@@ -1,0 +1,56 @@
+# Important variables and constants, like $EDITOR, $PAGER, etc.
+# *Please note:* that $PATH and similar variables handling paths are located in S00-path; not in this file
+
+export EMAIL="magnus.bergmark@gmail.com"
+export FULLNAME="Magnus Bergmark"
+
+# Custom editor depending on precence of X
+export VISUAL=vim
+if [[ $DISPLAY != "" ]]; then
+     export EDITOR=gvim
+else
+     export EDITOR=vim
+fi
+
+# this makes man pages look nicer...
+export LESS_TERMCAP_mb=$'\E[01;31m'
+export LESS_TERMCAP_md=$'\E[01;31m'
+export LESS_TERMCAP_me=$'\E[0m'
+export LESS_TERMCAP_se=$'\E[0m'
+export LESS_TERMCAP_so=$'\E[01;44;33m'
+export LESS_TERMCAP_ue=$'\E[0m'
+export LESS_TERMCAP_us=$'\E[01;32m'
+
+# Screen(1) improvements
+export IGNOREEOF=1 # Don't exit on ^D, except if pressed twice
+# More configuration in ~/.screenrc
+
+#####################################################
+# Setup LS_COLORS to decide the colorization of files
+
+# Base file types: 
+# directory, file, link, pipe, socket, block device, charater device, orphan, executable
+LS_COLORS="di=94:fi=0:ln=36:pi=4:so=4:bd=4;93:cd=93:or=5;31:ex=1;32"
+
+# Packages
+LS_COLORS="$LS_COLORS:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.gz=01;31:*.bz2=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31"
+
+# Image and graphics files
+LS_COLORS="$LS_COLORS::*.jpg=01;35:*.jpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.xcf=01;35:*.svg=01;35"
+
+# Movies and video
+LS_COLORS="$LS_COLORS:*.mov=01;33:*.mpg=01;33:*.mpeg=01;33:*.avi=01;33:*.fla=01;33:*.swf=01;33:*.mkv=01;33"
+
+# Music
+LS_COLORS="$LS_COLORS:*.ogg=95:*.mp3=95:*.wav=95:*.flac=95"
+
+# Other large binary files
+LS_COLORS="$LS_COLORS:*.iso=01;33:*.img=01;33:*.bin=01;33"
+
+# Files that I don't have to pay attention to
+LS_COLORS="$LS_COLORS:*.nfo=90:*.sfv=90:*.srt=90:*.sub=90"
+
+export LS_COLORS
+export ZLS_COLORS=$LS_COLORS
+
+######################################################

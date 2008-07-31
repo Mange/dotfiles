@@ -1,0 +1,6 @@
+# Ignore (g)vi(m) swap files
+*.swp
+
+# Ignore backups
+*~
+

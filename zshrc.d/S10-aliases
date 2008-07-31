@@ -1,0 +1,52 @@
+# Aliases
+# First of all, we have ordinary aliases
+# Then we have inline aliases
+
+alias j='jobs'
+
+alias ls='ls --color=auto'
+alias lsl='ls --color=auto -l'
+alias lsa='ls --color=auto -a'
+alias l='ls --color=auto -l -a'
+
+# Give less more advanced capabilities, like coloring, save to file, etc.
+alias less='/usr/share/vim/vim71/macros/less.sh'
+
+alias cwd='pwd'
+
+alias po='popd'
+alias pd='pushd'
+
+alias grep='grep --color=auto'
+
+alias nano='nano -w' # No word wrapping
+
+alias isomount='mount -o loop -t iso9660'
+
+alias cp='cp -i'
+
+################################################################
+# Inline aliases
+
+# cd by .. or ... or ... or mv file ..../.
+alias '..'='cd ..'
+alias -g '...'='../..'
+alias -g '....'='../../..'
+alias -g '.....'='../../../..'
+
+alias -g G='| grep'
+alias -g L='| less'
+
+alias -g ND='$(ls -d *(/om[1]))' # newest directory
+alias -g NF='$(ls *(.om[1]))'    # newest file
+# Example of use
+#    dmesg > log
+#    mkdir status
+#    cp NF ND
+#
+
+alias -g HL="--help"
+alias -g LL="2>&1 | less"
+alias -g NE="2> /dev/null"
+alias -g NUL="> /dev/null 2>&1"
+

@@ -1,0 +1,89 @@
+#!/bin/zsh
+# Useful functions
+
+# $EDITOR: Opens $EDITOR, unless some parameter is a file owned 
+# by root, in which case "sudo $EDITOR" is invoked.
+# Example:
+#  ~$ vim tmp.txt
+#        ... edit ...
+#  ~$ vim /etc/conf
+#  Password:
+#       ... edit ...
+function $EDITOR {
+	LIMIT=$#
+	for ((i = 1; i <= $LIMIT; i++ )) do
+		eval file="\$$i"
+		if [[ -e $file && ! -O $file ]]
+		then
+			otherfile=1
+		else
+	
+		fi
+	done
+	if [[ $otherfile = 1 ]]
+	then
+		sudo $EDITOR "$@"
+	else
+		command $EDITOR "$@"
+	fi
+}
+
+# zipdir: Compresses the supplied dir into a zip, ignoring
+# crap
+# usage: zipdir ./release
+#   (Saves to ./release.zip)
+zipdir() { zip "$@".zip -r "$@" -x "*/.DS_Store" "*/.svn/*" }
+
+
+# bak: Renames file to *~
+# usage: bak <fname>
+# example: important.sh -> important.sh~
+bak() {
+	mv "$1" "$1~"
+}
+
+# rmbak: Removes backup files
+# usage: rmbak
+rmbak() {
+	rm -vf .*~ *~ \#*\#
+}
+
+# Name current directory
+# usage:
+#   ~mange$ cd /var/log/apache2/myhost.com/subdomain
+#   /var/log/apache2/myhost.com/subdomain$ namedir sublog
+#   ~sublog$ echo "Weeeeee!"
+namedir () { hash -d $1=`pwd` }
+
+# inject_named_dirs: Try to shorten a path using named dirs
+# usage:
+#    ~mydir/conf % pwd
+#    /home/joe/projects/mydirectory/conf
+#    ~mydir/conf % inject_named_dirs `pwd`
+#    ~mydir/conf
+#
+inject_named_dirs () {
+     local d p
+     d=$1
+     # Go through every key in $nameddirs
+     for n in ${(onk)nameddirs}; do
+          p=$nameddirs[$n]
+          d=$(echo $d | sed "s;$p;~$n;")
+     done
+     echo $d
+}
+
+# Set Konsole session name
+# This function changes the session name
+# in Konsole. Should be completely silent if
+# the terminal is not a child of Konsole.
+konsole-name () {
+     # Look for a parent Konsole
+     dcop konsole-$PPID &> /dev/null
+     if [[ $? == "0" ]]; then
+          # We are in Konsole!
+          local session
+          session=`dcop konsole-$PPID konsole currentSession`
+          dcop konsole-$PPID $session renameSession "$1"
+     fi
+}

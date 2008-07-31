@@ -1,0 +1,14 @@
+# zmv - "programmable rename"
+
+autoload -U zmv
+#
+# Replace spaces in filenames with a underline
+#   zmv '* *' '$f:gs/ /_'
+#   zmv '(* *)' '${1// /}'
+#   zmv -Q "(**/)(* *)(D)" "\$1\${2// /_}"
+# Change the suffix from *.sh to *.pl
+#   zmv -W '*.sh' '*.pl'
+# lowercase/uppercase all files/directories
+#   zmv '(*)' '${(L)1}' # lowercase
+#   zmv '(*)' '${(U)1}' # uppercase
+#
