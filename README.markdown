@@ -35,7 +35,7 @@ Installation
  * Remove the chosen dotfiles and replace them with a soft link into the repository instead:
      
         user@localhost ~% rm .zshrc
-        user@localhost ~% ln -s .zshrc ~/dotfiles/zshrc
+        user@localhost ~% ln -s ~/dotfiles/zshrc .zshrc 
      
  * You're done!
 
