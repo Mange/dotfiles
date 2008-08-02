@@ -106,3 +106,50 @@ konsole-name () {
           dcop konsole-$PPID $session renameSession "$1"
      fi
 }
+
+# Convert a relative path to an absolute path
+# This works for both files and directories.
+#
+# Examples:
+#  ~/docs % rel-to-abs .
+#  /home/joe/docs
+#  ~/docs % rel-to-abs document.odf
+#  /home/joe/docs/document.odf
+#
+rel-to-abs() {
+  local dest file
+  dest=$1
+  
+  # If it's an absolute path already
+  if [[ "$dest" == /* ]]; then
+    echo $dest
+    return 0
+  fi
+  
+  # Place a "./" in the beginning in case they are not
+  # there already. This will make the directory correction
+  # work correctly.
+  if [[ "$dest" != ./* ]]; then
+    dest="./$dest"
+  fi
+  
+  # Make sure the file/dir actually exists
+  if [[ ! -e "$dest" ]]; then
+      echo "'$dest' doesn't even exist, dummy!" > /dev/stderr
+      return 1
+  fi
+  
+  # Check if it's a file
+  if [[ -f "$dest" ]]; then
+    # A file is a bit harder... We must remove the file part from the name...
+    # sed should do the job nicely!
+    file="/$(echo $dest | sed 's:^.*/::')" # Delete everything except the filename
+    dest=$(echo $dest | sed 's:/[^/]*$::') # Replace everything after the last /
+                                           # to the end of the string   
+    # /path/to/file
+    #         |----|
+    #      Will be removed
+  fi
+  
+  echo $(cd "$dest"; pwd)$file
+}
