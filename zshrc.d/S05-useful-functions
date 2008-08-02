@@ -48,12 +48,31 @@ rmbak() {
 	rm -vf .*~ *~ \#*\#
 }
 
-# Name current directory
-# usage:
+# Name a directory.
+# Usage:
+#    namedir $name [ $path ]
+# If $path is not set, the function will use the current 
+# working directory instead.
+#
+# Please note that this is not persistent or shared
+# between shells running. If you want any permanent names
+# pleace place them in ~/.zsh-named-directories
+#
+# Example usage:
 #   ~mange$ cd /var/log/apache2/myhost.com/subdomain
 #   /var/log/apache2/myhost.com/subdomain$ namedir sublog
-#   ~sublog$ echo "Weeeeee!"
-namedir () { hash -d $1=`pwd` }
+#   ~sublog$ namedir aplog /var/log/apache2
+#   ~sublog$ cd ~aplog
+namedir () { 
+     local dir
+     if [[ x$2 == x ]]; then
+          dir = `pwd`
+     else
+          dir=$2
+     fi
+
+     hash -d $1=$dir
+}
 
 # inject_named_dirs: Try to shorten a path using named dirs
 # usage:

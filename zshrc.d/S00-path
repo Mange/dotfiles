@@ -1,9 +1,5 @@
+#! /bin/zsh
 # PATH
 export PATH=$HOME/bin:$PATH:/sbin:/usr/sbin:/usr/local/sbin
 export CDPATH=".:..:$HOME"
-
-# Named directories used often
-hash -d dev="$HOME/Development"
-hash -d share="$HOME/Shared"
-hash -d docs="$HOME/Documents"
 
