@@ -89,6 +89,13 @@ inject_named_dirs () {
           p=$nameddirs[$n]
           d=$(echo $d | sed "s;$p;~$n;")
      done
+
+     # Now do the same but with home directories
+     for u in ${(onk)userdirs}; do
+          p=$userdirs[$u]
+          d=$(echo $d | sed "s;$p;~$u;")
+     done
+
      echo $d
 }
 
@@ -143,9 +150,9 @@ rel-to-abs() {
   if [[ -f "$dest" ]]; then
     # A file is a bit harder... We must remove the file part from the name...
     # sed should do the job nicely!
-    file="/$(echo $dest | sed 's:^.*/::')" # Delete everything except the filename
-    dest=$(echo $dest | sed 's:/[^/]*$::') # Replace everything after the last /
-                                           # to the end of the string   
+    file="/$(echo $dest | sed 's:^.*/::')"   # Delete everything except the filename
+    dest="$(echo $dest | sed 's:/[^/]*$::')" # Replace everything after the last /
+                                             # to the end of the string   
     # /path/to/file
     #         |----|
     #      Will be removed
@@ -153,3 +160,4 @@ rel-to-abs() {
   
   echo $(cd "$dest"; pwd)$file
 }
+
