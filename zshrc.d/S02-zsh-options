@@ -10,7 +10,7 @@ setopt always_to_end        # always go to end of word after completion
 setopt append_history       # append to history, dont truncate it
 setopt auto_cd              # do cd path if only 'path' is given as command
 setopt auto_continue        # send SIGCONT to jobs disowned
-setopt auto_list            # list choice on ambiguous command
+#setopt auto_list            # list choice on ambiguous command
 setopt auto_menu            # show menu for completion
 setopt no_autoname_dirs     # after foo=/absolute/path, ~foo may expand to
                             # /absolute/path, but `%~' in prompt won't give
@@ -34,7 +34,7 @@ setopt no_bsd_echo          # dont want BSD echo compat
 #[ c ]##########################################################################
 setopt case_glob            # case sensitive globbing
 setopt c_bases              # understand 12#120 as 120 in base 12
-setopt no_cdable_vars       # dont add ~ automagically
+setopt cdable_vars          # do add ~ automagically when directory doesn't exist
 setopt no_chase_dots        # foo/bar/.. is foo/ even if bar is a symlink
 #setopt chase_links          # cd to a symlink is in fact cd to the true dir
 setopt check_jobs           # check jobs on exit
@@ -44,10 +44,11 @@ setopt complete_in_word     # we want completion to be done from cursor in word
 setopt correct              # try to correct command line
 setopt no_correct_all       # don't coorect args
 setopt no_csh_junkiehistory # csh sucks
-setopt no_csh_junkie_loops  # want do /list/; done
+setopt csh_junkie_loops     # even shorter loops: for ... ...; end - instead 
+                            # of just for ... do; ... done
 setopt no_csh_junkie_quotes # csh quote rules sucks too
 setopt no_csh_nullcmd       # want to keep my (READ)?NULLCMD settings
-setopt no_csh_null_glob     # don't erase not matched globs silently
+setopt csh_null_glob        # do erase not matched globs silently
 
 #[ d-g ]########################################################################
 setopt no_dvorak            # use only regular (qw|az)erty
@@ -134,7 +135,7 @@ setopt pushd_to_home        # pushd == pushd $HOME
 setopt rc_expand_param      # some expansion trick for arrays in params
 setopt rc_quotes            # '' == ' in 'quoted exprs
 setopt rcs                  # source all /etc rcs
-setopt no_rec_exact         # recognize exact match even if ambiguous
+setopt rec_exact         # recognize exact match even if ambiguous
 #setopt restricted           #
 setopt no_rm_star_silent    # ask user before rm foo/*
 setopt no_rm_star_wait      # dont't idle 10 seconds
@@ -173,10 +174,10 @@ HISTFILE=$HOME/.zsh-history
 HISTSIZE=10000              # size of history
 LISTMAX=1000                # never ask
 NULLCMD='cat'               # use cat for > null commands
-REPORTTIME=2                # report time if execution exceeds amount of seconds
+REPORTTIME=5                # report time if execution exceeds amount of seconds
 SAVEHIST=10000              # maximum of history events to be save
 LOGCHECK=60
 watch=(notme)               # watch login/logout
-WORDCHARS="*?_-.[]~/&;!#$%^(){}<>"
+#WORDCHARS="*?_-.[]~/&;!#$%^(){}<>"
                             # part of word in line editor
 

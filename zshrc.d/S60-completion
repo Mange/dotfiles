@@ -21,11 +21,11 @@ zstyle ':completion:*:approximate:*' max-errors 'reply=( $(( ($#PREFIX+$#SUFFIX)
 
 #[ Formats ]####################################################################
 zstyle ':completion:*' group 1
-zstyle ':completion:*' format '%B---- %d%b'
-zstyle ':completion:*:corrections' format '%B---- %d (errors %e)%b'
-zstyle ':completion:*:descriptions' format "%B---- %d%b"
-zstyle ':completion:*:messages' format '%B%U---- %d%u%b' 
-zstyle ':completion:*:warnings' format "%B$fg[red]%}---- no match for: $fg[white]%d%b"
+zstyle ':completion:*' format '%B %d%b'
+zstyle ':completion:*:corrections' format '%B %d (errors %e)%b'
+zstyle ':completion:*:descriptions' format "%B %d%b"
+zstyle ':completion:*:messages' format '%B%U %d%u%b' 
+zstyle ':completion:*:warnings' format "%B$fg[red]%} no match for: $fg[white]%d%b"
 zstyle ':completion:*' group-name ''
 
 #[ Kill ]#######################################################################
@@ -44,9 +44,7 @@ zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)[ 0-9:]#([
 #zstyle ':completion:*' hosts $hosts
 #zstyle ':completion:*:hosts' list-colors '=(#b)(*)(.dreadfulmanatee.org)=01;30=01;31' '=[^.]#=01;31'
 
-users=(root mange skattkista stoy)
-zstyle ':completion:*' users $users
-
+# Complete specific filenames for specific programs
 zstyle ':completion:*:*:[ak]dvi:*' file-patterns \
     '*.dvi:dvi-files:DVI\ files *(-/):directories:Directories' '*:all-files'
 zstyle ':completion:*:*:kghostview:*' file-patterns \
@@ -65,7 +63,7 @@ zstyle ':completion:*:*:vi(m|):*:*files' ignored-patterns '*?.(aux|dvi|ps|pdf|bb
 zstyle ':completion:*' squeeze-slashes true
 
 # When completing in the middle of lines; ignore stuff after the cursor
-bindkey '^i' expand-or-complete-prefix
+#bindkey '^i' expand-or-complete-prefix
 
 # Ignore lost+found dirs
 zstyle ':completion:*:cd:*' ignored-patterns '(*/)#lost+found'
