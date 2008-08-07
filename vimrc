@@ -31,8 +31,8 @@ endif
 
 " Tab settings
 set expandtab
-set tabstop=5
-set shiftwidth=5
+set tabstop=2
+set shiftwidth=2
 set smarttab
 
 syntax on
@@ -95,7 +95,7 @@ set nobackup
 set bs=2
 
 " Set the encoding to UTF-8
-set encoding=utf-8
+"set encoding=utf-8
 
 " Search for text as you type
 set incsearch
@@ -104,10 +104,10 @@ set incsearch
 runtime! ftdetect/*.vim
 
 " Set the status line format.
-set laststatus=2
-if has("statusline")
-     set statusline=%F%m%r%h%w\ [%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")} 
-endif
+"set laststatus=2
+"if has("statusline")
+"     set statusline=%F%m%r%h%w\ [%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")} 
+"endif
 
 " Enable line wrapping.
 set wrap

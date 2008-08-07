@@ -1,3 +1,4 @@
+#!/bin/zsh
 # Aliases
 # First of all, we have ordinary aliases
 # Then we have inline aliases
@@ -5,9 +6,9 @@
 alias j='jobs'
 
 alias ls='ls --color=auto'
-alias lsl='ls --color=auto -l'
-alias lsa='ls --color=auto -a'
-alias l='ls --color=auto -l -a'
+alias lsl='ls -l'
+alias lsa='ls -a'
+alias l='ls -lah'
 
 # Give less more advanced capabilities, like coloring, save to file, etc.
 alias less='/usr/share/vim/vim71/macros/less.sh'
@@ -18,12 +19,30 @@ alias po='popd'
 alias pd='pushd'
 
 alias grep='grep --color=auto'
+alias findtext='grep --exclude-dir=.svn -r'
 
 alias nano='nano -w' # No word wrapping
 
 alias isomount='mount -o loop -t iso9660'
 
-alias cp='cp -i'
+alias cp='cp -i' # Confirm before overwriting
+
+################################################################
+# SVN and git aliases
+alias sst='svn status'
+alias sco='svn commit'
+alias sup='svn update'
+alias sdf='svn diff'
+alias sdiff='svn diff'
+alias slog='svn log'
+
+alias gst='git status'
+alias gco='git commit -v'
+alias gup='git fetch'
+alias gdf='git diff'
+alias gdiff='git diff'
+alias glog='git log'
+
 
 ################################################################
 # Inline aliases
