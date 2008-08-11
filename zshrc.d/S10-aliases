@@ -36,13 +36,14 @@ alias sdf='svn diff'
 alias sdiff='svn diff'
 alias slog='svn log'
 
-alias gst='git status'
-alias gco='git commit -v'
-alias gup='git fetch'
-alias gdf='git diff'
-alias gdiff='git diff'
-alias glog='git log'
-
+alias gst='git-status'
+alias gco='git-commit -v'
+alias gup='git-pull'
+alias gdf='git-diff'
+alias gdiff='git-diff'
+alias glog='git-log'
+alias branches='git-branches -a'
+alias checkout='git-checkout'
 
 ################################################################
 # Inline aliases
