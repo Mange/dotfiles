@@ -1,7 +1,4 @@
 #! /bin/zsh
-#
-# vi-mode colour changing
-#   http://www.zsh.org/mla/users/2006/msg01196.html
 
 setopt prompt_subst
 autoload colors
@@ -109,8 +106,33 @@ if [[ $UID == 0 ]]; then
      lprompt '<>' red red
      rprompt '<>' red red red
 else
-     lprompt '[]' blue cyan 
-     rprompt '()' green red blue
+  case $HOST in
+    morbidus*)
+      lprompt '[]' blue cyan
+      rprompt '()' green red blue
+      ;;
+
+    cordelia*)
+      lprompt '[]' blue cyan
+      rprompt '()' green red blue
+      ;;
+
+    whiletrue*)
+      lprompt '[]' blue cyan
+      rprompt '()' green red blue
+      ;;
+
+    *)
+      if [[ ${$(hostname -f)#*.} =~ "(newsline|ad|pt|presstext).se" ]]; then
+          lprompt '[]' cyan blue
+          rprompt '()' red blue yellow
+      else
+          lprompt '{}' white gray
+          rprompt '()' white white gray
+      fi
+      ;;
+      
+  esac
 fi
 
 unset rst bgc

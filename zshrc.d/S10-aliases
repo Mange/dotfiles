@@ -5,23 +5,21 @@
 
 alias j='jobs'
 
-alias ls='ls --color=auto'
+alias ls='ls --color=auto -h'
 alias lsl='ls -l'
 alias lsa='ls -a'
-alias l='ls -lah'
+alias l='ls -la'
 
 # Give less more advanced capabilities, like coloring, save to file, etc.
-alias less='/usr/share/vim/vim71/macros/less.sh'
+alias less='/usr/share/vim/current/macros/less.sh'
 
 alias cwd='pwd'
 
 alias po='popd'
 alias pd='pushd'
 
-alias grep='grep --color=auto'
-alias findtext='grep --exclude-dir=.svn -r'
-
-alias nano='nano -w' # No word wrapping
+alias grep='grep --color=auto --exclude-dir=.svn --exclude-dir=.git'
+alias findtext='grep -r .'
 
 alias isomount='mount -o loop -t iso9660'
 
@@ -29,21 +27,31 @@ alias cp='cp -i' # Confirm before overwriting
 
 ################################################################
 # SVN and git aliases
-alias sst='svn status'
-alias sco='svn commit'
-alias sup='svn update'
-alias sdf='svn diff'
-alias sdiff='svn diff'
-alias slog='svn log'
+alias sst      = 'svn status'
+alias sco      = 'svn commit'
+alias sup      = 'svn update'
+alias sdf      = 'svn diff'
+alias sdiff    = 'svn diff'
+alias slog     = 'svn log'
 
-alias gst='git-status'
-alias gco='git-commit -v'
-alias gup='git-pull'
-alias gdf='git-diff'
-alias gdiff='git-diff'
-alias glog='git-log'
-alias branches='git-branches -a'
-alias checkout='git-checkout'
+alias gst      = 'git status'
+alias gco      = 'git commit -v'
+alias gup      = 'git pull'
+alias gdf      = 'git diff'
+alias gdiff    = 'git diff'
+alias glog     = 'git log'
+alias grst     = 'git reset'
+alias branches = 'git branches -a'
+alias checkout = 'git checkout'
+alias gch      = 'git checkout'
+alias gadd     = 'git add'
+alias gad      = 'git add'
+alias dcommit  = 'git svn dcommit'
+alias drebase  = 'git svn rebase'
+
+################################################################
+# Ruby on Rails aliases
+alias sc='script/console'
 
 ################################################################
 # Inline aliases
@@ -54,8 +62,14 @@ alias -g '...'='../..'
 alias -g '....'='../../..'
 alias -g '.....'='../../../..'
 
+alias -g '..2'='../..'
+alias -g '..3'='../../..'
+alias -g '..4'='../../../..'
+alias -g '..5'='../../../../..'
+
 alias -g G='| grep'
 alias -g L='| less'
+alias -g S='| sed'
 
 alias -g ND='$(ls -d *(/om[1]))' # newest directory
 alias -g NF='$(ls *(.om[1]))'    # newest file

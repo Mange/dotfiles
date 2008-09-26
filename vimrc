@@ -3,6 +3,18 @@ if v:progname =~? "evim"
   finish
 endif
 
+" Set some GUI settings
+" f = Foreground; don't fork
+" a = autoselect
+" c = Console dialogs for simple questions
+" g = Grey menu items instead of hidden when inactive
+" i = Icon
+" r = Right hand scrollbar present
+" L = Left hand scrollbar when vertical split
+" t = Include tear-off menu items
+" m = Menu bar
+set guioptions=facgirLtm
+
 " Use Vim settings, rather then Vi settings (much better!).
 " This must be first, because it changes other options as a side effect.
 set nocompatible
@@ -124,8 +136,8 @@ augroup Txt
 augroup END
 
 " Autowrite on swap
-set autowrite
-set noshowcmd
+"set autowrite
+"set noshowcmd
 
 " Setup the menu stuff
 set wildmenu
@@ -160,3 +172,5 @@ vnoremap <script> <c-v> "-c<esc><sid>Paste
 " Set up backup directory
 set backupdir=$HOME/.tmp/  
 
+" Set the shell to a basic one to ensure that external commands will run properly
+set shell=/bin/sh

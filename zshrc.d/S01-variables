@@ -4,12 +4,13 @@
 export EMAIL="magnus.bergmark@gmail.com"
 export FULLNAME="Magnus Bergmark"
 
-# Custom editor depending on precence of X
-export VISUAL=vim
+# Custom editor depending on presence of X
 if [[ $DISPLAY != "" ]]; then
-     export EDITOR=gvim
+  export EDITOR=gvim
+  export VISUAL=gvim
 else
-     export EDITOR=vim
+  export EDITOR=vim
+  export VISUAL=vim
 fi
 
 # this makes man pages look nicer...
@@ -20,6 +21,9 @@ export LESS_TERMCAP_se=$'\E[0m'
 export LESS_TERMCAP_so=$'\E[01;44;33m'
 export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;32m'
+
+# LESS should accept ANSI colors and higlight search results
+export LESS="-Rg"
 
 # Screen(1) improvements
 export IGNOREEOF=1 # Don't exit on ^D, except if pressed twice

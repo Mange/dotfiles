@@ -40,9 +40,10 @@ zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)[ 0-9:]#([
 #        ( [ -r .ssh/config ] && awk '/^host +[a-z]/ { print $2 }' .ssh/config) ;\
 #        ( [ -r .ssh/known_hosts ] && awk '{print $1}' .ssh/known_hosts | tr , '\n')
 #) | sort -u))
+#
 
 #zstyle ':completion:*' hosts $hosts
-#zstyle ':completion:*:hosts' list-colors '=(#b)(*)(.dreadfulmanatee.org)=01;30=01;31' '=[^.]#=01;31'
+#zstyle ':completion:*:hosts' list-colors '=(#b)(*)(.newsline.se)=01;30=01;31' '=(#b)(*)(.ad.se)=01;30=01;31' '=(#b)(*)(.pt.se)=01;30=01;31' '=[^.]#=01;31'
 
 # Complete specific filenames for specific programs
 zstyle ':completion:*:*:[ak]dvi:*' file-patterns \
