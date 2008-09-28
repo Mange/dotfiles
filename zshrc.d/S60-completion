@@ -8,7 +8,8 @@ autoload -U compinit && compinit
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path ~/.zsh/cache
 
-zstyle ':completion:*' add-space true
+#zstyle ':completion:*' add-space true
+
 # Fuzzy matching will allow for some errors in the string
 zstyle ':completion:*' completer _expand _complete _match _prefix _approximate _list
 zstyle ':completion:*' menu select=1
@@ -61,13 +62,14 @@ zstyle ':completion:*' file-patterns \
 zstyle ':completion:*:*:vi(m|):*:*files' ignored-patterns '*?.(aux|dvi|ps|pdf|bbl|toc|lot|lof|o|cm?)'
 
 # Skip trailing slash if completed string is a directory
-zstyle ':completion:*' squeeze-slashes true
+#zstyle ':completion:*' squeeze-slashes true
 
 # When completing in the middle of lines; ignore stuff after the cursor
 #bindkey '^i' expand-or-complete-prefix
 
-# Ignore lost+found dirs
+# Ignore lost+found dirs and completion functions for commands not installed
 zstyle ':completion:*:cd:*' ignored-patterns '(*/)#lost+found'
+zstyle ':completion:*:functions' ignored-patterns '_*'
 
 # With commands like `rm/kill/diff' it's annoying if one gets offered the same 
 # filename again even if it is already on the command line.
