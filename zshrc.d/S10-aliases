@@ -27,27 +27,28 @@ alias cp='cp -i' # Confirm before overwriting
 
 ################################################################
 # SVN and git aliases
-alias sst      = 'svn status'
-alias sco      = 'svn commit'
-alias sup      = 'svn update'
-alias sdf      = 'svn diff'
-alias sdiff    = 'svn diff'
-alias slog     = 'svn log'
+#
+alias sst='svn status'
+alias sco='svn commit'
+alias sup='svn update'
+alias sdf='svn diff'
+alias sdiff='svn diff'
+alias slog='svn log'
 
-alias gst      = 'git status'
-alias gco      = 'git commit -v'
-alias gup      = 'git pull'
-alias gdf      = 'git diff'
-alias gdiff    = 'git diff'
-alias glog     = 'git log'
-alias grst     = 'git reset'
-alias branches = 'git branches -a'
-alias checkout = 'git checkout'
-alias gch      = 'git checkout'
-alias gadd     = 'git add'
-alias gad      = 'git add'
-alias dcommit  = 'git svn dcommit'
-alias drebase  = 'git svn rebase'
+alias gst='git status'
+alias gco='git commit -v'
+alias gup='git pull'
+alias gdf='git diff'
+alias gdiff='git diff'
+alias glog='git log'
+alias grst='git reset'
+alias branches='git branches -a'
+alias checkout='git checkout'
+alias gch='git checkout'
+alias gadd='git add'
+alias gad='git add'
+alias dcommit='git svn dcommit'
+alias drebase='git svn rebase'
 
 ################################################################
 # Ruby on Rails aliases

@@ -123,7 +123,7 @@ else
       ;;
 
     *)
-      if [[ ${$(hostname -f)#*.} =~ "(newsline|ad|pt|presstext).se" ]]; then
+      if [[ ${$(hostname -f)#*.} == (newsline|ad|pt|presstext).se ]]; then
           lprompt '[]' cyan blue
           rprompt '()' red blue yellow
       else
