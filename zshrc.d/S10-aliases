@@ -19,7 +19,8 @@ alias po='popd'
 alias pd='pushd'
 
 alias grep='grep --color=auto --exclude-dir=.svn --exclude-dir=.git'
-alias findtext='grep -r .'
+alias findtext='grep -r . -e'
+alias textgrep='findtext'
 
 alias isomount='mount -o loop -t iso9660'
 
