@@ -28,6 +28,26 @@ function $EDITOR {
 	fi
 }
 
+# $VISUAL: Same as with $EDITOR, but with $VISUAL
+function $VISUAL {
+	LIMIT=$#
+	for ((i = 1; i <= $LIMIT; i++ )) do
+		eval file="\$$i"
+		if [[ -e $file && ! -O $file ]]
+		then
+			otherfile=1
+		else
+	
+		fi
+	done
+	if [[ $otherfile = 1 ]]
+	then
+		sudo $VISUAL "$@"
+	else
+		command $VISUAL "$@"
+	fi
+}
+
 # zipdir: Compresses the supplied dir into a zip, ignoring
 # crap
 # usage: zipdir ./release
@@ -82,21 +102,7 @@ namedir () {
 #    ~mydir/conf
 #
 inject_named_dirs () {
-     local d p
-     d=$1
-     # Go through every key in $nameddirs
-     for n in ${(onk)nameddirs}; do
-          p=$nameddirs[$n]
-          d=$(echo $d | sed "s;$p;~$n;")
-     done
-
-     # Now do the same but with home directories
-     for u in ${(onk)userdirs}; do
-          p=$userdirs[$u]
-          d=$(echo $d | sed "s;$p;~$u;")
-     done
-
-     echo $d
+  print -D $1
 }
 
 # Set Konsole session name
@@ -149,13 +155,8 @@ rel-to-abs() {
   # Check if it's a file
   if [[ -f "$dest" ]]; then
     # A file is a bit harder... We must remove the file part from the name...
-    # sed should do the job nicely!
-    file="/$(echo $dest | sed 's:^.*/::')"   # Delete everything except the filename
-    dest="$(echo $dest | sed 's:/[^/]*$::')" # Replace everything after the last /
-                                             # to the end of the string   
-    # /path/to/file
-    #         |----|
-    #      Will be removed
+    file="/$(basename $dest)"
+    dest="$(dirname $dest)"
   fi
   
   echo $(cd "$dest"; pwd)$file
