@@ -1,0 +1,24 @@
+#!/bin/zsh
+
+# Make everything dark gray
+echo -en $fg_bold[black]
+
+#
+# Echoes a short fortune
+#
+
+if [[ $(which fortune &> /dev/null; echo $?) == "0" ]]; then
+  echo
+  fortune -as
+  echo
+fi
+
+#
+# Show the uptime, too
+#
+echo -n Uptime:
+uptime
+echo
+
+# Restore the color
+echo -en $fg[default]
