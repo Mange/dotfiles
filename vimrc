@@ -34,12 +34,6 @@ colorscheme vibrantink
 set autoindent
 set smartindent
 
-" enable code folding if using vim above version 6
-if version >= 600
-   set foldenable
-   set foldmethod=marker
-endif
-
 " Tab settings
 set expandtab
 set tabstop=2
@@ -169,3 +163,11 @@ set backupdir=$HOME/.tmp/
 
 " Set the shell to a basic one to ensure that external commands will run properly
 set shell=/bin/sh
+
+" TSelectBuffer mappings
+noremap <m-b> :TSelectBuffer<cr>
+inoremap <m-b> <c-o>:TSelectBuffer<cr> 
+
+" Do not show the auto complete dialog before writing a higher number of
+" chars... This is to avoid completion popups on "else", "if", etc.
+let g:AutoComplPop_BehaviorKeywordLength = 6
