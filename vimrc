@@ -11,9 +11,7 @@ endif
 " i = Icon
 " r = Right hand scrollbar present
 " L = Left hand scrollbar when vertical split
-" t = Include tear-off menu items
-" m = Menu bar
-set guioptions=facgirLtm
+set guioptions=facgirL
 
 " Use Vim settings, rather then Vi settings (much better!).
 " This must be first, because it changes other options as a side effect.
@@ -30,7 +28,8 @@ set number		" line numbers
 
 " Set the colorscheme and the background
 set background=dark
-colorscheme desert
+colorscheme vibrantink
+
 " Autoindent and Smartindent on
 set autoindent
 set smartindent
@@ -130,10 +129,8 @@ set shortmess=atI
 " Set the number of undo levels
 set undolevels=1000
 
-" Autocommands used for *.txt files
-augroup Txt
-     autocmd BufNewFile,BufRead *.txt   setf txt
-augroup END
+" Autoscroll 5 lines from the top or bottom
+set scrolloff=5
 
 " Autowrite on swap
 "set autowrite
