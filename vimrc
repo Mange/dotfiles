@@ -20,11 +20,11 @@ set nocompatible
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
 
-set history=50		" keep 50 lines of command line history
-set ruler		" show the cursor position all the time
-set showcmd		" display incomplete commands
-set incsearch		" do incremental searching
-set number		" line numbers
+set history=50 " keep 50 lines of command line history
+set ruler      " show the cursor position all the time
+set showcmd    " display incomplete commands
+set incsearch  " do incremental searching
+set number     " line numbers
 
 " Set the colorscheme and the background
 set background=dark
@@ -76,15 +76,13 @@ if has("autocmd")
   augroup END
 
 else
-
-  set autoindent		" always set autoindenting on
-
+  set autoindent " always set autoindenting on
 endif " has("autocmd")
 
 " Convenient command to see the difference between the current buffer and the
 " file it was loaded from, thus the changes you made.
 command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
-	 	\ | wincmd p | diffthis
+     \ | wincmd p | diffthis
 
 " Shift-H and Shift-L to switch tabs
 map <S-h> gT
