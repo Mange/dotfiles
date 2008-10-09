@@ -86,8 +86,11 @@ zsh_git_compute_vars() {
 }
 
 # on each chdir update the cached git variable(s)
-preexec_functions+='zsh_git_preexec_update_vars'
-chpwd_functions+='zsh_git_chpwd_update_vars'
+if [[ $(command_exists git) == 1 ]]
+then
+  preexec_functions+='zsh_git_preexec_update_vars'
+  chpwd_functions+='zsh_git_chpwd_update_vars'
+fi
 #precmd_functions+='zsh_git_precmd_update_vars'
 
 zsh_git_chpwd_update_vars() {
@@ -125,3 +128,10 @@ get_git_prompt_info() {
         echo -n "${res}"
 }
 
+# Disable the git prompt method when git does not exist in path;
+# this is neccessary on computers without git if you want it to
+# have a usable prompt anyway
+if [[ $(command_exists git) == 0 ]]
+then
+  get_git_prompt_info() { }
+fi
