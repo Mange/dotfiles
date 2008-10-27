@@ -12,52 +12,32 @@ function command_exists {
     fi
 }
 
-
-# $EDITOR: Opens $EDITOR, unless some parameter is a file owned 
-# by root, in which case "sudo $EDITOR" is invoked.
+# edit: Opens $EDITOR, unless some parameter is a file without 
+# write permissions for the current user, in which case 
+# "sudo $EDITOR" is invoked.
 # Example:
-#  ~$ vim tmp.txt
+#  ~$ edit tmp.txt
 #        ... edit ...
-#  ~$ vim /etc/conf
+#  ~$ edit /etc/conf
 #  Password:
 #       ... edit ...
-function $EDITOR {
-	LIMIT=$#
-	for ((i = 1; i <= $LIMIT; i++ )) do
-		eval file="\$$i"
-		if [[ -e $file && ! -O $file ]]
-		then
-			otherfile=1
-		else
-	
-		fi
-	done
-	if [[ $otherfile = 1 ]]
-	then
-		sudo $EDITOR "$@"
-	else
-		command $EDITOR "$@"
-	fi
-}
+function edit {
+  local found_one;
+  found_one=false;
+  for arg in $@; do
+    if [[ -f $arg && ! -w $arg ]]; # If a file and no write flag set
+    then
+      found_one=true
+      break
+    fi
+  done
 
-# $VISUAL: Same as with $EDITOR, but with $VISUAL
-function $VISUAL {
-	LIMIT=$#
-	for ((i = 1; i <= $LIMIT; i++ )) do
-		eval file="\$$i"
-		if [[ -e $file && ! -O $file ]]
-		then
-			otherfile=1
-		else
-	
-		fi
-	done
-	if [[ $otherfile = 1 ]]
-	then
-		sudo $VISUAL "$@"
-	else
-		command $VISUAL "$@"
-	fi
+  if [[ $found_one == true ]];
+  then
+    sudo $EDITOR "$@"
+  else
+    command $EDITOR "$@"
+  fi
 }
 
 # zipdir: Compresses the supplied dir into a zip, ignoring
@@ -97,8 +77,8 @@ rmbak() {
 #   ~sublog$ cd ~aplog
 namedir () { 
      local dir
-     if [[ x$2 == x ]]; then
-          dir = `pwd`
+     if [[ "$2" == "" ]]; then
+          dir=`pwd`
      else
           dir=$2
      fi
@@ -129,7 +109,9 @@ konsole-name () {
           local session
           session=`dcop konsole-$PPID konsole currentSession`
           dcop konsole-$PPID $session renameSession "$1"
+          return 0
      fi
+     return 1
 }
 
 # Convert a relative path to an absolute path

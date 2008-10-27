@@ -11,14 +11,27 @@ alias lsa='ls -a'
 alias l='ls -la'
 
 # Give less more advanced capabilities, like coloring, save to file, etc.
-alias less='/usr/share/vim/current/macros/less.sh'
+if [[ -f /usr/share/vim/current/macros/less.sh ]]; then
+  alias less='/usr/share/vim/current/macros/less.sh'
+fi
 
 alias cwd='pwd'
 
 alias po='popd'
 alias pd='pushd'
 
-alias grep='grep --color=auto --exclude-dir=.svn --exclude-dir=.git'
+##########################################################################################
+# Older versions of grep does not understand --exclude-dir. Do not set if older version...
+minor=$(  command grep --version | grep -E "[0-9]+\.[0-9]+\.[0-9]+" | awk -F '.' '{ print $3 }')
+release=$(command grep --version | grep -E "[0-9]+\.[0-9]+\.[0-9]+" | awk -F '.' '{ print $2 }')
+
+if [[ $minor > 5 || ( $minor == 5 && $release > 1 ) ]]; then
+  alias grep='grep --color=auto --exclude-dir=.svn --exclude-dir=.git'
+else
+  alias grep='grep --color=auto'
+fi
+##########################################################################################
+
 alias findtext='grep -r . -e'
 alias textgrep='findtext'
 
@@ -70,19 +83,20 @@ alias -g '..4'='../../../..'
 alias -g '..5'='../../../../..'
 
 alias -g G='| grep'
-alias -g L='| less'
 alias -g S='| sed'
+alias -g L='| less'
+alias -g LL="2>&1 | less"
 
-alias -g ND='$(ls -d *(/om[1]))' # newest directory
-alias -g NF='$(ls *(.om[1]))'    # newest file
-# Example of use
+alias -g HL="--help"
+alias -g NE="2> /dev/null"
+alias -g NUL="> /dev/null 2>&1"
+
+# Newest File and Newest Directory
+# Example of use:
 #    dmesg > log
 #    mkdir status
 #    cp NF ND
 #
-
-alias -g HL="--help"
-alias -g LL="2>&1 | less"
-alias -g NE="2> /dev/null"
-alias -g NUL="> /dev/null 2>&1"
+alias -g ND='$(ls -d *(/om[1]))' # newest directory
+alias -g NF='$(ls *(.om[1]))'    # newest file
 

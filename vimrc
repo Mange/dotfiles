@@ -28,7 +28,7 @@ set number     " line numbers
 
 " Set the colorscheme and the background
 set background=dark
-colorscheme vibrantink
+colorscheme vividchalk
 
 " Autoindent and Smartindent on
 set autoindent
