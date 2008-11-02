@@ -1,5 +1,12 @@
 #! /bin/zsh
 # PATH
-export PATH=$HOME/bin:$PATH:/sbin:/usr/sbin:/usr/local/sbin
+export PATH=$HOME/bin:/sbin:/usr/sbin:/usr/local/sbin:$PATH
 export CDPATH=".:..:$HOME"
+
+# Check for the MacPorts path if the host is a mac. Let the MacPorts app override the
+# default commands from the mac. I do prefer the GNU versions of stuff. :-)
+#
+if [[ `uname -a` == *Darwin* && -d /opt/local/bin ]]; then
+  export PATH=/opt/local/bin:$PATH
+fi
 
