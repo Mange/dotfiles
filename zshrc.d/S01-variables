@@ -1,5 +1,12 @@
+#!/bin/zsh
 # Important variables and constants, like $EDITOR, $PAGER, etc.
 # *Please note:* that $PATH and similar variables handling paths are located in S00-path; not in this file
+
+if [[ `uname -a` == *Darwin* ]]; then
+  export IS_MAC=1
+else
+  export IS_MAC=0
+fi
 
 export EMAIL="magnus.bergmark@gmail.com"
 export FULLNAME="Magnus Bergmark"
@@ -11,6 +18,12 @@ if [[ $DISPLAY != "" ]]; then
 else
   export EDITOR=vim
   export VISUAL=vim
+fi
+
+# Textmate for mac
+if [[ $IS_MAC == 1 ]]; then
+  export EDITOR="mate -w"
+  export VISUAL="mate -w"
 fi
 
 # this makes man pages look nicer...
