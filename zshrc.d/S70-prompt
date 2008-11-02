@@ -106,33 +106,36 @@ if [[ $UID == 0 ]]; then
      lprompt '<>' red red
      rprompt '<>' red red red
 else
-  case $HOST in
-    morbidus*)
-      lprompt '[]' blue cyan
-      rprompt '()' green red blue
-      ;;
+  lprompt '[]' blue cyan
+  rprompt '()' green red blue
 
-    cordelia*)
-      lprompt '[]' blue cyan
-      rprompt '()' green red blue
-      ;;
+  # case $HOST in
+  #   morbidus*)
+  #     lprompt '[]' blue cyan
+  #     rprompt '()' green red blue
+  #     ;;
 
-    whiletrue*)
-      lprompt '[]' blue cyan
-      rprompt '()' green red blue
-      ;;
+  #   cordelia*)
+  #     lprompt '[]' blue cyan
+  #     rprompt '()' green red blue
+  #     ;;
 
-    *)
-      if [[ ${$(hostname -f)#*.} == (newsline|ad|pt|presstext).se ]]; then
-          lprompt '[]' cyan blue
-          rprompt '()' red blue yellow
-      else
-          lprompt '{}' white gray
-          rprompt '()' white white gray
-      fi
-      ;;
-      
-  esac
+  #   whiletrue*)
+  #     lprompt '[]' blue cyan
+  #     rprompt '()' green red blue
+  #     ;;
+
+  #   *)
+  #     if [[ ${$(hostname -f)#*.} == (newsline|ad|pt|presstext).se ]]; then
+  #         lprompt '[]' cyan blue
+  #         rprompt '()' red blue yellow
+  #     else
+  #         lprompt '{}' white gray
+  #         rprompt '()' white white gray
+  #     fi
+  #     ;;
+  #     
+  # esac
 fi
 
 unset rst bgc
