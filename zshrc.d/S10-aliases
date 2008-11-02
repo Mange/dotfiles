@@ -82,6 +82,7 @@ alias -g '..3'='../../..'
 alias -g '..4'='../../../..'
 alias -g '..5'='../../../../..'
 
+alias -g E='| `echo $EDITOR`' # Lazy evaluation so we're not locking this alias the the $EDITOR defined during the initialization
 alias -g G='| grep'
 alias -g S='| sed'
 alias -g L='| less'
