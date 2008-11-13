@@ -2,5 +2,5 @@
 
 # Run local stuff, too.
 if [[ -f ~/.zshprofile.local ]]; then
-  source ~/.zashprofile.local
+  source ~/.zshprofile.local
 fi
