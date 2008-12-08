@@ -3,6 +3,11 @@ if v:progname =~? "evim"
   finish
 endif
 
+" Do not load ShowMarks if vim does not have +signs support
+if has( "signs" ) == 0
+  let loaded_showmarks = 1
+end
+
 " Set some GUI settings
 " f = Foreground; don't fork
 " a = autoselect
