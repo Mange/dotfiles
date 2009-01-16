@@ -1,6 +1,6 @@
 #! /bin/zsh
-# PATH
-export PATH=$HOME/bin:/sbin:/usr/sbin:/usr/local/sbin:$PATH
+# PATH, /usr/local/bin is appended last since this is not a standard path on OS X (!?)
+export PATH=$HOME/bin:/sbin:/usr/sbin:/usr/local/sbin:$PATH:/usr/local/bin
 export CDPATH=".:..:$HOME"
 
 # Check for the MacPorts path if the host is a mac. Let the MacPorts app override the
