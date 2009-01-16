@@ -101,3 +101,5 @@ alias -g NUL="> /dev/null 2>&1"
 alias -g ND='$(ls -d *(/om[1]))' # newest directory
 alias -g NF='$(ls *(.om[1]))'    # newest file
 
+# Resume screen
+alias -g SC='screen -R'
