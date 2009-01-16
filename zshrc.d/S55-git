@@ -9,16 +9,6 @@ export GIT_COMMITTER_NAME="${FULLNAME}"
 export GIT_COMMITTER_EMAIL="${EMAIL}"
 
 # ----------------------------------------------------------------------
-# various git scripts
-
-gitize() {
-        git init \
-        && git add . \
-        && git commit -a -m"initial commit" \
-        && git gc
-}
-
-# ----------------------------------------------------------------------
 # The following implements a caching mechanism for git information.
 # The RPROMPT executes get_git_bprompt_info() and include the output...
 #
@@ -85,6 +75,14 @@ zsh_git_compute_vars() {
         new_parse_git_branch
 }
 
+git_status() {
+    if current_git_status=$(git status 2> /dev/null | grep 'added to commit' 2> /dev/null); then
+        echo "☢"
+    else
+        echo " "
+    fi
+}
+
 # on each chdir update the cached git variable(s)
 if [[ $(command_exists git) == 1 ]]
 then
@@ -134,4 +132,5 @@ get_git_prompt_info() {
 if [[ $(command_exists git) == 0 ]]
 then
   get_git_prompt_info() { }
+  git_status() { }
 fi
