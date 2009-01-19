@@ -78,8 +78,6 @@ zsh_git_compute_vars() {
 git_status() {
     if current_git_status=$(git status 2> /dev/null | grep 'added to commit' 2> /dev/null); then
         echo "☢"
-    else
-        echo " "
     fi
 }
 

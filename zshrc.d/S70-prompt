@@ -34,17 +34,16 @@ function lprompt {
      fi
 
      # Git status and stuff
-     local git_b git_s color_b color_s git_status
+     local git_b git_s color_b color_s
      git_b='$(get_git_prompt_info '%b')'
-     git_s='$(get_git_prompt_info '%s')'
+     git_s='$(git_status)$(get_git_prompt_info '%s')'
      color_b="%{$fg[green]%}"
      color_s="%{$fg[red]%}"
-     git_status='$(git_status)'
 
      PROMPT="\
 $ch1\
 $color_b$git_b\
-$color_s$git_status$git_s\
+$color_s$git_s\
 $color1%B%1~%b\
 $ch2$rst \
 $bgc$color2$field2$rst \
