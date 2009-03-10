@@ -74,6 +74,7 @@ alias ggraph='git log --all --decorate --graph --pretty=oneline --abbrev-commit'
 alias sc='script/console'
 alias sg='script/generate'
 alias sdb='script/dbconsole'
+alias ss='thin start'
 
 ################################################################
 # Inline aliases
