@@ -67,6 +67,7 @@ alias gpl='git pull --rebase'
 alias gph='git push'
 alias dcommit='git svn dcommit'
 alias drebase='git svn rebase'
+alias ggraph='git log --all --decorate --graph --pretty=oneline --abbrev-commit'
 
 ################################################################
 # Ruby on Rails aliases
