@@ -21,7 +21,7 @@ activity "%c activity -> %n%f %t"
 bell "%c bell -> %n%f %t^G"
 vbell_msg " *beep* "
 #caption always " %m%d %c | %w"
-caption always "%{= kW}%{G}%c %{= KW}%-Lw%{= BW}%50>%n%f* %t%{-}%+Lw%{-}%<"
+caption always "%{= kW}%{G}%c %L=%{= KW}%-Lw%{= BW}%50>%n%f* %t%{-}%+Lw%-0<"
 
 bind ~ activity       "%c activity -> %n%f %t"
 bind * activity       "%c activity -> %n%f %t"
