@@ -31,10 +31,6 @@ set showcmd    " display incomplete commands
 set incsearch  " do incremental searching
 set number     " line numbers
 
-" Set the colorscheme and the background
-set background=dark
-colorscheme vividchalk
-
 " Autoindent and Smartindent on
 set autoindent
 set smartindent
@@ -80,7 +76,7 @@ endif " has("autocmd")
 
 " Convenient command to see the difference between the current buffer and the
 " file it was loaded from, thus the changes you made.
-command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
+command! DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
      \ | wincmd p | diffthis
 
 " Shift-H and Shift-L to switch tabs
@@ -176,3 +172,7 @@ inoremap <m-b> <c-o>:TSelectBuffer<cr>
 " Do not show the auto complete dialog before writing a higher number of
 " chars... This is to avoid completion popups on "else", "if", etc.
 let g:AutoComplPop_BehaviorKeywordLength = 6
+
+" Set the colorscheme and the background
+set background=dark
+colorscheme vividchalk
