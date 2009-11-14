@@ -22,3 +22,8 @@ echo
 
 # Restore the color
 echo -en $fg[default]
+
+# Warn for missing important directories
+if [ ! -d ~/.zsh ]; then
+  echo "Warning: ~/.zsh directory not present. Please mkdir it for caching and history to work properly"
+fi

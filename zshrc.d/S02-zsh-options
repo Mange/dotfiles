@@ -34,9 +34,9 @@ setopt no_bsd_echo          # dont want BSD echo compat
 #[ c ]##########################################################################
 setopt case_glob            # case sensitive globbing
 setopt c_bases              # understand 12#120 as 120 in base 12
-setopt cdable_vars          # do add ~ automagically when directory doesn't exist
+setopt no_cdable_vars       # do not add ~ automagically when directory doesn't exist
 setopt no_chase_dots        # foo/bar/.. is foo/ even if bar is a symlink
-#setopt chase_links          # cd to a symlink is in fact cd to the true dir
+#setopt chase_links         # cd to a symlink is in fact cd to the true dir
 setopt check_jobs           # check jobs on exit
 setopt clobber              # redirection can create files
 setopt complete_aliases     # dont replace alias before completion
@@ -52,7 +52,7 @@ setopt csh_null_glob        # do erase not matched globs silently
 
 #[ d-g ]########################################################################
 setopt no_dvorak            # use only regular (qw|az)erty
-setopt emacs             # use rather bindkeys that builtin
+setopt emacs                # use emacs-like keybindings
 setopt equals               # perform = file expansions
 setopt no_err_exit          # don't weant to see exit status even if nonzero
 setopt no_err_return        # no return from a function with non 0 ending cmds
@@ -75,10 +75,8 @@ setopt hash_dirs            # hash directories holding commands too
 setopt hash_list_all        # verify path hash on completion
 setopt hist_allow_clobber   # add | to redirections in history
 setopt no_hist_beep         # don't beep on history expansion errors
-#setopt hist_expire_dups_first
 setopt hist_find_no_dups    # don't show dups even if not contiguous
 setopt hist_ignore_all_dups # ignore all -- even non contiguous -- dups
-#setopt hist_ignore_dups     # ignore contiguous dups
 setopt no_hist_ignore_space # historify commands with spaces too
 setopt hist_no_functions    # don't save functions defs in history
 setopt hist_no_store        # remove hists access cmds from hist
@@ -89,7 +87,6 @@ setopt no_hup               # don't SIGHUP bg cmds on logout
 setopt no_ignore_braces     # do braces expansion
 setopt no_ignore_eof        # don't ignore ^D
 setopt no_inc_appendhistory # dont' append incrementally
-#setopt interactive
 setopt interactive_comments # allow comments in interactive shell
 
 #[ k-o ]########################################################################
@@ -103,8 +100,6 @@ setopt no_list_beep         # don't beep for completion
 setopt list_packed          # different width for completion
 setopt no_list_rows_first   # sort by colums
 setopt list_types           # show types of listing files
-#setopt local_*              # used in functions RTFM
-#setopt login                # don't have to do it myself
 setopt long_list_jobs       # list jobs in long format
 setopt magic_equal_subst    # foo= is file expanded
 setopt no_mail_warning      # auto-explained
@@ -123,39 +118,30 @@ setopt no_overstrike        # dont start le in overstrike mode
 setopt path_dirs            # search in path even if cmd has '/' in it
 setopt no_posix_builtins    # yeah don't like posix, i'm a rebel
 setopt print_eight_bit      # just to be sure
-#setopt privileged           #
 setopt no_prompt_bang       # dont perform history expansion in prompt
 setopt no_prompt_cr         # don'tprint <cr> before prompt ---> see precmd !
 setopt prompt_percent       # expand % escapes in prompt
 setopt prompt_subst         # subts in prompt
 setopt pushd_ignore_dups    # ignore dups in pushd
-#setopt pushd_minus          # exchange +/-
 setopt pushd_silent         # don't print stack after push/pop
 setopt pushd_to_home        # pushd == pushd $HOME
 setopt rc_expand_param      # some expansion trick for arrays in params
 setopt rc_quotes            # '' == ' in 'quoted exprs
 setopt rcs                  # source all /etc rcs
-setopt rec_exact         # recognize exact match even if ambiguous
-#setopt restricted           #
+setopt rec_exact            # recognize exact match even if ambiguous
 setopt no_rm_star_silent    # ask user before rm foo/*
 setopt no_rm_star_wait      # dont't idle 10 seconds
 
 #[ s-z ]########################################################################
-#setopt no_share_history     # traditional bash-history
 setopt no_sh_file_expansion # dont expand filnames first
 setopt no_sh_glob           # allow globbing with [(|)<]
-#setopt shin_stdin           #
 setopt no_sh_nullcmd        # use my NULLCMD
 setopt sh_option_letters    # interprete single option letters a la ksh
 setopt short_loops          # short loops
 setopt no_sh_word_split     # `s="a b"; a=($s)' => array of length 1, not 2
-#setopt single_command       #
 setopt no_single_line_zle   # use multiline editor
 setopt no_sun_keyboard_hack # i don't use sun kb
 setopt transient_rprompt    # better for cut/paste
-#setopt typeset_silent       #
-#setopt unset                #
-#setopt verbose              #
 setopt no_vi                # never use vi-like keys in the shell
 setopt no_xtrace            # do not debug by default
 setopt zle                  # use zsh le
@@ -169,7 +155,7 @@ typeset -ga preexec_functions
 typeset -ga precmd_functions
 typeset -ga chpwd_functions
 
-HISTFILE=$HOME/.zsh-history
+HISTFILE=$HOME/.zsh/history
 
 HISTSIZE=10000              # size of history
 LISTMAX=1000                # never ask
