@@ -4,3 +4,4 @@
 # Ignore backups
 *~
 
+.DS_Store
