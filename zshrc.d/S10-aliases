@@ -32,8 +32,8 @@ else
 fi
 ##########################################################################################
 
-alias findtext='grep -r . -e'
-alias textgrep='findtext'
+# Stupid Debian
+command_exists ack-grep && alias ack='ack-grep'
 
 alias isomount='mount -o loop -t iso9660'
 
