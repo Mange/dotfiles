@@ -72,8 +72,8 @@ zsh_git_compute_vars() {
 
 git_status() {
     local changed_files="$(git status 2> /dev/null | grep -E '(modified:)|(new file:)|(deleted:)')"
-    local changed_files_count=$(echo "$changed_files" | wc -l)
-    if echo "$changed_files" | grep -q 'modified:'; then
+    local changed_files_count=$(echo -n "$changed_files" | wc -l)
+    if echo -n "$changed_files" | grep -q 'modified:'; then
         echo -n "☢"
     fi
     
