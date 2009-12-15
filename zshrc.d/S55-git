@@ -20,15 +20,10 @@ export __ZSH_GIT_BRANCH=
 export __ZSH_GIT_STATE=
 export __ZSH_GIT_VARS_INVALID=1
 
-# get the name of the branch we are on
-parse_git_branch() {
-        git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1) -- /'
-}
-
 # http://blog.madism.org/index.php/2008/05/07/173-git-prompt
-new_parse_git_branch() {
+parse_git_branch() {
     local git_dir branch
-
+    
     psvar=()
     git_dir=$(git rev-parse --git-dir 2> /dev/null) || return
     if test -d "$git_dir/../.dotest"; then
@@ -72,12 +67,18 @@ zsh_git_invalidate_vars() {
         export __ZSH_GIT_VARS_INVALID=1
 }
 zsh_git_compute_vars() {
-        new_parse_git_branch
+        parse_git_branch
 }
 
 git_status() {
-    if current_git_status=$(git status 2> /dev/null | grep 'added to commit' 2> /dev/null); then
-        echo "☢"
+    local changed_files="$(git status 2> /dev/null | grep -E '(modified:)|(new file:)|(deleted:)')"
+    local changed_files_count=$(echo "$changed_files" | wc -l)
+    if echo "$changed_files" | grep -q 'modified:'; then
+        echo -n "☢"
+    fi
+    
+    if [[ $changed_files_count != '0' ]]; then
+      echo -n "$changed_files_count "
     fi
 }
 
