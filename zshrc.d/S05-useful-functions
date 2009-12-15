@@ -1,15 +1,11 @@
 #!/bin/zsh
 # Useful functions
 
-# Outputs 1 when the given command is found in PATH. Outputs 0 otherwise.
+# Returns success when command is found
+# Just to keep checks short :-)
 function command_exists {
-    which $1 &> /dev/null
-    if [[ $? == 0 ]]
-    then
-      echo 1
-    else
-      echo 0
-    fi
+    command which -s $1
+    return $?
 }
 
 # edit: Opens $EDITOR, unless some parameter is a file without 
