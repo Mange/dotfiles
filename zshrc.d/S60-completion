@@ -28,7 +28,7 @@ zstyle ':completion:*:warnings' format "%B$fg[red]%} no match for: $fg[white]%d%
 zstyle ':completion:*' group-name ''
 
 #[ Kill ]#######################################################################
-zstyle ':completion:*:processes' command 'ps au -o pid,time,cmd|grep -v "ps au -o pid,time,cmd"'
+zstyle ':completion:*:processes' command 'ps au -o pid,time|grep -v "ps au -o pid,time"'
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)[ 0-9:]#([^ ]#)*=01;30=01;31=01;38'
 
 #[ hosts and users ]############################################################
