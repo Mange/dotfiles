@@ -44,6 +44,9 @@ zstyle ':completion:*' hosts $hosts
 zstyle ':completion:*:*:[ak]dvi:*' file-patterns \
     '*.dvi:dvi-files:DVI\ files *(-/):directories:Directories' '*:all-files'
 
+zstyle ':completion:*:*:unzip:*' file-patterns \
+    '*.zip:zip-files:ZIP\ files *(-/):directories:Directories' '*:all-files'
+
 zstyle ':completion:*:*:kghostview:*' file-patterns \
     '*.(ps|pdf)(|.gz|.bz2):pspdf-files:PostScript\ or\ PDF\ files  *(-/):directories:Directories' '*:all-files'
 
