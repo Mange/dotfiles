@@ -152,3 +152,7 @@ rel-to-abs() {
   echo $(cd "$dest"; pwd)$file
 }
 
+reload-aliases() {
+  for f in $HOME/.zshrc.d/*aliases*; do source $f; done
+}
+

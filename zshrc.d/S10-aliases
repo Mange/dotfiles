@@ -78,7 +78,16 @@ alias gup='git fetch'
 alias sc='script/console'
 alias sg='script/generate'
 alias sdb='script/dbconsole'
-alias ss='thin start'
+alias ss='script/server'
+
+alias r='rake'
+alias rt='RAILS_ENV=test rake'
+alias rdm='r db:migrate'
+alias rtdm='rt db:migrate'
+alias rdtp='r db:test:prepare'
+
+command_exists thin && alias ss='thin start'
+
 
 ################################################################
 # Inline aliases
