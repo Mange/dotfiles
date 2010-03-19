@@ -109,7 +109,7 @@ zsh_git_preexec_update_vars() {
 # providing no arguments is equivalent to "%p %b %s".
 get_git_prompt_info() {
         test -n "$__ZSH_GIT_VARS_INVALID" && zsh_git_compute_vars
-        test -n "$__ZSH_GIT_DIR" || return
+        test -n "$__ZSH_GIT_DIR" || return 0
 
         local def fmt res
         def='%p %b %s'
