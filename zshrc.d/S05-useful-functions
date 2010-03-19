@@ -4,7 +4,7 @@
 # Returns success when command is found
 # Just to keep checks short :-)
 function command_exists {
-    command which -s $1
+    whence $1 > /dev/null
     return $?
 }
 
