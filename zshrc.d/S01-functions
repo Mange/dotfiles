@@ -1,39 +1,13 @@
 #!/bin/zsh
-# Useful functions
 
-# Returns success when command is found
-# Just to keep checks short :-)
+function is_mac {
+  uname -a | grep -q 'Darwin'
+  return $?
+}
+
 function command_exists {
     whence $1 > /dev/null
     return $?
-}
-
-# edit: Opens $EDITOR, unless some parameter is a file without 
-# write permissions for the current user, in which case 
-# "sudo $EDITOR" is invoked.
-# Example:
-#  ~$ edit tmp.txt
-#        ... edit ...
-#  ~$ edit /etc/conf
-#  Password:
-#       ... edit ...
-function edit {
-  local found_one;
-  found_one=false;
-  for arg in $@; do
-    if [[ -f $arg && ! -w $arg ]]; # If a file and no write flag set
-    then
-      found_one=true
-      break
-    fi
-  done
-
-  if [[ $found_one == true ]];
-  then
-    sudo $EDITOR "$@"
-  else
-    command $EDITOR "$@"
-  fi
 }
 
 # zipdir: Compresses the supplied dir into a zip, ignoring
