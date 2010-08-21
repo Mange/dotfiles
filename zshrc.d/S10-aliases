@@ -25,6 +25,10 @@ fi
 # Helpful commands
 alias isomount='mount -o loop -t iso9660'
 
+# Copy / Paste
+command_exists pbcopy  || alias pbcopy='xsel --clipboard --input'
+command_exists pbpaste || alias pbpaste='xsel --clipboard --output'
+
 # SVN
 alias sst='svn status'
 alias sco='svn commit'
