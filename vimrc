@@ -68,7 +68,11 @@ if v:progname =~? "gvim"
 endif
 
 " Shortcut for saving in all modes
-map <C-s> <C-o>:w<cr>
+noremap <C-s> :w<cr>
+inoremap <C-s> <C-o>:w<CR>
+
+" Other shortcuts
+map <F2> :NERDTreeToggle
 
 " Highlight invisible characters
 set listchars=eol:¬,tab:→\ 
