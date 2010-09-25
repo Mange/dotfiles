@@ -4,3 +4,6 @@
 [submodule "vim/bundle/snipmate"]
 	path = vim/bundle/snipmate
 	url = http://github.com/msanders/snipmate.vim.git
+[submodule "vim/bundle/vim-trailing-whitespace"]
+	path = vim/bundle/vim-trailing-whitespace
+	url = http://github.com/bronson/vim-trailing-whitespace.git
