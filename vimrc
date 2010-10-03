@@ -81,3 +81,5 @@ set list
 " Set the colorscheme and the background
 set background=dark
 colorscheme vividchalk
+
+set statusline=%{fugitive#statusline()}\ %<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
