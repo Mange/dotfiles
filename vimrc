@@ -72,7 +72,7 @@ noremap <C-s> :w<cr>
 inoremap <C-s> <C-o>:w<CR>
 
 " Other shortcuts
-map <F2> :NERDTreeToggle
+map <F2> :NERDTreeToggle<CR>
 
 " Highlight invisible characters
 set listchars=eol:¬,tab:→\ 
