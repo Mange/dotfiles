@@ -75,7 +75,7 @@ inoremap <C-s> <C-o>:w<CR>
 map <F2> :NERDTreeToggle<CR>
 
 " Highlight invisible characters
-set listchars=eol:¬,tab:→\ 
+set listchars=tab:→\ ,eol:¬
 set list
 
 " Set the colorscheme and the background
