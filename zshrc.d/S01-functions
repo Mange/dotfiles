@@ -33,7 +33,7 @@ rmbak() {
 # Name a directory.
 # Usage:
 #    namedir $name [ $path ]
-# If $path is not set, the function will use the current 
+# If $path is not set, the function will use the current
 # working directory instead.
 #
 # Please note that this is not persistent or shared
@@ -45,7 +45,7 @@ rmbak() {
 #   /var/log/apache2/myhost.com/subdomain$ namedir sublog
 #   ~sublog$ namedir aplog /var/log/apache2
 #   ~sublog$ cd ~aplog
-namedir () { 
+namedir () {
      local dir
      if [[ "$2" == "" ]]; then
           dir=`pwd`
@@ -96,37 +96,47 @@ konsole-name () {
 rel-to-abs() {
   local dest file
   dest=$1
-  
+
   # If it's an absolute path already
   if [[ "$dest" == /* ]]; then
     echo $dest
     return 0
   fi
-  
+
   # Place a "./" in the beginning in case they are not
   # there already. This will make the directory correction
   # work correctly.
   if [[ "$dest" != ./* ]]; then
     dest="./$dest"
   fi
-  
+
   # Make sure the file/dir actually exists
   if [[ ! -e "$dest" ]]; then
       echo "'$dest' doesn't even exist, dummy!" > /dev/stderr
       return 1
   fi
-  
+
   # Check if it's a file
   if [[ -f "$dest" ]]; then
     # A file is a bit harder... We must remove the file part from the name...
     file="/$(basename $dest)"
     dest="$(dirname $dest)"
   fi
-  
+
   echo $(cd "$dest"; pwd)$file
 }
 
 reload-aliases() {
   for f in $HOME/.zshrc.d/*aliases*; do source $f; done
+}
+
+# run command with gem bundler if gemfile is present
+bundle-exec() {
+  if [ -f Gemfile ]; then
+    echo "(→ bundle exec $*)"
+    bundle exec $@
+  else
+    $@
+  fi
 }
 

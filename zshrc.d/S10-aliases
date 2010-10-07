@@ -1,7 +1,4 @@
 #!/bin/zsh
-# Aliases
-# First of all, we have ordinary aliases
-# Then we have inline aliases
 
 alias j='jobs'
 alias cwd='pwd'
@@ -13,7 +10,7 @@ alias lsl='ls -l'
 alias lsa='ls -a'
 alias l='ls -la'
 
-alias cp='cp -i' # Confirm before overwriting
+alias cp='cp -i'
 
 command_exists ack-grep && alias ack='ack-grep' # Debian
 
@@ -63,13 +60,19 @@ alias grst='git reset'
 alias gst='git status'
 alias gup='git fetch'
 
+# Ruby development
+alias r='rake'
+alias be='bundle exec'
+for gem in rake cap spec cucumber; do
+  alias $gem="bundle-exec $gem"
+done
+
 # Ruby on Rails
 alias sc='script/console'
 alias sg='script/generate'
 alias sdb='script/dbconsole'
 alias ss='script/server'
 
-alias r='rake'
 alias rt='RAILS_ENV=test rake'
 alias migrate='r db:migrate db:test:prepare'
 alias rmigrate='r db:migrate:redo db:test:prepare'
