@@ -63,7 +63,7 @@ alias gup='git fetch'
 # Ruby development
 alias r='rake'
 alias be='bundle exec'
-for gem in rake cap spec cucumber; do
+for gem in rake cap rspec spec cucumber spork; do
   alias $gem="bundle-exec $gem"
 done
 
