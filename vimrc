@@ -63,8 +63,8 @@ set wildmode=list:longest,full
 if v:progname =~? "gvim"
   vmap <C-c> "+y
   vmap <C-x> "+x
+  imap <C-v> "+p
   nmap <C-v> "+p
-  nmap <S-C-v> "+P
 endif
 
 " Shortcut for saving in all modes
