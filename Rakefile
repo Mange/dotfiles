@@ -1,6 +1,6 @@
 require 'pathname'
 
-SYMLINKS = %w[screenrc vimrc zshprofile zshrc vim zshrc.d]
+SYMLINKS = %w[screenrc vimrc zshprofile zshrc vim zshrc.d irbrc railsrc]
 FILES = %w[zsh-named-directories]
 
 SYMLINKS.each do |file|

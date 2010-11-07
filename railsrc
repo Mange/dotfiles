@@ -1,0 +1,22 @@
+#!/usr/bin/ruby
+
+begin
+  require 'hirb'
+  Hirb.enable
+rescue LoadError
+end
+
+def redirect_active_record_log(stream)
+  ActiveRecord::Base.logger = Logger.new(stream)
+  ActiveRecord::Base.clear_active_connections!
+end
+alias redirect_activerecord_log redirect_active_record_log
+
+def show_log
+  redirect_active_record_log(STDOUT)
+end
+
+def hide_log
+  redirect_active_record_log(nil)
+end
+
