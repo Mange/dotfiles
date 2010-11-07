@@ -1,59 +1,63 @@
 require 'pathname'
 
-module Dotfiles
-  extend self
+class Dotfile
   SYMLINKS = %w[screenrc vimrc zshprofile zshrc vim zshrc.d irbrc railsrc]
   FILES = %w[zsh-named-directories]
 
-  def target_path(file)
-    Pathname.new('~').join(".#{file}").expand_path
+  def initialize(name)
+    @name = name
+    @home_path = File.join('~', ".#{name}")
+    @source_path = Pathname.new(File.dirname(__FILE__)).join(name).expand_path
+    @target_path = Pathname.new(@home_path).expand_path
   end
 
-  def source_path(file)
-    Pathname.new(File.dirname(__FILE__)).join(file).expand_path
+  def install
+    if SYMLINKS.include? @name
+      install_symlink
+    elsif FILES.include? @name
+      install_copy
+    else
+      raise "Unknown file #{name}"
+    end
   end
 
-  def symlink_to_home(file)
-    source = source_path(file)
-    destination = target_path(file)
-    if destination.exist?
-      if destination.symlink?
-        puts "#{destination} already exists and is a symlink. Deleting it"
-        destination.delete
+  protected
+    def install_symlink
+      if @target_path.exist?
+        if @target_path.symlink?
+          puts "#{@home_path} already exists and is a symlink. Deleting it"
+          @target_path.delete
+        else
+          puts "#{@home_path} already exists and is not a symlink. Backing up to #{@home_path}~"
+          @target_path.rename(@target_path.to_s + '~')
+        end
+      end
+      File.symlink(@source_path, @target_path)
+    end
+
+    def install_copy
+      unless @target_path.exist?
+        @source_path.copy(@target_path)
       else
-        puts "#{destination} already exists and is not a symlink. Backing up to #{destination.to_s + '~'}"
-        destination.rename(destination.to_s + '~')
+        puts "#{@home_path} already exists. Skipping it"
       end
     end
-    File.symlink(source, destination)
-  end
-
-  def copy_to_home(file)
-    source = source_path(file)
-    destination = target_path(file)
-
-    unless destination.exist?
-      source.copy(destination)
-    else
-      puts "#{destination} already exists. Skipping it"
-    end
-  end
 end
 
-Dotfiles::SYMLINKS.each do |file|
+Dotfile::SYMLINKS.each do |file|
   desc "Installs #{file} by symlinking it inside your home"
   task file do
-    Dotfiles.symlink_to_home file
+    Dotfile.new(file).install
   end
 end
 
-Dotfiles::FILES.each do |file|
+Dotfile::FILES.each do |file|
   desc "Installs #{file} by copying it to your home"
   task file do
-    Dotfiles.copy_to_home file
+    Dotfile.new(file).install
   end
 end
 
 desc "Installs all files"
-task :install => (Dotfiles::SYMLINKS + Dotfiles::FILES)
+task :install => (Dotfile::SYMLINKS + Dotfile::FILES)
 
