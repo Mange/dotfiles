@@ -20,3 +20,10 @@ end
 desc "Installs all files"
 task :install => (SYMLINKS + FILES)
 
+desc "Clears all symlinks"
+task :clear_symlinks do
+  SYMLINKS.each do |file|
+    Dotfile.new(file).delete_target
+  end
+end
+

@@ -26,6 +26,10 @@ class Dotfile
     end
   end
 
+  def delete_target
+    @target_path.delete if @target_path.symlink? or @target_path.exist?
+  end
+
   protected
    def target_is_symlink_to_source?
      @target_path.symlink? and @target_path.realpath == @source_path.realpath
