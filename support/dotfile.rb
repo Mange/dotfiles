@@ -9,14 +9,11 @@ class Dotfile
   end
 
   def install_symlink
-    if @target_path.exist?
-      if @target_path.symlink?
-        puts "#{@home_path} already exists and is a symlink. Deleting it"
-        @target_path.delete
-      else
-        puts "#{@home_path} already exists and is not a symlink. Backing up to #{@home_path}~"
-        @target_path.rename(@target_path.to_s + '~')
-      end
+    if @target_path.exist? or @target_path.symlink?
+      return if target_is_symlink_to_source?
+      puts "#{@home_path} already exists. Backing up to #{@home_path}~"
+      File.delete(@target_path.to_s + '~') rescue nil
+      @target_path.rename(@target_path.to_s + '~')
     end
     File.symlink(@source_path, @target_path)
   end
@@ -28,5 +25,12 @@ class Dotfile
       puts "#{@home_path} already exists. Skipping it"
     end
   end
+
+  protected
+   def target_is_symlink_to_source?
+     @target_path.symlink? and @target_path.realpath == @source_path.realpath
+   rescue Errno::ENOENT
+     false
+   end
 end
 
