@@ -4,8 +4,8 @@ class Dotfile
   def initialize(name)
     @name = name
     @home_path = File.join('~', ".#{name}")
-    @source_path = Pathname.new(File.dirname(__FILE__)).join('..', name).expand_path
     @target_path = Pathname.new(@home_path).expand_path
+    @source_path = Pathname.new(File.dirname(__FILE__)).join('..', name).expand_path
   end
 
   def install_symlink
@@ -15,7 +15,7 @@ class Dotfile
       File.delete(@target_path.to_s + '~') rescue nil
       @target_path.rename(@target_path.to_s + '~')
     end
-    File.symlink(@source_path, @target_path)
+    File.symlink(@source_path.relative_path_from(@target_path.dirname), @target_path)
   end
 
   def install_copy
