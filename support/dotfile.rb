@@ -1,4 +1,5 @@
 require 'pathname'
+require 'fileutils'
 
 class Dotfile
   def initialize(name)
@@ -20,7 +21,7 @@ class Dotfile
 
   def install_copy
     unless @target_path.exist?
-      @source_path.copy(@target_path)
+      FileUtils.copy @source_path, @target_path
     else
       puts "#{@home_path} already exists. Skipping it"
     end
