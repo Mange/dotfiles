@@ -20,6 +20,7 @@ set hlsearch
 set number     " line numbers
 set nobackup
 set wrap
+set autoread
 
 set shortmess=imrx
 set cmdheight=2
