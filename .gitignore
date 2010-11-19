@@ -4,4 +4,7 @@
 # Ignore backups
 *~
 
+# Ignore tags
+vim/bundle/*/doc/tags
+
 .DS_Store
