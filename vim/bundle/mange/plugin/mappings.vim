@@ -26,3 +26,4 @@ nmap <S-Tab> <C-w><C-W>
 
 " Other shortcuts
 map <F2> :NERDTreeToggle<CR>
+nmap <Space> :
