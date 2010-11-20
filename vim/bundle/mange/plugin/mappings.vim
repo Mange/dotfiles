@@ -20,6 +20,9 @@ nmap <C-a> ^
 imap <C-e> <C-o>$
 nmap <C-e> $
 
+" Window shortcuts
+nmap <Tab> <C-w><C-w>
+nmap <S-Tab> <C-w><C-W>
+
 " Other shortcuts
 map <F2> :NERDTreeToggle<CR>
-
