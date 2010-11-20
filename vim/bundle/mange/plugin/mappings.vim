@@ -20,6 +20,9 @@ nmap <C-a> ^
 imap <C-e> <C-o>$
 nmap <C-e> $
 
+" Hashrocket!
+imap <C-l> <Space>=><Space>
+
 " Window shortcuts
 nmap <Tab> <C-w><C-w>
 nmap <S-Tab> <C-w><C-W>
