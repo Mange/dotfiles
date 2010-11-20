@@ -27,6 +27,14 @@ imap <C-l> <Space>=><Space>
 nmap <Tab> <C-w><C-w>
 nmap <S-Tab> <C-w><C-W>
 
+" Fugitive mappings
+nmap <C-G>b :Gblame<CR>
+nmap <C-G>c :Gcommit<CR>
+nmap <C-G>C :Gcommit --all<CR>
+nmap <C-G>d :Gdiff<CR>
+nmap <C-G>l :Glog<CR>
+nmap <C-G>s :Gstatus<CR>
+
 " Other shortcuts
 map <F2> :NERDTreeToggle<CR>
 nmap <Space> :
