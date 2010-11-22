@@ -31,3 +31,6 @@ set smarttab
 " Setup the menu stuff
 set wildmenu
 set wildmode=list:longest,full
+
+" Have swapfiles in a separate directory
+set dir=~/.vim/tmp
