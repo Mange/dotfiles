@@ -1,6 +1,7 @@
 require 'support/dotfile'
+require 'fileutils'
 
-SYMLINKS = %w[screenrc vimrc zshprofile zshrc vim zshrc.d irbrc railsrc]
+SYMLINKS = %w[screenrc vimrc zshprofile zshrc zshrc.d irbrc railsrc]
 FILES = %w[zsh-named-directories]
 
 SYMLINKS.each do |file|
@@ -17,8 +18,18 @@ FILES.each do |file|
   end
 end
 
+desc "Makes sure that the submodules are all initialized and up-to-date"
+task :submodules do
+  `git submodules update --init`
+end
+
+desc "Installs vim config"
+task :vim => :submodules do
+  Dotfile.new('vim').install_symlink
+end
+
 desc "Installs all files"
-task :install => (SYMLINKS + FILES)
+task :install => (SYMLINKS + FILES + [:vim])
 
 desc "Clears all symlinks"
 task :clear_symlinks do
