@@ -20,7 +20,7 @@ end
 
 desc "Makes sure that the submodules are all initialized and up-to-date"
 task :submodules do
-  `git submodules update --init`
+  `git submodule update --init`
 end
 
 desc "Installs vim config"
