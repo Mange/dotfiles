@@ -1,5 +1,3 @@
-set guioptions=acei
-
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
 
@@ -33,12 +31,3 @@ set smarttab
 " Setup the menu stuff
 set wildmenu
 set wildmode=list:longest,full
-
-" Highlight invisible characters
-set listchars=tab:→\ ,eol:¬
-set list
-
-" Set the colorscheme and the background
-set background=dark
-colorscheme vividchalk
-
