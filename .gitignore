@@ -1,10 +1,7 @@
-# Ignore (g)vi(m) swap files
 *.swp
-
-# Ignore backups
 *~
 
-# Ignore tags
 vim/bundle/*/doc/tags
+vim/.netrwhist
 
 .DS_Store
