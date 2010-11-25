@@ -1,4 +1,8 @@
+# Type modifications
+--type-add=php=.inc
+
 # Custom types
 --type-set=sass=.sass,.scss
 --type-set=haml=.haml
 --type-set=gherkin=.feature
+--type-set=config=.ini,.cfg,.config
