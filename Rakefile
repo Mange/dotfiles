@@ -1,7 +1,7 @@
 require 'support/dotfile'
 require 'fileutils'
 
-SYMLINKS = %w[screenrc vimrc zshprofile zshrc zshrc.d irbrc railsrc]
+SYMLINKS = %w[screenrc vimrc zshprofile zshrc zshrc.d irbrc railsrc ackrc]
 FILES = %w[zsh-named-directories]
 
 SYMLINKS.each do |file|
