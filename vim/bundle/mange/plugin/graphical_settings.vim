@@ -4,5 +4,9 @@ if has("gui_running")
   colorscheme vividchalk
   set listchars=tab:→\ ,eol:¬
   set list
-  set guifont=Monaco:h12
+  if has("gui_macvim")
+    set guifont=Monaco:h12
+  else
+    set guifont=Monaco\ 11,\ DejaVu\ Sans\ Mono\ 10
+  end
 end
