@@ -11,8 +11,8 @@ else
   export EDITOR=vim
 fi
 
-# Textmate where available
-command_exists "mate" && export EDITOR="mate -w"
+# MacVim where available
+command_exists "mvim" && export EDITOR="mvim -f"
 
 export VISUAL=$EDITOR
 
