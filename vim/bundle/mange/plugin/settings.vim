@@ -11,6 +11,7 @@ set number     " line numbers
 set nobackup
 set wrap
 set autoread
+set smartcase
 
 set shortmess=imrx
 set cmdheight=2
