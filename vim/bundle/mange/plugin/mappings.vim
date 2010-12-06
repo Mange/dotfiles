@@ -27,10 +27,6 @@ imap <C-l> <Space>=><Space>
 nmap <Tab> <C-w><C-w>
 nmap <S-Tab> <C-w><C-W>
 
-" Friendlier indentation
-vnoremap > >gv
-vnoremap < <gv
-
 " Fugitive mappings
 nmap <C-G>b :Gblame<CR>
 nmap <C-G>c :Gcommit<CR>
