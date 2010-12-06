@@ -9,6 +9,9 @@ set listchars=tab:→\ ,eol:¬
 set list
 
 if has("gui_macvim")
+  " Fullscreen takes up entire screen
+  set fuoptions=maxhorz,maxvert
+
   set guifont=Monaco:h12
 else
   set guifont=Monaco\ 11,\ DejaVu\ Sans\ Mono\ 10
