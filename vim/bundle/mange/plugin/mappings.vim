@@ -33,6 +33,10 @@ imap <C-l> <Space>=><Space>
 nmap <Tab> <C-w><C-w>
 nmap <S-Tab> <C-w><C-W>
 
+" Unmap Q
+" I'll use it for context-sensitive actions depending on filetype
+map <expr> Q ''
+
 " Fugitive mappings
 nmap <C-G>b :Gblame<CR>
 nmap <C-G>c :Gcommit<CR>
