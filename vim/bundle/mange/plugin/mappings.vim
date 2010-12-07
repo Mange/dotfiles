@@ -2,6 +2,12 @@
 map <S-h> gT
 map <S-l> gt
 
+" CTRL-<navigation> to move windows
+map <C-h> <C-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>l
+
 " Shortcuts to use system clipboard
 if v:progname =~? "gvim"
   vmap <C-c> "+y
