@@ -45,6 +45,9 @@ nmap <C-G>d :Gdiff<CR>
 nmap <C-G>l :Glog<CR>
 nmap <C-G>s :Gstatus<CR>
 
+" Inserts the path of the currently edited file into a command
+cmap <C-p> <C-R>=expand("%:p:h") . "/" <CR>
+
 " Other shortcuts
 map <F2> :NERDTreeToggle<CR>
 nmap <Space> :
