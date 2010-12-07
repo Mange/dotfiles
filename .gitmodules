@@ -49,3 +49,6 @@
 [submodule "vim/bundle/AutoClose"]
 	path = vim/bundle/AutoClose
 	url = git://github.com/vim-scripts/AutoClose.git
+[submodule "vim/bundle/vim-javascript"]
+	path = vim/bundle/vim-javascript
+	url = git://github.com/pangloss/vim-javascript.git
