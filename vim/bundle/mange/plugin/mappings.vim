@@ -38,3 +38,32 @@ nmap <C-G>s :Gstatus<CR>
 " Other shortcuts
 map <F2> :NERDTreeToggle<CR>
 nmap <Space> :
+
+" Stolen from Janus
+" https://github.com/carlhuda/janus/blob/master/gvimrc
+function s:UpdateNERDTree(...)
+  let stay = 0
+
+  if(exists("a:1"))
+    let stay = a:1
+  end
+
+  if exists("t:NERDTreeBufName")
+    let nr = bufwinnr(t:NERDTreeBufName)
+    if nr != -1
+      exe nr . "wincmd w"
+      exe substitute(mapcheck("R"), "<CR>", "", "")
+      if !stay
+        wincmd p
+      end
+    endif
+  endif
+
+  if exists("CommandTFlush")
+    CommandTFlush
+  endif
+endfunction
+
+command UpdateNERDTree call s:UpdateNERDTree()
+map <leader>r :UpdateNERDTree<CR>:CommandTFlush<CR>
+
