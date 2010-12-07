@@ -43,3 +43,6 @@
 [submodule "vim/bundle/supertab"]
 	path = vim/bundle/supertab
 	url = git://github.com/ervandew/supertab.git
+[submodule "vim/bundle/indent_object"]
+	path = vim/bundle/indent_object
+	url = git://github.com/michaeljsmith/vim-indent-object.git
