@@ -3,5 +3,6 @@
 
 vim/bundle/*/doc/tags
 vim/.netrwhist
+vim/spell
 
 .DS_Store
