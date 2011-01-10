@@ -78,5 +78,5 @@ function s:UpdateNERDTree(...)
 endfunction
 
 command UpdateNERDTree call s:UpdateNERDTree()
-map <leader>r :UpdateNERDTree<CR>:CommandTFlush<CR>
+map <leader>r :CommandTFlush<CR>:UpdateNERDTree<CR>
 
