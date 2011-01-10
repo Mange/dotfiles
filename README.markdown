@@ -9,7 +9,7 @@ Please note that this repository is very personal, and small changes might be ad
 
 Preference bias
 ---------------
-I'm biased towards Ruby, ZSH, GNU Screen, Git and VIM so most configurations should be inline with this ecosystem. I use both Linux and Mac systems so no preference will be taken there.
+I'm biased towards Ruby, ZSH, tmux, Git and VIM so most configurations should be inline with this ecosystem. I use both Linux and Mac systems so no preference will be taken there.
 
 Installation
 ------------

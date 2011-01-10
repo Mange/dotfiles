@@ -1,7 +1,7 @@
 require 'support/dotfile'
 require 'fileutils'
 
-SYMLINKS = %w[screenrc vimrc zshprofile zshrc zshrc.d irbrc railsrc ackrc tmux.conf]
+SYMLINKS = %w[vimrc zshprofile zshrc zshrc.d irbrc railsrc ackrc tmux.conf]
 FILES = %w[zsh-named-directories]
 
 SYMLINKS.each do |file|
@@ -30,6 +30,14 @@ end
 
 desc "Installs all files"
 task :install => (SYMLINKS + FILES + [:vim])
+
+desc "Clears all 'legacy' files (like old symlinks)"
+task :cleanup do
+  Dotfile.new('screenrc').delete_target(:only_symlink => true)
+end
+
+desc "Install and clean up old files"
+task :update => [:install, :cleanup]
 
 desc "Clears all symlinks"
 task :clear_symlinks do

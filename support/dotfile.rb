@@ -24,8 +24,8 @@ class Dotfile
     end
   end
 
-  def delete_target
-    target_path.delete if target_path.symlink? or target_path.exist?
+  def delete_target(options = {})
+    target_path.delete if target_path.symlink? or (not options[:only_symlink] and target_path.exist?)
   end
 
   protected
