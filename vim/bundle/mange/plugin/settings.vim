@@ -38,4 +38,3 @@ set wildmode=list:longest,full
 " Have swapfiles in a separate directory
 set dir=~/.vim/tmp
 
-let g:CommandTMaxHeight=20
