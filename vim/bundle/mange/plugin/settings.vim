@@ -9,6 +9,7 @@ set incsearch
 set number     " line numbers
 set nobackup
 set autoread
+set ignorecase
 set smartcase
 
 set hlsearch   " Toggle with sh
