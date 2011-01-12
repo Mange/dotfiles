@@ -38,3 +38,7 @@ set wildmode=list:longest,full
 " Have swapfiles in a separate directory
 set dir=~/.vim/tmp
 
+" Looks
+set background=dark
+colorscheme vividchalk
+set listchars=tab:→\ ,eol:¬
