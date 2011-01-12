@@ -18,6 +18,12 @@ FILES.each do |file|
   end
 end
 
+desc "Installs the global gitignore file"
+task :gitignore do
+  Dotfile.new('gitignore').install_symlink
+  `git config --global core.excludesfile "$HOME/.gitignore"`
+end
+
 desc "Makes sure that the submodules are all initialized and up-to-date"
 task :submodules do
   `git submodule update --init`
@@ -29,7 +35,7 @@ task :vim => :submodules do
 end
 
 desc "Installs all files"
-task :install => (SYMLINKS + FILES + [:vim])
+task :install => (SYMLINKS + FILES + [:vim, :gitignore])
 
 desc "Clears all 'legacy' files (like old symlinks)"
 task :cleanup do
