@@ -1,0 +1,28 @@
+#!/bin/zsh
+# Set PATH to be a bit more intelligent on Macs, etc.
+
+function use_path() {
+  if [[ -d $1 ]]; then
+    if [[ $2 == "front" ]]; then
+      export PATH="$1:$PATH"
+    else
+      export PATH="$PATH:$1"
+    fi
+  fi
+}
+
+
+# Give me admin tools in path
+use_path /sbin
+use_path /usr/sbin
+use_path /usr/local/sbin
+
+# This isn't standard on Mac. Wow...
+use_path /usr/local/bin front
+
+# Custom packages at the front
+for dir in /opt/*/bin(/); do
+  use_path "$dir" front
+done
+
+unset use_path
