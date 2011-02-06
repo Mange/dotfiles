@@ -7,7 +7,7 @@ if [ ! -e /etc/zprofile ]; then
     source /etc/profile
 fi
 
-for zshrc_file in ~/.zshrc.d/S[0-9][0-9]*[^~] ; do
-     source $zshrc_file
+for file in ~/.zshrc.d/S*[^~] ; do
+     source $file
 done
 
