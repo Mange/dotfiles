@@ -25,4 +25,8 @@ for dir in /opt/*/bin(/); do
   use_path "$dir" front
 done
 
+# GNU coreutils, findutils, etc. on Mac
+# This is the place where the original commands are placed; bins in /opt/local/bin are all named with a 'g' prefix
+use_path /opt/local/libexec/gnubin front
+
 unset use_path
