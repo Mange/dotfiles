@@ -5,10 +5,33 @@
 # If  the  PROMPT_SUBST option is set, the prompt string is first subjected to
 # parameter expansion, command substitution and arithmetic expansion.
 # See zshexpn(1).
-set prompt_subst
+setopt prompt_subst
 
 # Capability to show SCM info in the prompt
 autoload -Uz vcs_info
+
+# Speed it up by removing systems I'm not using
+zstyle ':vcs_info:*' enable git svn
+
+function() {
+  zstyle ':vcs_info:*:prompt:*' use-prompt-escapes true
+  zstyle ':vcs_info:*:prompt:*' check-for-changes true
+  zstyle ':vcs_info:*:prompt:*' unstagedstr "‣"
+  zstyle ':vcs_info:*:prompt:*' stagedstr "•"
+
+  local scm_name_format="%F{244}%s"                # git
+  local branch_format="%F{202}%b%F{244}@%F{130}%r" # branch@repo
+  local changes_format="%F{green}%c%F{red}%u"      # •‣
+  zstyle ':vcs_info:*:prompt:*' formats       "(${scm_name_format} ${branch_format}${changes_format}%f)" ""
+  zstyle ':vcs_info:*:prompt:*' actionformats "(${scm_name_format} ${branch_format}${changes_format}%f [%F{cyan}%a%f])" ""
+
+  zstyle ':vcs_info:*:prompt:*' nvcsformats   "" ""
+}
+
+# Generate VCS info just before rendering prompt
+function precmd {
+  vcs_info 'prompt'
+}
 
 function {
   # Color user differently if we have a privileged user ("!")
@@ -28,3 +51,17 @@ function {
   local current_jobs="%(1j.$fg_bold[magenta]J%j .)"
   PROMPT="$user $current_time$last_status $dir $current_jobs$reset_color› "
 }
+
+function {
+  RPROMPT='$vcs_info_msg_0_'
+}
+
+# Convenience functions to disable/enable check-for-changes in certain sessions
+function disable-check-for-changes() {
+  zstyle ':vcs_info:*:prompt:*' check-for-changes false
+}
+
+function enable-check-for-changes() {
+  zstyle ':vcs_info:*:prompt:*' check-for-changes true
+}
+
