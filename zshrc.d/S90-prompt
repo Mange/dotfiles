@@ -37,19 +37,17 @@ function {
   # Color user differently if we have a privileged user ("!")
   # %(nx.true.false)
   if is256color; then
-    local time_color="%F{242}"
-    local sec_color="%F{236}"
+    local current_time="%F{247}%D{%H:%M}%F{240}%D{:%S}"
   else
-    local time_color="$fg_bold[white]"
-    local sec_color="$fg[white]"
+    local current_time="%F{white}%D{%H:%M}%B%F{black}%D{:%S}%b"
   fi
 
-  local user="%(!.$fg[red].$fg[green])%n"
-  local current_time="$time_color%D{%H:%M}$sec_color%D{:%S}"
-  local dir="$fg_bold[blue]%4~"
-  local last_status="%(?.. $fg[blue]*%?)"
-  local current_jobs="%(1j.$fg_bold[magenta]J%j .)"
-  PROMPT="$user $current_time$last_status $dir $current_jobs$reset_color› "
+  local user="%(!.%F{red}.%F{green})%n"
+  local dir="%B%F{blue}%4~%b"
+  local last_status="%(?.. %F{blue}*%?)"
+  local current_jobs="%(1j.%F{magenta}%BJ%j%b .)"
+  local prompt_end="%1{›%} " # Treat this character as having width 1
+  PROMPT="$user ${current_time}${last_status} $dir ${current_jobs}${prompt_end} "
 }
 
 function {
