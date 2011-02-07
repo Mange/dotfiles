@@ -47,7 +47,7 @@ function {
   local last_status="%(?.. %F{blue}*%?)"
   local current_jobs="%(1j.%F{magenta}%BJ%j%b .)"
   local prompt_end="%1{›%} " # Treat this character as having width 1
-  PROMPT="$user ${current_time}${last_status} $dir ${current_jobs}${prompt_end} "
+  PROMPT="$user ${current_time}${last_status} $dir ${current_jobs}${prompt_end} %f%k%b"
 }
 
 function {
