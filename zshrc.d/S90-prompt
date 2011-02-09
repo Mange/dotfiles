@@ -1,6 +1,9 @@
 #!/bin/zsh
 # Prompt settings and configuration
 
+# Make RPROMPT disappear after running a command
+setopt transient_rprompt
+
 # From the manpage:
 # If  the  PROMPT_SUBST option is set, the prompt string is first subjected to
 # parameter expansion, command substitution and arithmetic expansion.
