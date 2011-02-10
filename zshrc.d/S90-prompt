@@ -56,7 +56,14 @@ function {
   local dir="%B%F{blue}%4~%b"
   local last_status="%(?.. %F{red}*%?)"
   local current_jobs="%(1j.%F{magenta}%BJ%j%b .)"
-  local prompt_end="%1{›%} " # Treat this character as having width 1
+
+  if [[ $TERM != screen* ]]; then
+    local prompt_end="%1{›%} " # Treat this character as having width 1
+  else
+    # Tmux fucks up with UTF-8 in the prompt
+    local prompt_end="> "
+  fi
+
   PROMPT="$user ${current_time}${last_status} $dir ${current_jobs}${prompt_end}%f%k%b"
 }
 
