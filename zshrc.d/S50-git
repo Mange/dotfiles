@@ -1,0 +1,16 @@
+#!/usr/bin/env zsh
+# Git settings and shortcuts
+
+alias checkout='git checkout'
+alias gadd='git add'
+alias gco='git commit -v'
+alias gdf='git diff'
+alias ggraph='git log --all --decorate --graph --pretty=oneline --abbrev-commit'
+alias gup='git fetch'
+alias gri='git rebase -i'
+alias gst='git status'
+
+export GIT_AUTHOR_NAME="Magnus Bergmark"
+export GIT_AUTHOR_EMAIL="magnus.bergmark@gmail.com"
+export GIT_COMMITTER_NAME="Magnus Bergmark"
+export GIT_COMMITTER_EMAIL="magnus.bergmark@gmail.com"
