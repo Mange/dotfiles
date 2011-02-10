@@ -1,0 +1,9 @@
+#!/usr/bin/env zsh
+# Activate completion system and do some basic settings
+
+zmodload zsh/complist
+autoload -U compinit && compinit -d ~/.zsh/completiondump
+
+# Find out what an alias stands for and complete like if it was the original command
+# This gives me git completion for my git aliases, for example
+setopt nocomplete_aliases
