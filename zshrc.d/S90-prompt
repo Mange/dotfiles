@@ -19,11 +19,19 @@ zstyle ':vcs_info:*' enable git svn
 function() {
   zstyle ':vcs_info:*:prompt:*' use-prompt-escapes true
   zstyle ':vcs_info:*:prompt:*' check-for-changes true
-  zstyle ':vcs_info:*:prompt:*' unstagedstr "‣"
-  zstyle ':vcs_info:*:prompt:*' stagedstr "•"
+
+  zstyle ':vcs_info:*:prompt:*' unstagedstr "%1{‣%}" # Treat this character as having width 1
+  zstyle ':vcs_info:*:prompt:*' stagedstr "%1{•%}"   # ditto
 
   local branch_format="%F{202}%b%F{244}@%F{130}%r" # branch@repo
-  local changes_format="%F{green}%c%F{red}%u"      # •‣
+
+  if [[ $ZSH_VERSION = 4.3.<11-> ]]; then
+    local changes_format="%F{green}%c%F{red}%u"      # •‣
+  else
+    # Old version cannot show changes
+    local changes_format=""
+  fi
+
   zstyle ':vcs_info:*:prompt:*' formats       "(${branch_format}${changes_format}%f)" ""
   zstyle ':vcs_info:*:prompt:*' actionformats "(${branch_format}${changes_format}%f [%F{cyan}%a%f])" ""
 
