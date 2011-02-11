@@ -7,3 +7,26 @@ autoload -U compinit && compinit -d ~/.zsh/completiondump
 # Find out what an alias stands for and complete like if it was the original command
 # This gives me git completion for my git aliases, for example
 setopt nocomplete_aliases
+
+zstyle ':completion:*' cache-path ~/.zsh/completioncache
+
+# Use verbose completions (usually adds descriptions / context to matches)
+zstyle ':completion:*' verbose yes
+
+# Long file lists, but only with few files listed
+zstyle ':completion:*' file-list all=20
+
+# Environments to assume when autocompleting sudo
+# In case I didn't already have all the sbin dirs in PATH, I would add them here
+zstyle ':complete:sudo:' environ HOME="/root"
+
+#
+# Pimpin' format
+#
+
+# List completion candidates in groups
+zstyle ':completion:*' group-name ''
+# Looks of group headings
+zstyle ':completion:*:descriptions' format "%B%K{blue}%F{white}>> %d%b%f%k"
+# "No match" warning
+zstyle ':completion:*:warnings' format "%F{red}no match for: %f%d"
