@@ -2,7 +2,7 @@ require 'support/dotfile'
 require 'fileutils'
 
 SYMLINKS = %w[vimrc zshprofile zshrc zshrc.d irbrc railsrc ackrc tmux.conf]
-FILES = %w[zsh-named-directories]
+FILES = []
 
 SYMLINKS.each do |file|
   desc "Installs #{file} by symlinking it inside your home"
