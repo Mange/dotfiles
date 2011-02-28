@@ -1,0 +1,18 @@
+#!/usr/bin/env zsh
+# Navigation tricks and shortcuts
+
+# cd to files to go to containing directories
+# Nice when you paste a filename
+cd () {
+  if (( $# != 1 )); then
+    builtin cd "$@"
+    return
+  fi
+
+  if [[ -f "$1" ]]; then
+    builtin cd "$1:h"
+  else
+    builtin cd "$1"
+  fi
+}
+
