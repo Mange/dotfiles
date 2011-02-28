@@ -11,7 +11,6 @@ function use_path() {
   fi
 }
 
-
 # Give me admin tools in path
 use_path /sbin
 use_path /usr/sbin
@@ -28,5 +27,8 @@ done
 # GNU coreutils, findutils, etc. on Mac
 # This is the place where the original commands are placed; bins in /opt/local/bin are all named with a 'g' prefix
 use_path /opt/local/libexec/gnubin front
+
+# Personal stuff
+use_path ~/bin
 
 unset use_path
