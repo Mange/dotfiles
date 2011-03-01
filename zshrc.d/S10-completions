@@ -16,6 +16,9 @@ zstyle ':completion:*' verbose yes
 # Long file lists, but only with few files listed
 zstyle ':completion:*' file-list all=20
 
+# Approximate when no matches can be found – corrects small errors
+zstyle ':completion:*' completer _complete _approximate
+
 # Environments to assume when autocompleting sudo
 # In case I didn't already have all the sbin dirs in PATH, I would add them here
 zstyle ':complete:sudo:' environ HOME="/root"
