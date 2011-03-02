@@ -1,4 +1,4 @@
-#!/usr/bin/zsh
+#!/usr/bin/env zsh
 # Named directories and helper functions
 
 # namedir name [path]

@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/usr/bin/env zsh
 # Set PATH to be a bit more intelligent on Macs, etc.
 
 function use_path() {

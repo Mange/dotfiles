@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/usr/bin/env zsh
 # Prompt settings and configuration
 
 # Make RPROMPT disappear after running a command

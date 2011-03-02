@@ -1,3 +1,3 @@
-#!/usr/bin/zsh
+#!/usr/bin/env zsh
 # If RVM is installed, source the config as the last thing we do
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
