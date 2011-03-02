@@ -25,8 +25,3 @@ alias t='tree -L 3 --filelimit 50'
 alias ls='ls --color=auto'
 alias l='ls -l'
 
-eval $(dircolors -b)
-# Files that I don't have to pay attention to
-export LS_COLORS="$LS_COLORS:*.nfo=90:*.sfv=90:*.srt=90:*.sub=90"
-export ZLS_COLORS=$LS_COLORS
-
