@@ -29,6 +29,6 @@ done
 use_path /opt/local/libexec/gnubin front
 
 # Personal stuff
-use_path ~/bin
+use_path ~/bin front
 
 unset use_path
