@@ -1,0 +1,31 @@
+#!/usr/bin/env zsh
+# Named directories and helper functions
+
+# namedir name [path]
+namedir () {
+  local target
+  if [[ $2 == "" ]]; then
+    target=$(pwd)
+  else
+    target=$2
+  fi
+
+  hash -d $1=$target
+}
+
+if [ -f ~/.zsh-named-directories ]; then
+  echo "Found ~/.zsh-named-directories. This is deprecated..."
+  source ~/.zsh-named-directories
+fi
+
+if [ -f ~/.zsh/named-directories ]; then
+  source ~/.zsh/named-directories
+fi
+
+# Give all projects a name
+if [ -d ~/projects ]; then
+  for dir in ~/projects/*(/); do
+    namedir "$(basename $dir)" "$dir"
+  done
+fi
+

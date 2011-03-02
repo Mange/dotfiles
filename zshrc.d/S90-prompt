@@ -1,0 +1,82 @@
+#!/usr/bin/env zsh
+# Prompt settings and configuration
+
+# Make RPROMPT disappear after running a command
+setopt transient_rprompt
+
+# From the manpage:
+# If  the  PROMPT_SUBST option is set, the prompt string is first subjected to
+# parameter expansion, command substitution and arithmetic expansion.
+# See zshexpn(1).
+setopt prompt_subst
+
+# Capability to show SCM info in the prompt
+autoload -Uz vcs_info
+
+# Speed it up by removing systems I'm not using
+zstyle ':vcs_info:*' enable git svn
+
+function() {
+  zstyle ':vcs_info:*:prompt:*' use-prompt-escapes true
+  zstyle ':vcs_info:*:prompt:*' check-for-changes true
+
+  zstyle ':vcs_info:*:prompt:*' unstagedstr "%1{‣%}" # Treat this character as having width 1
+  zstyle ':vcs_info:*:prompt:*' stagedstr "%1{•%}"   # ditto
+
+  local branch_format="%F{202}%b%F{244}@%F{130}%r" # branch@repo
+
+  if [[ $ZSH_VERSION = 4.3.<11-> ]]; then
+    local changes_format="%F{green}%c%F{red}%u"      # •‣
+  else
+    # Old version cannot show changes
+    local changes_format=""
+  fi
+
+  zstyle ':vcs_info:*:prompt:*' formats       "(${branch_format}${changes_format}%f)" ""
+  zstyle ':vcs_info:*:prompt:*' actionformats "(${branch_format}${changes_format}%f [%F{cyan}%a%f])" ""
+
+  zstyle ':vcs_info:*:prompt:*' nvcsformats   "" ""
+}
+
+# Generate VCS info just before rendering prompt
+function precmd {
+  vcs_info 'prompt'
+}
+
+function {
+  # Color user differently if we have a privileged user ("!")
+  # %(nx.true.false)
+  if is256color; then
+    local current_time="%F{247}%D{%H:%M}%F{240}%D{:%S}"
+  else
+    local current_time="%F{white}%D{%H:%M}%B%F{black}%D{:%S}%b"
+  fi
+
+  local user="%(!.%F{red}.%F{green})%n"
+  local dir="%B%F{blue}%4~%b"
+  local last_status="%(?.. %F{red}*%?)"
+  local current_jobs="%(1j.%F{magenta}%BJ%j%b .)"
+
+  if [[ $TERM != screen* ]]; then
+    local prompt_end="%1{›%} " # Treat this character as having width 1
+  else
+    # Tmux fucks up with UTF-8 in the prompt
+    local prompt_end="> "
+  fi
+
+  PROMPT="$user ${current_time}${last_status} $dir ${current_jobs}${prompt_end}%f%k%b"
+}
+
+function {
+  RPROMPT='$vcs_info_msg_0_'
+}
+
+# Convenience functions to disable/enable check-for-changes in certain sessions
+function disable-check-for-changes() {
+  zstyle ':vcs_info:*:prompt:*' check-for-changes false
+}
+
+function enable-check-for-changes() {
+  zstyle ':vcs_info:*:prompt:*' check-for-changes true
+}
+

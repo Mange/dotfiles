@@ -1,4 +1,0 @@
-#!/bin/zsh
-
-# Generally, I want my umask to default to rw-rw-r--
-umask 002

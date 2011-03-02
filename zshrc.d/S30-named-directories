@@ -1,6 +1,0 @@
-#!/bin/zsh
-
-if [[ -f ~/.zsh-named-directories ]]; then
-     source ~/.zsh-named-directories
-fi
-

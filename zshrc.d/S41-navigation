@@ -1,0 +1,27 @@
+#!/usr/bin/env zsh
+# Navigation tricks and shortcuts
+
+setopt auto_pushd
+setopt pushd_ignore_dups
+
+# cd to files to go to containing directories
+# Nice when you paste a filename
+cd () {
+  if (( $# != 1 )); then
+    builtin cd "$@"
+    return
+  fi
+
+  if [[ -f "$1" ]]; then
+    builtin cd "$1:h"
+  else
+    builtin cd "$1"
+  fi
+}
+
+alias tree='tree -AC -I ".svn|.git"'
+alias t='tree -L 3 --filelimit 50'
+
+alias ls='ls --color=auto'
+alias l='ls -l'
+
