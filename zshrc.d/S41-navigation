@@ -22,3 +22,6 @@ cd () {
 alias tree='tree -AC -I ".svn|.git"'
 alias t='tree -L 3 --filelimit 50'
 
+alias ls='ls --color=auto'
+alias l='ls -l'
+
