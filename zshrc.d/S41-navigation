@@ -1,6 +1,9 @@
 #!/usr/bin/env zsh
 # Navigation tricks and shortcuts
 
+setopt auto_pushd
+setopt pushd_ignore_dups
+
 # cd to files to go to containing directories
 # Nice when you paste a filename
 cd () {
