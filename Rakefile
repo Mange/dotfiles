@@ -34,8 +34,13 @@ task :vim => :submodules do
   Dotfile.new('vim').install_symlink
 end
 
+desc "Creates a blank .zsh directory"
+task :zsh do
+  `mkdir -p ~/.zsh`
+end
+
 desc "Installs all files"
-task :install => (SYMLINKS + FILES + [:vim, :gitignore])
+task :install => (SYMLINKS + FILES + %w[vim gitignore zsh])
 
 desc "Clears all 'legacy' files (like old symlinks)"
 task :cleanup do
