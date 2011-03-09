@@ -20,7 +20,7 @@ use_path /usr/local/sbin
 use_path /usr/local/bin front
 
 # Custom packages at the front
-for dir in /opt/*/bin(/); do
+for dir in /opt/*/bin(/N); do
   use_path "$dir" front
 done
 
