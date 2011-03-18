@@ -1,4 +1,6 @@
 *.swp
+*.swn
+*.swo
 *~
 
 vim/bundle/*/doc/tags
