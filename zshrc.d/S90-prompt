@@ -11,7 +11,20 @@ setopt transient_rprompt
 setopt prompt_subst
 
 # Capability to show SCM info in the prompt
-autoload -Uz vcs_info
+if [[ $ZSH_VERSION = 4.<3->.* ]]; then
+  autoload -Uz vcs_info
+
+  # Generate VCS info just before rendering prompt
+  function precmd {
+    vcs_info 'prompt'
+  }
+else
+  export vcs_info_msg_0_="zsh too old"
+fi
+
+function {
+  RPROMPT='$vcs_info_msg_0_'
+}
 
 # Speed it up by removing systems I'm not using
 zstyle ':vcs_info:*' enable git svn
@@ -38,11 +51,6 @@ function() {
   zstyle ':vcs_info:*:prompt:*' nvcsformats   "" ""
 }
 
-# Generate VCS info just before rendering prompt
-function precmd {
-  vcs_info 'prompt'
-}
-
 function {
   # Color user differently if we have a privileged user ("!")
   # %(nx.true.false)
@@ -65,10 +73,6 @@ function {
   fi
 
   PROMPT="$user ${current_time}${last_status} $dir ${current_jobs}${prompt_end}%f%k%b"
-}
-
-function {
-  RPROMPT='$vcs_info_msg_0_'
 }
 
 # Convenience functions to disable/enable check-for-changes in certain sessions
