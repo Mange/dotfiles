@@ -21,12 +21,16 @@ end
 desc "Installs the global gitignore file"
 task :gitignore do
   Dotfile.new('gitignore').install_symlink
-  `git config --global core.excludesfile "$HOME/.gitignore"`
+  unless system('git config --global core.excludesfile "$HOME/.gitignore"')
+    STDERR.puts "Could not set git excludesfile. Continuing..."
+  end
 end
 
 desc "Makes sure that the submodules are all initialized and up-to-date"
 task :submodules do
-  `git submodule update --init`
+  unless system('git submodule update --init')
+    STDERR.puts "Could not update vim submodules. Continuing..."
+  end
 end
 
 desc "Installs vim config"
@@ -40,7 +44,7 @@ task :zsh do
 end
 
 desc "Installs all files"
-task :install => (SYMLINKS + FILES + %w[vim gitignore zsh])
+task :install => (SYMLINKS + FILES + %w[gitignore zsh vim])
 
 desc "Clears all 'legacy' files (like old symlinks)"
 task :cleanup do
