@@ -2,7 +2,7 @@
 # Editor settings
 
 try-editor () {
-  if which $1 >/dev/null; then
+  if which $1 >/dev/null 2>/dev/null; then
     EDITOR="$@"
   fi
 }
