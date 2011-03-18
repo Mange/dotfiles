@@ -22,9 +22,7 @@ else
   export vcs_info_msg_0_="zsh too old"
 fi
 
-function {
-  RPROMPT='$vcs_info_msg_0_'
-}
+export RPROMPT='$vcs_info_msg_0_'
 
 # Speed it up by removing systems I'm not using
 zstyle ':vcs_info:*' enable git svn
