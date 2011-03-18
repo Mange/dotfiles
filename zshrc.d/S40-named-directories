@@ -34,7 +34,7 @@ fi
 
 # Give all projects a name
 if [ -d ~/projects ]; then
-  for dir in ~/projects/*(/); do
+  for dir in ~/projects/*(/N); do
     namedir "$(basename $dir)" "$dir"
   done
 fi
