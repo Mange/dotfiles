@@ -59,6 +59,16 @@ function {
     local current_time="%F{white}%D{%H:%M}%B%F{black}%D{:%S}%b"
   fi
 
+  if [[ -n $SSH_CLIENT ]]; then
+    if is256color; then
+      local host='%F{241}@%F{60}%4m'
+    else
+      local host='%f@%F{blue}%4m'
+    fi
+  else
+    local host=''
+  fi
+
   local user="%(!.%F{red}.%F{green})%n"
   local dir="%B%F{blue}%4~%b"
   local last_status="%(?.. %F{red}*%?)"
@@ -72,7 +82,7 @@ function {
     local prompt_end="> "
   fi
 
-  PROMPT="$user ${current_time}${last_status} $dir ${current_jobs}${ruby_version}${prompt_end}%f%k%b"
+  PROMPT="${user}${host} ${current_time}${last_status} $dir ${current_jobs}${ruby_version}${prompt_end}%f%k%b"
 }
 
 # Convenience functions to disable/enable check-for-changes in certain sessions
