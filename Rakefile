@@ -1,4 +1,4 @@
-require 'support/dotfile'
+require File.expand_path('../support/dotfile', __FILE__)
 require 'fileutils'
 
 SYMLINKS = %w[vimrc zshprofile zshrc zshrc.d irbrc railsrc ackrc tmux.conf rspec]
