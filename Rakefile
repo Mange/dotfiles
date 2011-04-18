@@ -1,7 +1,7 @@
 require 'support/dotfile'
 require 'fileutils'
 
-SYMLINKS = %w[vimrc zshprofile zshrc zshrc.d irbrc railsrc ackrc tmux.conf]
+SYMLINKS = %w[vimrc zshprofile zshrc zshrc.d irbrc railsrc ackrc tmux.conf rspec]
 FILES = []
 
 SYMLINKS.each do |file|
