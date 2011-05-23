@@ -3,6 +3,7 @@ set nocompatible
 let g:CommandTMaxHeight=20
 
 source ~/.vim/bundles.vim
+helptags ~/.vim/vundle/doc
 
 syntax on
 filetype plugin indent on
