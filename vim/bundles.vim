@@ -19,7 +19,7 @@ Bundle 'vim-ruby/vim-ruby'
 Bundle 'bronson/vim-trailing-whitespace'
 
 " vim-scripts
-Bundle 'json'
+Bundle 'JSON.vim'
 Bundle 'rename'
 Bundle 'zoomwin'
 Bundle 'netrw.vim'
