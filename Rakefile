@@ -29,12 +29,12 @@ end
 desc "Makes sure that the submodules are all initialized and up-to-date"
 task :submodules do
   unless system('git submodule update --init')
-    STDERR.puts "Could not update vim submodules. Continuing..."
+    STDERR.puts "Could not update submodules. Continuing..."
   end
 end
 
 desc "Installs vim config"
-task :vim => :submodules do
+task :vim do
   Dotfile.new('vim').install_symlink
 end
 
@@ -44,7 +44,7 @@ task :zsh do
 end
 
 desc "Installs all files"
-task :install => (SYMLINKS + FILES + %w[gitignore zsh vim])
+task :install => (SYMLINKS + FILES + %w[gitignore zsh vim submodules])
 
 desc "Clears all 'legacy' files (like old symlinks)"
 task :cleanup do
