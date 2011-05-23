@@ -18,10 +18,12 @@ autocmd BufReadPost *
   \   exe "normal! g`\"" |
   \ endif
 
+function! GitStatusLine()
+  if exists('g:loaded_fugitive')
+    return fugitive#statusline()
+  endif
+  return "(fugitive not loaded)"
+endfunction
 
-if exists('g:loaded_fugitive') || &cp
-  set statusline=%{fugitive#statusline()}\ %<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
-else
-  set statusline=restart\ vim!\ %<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
-endif
+set statusline=%{GitStatusLine()}\ %<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 
