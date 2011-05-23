@@ -3,8 +3,8 @@
 *.swo
 *~
 
-vim/bundle/*/doc/tags
-vim/.netrwhist
+vim/bundle
 vim/spell
+vim/.netrwhist
 
 .DS_Store
