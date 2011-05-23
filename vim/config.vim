@@ -1,12 +1,8 @@
-" Use Vim settings, rather then Vi settings (much better!).
-" This must be first, because it changes other options as a side effect.
 set nocompatible
 
 let g:CommandTMaxHeight=20
 
-" Pathogen
-call pathogen#runtime_append_all_bundles()
-call pathogen#helptags()
+source bundles.vim
 
 syntax on
 filetype plugin indent on
@@ -22,5 +18,10 @@ autocmd BufReadPost *
   \   exe "normal! g`\"" |
   \ endif
 
-set statusline=%{fugitive#statusline()}\ %<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
+
+if exists('g:loaded_fugitive') || &cp
+  set statusline=%{fugitive#statusline()}\ %<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
+else
+  set statusline=restart\ vim!\ %<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
+endif
 
