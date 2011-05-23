@@ -26,6 +26,13 @@ task :gitignore do
   end
 end
 
+desc "Does some basic Git setup"
+task :gitconfig do
+  exec = lambda { |command| system(command) or STDERR.puts "Command failed: #{command}" }
+  exec['git config --global push.default tracking']
+  exec['git config --global color.ui true']
+end
+
 desc "Makes sure that the submodules are all initialized and up-to-date"
 task :submodules do
   unless system('git submodule update --init')
@@ -44,7 +51,7 @@ task :zsh do
 end
 
 desc "Installs all files"
-task :install => (SYMLINKS + FILES + %w[gitignore zsh vim submodules])
+task :install => (SYMLINKS + FILES + %w[gitignore zsh vim submodules gitconfig])
 
 desc "Clears all 'legacy' files (like old symlinks)"
 task :cleanup do
