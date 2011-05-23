@@ -49,3 +49,6 @@
 [submodule "vim/bundle/tabular"]
 	path = vim/bundle/tabular
 	url = git://github.com/godlygeek/tabular.git
+[submodule "vim/vundle"]
+	path = vim/vundle
+	url = http://github.com/gmarik/vundle.git
