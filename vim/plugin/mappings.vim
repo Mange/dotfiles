@@ -50,7 +50,6 @@ cmap <C-p> <C-R>=expand("%:p:h") . "/" <CR>
 
 " Other shortcuts
 map <F2> :NERDTreeToggle<CR>
-nmap <Space> :
 
 " Stolen from Janus
 " https://github.com/carlhuda/janus/blob/master/gvimrc
@@ -78,5 +77,5 @@ function s:UpdateNERDTree(...)
 endfunction
 
 command UpdateNERDTree call s:UpdateNERDTree()
-map <leader>r :CommandTFlush<CR>:UpdateNERDTree<CR>
+map <silent> <leader>r :CommandTFlush<CR>:UpdateNERDTree<CR>
 
