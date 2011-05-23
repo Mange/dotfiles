@@ -5,6 +5,8 @@ call vundle#rc()
 
 " GitHub
 Bundle 'ap/vim-css-color'
+Bundle 'bronson/vim-trailing-whitespace'
+Bundle 'ecomba/vim-ruby-refactoring'
 Bundle 'ervandew/supertab'
 Bundle 'godlygeek/tabular'
 Bundle 'michaeljsmith/vim-indent-object'
@@ -17,7 +19,6 @@ Bundle 'tpope/vim-haml'
 Bundle 'tpope/vim-rails'
 Bundle 'tpope/vim-surround'
 Bundle 'vim-ruby/vim-ruby'
-Bundle 'bronson/vim-trailing-whitespace'
 
 " vim-scripts
 Bundle 'JSON.vim'
