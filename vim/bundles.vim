@@ -19,12 +19,13 @@ Bundle 'tpope/vim-haml'
 Bundle 'tpope/vim-rails'
 Bundle 'tpope/vim-surround'
 Bundle 'vim-ruby/vim-ruby'
+Bundle 'xolox/vim-easytags'
 
 " vim-scripts
 Bundle 'JSON.vim'
+Bundle 'netrw.vim'
 Bundle 'rename'
 Bundle 'zoomwin'
-Bundle 'netrw.vim'
 
 " other Git
 Bundle 'git://git.wincent.com/command-t.git'
