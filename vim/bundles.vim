@@ -4,6 +4,7 @@ set rtp+=~/.vim/vundle/
 call vundle#rc()
 
 " GitHub
+Bundle 'ap/vim-css-color'
 Bundle 'ervandew/supertab'
 Bundle 'godlygeek/tabular'
 Bundle 'michaeljsmith/vim-indent-object'
