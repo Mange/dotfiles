@@ -24,6 +24,7 @@ Bundle 'xolox/vim-easytags'
 
 " vim-scripts
 Bundle 'JSON.vim'
+Bundle 'UltiSnips'
 Bundle 'netrw.vim'
 Bundle 'rename'
 Bundle 'zoomwin'
@@ -34,9 +35,6 @@ Bundle 'git://git.wincent.com/command-t.git'
 " Should I still keep these?
 Bundle 'mexpolk/vim-taglist'
 Bundle 'scrooloose/nerdtree'
-
-" Will be removed/changed soon
-Bundle 'msanders/snipmate.vim'
 
 filetype plugin indent on " required!
 

@@ -6,6 +6,10 @@ let g:easytags_resolve_links = 1
 let g:easytags_cmd = '/usr/local/bin/ctags'
 let g:easytags_dynamic_files = 1
 
+let g:UltiSnipsEditSplit = "horizontal"
+let g:UltiSnipsExpandTrigger = "<c-tab>"
+let g:UltiSnipsListSnippets = "<c-s-tab>"
+
 source ~/.vim/bundles.vim
 helptags ~/.vim/vundle/doc
 
