@@ -25,12 +25,14 @@ Bundle 'vim-ruby/vim-ruby'
 Bundle 'xolox/vim-easytags'
 Bundle 'xolox/vim-notes'
 
+" Mirror needed since VBA from original source does not seem to install
+Bundle 'vim-scripts/ZoomWin'
+
 " vim-scripts
 Bundle 'JSON.vim'
+Bundle 'Rename'
 Bundle 'UltiSnips'
 Bundle 'netrw.vim'
-Bundle 'zoomwin'
-Bundle 'Rename'
 Bundle 'ruby-matchit'
 
 " other Git
