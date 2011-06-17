@@ -31,6 +31,7 @@ Bundle 'UltiSnips'
 Bundle 'netrw.vim'
 Bundle 'zoomwin'
 Bundle 'Rename'
+Bundle 'ruby-matchit'
 
 " other Git
 Bundle 'git://git.wincent.com/command-t.git'
