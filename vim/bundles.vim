@@ -23,6 +23,7 @@ Bundle 'tpope/vim-rails'
 Bundle 'tpope/vim-surround'
 Bundle 'vim-ruby/vim-ruby'
 Bundle 'xolox/vim-easytags'
+Bundle 'xolox/vim-notes'
 
 " vim-scripts
 Bundle 'JSON.vim'
