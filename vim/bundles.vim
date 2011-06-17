@@ -26,8 +26,8 @@ Bundle 'xolox/vim-easytags'
 Bundle 'JSON.vim'
 Bundle 'UltiSnips'
 Bundle 'netrw.vim'
-Bundle 'rename'
 Bundle 'zoomwin'
+Bundle 'Rename'
 
 " other Git
 Bundle 'git://git.wincent.com/command-t.git'
