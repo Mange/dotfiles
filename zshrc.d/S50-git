@@ -9,6 +9,8 @@ alias ggraph='git log --all --decorate --graph --pretty=oneline --abbrev-commit'
 alias gpu='git push'
 alias gri='git rebase -i'
 alias gro='git rebase @{upstream}'
+alias gmo='git merge @{upstream}'
+alias gmm='git merge master'
 alias gst='git status'
 alias gup='git fetch'
 
