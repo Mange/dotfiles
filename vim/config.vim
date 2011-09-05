@@ -11,7 +11,6 @@ let g:UltiSnipsExpandTrigger = "<c-tab>"
 let g:UltiSnipsListSnippets = "<c-s-tab>"
 
 source ~/.vim/bundles.vim
-helptags ~/.vim/vundle/doc
 
 syntax on
 filetype plugin indent on
