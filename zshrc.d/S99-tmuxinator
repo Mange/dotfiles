@@ -1,0 +1,4 @@
+#!/usr/bin/env zsh
+# Configuration for the tmuxinator gem
+
+[[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
