@@ -1,7 +1,10 @@
 filetype off " required!
 
-set rtp+=~/.vim/vundle/
+set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
+
+" Vundle should handle itself
+Bundle 'gmarik/vundle'
 
 " GitHub
 Bundle 'ap/vim-css-color'

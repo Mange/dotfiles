@@ -33,15 +33,15 @@ task :gitconfig do
   exec['git config --global color.ui true']
 end
 
-desc "Makes sure that the submodules are all initialized and up-to-date"
-task :submodules do
-  unless system('git submodule update --init')
-    STDERR.puts "Could not update submodules. Continuing..."
+desc "Installs Vundle"
+task :vundle do
+  unless system('git clone -q git://github.com/gmarik/vundle.git vim/bundle/vundle')
+    STDERR.puts "Could not clone Vundle. Continuing..."
   end
 end
 
 desc "Installs vim config"
-task :vim do
+task :vim => [:vundle] do
   Dotfile.new('vim').install_symlink
 end
 
@@ -51,7 +51,7 @@ task :zsh do
 end
 
 desc "Installs all files"
-task :install => (SYMLINKS + FILES + %w[gitignore zsh vim submodules gitconfig])
+task :install => (SYMLINKS + FILES + %w[gitignore zsh vim gitconfig])
 
 desc "Clears all 'legacy' files (like old symlinks)"
 task :cleanup do
