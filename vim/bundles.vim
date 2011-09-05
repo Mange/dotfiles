@@ -42,9 +42,5 @@ Bundle 'ruby-matchit'
 " other Git
 Bundle 'git://git.wincent.com/command-t.git'
 
-" Should I still keep these?
-Bundle 'mexpolk/vim-taglist'
-Bundle 'scrooloose/nerdtree'
-
 filetype plugin indent on " required!
 
