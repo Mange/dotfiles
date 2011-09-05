@@ -1,3 +1,6 @@
+" This is sooo nice
+nmap <Space> :
+
 " Shift-H and Shift-L to switch tabs
 map <S-h> gT
 map <S-l> gt
