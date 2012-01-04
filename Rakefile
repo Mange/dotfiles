@@ -29,12 +29,18 @@ end
 desc "Does some basic Git setup"
 task :gitconfig do
   exec = lambda { |command| system(command) or STDERR.puts "Command failed: #{command}" }
-  exec['git config --global push.default tracking']
-  exec['git config --global color.ui true']
+  config = lambda { |setting, value| exec[%(git config --global "#{setting}" "#{value}")] }
 
-  exec['git config --global user.name "Magnus Bergmark"']
-  exec['git config --global user.email "magnus.bergmark@gmail.com"']
-  exec['git config --global github.user Mange']
+  config["push.default", "tracking"]
+  config["color.ui", "true"]
+
+  config["user.name", "Magnus Bergmark"]
+  config["user.email", "magnus.bergmark@gmail.com"]
+  config["github.user", "Mange"]
+
+  config["color.branch.current", "bold green"]
+  config["color.branch.local", "green"]
+  config["color.branch.remote", "blue"]
 end
 
 desc "Installs Vundle"
