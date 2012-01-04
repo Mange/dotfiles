@@ -1,20 +1,26 @@
 #!/usr/bin/env zsh
 # Git settings and shortcuts
 
+git_log_format='--pretty=format:%Cblue%h%Creset %cr %C(bold black)%an%Cgreen%d%Creset %s'
+
 alias checkout='git checkout'
 alias gadd='git add'
 alias gco='git commit -v'
-alias gdf='git diff'
-alias ggraph='git log --all --decorate --graph --pretty=oneline --abbrev-commit'
 alias gpu='git push'
 alias gri='git rebase -i'
 alias gro='git rebase @{upstream}'
 alias gmo='git merge @{upstream}'
 alias gmm='git merge master'
-alias gst='git status'
+alias gmm='git rebase master'
 alias gup='git fetch'
 
-export GIT_AUTHOR_NAME="Magnus Bergmark"
-export GIT_AUTHOR_EMAIL="magnus.bergmark@gmail.com"
-export GIT_COMMITTER_NAME="Magnus Bergmark"
-export GIT_COMMITTER_EMAIL="magnus.bergmark@gmail.com"
+alias gl="git log --graph '$git_log_format'"
+alias s="git status --short"
+alias gb="git branch -av"
+alias master="git checkout master"
+alias gd="git diff"
+alias gdw="git diff --color-word"
+
+# Deprecated
+alias gst='echo use s'
+alias gdf='echo use gd / gdw'
