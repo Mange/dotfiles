@@ -31,6 +31,10 @@ task :gitconfig do
   exec = lambda { |command| system(command) or STDERR.puts "Command failed: #{command}" }
   exec['git config --global push.default tracking']
   exec['git config --global color.ui true']
+
+  exec['git config --global user.name "Magnus Bergmark"']
+  exec['git config --global user.email "magnus.bergmark@gmail.com"']
+  exec['git config --global github.user Mange']
 end
 
 desc "Installs Vundle"
