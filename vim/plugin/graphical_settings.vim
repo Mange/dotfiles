@@ -12,5 +12,5 @@ if has("gui_macvim")
 
   set transparency=15
 else
-  set guifont=Menlo\ 9,\ DejaVu\ Sans\ Mono\ 9
+  set guifont=DejaVu\ Sans\ Mono\ 9
 endif
