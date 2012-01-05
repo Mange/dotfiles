@@ -4,8 +4,9 @@
 setopt auto_pushd
 setopt pushd_ignore_dups
 
-# cd to files to go to containing directories
-# Nice when you paste a filename
+# Enhanced cd:
+#   * cd <path>/<file> go to <path>
+#   * auto ls when cd succeeded
 cd () {
   if (( $# != 1 )); then
     builtin cd "$@"
@@ -17,6 +18,8 @@ cd () {
   else
     builtin cd "$1"
   fi
+
+  [ $? ] && ls
 }
 
 alias tree='tree -AC -I ".svn|.git"'
