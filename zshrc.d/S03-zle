@@ -1,0 +1,11 @@
+#!/usr/bin/env zsh
+
+# Default:        *?_-.[]~=/&;!#$%^(){}<>
+export WORDCHARS='*?[]~=&;!#$%^(){}'
+
+# ^LeftArrow, ^RightArrow
+bindkey '[1;5C' forward-word
+bindkey '[1;5D' backward-word
+
+# New line
+bindkey '^J' self-insert
