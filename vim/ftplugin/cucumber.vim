@@ -13,3 +13,7 @@ endfunction
 inoremap <buffer><silent> <Bar>   <Bar><Esc>:call <SID>align()<CR>a
 map <buffer> Q :call <SID>align()<CR>
 
+setlocal nofoldenable " start with everything unfolded
+setlocal foldnestmax=2
+setlocal foldmethod=indent
+setlocal foldlevelstart=3
