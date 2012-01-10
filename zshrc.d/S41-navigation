@@ -4,27 +4,25 @@
 setopt auto_pushd
 setopt pushd_ignore_dups
 
-# Enhanced cd:
-#   * cd <path>/<file> go to <path>
-#   * auto ls when cd succeeded
-cd () {
-  if (( $# != 1 )); then
-    builtin cd "$@"
-    return
-  fi
-
-  if [[ -f "$1" ]]; then
-    builtin cd "$1:h"
-  else
-    builtin cd "$1"
-  fi
-
-  [ $? ] && ls
-}
-
 alias tree='tree -AC -I ".svn|.git"'
 alias t='tree -L 3 --filelimit 50'
 
 alias ls='ls --color=auto'
 alias l='ls -l'
 
+# Enhanced cd:
+#   * cd <path>/<file> go to <path>
+#   * auto ls when cd succeeded
+cd () {
+  if (( $# != 1 )); then
+    builtin cd "$@"
+  else
+    if [[ -f "$1" ]]; then
+      builtin cd "$1:h"
+    else
+      builtin cd "$1"
+    fi
+  fi
+
+  [ $? ] && ls
+}
