@@ -7,19 +7,21 @@ alias checkout='git checkout'
 alias gadd='git add'
 alias gco='git commit -v'
 alias gpu='git push'
+alias gmo='git merge @{upstream} --no-ff'
+alias gmm='git merge master --no-ff'
 alias gri='git rebase -i'
 alias gro='git rebase @{upstream}'
-alias gmo='git merge @{upstream}'
-alias gmm='git merge master'
-alias gmm='git rebase master'
-alias gup='git fetch'
+alias groi='git rebase -i @{upstream}'
+alias grm='git rebase master'
+alias gup='git fetch && gmo'
+alias ff='git merge --ff-only'
 
 alias gl="git log --graph '$git_log_format'"
 alias s="git status --short"
 alias gb="git branch -av"
 alias master="git checkout master"
 alias gd="git diff"
-alias gdw="git diff --color-word"
+alias gdw="git diff --color-words"
 
 # Deprecated
 alias gst='echo use s'
