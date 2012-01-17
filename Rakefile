@@ -45,8 +45,10 @@ end
 
 desc "Installs Vundle"
 task :vundle do
-  unless system('git clone -q git://github.com/gmarik/vundle.git vim/bundle/vundle')
-    STDERR.puts "Could not clone Vundle. Continuing..."
+  unless File.exist?('vim/bundle/vundle')
+    unless system('git clone -q git://github.com/gmarik/vundle.git vim/bundle/vundle')
+      STDERR.puts "Could not clone Vundle. Continuing..."
+    end
   end
 end
 
