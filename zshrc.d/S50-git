@@ -13,8 +13,9 @@ alias gri='git rebase -i'
 alias gro='git rebase @{upstream}'
 alias groi='git rebase -i @{upstream}'
 alias grm='git rebase master'
-alias gup='git fetch && gmo'
 alias ff='git merge --ff-only'
+alias ffo='git merge --ff-only @{upstream}'
+alias gup='git fetch && ffo'
 
 alias gl="git log --graph '$git_log_format'"
 alias s="git status --short"
