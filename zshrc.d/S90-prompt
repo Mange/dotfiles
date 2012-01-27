@@ -1,6 +1,12 @@
 #!/usr/bin/env zsh
 # Prompt settings and configuration
 
+# Will be used by prompt
+# S99-rvm will overwrite this function
+function rvm-ruby-version () {
+  echo "no rvm"
+}
+
 # Make RPROMPT disappear after running a command
 setopt transient_rprompt
 
