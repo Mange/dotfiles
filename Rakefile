@@ -1,7 +1,20 @@
 require File.expand_path('../support/dotfile', __FILE__)
 require 'fileutils'
 
-SYMLINKS = %w[vimrc zshenv zshprofile zshrc zshrc.d irbrc railsrc ackrc tmux.conf rspec gemrc]
+SYMLINKS = %w[
+  ackrc
+  gemrc
+  irbrc
+  pentadactylrc
+  railsrc
+  rspec
+  tmux.conf
+  vimrc
+  zshenv
+  zshprofile
+  zshrc
+  zshrc.d
+]
 FILES = []
 
 SYMLINKS.each do |file|
