@@ -33,8 +33,8 @@ if [ -f $newfile ]; then
 fi
 
 # Give all projects a name
-if [ -d ~/projects ]; then
-  for dir in ~/projects/*(/N); do
+if [ -d ~/Projects ]; then
+  for dir in ~/Projects/*(/N); do
     namedir "$(basename $dir)" "$dir"
   done
 fi
