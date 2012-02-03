@@ -10,6 +10,12 @@ let g:UltiSnipsEditSplit = "horizontal"
 let g:UltiSnipsExpandTrigger = "<c-tab>"
 let g:UltiSnipsListSnippets = "<c-s-tab>"
 
+if isdirectory($HOME . '/Dropbox/Notes')
+  let g:notes_directory = '~/Dropbox/Notes'
+elseif isdirectory($HOME . '/Documents/Notes')
+  let g:notes_directory = '~/Documents/Notes'
+endif
+
 source ~/.vim/bundles.vim
 
 syntax on
