@@ -24,7 +24,9 @@ done
 
 # GNU coreutils, findutils, etc. on Mac
 # This is the place where the original commands are placed; bins in /opt/local/bin are all named with a 'g' prefix
-use_path /opt/local/libexec/gnubin front
+if whence -p brew > /dev/null; then
+  use_path "$(brew --prefix coreutils)/libexec/gnubin" front
+fi
 
 # Personal stuff
 use_path ~/bin front

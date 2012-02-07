@@ -29,7 +29,6 @@ Bundle 'tpope/vim-markdown'
 Bundle 'tpope/vim-rails'
 Bundle 'tpope/vim-surround'
 Bundle 'vim-ruby/vim-ruby'
-Bundle 'xolox/vim-easytags'
 Bundle 'xolox/vim-notes'
 
 " Mirror needed since VBA from original source does not seem to install
