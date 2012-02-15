@@ -4,23 +4,30 @@
 git_log_format='--pretty=format:%Cblue%h%Creset %cr %C(bold black)%an%Cgreen%d%Creset %s'
 
 alias checkout='git checkout'
+alias master="git checkout master"
+alias production="git checkout production"
+
 alias gadd='git add'
 alias gco='git commit -v'
 alias gpu='git push'
-alias gmo='git merge @{upstream} --no-ff'
-alias gmm='git merge master --no-ff'
+alias gb="git branch -av"
+
+alias gm='git merge --no-ff'
+alias gmo='git merge --no-ff @{upstream}'
+alias gmm='git merge --no-ff master'
+
 alias gri='git rebase -i'
 alias gro='git rebase @{upstream}'
 alias groi='git rebase -i @{upstream}'
 alias grm='git rebase master'
+
 alias ff='git merge --ff-only'
+alias ffm='git merge --ff-only master'
 alias ffo='git merge --ff-only @{upstream}'
 alias gup='git fetch && ffo'
 
 alias gl="git log --graph '$git_log_format'"
 alias s="git status --short"
-alias gb="git branch -av"
-alias master="git checkout master"
 alias gd="git diff"
 alias gdw="git diff --color-words"
 
