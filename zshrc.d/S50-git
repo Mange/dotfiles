@@ -35,6 +35,7 @@ alias glp="git log --graph '$git_log_format' --first-parent origin/production...
 alias s="git status --short"
 alias gd="git diff"
 alias gdw="git diff --color-words"
+alias staged="gd --cached"
 
 # Deprecated
 alias gst='echo use s'
