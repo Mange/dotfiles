@@ -39,3 +39,5 @@ alias gdw="git diff --color-words"
 # Deprecated
 alias gst='echo use s'
 alias gdf='echo use gd / gdw'
+
+unset git_log_format
