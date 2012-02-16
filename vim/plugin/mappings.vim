@@ -33,12 +33,8 @@ nmap <S-Tab> :cp<CR>
 map <expr> Q ''
 
 " Fugitive mappings
-nmap <C-G>b :Gblame<CR>
-nmap <C-G>c :Gcommit<CR>
-nmap <C-G>C :Gcommit --all<CR>
-nmap <C-G>d :Gdiff<CR>
-nmap <C-G>l :Glog<CR>
-nmap <C-G>s :Gstatus<CR>
+nmap <F1> :Gstatus<CR>
+nmap <F2> :Gcommit --all<CR>
 
 " Inserts the path of the currently edited file into a command
 cmap <C-p> <C-R>=expand("%:p:h") . "/" <CR>
