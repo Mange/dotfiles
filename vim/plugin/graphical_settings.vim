@@ -14,3 +14,11 @@ if has("gui_macvim")
 else
   set guifont=DejaVu\ Sans\ Mono\ 9
 endif
+
+" Shortcuts to use system clipboard
+if v:progname =~? "gvim"
+  vmap <C-c> "+y
+  vmap <C-x> "+x
+  imap <C-v> "+p
+  nmap <C-v> "+p
+endif

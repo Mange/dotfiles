@@ -11,14 +11,6 @@ map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
 
-" Shortcuts to use system clipboard
-if v:progname =~? "gvim"
-  vmap <C-c> "+y
-  vmap <C-x> "+x
-  imap <C-v> "+p
-  nmap <C-v> "+p
-endif
-
 " Shortcut for saving in all modes
 noremap <C-s> :w<cr>
 inoremap <C-s> <C-o>:w<CR>
