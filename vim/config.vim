@@ -28,6 +28,9 @@ endif
 let g:NERDCreateDefaultMappings = 0
 let g:NERDSpaceDelims = 1
 
+" Powerline
+let g:Powerline_symbols = "unicode"
+
 source ~/.vim/bundles.vim
 
 syntax on
@@ -43,13 +46,4 @@ autocmd BufReadPost *
   \ if line("'\"") > 0 && line("'\"") <= line("$") |
   \   exe "normal! g`\"" |
   \ endif
-
-function! GitStatusLine()
-  if exists('g:loaded_fugitive')
-    return fugitive#statusline()
-  endif
-  return "(fugitive not loaded)"
-endfunction
-
-set statusline=%{GitStatusLine()}\ %<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 

@@ -7,6 +7,7 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 " GitHub
+Bundle 'Lokaltog/vim-powerline'
 Bundle 'ap/vim-css-color'
 Bundle 'bronson/vim-trailing-whitespace'
 Bundle 'chriskempson/Vim-Tomorrow-Theme'

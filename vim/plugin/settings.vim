@@ -3,14 +3,17 @@ set backspace=indent,eol,start
 
 set history=50
 set undolevels=1000
-set ruler      " show the cursor position all the time
-set showcmd    " display incomplete commands
+set ruler        " show the cursor position all the time
+set showcmd      " display incomplete commands
+set laststatus=2 " Always show status for last window
 set incsearch
-set number     " line numbers
+set number       " line numbers
 set nobackup
 set autoread
 set ignorecase
 set smartcase
+
+set encoding=utf-8
 
 " Use linear search in tags when smartcase and ignorecase is set,
 " otherwise SuperTab gives a load of errors all the time
