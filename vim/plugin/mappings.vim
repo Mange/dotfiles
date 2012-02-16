@@ -42,5 +42,3 @@ map <D-/> <plug>NERDCommenterToggle
 " Inserts the path of the currently edited file into a command
 cmap <C-p> <C-R>=expand("%:p:h") . "/" <CR>
 
-map <silent> <leader>r :CommandTFlush<CR>
-

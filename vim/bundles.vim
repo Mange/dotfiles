@@ -16,6 +16,7 @@ Bundle 'ervandew/supertab'
 Bundle 'godlygeek/tabular'
 Bundle 'kana/vim-scratch'
 Bundle 'kchmck/vim-coffee-script'
+Bundle 'kien/ctrlp.vim'
 Bundle 'michaeljsmith/vim-indent-object'
 Bundle 'mileszs/ack.vim'
 Bundle 'nanki/treetop.vim'
@@ -43,9 +44,6 @@ Bundle 'JSON.vim'
 Bundle 'UltiSnips'
 Bundle 'netrw.vim'
 Bundle 'ruby-matchit'
-
-" other Git
-Bundle 'git://git.wincent.com/command-t.git'
 
 filetype plugin indent on " required!
 

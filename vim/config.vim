@@ -1,8 +1,5 @@
 set nocompatible
 
-" Command-T
-let g:CommandTMaxHeight = 20
-
 " netrw
 let g:netrw_liststyle="tree"
 
@@ -30,6 +27,15 @@ let g:NERDSpaceDelims = 1
 
 " Powerline
 let g:Powerline_symbols = "unicode"
+
+" CtrlP
+let g:ctrlp_jump_to_buffer = 2 " Jump to active buffer, even if in another tab
+let g:ctrlp_root_markers = ['Rakefile', 'Gemfile', '.rvmrc']
+let g:ctrlp_cache_dir = $HOME.'/.vim/tmp/ctrlp'
+let g:ctrlp_prompt_mappings = {
+  \ 'ToggleRegex()':        [],
+  \ 'PrtClearCache()':      ['<F5>', '<c-r>']
+  \ }
 
 source ~/.vim/bundles.vim
 
