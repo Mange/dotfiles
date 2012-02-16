@@ -10,7 +10,7 @@ if has("gui_macvim")
   " Fullscreen takes up entire screen
   set fuoptions=maxhorz,maxvert
 
-  set transparency=15
+  set transparency=0
 else
   set guifont=DejaVu\ Sans\ Mono\ 9
 endif

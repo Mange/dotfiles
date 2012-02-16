@@ -9,6 +9,7 @@ Bundle 'gmarik/vundle'
 " GitHub
 Bundle 'ap/vim-css-color'
 Bundle 'bronson/vim-trailing-whitespace'
+Bundle 'chriskempson/Vim-Tomorrow-Theme'
 Bundle 'ecomba/vim-ruby-refactoring'
 Bundle 'ervandew/supertab'
 Bundle 'godlygeek/tabular'

@@ -45,5 +45,5 @@ set dir=~/.vim/tmp
 
 " Looks
 set background=dark
-colorscheme vividchalk
+colorscheme Tomorrow-Night
 set listchars=tab:→\ ,eol:¬
