@@ -24,9 +24,9 @@ nmap <C-e> $
 " Hashrocket!
 imap <C-l> <Space>=><Space>
 
-" Window shortcuts
-nmap <Tab> <C-w><C-w>
-nmap <S-Tab> <C-w><C-W>
+" Quick list shortcuts
+nmap <Tab> :cn<CR>
+nmap <S-Tab> :cp<CR>
 
 " Unmap Q
 " I'll use it for context-sensitive actions depending on filetype
