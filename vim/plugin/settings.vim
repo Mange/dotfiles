@@ -15,10 +15,6 @@ set smartcase
 
 set encoding=utf-8
 
-" Use linear search in tags when smartcase and ignorecase is set,
-" otherwise SuperTab gives a load of errors all the time
-set notagbsearch
-
 set hlsearch   " Toggle with sh
 set wrap       " Toggle with sw
 " See map_toggle.vim for more toggle mappings

@@ -1,6 +1,9 @@
 " This is sooo nice
 nmap <Space> :
 
+" Use tab for autocompletions
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+
 " Shift-H and Shift-L to switch tabs
 map <S-h> gT
 map <S-l> gt

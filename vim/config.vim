@@ -21,6 +21,9 @@ elseif isdirectory($HOME . '/Documents/Notes')
   let g:notes_directory = '~/Documents/Notes'
 endif
 
+" neocomplcache
+let g:neocomplcache_enable_at_startup = 1
+
 " NERDCommenter
 let g:NERDCreateDefaultMappings = 0
 let g:NERDSpaceDelims = 1

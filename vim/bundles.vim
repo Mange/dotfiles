@@ -8,11 +8,11 @@ Bundle 'gmarik/vundle'
 
 " GitHub
 Bundle 'Lokaltog/vim-powerline'
+Bundle 'Shougo/neocomplcache'
 Bundle 'ap/vim-css-color'
 Bundle 'bronson/vim-trailing-whitespace'
 Bundle 'chriskempson/Vim-Tomorrow-Theme'
 Bundle 'ecomba/vim-ruby-refactoring'
-Bundle 'ervandew/supertab'
 Bundle 'godlygeek/tabular'
 Bundle 'kana/vim-scratch'
 Bundle 'kchmck/vim-coffee-script'
