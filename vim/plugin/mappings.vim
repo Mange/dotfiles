@@ -36,6 +36,9 @@ map <expr> Q ''
 nmap <F1> :Gstatus<CR>
 nmap <F2> :Gcommit --all<CR>
 
+" NERDCommenter
+map <D-/> <plug>NERDCommenterToggle
+
 " Inserts the path of the currently edited file into a command
 cmap <C-p> <C-R>=expand("%:p:h") . "/" <CR>
 

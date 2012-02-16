@@ -1,24 +1,32 @@
 set nocompatible
 
+" Command-T
 let g:CommandTMaxHeight = 20
 
 " netrw
 let g:netrw_liststyle="tree"
 
+" easytags
 " let g:easytags_suppress_ctags_warning = 1
 let g:easytags_resolve_links = 1
 let g:easytags_cmd = '/usr/local/bin/ctags'
 let g:easytags_dynamic_files = 1
 
+" UltiSnips
 let g:UltiSnipsEditSplit = "horizontal"
 let g:UltiSnipsExpandTrigger = "<c-tab>"
 let g:UltiSnipsListSnippets = "<c-s-tab>"
 
+" Notes
 if isdirectory($HOME . '/Dropbox/Notes')
   let g:notes_directory = '~/Dropbox/Notes'
 elseif isdirectory($HOME . '/Documents/Notes')
   let g:notes_directory = '~/Documents/Notes'
 endif
+
+" NERDCommenter
+let g:NERDCreateDefaultMappings = 0
+let g:NERDSpaceDelims = 1
 
 source ~/.vim/bundles.vim
 
