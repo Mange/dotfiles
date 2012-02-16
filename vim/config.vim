@@ -1,6 +1,10 @@
 set nocompatible
 
 let g:CommandTMaxHeight = 20
+
+" netrw
+let g:netrw_liststyle="tree"
+
 " let g:easytags_suppress_ctags_warning = 1
 let g:easytags_resolve_links = 1
 let g:easytags_cmd = '/usr/local/bin/ctags'
