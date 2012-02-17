@@ -28,6 +28,9 @@ let g:neocomplcache_enable_at_startup = 1
 let g:NERDCreateDefaultMappings = 0
 let g:NERDSpaceDelims = 1
 
+" Syntastic
+let g:syntastic_check_on_open = 1
+
 " Powerline
 let g:Powerline_symbols = "unicode"
 
