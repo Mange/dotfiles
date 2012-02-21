@@ -12,7 +12,6 @@ alias l='ls -l'
 
 # Enhanced cd:
 #   * cd <path>/<file> go to <path>
-#   * auto ls when cd succeeded
 cd () {
   if (( $# != 1 )); then
     builtin cd "$@"
@@ -23,6 +22,6 @@ cd () {
       builtin cd "$1"
     fi
   fi
-
-  [ $? ] && ls
 }
+
+function chpwd { ls }
