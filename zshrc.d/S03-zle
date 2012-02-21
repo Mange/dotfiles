@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 # Default:        *?_-.[]~=/&;!#$%^(){}<>
-export WORDCHARS='*?[]~=&;!#$%^(){}'
+export WORDCHARS='*?[]~&;!#$%^(){}'
 
 # ^LeftArrow, ^RightArrow
 bindkey '[1;5C' forward-word
