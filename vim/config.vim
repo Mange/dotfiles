@@ -42,6 +42,10 @@ let g:ctrlp_prompt_mappings = {
   \ 'ToggleRegex()':        [],
   \ 'PrtClearCache()':      ['<F5>', '<c-r>']
   \ }
+let g:ctrlp_custom_ignore = {
+  \ 'dir': '\.git$\|\.svn$\|public/assets$\|vendor$\|tmp$\|log$',
+  \ 'file': '\.exe$\|\.so$\|\.dll$',
+  \ }
 
 source ~/.vim/bundles.vim
 
