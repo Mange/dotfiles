@@ -1,0 +1,1 @@
+nmap Q :source %<CR>
