@@ -45,4 +45,4 @@ set dir=~/.vim/tmp
 " Looks
 set background=dark
 colorscheme Tomorrow-Night
-set listchars=tab:→\ ,eol:¬
+set listchars=tab:→\ ,eol:¬,nbsp:•
