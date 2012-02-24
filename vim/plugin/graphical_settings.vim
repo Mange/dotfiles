@@ -5,6 +5,9 @@ endif
 set guioptions=acei
 set list
 
+" Automatically resize splits on window resize
+autocmd VimResized * wincmd =
+
 if has("gui_macvim")
   set guifont=Menlo:h12
   " Fullscreen takes up entire screen
