@@ -46,6 +46,7 @@ let g:ctrlp_custom_ignore = {
   \ 'dir': '\.git$\|\.svn$\|public/assets$\|vendor$\|tmp$\|log$',
   \ 'file': '\.exe$\|\.so$\|\.dll$',
   \ }
+let g:ctrlp_user_command = ['.git/', 'cd %s && git ls-files']
 
 source ~/.vim/bundles.vim
 
