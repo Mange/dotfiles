@@ -9,6 +9,7 @@ Bundle 'gmarik/vundle'
 " GitHub
 Bundle 'Lokaltog/vim-powerline'
 Bundle 'Shougo/neocomplcache'
+Bundle 'Townk/vim-autoclose'
 Bundle 'ap/vim-css-color'
 Bundle 'bronson/vim-trailing-whitespace'
 Bundle 'chriskempson/Vim-Tomorrow-Theme'
