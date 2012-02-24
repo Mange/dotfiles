@@ -48,6 +48,10 @@ let g:ctrlp_custom_ignore = {
   \ }
 let g:ctrlp_user_command = ['.git/', 'cd %s && git ls-files']
 
+" Indent guides
+let g:indent_guides_color_change_percent = 5
+let g:indent_guides_start_level = 2
+
 source ~/.vim/bundles.vim
 
 syntax on
