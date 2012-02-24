@@ -33,7 +33,7 @@ use_path ~/bin front
 
 unset use_path
 
-# Login shells should still get a hold of rvm
-if [[ $PS1 == "" ]]; then
+# Non-interactive shells should still get a hold of rvm
+if [ ! -t ]; then
   source $HOME/.zshrc.d/S99-rvm
 fi
