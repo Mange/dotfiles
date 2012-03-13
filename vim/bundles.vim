@@ -6,7 +6,7 @@ call vundle#rc()
 " Vundle is an adult; it can manage itself
 Bundle 'gmarik/vundle'
 
-" Utility
+""" Utility
 Bundle 'kana/vim-scratch'
 Bundle 'kien/ctrlp.vim'
 Bundle 'mileszs/ack.vim'
@@ -15,7 +15,7 @@ Bundle 'tpope/vim-eunuch'
 Bundle 'tpope/vim-fugitive'
 Bundle 'xolox/vim-notes'
 
-" Editor functionality
+""" Editor functionality
 Bundle 'Shougo/neocomplcache'
 Bundle 'Townk/vim-autoclose'
 Bundle 'UltiSnips'
@@ -26,9 +26,11 @@ Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/syntastic'
 Bundle 'tpope/vim-endwise'
 Bundle 'tpope/vim-surround'
-Bundle 'vim-scripts/ZoomWin' " Mirror; VBA from original source does not install
 
-" Filetypes, projects, etc.
+" Mirror; VBA from original source does not install
+Bundle 'vim-scripts/ZoomWin'
+
+""" Filetypes, projects, etc.
 Bundle 'JSON.vim'
 Bundle 'ecomba/vim-ruby-refactoring'
 Bundle 'kchmck/vim-coffee-script'
@@ -46,7 +48,7 @@ Bundle 'tpope/vim-rake'
 Bundle 'tpope/vim-rvm'
 Bundle 'vim-ruby/vim-ruby'
 
-" Looks
+""" Looks
 Bundle 'Lokaltog/vim-powerline'
 Bundle 'ap/vim-css-color'
 Bundle 'chriskempson/Vim-Tomorrow-Theme'
