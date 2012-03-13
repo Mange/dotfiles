@@ -21,7 +21,6 @@ Bundle 'kien/ctrlp.vim'
 Bundle 'michaeljsmith/vim-indent-object'
 Bundle 'mileszs/ack.vim'
 Bundle 'nanki/treetop.vim'
-Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'othree/html5-syntax.vim'
 Bundle 'pangloss/vim-javascript'
 Bundle 'puppetlabs/puppet-syntax-vim'
@@ -51,4 +50,3 @@ Bundle 'netrw.vim'
 Bundle 'ruby-matchit'
 
 filetype plugin indent on " required!
-
