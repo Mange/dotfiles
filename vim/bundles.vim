@@ -54,6 +54,6 @@ Bundle 'vim-ruby/vim-ruby'
 """ Looks
 Bundle 'Lokaltog/vim-powerline'
 Bundle 'ap/vim-css-color'
-Bundle 'chriskempson/Vim-Tomorrow-Theme'
+Bundle 'chriskempson/vim-tomorrow-theme'
 
 filetype plugin indent on " required!
