@@ -1,0 +1,48 @@
+#
+# RSpec
+#
+snippet spec "new spec file" b
+# encoding: UTF-8
+require 'spec_helper'
+
+desc${0}
+endsnippet
+
+snippet desc "describe" b
+describe ${1} do
+  ${0}
+end
+endsnippet
+
+snippet it "it does something" b
+it "${1:does something}" do
+  ${0}
+end
+endsnippet
+
+snippet be "before each" b
+before(:each) { ${1} }
+${0}
+endsnippet
+
+snippet bee "before each do" b
+before(:each) do
+  ${1}
+end
+${0}
+endsnippet
+
+snippet cont "context" b
+context "${1}" do
+  ${0}
+end
+endsnippet
+
+snippet let "let" b
+let(:${1:variable}) { ${2} }
+${0}
+endsnippet
+
+snippet shr "should_receive" w
+should_receive(:${1})${0}
+endsnippet
