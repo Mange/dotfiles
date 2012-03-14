@@ -1,5 +1,8 @@
 filetype off " required!
 
+" Some hosts I work with does not support git-http
+let g:vundle_default_git_proto = 'git'
+
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
