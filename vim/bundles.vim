@@ -20,7 +20,6 @@ Bundle 'xolox/vim-notes'
 
 """ Editor functionality
 Bundle 'Shougo/neocomplcache'
-Bundle 'Townk/vim-autoclose'
 Bundle 'UltiSnips'
 Bundle 'bronson/vim-trailing-whitespace'
 Bundle 'godlygeek/tabular'
