@@ -1,1 +1,1 @@
-let g:netrw_liststyle="tree"
+let g:netrw_liststyle = 3
