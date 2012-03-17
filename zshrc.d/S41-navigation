@@ -7,6 +7,9 @@ setopt pushd_ignore_dups
 alias tree='tree -AC -I ".svn|.git"'
 alias t='tree -L 3 --filelimit 50'
 
+# Sort files by size and show human readable
+alias fusage='ls -Ssrh'
+
 alias ls='ls --color=auto'
 alias l='ls -l'
 
