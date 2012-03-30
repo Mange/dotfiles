@@ -20,9 +20,7 @@ inoremap <C-s> <C-o>:w<CR>
 
 " Heresy!
 imap <C-a> <C-o>^
-nmap <C-a> ^
 imap <C-e> <C-o>$
-nmap <C-e> $
 
 " Hashrocket!
 imap <C-l> <Space>=><Space>
