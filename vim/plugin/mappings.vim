@@ -1,3 +1,6 @@
+" Jump to alternative file
+map <leader><leader> :A<CR>
+
 " This is sooo nice
 nmap <Space> :
 
