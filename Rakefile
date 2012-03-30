@@ -80,7 +80,13 @@ task :zsh do
 end
 
 desc "Installs all files"
-task :install => (SYMLINKS + FILES + %w[gitignore zsh gitconfig vundle])
+task :install => (SYMLINKS + FILES + %w[gitignore zsh gitconfig vundle]) do
+  if ENV['SHELL'] !~ /zsh/
+    STDERR.puts "Warning: You seem to be using a shell different from zsh (#{ENV['SHELL']})"
+    STDERR.puts "Fix this by running:"
+    STDERR.puts "  chsh -s `which zsh`"
+  end
+end
 
 desc "Clears all 'legacy' files (like old symlinks)"
 task :cleanup do
