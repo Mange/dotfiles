@@ -57,7 +57,7 @@ task :gitconfig do
 end
 
 desc "Installs Vundle"
-task :vundle do
+task :vundle => [:vim] do
   unless File.exist?('vim/bundle/vundle')
     if system('git clone -q git://github.com/gmarik/vundle.git vim/bundle/vundle')
       unless system('vim -c ":BundleInstall" -c ":qa"')
@@ -70,7 +70,7 @@ task :vundle do
 end
 
 desc "Installs vim config"
-task :vim => [:vundle] do
+task :vim do
   Dotfile.new('vim').install_symlink
 end
 
@@ -80,7 +80,7 @@ task :zsh do
 end
 
 desc "Installs all files"
-task :install => (SYMLINKS + FILES + %w[gitignore zsh vim gitconfig])
+task :install => (SYMLINKS + FILES + %w[gitignore zsh gitconfig vundle])
 
 desc "Clears all 'legacy' files (like old symlinks)"
 task :cleanup do
