@@ -3,3 +3,5 @@
 
 # Setting EDITOR to vim makes zsh assume you want vim bindings
 bindkey -e
+
+export REPORTTIME=10
