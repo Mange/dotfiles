@@ -27,11 +27,11 @@ if is-at-least 4.3.0; then
     vcs_info 'prompt'
     rvm_ruby_version_for_humans="$(rvm-ruby-version) "
   }
+
+  export RPROMPT='$vcs_info_msg_0_'
 else
   export vcs_info_msg_0_="zsh too old"
 fi
-
-export RPROMPT='$vcs_info_msg_0_'
 
 # Speed it up by removing systems I'm not using
 zstyle ':vcs_info:*' enable git svn
@@ -40,27 +40,25 @@ function() {
   zstyle ':vcs_info:*:prompt:*' use-prompt-escapes true
   zstyle ':vcs_info:*:prompt:*' check-for-changes true
 
-  zstyle ':vcs_info:*:prompt:*' unstagedstr "%1{‣%}" # Treat this character as having width 1
-  zstyle ':vcs_info:*:prompt:*' stagedstr "%1{•%}"   # ditto
+  zstyle ':vcs_info:*:prompt:*' unstagedstr "+"
+  zstyle ':vcs_info:*:prompt:*' stagedstr "+"
 
-  local branch_format="%F{202}%b%F{244}@%F{130}%r" # branch@repo
+  local branch_format="%F{130}%r%F{244}/%F{202}%b" # repo/branch
 
   if is-at-least 4.3.11; then
-    local changes_format="%F{green}%c%F{red}%u"      # •‣
+    local changes_format="%F{green}%c%F{red}%u"
   else
     # Old version cannot show changes
     local changes_format=""
   fi
 
-  zstyle ':vcs_info:*:prompt:*' formats       "(${branch_format}${changes_format}%f)" ""
-  zstyle ':vcs_info:*:prompt:*' actionformats "(${branch_format}${changes_format}%f [%F{cyan}%a%f])" ""
+  zstyle ':vcs_info:*:prompt:*' formats       "${branch_format}${changes_format}%f" ""
+  zstyle ':vcs_info:*:prompt:*' actionformats "${branch_format}${changes_format}%f [%F{cyan}%a%f]" ""
 
   zstyle ':vcs_info:*:prompt:*' nvcsformats   "" ""
 }
 
 function {
-  # Color user differently if we have a privileged user ("!")
-  # %(nx.true.false)
   if is256color; then
     local current_time="%F{247}%D{%H:%M}%F{240}%D{:%S}"
   else
@@ -77,6 +75,8 @@ function {
     local host=''
   fi
 
+  # Color user differently if we have a privileged user ("!")
+  # %(nx.true.false)
   local user="%(!.%F{red}.%F{green})%n"
   local dir="%B%F{blue}%4~%b"
   local last_status="%(?.. %F{red}*%?)"
