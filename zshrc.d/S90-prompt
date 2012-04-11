@@ -16,8 +16,10 @@ setopt transient_rprompt
 # See zshexpn(1).
 setopt prompt_subst
 
+autoload is-at-least
+
 # Capability to show SCM info in the prompt
-if [[ $ZSH_VERSION = 4.<3->.* ]]; then
+if is-at-least 4.3.0; then
   autoload -Uz vcs_info
 
   # Generate VCS info just before rendering prompt
@@ -43,7 +45,7 @@ function() {
 
   local branch_format="%F{202}%b%F{244}@%F{130}%r" # branch@repo
 
-  if [[ $ZSH_VERSION = 4.3.<11-> ]]; then
+  if is-at-least 4.3.11; then
     local changes_format="%F{green}%c%F{red}%u"      # •‣
   else
     # Old version cannot show changes
