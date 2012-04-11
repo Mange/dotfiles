@@ -41,8 +41,8 @@ end
 
 desc "Does some basic Git setup"
 task :gitconfig do
-  exec = lambda { |command| system(command) or STDERR.puts "Command failed: #{command}" }
-  config = lambda { |setting, value| exec[%(git config --global "#{setting}" "#{value}")] }
+  exec = lambda { |command| system(*command) or STDERR.puts "Command failed: #{command.join(' ')}" }
+  config = lambda { |setting, value| exec[['git', 'config', '--global', setting, value]] }
 
   config["push.default", "tracking"]
   config["color.ui", "true"]
@@ -54,6 +54,10 @@ task :gitconfig do
   config["color.branch.current", "bold green"]
   config["color.branch.local", "green"]
   config["color.branch.remote", "blue"]
+
+  config["merge.conflictstyle", "diff3"]
+  config["merge.fugitive.cmd", 'mvim -f -c "Gdiff" "$MERGED"']
+  config["merge.tool", "fugitive"]
 end
 
 desc "Installs Vundle"
