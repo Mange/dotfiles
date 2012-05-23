@@ -7,7 +7,7 @@ class Dotfile
   end
 
   def install_symlink
-    clear_target
+    clear_target_path
     File.symlink(source_path.relative_path_from(target_path.dirname), target_path)
   end
 
