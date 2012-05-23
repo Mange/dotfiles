@@ -7,8 +7,9 @@ class Dotfile
   end
 
   def install_symlink
-    clear_target_path
-    File.symlink(source_path.relative_path_from(target_path.dirname), target_path)
+    if clear_target_path
+      File.symlink(source_path.relative_path_from(target_path.dirname), target_path)
+    end
   end
 
   def install_copy
@@ -45,6 +46,9 @@ protected
     if present and not target_is_symlink_to_source?
       puts "#{home_path} already exists. Backing up to #{home_path}~"
       backup_target
+      true
+    else
+      not present
     end
   end
 
