@@ -37,3 +37,5 @@ unset use_path
 if [ ! -t ]; then
   source $HOME/.zshrc.d/S99-rvm
 fi
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
