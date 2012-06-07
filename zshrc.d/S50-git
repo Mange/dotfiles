@@ -30,7 +30,7 @@ alias gl="git log --graph '$git_log_format'"
 
 # Show all commits between production and master, excluding "contents" of merges
 # e.g. Show merge commits, not what the topic branch contained
-alias glp="git log --graph '$git_log_format' --first-parent origin/production...master"
+alias glp="git fetch; git log --graph '$git_log_format' --first-parent origin/production...origin/master"
 
 alias s="git status --short"
 alias gd="git diff"
