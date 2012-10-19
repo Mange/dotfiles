@@ -7,5 +7,6 @@ vim/bundle
 vim/spell
 vim/.netrwhist
 vim/tmp
+vim/local_*.vim
 
 .DS_Store
