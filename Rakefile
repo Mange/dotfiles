@@ -5,7 +5,6 @@ SYMLINKS = %w[
   ackrc
   gemrc
   irbrc
-  pentadactylrc
   railsrc
   rspec
   tmux.conf
@@ -95,6 +94,7 @@ end
 desc "Clears all 'legacy' files (like old symlinks)"
 task :cleanup do
   Dotfile.new('screenrc').delete_target(:only_symlink => true)
+  Dotfile.new('pentadactylrc').delete_target(:only_symlink => true)
 end
 
 desc "Install and clean up old files"
