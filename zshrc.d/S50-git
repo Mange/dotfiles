@@ -26,7 +26,7 @@ alias ffm='git merge --ff-only master'
 alias ffo='git merge --ff-only @{upstream}'
 alias gup='git fetch && ffo'
 
-alias gl="git log --graph '$git_log_format'"
+alias gl="git log --graph -n 1000 '$git_log_format'"
 
 # Show all commits between production and master, excluding "contents" of merges
 # e.g. Show merge commits, not what the topic branch contained
