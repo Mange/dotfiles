@@ -13,6 +13,7 @@ SYMLINKS = %w[
   zshprofile
   zshrc
   zshrc.d
+  zsh
 ]
 FILES = []
 
@@ -77,11 +78,6 @@ task :vim do
   Dotfile.new('vim').install_symlink
 end
 
-desc "Creates a blank .zsh directory"
-task :zsh do
-  `mkdir -p ~/.zsh`
-end
-
 desc "Installs all files"
 task :install => (SYMLINKS + FILES + %w[gitignore zsh gitconfig vundle]) do
   if ENV['SHELL'] !~ /zsh/
@@ -95,6 +91,8 @@ desc "Clears all 'legacy' files (like old symlinks)"
 task :cleanup do
   Dotfile.new('screenrc').delete_target(:only_symlink => true)
   Dotfile.new('pentadactylrc').delete_target(:only_symlink => true)
+  # Clean up backup created after converting ~/.zsh to a symlink
+  `[[ -d ~/.zsh~ ]] && mv ~/.zsh\~/* ~/.zsh && rmdir ~/.zsh~`
 end
 
 desc "Install and clean up old files"

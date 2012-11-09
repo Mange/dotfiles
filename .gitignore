@@ -9,4 +9,6 @@ vim/.netrwhist
 vim/tmp
 vim/local_*.vim
 
+zsh/*
+
 .DS_Store
