@@ -92,7 +92,7 @@ task :cleanup do
   Dotfile.new('screenrc').delete_target(:only_symlink => true)
   Dotfile.new('pentadactylrc').delete_target(:only_symlink => true)
   # Clean up backup created after converting ~/.zsh to a symlink
-  `[[ -d ~/.zsh~ ]] && mv ~/.zsh\~/* ~/.zsh && rmdir ~/.zsh~`
+  `[ -d ~/.zsh~ ] && mv ~/.zsh\~/* ~/.zsh && rmdir ~/.zsh~`
 end
 
 desc "Install and clean up old files"
