@@ -61,15 +61,18 @@ task :gitconfig do
 end
 
 desc "Installs Vundle"
-task :vundle => [:vim] do
+task :vundle => :vim do
   unless File.exist?('vim/bundle/vundle')
-    if system('git clone -q git://github.com/gmarik/vundle.git vim/bundle/vundle')
-      unless system('vim -c ":BundleInstall" -c ":qa"')
-        STDERR.puts "Could not automatically install vim bundles. Continuing..."
-      end
-    else
+    unless system('git clone -q git://github.com/gmarik/vundle.git vim/bundle/vundle')
       STDERR.puts "Could not clone Vundle. Continuing..."
     end
+  end
+end
+
+desc "Installs all vundle plugins"
+task :vimplugins => :vundle do
+  unless system('vim -c ":BundleInstall" -c ":qa"')
+    STDERR.puts "Could not automatically install vim bundles. Continuing..."
   end
 end
 
