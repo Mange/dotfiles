@@ -1,3 +1,9 @@
+" Don't load any bundles on old vim installations
+" It's probably a server anyway...
+if version < 702
+  finish
+endif
+
 filetype off " required!
 
 " Some hosts I work with does not support git-http
