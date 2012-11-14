@@ -5,6 +5,7 @@ SYMLINKS = %w[
   ackrc
   gemrc
   irbrc
+  git_template
   railsrc
   rspec
   tmux.conf
@@ -58,6 +59,8 @@ task :gitconfig do
   config["merge.conflictstyle", "diff3"]
   config["merge.fugitive.cmd", 'mvim -f -c "Gdiff" "$MERGED"']
   config["merge.tool", "fugitive"]
+
+  config["init.templatedir", "~/.git_template"]
 end
 
 desc "Installs Vundle"
