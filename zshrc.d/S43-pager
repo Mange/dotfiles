@@ -13,3 +13,7 @@ export LESS_TERMCAP_us=$'\E[01;32m'
 # LESS should accept ANSI colors and higlight search results
 export LESS="-Rg"
 
+# Use lesspipe if installed
+if whence 'lesspipe.sh' > /dev/null; then
+  eval `lesspipe.sh`
+fi
