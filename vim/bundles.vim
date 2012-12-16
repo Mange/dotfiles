@@ -16,6 +16,7 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 """ Utility
+Bundle 'DataWraith/auto_mkdir'
 Bundle 'kana/vim-scratch'
 Bundle 'kien/ctrlp.vim'
 Bundle 'mileszs/ack.vim'
