@@ -1,7 +1,9 @@
 " Thanks to bronson/vim-trailing-whitespace for a reference on how to
 " implement this! <3
 
-highlight LongLine ctermbg=darkred ctermfg=white guibg=#2B1C1C
-autocmd ColorScheme * highlight LongLine ctermbg=darkred ctermfg=white guibg=#2B1C1C
+highlight LongLine ctermbg=darkred ctermfg=white guibg=darkred
+autocmd ColorScheme * highlight LongLine ctermbg=darkred ctermfg=white guibg=darkred
 
-autocmd BufWinEnter,InsertEnter,InsertLeave * match LongLine /\%>100v.\+/
+autocmd BufWinEnter,InsertEnter,InsertLeave * match LongLine /\%100c./
+
+" This is a test line.  This is a test line.  This is a test line.  This is a test line.  This is a test line.  This is a test line. 
