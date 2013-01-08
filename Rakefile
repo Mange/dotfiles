@@ -60,6 +60,9 @@ task :gitconfig do
   config["merge.fugitive.cmd", 'mvim -f -c "Gdiff" "$MERGED"']
   config["merge.tool", "fugitive"]
 
+  config["rebase.autosquash", "true"]
+  config["rebase.stat", "true"]
+
   config["init.templatedir", "~/.git_template"]
 end
 
