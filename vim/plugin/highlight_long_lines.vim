@@ -4,6 +4,6 @@
 highlight LongLine ctermbg=darkred ctermfg=white guibg=darkred
 autocmd ColorScheme * highlight LongLine ctermbg=darkred ctermfg=white guibg=darkred
 
-autocmd BufWinEnter,InsertEnter,InsertLeave * match LongLine /\%100c./
+autocmd InsertEnter * match LongLine /\%100c./
 
-" This is a test line.  This is a test line.  This is a test line.  This is a test line.  This is a test line.  This is a test line. 
+" This is a test line.  This is a test line.  This is a test line.  This is a test line.  This is a test line.  This is a test line.
