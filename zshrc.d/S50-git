@@ -21,24 +21,21 @@ alias gro='git rebase @{upstream}'
 alias groi='git rebase -i @{upstream}'
 alias grm='git rebase master'
 
+alias gf='git fetch --prune'
 alias ff='git merge --ff-only'
 alias ffm='git merge --ff-only master'
 alias ffo='git merge --ff-only @{upstream}'
-alias gup='git fetch && ffo'
+alias gup='gf && ffo'
 
 alias gl="git log --graph -n 1000 '$git_log_format'"
 
 # Show all commits between production and master, excluding "contents" of merges
 # e.g. Show merge commits, not what the topic branch contained
-alias glp="git fetch; git log --graph '$git_log_format' --first-parent origin/production...origin/master"
+alias glp="gf; git log --graph '$git_log_format' --first-parent origin/production...origin/master"
 
 alias s="git status --short"
 alias gd="git diff"
 alias gdw="git diff --color-words"
 alias staged="gd --cached"
-
-# Deprecated
-alias gst='echo use s'
-alias gdf='echo use gd / gdw'
 
 unset git_log_format
