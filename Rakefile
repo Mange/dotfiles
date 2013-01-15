@@ -64,6 +64,10 @@ task :gitconfig do
   config["rebase.stat", "true"]
 
   config["init.templatedir", "~/.git_template"]
+
+  # Aliases
+  config["alias.new", %(!sh -c 'git log $1@{1}..$1@{0} "$@"')]
+  config["alias.prune", %(!git remote | xargs -n 1 git remote prune)]
 end
 
 desc "Installs Vundle"
