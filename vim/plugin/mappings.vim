@@ -54,3 +54,6 @@ map <D-/> <plug>NERDCommenterToggle
 
 " %% expands to current buffer's path in command mode
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
+
+" Close all buffers
+nmap <leader>q :bufdo :bd<CR>
