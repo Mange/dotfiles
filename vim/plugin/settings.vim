@@ -46,3 +46,7 @@ set dir=~/.vim/tmp
 set background=dark
 colorscheme Tomorrow-Night
 set listchars=tab:→\ ,eol:¬,nbsp:•
+
+" Highlight searches using only underlines
+hi clear Search
+hi Search term=underline cterm=underline gui=underline
