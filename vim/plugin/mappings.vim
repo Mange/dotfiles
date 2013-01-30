@@ -57,3 +57,6 @@ cnoremap %% <C-R>=expand('%:h').'/'<cr>
 
 " Close all buffers
 nmap <leader>q :bufdo :bd<CR>
+
+" Open TODO
+nmap <leader>t :tabnew<CR>:Note TODO<CR>
