@@ -6,6 +6,7 @@ nmap <Space> :
 
 " Use tab for autocompletions
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<S-TAB>"
 
 " Shift-H and Shift-L to switch tabs
 map <S-h> gT
@@ -20,6 +21,10 @@ map <C-l> <C-w>l
 " Shortcut for saving in all modes
 noremap <C-s> :w<cr>
 inoremap <C-s> <C-o>:w<CR>
+
+" Save and close window
+noremap <C-d> :wq<CR>
+inoremap <C-d> <Esc>:wq<CR>
 
 " Heresy!
 imap <C-a> <C-o>^
