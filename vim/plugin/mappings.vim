@@ -30,8 +30,8 @@ inoremap <C-d> <Esc>:wq<CR>
 imap <C-a> <C-o>^
 imap <C-e> <C-o>$
 
-" Hashrocket!
-imap <C-l> <Space>=><Space>
+" Hashcolon!
+imap <C-l> :<Space>
 
 " Quick list shortcuts
 nmap <Tab> :cn<CR>
@@ -44,6 +44,10 @@ map <expr> Q ''
 " Fugitive mappings
 nmap <F1> :Gstatus<CR>
 nmap <F2> :Gcommit --all<CR>
+nmap <leader>gs :Gstatus<CR>
+nmap <leader>ga :Gw<CR>
+nmap <leader>gc :Gcommit<CR>
+nmap <leader>gca :Gcommit --all<CR>
 
 " NERDCommenter
 map <D-/> <plug>NERDCommenterToggle
