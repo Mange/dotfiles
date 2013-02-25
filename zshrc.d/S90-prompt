@@ -34,7 +34,7 @@ else
 fi
 
 # Speed it up by removing systems I'm not using
-zstyle ':vcs_info:*' enable git svn
+zstyle ':vcs_info:*' enable git svn hg
 
 function() {
   zstyle ':vcs_info:*:prompt:*' use-prompt-escapes true
