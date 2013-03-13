@@ -3,9 +3,77 @@
 # Default:        *?_-.[]~=/&;!#$%^(){}<>
 export WORDCHARS='*?[]~&;!#$%^(){}'
 
+bindkey -v
+
+# Outputs $1 when on insert mode and outputs $2 when on command mode.
+# zle_mode_output "when insert" "when command"
+function zle_mode_output {
+  # Keymap could be empty sometimes; assume insert mode
+  case $KEYMAP in
+    ("vicmd") echo $2;;
+    (*) echo $1
+  esac
+}
+
+# Reset prompt on mode change
+function zle-keymap-select {
+  zle reset-prompt
+}
+zle -N zle-keymap-select
+
+# Start in insert mode (default, but does not hurt)
+zle-line-init () {
+  zle -K viins
+}
+zle -N zle-line-init
+
 # ^LeftArrow, ^RightArrow
 bindkey '[1;5C' forward-word
 bindkey '[1;5D' backward-word
 
 # New line
-bindkey '^J' self-insert
+bindkey -M viins '^J' self-insert
+
+# Vim-like bindings
+# Stolen from https://github.com/sharat87/zsh-vim-mode/blob/master/zsh-vim-mode.plugin.zsh
+# Stuff I don't want presently commented out. I might want them, but with
+# different keybindings later.
+# bindkey -M vicmd ' ' execute-named-cmd # Space for command line mode
+
+# Home key variants
+bindkey '\e[1~' vi-beginning-of-line
+bindkey '\eOH' vi-beginning-of-line
+
+# End key variants
+bindkey '\e[4~' vi-end-of-line
+bindkey '\eOF' vi-end-of-line
+
+bindkey -M viins '^w' vi-backward-kill-word
+
+bindkey -M vicmd 'yy' vi-yank-whole-line
+bindkey -M vicmd 'Y' vi-yank-eol
+
+# bindkey -M vicmd 'y.' vi-yank-whole-line
+# bindkey -M vicmd 'c.' vi-change-whole-line
+# bindkey -M vicmd 'd.' kill-whole-line
+
+bindkey -M vicmd 'u' undo
+bindkey -M vicmd '^r' redo
+
+bindkey -M vicmd 'H' run-help
+bindkey -M viins '^h' run-help
+
+# bindkey -M vicmd 'k' history-substring-search-up
+# bindkey -M vicmd 'j' history-substring-search-down
+
+bindkey '^p' history-substring-search-up
+bindkey '^n' history-substring-search-down
+
+# bindkey -M vicmd '\-' vi-repeat-find
+# bindkey -M vicmd '_' vi-rev-repeat-find
+
+# bindkey -M viins '\e.' insert-last-word
+# bindkey -M vicmd '\e.' insert-last-word
+
+bindkey -M viins '^a' beginning-of-line
+bindkey -M viins '^e' end-of-line

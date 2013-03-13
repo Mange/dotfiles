@@ -1,12 +1,6 @@
 #!/usr/bin/env zsh
 # Prompt settings and configuration
 
-# Will be used by prompt
-# S99-rvm will overwrite this function
-function rvm-ruby-version () {
-  echo "no rvm"
-}
-
 # Make RPROMPT disappear after running a command
 setopt transient_rprompt
 
@@ -16,48 +10,89 @@ setopt transient_rprompt
 # See zshexpn(1).
 setopt prompt_subst
 
-autoload is-at-least
-
-# Capability to show SCM info in the prompt
-if is-at-least 4.3.0; then
-  autoload -Uz vcs_info
-
-  # Generate VCS info just before rendering prompt
-  function precmd {
-    vcs_info 'prompt'
-    rvm_ruby_version_for_humans="$(rvm-ruby-version) "
-  }
-
-  export RPROMPT='$vcs_info_msg_0_'
-else
-  export vcs_info_msg_0_="zsh too old"
-fi
-
-# Speed it up by removing systems I'm not using
-zstyle ':vcs_info:*' enable git svn hg
-
+#
+# Setup VCS info for the prompt
+#
 function() {
-  zstyle ':vcs_info:*:prompt:*' use-prompt-escapes true
-  zstyle ':vcs_info:*:prompt:*' check-for-changes true
+  autoload is-at-least
+  if is-at-least 4.3.0; then
+    autoload -Uz vcs_info
 
-  zstyle ':vcs_info:*:prompt:*' unstagedstr "+"
-  zstyle ':vcs_info:*:prompt:*' stagedstr "+"
+    # Speed it up by removing systems I'm not using
+    zstyle ':vcs_info:*' enable git svn hg
 
-  local branch_format="%F{130}%r%F{244}/%F{202}%b" # repo/branch
+    zstyle ':vcs_info:*:prompt:*' use-prompt-escapes true
+    zstyle ':vcs_info:*:prompt:*' check-for-changes true
 
-  if is-at-least 4.3.11; then
-    local changes_format="%F{green}%c%F{red}%u"
+    # Use colors to differentiate between these
+    zstyle ':vcs_info:*:prompt:*' unstagedstr "+"
+    zstyle ':vcs_info:*:prompt:*' stagedstr "+"
+
+    local branch_format="%F{130}%r%F{244}/%F{202}%b" # repo/branch
+
+    if is-at-least 4.3.11; then
+      local changes_format="%F{green}%c%F{red}%u"
+    else
+      # Old version cannot show changes
+      local changes_format=""
+    fi
+
+    zstyle ':vcs_info:*:prompt:*' formats       "${branch_format}${changes_format}%f" ""
+    zstyle ':vcs_info:*:prompt:*' actionformats "${branch_format}${changes_format}%f [%F{cyan}%a%f]" ""
+
+    zstyle ':vcs_info:*:prompt:*' nvcsformats   "" ""
+
+    # Generate VCS info just before rendering prompt
+    function precmd {
+      vcs_info 'prompt'
+    }
   else
-    # Old version cannot show changes
-    local changes_format=""
+    export vcs_info_msg_0_="zsh too old"
   fi
-
-  zstyle ':vcs_info:*:prompt:*' formats       "${branch_format}${changes_format}%f" ""
-  zstyle ':vcs_info:*:prompt:*' actionformats "${branch_format}${changes_format}%f [%F{cyan}%a%f]" ""
-
-  zstyle ':vcs_info:*:prompt:*' nvcsformats   "" ""
 }
 
+# Convenience functions to disable/enable check-for-changes in certain sessions
+function disable-check-for-changes() {
+  zstyle ':vcs_info:*:prompt:*' check-for-changes false
+}
+
+function enable-check-for-changes() {
+  zstyle ':vcs_info:*:prompt:*' check-for-changes true
+}
+
+#
+# Helper functions to be used when building the prompt
+#
+
+# S99-rvm will overwrite this function
+function rvm-ruby-version () {
+  echo "no rvm"
+}
+
+# Show verbose mode information
+function vi_mode_prompt_info {
+  zle_mode_output "%F{green}INS%f" "%K{red}CMD%k"
+}
+
+if [[ $TERM != screen* ]]; then
+  # Treat these characters as having width 1
+  _prompt_insert_mode_character="%1{›%}"
+  _prompt_command_mode_character="%1{»%}"
+else
+  # Tmux fucks up with UTF-8 in the prompt
+  # Perhaps this is due to me not specifying zero-width on all color codes..?
+  _prompt_insert_mode_character=">"
+  _prompt_command_mode_character="$"
+fi
+
+# Show mode information by the last character in the prompt
+function prompt_end_character {
+  zle_mode_output "$_prompt_insert_mode_character " "%F{red}${_prompt_command_mode_character}%f "
+}
+
+#
+# Actually set up the PROMPT and RPROMPT variables
+#
 function {
   if is256color; then
     local current_time="%F{247}%D{%H:%M}%F{240}%D{:%S}"
@@ -78,27 +113,14 @@ function {
   # Color user differently if we have a privileged user ("!")
   # %(nx.true.false)
   local user="%(!.%F{red}.%F{green})%n"
+
   local dir="%B%F{blue}%4~%b"
   local last_status="%(?.. %F{red}*%?)"
   local current_jobs="%(1j.%F{magenta}%BJ%j%b .)"
-  local ruby_version='%F{yellow}${rvm_ruby_version_for_humans}%f'
+  local ruby_version='%F{yellow}$(rvm-ruby-version) %f'
+  local end='$(prompt_end_character)%f%k%b'
 
-  if [[ $TERM != screen* ]]; then
-    local prompt_end="%1{›%} " # Treat this character as having width 1
-  else
-    # Tmux fucks up with UTF-8 in the prompt
-    local prompt_end="> "
-  fi
 
-  PROMPT="${user}${host} ${current_time}${last_status} $dir ${current_jobs}${ruby_version}${prompt_end}%f%k%b"
+  export RPROMPT='$(vi_mode_prompt_info) $vcs_info_msg_0_'
+  export PROMPT="${user}${host} ${current_time}${last_status} $dir ${current_jobs}${ruby_version}${end}"
 }
-
-# Convenience functions to disable/enable check-for-changes in certain sessions
-function disable-check-for-changes() {
-  zstyle ':vcs_info:*:prompt:*' check-for-changes false
-}
-
-function enable-check-for-changes() {
-  zstyle ':vcs_info:*:prompt:*' check-for-changes true
-}
-

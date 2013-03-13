@@ -1,7 +1,4 @@
 #!/usr/bin/env zsh
 # Misc stuff that does not warrant separate files
 
-# Setting EDITOR to vim makes zsh assume you want vim bindings
-bindkey -e
-
 export REPORTTIME=10
