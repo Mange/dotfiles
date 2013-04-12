@@ -10,7 +10,8 @@ function! s:MapToggle(key, opt)
 endfunction
 
 MapToggle sl list
-MapToggle sh hlsearch
+" Replaced by mapping in mappings.vim
+" MapToggle sh hlsearch
 MapToggle sw wrap
 MapToggle ss spell
 MapToggle sc cursorcolumn

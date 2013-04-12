@@ -24,6 +24,7 @@ Bundle 'netrw.vim'
 Bundle 'tpope/vim-eunuch'
 Bundle 'tpope/vim-fugitive'
 Bundle 'xolox/vim-notes'
+Bundle 'SearchHighlighting'
 
 """ Editor functionality
 Bundle 'Shougo/neocomplcache'

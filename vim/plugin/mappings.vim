@@ -37,6 +37,10 @@ imap <C-l> :<Space>
 nmap <Tab> :cn<CR>
 nmap <S-Tab> :cp<CR>
 
+" Smart toggling of hlsearch (thanks to SearchHighlighting plugin)
+nmap sh <Plug>SearchHighlightingToggleHlsearch
+vmap sh <Plug>SearchHighlightingToggleHlsearch
+
 " Unmap Q
 " I'll use it for context-sensitive actions depending on filetype
 map <expr> Q ''
