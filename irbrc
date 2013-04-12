@@ -45,12 +45,22 @@ end
 
 class Object
   include ShellEmulation
-  def cool_methods
-    (methods - Object.methods).sort
+  def cool_methods(matcher = nil)
+    messages = (methods - Object.methods).sort
+    if matcher
+      messages.grep matcher
+    else
+      messages
+    end
   end
 
-  def my_methods
-    (self.methods - self.class.superclass.instance_methods).sort
+  def my_methods(matcher = nil)
+    messages = (self.methods - self.class.superclass.instance_methods).sort
+    if matcher
+      messages.grep matcher
+    else
+      messages
+    end
   end
 end
 
