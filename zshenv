@@ -1,41 +1,42 @@
-# Set PATH to be a bit more intelligent on Macs, etc.
-function use_path() {
-  if [[ -d $1 ]]; then
-    if [[ $2 == "front" ]]; then
-      export PATH="$1:$PATH"
-    else
-      export PATH="$PATH:$1"
+function {
+  if [[ $customized_paths != "yes" ]]; then
+    customized_paths="yes"
+
+    # Macs do unholy things to the PATH when spawning subshells; so we work
+    # around it by clearing first to a sane default
+    if [ -d /etc/paths.d ]; then
+      path=(
+        $(cat /etc/paths)(/N)
+        $(cat /etc/paths.d/*)(/N)
+
+        /usr/local/bin
+        /usr/bin
+        /bin
+      )
     fi
+
+    path=(
+      /usr/local/sbin
+      /usr/sbin
+      /sbin
+
+      $HOME/bin
+      /opt/*/bin(/N)
+      /usr/local/*/bin(/N)
+
+      /usr/local/bin
+
+      $(whence -p brew >/dev/null && brew --prefix coreutils)/libexec/gnubin(/N)
+
+      "$path[@]"
+    )
+    typeset -Ugx path # uniq global export
   fi
 }
 
-# Give me admin tools in path
-use_path /sbin
-use_path /usr/sbin
-use_path /usr/local/sbin
-
-# This isn't standard on Mac. Wow...
-use_path /usr/local/bin front
-
-# Custom packages at the front
-for dir in /opt/*/bin(/N); do
-  use_path "$dir" front
-done
-
-# GNU coreutils, findutils, etc. on Mac
-# This is the place where the original commands are placed; bins in /opt/local/bin are all named with a 'g' prefix
-if whence -p brew > /dev/null; then
-  use_path "$(brew --prefix coreutils)/libexec/gnubin" front
-fi
-
-# Personal stuff
-use_path ~/bin front
-
-unset use_path
-
 # Non-interactive shells should still get a hold of rvm
-if [ ! -t ]; then
+# Vim runs zsh with -c; a tty is present but it still isn't interactive
+if [ ! -t ] || [[ $VIM != "" ]]; then
   source $HOME/.zshrc.d/S99-rvm
 fi
 
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
