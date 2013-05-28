@@ -38,6 +38,7 @@ Bundle 'gregsexton/gitv'
 Bundle 'michaeljsmith/vim-indent-object'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/syntastic'
+Bundle 'tpope/vim-abolish'
 Bundle 'tpope/vim-endwise'
 Bundle 'tpope/vim-surround'
 
