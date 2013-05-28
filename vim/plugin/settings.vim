@@ -20,7 +20,6 @@ set wrap       " Toggle with sw
 " See map_toggle.vim for more toggle mappings
 
 set shortmess=imrx
-set cmdheight=2
 
 set scrolloff=10
 set sidescrolloff=10
@@ -34,6 +33,10 @@ set expandtab
 set tabstop=2
 set shiftwidth=2
 set smarttab
+
+" Split settings
+set splitbelow
+set splitright
 
 " Setup the menu stuff
 set wildmenu
