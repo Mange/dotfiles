@@ -15,6 +15,9 @@ call vundle#rc()
 " Vundle is an adult; it can manage itself
 Bundle 'gmarik/vundle'
 
+""" Dependency for vim-notes
+Bundle 'xolox/vim-misc'
+
 """ Utility
 Bundle 'DataWraith/auto_mkdir'
 Bundle 'kana/vim-scratch'
