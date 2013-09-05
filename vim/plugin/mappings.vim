@@ -53,9 +53,6 @@ nmap <leader>ga :Gw<CR>
 nmap <leader>gc :Gcommit<CR>
 nmap <leader>gca :Gcommit --all<CR>
 
-" NERDCommenter
-map <D-/> <plug>NERDCommenterToggle
-
 " %% expands to current buffer's path in command mode
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
 
