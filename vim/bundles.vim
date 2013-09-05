@@ -18,6 +18,9 @@ Bundle 'gmarik/vundle'
 """ Dependency for vim-notes
 Bundle 'xolox/vim-misc'
 
+"" Dependency for vim-textobj-rubyblock
+Bundle 'kana/vim-textobj-user'
+
 """ Utility
 Bundle 'DataWraith/auto_mkdir'
 Bundle 'kana/vim-scratch'
@@ -37,6 +40,7 @@ Bundle 'godlygeek/tabular'
 Bundle 'gregsexton/gitv'
 Bundle 'michaeljsmith/vim-indent-object'
 Bundle 'scrooloose/nerdcommenter'
+Bundle 'nelstrom/vim-textobj-rubyblock'
 Bundle 'scrooloose/syntastic'
 Bundle 'tpope/vim-abolish'
 Bundle 'tpope/vim-endwise'
