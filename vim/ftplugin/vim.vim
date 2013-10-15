@@ -1,1 +1,1 @@
-nmap Q :source %<CR>
+nmap <buffer> Q :source %<CR>
