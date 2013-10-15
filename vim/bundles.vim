@@ -22,6 +22,16 @@ NeoBundle 'xolox/vim-misc'
 "" Dependency for vim-textobj-rubyblock
 NeoBundle 'kana/vim-textobj-user'
 
+""" Improves NeoBundle, Unite, etc.
+NeoBundle 'Shougo/vimproc', {
+      \ 'build' : {
+      \     'windows' : 'make -f make_mingw32.mak',
+      \     'cygwin' : 'make -f make_cygwin.mak',
+      \     'mac' : 'make -f make_mac.mak',
+      \     'unix' : 'make -f make_unix.mak',
+      \    },
+      \ }
+
 """ Utility
 NeoBundle 'DataWraith/auto_mkdir'
 NeoBundle 'kana/vim-scratch'
