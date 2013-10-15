@@ -50,24 +50,34 @@ NeoBundle 'tpope/vim-surround'
 " Mirror; VBA from original source does not install
 NeoBundle 'vim-scripts/ZoomWin'
 
-""" Filetypes, projects, etc.
-NeoBundle 'JSON.vim'
-NeoBundle 'ecomba/vim-ruby-refactoring'
-NeoBundle 'kchmck/vim-coffee-script'
-NeoBundle 'nanki/treetop.vim'
-NeoBundle 'othree/html5-syntax.vim'
-NeoBundle 'pangloss/vim-javascript'
-NeoBundle 'puppetlabs/puppet-syntax-vim'
-NeoBundle 'ruby-matchit'
-NeoBundle 'timcharper/textile.vim'
+""" Ruby
 NeoBundle 'tpope/vim-bundler'
-NeoBundle 'tpope/vim-cucumber'
-NeoBundle 'tpope/vim-haml'
-NeoBundle 'tpope/vim-markdown'
+NeoBundle 'tpope/vim-rvm'
+
+NeoBundle 'ecomba/vim-ruby-refactoring'
+NeoBundle 'ruby-matchit'
 NeoBundle 'tpope/vim-rails'
 NeoBundle 'tpope/vim-rake'
-NeoBundle 'tpope/vim-rvm'
 NeoBundle 'vim-ruby/vim-ruby'
+
+NeoBundle 'tpope/vim-haml'
+
+NeoBundle 'nanki/treetop.vim'
+
+""" JS
+NeoBundle 'JSON.vim'
+
+NeoBundle 'kchmck/vim-coffee-script'
+NeoBundle 'pangloss/vim-javascript'
+
+""" HTML
+NeoBundle 'othree/html5-syntax.vim'
+
+""" Misc
+NeoBundle 'puppetlabs/puppet-syntax-vim'
+NeoBundle 'timcharper/textile.vim'
+NeoBundle 'tpope/vim-cucumber'
+NeoBundle 'tpope/vim-markdown'
 
 """ Looks
 NeoBundle 'Lokaltog/vim-powerline'
