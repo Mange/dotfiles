@@ -42,6 +42,7 @@ NeoBundle 'tpope/vim-eunuch'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'xolox/vim-notes'
 NeoBundle 'SearchHighlighting'
+NeoBundle 'mhinz/vim-signify'
 
 """ Editor functionality
 NeoBundle 'Shougo/neocomplcache'
