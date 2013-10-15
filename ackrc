@@ -8,3 +8,6 @@
 --type-set=haml=.haml
 --type-set=gherkin=.feature
 --type-set=config=.ini,.cfg,.config
+
+# Additional directories to ignore
+--ignore-dir=node_modules
