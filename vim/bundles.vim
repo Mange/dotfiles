@@ -6,71 +6,74 @@ endif
 
 filetype off " required!
 
-" Some hosts I work with does not support git-http
-let g:vundle_default_git_proto = 'git'
+if has('vim_starting')
+  set nocompatible
+  set rtp+=~/.vim/bundle/neobundle.vim/
+endif
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+call neobundle#rc(expand("~/.vim/bundle/"))
 
-" Vundle is an adult; it can manage itself
-Bundle 'gmarik/vundle'
+" NeoBundle is an adult; it can manage itself
+NeoBundle 'Shougo/neobundle.vim'
 
 """ Dependency for vim-notes
-Bundle 'xolox/vim-misc'
+NeoBundle 'xolox/vim-misc'
 
 "" Dependency for vim-textobj-rubyblock
-Bundle 'kana/vim-textobj-user'
+NeoBundle 'kana/vim-textobj-user'
 
 """ Utility
-Bundle 'DataWraith/auto_mkdir'
-Bundle 'kana/vim-scratch'
-Bundle 'kien/ctrlp.vim'
-Bundle 'mileszs/ack.vim'
-Bundle 'netrw.vim'
-Bundle 'tpope/vim-eunuch'
-Bundle 'tpope/vim-fugitive'
-Bundle 'xolox/vim-notes'
-Bundle 'SearchHighlighting'
+NeoBundle 'DataWraith/auto_mkdir'
+NeoBundle 'kana/vim-scratch'
+NeoBundle 'kien/ctrlp.vim'
+NeoBundle 'mileszs/ack.vim'
+NeoBundle 'netrw.vim'
+NeoBundle 'tpope/vim-eunuch'
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'xolox/vim-notes'
+NeoBundle 'SearchHighlighting'
 
 """ Editor functionality
-Bundle 'Shougo/neocomplcache'
-Bundle 'UltiSnips'
-Bundle 'bronson/vim-trailing-whitespace'
-Bundle 'godlygeek/tabular'
-Bundle 'gregsexton/gitv'
-Bundle 'michaeljsmith/vim-indent-object'
-Bundle 'nelstrom/vim-textobj-rubyblock'
-Bundle 'scrooloose/syntastic'
-Bundle 'tpope/vim-abolish'
-Bundle 'tpope/vim-commentary'
-Bundle 'tpope/vim-endwise'
-Bundle 'tpope/vim-surround'
+NeoBundle 'Shougo/neocomplcache'
+NeoBundle 'UltiSnips'
+NeoBundle 'bronson/vim-trailing-whitespace'
+NeoBundle 'godlygeek/tabular'
+NeoBundle 'gregsexton/gitv'
+NeoBundle 'michaeljsmith/vim-indent-object'
+NeoBundle 'nelstrom/vim-textobj-rubyblock'
+NeoBundle 'scrooloose/syntastic'
+NeoBundle 'tpope/vim-abolish'
+NeoBundle 'tpope/vim-commentary'
+NeoBundle 'tpope/vim-endwise'
+NeoBundle 'tpope/vim-surround'
 
 " Mirror; VBA from original source does not install
-Bundle 'vim-scripts/ZoomWin'
+NeoBundle 'vim-scripts/ZoomWin'
 
 """ Filetypes, projects, etc.
-Bundle 'JSON.vim'
-Bundle 'ecomba/vim-ruby-refactoring'
-Bundle 'kchmck/vim-coffee-script'
-Bundle 'nanki/treetop.vim'
-Bundle 'othree/html5-syntax.vim'
-Bundle 'pangloss/vim-javascript'
-Bundle 'puppetlabs/puppet-syntax-vim'
-Bundle 'ruby-matchit'
-Bundle 'timcharper/textile.vim'
-Bundle 'tpope/vim-bundler'
-Bundle 'tpope/vim-cucumber'
-Bundle 'tpope/vim-haml'
-Bundle 'tpope/vim-markdown'
-Bundle 'tpope/vim-rails'
-Bundle 'tpope/vim-rake'
-Bundle 'tpope/vim-rvm'
-Bundle 'vim-ruby/vim-ruby'
+NeoBundle 'JSON.vim'
+NeoBundle 'ecomba/vim-ruby-refactoring'
+NeoBundle 'kchmck/vim-coffee-script'
+NeoBundle 'nanki/treetop.vim'
+NeoBundle 'othree/html5-syntax.vim'
+NeoBundle 'pangloss/vim-javascript'
+NeoBundle 'puppetlabs/puppet-syntax-vim'
+NeoBundle 'ruby-matchit'
+NeoBundle 'timcharper/textile.vim'
+NeoBundle 'tpope/vim-bundler'
+NeoBundle 'tpope/vim-cucumber'
+NeoBundle 'tpope/vim-haml'
+NeoBundle 'tpope/vim-markdown'
+NeoBundle 'tpope/vim-rails'
+NeoBundle 'tpope/vim-rake'
+NeoBundle 'tpope/vim-rvm'
+NeoBundle 'vim-ruby/vim-ruby'
 
 """ Looks
-Bundle 'Lokaltog/vim-powerline'
-Bundle 'ap/vim-css-color'
-Bundle 'chriskempson/vim-tomorrow-theme'
+NeoBundle 'Lokaltog/vim-powerline'
+NeoBundle 'ap/vim-css-color'
+NeoBundle 'chriskempson/vim-tomorrow-theme'
 
 filetype plugin indent on " required!
+
+NeoBundleCheck

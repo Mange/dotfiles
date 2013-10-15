@@ -70,18 +70,18 @@ task :gitconfig do
   config["alias.prune", %(!git remote | xargs -n 1 git remote prune)]
 end
 
-desc "Installs Vundle"
-task :vundle => :vim do
-  unless File.exist?('vim/bundle/vundle')
-    unless system('git clone -q git://github.com/gmarik/vundle.git vim/bundle/vundle')
-      STDERR.puts "Could not clone Vundle. Continuing..."
+desc "Installs NeoBundle"
+task :neobundle => :vim do
+  unless File.exist?('vim/bundle/neobundle.vim/')
+    unless system('git clone -q git://github.com/Shougo/neobundle.vim.git vim/bundle/neobundle.vim')
+      STDERR.puts "Could not clone NeoBundle. Continuing..."
     end
   end
 end
 
-desc "Installs all vundle plugins"
-task :vimplugins => :vundle do
-  unless system('vim -c ":BundleInstall" -c ":qa"')
+desc "Installs all neobundle plugins"
+task :vimplugins => :neobundle do
+  unless system('vim -c ":NeoBundleInstall" -c ":qa"')
     STDERR.puts "Could not automatically install vim bundles. Continuing..."
   end
 end
@@ -92,7 +92,7 @@ task :vim do
 end
 
 desc "Installs all files"
-task :install => (SYMLINKS + FILES + %w[gitignore zsh gitconfig vundle]) do
+task :install => (SYMLINKS + FILES + %w[gitignore zsh gitconfig neobundle]) do
   if ENV['SHELL'] !~ /zsh/
     STDERR.puts "Warning: You seem to be using a shell different from zsh (#{ENV['SHELL']})"
     STDERR.puts "Fix this by running:"
