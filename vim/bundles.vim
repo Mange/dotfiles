@@ -92,8 +92,8 @@ NeoBundle 'tpope/vim-cucumber'
 NeoBundle 'tpope/vim-markdown'
 
 """ Looks
-NeoBundle 'Lokaltog/vim-powerline'
 NeoBundle 'ap/vim-css-color'
+NeoBundle 'bling/vim-airline'
 NeoBundle 'chriskempson/vim-tomorrow-theme'
 
 filetype plugin indent on " required!
