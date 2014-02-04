@@ -79,8 +79,9 @@ NeoBundle 'JSON.vim'
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'pangloss/vim-javascript'
 
-""" HTML
+""" HTML/CSS
 NeoBundle 'othree/html5-syntax.vim'
+NeoBundle 'groenewege/vim-less'
 
 """ Misc
 NeoBundle 'puppetlabs/puppet-syntax-vim'
