@@ -9,3 +9,6 @@ doc/tags
 *.swp
 *.swo
 *~
+
+#-- Project-specific things --
+.*.local
