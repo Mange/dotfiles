@@ -23,6 +23,7 @@ function {
       $HOME/bin
       /opt/*/bin(/N)
       /usr/local/*/bin(/N)
+      /usr/local/share/npm/bin
 
       /usr/local/bin
 
