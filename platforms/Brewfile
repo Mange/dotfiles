@@ -1,0 +1,46 @@
+install coreutils
+install findutils --default-names
+install grep --default-names
+
+install ack
+install git
+install lesspipe --syntax-highlighting
+install colordiff
+install ctags
+install fortune
+install nmap
+install node
+install rsync
+install tmux
+install tree
+install watch
+install wget
+install zsh-completions
+
+tap phinze/cask
+install brew-cask
+
+cask alfred link
+
+cask install alfred
+cask install antirsi
+cask install bettertouchtool
+cask install divvy
+cask install dropbox
+cask install google-chrome google-hangouts google-drive
+cask install iterm2
+cask install lastpass-universal
+cask install macvim
+
+cask install dash
+
+cask install spotify
+cask install steam
+cask install ukelele
+
+cask install jsonlook
+cask install qlcolorcode
+cask install qlmarkdown
+cask install qlprettypatch
+cask install qlstephen
+cask install quicklook-csv
