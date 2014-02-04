@@ -16,10 +16,7 @@ call neobundle#rc(expand("~/.vim/bundle/"))
 " NeoBundle is an adult; it can manage itself
 NeoBundle 'Shougo/neobundle.vim'
 
-""" Dependency for vim-notes
-NeoBundle 'xolox/vim-misc'
-
-"" Dependency for vim-textobj-rubyblock
+"" Dependency for vim-textobj-rubyblock and other custom textobj plugins
 NeoBundle 'kana/vim-textobj-user'
 
 """ Improves NeoBundle, Unite, etc.
@@ -40,8 +37,8 @@ NeoBundle 'mileszs/ack.vim'
 NeoBundle 'netrw.vim'
 NeoBundle 'tpope/vim-eunuch'
 NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'xolox/vim-notes'
-NeoBundle 'SearchHighlighting'
+NeoBundle 'xolox/vim-notes', {'depends': ['xolox/vim-misc']}
+NeoBundle 'SearchHighlighting', {'depends': ['ingo-library']}
 NeoBundle 'mhinz/vim-signify'
 
 """ Editor functionality
