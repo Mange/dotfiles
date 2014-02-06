@@ -19,19 +19,8 @@ NeoBundle 'Shougo/neobundle.vim'
 "" Dependency for vim-textobj-rubyblock and other custom textobj plugins
 NeoBundle 'kana/vim-textobj-user'
 
-""" Improves NeoBundle, Unite, etc.
-NeoBundle 'Shougo/vimproc', {
-      \ 'build' : {
-      \     'windows' : 'make -f make_mingw32.mak',
-      \     'cygwin' : 'make -f make_cygwin.mak',
-      \     'mac' : 'make -f make_mac.mak',
-      \     'unix' : 'make -f make_unix.mak',
-      \    },
-      \ }
-
 """ Utility
 NeoBundle 'DataWraith/auto_mkdir'
-NeoBundle 'kana/vim-scratch'
 NeoBundle 'kien/ctrlp.vim'
 NeoBundle 'mileszs/ack.vim'
 NeoBundle 'netrw.vim'
@@ -46,7 +35,6 @@ NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'UltiSnips'
 NeoBundle 'bronson/vim-trailing-whitespace'
 NeoBundle 'godlygeek/tabular'
-NeoBundle 'gregsexton/gitv'
 NeoBundle 'michaeljsmith/vim-indent-object'
 NeoBundle 'nelstrom/vim-textobj-rubyblock'
 NeoBundle 'tommcdo/vim-exchange'
@@ -56,8 +44,6 @@ NeoBundle 'tpope/vim-abolish'
 NeoBundle 'tpope/vim-commentary'
 NeoBundle 'tpope/vim-endwise'
 NeoBundle 'tpope/vim-surround'
-
-" Mirror; VBA from original source does not install
 NeoBundle 'vim-scripts/ZoomWin'
 
 """ Ruby
