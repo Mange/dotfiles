@@ -1,0 +1,65 @@
+#!/usr/bin/env ruby
+# encoding: utf-8
+
+require 'json'
+require 'open-uri'
+require 'set'
+require 'pathname'
+
+wanted_stations = Set.new %w[
+ambient
+chillout
+chilloutdreams
+chiptunes
+futuresynthpop
+glitchhop
+lounge
+spacemusic
+vocalchillout
+vocallounge
+vocaltrance
+]
+
+stations = []
+
+home = Pathname.new(Dir.home)
+destinations = [
+  home + "Music/Radio/DI",
+  home + "Music/Radio",
+  home + "Music/Playlists/DI",
+  home + "Music/DI",
+  home + "Music/Playlists",
+]
+destination = destinations.find { |dest| dest.directory? }
+
+unless destination
+  STDERR.puts "I do not know where to save the playlists. Please create one of the following directories:"
+  destinations.each do |candidate|
+    STDERR.puts "\t* #{candidate}"
+  end
+  exit 1
+end
+
+print "Fetching station list… "
+open("http://listen.di.fm/public1/") do |file|
+  JSON.parse(file.read).each do |station|
+    if wanted_stations.include? station["key"]
+      stations << station
+    end
+  end
+end
+print "\e[32m✔︎\e[0m\n"
+
+longest_station_length = stations.map { |s| s["name"].length }.max
+
+stations.each do |station|
+  print "\e[34m%s\e[0m " % ("#{station["name"]}…".rjust(longest_station_length + 1))
+  open(station["playlist"]) do |playlist|
+    destination.join(station["name"] + ".pls").open("w") do |file|
+      playlist.each_line { |line| file << line }
+    end
+  end
+  print "\e[32m✔︎\e[0m\n"
+end
+
+puts "\nStations saved at #{destination}"

@@ -1,4 +1,5 @@
 require File.expand_path('../support/dotfile', __FILE__)
+require File.expand_path('../support/binary', __FILE__)
 require 'fileutils'
 
 SYMLINKS = %w[
@@ -17,6 +18,9 @@ SYMLINKS = %w[
   zsh
 ]
 FILES = []
+BINARIES = %w[
+  di-download
+]
 
 SYMLINKS.each do |file|
   desc "Installs #{file} by symlinking it inside your home"
@@ -25,10 +29,25 @@ SYMLINKS.each do |file|
   end
 end
 
+BINARIES.each do |file|
+  desc "Installs #{file} binary by symlinking it to your home's bin directory"
+  task file => :bin do
+    Binary.new(file).install_symlink
+  end
+end
+
 FILES.each do |file|
   desc "Installs #{file} by copying it to your home"
   task file do
     Dotfile.new(file).install_copy
+  end
+end
+
+desc "Creates your bin directory if not present"
+task :bin do
+  bin_path = File.join(Dir.home, "bin")
+  unless File.directory? bin_path
+    Dir.mkdir(bin_path, 0750)
   end
 end
 
@@ -92,7 +111,7 @@ task :vim do
 end
 
 desc "Installs all files"
-task :install => (SYMLINKS + FILES + %w[gitignore zsh gitconfig neobundle]) do
+task :install => (SYMLINKS + FILES + BINARIES + %w[gitignore zsh gitconfig neobundle]) do
   if ENV['SHELL'] !~ /zsh/
     STDERR.puts "Warning: You seem to be using a shell different from zsh (#{ENV['SHELL']})"
     STDERR.puts "Fix this by running:"

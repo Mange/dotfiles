@@ -25,9 +25,6 @@ class Dotfile
     target_path.delete if target_path.symlink? or (target_path.exist? and should_delete_files)
   end
 
-protected
-  attr_reader :name
-
   def target_path
     @target_path ||= Pathname.new(home_path).expand_path
   end
@@ -39,6 +36,9 @@ protected
   def home_path
     @home_path ||= File.join('~', ".#{name}")
   end
+
+  protected
+  attr_reader :name
 
   def clear_target_path
     # Broken symlinks does not exist, so test for presence of a symlink as well
