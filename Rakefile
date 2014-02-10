@@ -114,7 +114,7 @@ task :update => [:install, :cleanup]
 desc "Clears all symlinks"
 task :clear_symlinks do
   SYMLINKS.each do |file|
-    Dotfile.new(file).delete_target
+    Dotfile.new(file).delete_target(:only_symlink => true)
   end
 end
 
