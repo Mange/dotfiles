@@ -1,6 +1,5 @@
 install coreutils
 install findutils --default-names
-install grep --default-names
 
 install ack
 install git
@@ -10,17 +9,18 @@ install ctags
 install fortune
 install nmap
 install node
-install rsync
 install tmux
 install tree
 install watch
 install wget
 install zsh-completions
 
+tap homebrew/dupes
+install grep --default-names
+install rsync
+
 tap phinze/cask
 install brew-cask
-
-cask alfred link
 
 cask install alfred
 cask install antirsi
