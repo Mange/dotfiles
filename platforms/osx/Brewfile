@@ -32,6 +32,7 @@ cask install iterm2
 cask install lastpass-universal
 cask install macvim
 
+cask install skitch
 cask install dash
 
 cask install spotify
