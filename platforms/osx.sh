@@ -28,9 +28,27 @@ if ! ps aux | grep "Alfred 2\.app" > /dev/null 2>&1; then
   fi
 fi
 
-if [ ! -d $HOME/.rvm ]; then
+if [ ! -d "$HOME/.rvm" ]; then
   echo "::::::::::: INSTALLING RVM :::::::::::"
   \curl -sSL https://get.rvm.io | bash -s stable
+fi
+
+if [ ! -d ../vendor/tomorrow-theme ]; then
+  echo "::::::::::: INSTALLING TOMORROW THEME :::::::::::"
+  git clone https://github.com/chriskempson/tomorrow-theme.git ../vendor/tomorrow-theme
+
+  # Install Chrome theme
+  mkdir -p "$HOME/Library/Application\ Support/Google/Chrome/Default/User/"
+  cp "../vendor/tomorrow-theme/Google Chrome Developer Tools/Custom.css" "$HOME/Library/Application\ Support/Google/Chrome/Default/User/Custom.css"
+
+  # iTerm 2
+  open "../vendor/tomorrow-theme/iTerm2/Tomorrow Night.itermcolors"
+fi
+
+if [ ! -d "$HOME/Music/Radio/DI" ]; then
+  echo "::::::::::: DOWNLOADING RADIO PLAYLISTS :::::::::::"
+  mkdir -p "$HOME/Music/Radio/DI"
+  ../bin/di-download
 fi
 
 # zsh-completions
