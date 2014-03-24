@@ -7,8 +7,7 @@ cd $(dirname $0)
 keyboardfile="/Library/Keyboard Layouts/Manges.keylayout"
 if [ ! -e "$keyboardfile" ]; then
   echo "::::::::::: INSTALLING KEYBOARD LAYOUT :::::::::::"
-  rm -f "$keyboardfile" # In case we had a broken symlink rather than nothing at all
-  ln -s "$(pwd -P)/osx/Manges.keylayout" "$keyboardfile"
+  sudo cp "$(pwd -P)/osx/Manges.keylayout" "$keyboardfile"
 fi
 
 if [ ! -e /usr/local/bin/brew ]; then
