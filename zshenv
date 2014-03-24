@@ -6,8 +6,7 @@ function {
     # around it by clearing first to a sane default
     if [ -d /etc/paths.d ]; then
       path=(
-        $(cat /etc/paths)(/N)
-        $(cat /etc/paths.d/*)(/N)
+        $(cat /etc/paths /etc/paths.d/*(N))(/N)
 
         /usr/local/bin
         /usr/bin
