@@ -31,6 +31,7 @@ cask install google-chrome google-hangouts google-drive
 cask install iterm2
 cask install lastpass-universal
 cask install macvim
+cask install skype
 
 cask install skitch
 cask install dash
