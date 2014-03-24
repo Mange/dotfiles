@@ -10,5 +10,6 @@ vim/tmp
 vim/local_*.vim
 
 zsh/*
+vendor/*
 
 .DS_Store
