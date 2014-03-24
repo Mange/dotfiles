@@ -22,7 +22,8 @@ if ! ps aux | grep "Alfred 2\.app" > /dev/null 2>&1; then
   if [ -d "$HOME/Applications/Alfred 2.app" ]; then
     echo "::::::::::: STARTING ALFRED :::::::::::"
     open "$HOME/Applications/Alfred 2.app"
-    sleep 5
+    echo "Press enter after letting Alfred start up properly..."
+    read x
     brew cask alfred link
   fi
 fi
