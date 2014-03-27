@@ -1,9 +1,0 @@
-#!/usr/bin/env zsh
-# Job control aliases and hacks
-
-alias j='jobs -l'
-
-setopt auto_continue # CONT any disowned commands
-setopt auto_resume   # "man" automatically resumes "man command" if in background ("man other" does not)
-setopt check_jobs    # print job statuses on exit, and cancel exiting the first time
-setopt hup           # HUP any jobs when exiting

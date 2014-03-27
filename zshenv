@@ -37,6 +37,10 @@ function {
 # Non-interactive shells should still get a hold of rvm
 # Vim runs zsh with -c; a tty is present but it still isn't interactive
 if [ ! -t ] || [[ $VIM != "" ]]; then
-  source $HOME/.zshrc.d/S99-rvm
+  if [[ -s /usr/local/rvm/scripts/rvm ]]; then
+    source /usr/local/rvm/scripts/rvm
+  elif [[ -s "$HOME/.rvm/scripts/rvm" ]]; then
+    source "$HOME/.rvm/scripts/rvm"
+  fi
 fi
 

@@ -1,7 +1,0 @@
-#!/usr/bin/env zsh
-# Misc stuff that does not warrant separate files
-
-export REPORTTIME=10
-
-# Disable flow control to allow ctrl-s and ctrl-q in terminal
-stty -ixon -ixoff

@@ -1,8 +1,0 @@
-#!/usr/bin/env zsh
-# Ruby on Rails development
-
-alias rt='RAILS_ENV=test rake'
-alias rc='rails console'
-alias migrate='rake db:migrate db:test:prepare'
-alias rmigrate='rake db:migrate:redo db:test:prepare'
-

@@ -1,5 +1,0 @@
-#!/usr/bin/env zsh
-
-# I want my primary group to write to my files
-# Why wouldn't I?
-umask 002
