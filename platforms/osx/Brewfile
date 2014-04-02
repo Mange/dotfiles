@@ -20,6 +20,7 @@ install grep --default-names
 install rsync
 
 tap phinze/cask
+tap caskroom/fonts
 install brew-cask
 
 cask install alfred
@@ -46,3 +47,5 @@ cask install qlmarkdown
 cask install qlprettypatch
 cask install qlstephen
 cask install quicklook-csv
+
+cask install font-dejavu
