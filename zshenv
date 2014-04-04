@@ -20,6 +20,7 @@ function {
       /sbin
 
       $HOME/bin
+      $HOME/.rvm/bin
       /opt/*/bin(/N)
       /usr/local/*/bin(/N)
       /usr/local/share/npm/bin
