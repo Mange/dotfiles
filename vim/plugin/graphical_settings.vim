@@ -8,7 +8,7 @@ set list
 " Automatically resize splits on window resize
 autocmd VimResized * wincmd =
 
-set guifont=Menlo\ for\ Powerline:h12,\ Menlo:h12,\ DejaVu\ Sans\ Mono\ 9
+set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h14,\ DejaVu\ Sans\ Mono:h14,\ DejaVu\ Sans\ Mono\ for\ Powerline\ 10,\ DejaVu\ Sans\ Mono\ 10
 
 if has("gui_macvim")
   " Fullscreen takes up entire screen
