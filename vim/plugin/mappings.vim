@@ -57,7 +57,7 @@ nmap <leader>gca :Gcommit --all<CR>
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
 
 " Close all buffers
-nmap <leader>q :bufdo :bd<CR>
+nmap <leader>q :0,1000bd<CR>
 
 " Open TODO
 nmap <leader>t :tabnew<CR>:Note TODO<CR>

@@ -31,7 +31,6 @@ NeoBundle 'SearchHighlighting', {'depends': ['ingo-library']}
 NeoBundle 'mhinz/vim-signify'
 
 """ Editor functionality
-NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'UltiSnips'
 NeoBundle 'bronson/vim-trailing-whitespace'
 NeoBundle 'godlygeek/tabular'
