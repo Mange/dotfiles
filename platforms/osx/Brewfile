@@ -49,3 +49,4 @@ cask install qlstephen
 cask install quicklook-csv
 
 cask install font-dejavu
+cask install font-dejavu-sans-mono-for-powerline
