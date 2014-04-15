@@ -8,7 +8,11 @@
 --type-set=haml=.haml
 --type-set=gherkin=.feature
 --type-set=config=.ini,.cfg,.config
+--type-set=log=.log,.stdout,.stderr
 
 # Additional directories to ignore
 --ignore-dir=node_modules
 --ignore-dir=bower_components
+
+# Don't search logs by default
+--no-log
