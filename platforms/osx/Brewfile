@@ -9,6 +9,7 @@ install ctags
 install fortune
 install nmap
 install node
+install ssh-copy-id
 install tmux
 install tree
 install watch
