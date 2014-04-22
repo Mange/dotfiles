@@ -1,4 +1,5 @@
 #!/bin/zsh
+# vim: foldmethod=marker
 
 setopt extendedglob
 
