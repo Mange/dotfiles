@@ -8,12 +8,18 @@ set list
 " Automatically resize splits on window resize
 autocmd VimResized * wincmd =
 
-set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h14,\ DejaVu\ Sans\ Mono:h14,\ DejaVu\ Sans\ Mono\ for\ Powerline\ 10,\ DejaVu\ Sans\ Mono\ 10
+" Display textwidth
+if exists("&colorcolumn")
+  set colorcolumn=+1,+2,+3
+endif
 
 if has("gui_macvim")
+  set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h14,\ DejaVu\ Sans\ Mono:h14
   " Fullscreen takes up entire screen
   set fuoptions=maxhorz,maxvert
   set transparency=0
+else
+  set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 10,\ DejaVu\ Sans\ Mono\ 10
 endif
 
 " Shortcuts to use system clipboard
