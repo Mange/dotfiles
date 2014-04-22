@@ -26,6 +26,6 @@ endif
 if v:progname =~? "gvim"
   vmap <C-c> "+y
   vmap <C-x> "+x
-  nmap <C-v> "+p
-  imap <C-v> <C-o>"+p
+  nmap <C-v> "+P
+  imap <C-v> <C-r>+
 endif
