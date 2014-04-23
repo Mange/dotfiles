@@ -1,5 +1,5 @@
 #!/bin/zsh
-# vim: foldmethod=marker
+# vim: fdm=marker:
 
 setopt extendedglob
 autoload is-at-least
