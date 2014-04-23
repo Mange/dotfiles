@@ -58,6 +58,20 @@ task :gitignore do
   end
 end
 
+desc "Initializes/updates other repos"
+task :modules do
+  {
+    "zsh/zsh-syntax-highlighting" => "git://github.com/zsh-users/zsh-syntax-highlighting.git",
+  }.each_pair do |pathname, repo|
+    path = File.expand_path(pathname, File.dirname(__FILE__))
+    if File.exists?(path)
+      system %(cd "#{path}" && git pull --rebase > /dev/null)
+    else
+      system %(git clone "#{repo}" "#{path}")
+    end
+  end
+end
+
 desc "Does some basic Git setup"
 task :gitconfig do
   exec = lambda { |command| system(*command) or STDERR.puts "Command failed: #{command.join(' ')}" }
@@ -110,7 +124,7 @@ task :vim do
 end
 
 desc "Installs all files"
-task :install => (SYMLINKS + FILES + BINARIES + %w[gitignore zsh gitconfig neobundle]) do
+task :install => (SYMLINKS + FILES + BINARIES + %w[modules gitignore zsh gitconfig neobundle]) do
   if ENV['SHELL'] !~ /zsh/
     STDERR.puts "Warning: You seem to be using a shell different from zsh (#{ENV['SHELL']})"
     STDERR.puts "Fix this by running:"
