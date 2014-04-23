@@ -2,8 +2,9 @@
 # vim: foldmethod=marker
 
 setopt extendedglob
+autoload is-at-least
 
-if [[ $ZSH_VERSION == 4.3.* ]]; then
+if is-at-least 4.3; then
   if [[ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
     source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
   fi
@@ -406,7 +407,6 @@ setopt prompt_subst
 # Setup VCS info for the prompt
 #
 function() {
-  autoload is-at-least
   if is-at-least 4.3.0; then
     autoload -Uz vcs_info
 
