@@ -67,8 +67,9 @@ NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'pangloss/vim-javascript'
 
 """ HTML/CSS
-NeoBundle 'othree/html5-syntax.vim'
+NeoBundle 'gregsexton/MatchTag'
 NeoBundle 'groenewege/vim-less'
+NeoBundle 'othree/html5-syntax.vim'
 
 """ Misc
 NeoBundle 'puppetlabs/puppet-syntax-vim'
