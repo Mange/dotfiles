@@ -92,8 +92,7 @@ task :gitconfig do
   config["commit.gpgsign", "true"]
 
   config["merge.conflictstyle", "diff3"]
-  config["merge.fugitive.cmd", 'mvim -f -c "Gdiff" "$MERGED"']
-  config["merge.tool", "fugitive"]
+  config["merge.tool", "vimdiff"]
 
   config["rebase.autosquash", "true"]
   config["rebase.stat", "true"]
