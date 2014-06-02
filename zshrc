@@ -312,7 +312,7 @@ alias-if-exist colordiff diff
 unset alias-if-exist
 # }}}
 # {{{ Git settings and shortcuts
-git_log_format='--pretty=format:%Cblue%h%Creset %cr %C(bold black)%an%Cgreen%d%Creset %s'
+git_log_format='%C(bold blue)%h%C(reset) %C(yellow)%G?%C(reset) - %C(bold green)%ar%C(reset) - %C(bold black)%cn %C(auto)%d%C(reset) %C(magenta)%GS%n''  %s%n'
 
 alias checkout='git checkout'
 alias master="git checkout master"
@@ -338,11 +338,11 @@ alias ffm='git merge --ff-only master'
 alias ffo='git merge --ff-only @{upstream}'
 alias gup='gf && ffo'
 
-alias gl="git log --graph -n 1000 '$git_log_format'"
+alias gl="git log --graph -n 1000 --format='tformat:$git_log_format'"
 
 # Show all commits between production and master, excluding "contents" of merges
 # e.g. Show merge commits, not what the topic branch contained
-alias glp="gf; git log --graph '$git_log_format' --first-parent origin/production...origin/master"
+alias glp="gf; git log --graph --format='tformat:$git_log_format' --first-parent origin/production...origin/master"
 
 alias s="git status --short"
 alias gd="git diff"
