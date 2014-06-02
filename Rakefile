@@ -82,11 +82,14 @@ task :gitconfig do
 
   config["user.name", "Magnus Bergmark"]
   config["user.email", "magnus.bergmark@gmail.com"]
+  config["user.signingkey", "4D8E0309"]
   config["github.user", "Mange"]
 
   config["color.branch.current", "bold green"]
   config["color.branch.local", "green"]
   config["color.branch.remote", "blue"]
+
+  config["commit.gpgsign", "true"]
 
   config["merge.conflictstyle", "diff3"]
   config["merge.fugitive.cmd", 'mvim -f -c "Gdiff" "$MERGED"']
