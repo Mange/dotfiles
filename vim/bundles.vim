@@ -60,6 +60,9 @@ NeoBundle 'tpope/vim-haml'
 
 NeoBundle 'nanki/treetop.vim'
 
+""" Go
+NeoBundle 'fatih/vim-go'
+
 """ JS
 NeoBundle 'JSON.vim'
 

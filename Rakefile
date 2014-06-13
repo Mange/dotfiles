@@ -50,6 +50,14 @@ task :bin do
   end
 end
 
+desc "Creates your gopath directory"
+task :gopath do
+  gopath_path = File.join(Dir.home, "Projects", "gopath")
+  unless File.directory? gopath_path
+    FileUtils.mkdir_p(gopath_path, 0750)
+  end
+end
+
 desc "Installs the global gitignore file"
 task :gitignore do
   Dotfile.new('gitignore').install_symlink
@@ -126,7 +134,7 @@ task :vim do
 end
 
 desc "Installs all files"
-task :install => (SYMLINKS + FILES + BINARIES + %w[modules gitignore zsh gitconfig neobundle]) do
+task :install => (SYMLINKS + FILES + BINARIES + %w[gopath modules gitignore zsh gitconfig neobundle]) do
   if ENV['SHELL'] !~ /zsh/
     STDERR.puts "Warning: You seem to be using a shell different from zsh (#{ENV['SHELL']})"
     STDERR.puts "Fix this by running:"
