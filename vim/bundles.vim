@@ -24,7 +24,6 @@ NeoBundle 'DataWraith/auto_mkdir'
 NeoBundle 'kien/ctrlp.vim'
 NeoBundle 'mileszs/ack.vim'
 NeoBundle 'netrw.vim'
-NeoBundle 'tpope/vim-dispatch'
 NeoBundle 'tpope/vim-eunuch'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'xolox/vim-notes', {'depends': ['xolox/vim-misc']}
