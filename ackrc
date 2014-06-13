@@ -13,6 +13,8 @@
 # Additional directories to ignore
 --ignore-dir=node_modules
 --ignore-dir=bower_components
+--ignore-dir=tmp
+--ignore-dir=coverage
 
 # Don't search logs by default
 --no-log
