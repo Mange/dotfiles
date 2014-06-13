@@ -119,18 +119,8 @@ try-editor () {
 try-editor nano
 try-editor vi
 try-editor vim
-[[ $DISPLAY != "" ]] && try-editor gvim -f
-try-editor mvim -f --nomru
 
 export VISUAL=$EDITOR
-
-# Trick to get focus back to my terminal again
-if [[ $EDITOR == mvim* ]]; then
-  local terminal_app='Terminal'
-  [[ -e /Applications/iTerm.app ]] && terminal_app='iTerm'
-  [[ -e ~/Applications/iTerm.app ]] && terminal_app='iTerm'
-  EDITOR="$EDITOR -c \"au VimLeave * \!open -a $terminal_app\""
-fi
 
 unset try-editor
 # }}}
