@@ -302,7 +302,7 @@ alias-if-exist colordiff diff
 unset alias-if-exist
 # }}}
 # {{{ Git settings and shortcuts
-git_log_format='%C(bold blue)%h%C(reset) %C(yellow)%G?%C(reset) - %C(bold green)%ar%C(reset) - %C(bold black)%cn %C(auto)%d%C(reset) %C(magenta)%GS%n''  %s%n'
+git_log_format='%C(bold blue)%h%C(reset) %C(yellow)%G?%C(reset) - %C(bold green)%ar%C(reset) - %C(bold black)%an %C(auto)%d%C(reset) %C(magenta)%GS%n''  %s%n'
 
 alias checkout='git checkout'
 alias master="git checkout master"
