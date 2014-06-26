@@ -11,10 +11,10 @@ if has('vim_starting')
   set rtp+=~/.vim/bundle/neobundle.vim/
 endif
 
-call neobundle#rc(expand("~/.vim/bundle/"))
+call neobundle#begin(expand("~/.vim/bundle/"))
 
 " NeoBundle is an adult; it can manage itself
-NeoBundle 'Shougo/neobundle.vim'
+NeoBundleFetch 'Shougo/neobundle.vim'
 
 "" Dependency for vim-textobj-rubyblock and other custom textobj plugins
 NeoBundle 'kana/vim-textobj-user'
@@ -84,6 +84,9 @@ NeoBundle 'ap/vim-css-color'
 NeoBundle 'bling/vim-airline'
 NeoBundle 'chriskempson/vim-tomorrow-theme'
 
-filetype plugin indent on " required!
+call neobundle#end()
+
+" required!
+filetype plugin indent on
 
 NeoBundleCheck
