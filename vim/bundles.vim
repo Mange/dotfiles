@@ -77,7 +77,7 @@ NeoBundle 'othree/html5-syntax.vim'
 NeoBundle 'puppetlabs/puppet-syntax-vim'
 NeoBundle 'timcharper/textile.vim'
 NeoBundle 'tpope/vim-cucumber'
-NeoBundle 'tpope/vim-markdown'
+NeoBundle 'suan/vim-instant-markdown'
 
 """ Looks
 NeoBundle 'ap/vim-css-color'
