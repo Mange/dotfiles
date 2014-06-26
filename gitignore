@@ -12,3 +12,4 @@ doc/tags
 
 #-- Project-specific things --
 .*.local
+.ruby-gemset
