@@ -21,14 +21,15 @@ NeoBundle 'kana/vim-textobj-user'
 
 """ Utility
 NeoBundle 'DataWraith/auto_mkdir'
+NeoBundle 'SearchHighlighting', {'depends': ['ingo-library']}
 NeoBundle 'kien/ctrlp.vim'
+NeoBundle 'mhinz/vim-signify'
 NeoBundle 'mileszs/ack.vim'
 NeoBundle 'netrw.vim'
+NeoBundle 'rizzatti/dash.vim'
 NeoBundle 'tpope/vim-eunuch'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'xolox/vim-notes', {'depends': ['xolox/vim-misc']}
-NeoBundle 'SearchHighlighting', {'depends': ['ingo-library']}
-NeoBundle 'mhinz/vim-signify'
 
 """ Editor functionality
 NeoBundle 'UltiSnips'
