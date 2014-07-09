@@ -265,9 +265,12 @@ export LESS_TERMCAP_us=$'\E[01;32m'
 export LESS="-Rg"
 
 # Use lesspipe if installed
-# TODO: Make this installed automatically
 if whence 'lesspipe.sh' > /dev/null; then
   eval `lesspipe.sh`
+fi
+
+if [[ -f "/usr/share/source-highlight/src-hilite-lesspipe.sh" ]]; then
+  export LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh %s"
 fi
 # }}}
 # {{{ Copy/Paste
