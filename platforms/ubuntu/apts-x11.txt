@@ -1,0 +1,5 @@
+# vim:ft=sh:
+# Programs to install only if X is installed on
+# machine.
+
+install vim-gnome
