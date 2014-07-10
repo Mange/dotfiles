@@ -1,0 +1,14 @@
+! åäö on ordinary swedish layout, but on modifier
+keycode  34 = bracketleft braceleft aring Aring
+keycode  47 = semicolon colon odiaeresis Odiaeresis
+keycode  48 = apostrophe quotedbl adiaeresis Adiaeresis
+
+! nbsp on modifier space
+keycode  65 = space NoSymbol nobreakspace
+
+! Swap ~ location
+keycode 94 = grave asciitilde grave asciitilde
+
+! Apple Right Alt for special characters
+add mod1 = Alt_L Meta_L
+keysym ISO_Level3_Shift = Mode_switch

@@ -3,18 +3,19 @@ require File.expand_path('../support/binary', __FILE__)
 require 'fileutils'
 
 SYMLINKS = %w[
+  Xmodmap
   ackrc
   gemrc
-  irbrc
   git_template
+  irbrc
   railsrc
   rspec
   tmux.conf
   vimrc
+  zsh
   zshenv
   zshprofile
   zshrc
-  zsh
 ]
 FILES = []
 BINARIES = %w[
