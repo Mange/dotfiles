@@ -1,7 +1,8 @@
-#!/bin/sh
+#!/usr/bin/env bash
 set -e
 
 cd $(dirname $0)
+. ./support/functions.bash
 
-echo "::::::::::: INSTALLING WORK SOFTWARE :::::::::::"
+header "Installing work software"
 brew bundle osx/Brewfile-work

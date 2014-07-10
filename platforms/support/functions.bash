@@ -17,7 +17,14 @@ export -f overline
 
 header() {
   echo
-  echo "$yellow‣ $green${1^^}$reset"
+  if [[ $BASH_VERSION < 4 ]]; then
+    # Mac OS comes with a very old version of bash
+    # No uppercase for me.
+    local message="$1"
+  else
+    local message="${1^^}"
+  fi
+  echo "$yellow‣ $green${message}$reset"
   echo -n $yellow
   overline $((${#1} + 2))
   echo $reset

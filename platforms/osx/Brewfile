@@ -1,6 +1,9 @@
 install coreutils
 install findutils --default-names
 
+# Replace ancient version in OS X
+install bash
+
 install ack
 install git
 install lesspipe --syntax-highlighting
