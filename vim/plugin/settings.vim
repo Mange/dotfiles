@@ -42,9 +42,6 @@ set splitright
 set wildmenu
 set wildmode=list:longest,full
 
-" Have swapfiles in a separate directory
-set dir=~/.vim/tmp
-
 " Looks
 set background=dark
 colorscheme Tomorrow-Night
