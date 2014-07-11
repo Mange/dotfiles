@@ -162,3 +162,4 @@ task :clear_symlinks do
   end
 end
 
+task default: :update
