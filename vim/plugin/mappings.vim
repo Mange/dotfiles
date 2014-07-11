@@ -67,4 +67,4 @@ cnoremap $$ <C-R>=expand('%:h').'/'<cr>
 nmap <leader>q :0,1000bd<CR>
 
 " Open TODO
-nmap <leader>t :tabnew<CR>:Note TODO<CR>
+nmap <leader>t :split<CR>:Note TODO<CR>
