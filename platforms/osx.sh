@@ -34,25 +34,11 @@ fi
 if [ ! -d ../vendor/tomorrow-theme ]; then
   header "Installing Tomorrow theme"
   git clone https://github.com/chriskempson/tomorrow-theme.git ../vendor/tomorrow-theme
-else
-  header "Updating Tomorrow theme"
-  (cd ../vendor/tomorrow-theme && git pull --rebase)
-fi
 
-# Install Chrome theme
-mkdir -p "$HOME/Library/Application Support/Google/Chrome/Default/User/"
-cp "../vendor/tomorrow-theme/Google Chrome Developer Tools/Custom.css" "$HOME/Library/Application Support/Google/Chrome/Default/User/Custom.css"
-
-# iTerm 2
-# Opening theme when it's already loaded will create a duplicate. Open it if
-# there are no preferences at all, or if the preferences to not include the
-# theme.
-if [ -f ~/Library/Preferences/com.googlecode.iterm2.plist ]; then
-  if ! grep -q "Tomorrow Night" ~/Library/Preferences/com.googlecode.iterm2.plist; then
-    open "../vendor/tomorrow-theme/iTerm2/Tomorrow Night.itermcolors"
-  fi
-else
+  # iTerm 2
   open "../vendor/tomorrow-theme/iTerm2/Tomorrow Night.itermcolors"
+else
+  (cd ../vendor/tomorrow-theme && git pull --rebase)
 fi
 
 ./shared/di.sh
