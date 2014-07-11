@@ -59,8 +59,9 @@ nmap <leader>ga :Gw<CR>
 nmap <leader>gc :Gcommit<CR>
 nmap <leader>gca :Gcommit --all<CR>
 
-" %% expands to current buffer's path in command mode
-cnoremap %% <C-R>=expand('%:h').'/'<cr>
+" $$ expands to current buffer's path in command mode
+cnoremap %% <C-R>=expand('%')<cr>
+cnoremap $$ <C-R>=expand('%:h').'/'<cr>
 
 " Close all buffers
 nmap <leader>q :0,1000bd<CR>
