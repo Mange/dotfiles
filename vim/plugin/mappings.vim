@@ -4,6 +4,9 @@ nnoremap k gk
 xnoremap j gj
 xnoremap k gk
 
+" Always assume very magic when searching
+noremap / /\v
+
 " Jump to alternative file
 map <leader><leader> :A<CR>
 
