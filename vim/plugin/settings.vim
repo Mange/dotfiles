@@ -50,3 +50,13 @@ set listchars=tab:→\ ,eol:¬,nbsp:•
 " Highlight searches using only underlines
 hi clear Search
 hi Search term=underline cterm=underline gui=underline
+
+" Improve spelling look in terminal
+hi clear SpellBad
+hi SpellBad term=undercurl,bold cterm=undercurl,bold ctermfg=red gui=undercurl guisp=Red
+hi clear SpellCap
+hi SpellCap term=undercurl,bold cterm=undercurl,bold ctermfg=blue gui=undercurl guisp=blue
+
+" Improve warning look
+hi clear SyntasticWarning
+hi SyntasticWarning ctermbg=magenta ctermfg=black gui=undercurl guisp=magenta
