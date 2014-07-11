@@ -145,8 +145,6 @@ end
 
 desc "Clears all 'legacy' files (like old symlinks)"
 task :cleanup do
-  Dotfile.new('screenrc').delete_target(:only_symlink => true)
-  Dotfile.new('pentadactylrc').delete_target(:only_symlink => true)
   Dotfile.new('zshrc.d').delete_target(:only_symlink => true)
   # Clean up backup created after converting ~/.zsh to a symlink
   `[ -d ~/.zsh~ ] && mv ~/.zsh\~/* ~/.zsh && rmdir ~/.zsh~`
