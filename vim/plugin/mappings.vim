@@ -1,3 +1,9 @@
+" Navigate display lines
+nnoremap j gj
+nnoremap k gk
+xnoremap j gj
+xnoremap k gk
+
 " Jump to alternative file
 map <leader><leader> :A<CR>
 
