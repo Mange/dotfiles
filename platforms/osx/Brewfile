@@ -1,3 +1,10 @@
+update
+
+# "install foo", where already installed version x, while latest is version x+n
+# will cause an error and abort the process. We upgrade all packages first to
+# avoid these problems.
+upgrade
+
 install coreutils
 install findutils --default-names
 
@@ -23,7 +30,7 @@ tap homebrew/dupes
 install grep --default-names
 install rsync
 
-tap phinze/cask
+tap caskroom/cask
 tap caskroom/fonts
 install brew-cask
 
@@ -52,5 +59,5 @@ cask install qlprettypatch
 cask install qlstephen
 cask install quicklook-csv
 
-cask install font-dejavu
+cask install font-dejavu-sans
 cask install font-dejavu-sans-mono-for-powerline
