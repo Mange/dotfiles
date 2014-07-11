@@ -29,6 +29,7 @@ NeoBundle 'netrw.vim'
 NeoBundle 'rizzatti/dash.vim'
 NeoBundle 'tpope/vim-eunuch'
 NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'tpope/vim-vinegar'
 NeoBundle 'xolox/vim-notes', {'depends': ['xolox/vim-misc']}
 
 """ Editor functionality
