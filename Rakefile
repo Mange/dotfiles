@@ -55,7 +55,7 @@ desc "Creates your gopath directory"
 task :gopath do
   gopath_path = File.join(Dir.home, "Projects", "gopath")
   unless File.directory? gopath_path
-    FileUtils.mkdir_p(gopath_path, 0750)
+    FileUtils.mkdir_p(gopath_path, mode: 0750)
   end
 end
 
