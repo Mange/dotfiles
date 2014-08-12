@@ -128,6 +128,9 @@ unset try-editor
 # Activate completion system and do some basic settings
 
 zmodload zsh/complist
+# Use my custom completions too
+fpath=(~/.zsh/completion $fpath)
+
 autoload -U compinit && compinit -d ~/.zsh/completiondump
 
 # Find out what an alias stands for and complete like if it was the original command
