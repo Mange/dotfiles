@@ -1,0 +1,13 @@
+#compdef bundle-exec
+# vim:ft=zsh:
+
+if (( CURRENT == 2 )); then
+  compadd rspec spec cap rails rake
+fi
+
+if (( CURRENT > 2 )); then
+  complcommand=_$words[2]
+  if whence $complcommand >/dev/null 2>/dev/null; then
+    $complcommand $words[3,-1]
+  fi
+fi
