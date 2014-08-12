@@ -33,14 +33,15 @@ NeoBundle 'tpope/vim-vinegar'
 NeoBundle 'xolox/vim-notes', {'depends': ['xolox/vim-misc']}
 
 """ Editor functionality
+NeoBundle 'AndrewRadev/switch.vim'
 NeoBundle 'UltiSnips'
 NeoBundle 'bronson/vim-trailing-whitespace'
 NeoBundle 'godlygeek/tabular'
 NeoBundle 'michaeljsmith/vim-indent-object'
 NeoBundle 'nelstrom/vim-textobj-rubyblock'
-NeoBundle 'tommcdo/vim-exchange'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'terryma/vim-multiple-cursors'
+NeoBundle 'tommcdo/vim-exchange'
 NeoBundle 'tpope/vim-abolish'
 NeoBundle 'tpope/vim-commentary'
 NeoBundle 'tpope/vim-endwise'

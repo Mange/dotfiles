@@ -10,8 +10,8 @@ noremap / /\v
 " Jump to alternative file
 map <leader><leader> :A<CR>
 
-" This is sooo nice
-nmap <Space> :
+" Switch using space
+nmap <Space> :Switch<cr>
 
 " Use tab for autocompletions
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
