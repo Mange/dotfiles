@@ -1,10 +1,16 @@
 // Configs
 S.cfga({
-  "defaultToCurrentScreen" : true,
-  "secondsBetweenRepeat" : 0.1,
-  "checkDefaultsOnLoad" : true,
-  "focusCheckWidthMax" : 3000,
-  "orderScreensLeftToRight" : true
+  "defaultToCurrentScreen": true,
+  "secondsBetweenRepeat": 0.1,
+  "checkDefaultsOnLoad": true,
+  "focusCheckWidthMax": 3000,
+  "orderScreensLeftToRight": true,
+
+  "windowHintsDuration": 5,
+  "windowHintsShowIcons": true,
+
+  "windowHintsIgnoreHiddenWindows": false,
+  "windowHintsSpread": true
 });
 
 // Monitors
@@ -24,9 +30,12 @@ S.bind(hyperKey("k"), S.op("focus", {direction: "up"}), true);
 S.bind(hyperKey("l"), S.op("focus", {direction: "right"}), true);
 
 S.bind(hyperKey(";"), S.op("focus", {app: "iTerm"}), false);
+S.bind(hyperKey("c"), S.op("focus", {app: "iTerm"}), false);
+
 S.bind(hyperKey("i"), S.op("focus", {app: "MacVim"}), false);
 S.bind(hyperKey("n"), S.op("focus", {app: "Google Chrome"}), false);
 S.bind(hyperKey("'"), S.op("focus", {app: "Flowdock"}), false);
+S.bind(hyperKey("u"), S.op("focus", {app: "Dash"}), false);
 
 // Move + Resize
 
@@ -51,3 +60,5 @@ S.bind(hyperKey("return"), S.op("chain", {operations: [
 
 // Misc
 S.bind(hyperKey("r"), S.op("relaunch"));
+
+S.bind(hyperKey("space"), S.op("hint", {characters: "JKLN1234567890"}));
