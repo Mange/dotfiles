@@ -134,8 +134,18 @@ task :vim do
   Dotfile.new('vim').install_symlink
 end
 
+desc "Installs Karabiner config (on Macs)"
+task :karabiner_config do
+  app_support = Pathname.new("~/Library/Application Support").expand_path
+  if app_support.directory?
+    config = Dotfile.new("karabiner.xml")
+    config.home_path = app_support.join("Karabiner", "private.xml")
+    config.install_symlink
+  end
+end
+
 desc "Installs all files"
-task :install => (SYMLINKS + FILES + BINARIES + %w[gopath modules gitignore zsh gitconfig neobundle]) do
+task :install => (SYMLINKS + FILES + BINARIES + %w[karabiner_config gopath modules gitignore zsh gitconfig neobundle]) do
   if ENV['SHELL'] !~ /zsh/
     STDERR.puts "Warning: You seem to be using a shell different from zsh (#{ENV['SHELL']})"
     STDERR.puts "Fix this by running:"

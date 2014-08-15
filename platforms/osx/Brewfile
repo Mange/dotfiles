@@ -45,6 +45,9 @@ cask install lastpass-universal
 cask install macvim
 cask install skype
 
+cask install seil
+cask install karbiner
+
 cask install skitch
 cask install dash
 

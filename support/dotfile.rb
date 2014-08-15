@@ -2,6 +2,8 @@ require 'pathname'
 require 'fileutils'
 
 class Dotfile
+  attr_writer :home_path
+
   def initialize(name)
     @name = name
   end

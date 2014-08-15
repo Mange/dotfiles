@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<root>
+  <item>
+    <name>Remap PC Application Key to Hyper</name>
+    <appendix>OS X doesn't have a Hyper. This maps PC Application Key to Control + Shift + Option + Command.</appendix>
+
+    <identifier>mange.pc_app_to_hyper</identifier>
+
+    <autogen>
+      --KeyToKey--
+      KeyCode::PC_APPLICATION,
+
+      KeyCode::COMMAND_L,
+      ModifierFlag::OPTION_L | ModifierFlag::SHIFT_L | ModifierFlag::CONTROL_L
+    </autogen>
+  </item>
+</root>
+
