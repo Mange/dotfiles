@@ -37,7 +37,6 @@ install brew-cask
 cask install alfred
 cask install antirsi
 cask install bettertouchtool
-cask install divvy
 cask install dropbox
 cask install google-chrome google-hangouts google-drive
 cask install iterm2
@@ -47,6 +46,7 @@ cask install skype
 
 cask install seil
 cask install karbiner
+cask install slate
 
 cask install skitch
 cask install dash

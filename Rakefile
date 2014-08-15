@@ -10,6 +10,7 @@ SYMLINKS = %w[
   irbrc
   railsrc
   rspec
+  slate.js
   tmux.conf
   vimrc
   zsh
