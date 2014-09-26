@@ -128,6 +128,12 @@ unset try-editor
 # Activate completion system and do some basic settings
 
 zmodload zsh/complist
+
+# Homebrew puts a lot of completions in here
+if [ -d /usr/local/share/zsh/site-functions ]; then
+  fpath=(/usr/local/share/zsh/site-functions $fpath)
+fi
+
 # Use my custom completions too
 fpath=(~/.zsh/completion $fpath)
 
