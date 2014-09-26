@@ -15,6 +15,7 @@
 --ignore-dir=bower_components
 --ignore-dir=tmp
 --ignore-dir=coverage
+--ignore-dir=target
 
 # Don't search logs by default
 --no-log
