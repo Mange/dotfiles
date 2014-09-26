@@ -13,7 +13,7 @@ fi
 [ -f ~/.zshrc.before ] && source ~/.zshrc.before
 
 # {{{ Helper functions
-command-exist () { whence $1 > /dev/null }
+command-exist () { whence $1 > /dev/null; }
 # }}}
 # {{{ umask
 # I want my primary group to write to my files

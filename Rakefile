@@ -11,6 +11,8 @@ SYMLINKS = %w[
   railsrc
   rspec
   slate.js
+  sshrc
+  sshrc.d
   tmux.conf
   vimrc
   zsh
@@ -144,6 +146,20 @@ task :karabiner_config do
     config.install_symlink
   end
 end
+
+desc "Generate a copy of the zshrc file for sshrc"
+sshrc_zshrc = File.expand_path("~/.sshrc.d/.zshrc")
+file sshrc_zshrc => "sshrc.d" do
+  File.open(sshrc_zshrc, 'w') do |out|
+    # Minify zshrc by removing comments and indentations
+    source = File.expand_path("../zshrc", __FILE__)
+    File.foreach(source) do |line|
+      filtered = line.sub(/#.*$/, '').sub(/^\s+/, '')
+      out << filtered unless filtered.empty?
+    end
+  end
+end
+task :install => sshrc_zshrc
 
 desc "Installs all files"
 task :install => (SYMLINKS + FILES + BINARIES + %w[karabiner_config gopath modules gitignore zsh gitconfig neobundle]) do

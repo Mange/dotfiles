@@ -20,6 +20,7 @@ install fortune
 install nmap
 install node
 install ssh-copy-id
+install sshrc
 install tmux
 install tree
 install watch

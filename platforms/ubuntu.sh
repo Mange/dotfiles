@@ -37,7 +37,18 @@ install-chrome() {
   rm google-chrome*.deb
 }
 
+install-sshrc() {
+  sudo add-apt-repository ppa:russell-s-stewart/ppa
+  sudo apt-get update
+  sudo apt-get install sshrc
+}
+
 install-apts ubuntu/apts.txt "CLI software"
+
+if ! hash sshrc 2>/dev/null; then
+  header "Installing sshrc"
+  install-sshrc
+fi
 
 if hash X 2>/dev/null; then
   install-apts ubuntu/apts-x11.txt "X software"
