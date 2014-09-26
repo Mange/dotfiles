@@ -62,6 +62,9 @@ NeoBundle 'tpope/vim-haml'
 
 NeoBundle 'nanki/treetop.vim'
 
+""" Scala
+NeoBundle 'derekwyatt/vim-scala'
+
 """ Go
 NeoBundle 'fatih/vim-go'
 
