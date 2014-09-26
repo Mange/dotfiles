@@ -1,7 +1,6 @@
 # vim:ft=sh:
 # Bare essentials
 install zsh vim ack-grep
-install source-highlight # for lesspipe
 
 # Fonts
 install fonts-dejavu fonts-dejavu-extra fonts-droid
@@ -9,6 +8,7 @@ install fonts-dejavu fonts-dejavu-extra fonts-droid
 # Development
 install git colordiff exuberant-ctags
 install tmux
+install source-highlight # for lesspipe
 
 # Misc
 install wget curl zsh-doc zsh-lovers tree
