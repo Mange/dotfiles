@@ -7,7 +7,10 @@ keycode  48 = apostrophe quotedbl adiaeresis Adiaeresis
 keycode  65 = space NoSymbol nobreakspace
 
 ! Swap ~ location
-keycode 94 = grave asciitilde grave asciitilde
+keycode 94 = acute asciitilde dead_acute dead_tilde
+
+! Extra letters
+keycode  26 = e E eacute Eacute
 
 ! Apple Right Alt for special characters
 add mod1 = Alt_L Meta_L
