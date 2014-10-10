@@ -71,3 +71,6 @@ nmap <leader>q :0,1000bd<CR>
 
 " Open TODO
 nmap <leader>t :split<CR>:Note TODO<CR>
+
+" Search for word in vim *and* Ack at the same time
+nmap <leader>a *:AckFromSearch<CR>

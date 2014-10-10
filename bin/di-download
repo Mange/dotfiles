@@ -6,6 +6,19 @@ require 'open-uri'
 require 'set'
 require 'pathname'
 
+if ARGV.include? '--help'
+  puts <<-USAGE
+#$0 [--help]
+
+Downloads Digitally Imported radio playlists.
+
+It will look for a listen key file in ~/Dropbox/Security/DI.fm.listenkey or
+fall back to free radio if none is found.
+
+USAGE
+  exit
+end
+
 wanted_stations = Set.new %w[
 ambient
 chillout
@@ -19,8 +32,6 @@ vocalchillout
 vocallounge
 vocaltrance
 ]
-
-stations = []
 
 home = Pathname.new(Dir.home)
 destinations = [
@@ -40,10 +51,22 @@ unless destination
   exit 1
 end
 
+listen_key_file = home.join("Dropbox", "Security", "DI.fm.listenkey")
+print "Looking for listen key in #{listen_key_file}… "
+if listen_key_file.exist?
+  print "\e[32m✔︎\e[0m\n"
+  listen_key = listen_key_file.read.chomp
+else
+  print "\e[31m✘\e[0m\n"
+  listen_key = nil
+end
+
 print "Fetching station list… "
+stations = []
 open("http://listen.di.fm/public1/") do |file|
   JSON.parse(file.read).each do |station|
     if wanted_stations.include? station["key"]
+      station["playlist"] << "?listen_key=#{listen_key}" if listen_key
       stations << station
     end
   end
