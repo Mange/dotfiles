@@ -63,7 +63,12 @@ end
 
 print "Fetching station list… "
 stations = []
-open("http://listen.di.fm/public1/") do |file|
+if listen_key
+  stations_url = "http://listen.di.fm/premium/"
+else
+  stations_url = "http://listen.di.fm/public1/"
+end
+open(stations_url) do |file|
   JSON.parse(file.read).each do |station|
     if wanted_stations.include? station["key"]
       station["playlist"] << "?listen_key=#{listen_key}" if listen_key
