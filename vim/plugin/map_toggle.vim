@@ -1,6 +1,7 @@
 " Toggle certain display settings
 " I don't know whom to attribute this to, but I got it from here:
 " https://gist.github.com/722047 (AndrewRadev)
+" I've also made some changes myself.
 
 " Toggle settings:
 command! -nargs=+ MapToggle call s:MapToggle(<f-args>)
@@ -15,4 +16,4 @@ MapToggle sl list
 MapToggle sw wrap
 MapToggle ss spell
 MapToggle sc cursorcolumn
-
+MapToggle sn number
