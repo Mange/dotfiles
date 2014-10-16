@@ -6,10 +6,13 @@ doc/tags
 
 #-- Crap and metadata --
 .DS_Store
-*.swp
-*.swo
 *~
 
 #-- Project-specific things --
 .*.local
 .ruby-gemset
+
+#-- Editor-specific things --
+*.swp
+*.swo
+/.idea
