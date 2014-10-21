@@ -103,12 +103,33 @@ bindkey -M vicmd 'v' edit-command-line
 bindkey -M viins '^rv' edit-command-line
 
 # }}}
-# {{{ ls Colors
+# {{{ ls (Colors, etc.)
 eval $(dircolors -b)
 
 # Files that I don't have to pay attention to
 export LS_COLORS="$LS_COLORS:*.nfo=90:*.sfv=90:*.srt=90:*.sub=90"
 export ZLS_COLORS="${LS_COLORS}"
+
+alias ls='ls --color=auto'
+alias l='ls -l'
+
+# Replace l with k if git is installed
+if is-at-least 4.3 && command-exist git; then
+  if [[ -f ~/.zsh/k/k.sh ]]; then
+    source ~/.zsh/k/k.sh
+
+    # k does not support parameters right now. Do a normal ls if any parameter is present.
+    alias l='maybe-k'
+    maybe-k() {
+      if [[ $# == 0 ]]; then
+        k
+      else
+        ls -la "$@"
+      fi
+    }
+  fi
+fi
+
 # }}}
 # {{{ EDITOR
 try-editor () {
@@ -225,9 +246,6 @@ alias t='tree -L 3 --filelimit 50'
 
 # Sort files by size and show human readable
 alias fusage='ls -Ssrh'
-
-alias ls='ls --color=auto'
-alias l='ls -l'
 
 # Enhanced cd:
 #   * cd <path>/<file> go to <path>

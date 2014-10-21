@@ -73,8 +73,9 @@ end
 desc "Initializes/updates other repos"
 task :modules do
   {
-    "zsh/zsh-syntax-highlighting" => "git://github.com/zsh-users/zsh-syntax-highlighting.git",
+    "zsh/zsh-syntax-highlighting" => "https://github.com/zsh-users/zsh-syntax-highlighting.git",
     "zsh/zsh-history-substring-search" => "https://github.com/zsh-users/zsh-history-substring-search.git",
+    "zsh/k" => "https://github.com/supercrabtree/k.git",
   }.each_pair do |pathname, repo|
     path = File.expand_path(pathname, File.dirname(__FILE__))
     if File.exists?(path)
