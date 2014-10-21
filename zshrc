@@ -36,6 +36,12 @@ bindkey -v
 autoload edit-command-line
 zle -N edit-command-line
 
+if is-at-least 4.3; then
+  if [[ -f ~/.zsh/zsh-history-substring-search/zsh-history-substring-search.zsh ]]; then
+    source ~/.zsh/zsh-history-substring-search/zsh-history-substring-search.zsh
+  fi
+fi
+
 # Outputs $1 when on insert mode and outputs $2 when on command mode.
 # zle_mode_output "when insert" "when command"
 function zle_mode_output {
@@ -51,12 +57,6 @@ function zle-keymap-select {
   zle reset-prompt
 }
 zle -N zle-keymap-select
-
-# Start in insert mode (default, but does not hurt)
-zle-line-init () {
-  zle -K viins
-}
-zle -N zle-line-init
 
 # ^LeftArrow, ^RightArrow
 bindkey '[1;5C' forward-word
@@ -93,14 +93,15 @@ bindkey -M vicmd '^r' redo
 bindkey -M vicmd 'H' run-help
 bindkey -M viins '^h' run-help
 
-bindkey '^p' history-substring-search-up
-bindkey '^n' history-substring-search-down
+bindkey '^n' history-substring-search-up
+bindkey '^p' history-substring-search-down
 
 bindkey -M viins '^a' beginning-of-line
 bindkey -M viins '^e' end-of-line
 
 bindkey -M vicmd 'v' edit-command-line
 bindkey -M viins '^rv' edit-command-line
+
 # }}}
 # {{{ ls Colors
 eval $(dircolors -b)
