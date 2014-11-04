@@ -433,7 +433,7 @@ function() {
     autoload -Uz vcs_info
 
     # Speed it up by removing systems I'm not using
-    zstyle ':vcs_info:*' enable git svn hg
+    zstyle ':vcs_info:*' enable git
 
     zstyle ':vcs_info:*:prompt:*' use-prompt-escapes true
     zstyle ':vcs_info:*:prompt:*' check-for-changes true
