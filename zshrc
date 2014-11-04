@@ -438,21 +438,20 @@ function() {
     zstyle ':vcs_info:*:prompt:*' use-prompt-escapes true
     zstyle ':vcs_info:*:prompt:*' check-for-changes true
 
-    # Use colors to differentiate between these
-    zstyle ':vcs_info:*:prompt:*' unstagedstr "+"
-    zstyle ':vcs_info:*:prompt:*' stagedstr "+"
+    zstyle ':vcs_info:*:prompt:*' unstagedstr "%1{⭐︎%}"
+    zstyle ':vcs_info:*:prompt:*' stagedstr "%1{❖%}"
 
-    local branch_format="%F{130}%r%F{244}/%F{202}%b" # repo/branch
+    local branch_format="%F{202}%r%F{208}@%F{214}%b" # repo/branch
 
     if is-at-least 4.3.11; then
-      local changes_format="%F{green}%c%F{red}%u"
+      local changes_format="%F{022}%c%F{088}%u"
     else
       # Old version cannot show changes
       local changes_format=""
     fi
 
-    zstyle ':vcs_info:*:prompt:*' formats       "${branch_format}${changes_format}%f" ""
-    zstyle ':vcs_info:*:prompt:*' actionformats "${branch_format}${changes_format}%f [%F{cyan}%a%f]" ""
+    zstyle ':vcs_info:*:prompt:*' formats       "${changes_format} ${branch_format}%f" ""
+    zstyle ':vcs_info:*:prompt:*' actionformats "${changes_format} ${branch_format}%f [%F{cyan}%a%f]" ""
 
     zstyle ':vcs_info:*:prompt:*' nvcsformats   "" ""
 
@@ -485,7 +484,7 @@ function rvm-ruby-version () {
 
 # Show verbose mode information
 function vi_mode_prompt_info {
-  zle_mode_output "%F{green}INS%f" "%K{red}CMD%k"
+  zle_mode_output "" "%K{196}%F{000} CMD %f%k"
 }
 
 # TODO: Do we still need this distinction?
@@ -502,7 +501,7 @@ fi
 
 # Show mode information by the last character in the prompt
 function prompt_end_character {
-  zle_mode_output "$_prompt_insert_mode_character " "%F{red}${_prompt_command_mode_character}%f "
+  zle_mode_output "$_prompt_insert_mode_character " "%F{196}${_prompt_command_mode_character}%f "
 }
 
 #
@@ -527,7 +526,7 @@ function {
 
   # Color user differently if we have a privileged user ("!")
   # %(nx.true.false)
-  local user="%(!.%F{red}.%F{green})%n"
+  local user="%(!.%F{196}.%F{072})%n"
 
   local dir="%B%F{blue}%4~%b"
   local last_status="%(?.. %F{red}*%?)"
@@ -536,7 +535,7 @@ function {
   local end='$(prompt_end_character)%f%k%b'
 
 
-  export RPROMPT='$(vi_mode_prompt_info) $vcs_info_msg_0_'
+  export RPROMPT='$(vi_mode_prompt_info)$vcs_info_msg_0_'
   export PROMPT="${user}${host} ${current_time}${last_status} $dir ${current_jobs}${ruby_version}${end}"
 }
 # }}}
