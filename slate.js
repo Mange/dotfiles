@@ -20,9 +20,11 @@ var monitorSecondary = "1";
 // Actions
 var left = S.op("push", {direction: "left", style: "bar-resize:screenSizeX/2"});
 var leftPrimary = left.dup({screen: monitorPrimary});
+var leftSecondary = left.dup({screen: monitorSecondary});
 
 var right = S.op("push", {direction: "right", style: "bar-resize:screenSizeX/2"});
 var rightPrimary = right.dup({screen: monitorPrimary});
+var rightSecondary = right.dup({screen: monitorSecondary});
 
 var up = S.op("push", {direction: "up", style: "bar-resize:screenSizeY/2"});
 var down = S.op("push", {direction: "down", style: "bar-resize:screenSizeY/2"});
@@ -54,15 +56,26 @@ var singleScreenLayout = S.layout("single screen", {
   "iTerm": {operations: [right], repeat: true}
 });
 
-// Two screen layout
+// Two screen layout (1 big, 1 smaller)
 var twoScreenLayout = S.layout("two screens", {
   "_before_": {operations: [showFlowdock]},
   "MacVim": {operations: [leftPrimary, rightPrimary], repeat: true},
-  "iTerm": {operations: [rightPrimary], repeat: true},
+  "iTerm": {operations: [rightPrimary, leftPrimary, rightSecondary], repeat: true},
   "Flowdock": {operations: [fullscreenSecondary]}
 });
 
+// Two big-screen layout
+var twoBigLayout = S.layout("two big screens", {
+  "_before_": {operations: [showFlowdock]},
+  "MacVim": {operations: [leftPrimary, rightPrimary], repeat: true},
+  "Google Chrome": {operations: [rightPrimary, leftSecondary, rightSecondary], repeat: true},
+  "iTerm": {operations: [leftSecondary, rightPrimary, rightSecondary], repeat: true},
+  "Flowdock": {operations: [rightSecondary]}
+});
+
+bigScreenResolutions = ["2560x1440", "2560x1440"];
 S.default(1, singleScreenLayout);
+S.default(bigScreenResolutions, twoBigLayout);
 S.default(2, twoScreenLayout);
 
 // Binds //
@@ -100,12 +113,37 @@ S.bind(hyperKey("r"), S.op("relaunch"));
 S.bind(hyperKey("f"), S.op("hint", {characters: "JKLN1234567890"}));
 
 // Reapply layout
-S.bind(hyperKey("space"), function() {
-  var layoutName;
-  if (S.screenCount() == 1) {
-    layoutName = singleScreenLayout;
-  } else {
-    layoutName = twoScreenLayout;
+var currentResolutions = function() {
+  var resolutions = [];
+  S.eachScreen(function(s) {
+    var rect = s.rect();
+    resolutions.push(rect.width + "x" + rect.height);
+  });
+  return resolutions;
+};
+var arraysEqual = function(a, b) {
+  if (a.length !== b.length) { return false; }
+  for (var i = 0; i < a.length; ++i) {
+    if (a[i] !== b[i]) { return false; }
   }
-  S.op("layout", {name: layoutName}).run();
+  return true;
+}
+var determineOptimalLayout = function(resolutions) {
+  if (resolutions.length == 1) {
+    return singleScreenLayout;
+  } else if (resolutions.length == 2) {
+    if (arraysEqual(resolutions, bigScreenResolutions)) {
+      return twoBigLayout;
+    } else {
+      return twoScreenLayout;
+    }
+  }
+
+  return null;
+};
+S.bind(hyperKey("space"), function() {
+  var layoutName = determineOptimalLayout(currentResolutions());
+  if (layoutName !== null) {
+    S.op("layout", {name: layoutName}).run();
+  }
 });
