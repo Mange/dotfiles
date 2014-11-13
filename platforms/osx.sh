@@ -17,7 +17,7 @@ if [ ! -e /usr/local/bin/brew ]; then
 fi
 
 header "Installing software"
-brew bundle osx/Brewfile
+./osx/brew.sh
 
 if ! ps aux | grep "Alfred 2\.app" > /dev/null 2>&1; then
   if [ -d "$HOME/Applications/Alfred 2.app" ]; then

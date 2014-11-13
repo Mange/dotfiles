@@ -5,4 +5,4 @@ cd $(dirname $0)
 . ./support/functions.bash
 
 header "Installing work software"
-brew bundle osx/Brewfile-work
+./osx/brew-work.sh
