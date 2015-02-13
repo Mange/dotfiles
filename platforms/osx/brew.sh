@@ -11,7 +11,7 @@ brew install findutils --default-names
 # Replace ancient version in OS X
 brew install bash
 
-brew install ack
+brew install ag
 brew install git
 brew install lesspipe --syntax-highlighting
 brew install colordiff

@@ -4,7 +4,6 @@ require 'fileutils'
 
 SYMLINKS = %w[
   Xmodmap
-  ackrc
   gemrc
   git_template
   irbrc
@@ -175,6 +174,7 @@ end
 desc "Clears all 'legacy' files (like old symlinks)"
 task :cleanup do
   Dotfile.new('zshrc.d').delete_target(:only_symlink => true)
+  Dotfile.new('ackrc').delete_target(:only_symlink => true)
   # Clean up backup created after converting ~/.zsh to a symlink
   `[ -d ~/.zsh~ ] && mv ~/.zsh\~/* ~/.zsh && rmdir ~/.zsh~`
 end

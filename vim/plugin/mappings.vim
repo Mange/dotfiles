@@ -76,5 +76,7 @@ nmap <leader>q :0,1000bd<CR>
 " Open TODO
 nmap <leader>t :split<CR>:Note TODO<CR>
 
-" Search for word in vim *and* Ack at the same time
-nmap <leader>a *:AckFromSearch<CR>
+" Search for word in vim *and* Ag at the same time
+" <leader>A for case-insensitive, <leader>a for smart-case
+nmap <leader>a *:AgFromSearch<CR>
+nmap <leader>A *:Ag -i "\b<C-r><C-w>\b"<CR>

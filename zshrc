@@ -324,9 +324,6 @@ alias-if-exist () {
   fi
 }
 
-# Stupid Debian
-alias-if-exist ack-grep ack
-
 # Colordiff
 alias-if-exist colordiff diff
 
