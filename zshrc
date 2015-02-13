@@ -438,7 +438,7 @@ function() {
     zstyle ':vcs_info:*:prompt:*' use-prompt-escapes true
     zstyle ':vcs_info:*:prompt:*' check-for-changes true
 
-    zstyle ':vcs_info:*:prompt:*' unstagedstr "%1{⭐︎%}"
+    zstyle ':vcs_info:*:prompt:*' unstagedstr "%1{★%}"
     zstyle ':vcs_info:*:prompt:*' stagedstr "%1{❖%}"
 
     local branch_format="%F{202}%r%F{208}@%F{214}%b" # repo/branch
