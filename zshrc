@@ -327,6 +327,15 @@ alias-if-exist () {
 # Colordiff
 alias-if-exist colordiff diff
 
+if command-exist ag; then
+  # I should not use Ack anymore
+  ack() {
+    echo "Use Ag, dummy!"
+    sleep 1
+    ag $@
+  }
+fi
+
 unset alias-if-exist
 # }}}
 # {{{ Git settings and shortcuts
