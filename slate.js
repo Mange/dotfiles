@@ -68,8 +68,8 @@ var twoScreenLayout = S.layout("two screens", {
 var twoBigLayout = S.layout("two big screens", {
   "_before_": {operations: [showFlowdock]},
   "MacVim": {operations: [leftPrimary, rightPrimary], repeat: true},
-  "Google Chrome": {operations: [rightPrimary, leftSecondary, rightSecondary], repeat: true},
-  "iTerm": {operations: [leftSecondary, rightPrimary, rightSecondary], repeat: true},
+  "Google Chrome": {operations: [leftSecondary, rightSecondary, rightPrimary], repeat: true},
+  "iTerm": {operations: [rightPrimary, rightSecondary, leftSecondary], repeat: true},
   "Flowdock": {operations: [rightSecondary]}
 });
 
