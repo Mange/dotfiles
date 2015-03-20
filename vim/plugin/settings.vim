@@ -60,3 +60,5 @@ hi SpellCap term=undercurl,bold cterm=undercurl,bold ctermfg=blue gui=undercurl 
 " Improve warning look
 hi clear SyntasticWarning
 hi SyntasticWarning ctermbg=magenta ctermfg=black gui=undercurl guisp=magenta
+hi SyntasticWarningSign ctermfg=yellow guifg=yellow
+hi SyntasticErrorSign ctermfg=red guifg=red
