@@ -21,6 +21,7 @@ NeoBundle 'kana/vim-textobj-user'
 
 """ Utility
 NeoBundle 'DataWraith/auto_mkdir'
+NeoBundle 'FelikZ/ctrlp-py-matcher'
 NeoBundle 'SearchHighlighting', {'depends': ['ingo-library']}
 NeoBundle 'kien/ctrlp.vim'
 NeoBundle 'mhinz/vim-signify'
