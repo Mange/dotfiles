@@ -49,6 +49,7 @@ brew cask install skype
 brew cask install seil
 brew cask install karbiner
 brew cask install slate
+brew cask install flux
 
 brew cask install skitch
 brew cask install dash
