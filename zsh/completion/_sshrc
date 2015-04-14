@@ -1,2 +1,2 @@
 #compdef _sshrc
-compdef sshrc=ssh
+compdef '_dispatch ssh ssh' sshrc
