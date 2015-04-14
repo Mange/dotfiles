@@ -86,3 +86,5 @@ set_prompt () {
     PS1+='\[\e[01;34m\]\w \$\[\e[00m\] '
 }
 PROMPT_COMMAND='set_prompt'
+
+[ -f "$SSHHOME/.sshrc.d/iterm2_shell_integration.bash" ] && source "$SSHHOME/.sshrc.d/iterm2_shell_integration.bash"
