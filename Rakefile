@@ -138,6 +138,12 @@ task :vim do
   Dotfile.new('vim').install_symlink
 end
 
+desc "Installs nvim config (symlinks to normal vim config)"
+task :nvim do
+  Dotfile.new('nvim', 'vim').install_symlink
+  Dotfile.new('nvimrc', 'vimrc').install_symlink
+end
+
 desc "Installs Karabiner config (on Macs)"
 task :karabiner_config do
   app_support = Pathname.new("~/Library/Application Support").expand_path
@@ -163,7 +169,7 @@ end
 task :install => sshrc_zshrc
 
 desc "Installs all files"
-task :install => (SYMLINKS + FILES + BINARIES + %w[karabiner_config gopath modules gitignore zsh gitconfig neobundle]) do
+task :install => (SYMLINKS + FILES + BINARIES + %w[karabiner_config gopath modules gitignore zsh gitconfig neobundle nvim]) do
   if ENV['SHELL'] !~ /zsh/
     STDERR.puts "Warning: You seem to be using a shell different from zsh (#{ENV['SHELL']})"
     STDERR.puts "Fix this by running:"

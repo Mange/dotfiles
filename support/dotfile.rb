@@ -4,8 +4,9 @@ require 'fileutils'
 class Dotfile
   attr_writer :home_path
 
-  def initialize(name)
+  def initialize(name, source = name)
     @name = name
+    @source = source
   end
 
   def install_symlink
@@ -32,7 +33,7 @@ class Dotfile
   end
 
   def source_path
-    @source_path ||= Pathname.new(File.expand_path("../../#{name}", __FILE__))
+    @source_path ||= Pathname.new(File.expand_path("../../#{source}", __FILE__))
   end
 
   def home_path
@@ -40,7 +41,7 @@ class Dotfile
   end
 
   protected
-  attr_reader :name
+  attr_reader :name, :source
 
   def clear_target_path
     # Broken symlinks does not exist, so test for presence of a symlink as well
