@@ -60,10 +60,6 @@ NeoBundle 'tpope/vim-rails'
 NeoBundle 'tpope/vim-rake'
 NeoBundle 'vim-ruby/vim-ruby'
 
-NeoBundle 'tpope/vim-haml'
-
-NeoBundle 'nanki/treetop.vim'
-
 """ Scala
 NeoBundle 'derekwyatt/vim-scala'
 
@@ -78,13 +74,10 @@ NeoBundle 'pangloss/vim-javascript'
 
 """ HTML/CSS
 NeoBundle 'gregsexton/MatchTag'
-NeoBundle 'groenewege/vim-less'
 NeoBundle 'othree/html5-syntax.vim'
 
 """ Misc
 NeoBundle 'puppetlabs/puppet-syntax-vim'
-NeoBundle 'timcharper/textile.vim'
-NeoBundle 'tpope/vim-cucumber'
 NeoBundle 'suan/vim-instant-markdown'
 
 """ Looks
