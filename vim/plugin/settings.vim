@@ -43,8 +43,6 @@ set wildmenu
 set wildmode=list:longest,full
 
 " Looks
-set background=dark
-colorscheme Tomorrow-Night
 set listchars=tab:→\ ,eol:¬,nbsp:•
 
 " Highlight searches using only underlines
