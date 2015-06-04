@@ -241,7 +241,7 @@ fi
 setopt auto_pushd
 setopt pushd_ignore_dups
 
-alias tree='tree -AC -I ".svn|.git"'
+alias tree='tree -AC -I ".svn|.git|node_modules|bower_components"'
 alias t='tree -L 3 --filelimit 50'
 
 # Sort files by size and show human readable
