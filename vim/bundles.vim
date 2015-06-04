@@ -70,7 +70,7 @@ NeoBundle 'fatih/vim-go'
 NeoBundle 'JSON.vim'
 
 NeoBundle 'kchmck/vim-coffee-script'
-NeoBundle 'pangloss/vim-javascript'
+NeoBundle 'jelera/vim-javascript-syntax', {'autoload':{'filetypes':['javascript']}}
 
 """ HTML/CSS
 NeoBundle 'gregsexton/MatchTag'
