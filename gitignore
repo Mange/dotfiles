@@ -16,3 +16,4 @@ doc/tags
 *.swp
 *.swo
 /.idea
+.vimrc
