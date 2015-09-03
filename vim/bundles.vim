@@ -66,6 +66,9 @@ NeoBundle 'derekwyatt/vim-scala'
 """ Go
 NeoBundle 'fatih/vim-go'
 
+""" Rust
+NeoBundle 'rust-lang/rust.vim'
+
 """ JS
 NeoBundle 'JSON.vim'
 
