@@ -22,8 +22,12 @@ function {
       /sbin
 
       $HOME/bin
+
       $HOME/.rvm/bin
+
       $GOPATH/bin
+      /usr/local/opt/go/libexec/bin
+
       /opt/*/bin(/N)
       /usr/local/*/bin(/N)
       /usr/local/opt/*/libexec/bin(/N)
