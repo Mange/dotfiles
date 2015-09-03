@@ -53,14 +53,14 @@ var bothScreens = function(op) {
 var singleScreenLayout = S.layout("single screen", {
   "_before_": {operations: [fullscreenFlowdock, hideFlowdock]},
   "MacVim": {operations: [left, right], repeat: true},
-  "iTerm": {operations: [right], repeat: true}
+  "iTerm2": {operations: [right], repeat: true}
 });
 
 // Two screen layout (1 big, 1 smaller)
 var twoScreenLayout = S.layout("two screens", {
   "_before_": {operations: [showFlowdock]},
   "MacVim": {operations: [leftPrimary, rightPrimary], repeat: true},
-  "iTerm": {operations: [rightPrimary, leftPrimary, rightSecondary], repeat: true},
+  "iTerm2": {operations: [rightPrimary, leftPrimary, rightSecondary], repeat: true},
   "Flowdock": {operations: [fullscreenSecondary]}
 });
 
@@ -69,7 +69,7 @@ var twoBigLayout = S.layout("two big screens", {
   "_before_": {operations: [showFlowdock]},
   "MacVim": {operations: [leftPrimary, rightPrimary], repeat: true},
   "Google Chrome": {operations: [leftSecondary, rightSecondary, rightPrimary], repeat: true},
-  "iTerm": {operations: [rightPrimary, rightSecondary, leftSecondary], repeat: true},
+  "iTerm2": {operations: [rightPrimary, rightSecondary, leftSecondary], repeat: true},
   "Flowdock": {operations: [rightSecondary]}
 });
 
@@ -90,8 +90,8 @@ S.bind(hyperKey("j"), S.op("focus", {direction: "down"}), true);
 S.bind(hyperKey("k"), S.op("focus", {direction: "up"}), true);
 S.bind(hyperKey("l"), S.op("focus", {direction: "right"}), true);
 
-S.bind(hyperKey(";"), S.op("focus", {app: "iTerm"}), false);
-S.bind(hyperKey("c"), S.op("focus", {app: "iTerm"}), false);
+S.bind(hyperKey(";"), S.op("focus", {app: "iTerm2"}), false);
+S.bind(hyperKey("c"), S.op("focus", {app: "iTerm2"}), false);
 
 S.bind(hyperKey("i"), S.op("focus", {app: "MacVim"}), false);
 S.bind(hyperKey("n"), S.op("focus", {app: "Google Chrome"}), false);
