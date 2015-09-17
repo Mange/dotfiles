@@ -1,0 +1,22 @@
+#!/bin/bash
+
+fetch_url=$(LC_LANG=C LANG=C git config --get remote.origin.url)
+
+if [[ $? != 0 ]]; then
+  echo "Not a Git repo?" > /dev/stderr
+  exit 1
+fi
+
+if [[ $fetch_url != *github.com* ]]; then
+  echo "Remote origin is not on Github."
+  exit 1
+fi
+
+repo=$(echo $fetch_url | grep -oE "github.com[:/][A-Za-z0-9/_.-]+" | tr ":" "/" | sed "s/\.git$//")
+
+if [[ $repo != "" ]]; then
+  open https://${repo}
+else
+  echo "Could not construct URL from ${fetch_url}"
+  exit 1
+fi

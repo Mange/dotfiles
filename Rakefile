@@ -22,6 +22,7 @@ SYMLINKS = %w[
 FILES = []
 BINARIES = %w[
   di-download
+  github
 ]
 
 SYMLINKS.each do |file|
