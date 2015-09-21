@@ -71,7 +71,11 @@ cnoremap %% <C-R>=expand('%')<cr>
 cnoremap $$ <C-R>=expand('%:h').'/'<cr>
 
 " Close all buffers
-nmap <leader>q :0,1000bd<CR>
+if v:version > 704 || (v:version == 704 && has('patch585'))
+  nmap <leader>q :1,$bd<CR>
+else
+  nmap <leader>q :1,1000bd<CR>
+endif
 
 " Open TODO
 nmap <leader>t :split<CR>:Note TODO<CR>
