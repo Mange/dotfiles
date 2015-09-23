@@ -13,6 +13,7 @@ brew install bash
 
 brew install ag
 brew install git
+brew install hub
 brew install lesspipe --syntax-highlighting
 brew install colordiff
 brew install ctags

@@ -14,6 +14,12 @@ fi
 
 # {{{ Helper functions
 command-exist () { whence $1 > /dev/null; }
+
+alias-if-exist () {
+  if command-exist $1; then
+    alias $2=$1
+  fi
+}
 # }}}
 # {{{ umask
 # I want my primary group to write to my files
@@ -318,12 +324,6 @@ fi
 alias -g CP='| copy'
 # }}}
 # {{{ Command replacements / aliases for commands with non-standard names
-alias-if-exist () {
-  if command-exist $1; then
-    alias $2=$1
-  fi
-}
-
 # Colordiff
 alias-if-exist colordiff diff
 
@@ -335,11 +335,11 @@ if command-exist ag; then
     ag $@
   }
 fi
-
-unset alias-if-exist
 # }}}
 # {{{ Git settings and shortcuts
 git_log_format='%C(bold blue)%h%C(reset) %C(yellow)%G?%C(reset) - %C(bold green)%ar%C(reset) - %C(bold black)%an %C(auto)%d%C(reset) %C(magenta)%GS%n''  %s%n'
+
+alias-if-exist hub git
 
 alias checkout='git checkout'
 alias master="git checkout master"
@@ -573,3 +573,4 @@ if which rvm-prompt >/dev/null 2>/dev/null; then
 fi
 # }}}
 
+unset alias-if-exist
