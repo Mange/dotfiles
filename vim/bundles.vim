@@ -35,7 +35,6 @@ NeoBundle 'xolox/vim-notes', {'depends': ['xolox/vim-misc']}
 
 """ Editor functionality
 NeoBundle 'AndrewRadev/switch.vim'
-NeoBundle 'UltiSnips'
 NeoBundle 'bronson/vim-trailing-whitespace'
 NeoBundle 'godlygeek/tabular'
 NeoBundle 'haya14busa/incsearch.vim'
