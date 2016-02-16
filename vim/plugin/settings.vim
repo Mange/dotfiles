@@ -13,7 +13,9 @@ set autoread
 set ignorecase
 set smartcase
 
-set encoding=utf-8
+if !has('nvim')
+  set encoding=utf-8
+endif
 
 set hlsearch   " Toggle with sh
 set wrap       " Toggle with sw
