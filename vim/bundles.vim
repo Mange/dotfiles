@@ -67,6 +67,7 @@ NeoBundle 'fatih/vim-go'
 
 """ Rust
 NeoBundle 'rust-lang/rust.vim'
+NeoBundle 'racer-rust/vim-racer'
 
 """ JS
 NeoBundle 'JSON.vim'

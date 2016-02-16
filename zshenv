@@ -24,6 +24,7 @@ function {
       $HOME/bin
 
       $HOME/.rvm/bin
+      $HOME/.multirust/toolchains/stable/*/bin(/N)
 
       $GOPATH/bin
       /usr/local/opt/go/libexec/bin
