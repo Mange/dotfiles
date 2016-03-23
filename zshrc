@@ -404,6 +404,15 @@ for gem in cap cucumber guard rspec spork; do
 done
 
 # }}}
+# {{{ Autoload functions
+
+autoload zmv
+
+fpath=(~/.zsh/funcs $fpath)
+
+autoload run-changed-specs
+
+# }}}
 # {{{ Color shortcuts and magic
 autoload colors
 colors

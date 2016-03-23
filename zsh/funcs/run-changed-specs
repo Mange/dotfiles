@@ -1,0 +1,11 @@
+#!/usr/bin/env zsh
+
+run-changed-specs() {
+  local command="${1:-rspec}"
+  local changed="$(git status -s | grep '_spec\.rb' | awk '{ print $2 }')"
+  if [[ -n $changed ]]; then
+    echo $changed | xargs $command
+  else
+    echo "No changed spec files could be found." > /dev/stderr
+  fi
+}
