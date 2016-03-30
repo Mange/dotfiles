@@ -348,7 +348,8 @@ alias production="git checkout production"
 alias gadd='git add'
 alias gco='git commit -v'
 alias gpu='git push'
-alias gb="git branch -av"
+alias gb="git branch -v"
+alias gba="git branch -va"
 
 alias gm='git merge --no-ff'
 alias gmo='git merge --no-ff @{upstream}'
