@@ -35,9 +35,9 @@ var fullscreenSecondary = fullscreen.dup({screen: monitorSecondary});
 var hide = S.op("hide");
 var show = S.op("show");
 
-var fullscreenFlowdock = fullscreen.dup({app: "Flowdock"});
-var hideFlowdock = hide.dup({app: "Flowdock"});
-var showFlowdock = show.dup({app: "Flowdock"});
+var fullscreenSlack = fullscreen.dup({app: "Slack"});
+var hideSlack = hide.dup({app: "Slack"});
+var showSlack = show.dup({app: "Slack"});
 
 var bothScreens = function(op) {
   var ops = [];
@@ -51,26 +51,26 @@ var bothScreens = function(op) {
 
 // Single screen layout
 var singleScreenLayout = S.layout("single screen", {
-  "_before_": {operations: [fullscreenFlowdock, hideFlowdock]},
+  "_before_": {operations: [fullscreenSlack, hideSlack]},
   "MacVim": {operations: [left, right], repeat: true},
   "iTerm": {operations: [right], repeat: true}
 });
 
 // Two screen layout (1 big, 1 smaller)
 var twoScreenLayout = S.layout("two screens", {
-  "_before_": {operations: [showFlowdock]},
+  "_before_": {operations: [showSlack]},
   "MacVim": {operations: [leftPrimary, rightPrimary], repeat: true},
   "iTerm": {operations: [rightPrimary, leftPrimary, rightSecondary], repeat: true},
-  "Flowdock": {operations: [fullscreenSecondary]}
+  "Slack": {operations: [fullscreenSecondary]}
 });
 
 // Two big-screen layout
 var twoBigLayout = S.layout("two big screens", {
-  "_before_": {operations: [showFlowdock]},
+  "_before_": {operations: [showSlack]},
   "MacVim": {operations: [leftPrimary, rightPrimary], repeat: true},
   "Google Chrome": {operations: [leftSecondary, rightSecondary, rightPrimary], repeat: true},
   "iTerm": {operations: [rightPrimary, rightSecondary, leftSecondary], repeat: true},
-  "Flowdock": {operations: [rightSecondary]}
+  "Slack": {operations: [rightSecondary]}
 });
 
 bigScreenResolutions = ["2560x1440", "2560x1440"];
@@ -95,7 +95,7 @@ S.bind(hyperKey("c"), S.op("focus", {app: "iTerm"}), false);
 
 S.bind(hyperKey("i"), S.op("focus", {app: "MacVim"}), false);
 S.bind(hyperKey("n"), S.op("focus", {app: "Google Chrome"}), false);
-S.bind(hyperKey("'"), S.op("focus", {app: "Flowdock"}), false);
+S.bind(hyperKey("'"), S.op("focus", {app: "Slack"}), false);
 S.bind(hyperKey("u"), S.op("focus", {app: "Dash"}), false);
 
 // Move + Resize
