@@ -165,7 +165,7 @@ fi
 # Use my custom completions too
 fpath=(~/.zsh/completion $fpath)
 
-autoload -U compinit && compinit -d ~/.zsh/completiondump
+autoload -U compinit && compinit
 
 # Find out what an alias stands for and complete like if it was the original command
 # This gives me git completion for my git aliases, for example
