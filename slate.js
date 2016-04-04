@@ -13,6 +13,16 @@ S.cfga({
   "windowHintsSpread": true
 });
 
+var opWithoutTitle = function(op, regex) {
+  return function(window) {
+    if (!window.title().match(regex)) {
+      return window.doOperation(op);
+    } else {
+      return null;
+    }
+  };
+};
+
 // Monitors
 var monitorPrimary = "0";
 var monitorSecondary = "1";
@@ -68,7 +78,14 @@ var twoScreenLayout = S.layout("two screens", {
 var twoBigLayout = S.layout("two big screens", {
   "_before_": {operations: [showSlack]},
   "MacVim": {operations: [leftPrimary, rightPrimary], repeat: true},
-  "Google Chrome": {operations: [leftSecondary, rightSecondary, rightPrimary], repeat: true},
+  "Google Chrome": {
+    operations: [
+      opWithoutTitle(leftSecondary, /Hangouts/),
+      opWithoutTitle(rightSecondary, /Hangouts/),
+      opWithoutTitle(rightPrimary, /Hangouts/),
+    ],
+    repeat: true
+  },
   "iTerm": {operations: [rightPrimary, rightSecondary, leftSecondary], repeat: true},
   "Slack": {operations: [rightSecondary]}
 });
