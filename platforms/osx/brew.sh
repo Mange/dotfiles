@@ -1,3 +1,5 @@
+#!/bin/bash
+
 brew update
 
 # "install foo", where already installed version x, while latest is version x+n
@@ -28,7 +30,7 @@ brew install watch
 brew install wget
 brew install zsh-completions
 
-brew install macvim --override-system-vim --with-luajit --with-python3
+brew install macvim --with-override-system-vim --with-luajit --with-python3
 
 brew tap homebrew/dupes
 brew install grep --default-names
@@ -39,12 +41,17 @@ brew tap caskroom/fonts
 brew install brew-cask
 
 brew cask install alfred
-brew cask install antirsi
+
+# Cask is removed
+# brew cask install antirsi
+if [[ ! -d /Applications/AntiRSI.app ]]; then
+  open "http://antirsi.onnlucky.com/"
+fi
+
 brew cask install bettertouchtool
 brew cask install dropbox
 brew cask install google-chrome google-hangouts google-drive
 brew cask install iterm2
-brew cask install lastpass-universal
 brew cask install skype
 
 brew cask install seil
@@ -52,14 +59,12 @@ brew cask install karbiner
 brew cask install slate
 brew cask install flux
 
-brew cask install skitch
 brew cask install dash
 
 brew cask install spotify
 brew cask install steam
 brew cask install ukelele
 
-brew cask install jsonlook
 brew cask install qlcolorcode
 brew cask install qlmarkdown
 brew cask install qlprettypatch
