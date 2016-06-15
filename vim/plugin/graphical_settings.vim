@@ -18,6 +18,10 @@ if has("gui_macvim")
   " Fullscreen takes up entire screen
   set fuoptions=maxhorz,maxvert
   set transparency=0
+
+  " Don't clobber system clipboard in visual mode
+  " OS X don't have selection/clipboard distinction ("* vs "+ registers)
+  set guioptions-=a
 else
   set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 10,\ DejaVu\ Sans\ Mono\ 10
 endif
