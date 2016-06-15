@@ -16,8 +16,6 @@ brew install bash
 brew install ag
 brew install git
 brew install hub
-brew install lesspipe --syntax-highlighting
-brew install colordiff
 brew install ctags
 brew install fortune
 brew install nmap
@@ -35,6 +33,11 @@ brew install macvim --with-override-system-vim --with-luajit --with-python3
 brew tap homebrew/dupes
 brew install grep --default-names
 brew install rsync
+
+# Command decorators
+brew install colordiff
+brew install diff-so-fancy
+brew install lesspipe --syntax-highlighting
 
 brew tap caskroom/cask
 brew tap caskroom/fonts

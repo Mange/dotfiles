@@ -103,6 +103,13 @@ task :gitconfig do
   config["color.branch.local", "green"]
   config["color.branch.remote", "blue"]
 
+  # For diff-highlight / diff-so-fancy
+  config["color.diff-highlight.oldNormal", "red bold"]
+  config["color.diff-highlight.oldHighlight", "red bold 52"]
+  config["color.diff-highlight.newNormal", "green bold"]
+  config["color.diff-highlight.newHighlight", "green bold 22"]
+  config["core.pager", "diff-so-fancy | less --tabs=4 -RFX --pattern='^(added|deleted|modified): '"]
+
   config["commit.gpgsign", "true"]
 
   config["merge.conflictstyle", "diff3"]
