@@ -63,14 +63,16 @@ var bothScreens = function(op) {
 var singleScreenLayout = S.layout("single screen", {
   "_before_": {operations: [fullscreenSlack, hideSlack]},
   "MacVim": {operations: [left, right], repeat: true},
-  "iTerm": {operations: [right], repeat: true}
+  "iTerm":  {operations: [right], repeat: true},
+  "iTerm2": {operations: [right], repeat: true}
 });
 
 // Two screen layout (1 big, 1 smaller)
 var twoScreenLayout = S.layout("two screens", {
   "_before_": {operations: [showSlack]},
   "MacVim": {operations: [leftPrimary, rightPrimary], repeat: true},
-  "iTerm": {operations: [rightPrimary, leftPrimary, rightSecondary], repeat: true},
+  "iTerm":  {operations: [rightPrimary, leftPrimary, rightSecondary], repeat: true},
+  "iTerm2": {operations: [rightPrimary, leftPrimary, rightSecondary], repeat: true},
   "Slack": {operations: [fullscreenSecondary]}
 });
 
@@ -81,12 +83,14 @@ var twoBigLayout = S.layout("two big screens", {
   "Google Chrome": {
     operations: [
       opWithoutTitle(leftSecondary, /Hangouts/),
+      opWithoutTitle(leftSecondary, /Hangouts/),
       opWithoutTitle(rightSecondary, /Hangouts/),
       opWithoutTitle(rightPrimary, /Hangouts/),
     ],
     repeat: true
   },
-  "iTerm": {operations: [rightPrimary, rightSecondary, leftSecondary], repeat: true},
+  "iTerm":  {operations: [rightPrimary, rightSecondary, leftSecondary], repeat: true},
+  "iTerm2": {operations: [rightPrimary, rightSecondary, leftSecondary], repeat: true},
   "Slack": {operations: [rightSecondary]}
 });
 
