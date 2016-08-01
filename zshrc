@@ -213,27 +213,6 @@ namedir () {
   hash -d $1=$target
 }
 
-# TODO: Migrate this stuff to zshrc.after instead!
-
-local oldfile=~/.zsh-named-directories
-local newfile=~/.zsh/named-directories
-
-if [ -f $oldfile ]; then
-  echo "Found deprecated $oldfile."
-  if [ -f $newfile ]; then
-    echo "Could not autofix since $newfile already exist. Diff:"
-    diff -u $oldfile $newfile
-    source $oldfile
-  else
-    echo "Autofixing"
-    mv $oldfile $newfile
-  fi
-fi
-
-if [ -f $newfile ]; then
-  source $newfile
-fi
-
 # Give all projects a name
 if [ -d ~/Projects ]; then
   for dir in ~/Projects/*(/N); do
