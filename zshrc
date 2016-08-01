@@ -457,7 +457,7 @@ function() {
     zstyle ':vcs_info:*:prompt:*' unstagedstr "%1{★%}"
     zstyle ':vcs_info:*:prompt:*' stagedstr "%1{❖%}"
 
-    local branch_format="%F{202}%r%F{208}@%F{214}%b" # repo/branch
+    local branch_format="%F{214}%b" # %b = branch
 
     if is-at-least 4.3.11; then
       local changes_format="%F{022}%c%F{088}%u"
@@ -466,8 +466,8 @@ function() {
       local changes_format=""
     fi
 
-    zstyle ':vcs_info:*:prompt:*' formats       "${changes_format} ${branch_format}%f" ""
-    zstyle ':vcs_info:*:prompt:*' actionformats "${changes_format} ${branch_format}%f [%F{cyan}%a%f]" ""
+    zstyle ':vcs_info:*:prompt:*' formats       "${changes_format}${branch_format}%f" ""
+    zstyle ':vcs_info:*:prompt:*' actionformats "${changes_format}${branch_format}%f [%F{cyan}%a%f]" ""
 
     zstyle ':vcs_info:*:prompt:*' nvcsformats   "" ""
 
@@ -493,27 +493,14 @@ function enable-check-for-changes() {
 # Helper functions to be used when building the prompt
 #
 
-# RVM section will overwrite this function
-function rvm-ruby-version () {
-  echo "no rvm"
-}
-
 # Show verbose mode information
 function vi_mode_prompt_info {
   zle_mode_output "" "%K{196}%F{000} CMD %f%k"
 }
 
-# TODO: Do we still need this distinction?
-if [[ $TERM != screen* ]]; then
-  # Treat these characters as having width 1
-  _prompt_insert_mode_character="%1{›%}"
-  _prompt_command_mode_character="%1{»%}"
-else
-  # Tmux fucks up with UTF-8 in the prompt
-  # Perhaps this is due to me not specifying zero-width on all color codes..?
-  _prompt_insert_mode_character=">"
-  _prompt_command_mode_character="$"
-fi
+# Treat these characters as having width 1
+_prompt_insert_mode_character="%1{›%}"
+_prompt_command_mode_character="%1{»%}"
 
 # Show mode information by the last character in the prompt
 function prompt_end_character {
@@ -525,34 +512,37 @@ function prompt_end_character {
 #
 function {
   if is256color; then
-    local current_time="%F{247}%D{%H:%M}%F{240}%D{:%S}"
+    local current_time="%F{247}%D{%H:%M:%S}"
   else
-    local current_time="%F{white}%D{%H:%M}%B%F{black}%D{:%S}%b"
+    local current_time="%F{white}%D{%H:%M:%S}"
   fi
 
   if [[ -n $SSH_CLIENT ]]; then
     if is256color; then
-      local host='%F{241}@%F{60}%4m'
+      local host="%F{241}@%F{60}%4m "
     else
-      local host='%f@%F{blue}%4m'
+      local host="%f@%F{blue}%4m "
     fi
   else
-    local host=''
+    local host=""
   fi
 
-  # Color user differently if we have a privileged user ("!")
-  # %(nx.true.false)
-  local user="%(!.%F{196}.%F{072})%n"
+  # Don't show user at all if it's expected username
+  if [[ $USER == "mange" ]]; then
+    local user=""
+  else
+    # Color user differently if we have a privileged user ("!")
+    # %(nx.true.false)
+    local user="%(!.%F{196}.%F{072})%n"
+  fi
 
   local dir="%B%F{blue}%4~%b"
-  local last_status="%(?.. %F{red}*%?)"
-  local current_jobs="%(1j.%F{magenta}%BJ%j%b .)"
-  local ruby_version='%F{yellow}$(rvm-ruby-version) %f'
+  local last_status="%(?.. %F{red}%?)"
+  local current_jobs="%(1j.%F{magenta}%B%j%b.)"
   local end='$(prompt_end_character)%f%k%b'
 
-
   export RPROMPT='$(vi_mode_prompt_info)$vcs_info_msg_0_'
-  export PROMPT="${user}${host} ${current_time}${last_status} $dir ${current_jobs}${ruby_version}${end}"
+  export PROMPT="${user}${host}${current_time}${last_status} ${dir} ${current_jobs}${end}"
 }
 # }}}
 # {{{ Misc
@@ -574,12 +564,6 @@ if [[ -s /usr/local/rvm/scripts/rvm ]]; then
   source /usr/local/rvm/scripts/rvm
 elif [[ -s "$HOME/.rvm/scripts/rvm" ]]; then
   source "$HOME/.rvm/scripts/rvm"
-fi
-
-if which rvm-prompt >/dev/null 2>/dev/null; then
-  function rvm-ruby-version () {
-    rvm-prompt v g s
-  }
 fi
 # }}}
 
