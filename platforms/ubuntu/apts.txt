@@ -3,7 +3,7 @@
 install zsh vim silversearcher-ag
 
 # Fonts
-install fonts-dejavu fonts-dejavu-extra fonts-droid
+install fonts-dejavu fonts-dejavu-extra fonts-noto fonts-powerline
 
 # Development
 install git colordiff exuberant-ctags

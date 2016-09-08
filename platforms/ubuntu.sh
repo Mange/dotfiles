@@ -43,23 +43,35 @@ install-sshrc() {
   sudo apt-get install sshrc
 }
 
-install-apts ubuntu/apts.txt "CLI software"
+handle-failure() {
+  echo ${red}Command failed!${reset}
+  echo "Continue? [Yn]"
+  read -r answer
+  if [[ $answer != "" && $answer != "y" && $anser != "Y" ]]; then
+    echo "Aborting"
+    exit 1
+  fi 
+}
 
-if ! hash sshrc 2>/dev/null; then
-  header "Installing sshrc"
-  install-sshrc
-fi
+install-apts ubuntu/apts.txt "CLI software" || handle-failure
+
+# Disabled as Ubuntu 16 (Xenial) has no build binaries, so everything after
+# this fails. sources.list.d needs to be cleaned up manually after.
+# if ! hash sshrc 2>/dev/null; then
+#   header "Installing sshrc"
+#   install-sshrc || handle-failure
+# fi
 
 if hash X 2>/dev/null; then
-  install-apts ubuntu/apts-x11.txt "X software"
+  install-apts ubuntu/apts-x11.txt "X software" || handle-failure
 
   if ! hash google-chrome 2>/dev/null; then
     header "Installing Google Chrome"
-    install-chrome
+    install-chrome || handle-failure
   fi
 fi
 
-./shared/di.sh
+./shared/di.sh || handle-failure
 
 header "Installing updates"
 sudo apt-get -qq update && sudo apt-get dist-upgrade
