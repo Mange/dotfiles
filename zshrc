@@ -338,7 +338,7 @@ alias ffm='git merge --ff-only master'
 alias ffo='git merge --ff-only @{upstream}'
 alias gup='gf && ffo'
 
-alias gl="git log --graph -n 1000 --format='tformat:$git_log_format'"
+alias gl="git log --no-show-signature --graph -n 1000 --format='tformat:$git_log_format'"
 
 alias s="git status --short"
 alias gs="git show"
