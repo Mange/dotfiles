@@ -123,16 +123,7 @@ alias l='ls -l'
 if is-at-least 4.3 && command-exist git; then
   if [[ -f ~/.zsh/k/k.sh ]]; then
     source ~/.zsh/k/k.sh
-
-    # k does not support parameters right now. Do a normal ls if any parameter is present.
-    alias l='maybe-k'
-    maybe-k() {
-      if [[ $# == 0 ]]; then
-        k
-      else
-        ls -la "$@"
-      fi
-    }
+    alias l='k'
   fi
 fi
 
