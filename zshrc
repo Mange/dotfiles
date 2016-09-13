@@ -329,15 +329,17 @@ alias gco='git commit -v'
 alias gpu='git push'
 alias gb="git branch -v"
 alias gba="git branch -va"
+alias gbm="git branch -v --merged"
 
 alias gm='git merge --no-ff'
 alias gmo='git merge --no-ff @{upstream}'
 alias gmm='git merge --no-ff master'
 
-alias gri='git rebase -i'
 alias gro='git rebase @{upstream}'
-alias groi='git rebase -i @{upstream}'
 alias grm='git rebase master'
+alias gri='git rebase -i'
+alias grim='git rebase -i master'
+alias grio='git rebase -i @{upstream}'
 
 alias gf='git fetch --prune'
 alias ff='git merge --ff-only'
@@ -346,10 +348,6 @@ alias ffo='git merge --ff-only @{upstream}'
 alias gup='gf && ffo'
 
 alias gl="git log --graph -n 1000 --format='tformat:$git_log_format'"
-
-# Show all commits between production and master, excluding "contents" of merges
-# e.g. Show merge commits, not what the topic branch contained
-alias glp="gf; git log --graph --format='tformat:$git_log_format' --first-parent origin/production...origin/master"
 
 alias s="git status --short"
 alias gs="git show"
