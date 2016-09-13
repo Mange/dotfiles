@@ -116,6 +116,8 @@ task :gitconfig do
 
   config["commit.gpgsign", "true"]
 
+  config["log.showSignature", "true"]
+
   config["merge.conflictstyle", "diff3"]
   config["merge.tool", "vimdiff"]
 

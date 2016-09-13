@@ -352,7 +352,7 @@ alias gl="git log --graph -n 1000 --format='tformat:$git_log_format'"
 alias glp="gf; git log --graph --format='tformat:$git_log_format' --first-parent origin/production...origin/master"
 
 alias s="git status --short"
-alias gs="git show --show-signature"
+alias gs="git show"
 alias gd="git diff"
 alias gdw="git diff --color-words"
 alias staged="gd --cached"
