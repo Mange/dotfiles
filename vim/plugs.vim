@@ -23,7 +23,7 @@ Plug 'xolox/vim-misc' | Plug 'xolox/vim-notes'
 """ Editor functionality
 Plug 'AndrewRadev/switch.vim'
 Plug 'bronson/vim-trailing-whitespace'
-Plug 'godlygeek/tabular'
+Plug 'junegunn/vim-easy-align'
 Plug 'haya14busa/incsearch.vim'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'kana/vim-textobj-user' | Plug 'nelstrom/vim-textobj-rubyblock'
