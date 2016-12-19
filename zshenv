@@ -25,6 +25,7 @@ function {
 
       $HOME/.rvm/bin
       $HOME/.cargo/bin
+      $HOME/.yarn/bin
 
       $GOPATH/bin
       /usr/local/opt/go/libexec/bin
