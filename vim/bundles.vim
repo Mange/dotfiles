@@ -80,6 +80,7 @@ NeoBundle 'gregsexton/MatchTag'
 NeoBundle 'othree/html5-syntax.vim'
 
 """ Misc
+NeoBundle 'jparise/vim-graphql'
 NeoBundle 'puppetlabs/puppet-syntax-vim'
 NeoBundle 'suan/vim-instant-markdown'
 
