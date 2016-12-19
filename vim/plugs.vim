@@ -6,11 +6,21 @@ endif
 
 call plug#begin('~/.vim/plugged')
 
+" fzf cannot run properly in GUI MacVim. Terminal MacVim, or other graphical
+" Vims handles it fine.
+if isdirectory("/usr/local/opt/fzf") && !(has("gui_macvim") && has("gui_running"))
+  let g:use_fzf = 1
+  Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
+else
+  let g:use_fzf = 0
+  Plug 'kien/ctrlp.vim'
+endif
+
 """ Utility
 Plug 'DataWraith/auto_mkdir'
 Plug 'FelikZ/ctrlp-py-matcher'
 Plug 'ingo-library' | Plug 'SearchHighlighting'
-Plug 'kien/ctrlp.vim'
+
 Plug 'mhinz/vim-signify'
 Plug 'netrw.vim'
 Plug 'rizzatti/dash.vim'

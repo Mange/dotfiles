@@ -32,7 +32,7 @@ if [[ $COLORTERM == gnome-terminal ]]; then
   export TERM=xterm-256color
 fi
 # }}}
-# {{{ ZLE
+# {{{ ZLE and fzf
 # Default:        *?_-.[]~=/&;!#$%^(){}<>
 export WORDCHARS='*?[]~&;!#$%^(){}'
 
@@ -107,6 +107,8 @@ bindkey -M viins '^e' end-of-line
 
 bindkey -M vicmd 'v' edit-command-line
 bindkey -M viins '^rv' edit-command-line
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # }}}
 # {{{ ls (Colors, etc.)

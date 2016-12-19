@@ -84,3 +84,8 @@ nmap <leader>t :split<CR>:Note TODO<CR>
 " <leader>A for case-insensitive, <leader>a for smart-case
 nmap <leader>a *:AgFromSearch<CR>
 nmap <leader>A *:Ag -i "\b<C-r><C-w>\b"<CR>
+
+" fzf or CtrlP
+if g:use_fzf == 1
+  nmap <C-p> :GFiles<CR>
+endif

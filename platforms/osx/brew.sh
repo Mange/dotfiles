@@ -14,10 +14,11 @@ brew install findutils --default-names
 brew install bash
 
 brew install ag
-brew install git
-brew install hub
 brew install ctags
 brew install fortune
+brew install fzf
+brew install git
+brew install hub
 brew install nmap
 brew install node
 brew install ssh-copy-id
