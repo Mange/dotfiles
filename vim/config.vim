@@ -2,7 +2,7 @@ set nocompatible
 
 runtime! before/**/*.vim
 
-source ~/.vim/bundles.vim
+source ~/.vim/plugs.vim
 
 " Run local overrides if existing
 runtime! local_*.vim

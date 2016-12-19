@@ -3,7 +3,7 @@
 *.swo
 *~
 
-vim/bundle
+vim/plugged
 vim/spell
 vim/.netrwhist
 vim/tmp
