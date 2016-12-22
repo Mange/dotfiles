@@ -23,6 +23,11 @@ function! s:Dark()
   colorscheme Tomorrow-Night
   set background=dark
   call s:Shared()
+
+  " Improve GitGutter look
+  hi GitGutterAddLine guibg=#2c3529
+  hi GitGutterChangeLine guibg=#353429
+  hi GitGutterDeleteLine guibg=#352a29
 endfunction
 
 command! Light call s:Light()
