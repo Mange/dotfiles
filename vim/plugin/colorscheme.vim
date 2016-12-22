@@ -12,10 +12,10 @@ function! s:Shared()
   hi SpellCap term=undercurl,bold cterm=undercurl,bold ctermfg=blue gui=undercurl guisp=blue
 
   " Improve warning look
-  hi clear SyntasticWarning
-  hi SyntasticWarning ctermbg=magenta ctermfg=black gui=undercurl guisp=magenta
-  hi SyntasticWarningSign ctermfg=yellow guifg=yellow
-  hi SyntasticErrorSign ctermfg=red guifg=red
+  hi clear NeomakeWarning
+  hi NeomakeWarning ctermbg=magenta ctermfg=black gui=undercurl guisp=magenta
+  hi NeomakeWarningSign ctermfg=yellow guifg=yellow
+  hi NeomakeErrorSign ctermfg=red guifg=red
 endfunction
 
 command! Dark call s:Dark()
