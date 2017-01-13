@@ -7,6 +7,7 @@ SYMLINKS = %w[
   gemrc
   git_template
   irbrc
+  psqlrc
   railsrc
   rspec
   slate.js
