@@ -24,7 +24,7 @@ Plug 'ingo-library' | Plug 'SearchHighlighting'
 Plug 'airblade/vim-gitgutter'
 Plug 'netrw.vim'
 Plug 'rizzatti/dash.vim'
-Plug 'rking/ag.vim', {'on': 'Ag'}
+Plug 'rking/ag.vim', {'on': ['Ag', 'AgFromSearch']}
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-vinegar'
