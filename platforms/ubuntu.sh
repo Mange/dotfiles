@@ -47,15 +47,15 @@ handle-failure() {
   echo ${red}Command failed!${reset}
   echo "Continue? [Yn]"
   read -r answer
-  if [[ $answer != "" && $answer != "y" && $anser != "Y" ]]; then
+  if [[ $answer != "" && $answer != "y" && $answer != "Y" ]]; then
     echo "Aborting"
     exit 1
-  fi 
+  fi
 }
 
 install-apts ubuntu/apts.txt "CLI software" || handle-failure
 
-# Disabled as Ubuntu 16 (Xenial) has no build binaries, so everything after
+# Disabled as Ubuntu 16 (Xenial) has no built binaries, so everything after
 # this fails. sources.list.d needs to be cleaned up manually after.
 # if ! hash sshrc 2>/dev/null; then
 #   header "Installing sshrc"
