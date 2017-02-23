@@ -37,6 +37,11 @@ install-chrome() {
   rm google-chrome*.deb
 }
 
+install-playerctl() {
+  sudo apt-get install -y gtk-doc-tools gobject-introspection libglib2.0-dev
+  (cd ../vendor && make playerctl_install)
+}
+
 install-sshrc() {
   sudo add-apt-repository ppa:russell-s-stewart/ppa
   sudo apt-get update
@@ -68,6 +73,11 @@ if hash X 2>/dev/null; then
   if ! hash google-chrome 2>/dev/null; then
     header "Installing Google Chrome"
     install-chrome || handle-failure
+  fi
+
+  if ! hash playerctl 2>/dev/null; then
+    header "Installing playerctl"
+    install-playerctl || handle-failure
   fi
 fi
 

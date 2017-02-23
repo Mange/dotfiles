@@ -9,6 +9,6 @@ vim/.netrwhist
 vim/tmp
 vim/local_*.vim
 
-vendor/*
+vendor/*/
 
 .DS_Store
