@@ -132,22 +132,6 @@ task :gitconfig do
   config["alias.prune", %(!git remote | xargs -n 1 git remote prune)]
 end
 
-desc "Installs NeoBundle"
-task :neobundle => :vim do
-  unless File.exist?('vim/bundle/neobundle.vim/')
-    unless system('git clone -q git://github.com/Shougo/neobundle.vim.git vim/bundle/neobundle.vim')
-      STDERR.puts "Could not clone NeoBundle. Continuing..."
-    end
-  end
-end
-
-desc "Installs all neobundle plugins"
-task :vimplugins => :neobundle do
-  unless system('vim -c ":NeoBundleInstall" -c ":qa"')
-    STDERR.puts "Could not automatically install vim bundles. Continuing..."
-  end
-end
-
 desc "Installs vim config"
 task :vim do
   Dotfile.new('vim').install_symlink
@@ -155,8 +139,11 @@ end
 
 desc "Installs nvim config (symlinks to normal vim config)"
 task :nvim do
-  Dotfile.new('nvim', 'vim').install_symlink
-  Dotfile.new('nvimrc', 'vimrc').install_symlink
+  xdg_home = ENV.fetch('XDG_HOME', '~/.config')
+
+  nvim = Dotfile.new('nvim', 'vim')
+  nvim.home_path = File.join(xdg_home, 'nvim')
+  nvim.install_symlink
 end
 
 desc "Installs Karabiner config (on Macs)"
