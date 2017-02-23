@@ -6,6 +6,7 @@ SYMLINKS = %w[
   Xmodmap
   gemrc
   git_template
+  i3blocks.conf
   irbrc
   psqlrc
   railsrc
