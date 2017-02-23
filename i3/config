@@ -15,7 +15,7 @@
 #   * System mode https://github.com/mohabaks/dotfiles/blob/master/config/i3-gaps/.config/i3/config#L212
 #   * Lock screen (i3lock-fancy?)
 #   * Scratchpads? What are those?
-#   * Should I switch to i3-gap?
+#   * i3blocks-gaps
 #   * rofi instead of dmenu
 #   * Anti RSI
 #   * Add all of this to dotfiles
@@ -32,6 +32,8 @@ font pango:DejaVu Sans 8
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
+
+smart_borders no_gaps
 
 # setting                  outline  bg       text
 # client.focused           #9fbc00  #9fbc00  #111111
