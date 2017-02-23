@@ -146,6 +146,15 @@ task :nvim do
   nvim.install_symlink
 end
 
+desc "Installs i3 config"
+task :i3 do
+  xdg_home = ENV.fetch('XDG_HOME', '~/.config')
+
+  i3 = Dotfile.new('i3')
+  i3.home_path = File.join(xdg_home, 'i3')
+  i3.install_symlink
+end
+
 desc "Installs Karabiner config (on Macs)"
 task :karabiner_config do
   app_support = Pathname.new("~/Library/Application Support").expand_path
@@ -171,7 +180,19 @@ end
 task :install => sshrc_zshrc
 
 desc "Installs all files"
-task :install => (SYMLINKS + FILES + BINARIES + %w[karabiner_config gopath modules gitignore zsh gitconfig neobundle nvim]) do
+task :install => (
+  SYMLINKS + FILES + BINARIES + %w[
+    gitconfig
+    gitignore
+    gopath
+    i3
+    karabiner_config
+    modules
+    neobundle
+    nvim
+    zsh
+  ]
+) do
   if ENV['SHELL'] !~ /zsh/
     STDERR.puts "Warning: You seem to be using a shell different from zsh (#{ENV['SHELL']})"
     STDERR.puts "Fix this by running:"
