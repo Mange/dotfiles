@@ -2,6 +2,11 @@ require File.expand_path('../support/dotfile', __FILE__)
 require File.expand_path('../support/binary', __FILE__)
 require 'fileutils'
 
+XDG_SYMLINKS = %w[
+  i3
+  i3blocks
+]
+
 SYMLINKS = %w[
   Xmodmap
   gemrc
@@ -31,6 +36,17 @@ SYMLINKS.each do |file|
   desc "Installs #{file} by symlinking it inside your home"
   task file do
     Dotfile.new(file).install_symlink
+  end
+end
+
+XDG_SYMLINKS.each do |file|
+  desc "Installs #{file} by symlinking it inside your XDG_HOME"
+  task file do
+    xdg_home = ENV.fetch('XDG_HOME', '~/.config')
+
+    dotfile = Dotfile.new(file)
+    dotfile.home_path = File.join(xdg_home, file)
+    dotfile.install_symlink
   end
 end
 
@@ -147,15 +163,6 @@ task :nvim do
   nvim.install_symlink
 end
 
-desc "Installs i3 config"
-task :i3 do
-  xdg_home = ENV.fetch('XDG_HOME', '~/.config')
-
-  i3 = Dotfile.new('i3')
-  i3.home_path = File.join(xdg_home, 'i3')
-  i3.install_symlink
-end
-
 desc "Installs Karabiner config (on Macs)"
 task :karabiner_config do
   app_support = Pathname.new("~/Library/Application Support").expand_path
@@ -182,11 +189,10 @@ task :install => sshrc_zshrc
 
 desc "Installs all files"
 task :install => (
-  SYMLINKS + FILES + BINARIES + %w[
+  SYMLINKS + XDG_SYMLINKS + FILES + BINARIES + %w[
     gitconfig
     gitignore
     gopath
-    i3
     karabiner_config
     modules
     neobundle
