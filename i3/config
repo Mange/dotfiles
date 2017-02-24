@@ -21,6 +21,10 @@
 #   * Add all of this to dotfiles
 #     * How to manage difference in configs between machines?
 #   * Transparent terminals?
+#   * Unlock keychain on login
+#     * Which keychain, though? GNOMEs? Is there a standalone version?
+#     * Do we need to start gpg agent and ssh agent too? Looks like it's
+#       working for me right now, but I have no idea how.
 
 # {{{ Basic settings
 # Mod3 is my Hyper (see .Xmodmap)
