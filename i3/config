@@ -16,7 +16,6 @@
 #   * Lock screen (i3lock-fancy?)
 #   * Scratchpads? What are those?
 #   * i3blocks-gaps
-#   * rofi instead of dmenu
 #   * Anti RSI
 #   * Add all of this to dotfiles
 #     * How to manage difference in configs between machines?
@@ -74,7 +73,7 @@ bindsym $mod+Return exec i3-sensible-terminal
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
-bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+bindsym $mod+d exec --no-startup-id "rofi -show combi -modi combi,window,drun -combi-modi window,drun -separator-style none -tokenize"
 
 # }}}
 

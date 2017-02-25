@@ -3,6 +3,5 @@
 # machine.
 
 install vim-gnome
-
-install i3 i3blocks
+install rofi
 install compton
