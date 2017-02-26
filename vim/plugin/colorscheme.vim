@@ -1,3 +1,7 @@
+let g:gruvbox_contrast_dark='medium'
+let g:gruvbox_contrast_light='medium'
+colorscheme gruvbox
+
 function! s:Shared()
   runtime plugin/highlight_long_lines.vim
 
@@ -20,7 +24,6 @@ endfunction
 
 command! Dark call s:Dark()
 function! s:Dark()
-  colorscheme Tomorrow-Night
   set background=dark
   call s:Shared()
 
@@ -32,7 +35,6 @@ endfunction
 
 command! Light call s:Light()
 function! s:Light()
-  colorscheme Tomorrow
   set background=light
   call s:Shared()
 endfunction

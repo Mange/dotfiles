@@ -77,8 +77,8 @@ Plug 'puppetlabs/puppet-syntax-vim'
 Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
 
 """ Looks
-Plug 'ap/vim-css-color', {'for': ['css', 'html', 'scss']}
+Plug 'ap/vim-css-color', {'for': ['css', 'html', 'scss', 'conf']}
 Plug 'bling/vim-airline'
-Plug 'chriskempson/vim-tomorrow-theme'
+Plug 'morhetz/gruvbox'
 
 call plug#end()
