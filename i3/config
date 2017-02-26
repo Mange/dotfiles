@@ -11,11 +11,10 @@
 #   * Bind key for common applications
 #     * Start-or-switch-to possible?
 #   * Window rules for default placements, floating, etc.
-#   * Wallpaper
+#   * Terminus as terminal
 #   * System mode https://github.com/mohabaks/dotfiles/blob/master/config/i3-gaps/.config/i3/config#L212
 #   * Lock screen (i3lock-fancy?)
 #   * Scratchpads? What are those?
-#   * i3blocks-gaps
 #   * Anti RSI
 #   * Add all of this to dotfiles
 #     * How to manage difference in configs between machines?
@@ -99,6 +98,7 @@ exec --no-startup-id redshift
 exec --no-startup-id dropboxd
 exec --no-startup-id nm-applet
 exec --no-startup-id compton --backend glx --vsync opengl-swc --inactive-dim 0.1
+exec --no-startup-id feh --bg-fill ~/.wallpapers/Lakeside_Sunset_3840x2160.jpg
 # }}}
 
 # {{{ i3 shortcuts

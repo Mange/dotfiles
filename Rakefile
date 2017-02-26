@@ -21,6 +21,7 @@ SYMLINKS = %w[
   sshrc.d
   tmux.conf
   vimrc
+  wallpapers
   zsh
   zshenv
   zshprofile
