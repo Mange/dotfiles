@@ -8,6 +8,7 @@ XDG_SYMLINKS = %w[
 ]
 
 SYMLINKS = %w[
+  Xresources.d
   Xmodmap
   gemrc
   git_template
@@ -22,6 +23,7 @@ SYMLINKS = %w[
   tmux.conf
   vimrc
   wallpapers
+  xinitrc
   zsh
   zshenv
   zshprofile

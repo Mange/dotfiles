@@ -11,7 +11,7 @@
 #   * Bind key for common applications
 #     * Start-or-switch-to possible?
 #   * Window rules for default placements, floating, etc.
-#   * Terminus as terminal
+#   * Termite as terminal (too hard on ubuntu; Gentoo or Arch has this solved)
 #   * System mode https://github.com/mohabaks/dotfiles/blob/master/config/i3-gaps/.config/i3/config#L212
 #   * Lock screen (i3lock-fancy?)
 #   * Scratchpads? What are those?
