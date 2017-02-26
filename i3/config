@@ -238,12 +238,11 @@ bar {
           background         $dark0_hard
           statusline         $light1
           separator          $light1
-          # setting          outline       bg      text
-          focused_workspace  $light2       $light2 $dark1
-          active_workspace   $dark3        $dark3  $light1
-          inactive_workspace $dark2        $dark2  $light2
-          urgent_workspace   $faded_orange $light2 $dark2
-
+          # setting          outline       bg            text
+          focused_workspace  $light2       $light2       $dark1
+          active_workspace   $dark3        $dark3        $light1
+          inactive_workspace $dark2        $dark2        $light2
+          urgent_workspace   $faded_orange $faded_orange $light1
         }
 }
 
