@@ -30,6 +30,10 @@ function install-apts() {
   echo
 }
 
+install-fonts() {
+  (cd ../fonts && make)
+}
+
 install-chrome() {
   sudo apt-get install libxss1
   wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
@@ -76,6 +80,9 @@ install-apts ubuntu/apts.txt "CLI software" || handle-failure
 
 if hash X 2>/dev/null; then
   install-apts ubuntu/apts-x11.txt "X software" || handle-failure
+
+  header "Installing fonts"
+  install-fonts || handle-failure
 
   if ! hash i3 2>/dev/null; then
     header "Installing i3-gaps"
