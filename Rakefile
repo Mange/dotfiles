@@ -198,7 +198,6 @@ task :install => (
     gopath
     karabiner_config
     modules
-    neobundle
     nvim
     zsh
   ]
