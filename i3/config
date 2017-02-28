@@ -12,7 +12,6 @@
 #   * Window rules for default placements, floating, etc.
 #   * Termite as terminal (too hard on ubuntu; Gentoo or Arch has this solved)
 #   * System mode https://github.com/mohabaks/dotfiles/blob/master/config/i3-gaps/.config/i3/config#L212
-#   * Lock screen (i3lock-fancy?)
 #   * Scratchpads? What are those?
 #   * Anti RSI
 #   * Add all of this to dotfiles
@@ -35,6 +34,8 @@ font pango:DejaVu Sans 8
 floating_modifier $mod
 
 smart_borders no_gaps
+
+set $wallpaper "~/.wallpapers/Lakeside_Sunset_3840x2160.jpg"
 # }}}
 
 # {{{ Colors
@@ -97,7 +98,7 @@ exec --no-startup-id redshift
 exec --no-startup-id dropboxd
 exec --no-startup-id nm-applet
 exec --no-startup-id compton --backend glx --vsync opengl-swc --inactive-dim 0.1
-exec --no-startup-id feh --bg-fill ~/.wallpapers/Lakeside_Sunset_3840x2160.jpg
+exec --no-startup-id feh --bg-fill $wallpaper
 # }}}
 
 # {{{ i3 shortcuts
@@ -107,6 +108,9 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+# Lock screen
+bindsym $mod+Shift+Escape exec i3lock --show-failed-attempts --color=$dark1
 
 # Pulse Audio controls
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% #increase sound volume
