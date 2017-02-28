@@ -5,8 +5,7 @@
 
 # TODO:
 #   * Bind keys for media buttons
-#     * Volume controls
-#     * Play/pause/next/previous (how!?)
+#     * Play/pause/next/previous
 #     * Brightness?
 #   * Bind key for common applications
 #     * Start-or-switch-to possible?
@@ -108,6 +107,12 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+# Pulse Audio controls
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% #increase sound volume
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% #decrease sound volume
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle # mute sound
+bindsym Control+XF86AudioMute exec pavucontrol
 
 # }}}
 
