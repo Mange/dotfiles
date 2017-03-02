@@ -30,10 +30,9 @@ SYMLINKS = %w[
   zshrc
 ]
 FILES = []
-BINARIES = %w[
-  di-download
-  github
-]
+BINARIES = Dir.glob(
+  File.expand_path("../bin/*", __FILE__)
+).select { |path| File.file?(path) }.map { |path| File.basename(path) }
 
 SYMLINKS.each do |file|
   desc "Installs #{file} by symlinking it inside your home"
@@ -53,11 +52,16 @@ XDG_SYMLINKS.each do |file|
   end
 end
 
+desc "Installs all binaries"
+task :bins
+
 BINARIES.each do |file|
   desc "Installs #{file} binary by symlinking it to your home's bin directory"
-  task file => :bin do
+  task "bin/#{file}" => :bin do
     Binary.new(file).install_symlink
   end
+
+  task :bins => "bin/#{file}"
 end
 
 FILES.each do |file|
@@ -192,7 +196,8 @@ task :install => sshrc_zshrc
 
 desc "Installs all files"
 task :install => (
-  SYMLINKS + XDG_SYMLINKS + FILES + BINARIES + %w[
+  SYMLINKS + XDG_SYMLINKS + FILES + %w[
+    bins
     gitconfig
     gitignore
     gopath
