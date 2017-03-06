@@ -1,5 +1,5 @@
 FONT_DIR = ~/.local/share/fonts
-FONTS = FontAwesome.otf PowerlineSymbols.otf devicons.eot
+FONTS = FontAwesome.otf PowerlineSymbols.otf devicons.ttf
 FONT_CONFIG_DIR = ~/.config/fontconfig/conf.d
 FONT_CONFIGS = $(FONT_CONFIG_DIR)/10-symbols.conf
 
@@ -9,7 +9,7 @@ FONT_CONFIGS = $(FONT_CONFIG_DIR)/10-symbols.conf
 install: $(FONTS) $(FONT_DIR) $(FONT_CONFIGS) $(addprefix $(FONT_DIR)/,$(FONTS))
 
 clean:
-	rm *.otf *.eot
+	rm *.otf *.eot *.ttf
 
 update: clean $(FONTS)
 
@@ -19,8 +19,8 @@ FontAwesome.otf:
 PowerlineSymbols.otf:
 	wget https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf
 
-devicons.eot:
-	wget https://github.com/vorillaz/devicons/raw/master/fonts/devicons.eot
+devicons.ttf:
+	wget https://github.com/vorillaz/devicons/raw/master/fonts/devicons.ttf
 
 $(FONT_DIR):
 	mkdir -p $(FONT_DIR)
