@@ -130,8 +130,8 @@ bindsym $mod+Return exec i3-sensible-terminal
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
-bindsym $mod+d exec --no-startup-id "rofi -show combi -modi combi,window,run -combi-modi drun,window -separator-style none -tokenize"
-bindsym $mod+shift+d exec --no-startup-id "rofi -show run -separator-style none -tokenize"
+bindsym $mod+d exec --no-startup-id "rofi -show combi -modi combi,window,run -combi-modi drun,window -matching fuzzy -bw 0 -padding 10 -line-padding 10 -line-margin 0"
+bindsym $mod+shift+d exec --no-startup-id "rofi -show run -matching fuzzy -bw 0 -padding 10 -line-padding 10 -line-margin 0"
 
 # }}}
 
