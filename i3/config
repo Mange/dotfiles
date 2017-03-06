@@ -7,16 +7,11 @@
 #   * Bind keys for media buttons
 #     * Play/pause/next/previous
 #     * Brightness?
-#   * Bind key for common applications
-#     * Start-or-switch-to possible?
-#   * Window rules for default placements, floating, etc.
 #   * Termite as terminal (too hard on ubuntu; Gentoo or Arch has this solved)
 #   * System mode https://github.com/mohabaks/dotfiles/blob/master/config/i3-gaps/.config/i3/config#L212
-#   * Scratchpads? What are those?
 #   * Anti RSI
 #   * Add all of this to dotfiles
 #     * How to manage difference in configs between machines?
-#   * Transparent terminals?
 #   * Unlock keychain on login
 #     * Which keychain, though? GNOMEs? Is there a standalone version?
 #     * Do we need to start gpg agent and ssh agent too? Looks like it's
