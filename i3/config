@@ -92,7 +92,7 @@ client.unfocused         $dark0          $dark0          $light1 $neutral_orange
 client.urgent            $neutral_orange $neutral_orange $light1 $bright_orange  $neutral_orange
 # }}}
 
-# {{{ Startup applications
+# {{{ Early startup applications
 exec --no-startup-id xmodmap ~/.Xmodmap
 exec --no-startup-id redshift
 exec --no-startup-id dropboxd
@@ -284,5 +284,12 @@ bar {
           urgent_workspace   $faded_orange $faded_orange $light1
         }
 }
+
+# }}}
+
+# {{{ Late startup programs
+
+exec spotify
+exec slack
 
 # }}}
