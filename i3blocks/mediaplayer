@@ -1,0 +1,29 @@
+#!/bin/bash
+
+bright_green="#b8bb26"
+neutral_green="#98971a"
+faded_green="#79740e"
+dark4="#7c6f64"
+
+playing_icon=
+paused_icon=
+no_player_icon=
+
+player_status=$(playerctl status 2>/dev/null)
+
+if [[ $? == 0 ]]; then
+  if [[ $player_status == "Paused" ]]; then
+    current_icon=$paused_icon
+  else
+    current_icon=$playing_icon
+  fi
+
+  artist="<span color=\"${neutral_green}\">$(playerctl metadata artist)</span>"
+  title="<span color=\"${bright_green}\" weight=\"bold\">$(playerctl metadata title)</span>"
+  icon="<span color=\"${faded_green}\">${current_icon}</span>"
+
+  echo "${icon} ${artist} - ${title}"
+  echo "${icon} ${title}"
+else
+  echo "<span color=\"${dark4}\">${no_player_icon} No player</span>"
+fi
