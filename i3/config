@@ -5,7 +5,6 @@
 
 # TODO:
 #   * Bind keys for media buttons
-#     * Play/pause/next/previous
 #     * Brightness?
 #   * Termite as terminal (too hard on ubuntu; Gentoo or Arch has this solved)
 #   * System mode https://github.com/mohabaks/dotfiles/blob/master/config/i3-gaps/.config/i3/config#L212
@@ -107,12 +106,6 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 # Lock screen
 bindsym $mod+Shift+Escape exec i3lock --show-failed-attempts --color=$dark1
 
-# Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% #increase sound volume
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% #decrease sound volume
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle # mute sound
-bindsym Control+XF86AudioMute exec pavucontrol
-
 # }}}
 
 # {{{ Program shortcuts
@@ -120,13 +113,21 @@ bindsym Control+XF86AudioMute exec pavucontrol
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
 
-# start dmenu (a program launcher)
-# bindsym $mod+d exec dmenu_run
-# There also is the (new) i3-dmenu-desktop which only displays applications
-# shipping a .desktop file. It is a wrapper around dmenu, so you need that
-# installed.
+# Rofi
 bindsym $mod+d exec --no-startup-id "rofi -show combi -modi combi,window,run -combi-modi drun,window -matching fuzzy -bw 0 -padding 10 -line-padding 10 -line-margin 0"
 bindsym $mod+shift+d exec --no-startup-id "rofi -show run -matching fuzzy -bw 0 -padding 10 -line-padding 10 -line-margin 0"
+
+# Pulse Audio controls
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% #increase sound volume
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% #decrease sound volume
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle # mute sound
+bindsym Control+XF86AudioMute exec pavucontrol
+
+# Media player controls
+bindsym XF86AudioPlay  exec --no-startup-id playerctl play-pause, exec pkill -SIGRTMIN+10 i3blocks
+bindsym XF86AudioPause exec --no-startup-id playerctl play-pause, exec pkill -SIGRTMIN+10 i3blocks
+bindsym XF86AudioNext  exec --no-startup-id playerctl next, exec pkill -SIGRTMIN+10 i3blocks
+bindsym XF86AudioPrev  exec --no-startup-id playerctl previous, exec pkill -SIGRTMIN+10 i3blocks
 
 # }}}
 
