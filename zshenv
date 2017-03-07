@@ -37,7 +37,7 @@ function {
 
       /usr/local/bin
 
-      $(whence -p brew >/dev/null && brew --prefix coreutils)/libexec/gnubin(/N)
+      /usr/local/opt/coreutils/libexec/gnubin(/N)
 
       "$path[@]"
     )
