@@ -174,11 +174,20 @@ bindsym $mod+Shift+0 move container to workspace $workspace10
 
 # {{{ Assignments
 
-# Doesn't actually work. Maybe the Chrome window gets the title too late in the
-# startup process?
-assign [instance="^crx_" title="^DevDocs"] $workspace3
+# Chromium apps have instance names beginning with "crx_", so by looking for
+# that AND the title, we can determine which app it is. Some of the apps does
+# not assign instance/title before application finishes loading, and in that
+# case cannot be placed automatically using assign.
+# Using for_window instead might be better, but it also means that they are
+# frozen to that workspace, which is unacceptable in some cases.
 
-assign [class="Spotify"] $workspace9
+# DevDocs API Documentation app (Chromium)
+for_window [instance="^crx_" title="^DevDocs"] move to workspace $workspace3
+
+# Spotify does not set class before displaying window, so force window movement
+# always instead.
+# https://github.com/i3/i3/issues/2060
+for_window [class="Spotify"] move to workspace $workspace9
 
 assign [instance="^crx_" title="^Google Hangouts"] $workspace10
 assign [class="Slack"] $workspace10
