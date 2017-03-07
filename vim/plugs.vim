@@ -75,6 +75,7 @@ Plug 'othree/html5-syntax.vim', {'for': 'html'}
 Plug 'jparise/vim-graphql'
 Plug 'puppetlabs/puppet-syntax-vim'
 Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
+Plug 'hashivim/vim-terraform'
 
 """ Looks
 Plug 'ap/vim-css-color', {'for': ['css', 'html', 'scss']}
