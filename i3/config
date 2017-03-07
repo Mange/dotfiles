@@ -1,0 +1,289 @@
+# i3 config file (v4)
+# vim:foldmethod=marker:
+#
+# Please see http://i3wm.org/docs/userguide.html for a complete reference!
+
+# TODO:
+#   * Bind keys for media buttons
+#     * Brightness?
+#   * Termite as terminal (too hard on ubuntu; Gentoo or Arch has this solved)
+#   * System mode https://github.com/mohabaks/dotfiles/blob/master/config/i3-gaps/.config/i3/config#L212
+#   * Anti RSI
+#   * Add all of this to dotfiles
+#     * How to manage difference in configs between machines?
+#   * Unlock keychain on login
+#     * Which keychain, though? GNOMEs? Is there a standalone version?
+#     * Do we need to start gpg agent and ssh agent too? Looks like it's
+#       working for me right now, but I have no idea how.
+
+# {{{ Basic settings
+# Mod3 is my Hyper (see .Xmodmap)
+set $mod Mod3
+
+# This font is widely installed, provides lots of unicode glyphs, right-to-left
+# text rendering and scalability on retina/hidpi displays (thanks to pango).
+font pango:DejaVu Sans 8
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+smart_borders no_gaps
+# }}}
+
+# {{{ Colors
+# Based on Gruvbox; raw colors below:
+set $dark0_hard "#1d2021"
+set $dark0 "#282828"
+set $dark0_soft "#32302f"
+set $dark1 "#3c3836"
+set $dark2 "#504945"
+set $dark3 "#665c54"
+set $dark4 "#7c6f64"
+set $dark4_256 "#7c6f64"
+
+set $gray_245 "#928374"
+set $gray_244 "#928374"
+
+set $light0_hard "#f9f5d7"
+set $light0 "#fbf1c7"
+set $light0_soft "#f2e5bc"
+set $light1 "#ebdbb2"
+set $light2 "#d5c4a1"
+set $light3 "#bdae93"
+set $light4 "#a89984"
+set $light4_256 "#a89984"
+
+set $bright_red "#fb4934"
+set $bright_green "#b8bb26"
+set $bright_yellow "#fabd2f"
+set $bright_blue "#83a598"
+set $bright_purple "#d3869b"
+set $bright_aqua "#8ec07c"
+set $bright_orange "#fe8019"
+
+set $neutral_red "#cc241d"
+set $neutral_green "#98971a"
+set $neutral_yellow "#d79921"
+set $neutral_blue "#458588"
+set $neutral_purple "#b16286"
+set $neutral_aqua "#689d6a"
+set $neutral_orange "#d65d0e"
+
+set $faded_red "#9d0006"
+set $faded_green "#79740e"
+set $faded_yellow "#b57614"
+set $faded_blue "#076678"
+set $faded_purple "#8f3f71"
+set $faded_aqua "#427b58"
+set $faded_orange "#af3a03"
+
+# setting                outline         bg              text    indicator       child_border
+client.focused           $bright_blue    $bright_blue    $dark0  $neutral_orange $bright_blue
+client.focused_inactive  $dark1          $dark1          $light1 $neutral_orange $dark1
+client.unfocused         $dark0          $dark0          $light1 $neutral_orange $dark1
+client.urgent            $neutral_orange $neutral_orange $light1 $bright_orange  $neutral_orange
+# }}}
+
+# {{{ Early startup applications
+exec --no-startup-id xmodmap ~/.Xmodmap
+exec --no-startup-id redshift
+exec --no-startup-id dropboxd
+exec --no-startup-id nm-applet
+exec --no-startup-id compton --backend glx --vsync opengl-swc --inactive-dim 0.1
+exec_always --no-startup-id ~/bin/set-wallpaper
+# }}}
+
+# {{{ i3 shortcuts
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+# Lock screen
+bindsym $mod+Shift+Escape exec i3lock --show-failed-attempts --color=$dark1
+
+# }}}
+
+# {{{ Program shortcuts
+
+# start a terminal
+bindsym $mod+Return exec i3-sensible-terminal
+
+# Rofi
+bindsym $mod+d exec --no-startup-id "rofi -show combi -modi combi,window,run -combi-modi drun,window -matching fuzzy -bw 0 -padding 10 -line-padding 10 -line-margin 0"
+bindsym $mod+shift+d exec --no-startup-id "rofi -show run -matching fuzzy -bw 0 -padding 10 -line-padding 10 -line-margin 0"
+
+# Pulse Audio controls
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% #increase sound volume
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% #decrease sound volume
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle # mute sound
+bindsym Control+XF86AudioMute exec pavucontrol
+
+# Media player controls
+bindsym XF86AudioPlay  exec --no-startup-id playerctl play-pause, exec pkill -SIGRTMIN+10 i3blocks
+bindsym XF86AudioPause exec --no-startup-id playerctl play-pause, exec pkill -SIGRTMIN+10 i3blocks
+bindsym XF86AudioNext  exec --no-startup-id playerctl next, exec pkill -SIGRTMIN+10 i3blocks
+bindsym XF86AudioPrev  exec --no-startup-id playerctl previous, exec pkill -SIGRTMIN+10 i3blocks
+
+# }}}
+
+# {{{ Workspaces
+
+set $workspace1   "1:<big></big>"
+set $workspace2   "2:<big></big>"
+set $workspace3   "3:<big></big>"
+set $workspace4   "4"
+set $workspace5   "5"
+set $workspace6   "6"
+set $workspace7   "7"
+set $workspace8   "8"
+set $workspace9   "9:<big></big>"
+set $workspace10 "10:<big></big>"
+
+# switch to workspace
+bindsym $mod+grave workspace back_and_forth
+bindsym $mod+1 workspace $workspace1
+bindsym $mod+2 workspace $workspace2
+bindsym $mod+3 workspace $workspace3
+bindsym $mod+4 workspace $workspace4
+bindsym $mod+5 workspace $workspace5
+bindsym $mod+6 workspace $workspace6
+bindsym $mod+7 workspace $workspace7
+bindsym $mod+8 workspace $workspace8
+bindsym $mod+9 workspace $workspace9
+bindsym $mod+0 workspace $workspace10
+
+# Switch to current workspace in order to go back
+workspace_auto_back_and_forth yes
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $workspace1
+bindsym $mod+Shift+2 move container to workspace $workspace2
+bindsym $mod+Shift+3 move container to workspace $workspace3
+bindsym $mod+Shift+4 move container to workspace $workspace4
+bindsym $mod+Shift+5 move container to workspace $workspace5
+bindsym $mod+Shift+6 move container to workspace $workspace6
+bindsym $mod+Shift+7 move container to workspace $workspace7
+bindsym $mod+Shift+8 move container to workspace $workspace8
+bindsym $mod+Shift+9 move container to workspace $workspace9
+bindsym $mod+Shift+0 move container to workspace $workspace10
+
+# }}}
+
+# {{{ Assignments
+
+# Doesn't actually work. Maybe the Chrome window gets the title too late in the
+# startup process?
+assign [instance="^crx_" title="^DevDocs"] $workspace3
+
+assign [class="Spotify"] $workspace9
+
+assign [instance="^crx_" title="^Google Hangouts"] $workspace10
+assign [class="Slack"] $workspace10
+
+# }}}
+
+# {{{ Window management
+
+# kill focused window
+bindsym $mod+Shift+q kill
+
+# change focus
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# move focused window
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# split in horizontal orientation (note: this would be called vertical split in Vim)
+bindsym $mod+v split h
+
+# split in vertical orientation (note: this would be called horizontal split in Vim)
+bindsym $mod+s split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+w layout stacking
+bindsym $mod+t layout tabbed
+bindsym $mod+q layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# focus the child container
+#bindsym $mod+d focus child
+
+# }}}
+
+# {{{ Resize mode
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+        bindsym h resize shrink width 10 px or 10 ppt
+        bindsym j resize grow height 10 px or 10 ppt
+        bindsym k resize shrink height 10 px or 10 ppt
+        bindsym l resize grow width 10 px or 10 ppt
+
+        # same bindings, but for the arrow keys
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym $mod+r mode "resize"
+# }}}
+
+# {{{ Bar
+
+# Start i3bar to display a workspace bar (plus the system information i3blocks
+# finds out, if available)
+bar {
+        status_command i3blocks
+        font pango:DejaVu Sans Mono 12
+        position top
+        strip_workspace_numbers yes
+        colors {
+          background         $dark0_hard
+          statusline         $light1
+          separator          $light1
+          # setting          outline       bg            text
+          focused_workspace  $light2       $light2       $dark1
+          active_workspace   $dark3        $dark3        $light1
+          inactive_workspace $dark2        $dark2        $light2
+          urgent_workspace   $faded_orange $faded_orange $light1
+        }
+}
+
+# }}}
+
+# {{{ Late startup programs
+
+exec spotify
+exec slack
+
+# }}}

@@ -3,3 +3,7 @@
 # machine.
 
 install vim-gnome
+# install rxvt-unicode-256color
+install rofi
+install compton
+install pavucontrol lxrandr i3lock

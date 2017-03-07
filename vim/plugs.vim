@@ -36,6 +36,7 @@ Plug 'bronson/vim-trailing-whitespace'
 Plug 'haya14busa/incsearch.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'kana/vim-textobj-user' | Plug 'nelstrom/vim-textobj-rubyblock'
+Plug 'kien/rainbow_parentheses.vim'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'neomake/neomake'
 Plug 'terryma/vim-multiple-cursors'
@@ -78,8 +79,8 @@ Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
 Plug 'hashivim/vim-terraform'
 
 """ Looks
-Plug 'ap/vim-css-color', {'for': ['css', 'html', 'scss']}
+Plug 'ap/vim-css-color', {'for': ['css', 'html', 'scss', 'conf']}
 Plug 'bling/vim-airline'
-Plug 'chriskempson/vim-tomorrow-theme'
+Plug 'morhetz/gruvbox'
 
 call plug#end()

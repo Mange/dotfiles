@@ -2,10 +2,17 @@ require File.expand_path('../support/dotfile', __FILE__)
 require File.expand_path('../support/binary', __FILE__)
 require 'fileutils'
 
+XDG_SYMLINKS = %w[
+  i3
+  i3blocks
+]
+
 SYMLINKS = %w[
+  Xresources.d
   Xmodmap
   gemrc
   git_template
+  i3blocks.conf
   irbrc
   psqlrc
   railsrc
@@ -15,16 +22,17 @@ SYMLINKS = %w[
   sshrc.d
   tmux.conf
   vimrc
+  wallpapers
+  xinitrc
   zsh
   zshenv
   zshprofile
   zshrc
 ]
 FILES = []
-BINARIES = %w[
-  di-download
-  github
-]
+BINARIES = Dir.glob(
+  File.expand_path("../bin/*", __FILE__)
+).select { |path| File.file?(path) }.map { |path| File.basename(path) }
 
 SYMLINKS.each do |file|
   desc "Installs #{file} by symlinking it inside your home"
@@ -33,11 +41,27 @@ SYMLINKS.each do |file|
   end
 end
 
+XDG_SYMLINKS.each do |file|
+  desc "Installs #{file} by symlinking it inside your XDG_HOME"
+  task file do
+    xdg_home = ENV.fetch('XDG_HOME', '~/.config')
+
+    dotfile = Dotfile.new(file)
+    dotfile.home_path = File.join(xdg_home, file)
+    dotfile.install_symlink
+  end
+end
+
+desc "Installs all binaries"
+task :bins
+
 BINARIES.each do |file|
   desc "Installs #{file} binary by symlinking it to your home's bin directory"
-  task file => :bin do
+  task "bin/#{file}" => :bin do
     Binary.new(file).install_symlink
   end
+
+  task :bins => "bin/#{file}"
 end
 
 FILES.each do |file|
@@ -171,7 +195,18 @@ end
 task :install => sshrc_zshrc
 
 desc "Installs all files"
-task :install => (SYMLINKS + FILES + BINARIES + %w[karabiner_config gopath modules gitignore zsh gitconfig neobundle nvim]) do
+task :install => (
+  SYMLINKS + XDG_SYMLINKS + FILES + %w[
+    bins
+    gitconfig
+    gitignore
+    gopath
+    karabiner_config
+    modules
+    nvim
+    zsh
+  ]
+) do
   if ENV['SHELL'] !~ /zsh/
     STDERR.puts "Warning: You seem to be using a shell different from zsh (#{ENV['SHELL']})"
     STDERR.puts "Fix this by running:"

@@ -1,5 +1,9 @@
 set nocompatible
 
+if has("termguicolor")
+  set termguicolor
+endif
+
 runtime! before/**/*.vim
 
 source ~/.vim/plugs.vim

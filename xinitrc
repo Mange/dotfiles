@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+shopt -s nullglob
+[ -d ~/.Xresources.d ] && for f in ~/.Xresources.d/*; do xrdb -merge "-I$HOME" "-I$HOME/.Xresources.d" "$f"; done
+[ -f ~/.Xresources.local ] && xrdb -merge "-I$HOME" "-I$HOME/.Xresources.d" ~/.Xresources.local
+exec i3

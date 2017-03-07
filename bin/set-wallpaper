@@ -1,0 +1,14 @@
+#!/bin/bash
+set -e
+
+wallpaper=~/.wallpapers/Lakeside_Sunset_3840x2160.jpg
+number_of_monitors=$(xrandr --listmonitors | grep "Monitors: " | awk '{ print $2 }')
+
+if [[ $number_of_monitors > 0 ]]; then
+  command="feh"
+  for ((i=0; i < $number_of_monitors; ++i)); do
+    command="$command --bg-fill $wallpaper"
+  done
+
+  exec $command
+fi
