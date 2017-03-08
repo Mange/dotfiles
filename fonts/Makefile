@@ -1,15 +1,15 @@
 FONT_DIR = ~/.local/share/fonts
 FONTS = FontAwesome.otf PowerlineSymbols.otf devicons.ttf
 FONT_CONFIG_DIR = ~/.config/fontconfig/conf.d
-FONT_CONFIGS = $(FONT_CONFIG_DIR)/10-symbols.conf
+FONT_CONFIGS := $(wildcard *.conf)
 
 .PHONY: update clean install
 .DEFAULT_GOAL := install
 
-install: $(FONTS) $(FONT_DIR) $(FONT_CONFIGS) $(addprefix $(FONT_DIR)/,$(FONTS))
+install: $(FONTS) $(FONT_DIR) $(addprefix $(FONT_CONFIG_DIR)/,$(FONT_CONFIGS)) $(addprefix $(FONT_DIR)/,$(FONTS))
 
 clean:
-	rm *.otf *.eot *.ttf
+	@rm -v *.otf *.eot *.ttf
 
 update: clean $(FONTS)
 
@@ -29,7 +29,7 @@ $(FONT_CONFIG_DIR):
 	mkdir -p $(FONT_CONFIG_DIR)
 
 $(FONT_DIR)/%: % $(FONT_DIR)
-	cp -v $< $@
+	@cp -v $< $@
 
 $(FONT_CONFIG_DIR)/%: % $(FONT_CONFIG_DIR)
-	cp -v $< $@
+	@cp -v $< $@
