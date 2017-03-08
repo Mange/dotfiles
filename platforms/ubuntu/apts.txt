@@ -1,6 +1,10 @@
 # vim:ft=sh:
+
 # Bare essentials
-install zsh vim silversearcher-ag
+install zsh vim
+
+# Laptop support
+install acpi
 
 # Fonts
 install fonts-dejavu fonts-dejavu-extra fonts-noto fonts-powerline
