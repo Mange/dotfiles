@@ -7,6 +7,7 @@ dark4="#7c6f64"
 
 playing_icon=
 paused_icon=
+stopped_icon=
 no_player_icon=
 
 player_status=$(playerctl status 2>/dev/null)
@@ -14,13 +15,18 @@ player_status=$(playerctl status 2>/dev/null)
 if [[ $? == 0 ]]; then
   if [[ $player_status == "Paused" ]]; then
     current_icon=$paused_icon
+    icon_color=$faded_green
+  elif [[ $player_status == "Stopped" ]]; then
+    current_icon=$stopped_icon
+    icon_color=$dark4
   else
     current_icon=$playing_icon
+    icon_color=$bright_green
   fi
 
   artist="<span color=\"${neutral_green}\">$(playerctl metadata artist)</span>"
   title="<span color=\"${bright_green}\" weight=\"bold\">$(playerctl metadata title)</span>"
-  icon="<span color=\"${faded_green}\">${current_icon}</span>"
+  icon="<span color=\"${icon_color}\">${current_icon}</span>"
 
   echo "${icon} ${artist} - ${title}"
   echo "${icon} ${title}"
