@@ -87,7 +87,7 @@ client.urgent            $neutral_orange $neutral_orange $light1 $bright_orange 
 # {{{ Early startup applications
 exec --no-startup-id xmodmap ~/.Xmodmap
 exec --no-startup-id redshift
-exec --no-startup-id dropboxd
+exec --no-startup-id dropbox start
 exec --no-startup-id nm-applet
 exec --no-startup-id compton --backend glx --vsync opengl-swc --inactive-dim 0.1
 exec_always --no-startup-id ~/bin/set-wallpaper
