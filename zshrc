@@ -140,6 +140,7 @@ try-editor () {
 try-editor nano
 try-editor vi
 try-editor vim
+try-editor nvim
 
 export VISUAL=$EDITOR
 
