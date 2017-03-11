@@ -8,7 +8,6 @@
 #     * Brightness?
 #   * Termite as terminal (too hard on ubuntu; Gentoo or Arch has this solved)
 #   * System mode https://github.com/mohabaks/dotfiles/blob/master/config/i3-gaps/.config/i3/config#L212
-#   * Anti RSI
 #   * Add all of this to dotfiles
 #     * How to manage difference in configs between machines?
 
@@ -302,5 +301,6 @@ bar {
 
 exec spotify
 exec slack
+exec workrave
 
 # }}}
