@@ -6,17 +6,21 @@ cd $(dirname $0)
 
 ./shared/rvm.sh
 
-function install-apts() {
+apt-install() {
+  echo "${cyan}╸ sudo apt install -y ${*}${reset}"
+}
+
+install-apts() {
   local filename="$1"
   local title="$2"
   header "Installing $title"
   sed "s/#.*\$//" $filename | while read line; do
     [[ -z $line ]] && continue
 
-    echo -n ${cyan}╸ sudo apt-get $line$red
+    echo -n ${cyan}╸ sudo apt $line$red
 
     set +e
-    output="$(sudo apt-get -qq $line 2>&1)"
+    output="$(sudo apt -qq $line 2>&1)"
     if [[ $? == 0 ]]; then
       echo -n $green ✔ $reset
     else
@@ -35,7 +39,7 @@ install-fonts() {
 }
 
 install-chrome() {
-  sudo apt-get install -y libxss1
+  apt-install libxss1
   wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
   sudo dpkg -i google-chrome*.deb
   rm google-chrome*.deb
@@ -43,7 +47,7 @@ install-chrome() {
 
 install-i3-gaps() {
   # From: https://github.com/Airblader/i3/wiki/Compiling-&-Installing#ubuntu--1610
-  sudo apt-get install -y \
+  apt-install \
     libxcb1-dev libxcb-keysyms1-dev libpango1.0-dev libxcb-util0-dev libxcb-icccm4-dev libyajl-dev libstartup-notification0-dev libxcb-randr0-dev libev-dev libxcb-cursor-dev libxcb-xinerama0-dev libxcb-xkb-dev libxkbcommon-dev libxkbcommon-x11-dev autoconf libxcb-xrm0 libxcb-xrm-dev
   (cd ../vendor && make i3-gaps-install)
 }
@@ -53,22 +57,22 @@ install-i3blocks-gaps() {
 }
 
 install-playerctl() {
-  sudo apt-get install -y gtk-doc-tools gobject-introspection libglib2.0-dev
+  apt-install gtk-doc-tools gobject-introspection libglib2.0-dev
   (cd ../vendor && make playerctl-install)
 }
 
 install-lastpass-cli() {
   # https://github.com/lastpass/lastpass-cli
-  sudo apt-get install -y openssl libcurl4-openssl-dev libxml2 libssl-dev libxml2-dev pinentry-curses xclip
+  apt-install openssl libcurl4-openssl-dev libxml2 libssl-dev libxml2-dev pinentry-curses xclip
   # README didn't say, but this is also required:
-  sudo apt-get install -y cmake asciidoc
+  apt-install cmake asciidoc
   (cd ../vendor && make lastpass-cli)
 }
 
 install-sshrc() {
   sudo add-apt-repository ppa:russell-s-stewart/ppa
-  sudo apt-get update
-  sudo apt-get install -y sshrc
+  sudo apt update
+  apt-install sshrc
 }
 
 handle-failure() {
@@ -128,4 +132,4 @@ fi
 ./shared/di.sh || handle-failure
 
 header "Installing updates"
-sudo apt-get -qq update && sudo apt-get dist-upgrade
+sudo apt -qq update && sudo apt full-upgrade
