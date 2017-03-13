@@ -62,4 +62,4 @@ lastpass-cli/lpass: $(shell find lastpass-cli $(FIND_SOURCE_FILES)) | lastpass-c
 	cd lastpass-cli && cmake . && $(MAKE)
 
 /usr/local/bin/lpass: | lastpass-cli/lpass
-	sudo $(MAKE) -C lastpass-cli install
+	sudo $(MAKE) -C lastpass-cli install install-doc

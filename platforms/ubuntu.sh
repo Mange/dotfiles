@@ -61,7 +61,7 @@ install-lastpass-cli() {
   # https://github.com/lastpass/lastpass-cli
   sudo apt-get install -y openssl libcurl4-openssl-dev libxml2 libssl-dev libxml2-dev pinentry-curses xclip
   # README didn't say, but this is also required:
-  sudo apt-get install -y cmake
+  sudo apt-get install -y cmake asciidoc
   (cd ../vendor && make lastpass-cli)
 }
 
