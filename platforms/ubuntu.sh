@@ -35,7 +35,7 @@ install-fonts() {
 }
 
 install-chrome() {
-  sudo apt-get install libxss1
+  sudo apt-get install -y libxss1
   wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
   sudo dpkg -i google-chrome*.deb
   rm google-chrome*.deb
@@ -57,10 +57,18 @@ install-playerctl() {
   (cd ../vendor && make playerctl-install)
 }
 
+install-lastpass-cli() {
+  # https://github.com/lastpass/lastpass-cli
+  sudo apt-get install -y openssl libcurl4-openssl-dev libxml2 libssl-dev libxml2-dev pinentry-curses xclip
+  # README didn't say, but this is also required:
+  sudo apt-get install -y cmake
+  (cd ../vendor && make lastpass-cli)
+}
+
 install-sshrc() {
   sudo add-apt-repository ppa:russell-s-stewart/ppa
   sudo apt-get update
-  sudo apt-get install sshrc
+  sudo apt-get install -y sshrc
 }
 
 handle-failure() {
@@ -109,6 +117,11 @@ if hash X 2>/dev/null; then
   if ! hash playerctl 2>/dev/null; then
     header "Installing playerctl"
     install-playerctl || handle-failure
+  fi
+
+  if ! hash lpass 2>/dev/null; then
+    header "Installing lastpass-cli"
+    install-lastpass-cli || handle-failure
   fi
 fi
 

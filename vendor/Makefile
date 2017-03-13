@@ -1,20 +1,22 @@
-.PHONY: all update pull playerctl-install i3-gaps-install i3blocks-gaps-install
+.PHONY: all update pull playerctl-install i3-gaps-install i3blocks-gaps-install lastpass-cli-install
 .DEFAULT_GOAL = all
 
 FIND_SOURCE_FILES = -type f -not -path '*/\.*' -regex '.*\.\(c\|cpp\|h\|hpp\|sh\|in\|am\)'
 
-all: i3-gaps-install i3blocks-gaps-install playerctl-install
+all: i3-gaps-install i3blocks-gaps-install playerctl-install lastpass-cli-install
 
 update: | pull all
 
-pull: i3-gaps i3blocks-gaps playerctl
+pull: i3-gaps i3blocks-gaps playerctl lastpass-cli
 	cd i3-gaps && git pull --rebase
 	cd i3blocks-gaps && git pull --rebase
 	cd playerctl && git pull --rebase
+	cd lastpass-cli && git pull --rebase
 
 playerctl-install: /usr/bin/playerctl
 i3-gaps-install: /usr/bin/i3
 i3blocks-gaps-install: /usr/bin/i3blocks
+lastpass-cli-install: /usr/local/bin/lpass
 
 playerctl:
 	git clone https://github.com/acrisci/playerctl
@@ -39,10 +41,10 @@ i3-gaps/build/Makefile: | i3-gaps
 	cd i3-gaps/build && ../configure --prefix=/usr --sysconfdir=/etc --disable-sanitizers
 
 i3-gaps/build/i3: i3-gaps/build/Makefile $(shell find i3-gaps $(FIND_SOURCE_FILES))
-	cd i3-gaps/build && make
+	cd i3-gaps/build && $(MAKE)
 
 /usr/bin/i3: i3-gaps/build/i3
-	cd i3-gaps/build && sudo make install
+	cd i3-gaps/build && sudo $(MAKE) install
 
 i3blocks-gaps:
 	git clone https://github.com/Airblader/i3blocks-gaps
@@ -52,3 +54,12 @@ i3blocks-gaps/i3blocks: $(shell find i3blocks-gaps $(FIND_SOURCE_FILES)) | i3blo
 
 /usr/bin/i3blocks: i3blocks-gaps/i3blocks
 	cd i3blocks-gaps && sudo $(MAKE) install PREFIX=/usr
+
+lastpass-cli:
+	git clone https://github.com/lastpass/lastpass-cli
+
+lastpass-cli/lpass: $(shell find lastpass-cli $(FIND_SOURCE_FILES)) | lastpass-cli
+	cd lastpass-cli && cmake . && $(MAKE)
+
+/usr/local/bin/lpass: | lastpass-cli/lpass
+	sudo $(MAKE) -C lastpass-cli install
