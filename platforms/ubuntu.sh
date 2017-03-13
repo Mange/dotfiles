@@ -66,7 +66,7 @@ install-lastpass-cli() {
   apt-install openssl libcurl4-openssl-dev libxml2 libssl-dev libxml2-dev pinentry-curses xclip
   # README didn't say, but this is also required:
   apt-install cmake asciidoc
-  (cd ../vendor && make lastpass-cli)
+  (cd ../vendor && make lastpass-cli-install)
 }
 
 install-sshrc() {
