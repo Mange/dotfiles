@@ -17,8 +17,6 @@ SYMLINKS = %w[
   psqlrc
   railsrc
   rspec
-  sshrc
-  sshrc.d
   tmux.conf
   vimrc
   wallpapers
@@ -171,20 +169,6 @@ task :nvim do
   nvim.install_symlink
 end
 
-desc "Generate a copy of the zshrc file for sshrc"
-sshrc_zshrc = File.expand_path("~/.sshrc.d/.zshrc")
-file sshrc_zshrc => "sshrc.d" do
-  File.open(sshrc_zshrc, 'w') do |out|
-    # Minify zshrc by removing comments and indentations
-    source = File.expand_path("../zshrc", __FILE__)
-    File.foreach(source) do |line|
-      filtered = line.sub(/#.*$/, '').sub(/^\s+/, '')
-      out << filtered unless filtered.empty?
-    end
-  end
-end
-task :install => sshrc_zshrc
-
 desc "Installs all files"
 task :install => (
   SYMLINKS + XDG_SYMLINKS + FILES + %w[
@@ -209,6 +193,8 @@ task :cleanup do
   Dotfile.new('zshrc.d').delete_target(only_symlink: true)
   Dotfile.new('ackrc').delete_target(only_symlink: true)
   Dotfile.new('slate.js').delete_target(only_symlink: true)
+  Dotfile.new('sshrc').delete_target(only_symlink: true)
+  Dotfile.new('sshrc.d').delete_target(only_symlink: true)
   # Clean up backup created after converting ~/.zsh to a symlink
   `[ -d ~/.zsh~ ] && mv ~/.zsh\~/* ~/.zsh && rmdir ~/.zsh~`
 end

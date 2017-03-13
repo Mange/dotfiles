@@ -70,12 +70,6 @@ install-lastpass-cli() {
   (cd ../vendor && make lastpass-cli-install)
 }
 
-install-sshrc() {
-  sudo add-apt-repository ppa:russell-s-stewart/ppa
-  sudo apt update
-  apt-install sshrc
-}
-
 handle-failure() {
   echo ${red}Command failed!${reset}
   echo "Continue? [Yn]"
@@ -90,13 +84,6 @@ handle-failure() {
 sudo echo > /dev/null
 
 install-apts ubuntu/apts.txt "CLI software" || handle-failure
-
-# Disabled as Ubuntu 16 (Xenial) has no built binaries, so everything after
-# this fails. sources.list.d needs to be cleaned up manually after.
-# if ! hash sshrc 2>/dev/null; then
-#   header "Installing sshrc"
-#   install-sshrc || handle-failure
-# fi
 
 install-rustup || handle-failure
 install-crates rust/crates.txt "Rust software" || handle-failure
