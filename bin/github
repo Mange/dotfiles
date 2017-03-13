@@ -15,7 +15,7 @@ fi
 repo=$(echo $fetch_url | grep -oE "github.com[:/][A-Za-z0-9/_.-]+" | tr ":" "/" | sed "s/\.git$//")
 
 if [[ $repo != "" ]]; then
-  open https://${repo}
+  xdg-open https://${repo}
 else
   echo "Could not construct URL from ${fetch_url}"
   exit 1

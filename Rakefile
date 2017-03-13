@@ -17,7 +17,6 @@ SYMLINKS = %w[
   psqlrc
   railsrc
   rspec
-  slate.js
   sshrc
   sshrc.d
   tmux.conf
@@ -29,7 +28,9 @@ SYMLINKS = %w[
   zshprofile
   zshrc
 ]
+
 FILES = []
+
 BINARIES = Dir.glob(
   File.expand_path("../bin/*", __FILE__)
 ).select { |path| File.file?(path) }.map { |path| File.basename(path) }
@@ -170,16 +171,6 @@ task :nvim do
   nvim.install_symlink
 end
 
-desc "Installs Karabiner config (on Macs)"
-task :karabiner_config do
-  app_support = Pathname.new("~/Library/Application Support").expand_path
-  if app_support.directory?
-    config = Dotfile.new("karabiner.xml")
-    config.home_path = app_support.join("Karabiner", "private.xml")
-    config.install_symlink
-  end
-end
-
 desc "Generate a copy of the zshrc file for sshrc"
 sshrc_zshrc = File.expand_path("~/.sshrc.d/.zshrc")
 file sshrc_zshrc => "sshrc.d" do
@@ -201,7 +192,6 @@ task :install => (
     gitconfig
     gitignore
     gopath
-    karabiner_config
     modules
     nvim
     zsh
@@ -216,8 +206,9 @@ end
 
 desc "Clears all 'legacy' files (like old symlinks)"
 task :cleanup do
-  Dotfile.new('zshrc.d').delete_target(:only_symlink => true)
-  Dotfile.new('ackrc').delete_target(:only_symlink => true)
+  Dotfile.new('zshrc.d').delete_target(only_symlink: true)
+  Dotfile.new('ackrc').delete_target(only_symlink: true)
+  Dotfile.new('slate.js').delete_target(only_symlink: true)
   # Clean up backup created after converting ~/.zsh to a symlink
   `[ -d ~/.zsh~ ] && mv ~/.zsh\~/* ~/.zsh && rmdir ~/.zsh~`
 end
