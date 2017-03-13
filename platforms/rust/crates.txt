@@ -1,0 +1,9 @@
+# For "cargo install-update"
+cargo-update
+
+# Generic development tools
+watchexec
+ripgrep
+
+# Rust development
+racer

@@ -4,7 +4,8 @@ set -e
 cd $(dirname $0)
 . ./support/functions.bash
 
-./shared/rvm.sh
+. ./shared/rvm.sh
+. ./shared/rust.sh
 
 apt-install() {
   echo "${cyan}╸ sudo apt install -y ${*}${reset}"
@@ -96,6 +97,10 @@ install-apts ubuntu/apts.txt "CLI software" || handle-failure
 #   header "Installing sshrc"
 #   install-sshrc || handle-failure
 # fi
+
+install-rustup || handle-failure
+install-crates rust/crates.txt "Rust software" || handle-failure
+cargo-update || handle-failure
 
 if hash X 2>/dev/null; then
   install-apts ubuntu/apts-x11.txt "X software" || handle-failure
