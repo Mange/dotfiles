@@ -130,7 +130,7 @@ set $workspace1   "1:<big></big>"
 set $workspace2   "2:<big></big>"
 set $workspace3   "3:<big></big>"
 set $workspace4   "4"
-set $workspace5   "5"
+set $workspace5   "5:<big></big>"
 set $workspace6   "6"
 set $workspace7   "7"
 set $workspace8   "8"
@@ -190,6 +190,8 @@ bindsym $mod+Shift+Ctrl+l move workspace to output right
 
 # DevDocs API Documentation app (Chromium)
 for_window [instance="^crx_" title="^DevDocs"] move to workspace $workspace3
+
+assign [class="Evolution"] $workspace5
 
 # Spotify does not set class before displaying window, so force window movement
 # always instead.
