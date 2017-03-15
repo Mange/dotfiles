@@ -11,7 +11,7 @@ pull: i3-gaps i3blocks-gaps playerctl lastpass-cli
 	cd i3-gaps && git pull --rebase
 	cd i3blocks-gaps && git pull --rebase
 	cd playerctl && git pull --rebase
-	cd lastpass-cli && git pull --rebase
+	cd lastpass-cli && git reset --hard && git pull --rebase
 
 playerctl-install: /usr/bin/playerctl
 i3-gaps-install: /usr/bin/i3
@@ -61,5 +61,5 @@ lastpass-cli:
 lastpass-cli/lpass: $(shell find lastpass-cli $(FIND_SOURCE_FILES)) | lastpass-cli
 	cd lastpass-cli && cmake . && $(MAKE)
 
-/usr/local/bin/lpass: | lastpass-cli/lpass
+/usr/local/bin/lpass: lastpass-cli/lpass
 	sudo $(MAKE) -C lastpass-cli install install-doc
