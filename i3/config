@@ -106,9 +106,11 @@ bindsym $mod+Shift+Escape exec i3lock --show-failed-attempts --color=$dark1
 bindsym $mod+Return exec i3-sensible-terminal
 
 # Rofi
-bindsym $mod+d exec --no-startup-id "rofi -show combi -modi combi,window,run -combi-modi drun,window -matching fuzzy -bw 0 -padding 10 -line-padding 10 -line-margin 0"
-bindsym $mod+shift+d exec --no-startup-id "rofi -show run -matching fuzzy -bw 0 -padding 10 -line-padding 10 -line-margin 0"
-bindsym $mod+p exec --no-startup-id "rofi -modi lpass:rofi-lpass -show lpass -matching fuzzy -bw 0 -padding 10 -line-padding 10 -line-margin 0"
+set $rofi_theme -lines 8 -eh 2 -width 100 -padding 500 -opacity 80 -bw 0 -font \\"DejaVu Sans 16\\"
+set $rofi_behavior -matching fuzzy
+bindsym $mod+d exec --no-startup-id "rofi -show combi -modi combi,window,run -combi-modi drun,window $rofi_theme $rofi_behavior"
+bindsym $mod+shift+d exec --no-startup-id "rofi -show run -matching fuzzy $rofi_theme $rofi_behavior"
+bindsym $mod+p exec --no-startup-id "rofi -modi lpass:rofi-lpass -show lpass $rofi_theme $rofi_behavior"
 
 # Pulse Audio controls
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% #increase sound volume
