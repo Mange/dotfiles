@@ -108,6 +108,7 @@ bindsym $mod+Return exec i3-sensible-terminal
 # Rofi
 bindsym $mod+d exec --no-startup-id "rofi -show combi -modi combi,window,run -combi-modi drun,window -matching fuzzy -bw 0 -padding 10 -line-padding 10 -line-margin 0"
 bindsym $mod+shift+d exec --no-startup-id "rofi -show run -matching fuzzy -bw 0 -padding 10 -line-padding 10 -line-margin 0"
+bindsym $mod+p exec --no-startup-id "rofi -modi lpass:rofi-lpass -show lpass -matching fuzzy -bw 0 -padding 10 -line-padding 10 -line-margin 0"
 
 # Pulse Audio controls
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% #increase sound volume
