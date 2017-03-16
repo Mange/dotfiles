@@ -22,6 +22,7 @@ Plug 'FelikZ/ctrlp-py-matcher'
 Plug 'ingo-library' | Plug 'SearchHighlighting'
 
 Plug 'airblade/vim-gitgutter'
+Plug 'mhinz/vim-startify'
 Plug 'netrw.vim'
 Plug 'rizzatti/dash.vim'
 Plug 'rking/ag.vim', {'on': ['Ag', 'AgFromSearch']}
