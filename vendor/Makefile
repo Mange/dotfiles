@@ -1,22 +1,24 @@
-.PHONY: all update pull playerctl-install i3-gaps-install i3blocks-gaps-install lastpass-cli-install
+.PHONY: all update pull playerctl-install i3-gaps-install i3blocks-gaps-install lastpass-cli-install rofi-lpass-install
 .DEFAULT_GOAL = all
 
 FIND_SOURCE_FILES = -type f -not -path '*/\.*' -regex '.*\.\(c\|cpp\|h\|hpp\|sh\|in\|am\)'
 
-all: i3-gaps-install i3blocks-gaps-install playerctl-install lastpass-cli-install
+all: i3-gaps-install i3blocks-gaps-install playerctl-install lastpass-cli-install rofi-lpass-install
 
 update: | pull all
 
-pull: i3-gaps i3blocks-gaps playerctl lastpass-cli
+pull: i3-gaps i3blocks-gaps playerctl lastpass-cli rofi-lpass
 	cd i3-gaps && git pull --rebase
 	cd i3blocks-gaps && git pull --rebase
 	cd playerctl && git pull --rebase
 	cd lastpass-cli && git reset --hard && git pull --rebase
+	cd rofi-lpass && git pull --rebase
 
 playerctl-install: /usr/bin/playerctl
 i3-gaps-install: /usr/bin/i3
 i3blocks-gaps-install: /usr/bin/i3blocks
 lastpass-cli-install: /usr/local/bin/lpass
+rofi-lpass-install: $(HOME)/bin/rofi-lpass
 
 playerctl:
 	git clone https://github.com/acrisci/playerctl
@@ -61,5 +63,12 @@ lastpass-cli:
 lastpass-cli/lpass: $(shell find lastpass-cli $(FIND_SOURCE_FILES)) | lastpass-cli
 	cd lastpass-cli && cmake . && $(MAKE)
 
-/usr/local/bin/lpass: lastpass-cli/lpass
+/usr/local/bin/lpass: | lastpass-cli/lpass
 	sudo $(MAKE) -C lastpass-cli install install-doc
+
+rofi-lpass:
+	git clone git@github.com:Mange/rofi-lpass
+
+$(HOME)/bin/rofi-lpass: | rofi-lpass
+	ln -s $(CURDIR)/rofi-lpass/rofi-lpass $(HOME)/bin/rofi-lpass
+
