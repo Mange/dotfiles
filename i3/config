@@ -85,6 +85,7 @@ exec --no-startup-id redshift
 exec --no-startup-id dropbox start
 exec --no-startup-id nm-applet
 exec --no-startup-id compton --backend glx --vsync opengl-swc --inactive-dim 0.1
+exec --no-startup-id start-mopidy
 exec_always --no-startup-id ~/bin/set-wallpaper
 # }}}
 
@@ -193,11 +194,6 @@ for_window [instance="^crx_" title="^DevDocs"] move to workspace $workspace3
 
 assign [class="Evolution"] $workspace5
 
-# Spotify does not set class before displaying window, so force window movement
-# always instead.
-# https://github.com/i3/i3/issues/2060
-for_window [class="Spotify"] move to workspace $workspace9
-
 assign [instance="^crx_" title="^Google Hangouts"] $workspace10
 assign [class="Slack"] $workspace10
 
@@ -301,8 +297,8 @@ bar {
 
 # {{{ Late startup programs
 
-exec spotify
 exec slack
 exec workrave
+exec --no-startup-id i3-msg 'workspace $workspace9; exec i3-sensible-terminal -e \\"ncmpcpp\\"'
 
 # }}}

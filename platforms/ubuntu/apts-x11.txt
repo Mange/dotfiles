@@ -8,3 +8,10 @@ install compton
 install pavucontrol lxrandr i3lock
 
 install workrave
+
+# Mopidy music server
+#   - with Spotify suppprt
+#   - with Spotify Discover support
+#   - with MPRIS support (Media player DBUS interface, for playerctl, etc.)
+# And ncmpcpp MPD interface
+install mopidy mopidy-spotify mopidy-spotify-tunigo mopidy-mpris ncmpcpp
