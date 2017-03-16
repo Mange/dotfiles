@@ -137,6 +137,7 @@ if hash X 2>/dev/null; then
 fi
 
 ./shared/di.sh || handle-failure
+./shared/projects.sh || handle-failure
 
 header "Installing updates"
 sudo apt full-upgrade
