@@ -9,6 +9,8 @@ install pavucontrol lxrandr i3lock
 
 install workrave
 
+install lxappearance
+
 # Mopidy music server
 #   - with Spotify suppprt
 #   - with Spotify Discover support
