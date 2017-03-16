@@ -4,13 +4,6 @@ nnoremap k gk
 xnoremap j gj
 xnoremap k gk
 
-" Use incsearch plugin for searching
-map /  <Plug>(incsearch-forward)
-map ?  <Plug>(incsearch-backward)
-map g/ <Plug>(incsearch-stay)
-" Allow ^A and friends in the incsearch prompt
-let g:incsearch#emacs_like_keymap = 1
-
 " Jump to alternative file
 map <leader><leader> :A<CR>
 

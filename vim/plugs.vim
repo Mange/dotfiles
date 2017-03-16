@@ -34,7 +34,6 @@ Plug 'xolox/vim-misc' | Plug 'xolox/vim-notes'
 """ Editor functionality
 Plug 'AndrewRadev/switch.vim'
 Plug 'bronson/vim-trailing-whitespace'
-Plug 'haya14busa/incsearch.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'kana/vim-textobj-user' | Plug 'nelstrom/vim-textobj-rubyblock'
 Plug 'kien/rainbow_parentheses.vim'
