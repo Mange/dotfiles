@@ -8,8 +8,6 @@
 #     * Brightness?
 #   * Termite as terminal (too hard on ubuntu; Gentoo or Arch has this solved)
 #   * System mode https://github.com/mohabaks/dotfiles/blob/master/config/i3-gaps/.config/i3/config#L212
-#   * Add all of this to dotfiles
-#     * How to manage difference in configs between machines?
 
 # {{{ Basic settings
 # Mod3 is my Hyper (see .Xmodmap)
@@ -286,10 +284,10 @@ bar {
           statusline         $light1
           separator          $light1
           # setting          outline       bg            text
-          focused_workspace  $light2       $light2       $dark1
-          active_workspace   $dark3        $dark3        $light1
-          inactive_workspace $dark2        $dark2        $light2
-          urgent_workspace   $faded_orange $faded_orange $light1
+          focused_workspace  $light2       $light2       $dark0
+          active_workspace   $dark0_hard   $dark3        $light1
+          inactive_workspace $dark0_hard   $dark0_hard   $light2
+          urgent_workspace   $faded_orange $dark0_hard   $faded_orange
         }
 }
 
