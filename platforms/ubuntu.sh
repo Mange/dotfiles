@@ -8,7 +8,8 @@ cd $(dirname $0)
 . ./shared/rust.sh
 
 apt-install() {
-  echo "${cyan}╸ sudo apt install -y ${*}${reset}"
+  echo "${cyan}╸ sudo apt-get install -y ${*}${reset}"
+  sudo apt-get install -y "$@"
 }
 
 install-apts() {
@@ -18,10 +19,10 @@ install-apts() {
   sed "s/#.*\$//" $filename | while read line; do
     [[ -z $line ]] && continue
 
-    echo -n ${cyan}╸ sudo apt $line$red
+    echo -n ${cyan}╸ sudo apt-get $line$red
 
     set +e
-    output="$(sudo apt -qq $line 2>&1)"
+    output="$(sudo apt-get -qq $line 2>&1)"
     if [[ $? == 0 ]]; then
       echo -n $green ✔ $reset
     else
@@ -83,6 +84,9 @@ handle-failure() {
 # Ask for password right away.
 sudo echo > /dev/null
 
+header "Refreshing apt cache"
+sudo apt -qq update
+
 install-apts ubuntu/apts.txt "CLI software" || handle-failure
 
 install-rustup || handle-failure
@@ -124,4 +128,4 @@ fi
 ./shared/di.sh || handle-failure
 
 header "Installing updates"
-sudo apt -qq update && sudo apt full-upgrade
+sudo apt full-upgrade
