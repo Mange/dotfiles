@@ -80,6 +80,10 @@ install-lastpass-cli() {
   (cd ../vendor && make lastpass-cli-install)
 }
 
+install-rofi-lpass() {
+  (cd ../vendor && make rofi-lpass-install)
+}
+
 handle-failure() {
   echo ${red}Command failed!${reset}
   echo "Continue? [Yn]"
@@ -133,6 +137,11 @@ if hash X 2>/dev/null; then
   if ! hash lpass 2>/dev/null; then
     header "Installing lastpass-cli"
     install-lastpass-cli || handle-failure
+  fi
+
+  if ! hash rofi-lpass 2>/dev/null; then
+    header "Installing rofi-lpass"
+    install-rofi-lpass || handle-failure
   fi
 fi
 
