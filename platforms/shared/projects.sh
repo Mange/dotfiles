@@ -12,3 +12,9 @@ for project in $projects; do
     git clone "git@github.com:Mange/${project}" "${project_root}/${project}"
   fi
 done
+
+# barcommands
+if [[ ! -e ~/.cargo/bin/bar-memory ]]; then
+  echo "Installing barcommands"
+  (cd "${project_root}/barcommands" && cargo install --force)
+fi
