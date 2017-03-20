@@ -84,6 +84,10 @@ install-rofi-lpass() {
   (cd ../vendor && make rofi-lpass-install)
 }
 
+install-fzf() {
+  git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install
+}
+
 handle-failure() {
   echo ${red}Command failed!${reset}
   echo "Continue? [Yn]"
@@ -103,6 +107,11 @@ header "Refreshing apt cache"
 sudo apt -qq update
 
 install-apts ubuntu/apts.txt "CLI software" || handle-failure
+
+if [[ ! -d ~/.fzf ]]; then
+  header "Installing fzf"
+  install-fzf
+fi
 
 install-rustup || handle-failure
 install-crates rust/crates.txt "Rust software" || handle-failure
