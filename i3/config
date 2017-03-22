@@ -98,6 +98,9 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 # Lock screen
 bindsym $mod+Shift+Escape exec i3lock --show-failed-attempts --color=$dark1
 
+# In case of emergency
+bindsym Ctrl+Shift+Escape exec xmodmap ~/.Xmodmap, exec i3-sensible-terminal
+
 # }}}
 
 # {{{ Program shortcuts
