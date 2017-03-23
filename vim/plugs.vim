@@ -65,6 +65,14 @@ Plug 'fatih/vim-go'
 Plug 'rust-lang/rust.vim'
 Plug 'racer-rust/vim-racer', {'for': 'rust'}
 
+""" ASCIIdoc
+let vimple_init_vars = 0 " https://github.com/dahu/vimple/issues/11
+Plug 'dahu/vimple'
+Plug 'dahu/Asif'
+Plug 'Raimondi/VimRegStyle'
+Plug 'vim-scripts/SyntaxRange'
+Plug 'dahu/vim-asciidoc'
+
 """ JS
 Plug 'JSON.vim'
 Plug 'jelera/vim-javascript-syntax', {'for': 'javascript'}
