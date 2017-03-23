@@ -21,7 +21,7 @@ SYMLINKS = %w[
   tmux.conf
   vimrc
   wallpapers
-  xinitrc
+  xprofile
   zsh
   zshenv
   zshprofile
@@ -196,6 +196,7 @@ task :cleanup do
   Dotfile.new('slate.js').delete_target(only_symlink: true)
   Dotfile.new('sshrc').delete_target(only_symlink: true)
   Dotfile.new('sshrc.d').delete_target(only_symlink: true)
+  Dotfile.new('xinitrc').delete_target(only_symlink: true)
   # Clean up backup created after converting ~/.zsh to a symlink
   `[ -d ~/.zsh~ ] && mv ~/.zsh\~/* ~/.zsh && rmdir ~/.zsh~`
 end
