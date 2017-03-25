@@ -308,5 +308,6 @@ bar {
 exec slack
 exec workrave
 exec --no-startup-id i3-msg 'workspace $workspace9; exec i3-sensible-terminal -e \\"ncmpcpp\\"'
+exec google-chrome
 
 # }}}
