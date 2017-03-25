@@ -127,6 +127,10 @@ bindsym XF86AudioPause exec --no-startup-id playerctl play-pause, exec pkill -SI
 bindsym XF86AudioNext  exec --no-startup-id playerctl next, exec pkill -SIGRTMIN+10 i3blocks
 bindsym XF86AudioPrev  exec --no-startup-id playerctl previous, exec pkill -SIGRTMIN+10 i3blocks
 
+# Screenshots
+bindsym --release $mod+minus exec gnome-screenshot
+bindsym --release $mod+Shift+minus exec gnome-screenshot --area
+
 # }}}
 
 # {{{ Workspaces
