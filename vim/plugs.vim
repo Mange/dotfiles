@@ -21,6 +21,7 @@ Plug 'DataWraith/auto_mkdir'
 Plug 'FelikZ/ctrlp-py-matcher'
 Plug 'ingo-library' | Plug 'SearchHighlighting'
 
+Plug 'Yggdroot/indentLine'
 Plug 'airblade/vim-gitgutter'
 Plug 'mhinz/vim-startify'
 Plug 'netrw.vim'
