@@ -189,6 +189,11 @@ task :install => (
   end
 end
 
+desc "Install plugs in vim"
+task :vimplugs do
+  system("${VISUAL:-${EDITOR:-nvim}} --cmd 'let g:startify_disable_at_vimenter = 1' +PlugInstall +qa")
+end
+
 desc "Clears all 'legacy' files (like old symlinks)"
 task :cleanup do
   Dotfile.new('zshrc.d').delete_target(only_symlink: true)
@@ -202,7 +207,7 @@ task :cleanup do
 end
 
 desc "Install and clean up old files"
-task :update => [:install, :cleanup]
+task :update => [:install, :cleanup, :vimplugs]
 
 desc "Clears all symlinks"
 task :clear_symlinks do
