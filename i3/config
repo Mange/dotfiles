@@ -78,6 +78,7 @@ client.urgent            $neutral_orange $neutral_orange $light1 $bright_orange 
 # }}}
 
 # {{{ Early startup applications
+exec --no-startup-id ~/bin/autoscreens
 exec --no-startup-id xmodmap ~/.Xmodmap
 exec --no-startup-id redshift
 exec --no-startup-id dropbox start
