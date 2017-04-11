@@ -316,7 +316,6 @@ alias-if-exist hub git
 
 alias checkout='git checkout'
 alias master="git checkout master"
-alias production="git checkout production"
 
 alias gadd='git add'
 alias gco='git commit -v'
