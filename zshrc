@@ -344,7 +344,7 @@ alias gup='gf && ffo'
 alias gl="git log --no-show-signature --graph -n 1000 --format='tformat:$git_log_format'"
 
 alias s="git status --short"
-alias gs="git show"
+alias gs="git show --show-signature"
 alias gd="git diff"
 alias gdw="git diff --color-words"
 alias staged="gd --cached"

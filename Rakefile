@@ -141,7 +141,8 @@ task :gitconfig do
 
   config["commit.gpgsign", "true"]
 
-  config["log.showSignature", "true"]
+  # It's nice in theory, but too many scripts break with this on.
+  config["log.showSignature", "false"]
 
   config["merge.conflictstyle", "diff3"]
   config["merge.tool", "vimdiff"]
