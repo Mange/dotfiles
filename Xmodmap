@@ -12,6 +12,10 @@ keycode 94 = grave asciitilde dead_acute dead_tilde
 ! Extra letters
 keycode 26 = e E eacute Eacute
 
+! Special characters
+! Ellipsis …
+keycode 60 = period greater U2026 U2026
+
 ! Apple Right Alt for special characters
 add mod1 = Alt_L Meta_L
 ! Alt R / Apple Keyboard Right Alt
