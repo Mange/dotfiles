@@ -1,7 +1,7 @@
 # vim:ft=sh:
 
 # Bare essentials
-install zsh vim
+install zsh neovim
 
 # Laptop support
 install acpi
