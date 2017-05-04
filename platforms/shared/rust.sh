@@ -2,9 +2,23 @@
 set -e
 
 install-rustup() {
-  if ! hash rustup 2>/dev/null; then
+  if [[ ! -f ~/.cargo/env ]]; then
     header "Installing rustup"
     curl https://sh.rustup.rs -sSf | sh
+  fi
+}
+
+run-cargo() {
+  if hash cargo 2>/dev/null; then
+    command cargo "$@"
+  elif [[ -f ~/.cargo/env ]]; then
+    # This is handled by my dotfiles already, but this script can run before
+    # the dotfiles have been installed so deal with that.
+    source ~/.cargo/env
+    command cargo "$@"
+  else
+    echo "Cargo is not installed!"
+    exit 1
   fi
 }
 
@@ -13,7 +27,7 @@ install-crates() {
   local title="$2"
   header "Installing $title"
 
-  local installed_crates=$(cargo install --list | grep -oE '^[^ ]+')
+  local installed_crates=$(run-cargo install --list | grep -oE '^[^ ]+')
   sed "s/#.*\$//" $filename | while read crate; do
     [[ -z $crate ]] && continue
 
@@ -25,7 +39,7 @@ install-crates() {
     fi
 
     set +e
-    output="$(cargo install --quiet $crate 2>&1)"
+    output="$(run-cargo install --quiet $crate 2>&1)"
     if [[ $? == 0 ]]; then
       echo -n $green ✔ $reset
     else
@@ -41,5 +55,5 @@ install-crates() {
 
 cargo-update() {
   header "Updating all creates"
-  cargo install-update -a
+  run-cargo install-update -a
 }
