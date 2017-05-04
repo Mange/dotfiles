@@ -14,6 +14,9 @@ pull: i3-gaps i3blocks-gaps playerctl lastpass-cli rofi-lpass
 	cd lastpass-cli && git reset --hard && git pull --rebase
 	cd rofi-lpass && git pull --rebase
 
+$(HOME)/bin:
+	mkdir -p $(HOME)/bin
+
 playerctl-install: /usr/bin/playerctl
 i3-gaps-install: /usr/bin/i3
 i3blocks-gaps-install: /usr/bin/i3blocks
@@ -69,6 +72,6 @@ lastpass-cli/lpass: $(shell find lastpass-cli $(FIND_SOURCE_FILES)) | lastpass-c
 rofi-lpass:
 	git clone git@github.com:Mange/rofi-lpass
 
-$(HOME)/bin/rofi-lpass: | rofi-lpass
-	ln -s $(CURDIR)/rofi-lpass/rofi-lpass $(HOME)/bin/rofi-lpass
+$(HOME)/bin/rofi-lpass: $(HOME)/bin rofi-lpass
+	@ln -sf $(CURDIR)/rofi-lpass/rofi-lpass $(HOME)/bin/rofi-lpass
 
