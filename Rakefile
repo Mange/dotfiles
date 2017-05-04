@@ -163,7 +163,7 @@ task :vim do
 end
 
 desc "Installs nvim config (symlinks to normal vim config)"
-task :nvim do
+task :nvim => :vim do
   xdg_home = ENV.fetch('XDG_HOME', '~/.config')
 
   nvim = Dotfile.new('nvim', 'vim')
@@ -191,8 +191,8 @@ task :install => (
 end
 
 desc "Install plugs in vim"
-task :vimplugs do
-  system("${VISUAL:-${EDITOR:-nvim}} --cmd 'let g:startify_disable_at_vimenter = 1' +PlugInstall +qa")
+task :vimplugs => :vim do
+  system("${VISUAL:-${EDITOR:-nvim}} -u ~/.vim/plugs.vim +PlugInstall +qa")
 end
 
 desc "Clears all 'legacy' files (like old symlinks)"
