@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# Dynamic startup programs that I cannot represent well in i3 config.
+
+case "$(hostname)"; in
+  bilquis)
+    # Disable trackpad completely for 0.5 seconds when typing. This avoids
+    # accidentall clicks and focus change when typing on laptop keyboard.
+    # -K means ignore modifier keys (so I can still hold shift and use
+    # trackpad)
+    # -d means daemonize
+    syndaemon -i 0.5 -K -d
+    ;;
+  *)
+    ;;
+esac
