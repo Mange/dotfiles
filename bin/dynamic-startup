@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
 # Dynamic startup programs that I cannot represent well in i3 config.
+set -e
 
-case "$(hostname)"; in
+case "$(hostname)" in
   bilquis)
+    # Natural scrolling
+    xinput set-prop 12 293 -113 -113
+
     # Disable trackpad completely for 0.5 seconds when typing. This avoids
     # accidentall clicks and focus change when typing on laptop keyboard.
     # -K means ignore modifier keys (so I can still hold shift and use
