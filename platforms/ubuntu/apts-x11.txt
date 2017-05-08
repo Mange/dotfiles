@@ -10,10 +10,3 @@ install pavucontrol lxrandr feh
 install workrave
 
 install lxappearance
-
-# Mopidy music server
-#   - with Spotify suppprt
-#   - with Spotify Discover support
-#   - with MPRIS support (Media player DBUS interface, for playerctl, etc.)
-# And ncmpcpp MPD interface
-install mopidy mopidy-spotify mopidy-spotify-tunigo mopidy-mpris ncmpcpp

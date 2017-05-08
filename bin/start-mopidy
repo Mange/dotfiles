@@ -1,3 +1,0 @@
-#!/bin/bash
-
-exec mopidy --config ~/.config/mopidy/conf.d:~/.config/mopidy/mopidy.conf
