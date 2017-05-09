@@ -4,7 +4,7 @@
 install zsh neovim
 
 # Laptop support
-install acpi
+install acpi blueman
 
 # Fonts
 install fonts-dejavu fonts-dejavu-extra fonts-noto fonts-powerline
