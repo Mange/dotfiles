@@ -141,6 +141,10 @@ if hash X 2>/dev/null; then
     header "Installing rofi-lpass"
     install-rofi-lpass || handle-failure
   fi
+
+  if hash gsettings 2>/dev/null; then
+    gsettings set org.gnome.desktop.background show-desktop-icons false
+  fi
 fi
 
 ./shared/di.sh || handle-failure
