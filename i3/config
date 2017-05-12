@@ -78,6 +78,7 @@ client.urgent            $neutral_orange $neutral_orange $light1 $bright_orange 
 # }}}
 
 # {{{ Early startup applications
+set $wallpaper_command ~/bin/set-wallpaper
 exec --no-startup-id ~/bin/dynamic-startup
 exec --no-startup-id ~/bin/autoscreens
 exec --no-startup-id xmodmap ~/.Xmodmap
@@ -86,7 +87,7 @@ exec --no-startup-id dropbox start
 exec --no-startup-id nm-applet
 exec --no-startup-id blueman-applet
 exec --no-startup-id compton --backend glx --vsync opengl-swc --inactive-dim 0.1
-exec_always --no-startup-id ~/bin/set-wallpaper
+exec_always --no-startup-id $wallpaper_command
 # }}}
 
 # {{{ i3 shortcuts
@@ -101,7 +102,7 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 bindsym $mod+Shift+Escape exec gnome-screensaver-command --lock
 
 # Reflow screens
-bindsym $mod+Shift+x exec --no-startup-id xrandr --auto
+bindsym $mod+Shift+x exec --no-startup-id xrandr --auto && autoscreens && $wallpaper_command
 
 # In case of emergency
 bindsym Ctrl+Shift+Escape exec xmodmap ~/.Xmodmap, exec i3-sensible-terminal
