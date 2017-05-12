@@ -5,8 +5,11 @@
 install vim-gnome
 install rofi
 install compton
-install pavucontrol lxrandr feh
 
-install workrave
-
-install lxappearance
+#
+# Things used by i3, in my i3bar, etc.
+#
+install lxrandr feh lxappearance
+# sysstat for mpstat for bar-cpu
+install sysstat acpi
+install pavucontrol workrave blueman
