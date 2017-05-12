@@ -105,7 +105,7 @@ bindsym $mod+Shift+Escape exec gnome-screensaver-command --lock
 bindsym $mod+Shift+x exec --no-startup-id xrandr --auto && autoscreens && $wallpaper_command
 
 # In case of emergency
-bindsym Ctrl+Shift+Escape exec xmodmap ~/.Xmodmap, exec i3-sensible-terminal
+bindsym Ctrl+Shift+Escape exec xmodmap ~/.Xmodmap
 
 # }}}
 
