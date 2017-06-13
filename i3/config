@@ -4,8 +4,6 @@
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
 # TODO:
-#   * Bind keys for media buttons
-#     * Brightness?
 #   * Termite as terminal (too hard on ubuntu; Gentoo or Arch has this solved)
 #   * System mode https://github.com/mohabaks/dotfiles/blob/master/config/i3-gaps/.config/i3/config#L212
 
@@ -132,6 +130,10 @@ bindsym XF86AudioPlay  exec --no-startup-id playerctl play-pause, exec pkill -SI
 bindsym XF86AudioPause exec --no-startup-id playerctl play-pause, exec pkill -SIGRTMIN+10 i3blocks
 bindsym XF86AudioNext  exec --no-startup-id playerctl next, exec pkill -SIGRTMIN+10 i3blocks
 bindsym XF86AudioPrev  exec --no-startup-id playerctl previous, exec pkill -SIGRTMIN+10 i3blocks
+
+# Xbacklight
+bindsym XF86MonBrightnessUp exec xbacklight -inc 10
+bindsym XF86MonBrightnessDown exec xbacklight -dec 10
 
 # Screenshots
 bindsym --release $mod+minus exec gnome-screenshot

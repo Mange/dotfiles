@@ -9,7 +9,7 @@ install compton
 #
 # Things used by i3, in my i3bar, etc.
 #
-install lxrandr feh lxappearance
+install lxrandr feh lxappearance xbacklight
 # sysstat for mpstat for bar-cpu
 install sysstat acpi
 install pavucontrol workrave blueman
