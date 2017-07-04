@@ -22,6 +22,7 @@ function {
       /sbin
 
       $HOME/bin
+      $HOME/.local/bin
 
       $HOME/.rvm/bin
       $HOME/.cargo/bin
