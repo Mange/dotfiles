@@ -299,7 +299,7 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 bar {
         status_command i3blocks
-        font pango:DejaVu Sans Mono 12
+        font pango:DejaVu Sans Mono 8
         position top
         strip_workspace_numbers yes
         colors {
