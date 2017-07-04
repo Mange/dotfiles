@@ -179,6 +179,7 @@ task :install => (
     gopath
     modules
     nvim
+    vimplug
     zsh
   ]
 ) do
@@ -189,8 +190,20 @@ task :install => (
   end
 end
 
+desc "Install vim-plug"
+task :vimplug => :vim do
+  output_filename = "vim/autoload/plug.vim"
+
+  unless File.exist?(output_filename)
+    system(
+      "curl --create-dirs --silent --fail --location --output \"#{output_filename}\" " \
+        "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+    )
+  end
+end
+
 desc "Install plugs in vim"
-task :vimplugs => :vim do
+task :vimplugs => :vimplug do
   system("${VISUAL:-${EDITOR:-nvim}} -u ~/.vim/plugs.vim +PlugInstall +qa")
 end
 
