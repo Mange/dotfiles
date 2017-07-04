@@ -19,12 +19,11 @@ endif
 """ Utility
 Plug 'DataWraith/auto_mkdir'
 Plug 'FelikZ/ctrlp-py-matcher'
-Plug 'ingo-library' | Plug 'SearchHighlighting'
+Plug 'vim-scripts/ingo-library' | Plug 'vim-scripts/SearchHighlighting'
 
 Plug 'Yggdroot/indentLine'
 Plug 'airblade/vim-gitgutter'
 Plug 'mhinz/vim-startify'
-Plug 'netrw.vim'
 Plug 'rizzatti/dash.vim'
 Plug 'rking/ag.vim', {'on': ['Ag', 'AgFromSearch']}
 Plug 'tpope/vim-eunuch'
@@ -54,7 +53,7 @@ Plug 'tpope/vim-bundler', {'for': 'ruby'}
 Plug 'tpope/vim-rvm', {'for': 'ruby'}
 
 Plug 'ecomba/vim-ruby-refactoring', {'for': 'ruby'}
-Plug 'ruby-matchit', {'for': 'ruby'}
+Plug 'vim-scripts/ruby-matchit', {'for': 'ruby'}
 Plug 'tpope/vim-rails', {'for': 'ruby'}
 Plug 'tpope/vim-rake', {'for': 'ruby'}
 Plug 'vim-ruby/vim-ruby', {'for': 'ruby'}
@@ -75,7 +74,7 @@ Plug 'vim-scripts/SyntaxRange'
 Plug 'dahu/vim-asciidoc'
 
 """ JS
-Plug 'JSON.vim'
+Plug 'vim-scripts/JSON.vim'
 Plug 'jelera/vim-javascript-syntax', {'for': 'javascript'}
 
 """ HTML/CSS
