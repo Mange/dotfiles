@@ -102,7 +102,7 @@ if [[ ! -d ~/.fzf ]]; then
   install-fzf
 fi
 
-install-rustup || handle-failure
+install-or-update-rustup || handle-failure
 install-crates rust/crates.txt "Rust software" || handle-failure
 cargo-update || handle-failure
 

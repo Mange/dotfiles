@@ -1,10 +1,13 @@
 #!/bin/bash
 set -e
 
-install-rustup() {
+install-or-update-rustup() {
   if [[ ! -f ~/.cargo/env ]]; then
     header "Installing rustup"
     curl https://sh.rustup.rs -sSf | sh
+  else
+    header "Updating Rust"
+    rustup update
   fi
 }
 
