@@ -17,7 +17,7 @@ function! s:Shared()
 
   " Improve warning look
   hi clear NeomakeWarning
-  hi NeomakeWarning ctermbg=magenta ctermfg=black gui=undercurl guisp=magenta
+  hi link NeomakeWarning SpellCap
   hi NeomakeWarningSign ctermfg=yellow guifg=yellow
   hi NeomakeErrorSign ctermfg=red guifg=red
 endfunction
