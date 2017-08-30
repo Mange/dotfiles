@@ -5,6 +5,7 @@ require 'fileutils'
 XDG_SYMLINKS = %w[
   i3
   i3blocks
+  compton
 ]
 
 SYMLINKS = %w[
