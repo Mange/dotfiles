@@ -18,6 +18,7 @@ font pango:DejaVu Sans 8
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
+hide_edge_borders both
 smart_borders no_gaps
 gaps inner 11
 gaps outer 0
@@ -73,11 +74,11 @@ set $faded_purple "#8f3f71"
 set $faded_aqua "#427b58"
 set $faded_orange "#af3a03"
 
-# setting                outline         bg              text    indicator       child_border
-client.focused           $light1         $light1         $dark0  $neutral_orange $light1
-client.focused_inactive  $light3         $light3         $dark0  $neutral_orange $light3
-client.unfocused         $gray_245       $gray_245       $light1 $neutral_orange $gray_245
-client.urgent            $bright_red     $bright_red     $light1 $bright_red     $bright_red
+# setting                outline         bg              text    indicator   child_border
+client.focused           $light1         $light1         $dark0  $light3     $light1
+client.focused_inactive  $light3         $light3         $dark0  $light3     $light3
+client.unfocused         $gray_245       $gray_245       $light1 $light3     $gray_245
+client.urgent            $bright_red     $bright_red     $light1 $bright_red $bright_red
 # }}}
 
 # {{{ Early startup applications
