@@ -19,6 +19,11 @@ font pango:DejaVu Sans 8
 floating_modifier $mod
 
 smart_borders no_gaps
+gaps inner 11
+gaps outer 0
+
+new_window pixel 2
+new_float pixel 2
 # }}}
 
 # {{{ Colors
@@ -69,10 +74,10 @@ set $faded_aqua "#427b58"
 set $faded_orange "#af3a03"
 
 # setting                outline         bg              text    indicator       child_border
-client.focused           $bright_blue    $bright_blue    $dark0  $neutral_orange $bright_blue
-client.focused_inactive  $dark1          $dark1          $light1 $neutral_orange $dark1
-client.unfocused         $dark0          $dark0          $light1 $neutral_orange $dark1
-client.urgent            $neutral_orange $neutral_orange $light1 $bright_orange  $neutral_orange
+client.focused           $light1         $light1         $dark0  $neutral_orange $light1
+client.focused_inactive  $light3         $light3         $dark0  $neutral_orange $light3
+client.unfocused         $gray_245       $gray_245       $light1 $neutral_orange $gray_245
+client.urgent            $bright_red     $bright_red     $light1 $bright_red     $bright_red
 # }}}
 
 # {{{ Early startup applications
@@ -297,20 +302,23 @@ bindsym $mod+r mode "resize"
 
 # Start i3bar to display a workspace bar (plus the system information i3blocks
 # finds out, if available)
+set $bar_background "#262626"
+set $bar_hi_background "#4e4e4e"
+
 bar {
         status_command i3blocks
         font pango:DejaVu Sans Mono 8
         position top
         strip_workspace_numbers yes
         colors {
-          background         $dark0_hard
-          statusline         $light1
+          background         $bar_background
+          statusline         $bar_background
           separator          $light1
-          # setting          outline       bg            text
-          focused_workspace  $light2       $light2       $dark0
-          active_workspace   $dark0_hard   $dark3        $light1
-          inactive_workspace $dark0_hard   $dark0_hard   $light2
-          urgent_workspace   $faded_orange $dark0_hard   $faded_orange
+          # setting          outline            bg                 text
+          focused_workspace  $bar_hi_background $bar_hi_background $light1
+          active_workspace   $dark0_hard        $bar_background    $light1
+          inactive_workspace $bar_background    $bar_background    $gray_245
+          urgent_workspace   $bright_red        $bright_red        $light1
         }
 }
 
