@@ -149,16 +149,16 @@ bindsym --release $mod+Shift+minus exec gnome-screenshot --area
 
 # {{{ Workspaces
 
-set $workspace1   "1:<big></big>"
-set $workspace2   "2:<big></big>"
-set $workspace3   "3:<big></big>"
+set $workspace1   "1:System"
+set $workspace2   "2:Code"
+set $workspace3   "3:Browse"
 set $workspace4   "4"
-set $workspace5   "5:<big></big>"
+set $workspace5   "5:Email"
 set $workspace6   "6"
 set $workspace7   "7"
 set $workspace8   "8"
-set $workspace9   "9:<big></big>"
-set $workspace10 "10:<big></big>"
+set $workspace9   "9:Media"
+set $workspace10 "10:Chat"
 
 # switch to workspace
 bindsym $mod+grave workspace back_and_forth

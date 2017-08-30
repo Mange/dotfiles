@@ -3,7 +3,7 @@
 # machine.
 
 install vim-gnome
-install rofi
+install rofi polybar
 install compton
 
 #
