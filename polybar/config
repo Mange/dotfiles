@@ -40,8 +40,8 @@ padding-right = 0
 module-margin-right = 0
 module-margin-left = 0
 
-modules-right = volume separator network separator date
-modules-center =
+modules-right = volume separator battery network separator date
+modules-center = xwindow
 modules-left = i3
 
 background = ${colors.background}
@@ -238,6 +238,32 @@ animation-packetloss-0 = ⚠
 animation-packetloss-1 = 📶
 ; Framerate in milliseconds
 animation-packetloss-framerate = 500
+
+[module/xwindow]
+type = internal/xwindow
+
+[module/battery]
+type = internal/battery
+full-at = 100
+
+format-charging = <animation-charging> <label-charging>
+format-discharging = <ramp-capacity> <label-discharging>
+format-full = <ramp-capacity> <label-full>
+
+content-foreground = ${colors.foreground-alt}
+
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+animation-charging-framerate=750
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
 
 [module/separator]
 type = custom/text
