@@ -1,5 +1,8 @@
 ;:set syn=dosini
 
+[settings]
+screenchange-reload = true
+
 [colors]
 darkgray = ${xrdb:color8}
 orange = ${xrdb:color9}
