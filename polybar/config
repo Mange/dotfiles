@@ -1,15 +1,6 @@
 ;:set syn=dosini
 
-[global/wm]
-#margin-top = 8
-#margin-bottom = 8
-#margin-left = 8
-#margin-right = 8
-
-
 [colors]
-;orange = #FF6200
-;orange = #d65d0e
 darkgray = ${xrdb:color8}
 orange = ${xrdb:color9}
 white = #ebdbb2
@@ -31,8 +22,7 @@ alert = #fb4934
 
 [bar/bar]
 bottom = true
-wm-restack = i3
-override-redirect = true
+override-redirect = false
 offset-x = 11
 offset-y = 11
 
@@ -46,7 +36,7 @@ padding-right = 0
 module-margin-right = 0
 module-margin-left = 0
 
-modules-right = volume separator date
+modules-right = volume separator network separator date
 modules-center =
 modules-left = i3
 
@@ -70,7 +60,6 @@ font-1 = "FontAwesome:size=10"
 font-2 = "PowerlineSymbols:size=10"
 ; Devicons is named icomoon in the font file
 font-3 = "icomoon:size=10"
-
 
 [module/mpd]
 type = internal/mpd
@@ -163,7 +152,7 @@ format-volume-underline = ${colors.white}
 label-volume = %{F#928374} %{F-}%percentage:3%%
 #label-volume-foreground = ${color.white}
 
-label-muted =%{F#928374} %{F-}mute
+label-muted =%{F#928374} %{F-}mute
 format-muted = <label-muted>
 format-muted-underline = ${colors.white}
 format-muted-padding = 2
@@ -171,33 +160,9 @@ format-muted-padding = 2
 
 format-padding = 2
 
-[module/keyboard]
-type = internal/xkeyboard
-
-; Available tags:
-;   <label-layout> (default)
-;   <label-indicator> (default)
-format = %{A1:~/.bin/toggkbl:}%{F#928374} %{F-}<label-layout> <label-indicator>%{A}
-format-spacing = 0
-format-underline = ${colors.white}
-
-; Available tokens:
-;   %layout%
-;   %name%
-;   %number%
-; Default: %layout%
-label-layout = %layout%
-format-padding = 2
-
-; Available tokens:
-;   %name%
-; Default: %name%
-label-indicator = %name%
-label-indicator-padding = 0
-
 [module/network]
 type = internal/network
-interface = wlp3s0
+interface = wlp110s0
 
 ; Seconds to sleep between updates
 ; Default: 1
