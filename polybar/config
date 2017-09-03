@@ -143,8 +143,6 @@ strip-wsnumbers = true
 index-sort = true
 enable-click = true
 enable-scroll = false
-wrapping-scroll = false
-reverse-scroll = false
 fuzzy-match = true
 
 ws-icon-0 = 1:System;
@@ -152,29 +150,29 @@ ws-icon-1 = 2:Code;
 ws-icon-2 = 3:Browse;
 ws-icon-3 = 4;
 ws-icon-4 = 5:Email;
-ws-icon-8 = 9:Media;
-ws-icon-9 = 0:Chat;
+ws-icon-5 = 9:Media;
+ws-icon-6 = 10:Chat;
 ws-icon-default = 
 
 format = <label-state> <label-mode>
 
-label-mode = %icon%
+label-mode = "  %mode%  "
+label-mode-background = ${colors.alert}
 
-label-focused = %icon%
-;label-focused-font = 1
+label-focused = %icon% %index%
 label-focused-background = ${colors.background-alt}
 label-focused-underline= ${colors.white}
 label-focused-padding = 2
 
-label-unfocused = %icon%
+label-unfocused = %icon% %index%
 label-unfocused-foreground = ${colors.darkgray}
 label-unfocused-padding = 2
 
-label-urgent = %icon%!
+label-urgent = %icon%! %index%
 label-urgent-background = ${colors.alert}
 label-urgent-padding = 2
 
-label-visible = %icon%
+label-visible = %icon% %index%
 label-visible-foreground = ${colors.foreground-alt}
 label-visible-padding = 2
 
