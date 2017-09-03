@@ -83,15 +83,18 @@ client.urgent            $bright_red     $bright_red     $light1 $bright_red $br
 
 # {{{ Early startup applications
 set $wallpaper_command ~/bin/set-wallpaper
+set $polybar_command ~/.config/polybar/start.sh
+
 exec --no-startup-id ~/bin/dynamic-startup
 exec --no-startup-id ~/bin/autoscreens
+exec --no-startup-id compton --config ~/.config/compton/compton.conf
+exec_always --no-startup-id $wallpaper_command
+exec_always --no-startup-id $polybar_command
 exec --no-startup-id xmodmap ~/.Xmodmap
 exec --no-startup-id redshift
 exec --no-startup-id dropbox start
 exec --no-startup-id nm-applet
 exec --no-startup-id blueman-applet
-exec --no-startup-id compton --config ~/.config/compton/compton.conf
-exec_always --no-startup-id $wallpaper_command
 # }}}
 
 # {{{ i3 shortcuts
@@ -106,7 +109,7 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 bindsym $mod+Shift+Escape exec gnome-screensaver-command --lock
 
 # Reflow screens
-bindsym $mod+Shift+x exec --no-startup-id xrandr --auto && autoscreens && $wallpaper_command
+bindsym $mod+Shift+x exec --no-startup-id xrandr --auto && autoscreens && $wallpaper_command && $polybar_command
 
 # In case of emergency
 bindsym Ctrl+Shift+Escape exec xmodmap ~/.Xmodmap
@@ -297,32 +300,6 @@ mode "resize" {
 }
 
 bindsym $mod+r mode "resize"
-# }}}
-
-# {{{ Bar
-
-# Start i3bar to display a workspace bar (plus the system information i3blocks
-# finds out, if available)
-set $bar_background "#262626"
-set $bar_hi_background "#4e4e4e"
-
-bar {
-        status_command i3blocks
-        font pango:DejaVu Sans Mono 8
-        position top
-        strip_workspace_numbers yes
-        colors {
-          background         $bar_background
-          statusline         $bar_background
-          separator          $light1
-          # setting          outline            bg                 text
-          focused_workspace  $bar_hi_background $bar_hi_background $light1
-          active_workspace   $dark0_hard        $bar_background    $light1
-          inactive_workspace $bar_background    $bar_background    $gray_245
-          urgent_workspace   $bright_red        $bright_red        $light1
-        }
-}
-
 # }}}
 
 # {{{ Late startup programs
