@@ -28,6 +28,8 @@ override-redirect = false
 locale = en_US.UTF-8
 enable-ipc = true
 
+fixed-center = true
+
 background = ${colors.background}
 foreground = ${colors.foreground}
 
