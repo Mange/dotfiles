@@ -14,7 +14,7 @@ blue = #95aec7
 yellow = #c7ae95
 green = #aec795
 #background = #1f222d
-background = #262626
+background = #00000000
 background-alt = #4e4e4e
 #foreground = #dfdfdf
 foreground = ${xrdb:foreground}
@@ -68,7 +68,7 @@ tray-offset-x = 0
 tray-offset-y = 0
 ;tray-maxsize = 16
 tray-padding = 0
-tray-transparent = false
+tray-transparent = true
 tray-scale = 1.0
 
 [module/mpd]
