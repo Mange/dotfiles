@@ -97,10 +97,10 @@ inherit = bar/base
 bottom = true
 
 modules-right =
-modules-center =
+modules-center = media-previous media-play-pause media-title media-next
 modules-left = i3
 
-tray-detached = false
+tray-detached = true
 tray-position = right
 tray-offset-x = 0
 tray-offset-y = 0
@@ -109,29 +109,32 @@ tray-padding = 0
 tray-transparent = true
 tray-scale = 1.0
 
-[module/mpd]
-type = internal/mpd
-host = 127.0.0.1
-port = 6600
-format-online =<icon-prev><label-song><icon-next>
-format-online-underline = ${colors.white}
-format-online-padding = 1
+[module/media-title]
+type = custom/script
+exec = ~/.config/polybar/media
+click-left = playerctl play-pause
+click-right = playerctl next
 
-#label-song-font = 4
-label-song = %{A1:mpc toggle:}%artist% - %title%%{A}
-icon-play = 
-icon-pause = 
-icon-prev = 
-icon-next = 
+[module/media-play-pause]
+type = custom/script
+exec = ~/.config/polybar/play-pause
+click-left = playerctl play-pause
+format-padding = 1
+format-foreground = ${colors.foreground-muted}
 
-icon-prev-foreground = ${colors.darkgray}
-icon-next-foreground = ${colors.darkgray}
+[module/media-previous]
+type = custom/text
+content-padding = 1
+content = 
+content-foreground = ${colors.foreground-muted}
+click-left = playerctl previous
 
-icon-play-padding = 1
-icon-pause-padding = 1
-icon-prev-padding = 1
-icon-next-padding = 1
-label-song-padding = 1
+[module/media-next]
+type = custom/text
+content = 
+content-padding = 1
+content-foreground = ${colors.foreground-muted}
+click-left = playerctl next
 
 [module/i3]
 type = internal/i3
