@@ -23,32 +23,42 @@ primary = #1f222d
 secondary = #FF6200
 alert = #fb4934
 
-[bar/bar]
-height = 36
-bottom = true
+[bar/core]
 override-redirect = false
-offset-x = 11
-offset-y = 11
-
 locale = en_US.UTF-8
-
 enable-ipc = true
-
-padding-left = 0
-padding-right = 0
-
-module-margin-right = 0
-module-margin-left = 0
-
-modules-right = volume separator battery network separator date
-modules-center = xwindow
-modules-left = i3
 
 background = ${colors.background}
 foreground = ${colors.foreground}
 
-underline-size = 0
 underline-color = ${colors.white}
+underline-size = 0
+
+[bar/base]
+inherit = bar/core
+
+monitor = ${env:MONITOR}
+font-0 = ${env:POLYBAR_FONT_0}
+font-1 = ${env:POLYBAR_FONT_1}
+font-2 = ${env:POLYBAR_FONT_2}
+font-3 = ${env:POLYBAR_FONT_3}
+height = ${env:POLYBAR_BAR_HEIGHT:20}
+
+[bar/top]
+inherit = bar/base
+top = true
+
+modules-right = volume separator battery network separator date
+modules-center = xwindow
+modules-left =
+
+[bar/bottom]
+inherit = bar/base
+bottom = true
+
+modules-right =
+modules-center =
+modules-left = i3
 
 tray-detached = false
 tray-position = right
@@ -58,12 +68,6 @@ tray-offset-y = 0
 tray-padding = 0
 tray-transparent = false
 tray-scale = 1.0
-
-font-0 = "DejaVu Sans Mono:size=16;1"
-font-1 = "FontAwesome:size=16;1"
-font-2 = "PowerlineSymbols:size=16;1"
-; Devicons is named icomoon in the font file
-font-3 = "icomoon:size=16;1"
 
 [module/mpd]
 type = internal/mpd
