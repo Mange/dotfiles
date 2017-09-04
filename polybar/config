@@ -82,6 +82,7 @@ font-0 = ${env:POLYBAR_FONT_0}
 font-1 = ${env:POLYBAR_FONT_1}
 font-2 = ${env:POLYBAR_FONT_2}
 font-3 = ${env:POLYBAR_FONT_3}
+font-4 = ${env:POLYBAR_FONT_4}
 height = ${env:POLYBAR_BAR_HEIGHT:20}
 
 [bar/top]
