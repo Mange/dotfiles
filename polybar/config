@@ -89,7 +89,7 @@ height = ${env:POLYBAR_BAR_HEIGHT:20}
 inherit = bar/base
 top = true
 
-modules-right = volume separator battery network separator date
+modules-right = volume battery wifi wired date
 modules-center = xwindow
 modules-left =
 
@@ -207,29 +207,10 @@ format-muted-padding = 2
 
 format-padding = 2
 
-[module/network]
+[module/wifi]
 type = internal/network
 interface = wlp110s0
-
-; Seconds to sleep between updates
-; Default: 1
 interval = 3.0
-
-; Test connectivity every Nth update
-; A value of 0 disables the feature
-; NOTE: Experimental (needs more testing)
-; Default: 0
-;ping-interval = 3
-
-; @deprecated: Define min width using token specifiers (%downspeed:min% and %upspeed:min%)
-; Minimum output width of upload/download rate
-; Default: 3
-
-; Accumulate values from all interfaces
-; when querying for up/downspeed rate
-; Default: false
-accumulate-stats = true
-
 format-connected-padding = 2
 format-disconnected-padding = 2
 format-connected-underline = ${colors.white}
@@ -282,6 +263,46 @@ animation-packetloss-1 = 📶
 ; Framerate in milliseconds
 animation-packetloss-framerate = 500
 
+[module/wired]
+type = internal/network
+interface = enp3s0
+interval = 3.0
+format-connected-padding = 2
+format-disconnected-padding = 2
+format-connected-underline = ${colors.white}
+format-disconnected-underline = ${colors.white}
+
+; Available tags:
+;   <label-connected> (default)
+;   <ramp-signal>
+format-connected = <label-connected>
+
+; Available tags:
+;   <label-disconnected> (default)
+format-disconnected = <label-disconnected>
+
+; Available tags:
+;   <label-connected> (default)
+;   <label-packetloss>
+;   <animation-packetloss>
+format-packetloss = <animation-packetloss> <label-connected>
+
+; Available tokens:
+;   %ifname%    [wireless+wired]
+;   %local_ip%  [wireless+wired]
+;   %essid%     [wireless]
+;   %signal%    [wireless]
+;   %upspeed%   [wireless+wired]
+;   %downspeed% [wireless+wired]
+;   %linkspeed% [wired]
+; Default: %ifname% %local_ip%
+label-connected =  %{F#66}%local_ip% %{F#ff}%upspeed% %downspeed%
+
+; Available tokens:
+;   %ifname%    [wireless+wired]
+; Default: (none)
+label-disconnected = %{F#66}
+
 [module/xwindow]
 type = internal/xwindow
 
@@ -307,10 +328,5 @@ ramp-capacity-1 = 
 ramp-capacity-2 = 
 ramp-capacity-3 = 
 ramp-capacity-4 = 
-
-[module/separator]
-type = custom/text
-content = |
-content-foreground = #4e4e4e
 
 ; vim:ft=dosini
