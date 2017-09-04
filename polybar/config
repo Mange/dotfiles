@@ -89,17 +89,17 @@ height = ${env:POLYBAR_BAR_HEIGHT:20}
 inherit = bar/base
 top = true
 
-modules-right = volume battery wifi wired date
+modules-left = cpu ram
 modules-center = xwindow
-modules-left =
+modules-right = volume battery wifi wired date
 
 [bar/bottom]
 inherit = bar/base
 bottom = true
 
-modules-right =
-modules-center = media-previous media-play-pause media-title media-next
 modules-left = i3
+modules-center = media-previous media-play-pause media-title media-next
+modules-right =
 
 tray-detached = true
 tray-position = right
@@ -177,7 +177,6 @@ label-visible = %icon% %index%
 label-visible-foreground = ${colors.foreground-alt}
 label-visible-padding = 2
 
-
 [module/date]
 type = internal/date
 #date-alt =   %A %H:%M
@@ -192,20 +191,18 @@ label-separator = |
 [module/volume]
 type = internal/volume
 
-format-volume = <label-volume>
-format-volume-padding = 2
-
-format-volume-underline = ${colors.white}
-
-label-volume = %{F#928374} %{F-}%percentage:3%%
-#label-volume-foreground = ${color.white}
-
-label-muted =%{F#928374} %{F-}mute
-format-muted = <label-muted>
-format-muted-underline = ${colors.white}
-format-muted-padding = 2
-
 format-padding = 2
+format-volume = <ramp-volume> <label-volume>
+format-muted = <label-muted>
+
+label-volume = %percentage:3%%
+label-muted = 
+label-muted-foreground = ${colors.darkgray}
+
+ramp-volume-foreground = ${colors.darkgray}
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
 
 [module/wifi]
 type = internal/network
@@ -213,17 +210,19 @@ interface = wlp110s0
 interval = 3.0
 format-connected-padding = 2
 format-disconnected-padding = 2
-format-connected-underline = ${colors.white}
-format-disconnected-underline = ${colors.white}
 
 ; Available tags:
 ;   <label-connected> (default)
 ;   <ramp-signal>
-format-connected = %{F#928374} %{F-}<label-connected>
+format-connected = <label-connected>
+format-connected-prefix = " "
+format-connected-prefix-foreground = ${colors.darkgray}
 
 ; Available tags:
 ;   <label-disconnected> (default)
 format-disconnected = <label-disconnected>
+format-disconnected-prefix = " "
+format-disconnected-prefix-foreground = ${colors.darkgray}
 
 ; Available tags:
 ;   <label-connected> (default)
@@ -245,7 +244,7 @@ label-connected = %signal:3%%
 ; Available tokens:
 ;   %ifname%    [wireless+wired]
 ; Default: (none)
-label-disconnected = %{F#928374} %{F-}none
+label-disconnected =
 
 ; Available tokens:
 ;   %ifname%    [wireless+wired]
@@ -269,17 +268,19 @@ interface = enp3s0
 interval = 3.0
 format-connected-padding = 2
 format-disconnected-padding = 2
-format-connected-underline = ${colors.white}
-format-disconnected-underline = ${colors.white}
 
 ; Available tags:
 ;   <label-connected> (default)
 ;   <ramp-signal>
 format-connected = <label-connected>
+format-connected-prefix = " "
+format-connected-prefix-foreground = ${colors.darkgray}
 
 ; Available tags:
 ;   <label-disconnected> (default)
 format-disconnected = <label-disconnected>
+format-disconnected-prefix = " "
+format-disconnected-prefix-foreground = ${colors.darkgray}
 
 ; Available tags:
 ;   <label-connected> (default)
@@ -296,12 +297,12 @@ format-packetloss = <animation-packetloss> <label-connected>
 ;   %downspeed% [wireless+wired]
 ;   %linkspeed% [wired]
 ; Default: %ifname% %local_ip%
-label-connected =  %{F#66}%local_ip% %{F#ff}%upspeed% %downspeed%
+label-connected =  %local_ip%
 
 ; Available tokens:
 ;   %ifname%    [wireless+wired]
 ; Default: (none)
-label-disconnected = %{F#66}
+label-disconnected =
 
 [module/xwindow]
 type = internal/xwindow
@@ -328,5 +329,47 @@ ramp-capacity-1 = 
 ramp-capacity-2 = 
 ramp-capacity-3 = 
 ramp-capacity-4 = 
+
+[module/cpu]
+type = internal/cpu
+format = <label> <ramp-coreload>
+format-prefix = " "
+format-prefix-foreground = ${colors.darkgray}
+label = %percentage:3%%
+format-padding = 2
+ramp-coreload-0 = ▁
+ramp-coreload-1 = ▂
+ramp-coreload-2 = ▃
+ramp-coreload-3 = ▄
+ramp-coreload-4 = ▅
+ramp-coreload-5 = ▆
+ramp-coreload-6 = ▇
+ramp-coreload-7 = █
+ramp-coreload-0-foreground = ${gruvbox.faded_green}
+ramp-coreload-1-foreground = ${gruvbox.faded_green}
+ramp-coreload-2-foreground = ${gruvbox.faded_green}
+ramp-coreload-3-foreground = ${gruvbox.faded_yellow}
+ramp-coreload-4-foreground = ${gruvbox.faded_yellow}
+ramp-coreload-5-foreground = ${gruvbox.faded_yellow}
+ramp-coreload-6-foreground = ${gruvbox.faded_red}
+ramp-coreload-7-foreground = ${gruvbox.faded_red}
+
+[module/ram]
+type = internal/memory
+format = <label> <bar-used>
+format-prefix = " "
+format-prefix-foreground = ${colors.darkgray}
+label = %gb_used:5%
+format-padding = 2
+
+bar-used-indicator = |
+bar-used-width = 20
+bar-used-foreground-0 = ${gruvbox.neutral_green}
+bar-used-foreground-1 = ${gruvbox.neutral_green}
+bar-used-foreground-2 = ${gruvbox.neutral_yellow}
+bar-used-foreground-3 = ${gruvbox.neutral_red}
+bar-used-fill = ─
+bar-used-empty = ─
+bar-used-empty-foreground = ${gruvbox.dark4}
 
 ; vim:ft=dosini

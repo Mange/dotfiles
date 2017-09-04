@@ -25,7 +25,7 @@ normal-settings() {
   export POLYBAR_FONT_2="PowerlineSymbols:size=8;2"
   # Devicons is named icomoon in the font file
   export POLYBAR_FONT_3="icomoon:size=8;2"
-  export POLYBAR_FONT_4="Material Design Icons:size=8;2"
+  export POLYBAR_FONT_4="Material Design Icons:size=12;3"
   export POLYBAR_BAR_HEIGHT=26
 }
 
