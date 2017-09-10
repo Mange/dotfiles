@@ -5,7 +5,6 @@ require 'fileutils'
 XDG_SYMLINKS = %w[
   compton
   i3
-  i3blocks
   polybar
 ]
 
@@ -14,7 +13,6 @@ SYMLINKS = %w[
   Xmodmap
   gemrc
   git_template
-  i3blocks.conf
   irbrc
   psqlrc
   railsrc

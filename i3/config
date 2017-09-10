@@ -135,10 +135,10 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ to
 bindsym Control+XF86AudioMute exec pavucontrol
 
 # Media player controls
-bindsym XF86AudioPlay  exec --no-startup-id playerctl play-pause, exec pkill -SIGRTMIN+10 i3blocks
-bindsym XF86AudioPause exec --no-startup-id playerctl play-pause, exec pkill -SIGRTMIN+10 i3blocks
-bindsym XF86AudioNext  exec --no-startup-id playerctl next, exec pkill -SIGRTMIN+10 i3blocks
-bindsym XF86AudioPrev  exec --no-startup-id playerctl previous, exec pkill -SIGRTMIN+10 i3blocks
+bindsym XF86AudioPlay  exec --no-startup-id playerctl play-pause
+bindsym XF86AudioPause exec --no-startup-id playerctl play-pause
+bindsym XF86AudioNext  exec --no-startup-id playerctl next
+bindsym XF86AudioPrev  exec --no-startup-id playerctl previous
 
 # Xbacklight
 bindsym XF86MonBrightnessUp exec xbacklight -inc 10

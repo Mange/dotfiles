@@ -54,10 +54,6 @@ install-i3-gaps() {
   (cd ../vendor && make i3-gaps-install)
 }
 
-install-i3blocks-gaps() {
-  (cd ../vendor && make i3blocks-gaps-install)
-}
-
 install-playerctl() {
   apt-install gtk-doc-tools gobject-introspection libglib2.0-dev
   (cd ../vendor && make playerctl-install)
@@ -123,11 +119,6 @@ if hash X 2>/dev/null; then
   if ! hash i3 2>/dev/null; then
     header "Installing i3-gaps"
     install-i3-gaps || handle-failure
-  fi
-
-  if ! hash i3blocks 2>/dev/null; then
-    header "Installing i3blocks-gaps"
-    install-i3blocks-gaps || handle-failure
   fi
 
   if ! hash google-chrome 2>/dev/null; then
