@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+player_status=$(playerctl status 2>/dev/null)
+
+if [[ $? == 0 ]]; then
+  artist="$(playerctl metadata artist 2>/dev/null)"
+  title="$(playerctl metadata title 2>/dev/null)"
+
+  echo "${artist} - ${title}"
+else
+  echo ""
+fi

@@ -1,0 +1,375 @@
+;:set syn=dosini
+
+[settings]
+screenchange-reload = true
+
+[gruvbox]
+# Taken from https://github.com/morhetz/gruvbox/blob/master/colors/gruvbox.vim
+dark0_hard = #1d2021
+dark0 = #282828
+dark0_soft = #32302f
+dark1 = #3c3836
+dark2 = #504945
+dark3 = #665c54
+dark4 = #7c6f64
+dark4_256 = #7c6f64
+
+gray_245 = #928374
+gray_244 = #928374
+
+light0_hard = #f9f5d7
+light0 = #fbf1c7
+light0_soft = #f2e5bc
+light1 = #ebdbb2
+light2 = #d5c4a1
+light3 = #bdae93
+light4 = #a89984
+light4_256 = #a89984
+
+bright_red = #fb4934
+bright_green = #b8bb26
+bright_yellow = #fabd2f
+bright_blue = #83a598
+bright_purple = #d3869b
+bright_aqua = #8ec07c
+bright_orange = #fe8019
+
+neutral_red = #cc241d
+neutral_green = #98971a
+neutral_yellow = #d79921
+neutral_blue = #458588
+neutral_purple = #b16286
+neutral_aqua = #689d6a
+neutral_orange = #d65d0e
+
+faded_red = #9d0006
+faded_green = #79740e
+faded_yellow = #b57614
+faded_blue = #076678
+faded_purple = #8f3f71
+faded_aqua = #427b58
+faded_orange = #af3a03
+
+[colors]
+darkgray = ${gruvbox.gray_244}
+orange = ${xrdb:color9}
+white = ${gruvbox.light1}
+background = #00000000
+background-alt = #4e4e4e
+foreground = ${gruvbox.light1}
+foreground-muted = ${gruvbox.dark3}
+foreground-alt = ${gruvbox.dark2}
+alert = ${gruvbox.bright_red}
+
+[bar/core]
+override-redirect = false
+locale = en_US.UTF-8
+enable-ipc = true
+
+fixed-center = true
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+underline-color = ${colors.white}
+underline-size = 0
+
+[bar/base]
+inherit = bar/core
+
+monitor = ${env:MONITOR}
+font-0 = ${env:POLYBAR_FONT_0}
+font-1 = ${env:POLYBAR_FONT_1}
+font-2 = ${env:POLYBAR_FONT_2}
+font-3 = ${env:POLYBAR_FONT_3}
+font-4 = ${env:POLYBAR_FONT_4}
+height = ${env:POLYBAR_BAR_HEIGHT:20}
+
+[bar/top]
+inherit = bar/base
+top = true
+
+modules-left = cpu ram
+modules-center = xwindow
+modules-right = volume battery wifi wired date
+
+[bar/bottom]
+inherit = bar/base
+bottom = true
+
+modules-left = i3
+modules-center = media-previous media-play-pause media-title media-next
+modules-right =
+
+tray-detached = true
+tray-position = right
+tray-offset-x = 0
+tray-offset-y = 0
+;tray-maxsize = 16
+tray-padding = 0
+tray-transparent = true
+tray-scale = 1.0
+
+[module/media-title]
+type = custom/script
+exec = ~/.config/polybar/media
+click-left = playerctl play-pause
+click-right = playerctl next
+
+[module/media-play-pause]
+type = custom/script
+exec = ~/.config/polybar/play-pause
+click-left = playerctl play-pause
+format-padding = 1
+format-foreground = ${colors.foreground-muted}
+
+[module/media-previous]
+type = custom/text
+content-padding = 1
+content = 
+content-foreground = ${colors.foreground-muted}
+click-left = playerctl previous
+
+[module/media-next]
+type = custom/text
+content = 
+content-padding = 1
+content-foreground = ${colors.foreground-muted}
+click-left = playerctl next
+
+[module/i3]
+type = internal/i3
+pin-workspaces = true
+strip-wsnumbers = true
+index-sort = true
+enable-click = true
+enable-scroll = false
+fuzzy-match = true
+
+ws-icon-0 = 1:System;
+ws-icon-1 = 2:Code;
+ws-icon-2 = 3:Browse;
+ws-icon-3 = 4;
+ws-icon-4 = 5:Email;
+ws-icon-5 = 9:Media;
+ws-icon-6 = 10:Chat;
+ws-icon-default = 
+
+format = <label-state> <label-mode>
+
+label-mode = "  %mode%  "
+label-mode-background = ${colors.alert}
+
+label-focused = %icon% %index%
+label-focused-background = ${colors.background-alt}
+label-focused-underline= ${colors.white}
+label-focused-padding = 2
+
+label-unfocused = %icon% %index%
+label-unfocused-foreground = ${colors.darkgray}
+label-unfocused-padding = 2
+
+label-urgent = %icon%! %index%
+label-urgent-background = ${colors.alert}
+label-urgent-padding = 2
+
+label-visible = %icon% %index%
+label-visible-foreground = ${colors.foreground-alt}
+label-visible-padding = 2
+
+[module/date]
+type = internal/date
+#date-alt =   %A %H:%M
+date = %{F#928374}%{F-} %H:%M
+interval = 5
+format-underline = ${colors.white}
+format-foreground = ${colors.foreground}
+format-padding = 2
+
+label-separator = |
+
+[module/volume]
+type = internal/volume
+
+format-padding = 2
+format-volume = <ramp-volume> <label-volume>
+format-muted = <label-muted>
+
+label-volume = %percentage:3%%
+label-muted = 
+label-muted-foreground = ${colors.darkgray}
+
+ramp-volume-foreground = ${colors.darkgray}
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+
+[module/wifi]
+type = internal/network
+interface = wlp110s0
+interval = 3.0
+format-connected-padding = 2
+format-disconnected-padding = 2
+
+; Available tags:
+;   <label-connected> (default)
+;   <ramp-signal>
+format-connected = <label-connected>
+format-connected-prefix = " "
+format-connected-prefix-foreground = ${colors.darkgray}
+
+; Available tags:
+;   <label-disconnected> (default)
+format-disconnected = <label-disconnected>
+format-disconnected-prefix = " "
+format-disconnected-prefix-foreground = ${colors.darkgray}
+
+; Available tags:
+;   <label-connected> (default)
+;   <label-packetloss>
+;   <animation-packetloss>
+format-packetloss = <animation-packetloss> <label-connected>
+
+; Available tokens:
+;   %ifname%    [wireless+wired]
+;   %local_ip%  [wireless+wired]
+;   %essid%     [wireless]
+;   %signal%    [wireless]
+;   %upspeed%   [wireless+wired]
+;   %downspeed% [wireless+wired]
+;   %linkspeed% [wired]
+; Default: %ifname% %local_ip%
+label-connected = %signal:3%%
+
+; Available tokens:
+;   %ifname%    [wireless+wired]
+; Default: (none)
+label-disconnected =
+
+; Available tokens:
+;   %ifname%    [wireless+wired]
+;   %local_ip%  [wireless+wired]
+;   %essid%     [wireless]
+;   %signal%    [wireless]
+;   %linkspeed% [wired]
+; Default: (none)
+;label-packetloss = %essid%
+;label-packetloss-foreground = #eefafafa
+
+; Only applies if <animation-packetloss> is used
+animation-packetloss-0 = ⚠
+animation-packetloss-1 = 📶
+; Framerate in milliseconds
+animation-packetloss-framerate = 500
+
+[module/wired]
+type = internal/network
+interface = enp3s0
+interval = 3.0
+format-connected-padding = 2
+format-disconnected-padding = 2
+
+; Available tags:
+;   <label-connected> (default)
+;   <ramp-signal>
+format-connected = <label-connected>
+format-connected-prefix = " "
+format-connected-prefix-foreground = ${colors.darkgray}
+
+; Available tags:
+;   <label-disconnected> (default)
+format-disconnected = <label-disconnected>
+format-disconnected-prefix = " "
+format-disconnected-prefix-foreground = ${colors.darkgray}
+
+; Available tags:
+;   <label-connected> (default)
+;   <label-packetloss>
+;   <animation-packetloss>
+format-packetloss = <animation-packetloss> <label-connected>
+
+; Available tokens:
+;   %ifname%    [wireless+wired]
+;   %local_ip%  [wireless+wired]
+;   %essid%     [wireless]
+;   %signal%    [wireless]
+;   %upspeed%   [wireless+wired]
+;   %downspeed% [wireless+wired]
+;   %linkspeed% [wired]
+; Default: %ifname% %local_ip%
+label-connected =  %local_ip%
+
+; Available tokens:
+;   %ifname%    [wireless+wired]
+; Default: (none)
+label-disconnected =
+
+[module/xwindow]
+type = internal/xwindow
+
+[module/battery]
+type = internal/battery
+full-at = 100
+
+format-charging = <animation-charging> <label-charging>
+format-discharging = <ramp-capacity> <label-discharging>
+format-full = <ramp-capacity> <label-full>
+
+content-foreground = ${colors.foreground-alt}
+
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+animation-charging-framerate=750
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+
+[module/cpu]
+type = internal/cpu
+format = <label> <ramp-coreload>
+format-prefix = " "
+format-prefix-foreground = ${colors.darkgray}
+label = %percentage:3%%
+format-padding = 2
+ramp-coreload-0 = ▁
+ramp-coreload-1 = ▂
+ramp-coreload-2 = ▃
+ramp-coreload-3 = ▄
+ramp-coreload-4 = ▅
+ramp-coreload-5 = ▆
+ramp-coreload-6 = ▇
+ramp-coreload-7 = █
+ramp-coreload-0-foreground = ${gruvbox.faded_green}
+ramp-coreload-1-foreground = ${gruvbox.faded_green}
+ramp-coreload-2-foreground = ${gruvbox.faded_green}
+ramp-coreload-3-foreground = ${gruvbox.faded_yellow}
+ramp-coreload-4-foreground = ${gruvbox.faded_yellow}
+ramp-coreload-5-foreground = ${gruvbox.faded_yellow}
+ramp-coreload-6-foreground = ${gruvbox.faded_red}
+ramp-coreload-7-foreground = ${gruvbox.faded_red}
+
+[module/ram]
+type = internal/memory
+format = <label> <bar-used>
+format-prefix = " "
+format-prefix-foreground = ${colors.darkgray}
+label = %gb_used:5%
+format-padding = 2
+
+bar-used-indicator = |
+bar-used-width = 20
+bar-used-foreground-0 = ${gruvbox.neutral_green}
+bar-used-foreground-1 = ${gruvbox.neutral_green}
+bar-used-foreground-2 = ${gruvbox.neutral_yellow}
+bar-used-foreground-3 = ${gruvbox.neutral_red}
+bar-used-fill = ─
+bar-used-empty = ─
+bar-used-empty-foreground = ${gruvbox.dark4}
+
+; vim:ft=dosini

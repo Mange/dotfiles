@@ -92,6 +92,14 @@ handle-failure() {
 # Ask for password right away.
 sudo echo > /dev/null
 
+getdeb_file=/etc/apt/sources.list.d/getdeb.list
+if [[ ! -e $getdeb_file ]]; then
+  header "Installing GetDeb repository"
+  dist_name=$(lsb_release --short --codename)
+  echo "deb http://archive.getdeb.net/ubuntu ${dist_name}-getdeb apps" | sudo tee "$getdeb_file" > /dev/null
+  wget -q -O- http://archive.getdeb.net/getdeb-archive.key | sudo apt-key add -
+fi
+
 header "Refreshing apt cache"
 sudo apt -qq update
 

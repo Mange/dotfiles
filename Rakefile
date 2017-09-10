@@ -3,9 +3,10 @@ require File.expand_path('../support/binary', __FILE__)
 require 'fileutils'
 
 XDG_SYMLINKS = %w[
+  compton
   i3
   i3blocks
-  compton
+  polybar
 ]
 
 SYMLINKS = %w[

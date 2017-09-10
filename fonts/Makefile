@@ -1,5 +1,5 @@
 FONT_DIR = ~/.local/share/fonts
-FONTS = FontAwesome.otf PowerlineSymbols.otf devicons.ttf
+FONTS = FontAwesome.otf PowerlineSymbols.otf devicons.ttf materialdesignicons.ttf
 FONT_CONFIG_DIR = ~/.config/fontconfig/conf.d
 FONT_CONFIGS := $(wildcard *.conf)
 
@@ -21,6 +21,9 @@ PowerlineSymbols.otf:
 
 devicons.ttf:
 	wget https://github.com/vorillaz/devicons/raw/master/fonts/devicons.ttf
+
+materialdesignicons.ttf:
+	wget -O materialdesignicons.ttf https://github.com/Templarian/MaterialDesign-Webfont/raw/master/fonts/materialdesignicons-webfont.ttf
 
 $(FONT_DIR):
 	mkdir -p $(FONT_DIR)
