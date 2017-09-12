@@ -13,7 +13,7 @@ case "$(hostname)" in
     # -K means ignore modifier keys (so I can still hold shift and use
     # trackpad)
     # -d means daemonize
-    syndaemon -i 0.5 -K -d
+    syndaemon -i 1 -K -d
     ;;
   *)
     ;;
