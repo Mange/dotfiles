@@ -382,6 +382,10 @@ autoload zmv
 fpath=(~/.zsh/funcs $fpath)
 
 autoload run-changed-specs
+autoload run-branch-specs
+
+compdef run-changed-specs=rspec
+compdef run-branch-specs=rspec
 
 # }}}
 # {{{ Color shortcuts and magic
