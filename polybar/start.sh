@@ -29,16 +29,25 @@ normal-settings() {
   export POLYBAR_BAR_HEIGHT=26
 }
 
+machine-settings() {
+  local filename
+  filename="$(dirname "$0")/machine-$(hostname --short).env"
+
+  if [[ -f $filename ]]; then
+    export $(grep -Ev "\\s*#" "$filename" | xargs)
+  fi
+}
+
 start-on-hidpi() {
   local input_name="${1}"
   echo "Starting top and bottom bars on ${input_name} (HiDPI)"
-  (hidpi-settings; export MONITOR="${input_name}"; start-bars)
+  (hidpi-settings; machine-settings; export MONITOR="${input_name}"; start-bars)
 }
 
 start-on-normal() {
   local input_name="${1}"
   echo "Starting top and bottom bars on ${input_name} (normal)"
-  (normal-settings; export MONITOR="${input_name}"; start-bars)
+  (normal-settings; machine-settings; export MONITOR="${input_name}"; start-bars)
 }
 
 start-on-each-screen() {

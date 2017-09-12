@@ -206,7 +206,7 @@ ramp-volume-2 = 
 
 [module/wifi]
 type = internal/network
-interface = wlp110s0
+interface = ${env:POLYBAR_WIFI_DEVICE:wlp110s0}
 interval = 3.0
 format-connected-padding = 2
 format-disconnected-padding = 2
@@ -264,7 +264,7 @@ animation-packetloss-framerate = 500
 
 [module/wired]
 type = internal/network
-interface = enp3s0
+interface = ${env:POLYBAR_ETHERNET_DEVICE:enp3s0}
 interval = 3.0
 format-connected-padding = 2
 format-disconnected-padding = 2
