@@ -5,6 +5,9 @@ colorscheme gruvbox
 function! s:Shared()
   runtime plugin/highlight_long_lines.vim
 
+  " Transparent background
+  hi Normal ctermbg=None guibg=None
+
   " Highlight searches using only underlines
   hi clear Search
   hi Search term=underline cterm=underline gui=underline
@@ -38,5 +41,11 @@ function! s:Light()
   set background=light
   call s:Shared()
 endfunction
+
+if has("termguicolors")     " set true colors
+    set t_8f=\[[38;2;%lu;%lu;%lum
+    set t_8b=\[[48;2;%lu;%lu;%lum
+    set termguicolors
+endif
 
 call s:Dark()
