@@ -8,3 +8,6 @@ ripgrep
 # Rust development
 racer
 rustfmt
+rusty-tags
+cargo-edit
+cargo-watch
