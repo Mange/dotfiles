@@ -357,45 +357,19 @@ ramp-capacity-3 = 
 ramp-capacity-4 = 
 
 [module/cpu]
+inherit = module/base
 type = internal/cpu
-format = <label> <ramp-coreload>
-format-prefix = " "
+format = <label>
+format-prefix = "CPU "
 format-prefix-foreground = ${colors.darkgray}
 label = %percentage:3%%
-format-padding = 2
-ramp-coreload-0 = ▁
-ramp-coreload-1 = ▂
-ramp-coreload-2 = ▃
-ramp-coreload-3 = ▄
-ramp-coreload-4 = ▅
-ramp-coreload-5 = ▆
-ramp-coreload-6 = ▇
-ramp-coreload-7 = █
-ramp-coreload-0-foreground = ${gruvbox.faded_green}
-ramp-coreload-1-foreground = ${gruvbox.faded_green}
-ramp-coreload-2-foreground = ${gruvbox.faded_green}
-ramp-coreload-3-foreground = ${gruvbox.faded_yellow}
-ramp-coreload-4-foreground = ${gruvbox.faded_yellow}
-ramp-coreload-5-foreground = ${gruvbox.faded_yellow}
-ramp-coreload-6-foreground = ${gruvbox.faded_red}
-ramp-coreload-7-foreground = ${gruvbox.faded_red}
 
 [module/ram]
+inherit = module/base
 type = internal/memory
-format = <label> <bar-used>
-format-prefix = " "
+format = <label>
+format-prefix = "RAM "
 format-prefix-foreground = ${colors.darkgray}
 label = %gb_used:5%
-format-padding = 2
-
-bar-used-indicator = |
-bar-used-width = 20
-bar-used-foreground-0 = ${gruvbox.neutral_green}
-bar-used-foreground-1 = ${gruvbox.neutral_green}
-bar-used-foreground-2 = ${gruvbox.neutral_yellow}
-bar-used-foreground-3 = ${gruvbox.neutral_red}
-bar-used-fill = ─
-bar-used-empty = ─
-bar-used-empty-foreground = ${gruvbox.dark4}
 
 ; vim:ft=dosini
