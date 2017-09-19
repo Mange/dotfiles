@@ -111,7 +111,12 @@ tray-padding = 0
 tray-transparent = true
 tray-scale = 1.0
 
+[module/base]
+format-prefix-foreground = ${colors.darkgray}
+format-padding = 2
+
 [module/media-title]
+inherit = module/base
 type = custom/script
 exec = ~/.config/polybar/media
 click-left = playerctl play-pause
@@ -125,6 +130,7 @@ format-padding = 1
 format-foreground = ${colors.foreground-muted}
 
 [module/media-previous]
+inherit = module/base
 type = custom/text
 content-padding = 1
 content = 
@@ -132,6 +138,7 @@ content-foreground = ${colors.foreground-muted}
 click-left = playerctl previous
 
 [module/media-next]
+inherit = module/base
 type = custom/text
 content = 
 content-padding = 1
@@ -139,6 +146,7 @@ content-foreground = ${colors.foreground-muted}
 click-left = playerctl next
 
 [module/i3]
+inherit = module/base
 type = internal/i3
 pin-workspaces = true
 strip-wsnumbers = true
@@ -146,6 +154,7 @@ index-sort = true
 enable-click = true
 enable-scroll = false
 fuzzy-match = true
+format-padding = 0
 
 ws-icon-0 = 1:System;
 ws-icon-1 = 2:Code;
@@ -186,19 +195,19 @@ label-visible-padding = 2
 label-visible-underline = ${colors.darkgray}
 
 [module/date]
+inherit = module/base
 type = internal/date
 #date-alt =   %A %H:%M
 date = %{F#928374}%{F-} %H:%M
 interval = 5
 format-foreground = ${colors.foreground}
-format-padding = 2
 
 label-separator = |
 
 [module/volume]
+inherit = module/base
 type = internal/volume
 
-format-padding = 2
 format-volume = <ramp-volume> <label-volume>
 format-muted = <label-muted>
 
@@ -212,6 +221,7 @@ ramp-volume-1 = 
 ramp-volume-2 = 
 
 [module/wifi]
+inherit = module/base
 type = internal/network
 interface = ${env:POLYBAR_WIFI_DEVICE:wlp110s0}
 interval = 3.0
@@ -270,6 +280,7 @@ animation-packetloss-1 = 📶
 animation-packetloss-framerate = 500
 
 [module/wired]
+inherit = module/base
 type = internal/network
 interface = ${env:POLYBAR_ETHERNET_DEVICE:enp3s0}
 interval = 3.0
@@ -312,9 +323,11 @@ label-connected =  %local_ip%
 label-disconnected =
 
 [module/xwindow]
+inherit = module/base
 type = internal/xwindow
 
 [module/battery]
+inherit = module/base
 type = internal/battery
 full-at = 100
 
@@ -325,8 +338,7 @@ format-charging-padding = 2
 format-discharging-padding = 2
 format-full-padding = 2
 
-content-foreground = ${colors.foreground-alt}
-
+animation-charging-foreground = ${colors.darkgray}
 animation-charging-0 = 
 animation-charging-1 = 
 animation-charging-2 = 
