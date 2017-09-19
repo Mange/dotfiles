@@ -346,9 +346,13 @@ animation-charging-3 = 
 animation-charging-4 = 
 animation-charging-framerate=750
 
+ramp-capacity-foreground = ${colors.darkgray}
 ramp-capacity-0 = 
+ramp-capacity-0-foreground = ${colors.alert}
 ramp-capacity-1 = 
+ramp-capacity-1-foreground = ${gruvbox.neutral_red}
 ramp-capacity-2 = 
+ramp-capacity-2-foreground = ${gruvbox.bright_yellow}
 ramp-capacity-3 = 
 ramp-capacity-4 = 
 
