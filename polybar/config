@@ -64,7 +64,7 @@ transparent-alert = #77fb4934
 
 [bar/core]
 override-redirect = false
-locale = en_US.UTF-8
+locale = sv_SE.UTF-8
 enable-ipc = true
 
 fixed-center = true
@@ -197,8 +197,10 @@ label-visible-underline = ${colors.darkgray}
 [module/date]
 inherit = module/base
 type = internal/date
-#date-alt =   %A %H:%M
-date = %{F#928374}%{F-} %H:%M
+format-prefix = " "
+date-alt = %A vecka %W
+# $gruvbox.light2
+date = %{F#d5c4a1}%F%{F-} %H:%M
 interval = 5
 format-foreground = ${colors.foreground}
 
