@@ -55,11 +55,12 @@ darkgray = ${gruvbox.gray_244}
 orange = ${xrdb:color9}
 white = ${gruvbox.light1}
 background = #00000000
-background-alt = #4e4e4e
+background-alt = #774e4e4e
 foreground = ${gruvbox.light1}
 foreground-muted = ${gruvbox.dark3}
 foreground-alt = ${gruvbox.dark2}
 alert = ${gruvbox.bright_red}
+transparent-alert = #77fb4934
 
 [bar/core]
 override-redirect = false
@@ -71,8 +72,8 @@ fixed-center = true
 background = ${colors.background}
 foreground = ${colors.foreground}
 
-underline-color = ${colors.white}
-underline-size = 0
+line-color = ${colors.white}
+line-size = 6
 
 [bar/base]
 inherit = bar/core
@@ -160,29 +161,35 @@ format = <label-state> <label-mode>
 label-mode = "  %mode%  "
 label-mode-background = ${colors.alert}
 
+# Focused is the workspace that is currently getting commands
 label-focused = %icon% %index%
 label-focused-background = ${colors.background-alt}
-label-focused-underline= ${colors.white}
 label-focused-padding = 2
+label-focused-underline = ${gruvbox.neutral_purple}
 
+# Unfocused are workspaces that are not visible
 label-unfocused = %icon% %index%
 label-unfocused-foreground = ${colors.darkgray}
 label-unfocused-padding = 2
+label-unfocused-underline = ${colors.background-alt}
 
+# Urgent are workspaces with important events
 label-urgent = %icon%! %index%
-label-urgent-background = ${colors.alert}
 label-urgent-padding = 2
+label-urgent-background = ${colors.transparent-alert}
+label-urgent-underline = ${colors.alert}
 
+# Visible are selected workspaces on other screens
 label-visible = %icon% %index%
-label-visible-foreground = ${colors.foreground-alt}
+label-visible-foreground = ${colors.darkgray}
 label-visible-padding = 2
+label-visible-underline = ${colors.darkgray}
 
 [module/date]
 type = internal/date
 #date-alt =   %A %H:%M
 date = %{F#928374}%{F-} %H:%M
 interval = 5
-format-underline = ${colors.white}
 format-foreground = ${colors.foreground}
 format-padding = 2
 
