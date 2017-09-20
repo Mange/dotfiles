@@ -182,8 +182,8 @@ bindsym $mod+Ctrl+j focus output down
 bindsym $mod+Ctrl+k focus output up
 bindsym $mod+Ctrl+l focus output right
 
-# Switch to current workspace in order to go back
-workspace_auto_back_and_forth yes
+# Switching to active workspace does nothing
+workspace_auto_back_and_forth no
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace $workspace1
