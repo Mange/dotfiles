@@ -88,12 +88,22 @@ handle-failure() {
 # Ask for password right away.
 sudo echo > /dev/null
 
+# For example: "zesty"
+dist_name=$(lsb_release --short --codename)
+
 getdeb_file=/etc/apt/sources.list.d/getdeb.list
 if [[ ! -e $getdeb_file ]]; then
   header "Installing GetDeb repository"
-  dist_name=$(lsb_release --short --codename)
   echo "deb http://archive.getdeb.net/ubuntu ${dist_name}-getdeb apps" | sudo tee "$getdeb_file" > /dev/null
   wget -q -O- http://archive.getdeb.net/getdeb-archive.key | sudo apt-key add -
+fi
+
+if hash X 2>/dev/null; then
+  copyq_file=/etc/apt/sources.list.d/hluk-ubuntu-copyq-${dist_name}.list
+  if [[ ! -e $copyq_file ]]; then
+    header "Installing CopyQ repository"
+    sudo add-apt-repository ppa:hluk/copyq
+  fi
 fi
 
 header "Refreshing apt cache"
