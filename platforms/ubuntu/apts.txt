@@ -10,6 +10,7 @@ install fonts-dejavu fonts-dejavu-extra fonts-noto fonts-powerline
 install git colordiff exuberant-ctags
 install tmux
 install source-highlight # for lesspipe
+install shellcheck
 
 # Misc
 install wget curl zsh-doc zsh-lovers tree
