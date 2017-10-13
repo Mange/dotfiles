@@ -76,5 +76,6 @@ nmap <leader>A *:Ag -i "\b<C-r><C-w>\b"<CR>
 
 " fzf or CtrlP
 if g:use_fzf == 1
-  nmap <C-p> :GFiles<CR>
+  nmap <C-p> :FZF<cr>
 endif
+let g:fzf_history_dir = '~/.local/share/fzf-history'

@@ -6,11 +6,9 @@ endif
 
 call plug#begin('~/.vim/plugged')
 
-" fzf cannot run properly in GUI MacVim. Terminal MacVim, or other graphical
-" Vims handles it fine.
-if isdirectory("/usr/local/opt/fzf") && !(has("gui_macvim") && has("gui_running"))
+if isdirectory(expand('~/.fzf'))
   let g:use_fzf = 1
-  Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
+  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 else
   let g:use_fzf = 0
   Plug 'kien/ctrlp.vim'
