@@ -12,7 +12,7 @@ run-changed-specs() {
   # two columns, but if renamed, git status will output "old -> new".
   local changed="$(git status --porcelain | grep '_spec\.rb' | grep -vE '\bD\b' | awk '{ print $NF }')"
   if [[ -n $changed ]]; then
-    echo $changed | xargs $command $@
+    xargs --arg-file=<(echo $changed) $command $@
   else
     echo "No changed spec files could be found." > /dev/stderr
   fi

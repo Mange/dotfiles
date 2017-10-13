@@ -13,7 +13,7 @@ run-branch-specs() {
   # two columns, but if (R)enamed, output is "R old new".
   local changed="$(git diff origin/master.. --name-status --diff-filter=d | grep '_spec\.rb' | awk '{ print $NF }')"
   if [[ -n $changed ]]; then
-    echo $changed | xargs $command $@
+    xargs --arg-file=<(echo $changed) $command $@
   else
     echo "No changed spec files could be found." > /dev/stderr
   fi
