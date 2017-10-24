@@ -110,6 +110,11 @@ bindkey -M viins '^rv' edit-command-line
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# Use highlight to preview FZF files under CTRL+T
+if command-exist highlight; then
+  export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
+fi
+
 # }}}
 # {{{ ls (Colors, etc.)
 eval $(dircolors -b)
