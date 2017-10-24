@@ -99,7 +99,6 @@ task :modules do
   {
     "zsh/zsh-syntax-highlighting" => "https://github.com/zsh-users/zsh-syntax-highlighting.git",
     "zsh/zsh-history-substring-search" => "https://github.com/zsh-users/zsh-history-substring-search.git",
-    "zsh/k" => "https://github.com/supercrabtree/k.git",
   }.each_pair do |pathname, repo|
     path = File.expand_path(pathname, File.dirname(__FILE__))
     if File.exists?(path)
@@ -215,6 +214,7 @@ task :cleanup do
   Dotfile.new('sshrc').delete_target(only_symlink: true)
   Dotfile.new('sshrc.d').delete_target(only_symlink: true)
   Dotfile.new('xinitrc').delete_target(only_symlink: true)
+  system("rm -rf zsh/k") if Dir.exists?("zsh/k")
   # Clean up backup created after converting ~/.zsh to a symlink
   `[ -d ~/.zsh~ ] && mv ~/.zsh\~/* ~/.zsh && rmdir ~/.zsh~`
 end

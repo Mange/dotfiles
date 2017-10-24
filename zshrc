@@ -126,12 +126,9 @@ export ZLS_COLORS="${LS_COLORS}"
 alias ls='ls --color=auto'
 alias l='ls -l'
 
-# Replace l with k if git is installed
-if is-at-least 4.3 && command-exist git; then
-  if [[ -f ~/.zsh/k/k.sh ]]; then
-    source ~/.zsh/k/k.sh
-    alias l='k'
-  fi
+# Replace l with exa if exa is installed
+if command-exist exa; then
+  alias l='exa --long --color-scale --git'
 fi
 
 # }}}
