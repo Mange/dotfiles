@@ -3,6 +3,9 @@
 # Bare essentials
 install zsh neovim
 
+# Taskwarrior
+install taskwarrior vit
+
 # Fonts
 install fonts-dejavu fonts-dejavu-extra fonts-noto fonts-powerline
 

@@ -6,17 +6,19 @@ XDG_SYMLINKS = %w[
   compton
   i3
   polybar
+  taskwarrior
 ]
 
 SYMLINKS = %w[
-  Xresources.d
   Xmodmap
+  Xresources.d
   gemrc
   git_template
   irbrc
   psqlrc
   railsrc
   rspec
+  taskrc
   tmux.conf
   vimrc
   wallpapers

@@ -4,18 +4,6 @@ function {
   if [[ $customized_paths != "yes" ]]; then
     customized_paths="yes"
 
-    # Macs do unholy things to the PATH when spawning subshells; so we work
-    # around it by clearing first to a sane default
-    if [ -d /etc/paths.d ]; then
-      path=(
-        $(cat /etc/paths /etc/paths.d/*(N))(/N)
-
-        /usr/local/bin
-        /usr/bin
-        /bin
-      )
-    fi
-
     path=(
       /usr/local/sbin
       /usr/sbin
@@ -23,6 +11,8 @@ function {
 
       $HOME/bin
       $HOME/.local/bin
+
+      .git/safe/../../bin
 
       $HOME/.rvm/bin
       $HOME/.cargo/bin
