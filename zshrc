@@ -115,6 +115,11 @@ if command-exist highlight; then
   export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
 fi
 
+# Use ripgrep to populate fzf
+if command-exist rg; then
+  export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
+fi
+
 # }}}
 # {{{ ls (Colors, etc.)
 eval $(dircolors -b)
