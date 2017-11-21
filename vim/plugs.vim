@@ -6,17 +6,11 @@ endif
 
 call plug#begin('~/.vim/plugged')
 
-if isdirectory(expand('~/.fzf'))
-  let g:use_fzf = 1
-  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-else
-  let g:use_fzf = 0
-  Plug 'kien/ctrlp.vim'
-endif
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 
 """ Utility
 Plug 'DataWraith/auto_mkdir'
-Plug 'FelikZ/ctrlp-py-matcher'
 Plug 'vim-scripts/ingo-library' | Plug 'vim-scripts/SearchHighlighting'
 
 Plug 'Yggdroot/indentLine'
