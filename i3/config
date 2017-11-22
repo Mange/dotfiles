@@ -148,6 +148,9 @@ bindsym XF86MonBrightnessDown exec xbacklight -dec 10
 bindsym --release $mod+minus exec gnome-screenshot
 bindsym --release $mod+Shift+minus exec gnome-screenshot --area
 
+# Vit
+bindsym $mod+t exec floating-vit
+
 # }}}
 
 # {{{ Workspaces
@@ -229,6 +232,11 @@ assign [class="Slack"] $workspace10
 
 # CopyQ clipboard manager
 for_window [class="copyq"] floating enable
+
+# Floating terminal windows. gnome-terminal does not support setting name
+# and/or class (despite them being present in the --help output). This bug has
+# existed since 2005 so I don't think it's likely to be fixed soon.
+for_window [class="Gnome-terminal" window_role="floating"] floating enable
 # }}}
 
 # {{{ Window management
@@ -258,9 +266,9 @@ bindsym $mod+s split v
 bindsym $mod+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
-bindsym $mod+w layout stacking
-bindsym $mod+t layout tabbed
-bindsym $mod+q layout toggle split
+bindsym $mod+w       layout stacking
+bindsym $mod+shift+w layout tabbed
+bindsym $mod+q       layout toggle split
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
