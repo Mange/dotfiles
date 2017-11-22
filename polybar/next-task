@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
+# shellcheck source=../gruvbox-colors.env
 source ~/.gruvbox-colors.env
 
 task_cmd="task rc.echo.command=no rc._forcecolor=no rc.blanklines=false rc.hooks=off rc.verbose=nothing"

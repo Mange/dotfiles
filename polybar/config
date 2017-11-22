@@ -90,7 +90,7 @@ height = ${env:POLYBAR_BAR_HEIGHT:20}
 inherit = bar/base
 top = true
 
-modules-left = cpu ram
+modules-left = cpu ram task-counters
 modules-center = xwindow
 modules-right = volume battery wifi wired date
 
@@ -151,6 +151,16 @@ type = custom/script
 exec = ~/.config/polybar/next-task
 interval = 60
 label = %output:0:70%…
+click-left = floating-vit
+click-right = i3-sensible-terminal -e vit
+
+[module/task-counters]
+inherit = module/base
+type = custom/script
+exec = ~/.config/polybar/task-counters
+interval = 60
+format-prefix = "Tasks "
+format-prefix-foreground = ${colors.darkgray}
 click-left = floating-vit
 click-right = i3-sensible-terminal -e vit
 
