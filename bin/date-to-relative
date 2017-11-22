@@ -1,0 +1,46 @@
+#!/usr/bin/env ruby
+require "time"
+
+MINUTES = 60
+HOURS = MINUTES * 60
+DAYS = HOURS * 24
+
+def describe_diff(diff)
+  diff = diff.to_i
+
+  whole_days = diff / DAYS
+  diff -= whole_days * DAYS
+
+  whole_hours = diff / HOURS
+  diff -= whole_hours * HOURS
+
+  whole_minutes = diff / MINUTES
+  seconds_left = diff - (whole_minutes * MINUTES)
+
+  if whole_days > 0
+    "#{whole_days}d"
+  elsif whole_hours > 1
+    "#{whole_hours}h"
+  elsif whole_hours > 0
+    "#{whole_hours}h#{whole_minutes}m"
+  else
+    "#{whole_minutes}m#{seconds_left}s"
+  end
+end
+
+text = STDIN.read.strip
+date = begin
+  Time.parse(text)
+rescue
+  puts text
+  exit 1
+end
+
+diff = date - Time.now
+if diff < 0
+  # Provided date is in past
+  puts "#{describe_diff(-diff)} ago"
+else
+  # Provided date is in future
+  puts "in #{describe_diff(diff)}"
+end

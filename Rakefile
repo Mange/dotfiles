@@ -14,6 +14,7 @@ SYMLINKS = %w[
   Xresources.d
   gemrc
   git_template
+  gruvbox-colors.env
   irbrc
   psqlrc
   railsrc

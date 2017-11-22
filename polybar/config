@@ -100,9 +100,9 @@ bottom = true
 
 modules-left = i3
 modules-center = media-previous media-play-pause media-title media-next
-modules-right =
+modules-right = next-task
 
-tray-detached = true
+tray-detached = false
 tray-position = right
 tray-offset-x = 0
 tray-offset-y = 0
@@ -144,6 +144,15 @@ content = 
 content-padding = 1
 content-foreground = ${colors.foreground-muted}
 click-left = playerctl next
+
+[module/next-task]
+inherit = module/base
+type = custom/script
+exec = ~/.config/polybar/next-task
+interval = 60
+label = %output:0:70%…
+click-left = floating-vit
+click-right = i3-sensible-terminal -e vit
 
 [module/i3]
 inherit = module/base
