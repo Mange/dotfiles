@@ -11,15 +11,11 @@ next_task_id=$($task_cmd limit:1 next | head -n1 | awk '{ print $1 }')
 if [[ -n $next_task_id ]]; then
   project=$($task_cmd _get "${next_task_id}.project")
   description=$($task_cmd _get "${next_task_id}.description")
-  due=$($task_cmd _get "${next_task_id}.due" | date-to-relative)
+  due=$($task_cmd _get "${next_task_id}.due" | date-to-relative || true)
 
-  is_active=$($task_cmd _get "${next_task_id}.tags.ACTIVE" || false)
-  is_due_today=$($task_cmd _get "${next_task_id}.tags.DUETODAY" || false)
-  is_overdue=$($task_cmd _get "${next_task_id}.tags.OVERDUE" || false)
-
-  if [[ -n $due ]]; then
-    due=" (${due})"
-  fi
+  is_active=$($task_cmd _get "${next_task_id}.tags.ACTIVE" || true)
+  is_due_today=$($task_cmd _get "${next_task_id}.tags.DUETODAY" || true)
+  is_overdue=$($task_cmd _get "${next_task_id}.tags.OVERDUE" || true)
 
   if [[ -n $is_overdue ]]; then
     color="%{F${bright_red}}"
@@ -31,7 +27,15 @@ if [[ -n $next_task_id ]]; then
     color=""
   fi
 
-  echo "[${project}]${due} ${color}#${next_task_id} ${description}"
+  if [[ -n $project ]]; then
+    echo -n "[${project}] "
+  fi
+
+  if [[ -n $due ]]; then
+    echo -n "(${due}) "
+  fi
+
+  echo "${color}#${next_task_id} ${description}"
 else
   echo "[No task]"
 fi
