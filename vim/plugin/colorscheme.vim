@@ -1,5 +1,6 @@
 let g:gruvbox_contrast_dark='medium'
 let g:gruvbox_contrast_light='medium'
+let g:gruvbox_improved_warnings=1
 colorscheme gruvbox
 
 function! s:Shared()
@@ -10,21 +11,16 @@ function! s:Shared()
     hi Normal ctermbg=None guibg=None
   endif
 
-  " Highlight searches using only underlines
-  hi clear Search
-  hi Search term=underline cterm=underline gui=underline
-
-  " Improve spelling look in terminal
-  hi clear SpellBad
-  hi SpellBad term=undercurl,bold cterm=undercurl,bold ctermfg=red gui=undercurl guisp=Red
-  hi clear SpellCap
-  hi SpellCap term=undercurl,bold cterm=undercurl,bold ctermfg=blue gui=undercurl guisp=blue
-
   " Improve warning look
+  " Gruvbox has styles for Syntastic built in, so reuse them for Neomake
   hi clear NeomakeWarning
-  hi link NeomakeWarning SpellCap
-  hi NeomakeWarningSign ctermfg=yellow guifg=yellow
-  hi NeomakeErrorSign ctermfg=red guifg=red
+  hi clear NeomakeError
+
+  hi link NeomakeError SyntasticError
+  hi link NeomakeWarning SyntasticWarning
+
+  hi link NeomakeErrorSign GruvboxRedSign
+  hi link NeomakeWarningSign GruvboxYellowSign
 endfunction
 
 command! Dark call s:Dark()
