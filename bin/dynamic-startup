@@ -8,12 +8,15 @@ case "$(hostname)" in
     synclient HorizScrollDelta=-113
     synclient VertScrollDelta=-113
 
-    # Disable trackpad completely for 0.5 seconds when typing. This avoids
-    # accidentall clicks and focus change when typing on laptop keyboard.
-    # -K means ignore modifier keys (so I can still hold shift and use
+    # Palm detection
+    synclient PalmDetect=1
+
+    # Disable trackpad completely for 1.5 seconds when typing. This avoids
+    # accidental clicks and focus change when typing on laptop keyboard.
+    # -k means ignore modifier keys (so I can still hold shift and use
     # trackpad)
     # -d means daemonize
-    syndaemon -i 1 -K -d
+    syndaemon -i 1.5 -k -d
     ;;
   *)
     ;;
