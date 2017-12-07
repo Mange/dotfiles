@@ -25,6 +25,7 @@ Plug 'xolox/vim-misc' | Plug 'xolox/vim-notes'
 
 """ Editor functionality
 Plug 'AndrewRadev/switch.vim'
+Plug 'Shougo/context_filetype.vim'
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'junegunn/vim-easy-align'
 Plug 'kana/vim-textobj-user' | Plug 'nelstrom/vim-textobj-rubyblock'
@@ -41,14 +42,14 @@ Plug 'tpope/vim-surround'
 Plug 'vim-scripts/ZoomWin'
 
 """ Ruby
-Plug 'tpope/vim-bundler', {'for': 'ruby'}
-Plug 'tpope/vim-rvm', {'for': 'ruby'}
-
 Plug 'ecomba/vim-ruby-refactoring', {'for': 'ruby'}
-Plug 'vim-scripts/ruby-matchit', {'for': 'ruby'}
+Plug 'joker1007/vim-ruby-heredoc-syntax', {'for': 'ruby'}
+Plug 'tpope/vim-bundler', {'for': 'ruby'}
 Plug 'tpope/vim-rails', {'for': 'ruby'}
 Plug 'tpope/vim-rake', {'for': 'ruby'}
+Plug 'tpope/vim-rvm', {'for': 'ruby'}
 Plug 'vim-ruby/vim-ruby', {'for': 'ruby'}
+Plug 'vim-scripts/ruby-matchit', {'for': 'ruby'}
 
 """ Go
 Plug 'fatih/vim-go'
