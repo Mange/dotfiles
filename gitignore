@@ -18,3 +18,4 @@ doc/tags
 /.idea
 .vimrc
 .nvimrc
+*@neomake@
