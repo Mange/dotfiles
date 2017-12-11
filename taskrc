@@ -17,6 +17,11 @@ include ~/.config/taskwarrior/gruvbox-dark-256.theme
 # Inthe.AM
 include ~/Dropbox/Taskwarrior/Inthe.AM/credentials
 
+# Generic
+
+weekstart=Monday
+nag=You have higher priority tasks.
+
 # Urgency config
 
 # Low Hanging Fruit should be prioritized as it should be quick to complete.
