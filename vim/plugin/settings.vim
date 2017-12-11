@@ -13,10 +13,6 @@ set autoread
 set ignorecase
 set smartcase
 
-if !has('nvim')
-  set encoding=utf-8
-endif
-
 set hlsearch   " Toggle with sh
 set wrap       " Toggle with sw
 " See map_toggle.vim for more toggle mappings
@@ -46,3 +42,9 @@ set wildmode=list:longest,full
 
 " Looks
 set listchars=tab:→\ ,eol:¬,nbsp:•
+
+if has('nvim')
+  set inccommand=nosplit
+else
+  set encoding=utf-8
+endif
