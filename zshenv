@@ -1,5 +1,3 @@
-export GOPATH="$HOME/Projects/gopath"
-
 function {
   if [[ $customized_paths != "yes" ]]; then
     customized_paths="yes"
@@ -18,9 +16,6 @@ function {
       $HOME/.rvm/bin
       $HOME/.cargo/bin
       $HOME/.yarn/bin
-
-      $GOPATH/bin
-      /usr/local/opt/go/libexec/bin
 
       /opt/*/bin(/N)
       /usr/local/*/bin(/N)

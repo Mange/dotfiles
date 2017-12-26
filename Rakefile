@@ -81,14 +81,6 @@ task :bin do
   end
 end
 
-desc "Creates your gopath directory"
-task :gopath do
-  gopath_path = File.join(Dir.home, "Projects", "gopath")
-  unless File.directory? gopath_path
-    FileUtils.mkdir_p(gopath_path, mode: 0750)
-  end
-end
-
 desc "Installs the global gitignore file"
 task :gitignore do
   Dotfile.new('gitignore').install_symlink
@@ -178,7 +170,6 @@ task :install => (
     bins
     gitconfig
     gitignore
-    gopath
     modules
     nvim
     vimplug

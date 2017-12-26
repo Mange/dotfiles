@@ -52,9 +52,6 @@ Plug 'tpope/vim-rvm', {'for': 'ruby'}
 Plug 'vim-ruby/vim-ruby', {'for': 'ruby'}
 Plug 'vim-scripts/ruby-matchit', {'for': 'ruby'}
 
-""" Go
-Plug 'fatih/vim-go'
-
 """ Rust
 Plug 'rust-lang/rust.vim'
 Plug 'racer-rust/vim-racer', {'for': 'rust'}
