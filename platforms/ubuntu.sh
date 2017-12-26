@@ -40,11 +40,15 @@ install-fonts() {
   (cd ../fonts && make)
 }
 
-install-chrome() {
-  apt-install libxss1
-  wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-  sudo dpkg -i google-chrome*.deb
-  rm google-chrome*.deb
+install-firefox-developer-edition() {
+  if ! hash ubuntu-make.snap 2>/dev/null; then
+    subheader "Installing Ubuntu Make"
+    sudo snap install ubuntu-make
+  fi
+
+  rehash
+  subheader "Installing Firefox Developer Edition"
+  ubuntu-make.snap web firefox-dev
 }
 
 install-i3-gaps() {
@@ -131,9 +135,9 @@ if hash X 2>/dev/null; then
     install-i3-gaps || handle-failure
   fi
 
-  if ! hash google-chrome 2>/dev/null; then
-    header "Installing Google Chrome"
-    install-chrome || handle-failure
+  if ! hash firefox-developer 2>/dev/null; then
+    header "Installing Firefox Developer Edition"
+    install-firefox-developer-edition || handle-failure
   fi
 
   if ! hash playerctl 2>/dev/null; then

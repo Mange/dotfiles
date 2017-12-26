@@ -11,6 +11,7 @@ function {
 
       $HOME/bin
       $HOME/.local/bin
+      $HOME/.local/share/umake/bin
 
       .git/safe/../../bin
 
