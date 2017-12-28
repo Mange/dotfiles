@@ -177,7 +177,7 @@ format-padding = 0
 
 ws-icon-0 = 1:System;
 ws-icon-1 = 2:Code;
-ws-icon-2 = 3:Browse;
+ws-icon-2 = 3:Browse;
 ws-icon-3 = 4;
 ws-icon-4 = 5:Email;
 ws-icon-5 = 9:Media;
