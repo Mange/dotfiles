@@ -322,7 +322,7 @@ exec spotify
 exec workrave
 
 exec --no-startup-id i3-msg 'workspace $workspace10; layout stacked; exec slack'
-exec --no-startup-id i3-msg 'workspace $workspace3; exec google-chrome'
+exec --no-startup-id i3-msg 'workspace $workspace3; exec firefox-developer'
 
 exec --no-startup-id i3-msg 'workspace $workspace1'
 # }}}
