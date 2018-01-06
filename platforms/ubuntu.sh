@@ -121,7 +121,9 @@ if [[ ! -d ~/.fzf ]]; then
 fi
 
 install-or-update-rustup || handle-failure
+install-rustup-components || handle-failure
 install-crates rust/crates.txt "Rust software" || handle-failure
+install-nightly-crates rust/nightly-crates.txt "Nightly Rust software" || handle-failure
 cargo-update || handle-failure
 
 if hash X 2>/dev/null; then
