@@ -19,3 +19,4 @@ doc/tags
 .vimrc
 .nvimrc
 *@neomake*
+.*.rs.rustfmt
