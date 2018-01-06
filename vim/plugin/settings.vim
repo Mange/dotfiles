@@ -43,6 +43,12 @@ set wildmode=list:longest,full
 " Looks
 set listchars=tab:→\ ,eol:¬,nbsp:•
 
+" Tags
+set tags+=./rusty-tags.vi; " Semicolon means search parents recursively until found
+if !empty($RUST_SRC_PATH)
+  set tags+=$RUST_SRC_PATH/rusty-tags.vi
+endif
+
 if has('nvim')
   set inccommand=nosplit
 else

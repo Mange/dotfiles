@@ -1,0 +1,24 @@
+#!/bin/sh
+# vim:ft=sh:
+set -e
+
+# Generate Rust tags if project is a Rust crate and tooling is in place.
+if [ -f Cargo.toml ] && hash rusty-tags 2>/dev/null; then
+  # Find source code of current toolchain if not already defined.
+  if [ -z "$RUST_SRC_PATH" ] && hash rustc 2>/dev/null; then
+    RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/src/
+    export RUST_SRC_PATH
+  fi
+  rusty-tags --quiet vi
+else
+  # Generate normal ctags instead
+  trap 'rm -f .git/tags.$$' EXIT
+  ctags --tag-relative \
+    -Rf.git/tags.$$ \
+    --exclude=.git \
+    --exclude=tmp \
+    --exclude=build \
+    --exclude=target \
+    --languages=-javascript,sql
+  mv .git/tags.$$ .git/tags
+fi

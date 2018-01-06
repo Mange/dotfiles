@@ -11,6 +11,7 @@ doc/tags
 #-- Project-specific things --
 .*.local
 .ruby-gemset
+rusty-tags.vi
 
 #-- Editor-specific things --
 *.swp
