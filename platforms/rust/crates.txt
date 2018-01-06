@@ -4,6 +4,7 @@ cargo-update
 # Generic development tools
 watchexec
 ripgrep
+exa
 
 # Rust development
 racer
