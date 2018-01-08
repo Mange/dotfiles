@@ -18,6 +18,7 @@ function {
       $HOME/.yarn/bin
 
       /opt/*/bin(/N)
+      /snap/bin
       /usr/local/*/bin(/N)
       /usr/local/opt/*/libexec/bin(/N)
       /usr/local/share/npm/bin

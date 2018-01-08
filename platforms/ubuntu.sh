@@ -43,12 +43,11 @@ install-fonts() {
 install-firefox-developer-edition() {
   if ! hash ubuntu-make.snap 2>/dev/null; then
     subheader "Installing Ubuntu Make"
-    sudo snap install ubuntu-make
+    sudo snap install --classic ubuntu-make
   fi
 
-  rehash
   subheader "Installing Firefox Developer Edition"
-  ubuntu-make.snap web firefox-dev
+  /snap/bin/ubuntu-make.umake web firefox-dev
 }
 
 install-i3-gaps() {
