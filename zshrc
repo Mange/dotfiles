@@ -369,9 +369,14 @@ setopt hup           # HUP any jobs when exiting
 alias be='bundle exec'
 
 bundle-exec () {
-  if [ -f Gemfile ]; then
+  if [ -f "bin/$1" ]; then
+    echo "(→ bin/$*)"
+    cmd=$1
+    shift
+    "bin/$cmd" "$@"
+  elif [ -f Gemfile ]; then
     echo "(→ bundle exec $*)"
-    bundle exec $@
+    bundle exec "$@"
   else
     $@
   fi
