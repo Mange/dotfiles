@@ -259,9 +259,13 @@ if [ ! -e $HISTFILE ]; then
   touch $HISTFILE
 fi
 
-setopt append_history         # don't replace history when process exits
-setopt hist_ignore_all_dups   # remove old dups when added again
-setopt hist_verify            # verify ! expansions
+# don't replace history when process exits
+setopt append_history
+# remove old dups when added again
+setopt hist_ignore_all_dups
+# verify ! expansions
+setopt hist_verify
+
 # }}}
 # {{{ Pager
 # Pager settings (less, man, etc.)
@@ -335,6 +339,7 @@ alias gm='git merge --no-ff'
 alias gmo='git merge --no-ff @{upstream}'
 alias gmm='git merge --no-ff master'
 
+alias fixup='gco --fixup "$(git fshow)"'
 alias gro='git rebase @{upstream}'
 alias grm='git rebase master'
 alias gri='git rebase -i'
