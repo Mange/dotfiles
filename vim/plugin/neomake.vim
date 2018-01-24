@@ -8,5 +8,5 @@ let s:filetypesToCheck = [
       \"rust",
       \]
 
-autocmd BufWritePre * if index(s:filetypesToCheck, &ft) >= 0 | Neomake
+autocmd BufWritePost * if index(s:filetypesToCheck, &ft) >= 0 | Neomake
 autocmd BufEnter * if !empty(@%) && filereadable(@%) && index(s:filetypesToCheck, &ft) >= 0 | Neomake
