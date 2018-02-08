@@ -110,7 +110,7 @@ if hash X 2>/dev/null; then
 fi
 
 header "Refreshing apt cache"
-sudo apt -qq update
+sudo apt -qq update || handle-failure
 
 install-apts ubuntu/apts.txt "CLI software" || handle-failure
 
