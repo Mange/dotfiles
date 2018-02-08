@@ -12,7 +12,9 @@ install fonts-dejavu fonts-dejavu-extra fonts-noto fonts-powerline
 # Development
 install git colordiff exuberant-ctags
 install tmux
+install httpie
 install source-highlight # for lesspipe
+install python-pygments # for others
 install shellcheck
 
 # Misc
