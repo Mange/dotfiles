@@ -102,8 +102,8 @@ if [[ ! -e $getdeb_file ]]; then
 fi
 
 if hash X 2>/dev/null; then
-  copyq_file=/etc/apt/sources.list.d/hluk-ubuntu-copyq-${dist_name}.list
-  if [[ ! -e $copyq_file ]]; then
+  copyq_files=$(shopt -s nullglob; echo /etc/apt/sources.list.d/*copyq*.list)
+  if [[ -z $copyq_files ]]; then
     header "Installing CopyQ repository"
     sudo add-apt-repository ppa:hluk/copyq
   fi
