@@ -129,18 +129,6 @@ bindsym $mod+d exec --no-startup-id "rofi -show combi -modi combi,window,run -co
 bindsym $mod+shift+d exec --no-startup-id "rofi -show run -matching fuzzy $rofi_theme $rofi_behavior"
 bindsym $mod+p exec --no-startup-id "rofi -modi lpass:rofi-lpass -show lpass $rofi_theme $rofi_behavior"
 
-# Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% #increase sound volume
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% #decrease sound volume
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle # mute sound
-bindsym Control+XF86AudioMute exec pavucontrol
-
-# Media player controls
-bindsym XF86AudioPlay  exec --no-startup-id playerctl play-pause
-bindsym XF86AudioPause exec --no-startup-id playerctl play-pause
-bindsym XF86AudioNext  exec --no-startup-id playerctl next
-bindsym XF86AudioPrev  exec --no-startup-id playerctl previous
-
 # Xbacklight
 bindsym XF86MonBrightnessUp exec xbacklight -inc 10
 bindsym XF86MonBrightnessDown exec xbacklight -dec 10
@@ -293,30 +281,55 @@ bindsym $mod+a focus parent
 # {{{ Resize mode
 # resize window (you can also use the mouse for that)
 mode "resize" {
-        # These bindings trigger as soon as you enter the resize mode
+  # These bindings trigger as soon as you enter the resize mode
 
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
-        bindsym h resize shrink width 10 px or 10 ppt
-        bindsym j resize grow height 10 px or 10 ppt
-        bindsym k resize shrink height 10 px or 10 ppt
-        bindsym l resize grow width 10 px or 10 ppt
+  bindsym h resize shrink width 10 px or 10 ppt
+  bindsym j resize grow height 10 px or 10 ppt
+  bindsym k resize shrink height 10 px or 10 ppt
+  bindsym l resize grow width 10 px or 10 ppt
 
-        # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
-
-        # back to normal: Enter or Escape
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-        bindsym $mod+r mode "default"
+  # back to normal: Enter or Escape
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+  bindsym $mod+r mode "default"
 }
 
 bindsym $mod+r mode "resize"
+# }}}
+
+# {{{ Media mode and bindings
+
+# Pulse Audio controls
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% #increase sound volume
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% #decrease sound volume
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle # mute sound
+bindsym Control+XF86AudioMute exec pavucontrol
+
+# Media player controls
+bindsym XF86AudioPlay  exec --no-startup-id playerctl play-pause
+bindsym XF86AudioPause exec --no-startup-id playerctl play-pause
+bindsym XF86AudioNext  exec --no-startup-id playerctl next
+bindsym XF86AudioPrev  exec --no-startup-id playerctl previous
+
+mode "media" {
+  # Media player controls (se also "
+  bindsym j  exec --no-startup-id playerctl play-pause
+  bindsym k exec --no-startup-id playerctl play-pause
+  bindsym l  exec --no-startup-id playerctl next
+  bindsym h  exec --no-startup-id playerctl previous
+
+  # Pulse Audio controls
+  bindsym plus exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% #increase sound volume
+  bindsym minus exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% #decrease sound volume
+  bindsym 0 exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle # mute sound
+
+  # back to normal: Enter / Escape / Space
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+  bindsym Space mode "default"
+}
+
+bindsym $mod+m mode "media"
 # }}}
 
 # {{{ Late startup programs
