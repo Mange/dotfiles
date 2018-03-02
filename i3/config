@@ -170,6 +170,7 @@ set $workspace10 "10:Chat"
 
 # switch to workspace
 bindsym $mod+grave workspace back_and_forth
+bindsym $mod+Escape workspace back_and_forth
 bindsym $mod+1 workspace $workspace1
 bindsym $mod+2 workspace $workspace2
 bindsym $mod+3 workspace $workspace3
