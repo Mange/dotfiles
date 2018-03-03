@@ -19,6 +19,7 @@ install-rustup-components() {
   rustup component add rust-src
   rustup component add rls-preview
   rustup component add rust-analysis
+  rustup component add rustfmt-preview
 }
 
 run-cargo() {
