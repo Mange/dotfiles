@@ -138,7 +138,7 @@ fi
 
 # }}}
 # {{{ EDITOR
-try-editor () {
+try-editor() {
   if command-exist $1; then
     EDITOR="$@"
   fi
@@ -151,7 +151,7 @@ try-editor nvim
 
 export VISUAL=$EDITOR
 
-unset try-editor
+unset -f try-editor
 # }}}
 # {{{ Completions
 # Activate completion system and do some basic settings
@@ -360,7 +360,7 @@ alias gd="git diff"
 alias gdw="git diff --color-words"
 alias staged="gd --cached"
 
-unset git_log_format
+unset -v git_log_format
 # }}}
 # {{{ Job control aliases and hacks
 alias j='jobs -l'
@@ -558,4 +558,4 @@ elif [[ -s "$HOME/.rvm/scripts/rvm" ]]; then
 fi
 # }}}
 
-unset alias-if-exist
+unset -f alias-if-exist
