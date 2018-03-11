@@ -23,6 +23,7 @@ OPTIONS:
 
     SECTIONS:
       all      (All sections)
+      aur      (Install AUR software and tools)
       neovim   (Neovim support)
       pacman   (Install software)
       projects (Personal projects)
@@ -57,7 +58,7 @@ while true; do
 done
 
 case "$ONLY_SECTION" in
-  all | pacman | rust | projects | neovim )
+  all | pacman | rust | projects | neovim | aur )
     # Valid; do nothing
     ;;
   *)
@@ -107,6 +108,79 @@ install-pacman() {
   fi
 }
 
+compile-aur() {
+  local filename="$1"
+  sed 's/#.*$//' "$filename" | sed '/^$/d' | sort | while read package; do
+    # Skip if already installed
+    if pacman -Q --quiet $package 2>/dev/null >/dev/null; then
+      continue
+    fi
+
+    subheader "Compiling $package" -n
+    set +e
+    echo $red
+    output="$(aursync --no-view --no-confirm "$package" 2>&1)"
+    if [[ $? == 0 ]]; then
+      echo -n $green ✔
+    else
+      echo $red ✘
+      echo "$output"
+    fi
+    echo -n $reset
+    set -e
+  done
+
+  echo "${green}Everything compiled/installed ✔${reset}"
+}
+
+compile-aurutils() {
+    header "Installing aurutils"
+
+    subheader "Download and install from source"
+    if [[ ! -d /opt/aurutils ]]; then
+      sudo mkdir -p "/opt"
+      sudo git clone https://aur.archlinux.org/aurutils.git /opt/aurutils
+    fi
+
+    sudo chown -R "$USER:$USER" /opt/aurutils
+    sudo chmod -R u+wX /opt/aurutils
+    gpg --recv-keys 6bc26a17b9b7018a
+    (cd /opt/aurutils; makepkg -i)
+
+    subheader "Setting up local repository"
+    if [[ ! -f /etc/pacman.d/custom ]]; then
+      echo "Generating /etc/pacman.d/custom"
+      cat <<EOF | sudo tee /etc/pacman.d/custom > /dev/null
+[options]
+CacheDir = /var/cache/pacman/pkg
+CacheDir = /var/cache/pacman/custom
+CleanMethod = KeepCurrent
+
+[custom]
+SigLevel = Optional TrustAll
+Server = file:///var/cache/pacman/custom
+EOF
+    fi
+
+    if ! grep -q "/etc/pacman.d/custom" /etc/pacman.conf; then
+      echo "Adding include statement to /etc/pacman.conf"
+      echo -e "\n\nInclude = /etc/pacman.d/custom" | sudo tee --append /etc/pacman.conf > /dev/null
+    fi
+
+    if [[ ! -d /var/cache/pacman/custom ]]; then
+      echo "Generating repo at specified location"
+      sudo install -d /var/cache/pacman/custom -o "$USER"
+      repo-add /var/cache/pacman/custom/custom.db.tar
+      $PACMAN -Syu
+    fi
+
+    subheader "Installing aurutils using aurutils (whoa!)"
+    aursync --no-view --no-confirm aurutils
+
+    subheader "Cleaning up source"
+    sudo rm -rf /opt/aurutils
+}
+
 init-sudo() {
   # Ask for password up front
   sudo echo > /dev/null
@@ -125,6 +199,22 @@ if run-section "pacman"; then
       install-pacman "${bundle_file}" || handle-failure
     fi
   done
+fi
+
+if run-section "aur"; then
+  if ! hash aursync 2>/dev/null; then
+    init-sudo
+    compile-aurutils || handle-failure
+  fi
+
+  if hash aursync 2>/dev/null; then
+    init-sudo
+    header "Compile AUR software"
+    compile-aur arch/aur.txt || handle-failure
+
+    header "Install AUR software"
+    install-pacman arch/aur.txt || handle-failure
+  fi
 fi
 
 if run-section "rust"; then

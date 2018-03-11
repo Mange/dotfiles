@@ -34,6 +34,7 @@ export -f header
 subheader() {
   echo
   local message="$1"
-  echo "${yellow}‣ ${message}${reset}"
+  shift
+  echo "$@" "${yellow}‣ ${message}${reset}"
 }
 export -f subheader

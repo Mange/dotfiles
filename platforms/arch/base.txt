@@ -18,3 +18,8 @@ lightdm
 lightdm-gtk-greeter
 lightdm-gtk-greeter-settings
 xorg
+
+# For AUR
+jq
+pacutils
+parallel

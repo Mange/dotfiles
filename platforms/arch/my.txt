@@ -16,6 +16,8 @@ highlight
 ttf-dejavu
 
 # Utilities
+jq
+parallel
 task
 
 # Desktop env
