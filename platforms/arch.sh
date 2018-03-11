@@ -8,7 +8,72 @@ cd $(dirname $0)
 . ./shared/rvm.sh
 . ./shared/rust.sh
 
-pacman="sudo pacman --noconfirm"
+PACMAN="sudo pacman --noconfirm"
+
+usage() {
+  cat <<USAGE
+USAGE: $0 [OPTIONS]
+
+OPTIONS:
+  --help
+    Display this help text.
+
+  --only SECTION, -o SECTION
+    Only run the stuff part of that section.
+
+    SECTIONS:
+      all      (All sections)
+      pacman   (Install software)
+      rust     (Rust setup)
+      projects (Personal projects)
+USAGE
+}
+ONLY_SECTION="all"
+
+OPTS=$(getopt -n "$0" --longoptions "help,only:" --options "o:" --shell bash -- "$@")
+if [[ $? != 0 ]]; then exit 1; fi
+eval set -- "$OPTS"
+
+while true; do
+  case "$1" in
+    --help)
+      usage
+      shift
+      exit 0
+      ;;
+    -o | --only)
+      ONLY_SECTION="$2"
+      shift 2
+      ;;
+    --)
+      shift
+      break
+      ;;
+    *)
+      break
+      ;;
+  esac
+done
+
+case "$ONLY_SECTION" in
+  all | pacman | rust | projects )
+    # Valid; do nothing
+    ;;
+  *)
+    echo "ERROR: $ONLY_SECTION is not a known section" >&2
+    usage
+    exit 1
+    ;;
+esac
+
+run-section() {
+  local name="$1"
+  if [[ "$ONLY_SECTION" == "all" || "$ONLY_SECTION" == "$name" ]]; then
+    return 0
+  else
+    return 1
+  fi
+}
 
 install-pacman() {
   local filename="$1"
@@ -27,7 +92,7 @@ install-pacman() {
     # --needed does not reinstall already installed software. Just to be safe.
     set +e
     echo $red
-    output="$(echo "$needed" | $pacman -S --quiet --needed - 2>&1)"
+    output="$(echo "$needed" | $PACMAN -S --quiet --needed - 2>&1)"
     if [[ $? == 0 ]]; then
       echo -n $green ✔ $reset
     else
@@ -41,33 +106,46 @@ install-pacman() {
   fi
 }
 
-# Ask for password right away.
-sudo echo > /dev/null
+init-sudo() {
+  # Ask for password up front
+  sudo echo > /dev/null
+}
 
-header "Refreshing pacman cache"
-$pacman -S --refresh --quiet
+if run-section "pacman"; then
+  init-sudo
 
-for bundle in base $(hostname --short) my; do
-  bundle_file="arch/${bundle}.txt"
-  if [[ -f $bundle_file ]]; then
-    header "Install ${bundle} software"
-    install-pacman arch/base.txt || handle-failure
-  fi
-done
+  header "Refreshing pacman cache"
+  $PACMAN -S --refresh --quiet
 
-install-fzf || handle-failure
-install-or-update-rustup || handle-failure
-install-rustup-components || handle-failure
-install-crates rust/crates.txt "Rust software" || handle-failure
-install-nightly-crates rust/nightly-crates.txt "Nightly Rust software" || handle-failure
-cargo-update || handle-failure
-
-if hash gsettings 2>/dev/null; then
-  gsettings set org.gnome.desktop.background show-desktop-icons false
+  for bundle in base $(hostname --short) my; do
+    bundle_file="arch/${bundle}.txt"
+    if [[ -f $bundle_file ]]; then
+      header "Install ${bundle} software"
+      install-pacman "${bundle_file}" || handle-failure
+    fi
+  done
 fi
 
-./shared/di.sh || handle-failure
-./shared/projects.sh || handle-failure
+if run-section "rust"; then
+  install-or-update-rustup || handle-failure
+  install-rustup-components || handle-failure
+  install-crates rust/crates.txt "Rust software" || handle-failure
+  install-nightly-crates rust/nightly-crates.txt "Nightly Rust software" || handle-failure
+  cargo-update || handle-failure
+fi
 
-header "Installing updates"
-$pacman -Su
+if run-section "projects"; then
+  ./shared/projects.sh || handle-failure
+fi
+
+if run-section "all"; then
+  ./shared/di.sh || handle-failure
+  install-fzf || handle-failure
+
+  if hash gsettings 2>/dev/null; then
+    gsettings set org.gnome.desktop.background show-desktop-icons false
+  fi
+
+  header "Installing updates"
+  $PACMAN -Su
+fi
