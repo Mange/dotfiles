@@ -1,0 +1,19 @@
+# Helpful for installing software
+base-devel
+git
+
+# System utilities
+btrfs-progs
+openssh # SSH client
+xdg-utils
+
+# CLI environment
+zsh
+tmux
+
+# Graphical environment
+compton
+lightdm
+lightdm-gtk-greeter
+lightdm-gtk-greeter-settings
+xorg

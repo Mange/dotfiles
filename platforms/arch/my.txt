@@ -1,0 +1,58 @@
+# vim:ft=text:
+# My stuff
+
+# Neovim
+neovim
+python-3 # For neovim plugins
+nodejs # For neovim plugins
+npm # To install neovim package for nodejs
+python-pip # To install neovim package for Python
+
+# Coding help
+diff-so-fancy
+highlight
+
+# Fonts
+ttf-dejavu
+
+# Utilities
+task
+
+# Desktop env
+feh
+i3-gaps
+redshift
+rofi
+termite
+
+# GNOME software
+gnome-calculator
+gnome-calendar
+gnome-characters
+gnome-color-manager
+gnome-contacts
+gnome-font-viewer
+gnome-icon-theme
+gnome-icon-theme-extras
+gnome-keyring
+gnome-online-accounts
+gnome-photos
+gnome-screensaver
+gnome-screenshot
+gnome-session
+gnome-settings-daemon
+gnome-system-log
+gnome-system-monitor
+gnome-terminal
+gnome-themes-standard
+gnome-tweak-tool
+gnome-user-share
+gnome-weather
+gvfs-goa
+gvfs-google
+gvfs-gphoto2
+gvfs-mtp
+gvfs-nfs
+gvfs-smb
+seahorse
+system-config-printer

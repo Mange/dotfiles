@@ -1,0 +1,4 @@
+# vim:ft=text:
+# morbidus-specific
+nvidia
+nvidia-utils
