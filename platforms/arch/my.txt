@@ -43,7 +43,6 @@ gnome-session
 gnome-settings-daemon
 gnome-system-log
 gnome-system-monitor
-gnome-terminal
 gnome-themes-standard
 gnome-tweak-tool
 gnome-user-share
