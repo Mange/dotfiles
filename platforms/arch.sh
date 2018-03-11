@@ -4,6 +4,7 @@ set -e
 cd $(dirname $0)
 . ./support/functions.bash
 
+. ./shared/generic.sh
 . ./shared/rvm.sh
 . ./shared/rust.sh
 
@@ -53,3 +54,20 @@ for bundle in base $(hostname --short) my; do
     install-pacman arch/base.txt || handle-failure
   fi
 done
+
+install-fzf || handle-failure
+install-or-update-rustup || handle-failure
+install-rustup-components || handle-failure
+install-crates rust/crates.txt "Rust software" || handle-failure
+install-nightly-crates rust/nightly-crates.txt "Nightly Rust software" || handle-failure
+cargo-update || handle-failure
+
+if hash gsettings 2>/dev/null; then
+  gsettings set org.gnome.desktop.background show-desktop-icons false
+fi
+
+./shared/di.sh || handle-failure
+./shared/projects.sh || handle-failure
+
+header "Installing updates"
+$pacman -Su

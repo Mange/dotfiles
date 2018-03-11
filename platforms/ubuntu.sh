@@ -4,6 +4,7 @@ set -e
 cd $(dirname $0)
 . ./support/functions.bash
 
+. ./shared/generic.sh
 . ./shared/rvm.sh
 . ./shared/rust.sh
 
@@ -74,20 +75,6 @@ install-rofi-lpass() {
   (cd ../vendor && make rofi-lpass-install)
 }
 
-install-fzf() {
-  git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install
-}
-
-handle-failure() {
-  echo ${red}Command failed!${reset}
-  echo "Continue? [Yn]"
-  read -r answer
-  if [[ $answer != "" && $answer != "y" && $answer != "Y" ]]; then
-    echo "Aborting"
-    exit 1
-  fi
-}
-
 # Ask for password right away.
 sudo echo > /dev/null
 
@@ -114,11 +101,7 @@ sudo apt -qq update || handle-failure
 
 install-apts ubuntu/apts.txt "CLI software" || handle-failure
 
-if [[ ! -d ~/.fzf ]]; then
-  header "Installing fzf"
-  install-fzf
-fi
-
+install-fzf || handle-failure
 install-or-update-rustup || handle-failure
 install-rustup-components || handle-failure
 install-crates rust/crates.txt "Rust software" || handle-failure

@@ -4,12 +4,13 @@ git
 
 # System utilities
 btrfs-progs
+nfs-utils
 openssh # SSH client
 xdg-utils
 
 # CLI environment
-zsh
 tmux
+zsh
 
 # Graphical environment
 compton
