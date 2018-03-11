@@ -23,9 +23,10 @@ OPTIONS:
 
     SECTIONS:
       all      (All sections)
+      neovim   (Neovim support)
       pacman   (Install software)
-      rust     (Rust setup)
       projects (Personal projects)
+      rust     (Rust setup)
 USAGE
 }
 ONLY_SECTION="all"
@@ -56,7 +57,7 @@ while true; do
 done
 
 case "$ONLY_SECTION" in
-  all | pacman | rust | projects )
+  all | pacman | rust | projects | neovim )
     # Valid; do nothing
     ;;
   *)
@@ -83,7 +84,7 @@ install-pacman() {
   # (groups and indvidual) into their individual packages. Then filter them
   # through the local package database to get a list of "missing" software.
   local wanted_packages=$(set +e; echo "$wanted_software" | pacman -Sp --print-format "%n" - | sort)
-  local installed_packages=$(set +e; echo "$wanted_packages" | pacman -Q - | awk '{ print $1 }' | sort)
+  local installed_packages=$(set +e; echo "$wanted_packages" | pacman -Q - 2>/dev/null | awk '{ print $1 }' | sort)
   local needed="$(comm -23 <(echo "$wanted_packages") <(echo "$installed_packages"))"
 
   if [[ -n "$needed" ]]; then
@@ -136,6 +137,34 @@ fi
 
 if run-section "projects"; then
   ./shared/projects.sh || handle-failure
+fi
+
+if run-section "neovim"; then
+  if hash nvim 2>/dev/null; then
+    header "Neovim"
+    init-sudo
+
+    subheader "Python plugin"
+    if hash pip 2>/dev/null; then
+      sudo pip install -q neovim && echo "${green}✔ OK${reset}" || handle-failure
+    else
+      echo "${red}pip not installed${reset}"
+    fi
+
+    subheader "Ruby plugin"
+    if hash gem 2>/dev/null; then
+      gem install -q neovim && echo "${green}✔ OK${reset}" || handle-failure
+    else
+      echo "${red}Ruby/gem not installed${reset}"
+    fi
+
+    subheader "NodeJS plugin"
+    if hash npm 2>/dev/null; then
+      sudo npm install -g neovim && echo "${green}✔ OK${reset}" || handle-failure
+    else
+      echo "${red}npm not installed${reset}"
+    fi
+  fi
 fi
 
 if run-section "all"; then

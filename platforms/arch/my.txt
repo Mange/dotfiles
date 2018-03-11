@@ -3,7 +3,7 @@
 
 # Neovim
 neovim
-python-3 # For neovim plugins
+python # For neovim plugins
 nodejs # For neovim plugins
 npm # To install neovim package for nodejs
 python-pip # To install neovim package for Python
