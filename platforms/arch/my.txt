@@ -55,3 +55,7 @@ gvfs-nfs
 gvfs-smb
 seahorse
 system-config-printer
+
+# Media
+vlc
+playerctl
