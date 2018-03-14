@@ -6,6 +6,7 @@ git
 btrfs-progs
 nfs-utils
 openssh # SSH client
+pulseaudio
 xdg-utils
 
 # CLI environment
@@ -13,7 +14,6 @@ tmux
 zsh
 
 # Graphical environment
-compton
 lightdm
 lightdm-gtk-greeter
 lightdm-gtk-greeter-settings

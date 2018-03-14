@@ -89,7 +89,7 @@ install-pacman() {
   local needed="$(comm -23 <(echo "$wanted_packages") <(echo "$installed_packages"))"
 
   if [[ -n "$needed" ]]; then
-    echo "Installing:"
+    subheader "Installing new software:"
     echo "$needed" | column
     # --needed does not reinstall already installed software. Just to be safe.
     set +e

@@ -21,11 +21,13 @@ parallel
 task
 
 # Desktop env
+compton
 feh
 i3-gaps
 redshift
 rofi
 termite
+pavucontrol
 
 # GNOME software
 gnome-calculator
