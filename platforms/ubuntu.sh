@@ -5,7 +5,6 @@ cd $(dirname $0)
 . ./support/functions.bash
 
 . ./shared/generic.sh
-. ./shared/rvm.sh
 . ./shared/rust.sh
 
 apt-install() {
