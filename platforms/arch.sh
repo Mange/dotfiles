@@ -240,6 +240,10 @@ init-sudo() {
   sudo echo > /dev/null
 }
 
+if run-section "all"; then
+  setup-gpg-auto-retrieve
+fi
+
 if run-section "pacman"; then
   init-sudo
 
