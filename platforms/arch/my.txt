@@ -1,4 +1,4 @@
-# vim:ft=text:
+# vim:ft=text:nospell
 # My stuff
 
 # Neovim

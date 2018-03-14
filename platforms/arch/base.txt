@@ -1,3 +1,4 @@
+# vim:ft=text:nospell
 # Helpful for installing software
 base-devel
 git

@@ -1,3 +1,4 @@
+# vim:ft=text:nospell
 polybar-git
 copyq
 spotify
