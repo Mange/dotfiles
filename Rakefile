@@ -7,6 +7,7 @@ XDG_SYMLINKS = %w[
   i3
   polybar
   taskwarrior
+  termite
 ]
 
 SYMLINKS = %w[
