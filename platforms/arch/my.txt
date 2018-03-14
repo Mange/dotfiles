@@ -86,6 +86,10 @@ gvfs-smb
 seahorse
 system-config-printer
 
+# Docker
+docker
+docker-compose
+
 # Media
 vlc
 playerctl
