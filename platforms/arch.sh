@@ -201,6 +201,41 @@ EOF
     sudo rm -rf /opt/aurutils
 }
 
+configure-lightdm() {
+  local config=/etc/lightdm/lightdm-gtk-greeter.conf
+  local dotfile_config=../lightdm-gtk-greeter.conf
+  local differ=diff
+
+  if hash colordiff 2>/dev/null; then
+    differ=colordiff
+  fi
+
+  if [[ -f $config ]]; then
+    if diff="$("${differ}" -u "${config}" "${dotfile_config}" 2>&1)"; then
+      # File matches. Nothing to do! :)
+      return
+    else
+      header "Configuring LightDM"
+      echo "${yellow}Server config differs from config in dotfiles:${reset}"
+      echo "${diff}"
+      echo "Overwrite config? [yN] "
+      read -r answer
+      if [[ $answer != "y" && $answer != "Y" ]]; then
+        echo "Aborting"
+        handle-failure "Config not applied"
+        return
+      fi
+    fi
+  else
+    # File did not exist
+    header "Configuring LightDM"
+  fi
+
+  sudo cp "${dotfile_config}" "$config"
+  sudo chown root:root "$config"
+  sudo chmod u=rw,og=r "$config"
+}
+
 init-sudo() {
   # Ask for password up front
   sudo echo > /dev/null
@@ -285,6 +320,8 @@ if run-section "all"; then
 
   # Make bluetooth service boot at startup
   sudo systemctl enable bluetooth || handle-failure "Enabling bluetooth at boot"
+
+  configure-lightdm
 
   header "Installing updates"
   $PACMAN -Su
