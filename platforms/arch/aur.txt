@@ -5,6 +5,7 @@ polybar-git # A fast and easy-to-use status bar
 rvm         # RVM: Ruby Version Manager
 spotify     # A proprietary music streaming service
 vit         # A terminal interface for Taskwarrior with Vim key bindings and colorization support
+yakyak      # Desktop client for Google Hangouts
 
 # Fortunes :)
 fortune-mod-archer

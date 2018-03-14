@@ -218,8 +218,8 @@ assign [class="Evolution"] $workspace5
 # https://github.com/i3/i3/issues/2060
 for_window [class="Spotify"] move to workspace $workspace9
 
-assign [instance="^crx_" title="^Google Hangouts"] $workspace10
 assign [class="Slack"] $workspace10
+assign [class="yakyak"] $workspace10
 
 # CopyQ clipboard manager
 for_window [class="copyq"] floating enable
@@ -337,7 +337,7 @@ bindsym $mod+m mode "media"
 exec spotify
 exec workrave
 
-exec --no-startup-id i3-msg 'workspace $workspace10; layout stacked; exec slack'
+exec --no-startup-id i3-msg 'workspace $workspace10; layout stacked; exec slack; exec yakyak'
 exec --no-startup-id i3-msg 'workspace $workspace3; exec firefox-developer'
 
 exec --no-startup-id i3-msg 'workspace $workspace1'
