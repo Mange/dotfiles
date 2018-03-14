@@ -1,4 +1,6 @@
 # vim:ft=text:nospell
-polybar-git
-copyq
-spotify
+copyq       # Clipboard manager with searchable and editable history.
+http-prompt # An interactive HTTP command-line client
+polybar-git # A fast and easy-to-use status bar
+spotify     # A proprietary music streaming service
+vit         # A terminal interface for Taskwarrior with Vim key bindings and colorization support
