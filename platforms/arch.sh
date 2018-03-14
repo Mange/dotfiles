@@ -258,7 +258,8 @@ if run-section "neovim"; then
 fi
 
 if run-section "all"; then
-  ./shared/di.sh || handle-failure
+  init-sudo
+  ./shared/di.sh || handle-failure "Downloading DI playlists"
   install-fzf || handle-failure
 
   if hash gsettings 2>/dev/null; then
