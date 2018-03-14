@@ -108,29 +108,49 @@ install-pacman() {
   fi
 }
 
-compile-aur() {
+compile-install-aur() {
   local filename="$1"
-  sed 's/#.*$//' "$filename" | sed '/^$/d' | sort | while read package; do
+  local installed=0
+  local errors=0
+
+  # NOTE: This `while` has its stdin set at the end of the loop body so it does
+  # not run in a subshell, so it can modify $errors and $installed.
+  while read -r package; do
     # Skip if already installed
-    if pacman -Q --quiet $package 2>/dev/null >/dev/null; then
+    if pacman -Q --quiet "$package" 2>/dev/null >/dev/null; then
       continue
     fi
 
     subheader "Compiling $package" -n
     set +e
-    echo $red
-    output="$(aursync --no-view --no-confirm "$package" 2>&1)"
-    if [[ $? == 0 ]]; then
-      echo -n $green ✔
-    else
-      echo $red ✘
-      echo "$output"
-    fi
-    echo -n $reset
-    set -e
-  done
 
-  echo "${green}Everything compiled/installed ✔${reset}"
+    if output="$(aursync --no-view --no-confirm "$package" 2>&1)"; then
+      echo "${green} ✔"
+      subheader "Installing $package" -n
+
+      if output="$($PACMAN -S --quiet --needed "$package" 2>&1)"; then
+        echo "${green} ✔"
+        installed=$((installed + 1))
+      else
+        echo "${red} ✘ - FAILED"
+        echo "$output"
+        errors=$((errors + 1))
+      fi
+    else
+      echo "${red} ✘ - FAILED"
+      echo "$output"
+      errors=$((errors + 1))
+    fi
+    echo -n "${reset}"
+    set -e
+  done < <(sed 's/#.*$//' "$filename" | sed '/^$/d' | sort)
+
+  if [[ $errors -eq 0 ]]; then
+    echo "${green}Everything compiled/installed ✔${reset}"
+  else
+    echo "${yellow}${errors} package(s) failed to install. ${installed} installed successfully.${reset}"
+    handle-failure
+  fi
 }
 
 compile-aurutils() {
@@ -209,11 +229,8 @@ if run-section "aur"; then
 
   if hash aursync 2>/dev/null; then
     init-sudo
-    header "Compile AUR software"
-    compile-aur arch/aur.txt || handle-failure
-
-    header "Install AUR software"
-    install-pacman arch/aur.txt || handle-failure
+    header "Compile and install AUR software"
+    compile-install-aur arch/aur.txt || handle-failure
   fi
 fi
 
