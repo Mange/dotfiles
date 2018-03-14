@@ -21,6 +21,7 @@ parallel
 task
 
 # Desktop env
+blueman
 compton
 feh
 i3-gaps

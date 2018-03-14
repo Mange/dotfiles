@@ -4,11 +4,13 @@ base-devel
 git
 
 # System utilities
-btrfs-progs
-nfs-utils
-openssh # SSH client
-pulseaudio
-xdg-utils
+bluez        # Bluetooth
+bluez-utils  # Bluetooth
+btrfs-progs  # btrfs (filesystem)
+nfs-utils    # NFS (filesystem)
+openssh      # SSH client
+pulseaudio   # Audio server
+xdg-utils    # Desktop software support
 
 # CLI environment
 tmux

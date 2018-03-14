@@ -266,6 +266,9 @@ if run-section "all"; then
     gsettings set org.gnome.desktop.background show-desktop-icons false
   fi
 
+  # Make bluetooth service boot at startup
+  sudo systemctl enable bluetooth || handle-failure "Enabling bluetooth at boot"
+
   header "Installing updates"
   $PACMAN -Su
 fi
