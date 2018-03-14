@@ -4,3 +4,19 @@ http-prompt # An interactive HTTP command-line client
 polybar-git # A fast and easy-to-use status bar
 spotify     # A proprietary music streaming service
 vit         # A terminal interface for Taskwarrior with Vim key bindings and colorization support
+
+# Fortunes :)
+fortune-mod-archer
+fortune-mod-asoiaf
+fortune-mod-breakingbad
+fortune-mod-futurama
+fortune-mod-g-git
+fortune-mod-hackers # From the movie
+fortune-mod-limericks
+fortune-mod-portal
+fortune-mod-portal2
+fortune-mod-protolol-git
+fortune-mod-question-answer-jokes
+fortune-mod-rickandmorty
+fortune-mod-southpark
+fortune-mod-vimtips

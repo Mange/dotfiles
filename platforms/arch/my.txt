@@ -89,3 +89,7 @@ system-config-printer
 # Media
 vlc
 playerctl
+
+# Fortunes :)
+fortune-mod # adds the fortunes command
+# extra collections of fortunes are installed via aur
