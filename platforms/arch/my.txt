@@ -25,10 +25,12 @@ blueman
 compton
 feh
 i3-gaps
+network-manager-applet
+pavucontrol
 redshift
 rofi
 termite
-pavucontrol
+wireless_tools # for Polybar
 
 # GNOME software
 gnome-calculator
