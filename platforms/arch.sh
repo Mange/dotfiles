@@ -25,7 +25,6 @@ OPTIONS:
       aur      (Install AUR software and tools)
       neovim   (Neovim support)
       pacman   (Install software)
-      projects (Personal projects)
       rust     (Rust setup)
       updates  (Installing updates)
 USAGE
@@ -295,10 +294,6 @@ if run-section "rust"; then
   install-crates rust/crates.txt "Rust software" || handle-failure
   install-nightly-crates rust/nightly-crates.txt "Nightly Rust software" || handle-failure
   cargo-update || handle-failure
-fi
-
-if run-section "projects"; then
-  ./shared/projects.sh || handle-failure
 fi
 
 if run-section "neovim"; then
