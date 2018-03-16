@@ -235,6 +235,18 @@ configure-lightdm() {
   sudo chmod u=rw,og=r "$config"
 }
 
+setup-nerd-fonts() {
+  local package_config=/etc/fonts/conf.avail/10-nerd-font-symbols.conf
+  local user_config=${XDG_CONFIG_HOME:-~/.config}/fontconfig/conf.d/10-nerd-font-symbols.conf
+
+  if [[ -f "$package_config" && ! -e "$user_config" ]]; then
+    header "Setting up Nerd Fonts config for current user"
+    mkdir -p "$(dirname "${user_config}")"
+    ln -s "$package_config" "$user_config"
+    fc-cache
+  fi
+}
+
 init-sudo() {
   # Ask for password up front
   sudo echo > /dev/null
@@ -270,6 +282,8 @@ if run-section "aur"; then
     header "Compile and install AUR software"
     compile-install-aur arch/aur.txt || handle-failure
   fi
+
+  setup-nerd-fonts || handle-failure "Installing Nerd Font overrides"
 fi
 
 if run-section "rust"; then

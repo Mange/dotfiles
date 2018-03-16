@@ -19,10 +19,10 @@ shellcheck
 source-highlight # and lesspipe uses this to highlight code
 
 # Fonts
+# nerd-fonts installed in aur.txt
 noto-fonts
 noto-fonts-emoji
 noto-fonts-extra
-powerline-fonts
 ttf-dejavu
 
 # CLI env

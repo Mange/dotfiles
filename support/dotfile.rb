@@ -2,6 +2,7 @@ require 'pathname'
 require 'fileutils'
 
 class Dotfile
+  attr_reader :name, :source
   attr_writer :home_path
 
   def initialize(name, source = name)
@@ -41,8 +42,6 @@ class Dotfile
   end
 
   protected
-  attr_reader :name, :source
-
   def clear_target_path
     # Broken symlinks does not exist, so test for presence of a symlink as well
     present = (target_path.exist? || target_path.symlink?)

@@ -10,6 +10,9 @@ spotify       # A proprietary music streaming service
 vit           # A terminal interface for Taskwarrior with Vim key bindings and colorization support
 yakyak        # Desktop client for Google Hangouts
 
+# Fonts (also see my.txt)
+nerd-fonts-complete
+
 # Fortunes :)
 fortune-mod-archer
 fortune-mod-asoiaf
