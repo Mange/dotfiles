@@ -2,6 +2,8 @@
 # Helpful for installing software
 base-devel
 git
+curl
+wget
 
 # System utilities
 bluez        # Bluetooth
