@@ -27,6 +27,7 @@ OPTIONS:
       pacman   (Install software)
       projects (Personal projects)
       rust     (Rust setup)
+      updates  (Installing updates)
 USAGE
 }
 ONLY_SECTION="all"
@@ -57,7 +58,7 @@ while true; do
 done
 
 case "$ONLY_SECTION" in
-  all | pacman | rust | projects | neovim | aur )
+  all | pacman | rust | projects | neovim | aur | updates )
     # Valid; do nothing
     ;;
   *)
@@ -256,12 +257,14 @@ if run-section "all"; then
   setup-gpg-auto-retrieve
 fi
 
-if run-section "pacman"; then
+if run-section "updates" || run-section "pacman"; then
   init-sudo
 
   header "Refreshing pacman cache"
   $PACMAN -S --refresh --quiet
+fi
 
+if run-section "pacman"; then
   for bundle in base $(hostname --short) my; do
     bundle_file="arch/${bundle}.txt"
     if [[ -f $bundle_file ]]; then
@@ -339,7 +342,13 @@ if run-section "all"; then
   sudo systemctl enable bluetooth || handle-failure "Enabling bluetooth at boot"
 
   configure-lightdm
+fi
 
+if run-section "updates"; then
   header "Installing updates"
+  subheader "Installing AUR updates"
+  aursync --no-view --no-confirm --update || handle-failure
+
+  subheader "Installing package updates"
   $PACMAN -Su
 fi
