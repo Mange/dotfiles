@@ -9,7 +9,9 @@ wget
 bluez        # Bluetooth
 bluez-utils  # Bluetooth
 btrfs-progs  # btrfs (filesystem)
+exfat-utils  # exFAT (filesystem)
 nfs-utils    # NFS (filesystem)
+ntfs-3g      # NTFS (filesystem)
 openssh      # SSH client
 pulseaudio   # Audio server
 xdg-utils    # Desktop software support
