@@ -85,17 +85,27 @@ client.urgent            $bright_red     $bright_red     $light1 $bright_red $br
 set $wallpaper_command ~/bin/set-wallpaper
 set $polybar_command ~/.config/polybar/start.sh
 
+# Keyboard, screens, etc.
+exec --no-startup-id xmodmap ~/.Xmodmap
 exec --no-startup-id ~/bin/dynamic-startup
 exec --no-startup-id ~/bin/autoscreens
+
+# Compositor
 exec --no-startup-id compton --config ~/.config/compton/compton.conf
+exec --no-startup-id redshift
+
+# Wallpaper, bars, etc.
 exec_always --no-startup-id $wallpaper_command
 exec_always --no-startup-id $polybar_command
-exec --no-startup-id xmodmap ~/.Xmodmap
-exec --no-startup-id redshift
-exec --no-startup-id dropbox start
-exec --no-startup-id nm-applet
-exec --no-startup-id blueman-applet
-exec --no-startup-id copyq
+
+# Daemons
+exec --no-startup-id blueman-applet # Bluetooth
+exec --no-startup-id copyq # Clipboard manager
+exec --no-startup-id dropbox start # Dropbox
+exec --no-startup-id nm-applet # NetworkManager
+
+# To deal with apps requesting privilege elevation
+exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 # }}}
 
 # {{{ i3 shortcuts

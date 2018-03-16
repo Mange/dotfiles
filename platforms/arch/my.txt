@@ -83,6 +83,7 @@ gvfs-gphoto2
 gvfs-mtp
 gvfs-nfs
 gvfs-smb
+polkit-gnome
 seahorse
 system-config-printer
 
