@@ -127,7 +127,7 @@ set $rofi_theme -lines 8 -eh 2 -width 100 -padding 900 -bw 0 -color-window argb:
 set $rofi_behavior -matching fuzzy
 bindsym $mod+d exec --no-startup-id "rofi -show combi -modi combi,window,run -combi-modi drun,window $rofi_theme $rofi_behavior"
 bindsym $mod+shift+d exec --no-startup-id "rofi -show run -matching fuzzy $rofi_theme $rofi_behavior"
-bindsym $mod+p exec --no-startup-id "rofi -modi lpass:rofi-lpass -show lpass $rofi_theme $rofi_behavior"
+# TODO: bindsym $mod+p exec --no-startup-id "some-form-of-rofi-adapter-for-bitwarden"
 
 # Xbacklight
 bindsym XF86MonBrightnessUp exec xbacklight -inc 10
