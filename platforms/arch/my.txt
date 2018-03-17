@@ -27,6 +27,7 @@ ttf-dejavu
 
 # CLI env
 curl
+htop
 httpie
 jq
 nmap
