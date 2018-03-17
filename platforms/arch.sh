@@ -251,6 +251,13 @@ setup-nerd-fonts() {
   fi
 }
 
+enable-systemd-unit() {
+  if [[ $(systemctl is-enabled "$1") != "enabled" ]]; then
+    subheader "Enabling $1 at boot"
+    sudo systemctl enable "$1" || handle-failure "Enabling $1 at boot"
+  fi
+}
+
 init-sudo() {
   # Ask for password up front
   sudo echo > /dev/null
@@ -337,10 +344,12 @@ if run-section "all"; then
     gsettings set org.gnome.desktop.background show-desktop-icons false
   fi
 
-  # Make bluetooth service boot at startup
-  sudo systemctl enable bluetooth || handle-failure "Enabling bluetooth at boot"
-
   configure-lightdm
+
+  header "Configuring Systemd"
+  enable-systemd-unit "NetworkManager"
+  enable-systemd-unit "lightdm"
+  enable-systemd-unit "bluetooth"
 fi
 
 if run-section "updates"; then
