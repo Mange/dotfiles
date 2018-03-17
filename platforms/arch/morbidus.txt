@@ -2,3 +2,8 @@
 # morbidus-specific
 nvidia
 nvidia-utils
+
+# Deluge GTK client
+deluge
+python2-notify
+pygtk
