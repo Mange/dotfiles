@@ -337,7 +337,6 @@ fi
 
 if run-section "all"; then
   init-sudo
-  ./shared/di.sh || handle-failure "Downloading DI playlists"
   install-fzf || handle-failure
 
   if hash gsettings 2>/dev/null; then
