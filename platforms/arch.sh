@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-cd $(dirname $0)
+cd "$(dirname "$0")"
 . ./support/functions.bash
 
 . ./shared/generic.sh
@@ -31,8 +31,10 @@ USAGE
 }
 ONLY_SECTION="all"
 
-OPTS=$(getopt -n "$0" --longoptions "help,only:" --options "o:" --shell bash -- "$@")
-if [[ $? != 0 ]]; then exit 1; fi
+
+if ! OPTS="$(getopt -n "$0" --longoptions "help,only:" --options "o:" --shell bash -- "$@")"; then
+  exit 1
+fi
 eval set -- "$OPTS"
 
 while true; do
@@ -78,29 +80,31 @@ run-section() {
 
 install-pacman() {
   local filename="$1"
-  local wanted_software=$(sed 's/#.*$//' "$filename" | sed '/^$/d' | sort)
+  local wanted_software wanted_packages installed_packages needed
+
+  wanted_software=$(sed 's/#.*$//' "$filename" | sed '/^$/d' | sort)
 
   # See if everything is already installed by resolving all the packages
   # (groups and indvidual) into their individual packages. Then filter them
   # through the local package database to get a list of "missing" software.
-  local wanted_packages=$(set +e; echo "$wanted_software" | pacman -Sp --print-format "%n" - | sort)
-  local installed_packages=$(set +e; echo "$wanted_packages" | pacman -Q - 2>/dev/null | awk '{ print $1 }' | sort)
-  local needed="$(comm -23 <(echo "$wanted_packages") <(echo "$installed_packages"))"
+  wanted_packages=$(set +e; echo "$wanted_software" | pacman -Sp --print-format "%n" - | sort)
+  installed_packages=$(set +e; echo "$wanted_packages" | pacman -Q - 2>/dev/null | awk '{ print $1 }' | sort)
+  needed="$(comm -23 <(echo "$wanted_packages") <(echo "$installed_packages"))"
 
   if [[ -n "$needed" ]]; then
     subheader "Installing new software:"
     echo "$needed" | column
     # --needed does not reinstall already installed software. Just to be safe.
     set +e
-    echo $red
-    output="$(echo "$needed" | $PACMAN -S --quiet --needed - 2>&1)"
-    if [[ $? == 0 ]]; then
-      echo -n $green ✔ $reset
+    echo "$red"
+
+    if output="$(echo "$needed" | $PACMAN -S --quiet --needed - 2>&1)"; then
+      echo -n "${green} ✔${reset}"
     else
-      echo $red ✘
-      echo $output $reset
+      echo "${red} ✘"
+      echo "${output}${reset}"
     fi
-    echo $reset
+    echo "$reset"
     set -e
   else
     echo "${green}Everything installed ✔${reset}"
@@ -183,7 +187,7 @@ EOF
 
     if ! grep -q "/etc/pacman.d/custom" /etc/pacman.conf; then
       echo "Adding include statement to /etc/pacman.conf"
-      echo -e "\n\nInclude = /etc/pacman.d/custom" | sudo tee --append /etc/pacman.conf > /dev/null
+      echo -e '\n\nInclude = /etc/pacman.d/custom' | sudo tee --append /etc/pacman.conf > /dev/null
     fi
 
     if [[ ! -d /var/cache/pacman/custom ]]; then
