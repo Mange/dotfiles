@@ -142,7 +142,7 @@ compile-install-aur() {
     fi
     echo -n "${reset}"
     set -e
-  done < <(sed 's/#.*$//' "$filename" | sed '/^$/d' | sort)
+  done < <(sed 's/#.*$//' "$filename" | sed '/^$/d')
 
   if [[ $errors -eq 0 ]]; then
     echo "${green}Everything compiled/installed ✔${reset}"
