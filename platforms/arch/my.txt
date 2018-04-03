@@ -56,6 +56,9 @@ wireless_tools # for Polybar
 workrave
 xorg-xbacklight
 
+# Firefox
+firefox-developer-edition
+
 # GNOME software
 gnome-calculator
 gnome-calendar
