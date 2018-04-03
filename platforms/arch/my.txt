@@ -55,6 +55,7 @@ termite
 wireless_tools # for Polybar
 workrave
 xorg-xbacklight
+xsel
 
 # Firefox
 firefox-developer-edition
