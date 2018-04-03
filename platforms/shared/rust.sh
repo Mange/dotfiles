@@ -7,31 +7,31 @@ install-or-update-rustup() {
     curl https://sh.rustup.rs -sSf | sh
   else
     header "Updating Rust"
-    rustup update
+    run-rust-cmd rustup update
   fi
 }
 
 install-rustup-components() {
   header "Installing Nightly Rust"
-  rustup install nightly
+  run-rust-cmd rustup install nightly
 
   header "Adding Rust editor components"
-  rustup component add rust-src
-  rustup component add rls-preview
-  rustup component add rust-analysis
-  rustup component add rustfmt-preview
+  run-rust-cmd rustup component add rust-src
+  run-rust-cmd rustup component add rls-preview
+  run-rust-cmd rustup component add rust-analysis
+  run-rust-cmd rustup component add rustfmt-preview
 }
 
-run-cargo() {
-  if hash cargo 2>/dev/null; then
-    command cargo "$@"
+run-rust-cmd() {
+  if hash "$1" 2>/dev/null; then
+    command "$@"
   elif [[ -f ~/.cargo/env ]]; then
     # This is handled by my dotfiles already, but this script can run before
     # the dotfiles have been installed so deal with that.
     source ~/.cargo/env
-    command cargo "$@"
+    command "$@"
   else
-    echo "Cargo is not installed!"
+    echo "Cargo/Rustup is not installed!"
     exit 1
   fi
 }
@@ -44,7 +44,7 @@ install-crates-base() {
   header "Installing $title"
 
   local installed_crates
-  installed_crates=$(run-cargo "${extra_options[@]}" install --list | grep -oE '^[^ ]+')
+  installed_crates=$(run-rust-cmd cargo "${extra_options[@]}" install --list | grep -oE '^[^ ]+')
 
   sed "s/#.*\$//" "${filename}" | while read -r crate; do
     [[ -z $crate ]] && continue
@@ -57,7 +57,7 @@ install-crates-base() {
     fi
 
     set +e
-    output="$(run-cargo "${extra_options[@]}" install --quiet "${crate}" 2>&1)"
+    output="$(run-rust-cmd cargo "${extra_options[@]}" install --quiet "${crate}" 2>&1)"
     if [[ $? == 0 ]]; then
       echo -n "${green} ✔ ${reset}"
     else
@@ -84,7 +84,7 @@ install-nightly-crates() {
 
     echo -n "${cyan}╸ cargo install-update-config --toolchain nightly ${crate}${red}"
     set +e
-    output="$(run-cargo install-update-config --toolchain nightly "${crate}" 2>&1)"
+    output="$(run-rust-cmd cargo install-update-config --toolchain nightly "${crate}" 2>&1)"
     if [[ $? == 0 ]]; then
       echo -n "${green} ✔ ${reset}"
     else
@@ -98,5 +98,5 @@ install-nightly-crates() {
 
 cargo-update() {
   header "Updating all creates"
-  run-cargo install-update -a
+  run-rust-cmd cargo install-update -a
 }
