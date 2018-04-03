@@ -85,17 +85,30 @@ client.urgent            $bright_red     $bright_red     $light1 $bright_red $br
 set $wallpaper_command ~/bin/set-wallpaper
 set $polybar_command ~/.config/polybar/start.sh
 
+# Lock screen on suspend, after screensaver, etc.
+exec --no-startup-id light-locker
+
+# Keyboard, screens, etc.
+exec --no-startup-id xmodmap ~/.Xmodmap
 exec --no-startup-id ~/bin/dynamic-startup
 exec --no-startup-id ~/bin/autoscreens
+
+# Compositor
 exec --no-startup-id compton --config ~/.config/compton/compton.conf
+exec --no-startup-id redshift
+
+# Wallpaper, bars, etc.
 exec_always --no-startup-id $wallpaper_command
 exec_always --no-startup-id $polybar_command
-exec --no-startup-id xmodmap ~/.Xmodmap
-exec --no-startup-id redshift
-exec --no-startup-id dropbox start
-exec --no-startup-id nm-applet
-exec --no-startup-id blueman-applet
-exec --no-startup-id copyq
+
+# Daemons
+exec --no-startup-id blueman-applet # Bluetooth
+exec --no-startup-id copyq # Clipboard manager
+exec --no-startup-id dropbox start # Dropbox
+exec --no-startup-id nm-applet # NetworkManager
+
+# To deal with apps requesting privilege elevation
+exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 # }}}
 
 # {{{ i3 shortcuts
@@ -107,7 +120,7 @@ bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 # Lock screen
-bindsym $mod+Shift+Escape exec gnome-screensaver-command --lock
+bindsym $mod+Shift+Escape exec light-locker-command -l
 
 # Reflow screens
 bindsym $mod+Shift+x exec --no-startup-id xrandr --auto && autoscreens && $wallpaper_command && $polybar_command
@@ -127,7 +140,7 @@ set $rofi_theme -lines 8 -eh 2 -width 100 -padding 900 -bw 0 -color-window argb:
 set $rofi_behavior -matching fuzzy
 bindsym $mod+d exec --no-startup-id "rofi -show combi -modi combi,window,run -combi-modi drun,window $rofi_theme $rofi_behavior"
 bindsym $mod+shift+d exec --no-startup-id "rofi -show run -matching fuzzy $rofi_theme $rofi_behavior"
-bindsym $mod+p exec --no-startup-id "rofi -modi lpass:rofi-lpass -show lpass $rofi_theme $rofi_behavior"
+# TODO: bindsym $mod+p exec --no-startup-id "some-form-of-rofi-adapter-for-bitwarden"
 
 # Xbacklight
 bindsym XF86MonBrightnessUp exec xbacklight -inc 10
@@ -218,8 +231,8 @@ assign [class="Evolution"] $workspace5
 # https://github.com/i3/i3/issues/2060
 for_window [class="Spotify"] move to workspace $workspace9
 
-assign [instance="^crx_" title="^Google Hangouts"] $workspace10
 assign [class="Slack"] $workspace10
+assign [class="yakyak"] $workspace10
 
 # CopyQ clipboard manager
 for_window [class="copyq"] floating enable
@@ -337,8 +350,8 @@ bindsym $mod+m mode "media"
 exec spotify
 exec workrave
 
-exec --no-startup-id i3-msg 'workspace $workspace10; layout stacked; exec slack'
-exec --no-startup-id i3-msg 'workspace $workspace3; exec firefox-developer'
+exec --no-startup-id i3-msg 'workspace $workspace10; layout stacked; exec slack; exec yakyak'
+exec --no-startup-id i3-msg 'workspace $workspace3; exec gtk-launch firefox-developer-edition'
 
 exec --no-startup-id i3-msg 'workspace $workspace1'
 # }}}

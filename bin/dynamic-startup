@@ -4,19 +4,15 @@ set -e
 
 case "$(hostname)" in
   bilquis)
+    touchpad="SynPS/2 Synaptics TouchPad"
     # Natural scrolling
-    synclient HorizScrollDelta=-113
-    synclient VertScrollDelta=-113
+    xinput set-prop "${touchpad}" "libinput Natural Scrolling Enabled" 1
 
-    # Palm detection
-    synclient PalmDetect=1
+    # Tapping
+    xinput set-prop "${touchpad}" "libinput Tapping Enabled" 1
 
-    # Disable trackpad completely for 1.5 seconds when typing. This avoids
-    # accidental clicks and focus change when typing on laptop keyboard.
-    # -k means ignore modifier keys (so I can still hold shift and use
-    # trackpad)
-    # -d means daemonize
-    syndaemon -i 1.5 -k -d
+    # Disable touchpad while typing
+    xinput set-prop "${touchpad}" "libinput Disable While Typing Enabled" 1
     ;;
   *)
     ;;

@@ -551,9 +551,14 @@ stty -ixon -ixoff
 [ -f ~/.zshrc.after ] && source ~/.zshrc.after || true
 
 # {{{ RVM
-if [[ -s /usr/local/rvm/scripts/rvm ]]; then
+if [[ -s /usr/share/rvm/scripts/rvm ]]; then
+  # Arch-typical install directory
+  source /usr/share/rvm/scripts/rvm
+elif [[ -s /usr/local/rvm/scripts/rvm ]]; then
+  # Debian-typical install directory
   source /usr/local/rvm/scripts/rvm
 elif [[ -s "$HOME/.rvm/scripts/rvm" ]]; then
+  # Manually per-user install directory
   source "$HOME/.rvm/scripts/rvm"
 fi
 # }}}

@@ -1,0 +1,106 @@
+# vim:ft=text:nospell
+# My stuff
+
+# Neovim
+neovim
+python # For neovim plugins
+nodejs # For neovim plugins
+npm # To install neovim package for nodejs
+python-pip # To install neovim package for Python
+
+# Coding help
+colordiff
+ctags
+diff-so-fancy
+highlight
+lesspipe
+python-pygments  # some tools use this to highlight code
+shellcheck
+source-highlight # and lesspipe uses this to highlight code
+
+# Fonts
+# nerd-fonts installed in aur.txt
+noto-fonts
+noto-fonts-emoji
+noto-fonts-extra
+ttf-dejavu
+
+# CLI env
+curl
+htop
+httpie
+jq
+nmap
+parallel
+rsync
+task
+tree
+wget
+zsh-completions
+
+# Desktop env
+acpi # for battery indication, etc. in polybar
+blueman
+compton
+feh
+i3-gaps
+lxappearance
+lxrandr
+network-manager-applet
+pavucontrol
+redshift
+rofi
+sysstat # sysstat installs mpstat(1) for bar-cpu
+termite
+wireless_tools # for Polybar
+workrave
+xorg-xbacklight
+xsel
+
+# Firefox
+firefox-developer-edition
+
+# GNOME software
+deja-dup
+gnome-calculator
+gnome-calendar
+gnome-characters
+gnome-color-manager
+gnome-contacts
+gnome-font-viewer
+gnome-icon-theme
+gnome-icon-theme-extras
+gnome-keyring
+gnome-online-accounts
+gnome-photos
+gnome-screensaver
+gnome-screenshot
+gnome-session
+gnome-settings-daemon
+gnome-system-log
+gnome-system-monitor
+gnome-themes-standard
+gnome-tweak-tool
+gnome-user-share
+gnome-weather
+gvfs-goa
+gvfs-google
+gvfs-gphoto2
+gvfs-mtp
+gvfs-nfs
+gvfs-smb
+polkit-gnome
+seahorse
+system-config-printer
+
+# Docker
+docker
+docker-compose
+
+# Media
+vlc
+playerctl
+
+# Fortunes :)
+fortune-mod # adds the fortunes command
+# extra collections of fortunes are installed via aur

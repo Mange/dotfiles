@@ -1,0 +1,33 @@
+# vim:ft=text:nospell
+# Helpful for installing software
+base-devel
+git
+curl
+wget
+
+# System utilities
+bluez        # Bluetooth
+bluez-utils  # Bluetooth
+btrfs-progs  # btrfs (filesystem)
+exfat-utils  # exFAT (filesystem)
+nfs-utils    # NFS (filesystem)
+ntfs-3g      # NTFS (filesystem)
+openssh      # SSH client
+pulseaudio   # Audio server
+xdg-utils    # Desktop software support
+
+# CLI environment
+tmux
+zsh
+
+# Graphical environment
+light-locker # lock screen on suspend, or after screensaver starts
+lightdm
+lightdm-gtk-greeter
+lightdm-gtk-greeter-settings
+xorg
+
+# For AUR
+jq
+pacutils
+parallel

@@ -34,6 +34,24 @@ export -f header
 subheader() {
   echo
   local message="$1"
-  echo "${yellow}‣ ${message}${reset}"
+  shift
+  echo "$@" "${yellow}‣ ${message}${reset}"
 }
 export -f subheader
+
+handle-failure() {
+  if [[ -n "$1" ]]; then
+    echo -n "${red}Command failed: ${1}${reset} "
+  else
+    echo -n "${red}Command failed!${reset} "
+  fi
+
+  echo -n "Continue? [Yn] "
+  read -r answer
+  if [[ $answer != "" && $answer != "y" && $answer != "Y" ]]; then
+    echo "Aborting"
+    exit 1
+  fi
+}
+export -f handle-failure
+
