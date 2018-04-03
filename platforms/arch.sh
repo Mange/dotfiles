@@ -357,6 +357,10 @@ if run-section "all"; then
   enable-systemd-unit "NetworkManager"
   enable-systemd-unit "lightdm"
   enable-systemd-unit "bluetooth"
+
+  if hash docker 2>/dev/null; then
+    enable-systemd-unit "docker"
+  fi
 fi
 
 if run-section "updates"; then
