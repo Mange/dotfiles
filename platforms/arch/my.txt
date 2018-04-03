@@ -61,6 +61,7 @@ xsel
 firefox-developer-edition
 
 # GNOME software
+deja-dup
 gnome-calculator
 gnome-calendar
 gnome-characters
