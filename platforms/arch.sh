@@ -283,6 +283,8 @@ if run-section "pacman"; then
       install-pacman "${bundle_file}" || handle-failure
     fi
   done
+
+  install-ruby-via-rvm || handle-failure "Installing Ruby"
 fi
 
 if run-section "aur"; then
