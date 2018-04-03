@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 stop-existing() {
-  killall --quiet --wait --user $USER polybar
+  killall --quiet --wait --user "$USER" polybar
 }
 
 start-bars() {
@@ -54,16 +54,16 @@ start-on-each-screen() {
   local input_name resolution height
 
   xrandr --listactivemonitors | tail -n +2 | \
-    while read line; do
+    while read -r line; do
       # $line now looks like this:
       #  0: +*DP-1 2560/598x1440/336+0+0  DP-1
-      input_name=$(echo ${line} | awk '{ print $4 }')
+      input_name=$(echo "${line}" | awk '{ print $4 }')
       # Extract full resolution part, then remove the "/598" and "/336+0+0" parts.
-      resolution=$(echo ${line} | awk '{ print $3 }' | sed 's#/[^x]*##g')
+      resolution=$(echo "${line}" | awk '{ print $3 }' | sed 's#/[^x]*##g')
 
       # Guess that we are on an HiDPI screen depending on screen height
-      height=$(echo ${resolution} | cut -d 'x' -f 2)
-      if [[ ${height} > 2000 ]]; then
+      height=$(echo "${resolution}" | cut -d 'x' -f 2)
+      if [[ ${height} -gt 2000 ]]; then
         start-on-hidpi "${input_name}"
       else
         start-on-normal "${input_name}"
