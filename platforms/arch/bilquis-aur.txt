@@ -1,0 +1,4 @@
+# vim:ft=text:nospell
+# AUR, bilquis-specific
+
+system76-driver

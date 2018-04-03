@@ -1,0 +1,7 @@
+# vim:ft=text:nospell
+# bilquis-specific
+nvidia
+nvidia-utils
+
+wpa_supplicant
+

@@ -8,6 +8,7 @@ cd "$(dirname "$0")"
 . ./shared/rust.sh
 
 PACMAN="sudo pacman --noconfirm"
+HOSTNAME="$(hostname --short)"
 
 usage() {
   cat <<USAGE
@@ -275,7 +276,7 @@ if run-section "updates" || run-section "pacman"; then
 fi
 
 if run-section "pacman"; then
-  for bundle in base $(hostname --short) my; do
+  for bundle in base "${HOSTNAME}" my; do
     bundle_file="arch/${bundle}.txt"
     if [[ -f $bundle_file ]]; then
       header "Install ${bundle} software"
@@ -294,6 +295,11 @@ if run-section "aur"; then
     init-sudo
     header "Compile and install AUR software"
     compile-install-aur arch/aur.txt || handle-failure
+
+    if [[ -f "arch/${HOSTNAME}-aur.txt" ]]; then
+      header "Compile and install AUR software for ${HOSTNAME}"
+      compile-install-aur "arch/${HOSTNAME}-aur.txt" || handle-failure
+    fi
   fi
 
   setup-nerd-fonts || handle-failure "Installing Nerd Font overrides"
