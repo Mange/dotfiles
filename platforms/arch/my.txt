@@ -92,6 +92,7 @@ gvfs-nfs
 gvfs-smb
 polkit-gnome
 seahorse
+shotwell
 system-config-printer
 
 # Docker
