@@ -108,7 +108,7 @@ end
 desc "Does some basic Git setup"
 task :gitconfig do
   exec = lambda { |command| system(*command) or STDERR.puts "Command failed: #{command.join(' ')}" }
-  config = lambda { |setting, value| exec[['git', 'config', '--global', setting, value]] }
+  config = lambda { |*args| exec[['git', 'config', '--global', *args]] }
 
   config["push.default", "tracking"]
   config["color.ui", "true"]
@@ -129,9 +129,9 @@ task :gitconfig do
   config["color.diff-highlight.oldHighlight", "red bold 52"]
   config["color.diff-highlight.newNormal", "green bold"]
   config["color.diff-highlight.newHighlight", "green bold 22"]
-  config["pager.show",             "diff-so-fancy | less --tabs=4 -RXin"]
-  config["pager.diff",             "diff-so-fancy | less --tabs=4 -RXin"]
-  config["interactive.diffFilter", "diff-so-fancy | less --tabs=4 -RXin"]
+  config["pager.show", "diff-so-fancy | less --tabs=4 -RXin"]
+  config["pager.diff", "diff-so-fancy | less --tabs=4 -RXin"]
+  config["--unset", "interactive.diffFilter"]
 
   config["commit.gpgsign", "true"]
 
