@@ -123,6 +123,7 @@ task :gitconfig do
   config["color.branch.remote", "blue"]
 
   config["diff.compactionHeuristic", "true"]
+  config["diff.colorMoved", "zebra"]
 
   # For diff-highlight / diff-so-fancy
   config["color.diff-highlight.oldNormal", "red bold"]
