@@ -30,6 +30,7 @@ curl
 htop
 httpie
 jq
+keybase
 nmap
 parallel
 rsync
