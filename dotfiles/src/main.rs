@@ -77,9 +77,9 @@ fn run() -> Result<(), Error> {
     let state = State::new()?;
 
     if matches.is_present("verbose") {
-        Logger::change_level(log::LevelFilter::Info);
+        Logger::change_level(log::LevelFilter::Debug);
     } else {
-        Logger::change_level(log::LevelFilter::Warn);
+        Logger::change_level(log::LevelFilter::Info);
     }
 
     match matches.subcommand() {
@@ -93,7 +93,7 @@ fn run() -> Result<(), Error> {
 
 /// Install dotfiles.
 fn install(state: &State, _matches: &ArgMatches) -> Result<(), Error> {
-    info!("Installing dotfiles…");
+    debug!("Installing dotfiles…");
     let config_dir = state.root().join("config");
     let configs =
         Config::all_in_dir(&config_dir, state).context("Could not load list of config files")?;
@@ -107,7 +107,7 @@ fn install(state: &State, _matches: &ArgMatches) -> Result<(), Error> {
 
         match state {
             InstallationState::Installed => {
-                info!("Skipping config \"{}\": Already installed", name);
+                debug!("Skipping config \"{}\": Already installed", name);
             }
             InstallationState::NotInstalled => {
                 info!("Installing config \"{}\"", name);
@@ -138,7 +138,7 @@ fn install(state: &State, _matches: &ArgMatches) -> Result<(), Error> {
 fn cleanup(state: &State, _matches: &ArgMatches) -> Result<(), Error> {
     use std::fs;
 
-    info!("Cleaning up $HOME…");
+    debug!("Cleaning up $HOME…");
     let mut cleaned = 0;
 
     for entry in state.home().read_dir()? {
