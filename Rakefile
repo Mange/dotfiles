@@ -13,7 +13,6 @@ XDG_SYMLINKS = %w[
 SYMLINKS = %w[
   Xmodmap
   Xresources.d
-  gemrc
   git_template
   gruvbox-colors.env
   irbrc

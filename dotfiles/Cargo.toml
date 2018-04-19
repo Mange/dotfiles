@@ -1,0 +1,8 @@
+[package]
+name = "dotfiles"
+version = "0.1.0"
+authors = ["Magnus Bergmark <magnus.bergmark@gmail.com>"]
+
+[dependencies]
+clap = "2.31.2"
+failure = "0.1.1"
