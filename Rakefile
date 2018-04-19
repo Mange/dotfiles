@@ -2,14 +2,6 @@ require File.expand_path('../support/dotfile', __FILE__)
 require File.expand_path('../support/binary', __FILE__)
 require 'fileutils'
 
-XDG_SYMLINKS = %w[
-  compton
-  i3
-  polybar
-  taskwarrior
-  termite
-]
-
 SYMLINKS = %w[
   Xmodmap
   Xresources.d
@@ -40,17 +32,6 @@ SYMLINKS.each do |file|
   desc "Installs #{file} by symlinking it inside your home"
   task file do
     Dotfile.new(file).install_symlink
-  end
-end
-
-XDG_SYMLINKS.each do |file|
-  desc "Installs #{file} by symlinking it inside your XDG_HOME"
-  task file do
-    xdg_home = ENV.fetch('XDG_HOME', '~/.config')
-
-    dotfile = Dotfile.new(file)
-    dotfile.home_path = File.join(xdg_home, file)
-    dotfile.install_symlink
   end
 end
 
@@ -176,7 +157,7 @@ end
 
 desc "Installs all files"
 task :install => (
-  SYMLINKS + XDG_SYMLINKS + FILES + %w[
+  SYMLINKS + FILES + %w[
     bins
     fontconfig
     gitconfig
