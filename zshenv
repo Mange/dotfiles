@@ -1,6 +1,7 @@
 # XDG base directory exports
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-${HOME}/.config}"
 export GEMRC="${XDG_CONFIG_HOME}/ruby/gemrc"
+export IRBRC="${XDG_CONFIG_HOME}/ruby/irbrc"
 
 function {
   if [[ $customized_paths != "yes" ]]; then
