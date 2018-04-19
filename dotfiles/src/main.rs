@@ -77,10 +77,15 @@ fn install(state: &State, _matches: &ArgMatches) -> Result<(), Error> {
             config.name_string_lossy(),
         ))?;
         match state {
-            InstallationState::Installed => {
-                eprintln!("{} is already installed", config.name_string_lossy())
+            InstallationState::Installed => {}
+            InstallationState::NotInstalled => config.install()?,
+            InstallationState::BrokenSymlink(old_dest) => {
+                eprintln!(
+                    "Warning: Overwriting broken symlink to {}",
+                    old_dest.display()
+                );
+                config.install()?
             }
-            InstallationState::NotInstalled | InstallationState::BrokenSymlink => config.install()?,
             InstallationState::Conflict(other) => {
                 eprintln!(
                     "Cannot install {} config: Conflict with existing file at {}",

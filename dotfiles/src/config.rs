@@ -15,7 +15,7 @@ pub struct Config {
 pub enum InstallationState {
     Installed,
     NotInstalled,
-    BrokenSymlink,
+    BrokenSymlink(PathBuf),
     Conflict(PathBuf),
 }
 
@@ -47,6 +47,8 @@ impl Config {
                     let link_destination = self.dest_dir.read_link()?;
                     if link_destination == self.source_dir {
                         Ok(InstallationState::Installed)
+                    } else if !link_destination.exists() {
+                        Ok(InstallationState::BrokenSymlink(link_destination))
                     } else {
                         Ok(InstallationState::Conflict(link_destination))
                     }
