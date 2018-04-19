@@ -1,8 +1,13 @@
-# XDG base directory exports
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-${HOME}/.config}"
+
+# XDG base directory exports for special snowflakes
 export GEMRC="${XDG_CONFIG_HOME}/ruby/gemrc"
 export IRBRC="${XDG_CONFIG_HOME}/ruby/irbrc"
 export PSQLRC="${XDG_CONFIG_HOME}/postgresql/psqlrc"
+alias tmux="tmux -f \"${XDG_CONFIG_HOME}\"/tmux/tmux.conf"
+if [[ -n "$XDG_RUNTIME_DIR" ]]; then
+  export TMUX_TMPDIR="$XDG_RUNTIME_DIR"
+fi
 
 function {
   if [[ $customized_paths != "yes" ]]; then

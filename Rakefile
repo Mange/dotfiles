@@ -10,7 +10,6 @@ SYMLINKS = %w[
   railsrc
   rspec
   taskrc
-  tmux.conf
   vimrc
   wallpapers
   xprofile
