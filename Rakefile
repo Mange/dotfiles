@@ -10,7 +10,6 @@ SYMLINKS = %w[
   railsrc
   rspec
   taskrc
-  vimrc
   wallpapers
   xprofile
   zsh
