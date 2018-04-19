@@ -1,6 +1,6 @@
 use std::borrow::Cow;
 use std::path::{Path, PathBuf};
-use std::ffi::{OsStr, OsString};
+use std::ffi::OsString;
 use std::{fs, io};
 use prelude::*;
 
@@ -33,6 +33,7 @@ impl Config {
         let name = path.file_name()
             .ok_or_else(|| format_err!("Entry at {} had no file name", path.display()))?
             .to_owned();
+
         Ok(Config {
             dest_dir: state.xdg_config_home().join(&name),
             name: name,
@@ -63,15 +64,11 @@ impl Config {
         }
     }
 
-    pub fn name(&self) -> &OsStr {
-        &self.name
-    }
-
     pub fn name_string_lossy(&self) -> Cow<str> {
         self.name.to_string_lossy()
     }
 
-    pub fn install(self) -> Result<(), Error> {
+    pub fn install(&self) -> Result<(), Error> {
         match fs::remove_file(&self.dest_dir) {
             Ok(_) => {}
             Err(ref err) if err.kind() == io::ErrorKind::NotFound => {}

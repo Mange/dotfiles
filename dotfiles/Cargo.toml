@@ -6,3 +6,8 @@ authors = ["Magnus Bergmark <magnus.bergmark@gmail.com>"]
 [dependencies]
 clap = "2.31.2"
 failure = "0.1.1"
+term = "0.5.1"
+
+[dependencies.log]
+version = "0.4.1"
+features = ["std"]
