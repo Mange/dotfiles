@@ -7,7 +7,6 @@ SYMLINKS = %w[
   Xresources.d
   git_template
   gruvbox-colors.env
-  psqlrc
   railsrc
   rspec
   taskrc
