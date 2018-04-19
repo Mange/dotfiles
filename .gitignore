@@ -3,14 +3,14 @@
 *.swo
 *~
 
-vim/autoload/plug.vim
-vim/autoload/plug.vim.old
-vim/plugged
-vim/session
-vim/spell
-vim/.netrwhist
-vim/tmp
-vim/local_*.vim
+config/nvim/autoload/plug.vim
+config/nvim/autoload/plug.vim.old
+config/nvim/plugged
+config/nvim/session
+config/nvim/spell
+config/nvim/.netrwhist
+config/nvim/tmp
+config/nvim/local_*.vim
 
 vendor/*/
 

@@ -6,7 +6,7 @@ endif
 
 runtime! before/**/*.vim
 
-source ~/.vim/plugs.vim
+runtime plugs.vim
 
 " Run local overrides if existing
 runtime! local_*.vim

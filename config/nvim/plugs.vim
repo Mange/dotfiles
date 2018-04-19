@@ -4,7 +4,7 @@ if version < 702
   finish
 endif
 
-call plug#begin('~/.vim/plugged')
+call plug#begin($XDG_DATA_HOME . '/nvim/plugged')
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'

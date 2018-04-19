@@ -137,20 +137,6 @@ task :fontconfig do
   system("fc-cache")
 end
 
-desc "Installs vim config"
-task :vim do
-  Dotfile.new('vim').install_symlink
-end
-
-desc "Installs nvim config (symlinks to normal vim config)"
-task :nvim => :vim do
-  xdg_home = ENV.fetch('XDG_HOME', '~/.config')
-
-  nvim = Dotfile.new('nvim', 'vim')
-  nvim.home_path = File.join(xdg_home, 'nvim')
-  nvim.install_symlink
-end
-
 desc "Installs all files"
 task :install => (
   SYMLINKS + FILES + %w[
@@ -159,7 +145,6 @@ task :install => (
     gitconfig
     gitignore
     modules
-    nvim
     vimplug
     zsh
   ]
@@ -172,8 +157,9 @@ task :install => (
 end
 
 desc "Install vim-plug"
-task :vimplug => :vim do
-  output_filename = "vim/autoload/plug.vim"
+task :vimplug do
+  xdg_data_home = ENV.fetch('XDG_DATA_HOME', '~/.local/share')
+  output_filename = File.join(xdg_data_home, "nvim/site/autoload/plug.vim")
 
   unless File.exist?(output_filename)
     system(
@@ -185,7 +171,7 @@ end
 
 desc "Install plugs in vim"
 task :vimplugs => :vimplug do
-  system("${VISUAL:-${EDITOR:-nvim}} -u ~/.vim/plugs.vim +PlugInstall +qa")
+  system("${VISUAL:-${EDITOR:-nvim}} -u ${XDG_CONFIG_HOME}/nvim/plugs.vim +PlugInstall +qa")
 end
 
 desc "Clears all 'legacy' files (like old symlinks)"
