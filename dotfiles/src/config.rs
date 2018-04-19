@@ -1,7 +1,12 @@
+extern crate pathdiff;
+
 use std::borrow::Cow;
 use std::path::{Path, PathBuf};
 use std::ffi::OsString;
 use std::{fs, io};
+
+use self::pathdiff::diff_paths;
+
 use prelude::*;
 
 #[derive(Debug)]
@@ -82,7 +87,14 @@ impl Config {
             }
         };
 
-        ::std::os::unix::fs::symlink(&self.source_dir, &self.dest_dir)?;
+        ::std::os::unix::fs::symlink(self.symlink_target().as_ref(), &self.dest_dir)?;
         Ok(())
+    }
+
+    fn symlink_target(&self) -> Cow<PathBuf> {
+        // TODO: Add some tests for this
+        diff_paths(&self.source_dir, &self.dest_dir.parent().unwrap())
+            .map(Cow::Owned)
+            .unwrap_or_else(|| Cow::Borrowed(&self.source_dir))
     }
 }

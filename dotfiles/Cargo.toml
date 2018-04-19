@@ -7,6 +7,7 @@ authors = ["Magnus Bergmark <magnus.bergmark@gmail.com>"]
 clap = "2.31.2"
 failure = "0.1.1"
 term = "0.5.1"
+pathdiff = "0.1.0"
 
 [dependencies.log]
 version = "0.4.1"
