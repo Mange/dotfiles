@@ -13,5 +13,4 @@ config/nvim/tmp
 config/nvim/local_*.vim
 
 vendor/*/
-
-.DS_Store
+*.local
