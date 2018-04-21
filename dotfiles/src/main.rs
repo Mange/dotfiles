@@ -14,7 +14,7 @@ mod logger;
 use clap::{App, AppSettings, Arg, ArgMatches, SubCommand};
 use failure::{Error, ResultExt};
 
-use config::{BinFile, ConfigDirectory, Dotfile, Installable, InstallationState};
+use config::{BinFile, ConfigDirectory, DataDirectory, Dotfile, Installable, InstallationState};
 use state::State;
 use logger::Logger;
 
@@ -95,16 +95,20 @@ fn run() -> Result<(), Error> {
 fn install(state: &State, _matches: &ArgMatches) -> Result<(), Error> {
     debug!("Installing dotfiles…");
     let config_dir = state.root().join("config");
+    let data_dir = state.root().join("data");
     let snowflake_dir = state.root().join("snowflakes");
     let bin_dir = state.root().join("bin");
 
     let configs = ConfigDirectory::all_in_dir(&config_dir, state)
-        .context("Could not load list of config files")?;
+        .context("Could not load list of config entries")?;
+    let data_entries =
+        DataDirectory::all_in_dir(&data_dir, state).context("Could not load list of data entries")?;
     let snowflakes =
         Dotfile::all_in_dir(&snowflake_dir, state).context("Could not load list of dotfiles")?;
     let bins = BinFile::all_in_dir(&bin_dir, state)?;
 
     install_entries(&configs)?;
+    install_entries(&data_entries)?;
     install_entries(&snowflakes)?;
     install_entries(&bins)?;
 

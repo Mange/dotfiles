@@ -1,14 +1,14 @@
 #!/bin/bash
 set -e
 
-wallpaper=~/.wallpapers/wallhaven-276932.jpg
+wallpaper="${XDG_DATA_HOME}/wallpapers/wallhaven-276932.jpg"
 number_of_monitors=$(xrandr --listmonitors | grep "Monitors: " | awk '{ print $2 }')
 
-if [[ $number_of_monitors > 0 ]]; then
-  command="feh"
-  for ((i=0; i < $number_of_monitors; ++i)); do
-    command="$command --bg-fill $wallpaper"
+if [[ $number_of_monitors -gt 0 ]]; then
+  command=("feh")
+  for ((i=0; i < number_of_monitors; ++i)); do
+    command+=("--bg-fill" "$wallpaper")
   done
 
-  exec $command
+  exec "${command[@]}"
 fi

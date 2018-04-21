@@ -9,7 +9,6 @@ SYMLINKS = %w[
   railsrc
   rspec
   taskrc
-  wallpapers
   xprofile
 ]
 

@@ -25,6 +25,13 @@ pub struct ConfigDirectory {
 }
 
 #[derive(Debug)]
+pub struct DataDirectory {
+    name: String,
+    source_dir: PathBuf,
+    dest_dir: PathBuf,
+}
+
+#[derive(Debug)]
 pub struct Dotfile {
     name: String,
     source_path: PathBuf,
@@ -144,6 +151,32 @@ impl Installable for ConfigDirectory {
         Ok(ConfigDirectory {
             name: format!("config/{}", name.to_string_lossy()),
             dest_dir: state.xdg_config_home().join(&name),
+            source_dir: path,
+        })
+    }
+}
+
+impl Installable for DataDirectory {
+    fn source_path(&self) -> &Path {
+        &self.source_dir
+    }
+
+    fn destination_path(&self) -> &Path {
+        &self.dest_dir
+    }
+
+    fn display_name(&self) -> &str {
+        &self.name
+    }
+
+    fn new_from_path(path: PathBuf, state: &State) -> Result<Self, Error> {
+        let name = path.file_name()
+            .ok_or_else(|| format_err!("Entry at {} had no file name", path.display()))?
+            .to_owned();
+
+        Ok(DataDirectory {
+            name: format!("data/{}", name.to_string_lossy()),
+            dest_dir: state.xdg_data_home().join(&name),
             source_dir: path,
         })
     }
