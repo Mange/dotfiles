@@ -19,12 +19,14 @@ pub enum InstallationState {
 
 #[derive(Debug)]
 pub struct ConfigDirectory {
+    name: String,
     source_dir: PathBuf,
     dest_dir: PathBuf,
 }
 
 #[derive(Debug)]
 pub struct Dotfile {
+    name: String,
     source_path: PathBuf,
     dest_path: PathBuf,
 }
@@ -32,6 +34,7 @@ pub struct Dotfile {
 pub trait Installable: Sized {
     fn source_path(&self) -> &Path;
     fn destination_path(&self) -> &Path;
+    fn display_name(&self) -> &str;
     fn new_from_path(path: PathBuf, state: &State) -> Result<Self, Error>;
 
     fn all_in_dir(dir: &Path, state: &State) -> Result<Vec<Self>, Error> {
@@ -49,10 +52,6 @@ pub trait Installable: Sized {
         diff_paths(self.source_path(), destination_directory)
             .map(Cow::Owned)
             .unwrap_or_else(|| Cow::Borrowed(self.source_path()))
-    }
-
-    fn name_string_lossy(&self) -> Cow<str> {
-        self.source_path().to_string_lossy()
     }
 
     fn state(&self) -> Result<InstallationState, Error> {
@@ -119,12 +118,17 @@ impl Installable for ConfigDirectory {
         &self.dest_dir
     }
 
+    fn display_name(&self) -> &str {
+        &self.name
+    }
+
     fn new_from_path(path: PathBuf, state: &State) -> Result<Self, Error> {
         let name = path.file_name()
             .ok_or_else(|| format_err!("Entry at {} had no file name", path.display()))?
             .to_owned();
 
         Ok(ConfigDirectory {
+            name: format!("config/{}", name.to_string_lossy()),
             dest_dir: state.xdg_config_home().join(&name),
             source_dir: path,
         })
@@ -140,6 +144,10 @@ impl Installable for Dotfile {
         &self.dest_path
     }
 
+    fn display_name(&self) -> &str {
+        &self.name
+    }
+
     fn new_from_path(path: PathBuf, state: &State) -> Result<Self, Error> {
         let name = {
             let base_name = path.file_name()
@@ -151,6 +159,7 @@ impl Installable for Dotfile {
         };
 
         Ok(Dotfile {
+            name: format!("~/{}", name.to_string_lossy()),
             dest_path: state.home().join(&name),
             source_path: path,
         })

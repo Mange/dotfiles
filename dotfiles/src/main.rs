@@ -112,9 +112,9 @@ fn install_entries<T: Installable>(entries: &[T]) -> Result<(), Error> {
     for entry in entries {
         let state = entry.state().context(format!(
             "Could not determine installation state for {}",
-            entry.name_string_lossy(),
+            entry.display_name(),
         ))?;
-        let name = entry.name_string_lossy();
+        let name = entry.display_name();
 
         match state {
             InstallationState::Installed => {
@@ -136,7 +136,7 @@ fn install_entries<T: Installable>(entries: &[T]) -> Result<(), Error> {
             InstallationState::Conflict(other) => {
                 error!(
                     "Cannot install entry \"{}\": Conflict with existing file at {}",
-                    entry.name_string_lossy(),
+                    entry.display_name(),
                     other.display()
                 );
             }
