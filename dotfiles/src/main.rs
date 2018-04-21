@@ -14,7 +14,7 @@ mod logger;
 use clap::{App, AppSettings, Arg, ArgMatches, SubCommand};
 use failure::{Error, ResultExt};
 
-use config::{ConfigDirectory, Dotfile, Installable, InstallationState};
+use config::{BinFile, ConfigDirectory, Dotfile, Installable, InstallationState};
 use state::State;
 use logger::Logger;
 
@@ -96,50 +96,55 @@ fn install(state: &State, _matches: &ArgMatches) -> Result<(), Error> {
     debug!("Installing dotfiles…");
     let config_dir = state.root().join("config");
     let snowflake_dir = state.root().join("snowflakes");
+    let bin_dir = state.root().join("bin");
 
     let configs = ConfigDirectory::all_in_dir(&config_dir, state)
         .context("Could not load list of config files")?;
     let snowflakes =
         Dotfile::all_in_dir(&snowflake_dir, state).context("Could not load list of dotfiles")?;
+    let bins = BinFile::all_in_dir(&bin_dir, state)?;
 
     install_entries(&configs)?;
     install_entries(&snowflakes)?;
+    install_entries(&bins)?;
 
     Ok(())
 }
 
 fn install_entries<T: Installable>(entries: &[T]) -> Result<(), Error> {
-    for entry in entries {
-        let state = entry.state().context(format!(
-            "Could not determine installation state for {}",
-            entry.display_name(),
-        ))?;
-        let name = entry.display_name();
+    entries.into_iter().map(install_entry).collect()
+}
 
-        match state {
-            InstallationState::Installed => {
-                debug!("Skipping entry \"{}\": Already installed", name);
-            }
-            InstallationState::NotInstalled => {
-                info!("Installing entry \"{}\"", name);
-                entry.install()?
-            }
-            InstallationState::BrokenSymlink(old_dest) => {
-                warn!(
-                    "Entry \"{}\" is currently a broken symlink to {}. The symlink will be overwritten.",
-                    name,
-                    old_dest.display()
-                );
-                info!("Installing entry \"{}\"", name);
-                entry.install()?
-            }
-            InstallationState::Conflict(other) => {
-                error!(
-                    "Cannot install entry \"{}\": Conflict with existing file at {}",
-                    entry.display_name(),
-                    other.display()
-                );
-            }
+fn install_entry<T: Installable>(entry: &T) -> Result<(), Error> {
+    let state = entry.state().context(format!(
+        "Could not determine installation state for {}",
+        entry.display_name(),
+    ))?;
+    let name = entry.display_name();
+
+    match state {
+        InstallationState::Installed => {
+            debug!("Skipping entry \"{}\": Already installed", name);
+        }
+        InstallationState::NotInstalled => {
+            info!("Installing entry \"{}\"", name);
+            entry.install()?
+        }
+        InstallationState::BrokenSymlink(old_dest) => {
+            warn!(
+                "Entry \"{}\" is currently a broken symlink to {}. The symlink will be overwritten.",
+                name,
+                old_dest.display()
+            );
+            info!("Installing entry \"{}\"", name);
+            entry.install()?
+        }
+        InstallationState::Conflict(other) => {
+            error!(
+                "Cannot install entry \"{}\": Conflict with existing file at {}",
+                entry.display_name(),
+                other.display()
+            );
         }
     }
 

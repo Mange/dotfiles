@@ -31,6 +31,13 @@ pub struct Dotfile {
     dest_path: PathBuf,
 }
 
+#[derive(Debug)]
+pub struct BinFile {
+    name: String,
+    source_path: PathBuf,
+    dest_path: PathBuf,
+}
+
 pub trait Installable: Sized {
     fn source_path(&self) -> &Path;
     fn destination_path(&self) -> &Path;
@@ -91,6 +98,9 @@ pub trait Installable: Sized {
 
     fn install(&self) -> Result<(), Error> {
         let dest_path = self.destination_path();
+        // dest_path will never be "/", so getting the parent should always work.
+        let dest_dir = dest_path.parent().unwrap();
+
         match fs::remove_file(&dest_path) {
             Ok(_) => {}
             Err(ref err) if err.kind() == io::ErrorKind::NotFound => {}
@@ -103,6 +113,10 @@ pub trait Installable: Sized {
                     .map_err(Error::from)
             }
         };
+
+        if !dest_dir.exists() {
+            fs::create_dir_all(dest_dir)?;
+        }
 
         ::std::os::unix::fs::symlink(self.symlink_target().as_ref(), dest_path)?;
         Ok(())
@@ -161,6 +175,32 @@ impl Installable for Dotfile {
         Ok(Dotfile {
             name: format!("~/{}", name.to_string_lossy()),
             dest_path: state.home().join(&name),
+            source_path: path,
+        })
+    }
+}
+
+impl Installable for BinFile {
+    fn source_path(&self) -> &Path {
+        &self.source_path
+    }
+
+    fn destination_path(&self) -> &Path {
+        &self.dest_path
+    }
+
+    fn display_name(&self) -> &str {
+        &self.name
+    }
+
+    fn new_from_path(path: PathBuf, state: &State) -> Result<Self, Error> {
+        let name = path.file_name()
+            .ok_or_else(|| format_err!("Entry at {} had no file name", path.display()))?
+            .to_owned();
+
+        Ok(BinFile {
+            name: format!("~/bin/{}", name.to_string_lossy()),
+            dest_path: state.home().join("bin").join(&name),
             source_path: path,
         })
     }
