@@ -60,8 +60,19 @@ pub trait Installable: Sized {
         match dest_path.symlink_metadata() {
             Ok(metadata) => {
                 if metadata.file_type().is_symlink() {
-                    let link_destination = dest_path.read_link()?;
-                    if link_destination == self.source_path() {
+                    let mut link_destination = dest_path.read_link()?;
+                    // If link is relative ("../foo"), then calculate the real path based on the
+                    // directory the symlink lives in.
+                    if !link_destination.is_absolute() {
+                        // As we know it's a symlink it must be inside of something, so unwrapping
+                        // the parent should be safe. Path::parent returns None when the path is a
+                        // root path.
+                        let symlink_parent = dest_path.parent().unwrap();
+                        link_destination = symlink_parent.join(link_destination);
+                    }
+                    link_destination = link_destination.canonicalize()?;
+
+                    if link_destination == self.source_path().canonicalize()? {
                         Ok(InstallationState::Installed)
                     } else if !link_destination.exists() {
                         Ok(InstallationState::BrokenSymlink(link_destination))
