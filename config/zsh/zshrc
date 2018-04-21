@@ -5,12 +5,20 @@ setopt extendedglob
 autoload is-at-least
 
 if is-at-least 4.3; then
-  if [[ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
-    source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+  if [[ -f "${XDG_CONFIG_HOME}/zsh/vendor/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]]; then
+    source "${XDG_CONFIG_HOME}/zsh/vendor/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
   fi
 fi
 
-[ -f ~/.zshrc.before ] && source ~/.zshrc.before
+if [ -f ~/.zshrc.before ]; then
+  echo "$(tput setaf 1)\
+Warning: You have a ~/.zshrc.before file. \
+Move it to ${XDG_CONFIG_HOME}/zsh/zshrc.before.local!\
+$(tput sgr0)" > /dev/stderr
+  source ~/.zshrc.before
+fi
+# Chain with true to avoid $? being false
+[ -f "${XDG_CONFIG_HOME}/zsh/zshrc.before.local" ] && source "${XDG_CONFIG_HOME}/zsh/zshrc.before.local" || true
 
 # {{{ Helper functions
 command-exist () { whence $1 > /dev/null; }
@@ -43,8 +51,8 @@ autoload edit-command-line
 zle -N edit-command-line
 
 if is-at-least 4.3; then
-  if [[ -f ~/.zsh/zsh-history-substring-search/zsh-history-substring-search.zsh ]]; then
-    source ~/.zsh/zsh-history-substring-search/zsh-history-substring-search.zsh
+  if [[ -f "${XDG_CONFIG_HOME}/zsh/vendor/zsh-history-substring-search/zsh-history-substring-search.zsh" ]]; then
+    source "${XDG_CONFIG_HOME}/zsh/vendor/zsh-history-substring-search/zsh-history-substring-search.zsh"
   fi
 fi
 
@@ -164,7 +172,7 @@ if [ -d /usr/local/share/zsh/site-functions ]; then
 fi
 
 # Use my custom completions too
-fpath=(~/.zsh/completion $fpath)
+fpath=("${XDG_CONFIG_HOME}/zsh/completion" $fpath)
 
 autoload -U compinit && compinit
 
@@ -172,7 +180,7 @@ autoload -U compinit && compinit
 # This gives me git completion for my git aliases, for example
 setopt nocomplete_aliases
 
-zstyle ':completion:*' cache-path ~/.zsh/completioncache
+zstyle ':completion:*' cache-path "${XDG_CACHE_HOME}/zsh-completioncache"
 
 # Use verbose completions (usually adds descriptions / context to matches)
 zstyle ':completion:*' verbose yes
@@ -253,9 +261,13 @@ function chpwd { ls }
 # {{{ History
 export HISTSIZE=500
 export SAVEHIST=500
-export HISTFILE=~/.zsh/history
+export HISTFILE="${XDG_DATA_HOME}/zsh/history"
 
-if [ ! -e $HISTFILE ]; then
+if [[ ! -d "$(dirname "$HISTFILE")" ]]; then
+  mkdir -p "$(dirname "$HISTFILE")"
+fi
+
+if [[ ! -e $HISTFILE ]]; then
   touch $HISTFILE
 fi
 
@@ -396,7 +408,7 @@ done
 
 autoload zmv
 
-fpath=(~/.zsh/funcs $fpath)
+fpath=("${XDG_CONFIG_HOME}/zsh/funcs" $fpath)
 
 autoload run-changed-specs
 autoload run-branch-specs
@@ -547,8 +559,15 @@ stty -ixon -ixoff
 [ -f $HOME/.travis/travis.sh ] && source $HOME/.travis/travis.sh
 # }}}
 
+if [ -f ~/.zshrc.after ]; then
+  echo "$(tput setaf 1)\
+Warning: You have a ~/.zshrc.after file. \
+Move it to ${XDG_CONFIG_HOME}/zsh/zshrc.after.local!\
+$(tput sgr0)" > /dev/stderr
+  source ~/.zshrc.after
+fi
 # Chain with true to avoid $? being false
-[ -f ~/.zshrc.after ] && source ~/.zshrc.after || true
+[ -f "${XDG_CONFIG_HOME}/zsh/zshrc.after.local" ] && source "${XDG_CONFIG_HOME}/zsh/zshrc.after.local" || true
 
 # {{{ RVM
 if [[ -s /usr/share/rvm/scripts/rvm ]]; then

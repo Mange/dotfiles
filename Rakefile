@@ -12,10 +12,6 @@ SYMLINKS = %w[
   taskrc
   wallpapers
   xprofile
-  zsh
-  zshenv
-  zshprofile
-  zshrc
 ]
 
 FILES = []
@@ -69,8 +65,10 @@ end
 desc "Initializes/updates other repos"
 task :modules do
   {
-    "zsh/zsh-syntax-highlighting" => "https://github.com/zsh-users/zsh-syntax-highlighting.git",
-    "zsh/zsh-history-substring-search" => "https://github.com/zsh-users/zsh-history-substring-search.git",
+    "config/zsh/vendor/zsh-syntax-highlighting" =>
+      "https://github.com/zsh-users/zsh-syntax-highlighting.git",
+    "config/zsh/vendor/zsh-history-substring-search" =>
+      "https://github.com/zsh-users/zsh-history-substring-search.git",
   }.each_pair do |pathname, repo|
     path = File.expand_path(pathname, File.dirname(__FILE__))
     if File.exists?(path)
@@ -146,7 +144,6 @@ task :install => (
     gitignore
     modules
     vimplug
-    zsh
   ]
 ) do
   if ENV['SHELL'] !~ /zsh/
@@ -183,8 +180,6 @@ task :cleanup do
   Dotfile.new('sshrc.d').delete_target(only_symlink: true)
   Dotfile.new('xinitrc').delete_target(only_symlink: true)
   system("rm -rf zsh/k") if Dir.exists?("zsh/k")
-  # Clean up backup created after converting ~/.zsh to a symlink
-  `[ -d ~/.zsh~ ] && mv ~/.zsh\~/* ~/.zsh && rmdir ~/.zsh~`
 end
 
 desc "Install and clean up old files"

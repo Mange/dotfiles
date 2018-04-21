@@ -14,7 +14,7 @@ mod logger;
 use clap::{App, AppSettings, Arg, ArgMatches, SubCommand};
 use failure::{Error, ResultExt};
 
-use config::{Config, InstallationState};
+use config::{ConfigDirectory, Dotfile, Installable, InstallationState};
 use state::State;
 use logger::Logger;
 
@@ -95,42 +95,54 @@ fn run() -> Result<(), Error> {
 fn install(state: &State, _matches: &ArgMatches) -> Result<(), Error> {
     debug!("Installing dotfiles…");
     let config_dir = state.root().join("config");
-    let configs =
-        Config::all_in_dir(&config_dir, state).context("Could not load list of config files")?;
+    let snowflake_dir = state.root().join("snowflakes");
 
-    for config in configs {
-        let state = config.state().context(format!(
+    let configs = ConfigDirectory::all_in_dir(&config_dir, state)
+        .context("Could not load list of config files")?;
+    let snowflakes =
+        Dotfile::all_in_dir(&snowflake_dir, state).context("Could not load list of dotfiles")?;
+
+    install_entries(&configs)?;
+    install_entries(&snowflakes)?;
+
+    Ok(())
+}
+
+fn install_entries<T: Installable>(entries: &[T]) -> Result<(), Error> {
+    for entry in entries {
+        let state = entry.state().context(format!(
             "Could not determine installation state for {}",
-            config.name_string_lossy(),
+            entry.name_string_lossy(),
         ))?;
-        let name = config.name_string_lossy();
+        let name = entry.name_string_lossy();
 
         match state {
             InstallationState::Installed => {
-                debug!("Skipping config \"{}\": Already installed", name);
+                debug!("Skipping entry \"{}\": Already installed", name);
             }
             InstallationState::NotInstalled => {
-                info!("Installing config \"{}\"", name);
-                config.install()?
+                info!("Installing entry \"{}\"", name);
+                entry.install()?
             }
             InstallationState::BrokenSymlink(old_dest) => {
                 warn!(
-                    "Config \"{}\" is currently a broken symlink to {}. The symlink will be overwritten.",
+                    "Entry \"{}\" is currently a broken symlink to {}. The symlink will be overwritten.",
                     name,
                     old_dest.display()
                 );
-                info!("Installing config \"{}\"", name);
-                config.install()?
+                info!("Installing entry \"{}\"", name);
+                entry.install()?
             }
             InstallationState::Conflict(other) => {
                 error!(
-                    "Cannot install config \"{}\": Conflict with existing file at {}",
-                    config.name_string_lossy(),
+                    "Cannot install entry \"{}\": Conflict with existing file at {}",
+                    entry.name_string_lossy(),
                     other.display()
                 );
             }
         }
     }
+
     Ok(())
 }
 

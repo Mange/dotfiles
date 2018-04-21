@@ -10,13 +10,6 @@ use self::pathdiff::diff_paths;
 use prelude::*;
 
 #[derive(Debug)]
-pub struct Config {
-    name: OsString,
-    source_dir: PathBuf,
-    dest_dir: PathBuf,
-}
-
-#[derive(Debug)]
 pub enum InstallationState {
     Installed,
     NotInstalled,
@@ -24,34 +17,51 @@ pub enum InstallationState {
     Conflict(PathBuf),
 }
 
-impl Config {
-    pub fn all_in_dir(dir: &Path, state: &State) -> Result<Vec<Config>, Error> {
+#[derive(Debug)]
+pub struct ConfigDirectory {
+    source_dir: PathBuf,
+    dest_dir: PathBuf,
+}
+
+#[derive(Debug)]
+pub struct Dotfile {
+    source_path: PathBuf,
+    dest_path: PathBuf,
+}
+
+pub trait Installable: Sized {
+    fn source_path(&self) -> &Path;
+    fn destination_path(&self) -> &Path;
+    fn new_from_path(path: PathBuf, state: &State) -> Result<Self, Error>;
+
+    fn all_in_dir(dir: &Path, state: &State) -> Result<Vec<Self>, Error> {
         dir.read_dir()?
             .map(|entry| {
                 let entry = entry?;
-                Config::new_from_path(entry.path(), state)
+                Self::new_from_path(entry.path(), state)
             })
             .collect()
     }
 
-    fn new_from_path(path: PathBuf, state: &State) -> Result<Config, Error> {
-        let name = path.file_name()
-            .ok_or_else(|| format_err!("Entry at {} had no file name", path.display()))?
-            .to_owned();
-
-        Ok(Config {
-            dest_dir: state.xdg_config_home().join(&name),
-            name: name,
-            source_dir: path,
-        })
+    fn symlink_target(&self) -> Cow<Path> {
+        // TODO: Add some tests for this
+        let destination_directory = self.destination_path().parent().unwrap();
+        diff_paths(self.source_path(), destination_directory)
+            .map(Cow::Owned)
+            .unwrap_or_else(|| Cow::Borrowed(self.source_path()))
     }
 
-    pub fn state(&self) -> Result<InstallationState, Error> {
-        match self.dest_dir.symlink_metadata() {
+    fn name_string_lossy(&self) -> Cow<str> {
+        self.source_path().to_string_lossy()
+    }
+
+    fn state(&self) -> Result<InstallationState, Error> {
+        let dest_path = self.destination_path();
+        match dest_path.symlink_metadata() {
             Ok(metadata) => {
                 if metadata.file_type().is_symlink() {
-                    let link_destination = self.dest_dir.read_link()?;
-                    if link_destination == self.source_dir {
+                    let link_destination = dest_path.read_link()?;
+                    if link_destination == self.source_path() {
                         Ok(InstallationState::Installed)
                     } else if !link_destination.exists() {
                         Ok(InstallationState::BrokenSymlink(link_destination))
@@ -59,7 +69,7 @@ impl Config {
                         Ok(InstallationState::Conflict(link_destination))
                     }
                 } else {
-                    Ok(InstallationState::Conflict(self.dest_dir.clone()))
+                    Ok(InstallationState::Conflict(dest_path.to_path_buf()))
                 }
             }
             Err(ref err) if err.kind() == io::ErrorKind::NotFound => {
@@ -69,32 +79,69 @@ impl Config {
         }
     }
 
-    pub fn name_string_lossy(&self) -> Cow<str> {
-        self.name.to_string_lossy()
-    }
-
-    pub fn install(&self) -> Result<(), Error> {
-        match fs::remove_file(&self.dest_dir) {
+    fn install(&self) -> Result<(), Error> {
+        let dest_path = self.destination_path();
+        match fs::remove_file(&dest_path) {
             Ok(_) => {}
             Err(ref err) if err.kind() == io::ErrorKind::NotFound => {}
             Err(err) => {
                 return Err(err)
                     .context(format!(
                         "Could not remove destination path at {}",
-                        self.dest_dir.display(),
+                        dest_path.display(),
                     ))
                     .map_err(Error::from)
             }
         };
 
-        ::std::os::unix::fs::symlink(self.symlink_target().as_ref(), &self.dest_dir)?;
+        ::std::os::unix::fs::symlink(self.symlink_target().as_ref(), dest_path)?;
         Ok(())
     }
+}
 
-    fn symlink_target(&self) -> Cow<PathBuf> {
-        // TODO: Add some tests for this
-        diff_paths(&self.source_dir, &self.dest_dir.parent().unwrap())
-            .map(Cow::Owned)
-            .unwrap_or_else(|| Cow::Borrowed(&self.source_dir))
+impl Installable for ConfigDirectory {
+    fn source_path(&self) -> &Path {
+        &self.source_dir
+    }
+
+    fn destination_path(&self) -> &Path {
+        &self.dest_dir
+    }
+
+    fn new_from_path(path: PathBuf, state: &State) -> Result<Self, Error> {
+        let name = path.file_name()
+            .ok_or_else(|| format_err!("Entry at {} had no file name", path.display()))?
+            .to_owned();
+
+        Ok(ConfigDirectory {
+            dest_dir: state.xdg_config_home().join(&name),
+            source_dir: path,
+        })
+    }
+}
+
+impl Installable for Dotfile {
+    fn source_path(&self) -> &Path {
+        &self.source_path
+    }
+
+    fn destination_path(&self) -> &Path {
+        &self.dest_path
+    }
+
+    fn new_from_path(path: PathBuf, state: &State) -> Result<Self, Error> {
+        let name = {
+            let base_name = path.file_name()
+                .ok_or_else(|| format_err!("Entry at {} had no file name", path.display()))?;
+            let mut name = OsString::with_capacity(base_name.len() + 1);
+            name.push(".");
+            name.push(base_name);
+            name
+        };
+
+        Ok(Dotfile {
+            dest_path: state.home().join(&name),
+            source_path: path,
+        })
     }
 }
