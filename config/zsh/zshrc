@@ -174,7 +174,7 @@ fi
 # Use my custom completions too
 fpath=("${XDG_CONFIG_HOME}/zsh/completion" $fpath)
 
-autoload -U compinit && compinit
+autoload -U compinit && compinit -d "${XDG_CACHE_HOME}/zcompdump"
 
 # Find out what an alias stands for and complete like if it was the original command
 # This gives me git completion for my git aliases, for example
