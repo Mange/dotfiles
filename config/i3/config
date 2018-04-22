@@ -8,7 +8,7 @@
 #   * System mode https://github.com/mohabaks/dotfiles/blob/master/config/i3-gaps/.config/i3/config#L212
 
 # {{{ Basic settings
-# Mod3 is my Hyper (see .Xmodmap)
+# Mod3 is my Hyper (see $XDG_CONFIG_HOME/xmodmap/custom_keyboard)
 set $mod Mod3
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
@@ -89,7 +89,7 @@ set $polybar_command ~/.config/polybar/start.sh
 exec --no-startup-id light-locker
 
 # Keyboard, screens, etc.
-exec --no-startup-id xmodmap ~/.Xmodmap
+exec --no-startup-id xmodmap ~/.config/xmodmap/custom_keyboard
 exec --no-startup-id ~/bin/dynamic-startup
 exec --no-startup-id ~/bin/autoscreens
 
@@ -126,7 +126,7 @@ bindsym $mod+Shift+Escape exec light-locker-command -l
 bindsym $mod+Shift+x exec --no-startup-id xrandr --auto && autoscreens && $wallpaper_command && $polybar_command
 
 # In case of emergency
-bindsym Ctrl+Shift+Escape exec xmodmap ~/.Xmodmap
+bindsym Ctrl+Shift+Escape exec --no-startup-id xmodmap ~/.config/xmodmap/custom_keyboard
 
 # }}}
 

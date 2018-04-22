@@ -2,7 +2,6 @@ require File.expand_path('../support/dotfile', __FILE__)
 require 'fileutils'
 
 SYMLINKS = %w[
-  Xmodmap
   Xresources.d
   git_template
   gruvbox-colors.env
