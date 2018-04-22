@@ -18,8 +18,8 @@ pub struct Manifest {
 
 #[derive(Debug, PartialEq)]
 pub enum Entry {
-    Path(PathBuf, PathBuf),
-    Glob(String, PathBuf),
+    Path(PathBuf, PathBuf, Option<String>),
+    Glob(String, PathBuf, Option<String>),
 }
 
 impl Manifest {
@@ -70,14 +70,14 @@ pub enum TargetError {
 impl Entry {
     pub fn installable_targets(&self) -> Result<Vec<CustomTarget>, TargetError> {
         match self {
-            &Entry::Path(ref from, ref to) => {
+            &Entry::Path(ref from, ref to, ref shell_callback) => {
                 if from.exists() {
-                    Ok(vec![CustomTarget::new(from, to)])
+                    Ok(vec![CustomTarget::new(from, to, shell_callback.clone())])
                 } else {
                     Err(TargetError::SourceNotFound)
                 }
             }
-            &Entry::Glob(ref glob_str, ref dest_dir) => {
+            &Entry::Glob(ref glob_str, ref dest_dir, ref shell_callback) => {
                 if dest_dir.exists() && dest_dir.metadata().map(|md| md.is_file()).unwrap_or(false)
                 {
                     return Err(TargetError::DestinationIsNotDirectory(
@@ -88,7 +88,11 @@ impl Entry {
                 self::glob::glob(&glob_str)
                     .map_err(|e| TargetError::InvalidGlob(glob_str.clone(), e))?
                     .map(|entry| match entry {
-                        Ok(path) => Ok(CustomTarget::new_to_dir(path, &dest_dir)),
+                        Ok(path) => Ok(CustomTarget::new_to_dir(
+                            path,
+                            &dest_dir,
+                            shell_callback.clone(),
+                        )),
                         Err(err) => Err(TargetError::GlobIterationError(err)),
                     })
                     .collect()
@@ -98,13 +102,15 @@ impl Entry {
 
     fn normalize(self, base: &Path) -> Result<Self, Error> {
         Ok(match self {
-            Entry::Path(from, to) => Entry::Path(
+            Entry::Path(from, to, callback) => Entry::Path(
                 normalize_path(from, base, true)?,
                 normalize_path(to, base, false)?,
+                callback,
             ),
-            Entry::Glob(pattern, dir) => Entry::Glob(
+            Entry::Glob(pattern, dir, callback) => Entry::Glob(
                 normalize_pattern(pattern, base)?,
                 normalize_path(dir, base, false)?,
+                callback,
             ),
         })
     }
@@ -113,8 +119,8 @@ impl Entry {
 impl fmt::Display for Entry {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            &Entry::Path(ref from, _) => write!(f, "path {}", from.display()),
-            &Entry::Glob(ref pattern, _) => write!(f, "glob {}", pattern),
+            &Entry::Path(ref from, _, _) => write!(f, "path {}", from.display()),
+            &Entry::Glob(ref pattern, _, _) => write!(f, "glob {}", pattern),
         }
     }
 }
@@ -169,6 +175,7 @@ fn glob_entry(mut pairs: Pairs<Rule>) -> Result<Entry, Error> {
     Ok(Entry::Glob(
         String::from(glob(pairs.next().unwrap())?),
         PathBuf::from(path(pairs.next().unwrap())?),
+        shell_callback(pairs.next())?,
     ))
 }
 
@@ -176,6 +183,7 @@ fn file_entry(mut pairs: Pairs<Rule>) -> Result<Entry, Error> {
     Ok(Entry::Path(
         PathBuf::from(path(pairs.next().unwrap())?),
         PathBuf::from(path(pairs.next().unwrap())?),
+        shell_callback(pairs.next())?,
     ))
 }
 
@@ -218,6 +226,15 @@ fn env_var(pair: Pair<Rule>) -> Result<String, Error> {
         .map_err(Error::from)
 }
 
+fn shell_callback(pair: Option<Pair<Rule>>) -> Result<Option<String>, Error> {
+    if let Some(pair) = pair {
+        if let Some(inner) = pair.into_inner().next() {
+            return Ok(Some(inner.as_str().trim().to_owned()));
+        }
+    }
+    Ok(None)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -241,7 +258,7 @@ mod tests {
         assert_eq!(
             manifest.entries,
             vec![
-                Entry::Path(PathBuf::from("/tmp/a"), PathBuf::from("/tmp/b")),
+                Entry::Path(PathBuf::from("/tmp/a"), PathBuf::from("/tmp/b"), None),
             ]
         );
     }
@@ -252,8 +269,8 @@ mod tests {
         assert_eq!(
             manifest.entries,
             vec![
-                Entry::Path(PathBuf::from("/tmp/a"), PathBuf::from("/tmp/b")),
-                Entry::Path(PathBuf::from("/tmp/c"), PathBuf::from("/tmp/d")),
+                Entry::Path(PathBuf::from("/tmp/a"), PathBuf::from("/tmp/b"), None),
+                Entry::Path(PathBuf::from("/tmp/c"), PathBuf::from("/tmp/d"), None),
             ]
         );
     }
@@ -264,7 +281,7 @@ mod tests {
         assert_eq!(
             manifest.entries,
             vec![
-                Entry::Path(PathBuf::from("/tmp/a/b/c"), PathBuf::from("/x/y/z")),
+                Entry::Path(PathBuf::from("/tmp/a/b/c"), PathBuf::from("/x/y/z"), None),
             ]
         );
     }
@@ -278,7 +295,7 @@ mod tests {
         assert_eq!(
             manifest.entries,
             vec![
-                Entry::Path(PathBuf::from("/tmp/a"), PathBuf::from("/foo/bar")),
+                Entry::Path(PathBuf::from("/tmp/a"), PathBuf::from("/foo/bar"), None),
             ]
         );
     }
@@ -290,8 +307,8 @@ mod tests {
         assert_eq!(
             manifest.entries,
             vec![
-                Entry::Glob(String::from("/tmp/a"), PathBuf::from("/tmp/b")),
-                Entry::Glob(String::from("/tmp/c*"), PathBuf::from("/tmp/d")),
+                Entry::Glob(String::from("/tmp/a"), PathBuf::from("/tmp/b"), None),
+                Entry::Glob(String::from("/tmp/c*"), PathBuf::from("/tmp/d"), None),
             ]
         );
     }
@@ -308,7 +325,54 @@ mod tests {
         assert_eq!(
             manifest.entries,
             vec![
-                Entry::Glob(String::from("/tmp/foo/bar/*"), PathBuf::from("/tmp/to/bar")),
+                Entry::Glob(
+                    String::from("/tmp/foo/bar/*"),
+                    PathBuf::from("/tmp/to/bar"),
+                    None,
+                ),
+            ]
+        );
+    }
+
+    #[test]
+    fn it_parses_shell_instructions() {
+        let manifest = Manifest::parse(
+            "foo = bar | cat bar\nbar/* -> drinks | ls .",
+            &PathBuf::from("/tmp"),
+        ).unwrap();
+
+        assert_eq!(
+            manifest.entries,
+            vec![
+                Entry::Path(
+                    PathBuf::from("/tmp/foo"),
+                    PathBuf::from("/tmp/bar"),
+                    Some(String::from("cat bar")),
+                ),
+                Entry::Glob(
+                    String::from("/tmp/bar/*"),
+                    PathBuf::from("/tmp/drinks"),
+                    Some(String::from("ls .")),
+                ),
+            ]
+        );
+    }
+
+    #[test]
+    fn it_parses_shell_instructions_with_trailing_comment() {
+        let manifest = Manifest::parse(
+            "bar/* -> drinks | ls . # List all drinks in the bar after installing them!",
+            &PathBuf::from("/tmp"),
+        ).unwrap();
+
+        assert_eq!(
+            manifest.entries,
+            vec![
+                Entry::Glob(
+                    String::from("/tmp/bar/*"),
+                    PathBuf::from("/tmp/drinks"),
+                    Some(String::from("ls .")),
+                ),
             ]
         );
     }

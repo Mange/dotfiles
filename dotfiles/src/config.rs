@@ -8,9 +8,6 @@ use self::pathdiff::diff_paths;
 
 use prelude::*;
 
-// TODO: Merge together all of these variants? Try to wait for bigger outliers to avoid picking the
-// wrong abstraction.
-
 #[derive(Debug)]
 pub enum InstallationState {
     Installed,
@@ -18,6 +15,9 @@ pub enum InstallationState {
     BrokenSymlink(PathBuf),
     Conflict(PathBuf),
 }
+
+// TODO: Merge together all of these variants? Try to wait for bigger outliers to avoid picking the
+// wrong abstraction.
 
 #[derive(Debug)]
 pub struct ConfigDirectory {
@@ -45,12 +45,17 @@ pub struct CustomTarget {
     name: String,
     source_path: PathBuf,
     dest_path: PathBuf,
+    shell_callback: Option<String>,
 }
 
 pub trait Installable: Sized {
     fn source_path(&self) -> &Path;
     fn destination_path(&self) -> &Path;
     fn display_name(&self) -> &str;
+
+    fn after_install_action(&self) -> Option<Result<(), Error>> {
+        None
+    }
 
     fn symlink_target(&self) -> Cow<Path> {
         // TODO: Add some tests for this
@@ -125,6 +130,11 @@ pub trait Installable: Sized {
         }
 
         ::std::os::unix::fs::symlink(self.symlink_target().as_ref(), dest_path)?;
+
+        if let Some(result) = self.after_install_action() {
+            result.with_context(|_| format!("Failed to run callback for {}", self.display_name()))?;
+        }
+
         Ok(())
     }
 }
@@ -238,10 +248,46 @@ impl Installable for CustomTarget {
     fn display_name(&self) -> &str {
         &self.name
     }
+
+    fn after_install_action(&self) -> Option<Result<(), Error>> {
+        if let Some(ref command) = self.shell_callback {
+            use std::process;
+
+            info!("Running shell command:\n  {}", command);
+            Some(match process::Command::new("sh")
+                .current_dir(self.destination_path().parent().unwrap())
+                .arg("-c")
+                .arg(&command)
+                .status()
+            {
+                Ok(status) if status.success() => {
+                    debug!("Command finished successfully");
+                    Ok(())
+                }
+                Ok(status) => {
+                    error!(
+                        "Command failed with exit status {}",
+                        status.code().unwrap_or(0)
+                    );
+                    // Don't abort the rest of the install because of this.
+                    Ok(())
+                }
+                Err(error) => Err(error)
+                    .context(format!("Could not run manifest callback {}", command))
+                    .map_err(Error::from),
+            })
+        } else {
+            None
+        }
+    }
 }
 
 impl CustomTarget {
-    pub fn new<P>(source_path: P, destination_path: P) -> CustomTarget
+    pub fn new<P>(
+        source_path: P,
+        destination_path: P,
+        shell_callback: Option<String>,
+    ) -> CustomTarget
     where
         P: Into<PathBuf>,
     {
@@ -256,10 +302,15 @@ impl CustomTarget {
             name: name,
             source_path: source_path.into(),
             dest_path: destination_path,
+            shell_callback: shell_callback,
         }
     }
 
-    pub fn new_to_dir<P>(source_path: P, destination_parent: &Path) -> CustomTarget
+    pub fn new_to_dir<P>(
+        source_path: P,
+        destination_parent: &Path,
+        shell_callback: Option<String>,
+    ) -> CustomTarget
     where
         P: Into<PathBuf>,
     {
@@ -277,6 +328,7 @@ impl CustomTarget {
             name: name,
             source_path: source_path,
             dest_path: destination_path,
+            shell_callback: shell_callback,
         }
     }
 }

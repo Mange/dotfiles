@@ -2,11 +2,13 @@
 # Manifest of all snowflake files.
 #
 # Syntax:
-# GLOB -> DEST_DIR
+# GLOB -> DEST_DIR | SHELL
 #   Each file matching GLOB will be symlinked inside DEST_DIR
+#   Optional SHELL will be run after installing matched files.
 #
-# FILE = DEST_FILE
+# FILE = DEST_FILE | SHELL
 #   File with the name FILE will be symlinked as DEST_FILE
+#   Optional SHELL will be run after installing matched file.
 #
 # Environment variables can be inserted using $NAME.
 
@@ -15,4 +17,4 @@ zshenv = $HOME/.zshenv
 
 # fontconfig already supports XDG, but system needs to be able to place files
 # in here too so I don't want to place the entire directory under source control.
-fonts-conf.d/* -> $XDG_CONFIG_HOME/fontconfig/conf.d
+fonts-conf.d/* -> $XDG_CONFIG_HOME/fontconfig/conf.d | fc-cache
