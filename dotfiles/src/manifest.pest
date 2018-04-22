@@ -1,0 +1,16 @@
+manifest = { soi ~ ( glob_entry | file_entry )* ~ eoi }
+glob_entry = { glob ~ "->" ~ path }
+file_entry = { path ~ "=" ~ path }
+
+path = ${ ( env_var | filename )+ }
+glob = ${ ( wildcard | path )+ }
+
+filename = @{ ( !newline ~ 'a'..'z' | 'A'..'Z' | '0'..'9' | "_" | "-" ~ !">" | "." | " " | "/" )+ }
+wildcard = @{ "*" }
+
+env_var = ${ "$" ~ env_var_name }
+env_var_name = @{ ( 'A'..'Z' | '0'..'9' | "_" )+ }
+
+newline = _{ "\r\n" | "\n" }
+whitespace = _{ " " | "\t" | newline }
+comment = _{ "#" ~ ( !newline ~ any )* }

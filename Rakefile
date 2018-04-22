@@ -100,19 +100,9 @@ task :gitconfig do
   config["alias.prune", %(!git remote | xargs -n 1 git remote prune)]
 end
 
-desc "Installs font config"
-task :fontconfig do
-  xdg_home = ENV.fetch('XDG_HOME', '~/.config')
-  dotfile = Dotfile.new("90-fallbacks.conf", "fonts/90-fallbacks.conf")
-  dotfile.home_path = File.join(xdg_home, "fontconfig", "conf.d", dotfile.name)
-  dotfile.install_symlink
-  system("fc-cache")
-end
-
 desc "Installs all files"
 task :install => (
   SYMLINKS + FILES + %w[
-    fontconfig
     gitconfig
     gitignore
     modules

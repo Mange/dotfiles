@@ -1,0 +1,18 @@
+# vim: ft=conf nospell
+# Manifest of all snowflake files.
+#
+# Syntax:
+# GLOB -> DEST_DIR
+#   Each file matching GLOB will be symlinked inside DEST_DIR
+#
+# FILE = DEST_FILE
+#   File with the name FILE will be symlinked as DEST_FILE
+#
+# Environment variables can be inserted using $NAME.
+
+# zsh bootstrapping issues; sets up XDG for loading the rest of the files...
+zshenv = $HOME/.zshenv
+
+# fontconfig already supports XDG, but system needs to be able to place files
+# in here too so I don't want to place the entire directory under source control.
+fonts-conf.d/* -> $XDG_CONFIG_HOME/fontconfig/conf.d

@@ -1,0 +1,315 @@
+extern crate glob;
+
+use std::fmt;
+use std::fs::File;
+use std::io::Read;
+use std::path::{Path, PathBuf};
+
+use pest::Parser;
+use pest::iterators::{Pair, Pairs};
+
+use prelude::*;
+use config::CustomTarget;
+
+#[derive(Debug)]
+pub struct Manifest {
+    entries: Vec<Entry>,
+}
+
+#[derive(Debug, PartialEq)]
+pub enum Entry {
+    Path(PathBuf, PathBuf),
+    Glob(String, PathBuf),
+}
+
+impl Manifest {
+    pub fn load(path: &Path) -> Result<Manifest, Error> {
+        let contents = {
+            let mut file = File::open(path).context("Could not open manifest file")?;
+            let mut contents = String::new();
+            file.read_to_string(&mut contents)?;
+            contents
+        };
+        let base = path.parent().unwrap();
+        Ok(Manifest::parse(&contents, base)
+            .with_context(|_| format!("Failed to parse manifest file {}", path.display()))?)
+    }
+
+    pub fn parse(contents: &str, base: &Path) -> Result<Manifest, Error> {
+        let pairs = ManifestParser::parse(Rule::manifest, &contents)
+            // Format err as a string to fix lifetime issues; the error type returned needs to live
+            // longer than the string inside this method. We don't do anything more fancy with it
+            // than just displaying it anyway.
+            .map_err(|e| format_err!("{}", e))?;
+
+        let mut entries: Vec<Entry> = Vec::new();
+
+        for pair in pairs {
+            if pair.as_rule() == Rule::manifest {
+                for entry in manifest(pair.into_inner())? {
+                    entries.push(entry.normalize(base).context("Failed to normalize path")?);
+                }
+            }
+        }
+
+        Ok(Manifest { entries })
+    }
+
+    pub fn entries(&self) -> &Vec<Entry> {
+        &self.entries
+    }
+}
+
+pub enum TargetError {
+    SourceNotFound,
+    DestinationIsNotDirectory(PathBuf),
+    InvalidGlob(String, self::glob::PatternError),
+    GlobIterationError(self::glob::GlobError),
+}
+
+impl Entry {
+    pub fn installable_targets(&self) -> Result<Vec<CustomTarget>, TargetError> {
+        match self {
+            &Entry::Path(ref from, ref to) => {
+                if from.exists() {
+                    Ok(vec![CustomTarget::new(from, to)])
+                } else {
+                    Err(TargetError::SourceNotFound)
+                }
+            }
+            &Entry::Glob(ref glob_str, ref dest_dir) => {
+                if dest_dir.exists() && dest_dir.metadata().map(|md| md.is_file()).unwrap_or(false)
+                {
+                    return Err(TargetError::DestinationIsNotDirectory(
+                        dest_dir.to_path_buf(),
+                    ));
+                }
+
+                self::glob::glob(&glob_str)
+                    .map_err(|e| TargetError::InvalidGlob(glob_str.clone(), e))?
+                    .map(|entry| match entry {
+                        Ok(path) => Ok(CustomTarget::new_to_dir(path, &dest_dir)),
+                        Err(err) => Err(TargetError::GlobIterationError(err)),
+                    })
+                    .collect()
+            }
+        }
+    }
+
+    fn normalize(self, base: &Path) -> Result<Self, Error> {
+        Ok(match self {
+            Entry::Path(from, to) => Entry::Path(
+                normalize_path(from, base, true)?,
+                normalize_path(to, base, false)?,
+            ),
+            Entry::Glob(pattern, dir) => Entry::Glob(
+                normalize_pattern(pattern, base)?,
+                normalize_path(dir, base, false)?,
+            ),
+        })
+    }
+}
+
+impl fmt::Display for Entry {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self {
+            &Entry::Path(ref from, _) => write!(f, "path {}", from.display()),
+            &Entry::Glob(ref pattern, _) => write!(f, "glob {}", pattern),
+        }
+    }
+}
+
+fn normalize_pattern(pattern: String, base: &Path) -> Result<String, Error> {
+    if Path::new(&pattern).is_absolute() {
+        Ok(pattern)
+    } else {
+        base.to_str()
+            .ok_or_else(|| format_err!("Could not represent base directory as UTF-8"))
+            .map(|base_str| format!("{}/{}", base_str, pattern))
+    }
+}
+
+fn normalize_path(path: PathBuf, base: &Path, canonicalize: bool) -> Result<PathBuf, Error> {
+    let path = if path.is_absolute() {
+        path
+    } else {
+        base.join(path)
+    };
+
+    if canonicalize && path.exists() {
+        Ok(path.canonicalize()?)
+    } else {
+        Ok(path)
+    }
+}
+
+#[derive(Parser)]
+#[grammar = "manifest.pest"]
+struct ManifestParser;
+
+// To make sure that changing the pest file causes a recompilation
+#[cfg(debug_assertions)]
+const _GRAMMAR: &'static str = include_str!("manifest.pest");
+
+fn manifest(pairs: Pairs<Rule>) -> Result<Vec<Entry>, Error> {
+    pairs
+        .map(|pair| match pair.as_rule() {
+            Rule::glob_entry => glob_entry(pair.into_inner()),
+            Rule::file_entry => file_entry(pair.into_inner()),
+            _ => panic!(
+                "Could not generate AST for pair {:?}:\n{:#?}",
+                pair.as_rule(),
+                pair
+            ),
+        })
+        .collect()
+}
+
+fn glob_entry(mut pairs: Pairs<Rule>) -> Result<Entry, Error> {
+    Ok(Entry::Glob(
+        String::from(glob(pairs.next().unwrap())?),
+        PathBuf::from(path(pairs.next().unwrap())?),
+    ))
+}
+
+fn file_entry(mut pairs: Pairs<Rule>) -> Result<Entry, Error> {
+    Ok(Entry::Path(
+        PathBuf::from(path(pairs.next().unwrap())?),
+        PathBuf::from(path(pairs.next().unwrap())?),
+    ))
+}
+
+fn glob(pair: Pair<Rule>) -> Result<String, Error> {
+    let mut pattern = String::new();
+
+    for pair in pair.into_inner() {
+        match pair.as_rule() {
+            Rule::wildcard => pattern.push_str(pair.as_str()),
+            Rule::path => pattern.push_str(&path(pair)?),
+            other => {
+                panic!("Got an {:?} rule: {:#?}", other, pair);
+            }
+        }
+    }
+
+    Ok(String::from(pattern.trim()))
+}
+
+fn path(pair: Pair<Rule>) -> Result<String, Error> {
+    let mut path = String::new();
+
+    for pair in pair.into_inner() {
+        match pair.as_rule() {
+            Rule::filename => path.push_str(pair.as_str()),
+            Rule::env_var => path.push_str(&env_var(pair)?),
+            other => {
+                panic!("Got an {:?} rule: {:#?}", other, pair);
+            }
+        }
+    }
+
+    Ok(String::from(path.trim()))
+}
+
+fn env_var(pair: Pair<Rule>) -> Result<String, Error> {
+    let env_var_name = pair.into_inner().next().unwrap().as_str();
+    ::std::env::var(env_var_name)
+        .with_context(|_| format_err!("Could not read environment variable {}", env_var_name))
+        .map_err(Error::from)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::env;
+
+    #[test]
+    fn it_parses_empty_manifest() {
+        let manifest = Manifest::parse("", &PathBuf::from("/tmp")).unwrap();
+        assert!(manifest.entries.is_empty());
+    }
+
+    #[test]
+    fn it_parses_manifest_with_a_comment() {
+        let manifest = Manifest::parse("# foo bar\n#baz qux", &PathBuf::from("/tmp")).unwrap();
+        assert!(manifest.entries.is_empty());
+    }
+
+    #[test]
+    fn it_parses_simple_filename() {
+        let manifest = Manifest::parse("a = b", &PathBuf::from("/tmp")).unwrap();
+        assert_eq!(
+            manifest.entries,
+            vec![
+                Entry::Path(PathBuf::from("/tmp/a"), PathBuf::from("/tmp/b")),
+            ]
+        );
+    }
+
+    #[test]
+    fn it_parses_multiple_filename() {
+        let manifest = Manifest::parse("a = b\nc=d", &PathBuf::from("/tmp")).unwrap();
+        assert_eq!(
+            manifest.entries,
+            vec![
+                Entry::Path(PathBuf::from("/tmp/a"), PathBuf::from("/tmp/b")),
+                Entry::Path(PathBuf::from("/tmp/c"), PathBuf::from("/tmp/d")),
+            ]
+        );
+    }
+
+    #[test]
+    fn it_parses_filenames_with_paths() {
+        let manifest = Manifest::parse("a/b/c = /x/y/z", &PathBuf::from("/tmp")).unwrap();
+        assert_eq!(
+            manifest.entries,
+            vec![
+                Entry::Path(PathBuf::from("/tmp/a/b/c"), PathBuf::from("/x/y/z")),
+            ]
+        );
+    }
+
+    #[test]
+    fn it_parses_filenames_with_environment_variables() {
+        env::set_var("DF_TEST_X1", "/foo");
+
+        let manifest = Manifest::parse("a = $DF_TEST_X1/bar", &PathBuf::from("/tmp")).unwrap();
+
+        assert_eq!(
+            manifest.entries,
+            vec![
+                Entry::Path(PathBuf::from("/tmp/a"), PathBuf::from("/foo/bar")),
+            ]
+        );
+    }
+
+    #[test]
+    fn it_parses_simple_globs() {
+        let manifest = Manifest::parse("a -> b\nc* -> d", &PathBuf::from("/tmp")).unwrap();
+
+        assert_eq!(
+            manifest.entries,
+            vec![
+                Entry::Glob(String::from("/tmp/a"), PathBuf::from("/tmp/b")),
+                Entry::Glob(String::from("/tmp/c*"), PathBuf::from("/tmp/d")),
+            ]
+        );
+    }
+
+    #[test]
+    fn it_parses_globs_with_env() {
+        env::set_var("DF_TEST_X2", "bar");
+
+        let manifest = Manifest::parse(
+            "foo/$DF_TEST_X2/* -> to/$DF_TEST_X2",
+            &PathBuf::from("/tmp"),
+        ).unwrap();
+
+        assert_eq!(
+            manifest.entries,
+            vec![
+                Entry::Glob(String::from("/tmp/foo/bar/*"), PathBuf::from("/tmp/to/bar")),
+            ]
+        );
+    }
+}
