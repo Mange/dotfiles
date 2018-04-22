@@ -5,7 +5,6 @@ SYMLINKS = %w[
   Xresources.d
   git_template
   gruvbox-colors.env
-  rspec
   taskrc
   xprofile
 ]
