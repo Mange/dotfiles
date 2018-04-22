@@ -22,3 +22,6 @@ alias tmux="tmux -f \"${XDG_CONFIG_HOME}\"/tmux/tmux.conf"
 if [[ -n "$XDG_RUNTIME_DIR" ]]; then
   export TMUX_TMPDIR="$XDG_RUNTIME_DIR"
 fi
+
+# Xauthority
+export XAUTHORITY="${XDG_RUNTIME_DIR}/Xauthority"
