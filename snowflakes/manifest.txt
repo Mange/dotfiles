@@ -15,6 +15,9 @@
 # zsh bootstrapping issues; sets up XDG for loading the rest of the files...
 zshenv = $HOME/.zshenv
 
+# profile file is loaded by all kinds of apps; it is not possible to get them all to understand XDG. :(
+profile = $HOME/.profile
+
 # fontconfig already supports XDG, but system needs to be able to place files
 # in here too so I don't want to place the entire directory under source control.
 fonts-conf.d/* -> $XDG_CONFIG_HOME/fontconfig/conf.d | fc-cache

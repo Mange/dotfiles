@@ -1,0 +1,6 @@
+# vim: ft=sh
+# This file is loaded by some software. Specifically, lightdm is supposed to
+# read it, so it's an excellent place to load XDG zealotry so all following X
+# commands understand XDG.
+# shellcheck source=/home/mange/.config/xdg_zealotry
+source "${XDG_CONFIG_HOME:-${HOME}/.config}/xdg_zealotry"

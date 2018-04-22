@@ -1,4 +1,4 @@
-# vim: ft=zsh
+# vim: ft=sh
 
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-${HOME}/.config}"
 export XDG_DATA_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}"
@@ -18,8 +18,8 @@ export IRBRC="${XDG_CONFIG_HOME}/ruby/irbrc"
 export PSQLRC="${XDG_CONFIG_HOME}/postgresql/psqlrc"
 
 # tmux
-alias tmux="tmux -f \"${XDG_CONFIG_HOME}\"/tmux/tmux.conf"
-if [[ -n "$XDG_RUNTIME_DIR" ]]; then
+alias tmux='tmux -f "${XDG_CONFIG_HOME}/tmux/tmux.conf"'
+if [ -n "$XDG_RUNTIME_DIR" ]; then
   export TMUX_TMPDIR="$XDG_RUNTIME_DIR"
 fi
 
