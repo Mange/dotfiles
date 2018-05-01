@@ -2,32 +2,14 @@ require File.expand_path('../support/dotfile', __FILE__)
 require 'fileutils'
 
 SYMLINKS = %w[
-  git_template
   gruvbox-colors.env
   taskrc
 ]
-
-FILES = []
 
 SYMLINKS.each do |file|
   desc "Installs #{file} by symlinking it inside your home"
   task file do
     Dotfile.new(file).install_symlink
-  end
-end
-
-FILES.each do |file|
-  desc "Installs #{file} by copying it to your home"
-  task file do
-    Dotfile.new(file).install_copy
-  end
-end
-
-desc "Installs the global gitignore file"
-task :gitignore do
-  Dotfile.new('gitignore').install_symlink
-  unless system('git config --global core.excludesfile "$HOME/.gitignore"')
-    STDERR.puts "Could not set git excludesfile. Continuing..."
   end
 end
 
@@ -48,58 +30,9 @@ task :modules do
   end
 end
 
-desc "Does some basic Git setup"
-task :gitconfig do
-  exec = lambda { |command| system(*command) or STDERR.puts "Command failed: #{command.join(' ')}" }
-  config = lambda { |*args| exec[['git', 'config', '--global', *args]] }
-
-  config["push.default", "tracking"]
-  config["color.ui", "true"]
-
-  config["user.name", "Magnus Bergmark"]
-  config["user.email", "magnus.bergmark@gmail.com"]
-  config["user.signingkey", "4D8E0309"]
-  config["github.user", "Mange"]
-
-  config["color.branch.current", "bold green"]
-  config["color.branch.local", "green"]
-  config["color.branch.remote", "blue"]
-
-  config["diff.compactionHeuristic", "true"]
-  config["diff.colorMoved", "zebra"]
-
-  # For diff-highlight / diff-so-fancy
-  config["color.diff-highlight.oldNormal", "red bold"]
-  config["color.diff-highlight.oldHighlight", "red bold 52"]
-  config["color.diff-highlight.newNormal", "green bold"]
-  config["color.diff-highlight.newHighlight", "green bold 22"]
-  config["pager.show", "diff-so-fancy | less --tabs=4 -RXin"]
-  config["pager.diff", "diff-so-fancy | less --tabs=4 -RXin"]
-  config["--unset", "interactive.diffFilter"]
-
-  config["commit.gpgsign", "true"]
-
-  # It's nice in theory, but too many scripts break with this on.
-  config["log.showSignature", "false"]
-
-  config["merge.conflictstyle", "diff3"]
-  config["merge.tool", "vimdiff"]
-
-  config["rebase.autosquash", "true"]
-  config["rebase.stat", "true"]
-
-  config["init.templatedir", "~/.git_template"]
-
-  # Aliases
-  config["alias.new", %(!sh -c 'git log $1@{1}..$1@{0} "$@"')]
-  config["alias.prune", %(!git remote | xargs -n 1 git remote prune)]
-end
-
 desc "Installs all files"
 task :install => (
-  SYMLINKS + FILES + %w[
-    gitconfig
-    gitignore
+  SYMLINKS + %w[
     modules
     vimplug
   ]

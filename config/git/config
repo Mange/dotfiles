@@ -1,0 +1,56 @@
+# vim:ft=gitconfig
+
+# Use global hooks
+[core]
+  hooksPath = ~/.config/git/hooks
+
+# That's me!
+[user]
+	name = Magnus Bergmark
+	email = magnus.bergmark@gmail.com
+	signingkey = 4D8E0309
+[github]
+	user = Mange
+
+# Custom colors, pagers, etc.
+[color "branch"]
+	remote = blue
+	current = bold green
+	local = green
+[color "diff-highlight"]
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
+[pager]
+	show = diff-so-fancy | less --tabs=4 -RXin
+	diff = diff-so-fancy | less --tabs=4 -RXin
+[interactive]
+	diffFilter = diff-so-fancy | less --tabs=4 -RXin
+
+# Sign commits
+[commit]
+	gpgsign = true
+[log]
+	showSignature = false
+
+# Merge settings and style
+[merge]
+	conflictstyle = diff3
+	tool = vimdiff
+[merge "fugitive"]
+	cmd = mvim -f -c \"Gdiff\" \"$MERGED\"
+
+# Magic rebases
+[rebase]
+	autosquash = true
+	stat = true
+
+# Aliases
+[alias]
+	new = !sh -c 'git log $1@{1}..$1@{0} \"$@\"'
+	prune = !git remote | xargs -n 1 git remote prune
+
+# Nicer diffs
+[diff]
+	compactionHeuristic = true

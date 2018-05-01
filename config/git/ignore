@@ -1,3 +1,5 @@
+# Personal, global .gitignore
+
 #-- Autocomplete caches --
 .rake_tasks
 
