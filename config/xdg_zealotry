@@ -24,4 +24,4 @@ if [ -n "$XDG_RUNTIME_DIR" ]; then
 fi
 
 # Xauthority
-export XAUTHORITY="${XDG_RUNTIME_DIR}/Xauthority"
+# export XAUTHORITY="${XDG_RUNTIME_DIR}/Xauthority"
