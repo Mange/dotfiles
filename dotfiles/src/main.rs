@@ -18,7 +18,7 @@ mod manifest;
 
 use std::path::Path;
 
-use clap::{App, AppSettings, Arg, ArgMatches, SubCommand};
+use clap::{App, AppSettings, Arg, SubCommand};
 use failure::{Error, ResultExt};
 
 use config::{BinFile, ConfigDirectory, DataDirectory, FindInDir, Installable, InstallationState};
@@ -28,7 +28,6 @@ use manifest::Manifest;
 
 mod prelude {
     pub use failure::{Error, ResultExt};
-    pub use clap::ArgMatches;
     pub use state::State;
 }
 
@@ -36,7 +35,6 @@ fn define_app<'a, 'b>() -> App<'a, 'b> {
     app_from_crate!()
         .setting(AppSettings::GlobalVersion)
         .setting(AppSettings::ColoredHelp)
-        .setting(AppSettings::SubcommandRequiredElseHelp)
         .setting(AppSettings::VersionlessSubcommands)
         .arg(
             Arg::with_name("verbose")
@@ -50,6 +48,10 @@ fn define_app<'a, 'b>() -> App<'a, 'b> {
         )
         .subcommand(SubCommand::with_name("cleanup").about("Clean up broken symlinks in $HOME."))
         .subcommand(SubCommand::with_name("post").about("Runs post.sh script."))
+        .subcommand(
+            SubCommand::with_name("all")
+                .about("(DEFAULT) Runs cleanup, install and post commands."),
+        )
 }
 
 fn main() {
@@ -92,17 +94,25 @@ fn run() -> Result<(), Error> {
     }
 
     match matches.subcommand() {
-        ("install", Some(matches)) => install(&state, matches),
-        ("cleanup", Some(matches)) => cleanup(&state, matches),
-        ("post", Some(matches)) => run_post(&state, matches),
+        ("install", Some(_)) => install(&state, true),
+        ("cleanup", Some(_)) => cleanup(&state, true),
+        ("post", Some(_)) => run_post(&state, true),
+        ("all", Some(_)) | ("", None) => run_all(&state),
         (other, _) => {
             return Err(format_err!("{} subcommand is not yet implemented.", other));
         }
     }
 }
 
+/// Run all the subcommands.
+fn run_all(state: &State) -> Result<(), Error> {
+    cleanup(state, false)
+        .and_then(|_| install(state, false))
+        .and_then(|_| run_post(state, false))
+}
+
 /// Install dotfiles.
-fn install(state: &State, _matches: &ArgMatches) -> Result<(), Error> {
+fn install(state: &State, _called_explicitly: bool) -> Result<(), Error> {
     debug!("Installing dotfiles…");
     let config_dir = state.root().join("config");
     let data_dir = state.root().join("data");
@@ -217,7 +227,7 @@ fn install_target<T: Installable>(entry: &T) -> Result<(), Error> {
 }
 
 /// Delete broken symlinks from `$HOME`, etc.
-fn cleanup(state: &State, _matches: &ArgMatches) -> Result<(), Error> {
+fn cleanup(state: &State, called_explicitly: bool) -> Result<(), Error> {
     use std::fs;
 
     debug!("Cleaning up $HOME…");
@@ -241,14 +251,14 @@ fn cleanup(state: &State, _matches: &ArgMatches) -> Result<(), Error> {
 
     if cleaned > 0 {
         info!("Cleaned {} file(s)", cleaned);
-    } else {
+    } else if called_explicitly {
         info!("Nothing to clean up :)");
     }
     Ok(())
 }
 
 /// Runs post.sh file if it exists.
-fn run_post(state: &State, _matches: &ArgMatches) -> Result<(), Error> {
+fn run_post(state: &State, called_explicitly: bool) -> Result<(), Error> {
     use std::process;
     let post_file = state.root().join("post.sh");
 
@@ -271,10 +281,15 @@ fn run_post(state: &State, _matches: &ArgMatches) -> Result<(), Error> {
                 .map_err(Error::from),
         }
     } else {
-        warn!(
+        let message = format!(
             "Cannot find post.sh file ({} does not exist)",
             post_file.display()
         );
-        Ok(())
+        if called_explicitly {
+            Err(format_err!("{}", message))
+        } else {
+            warn!("{}", message);
+            Ok(())
+        }
     }
 }
