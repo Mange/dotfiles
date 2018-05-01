@@ -1,17 +1,6 @@
 require File.expand_path('../support/dotfile', __FILE__)
 require 'fileutils'
 
-SYMLINKS = %w[
-  gruvbox-colors.env
-]
-
-SYMLINKS.each do |file|
-  desc "Installs #{file} by symlinking it inside your home"
-  task file do
-    Dotfile.new(file).install_symlink
-  end
-end
-
 desc "Initializes/updates other repos"
 task :modules do
   {
@@ -31,7 +20,7 @@ end
 
 desc "Installs all files"
 task :install => (
-  SYMLINKS + %w[
+  %w[
     modules
     vimplug
   ]
@@ -74,12 +63,5 @@ end
 
 desc "Install and clean up old files"
 task :update => [:install, :cleanup, :vimplugs]
-
-desc "Clears all symlinks"
-task :clear_symlinks do
-  SYMLINKS.each do |file|
-    Dotfile.new(file).delete_target(:only_symlink => true)
-  end
-end
 
 task default: :update

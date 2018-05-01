@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -e
 
-# shellcheck source=../gruvbox-colors.env
-source ~/.gruvbox-colors.env
+# shellcheck source=../../data/gruvbox/colors.env
+source "${XDG_DATA_HOME}/gruvbox/colors.env"
 
 task_cmd="task rc.echo.command=no rc._forcecolor=no rc.blanklines=false rc.hooks=off rc.verbose=nothing"
 task_cmd="$task_cmd rc.report.all.columns=id rc.report.all.labels=id"
