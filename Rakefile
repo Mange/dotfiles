@@ -3,7 +3,6 @@ require 'fileutils'
 
 SYMLINKS = %w[
   gruvbox-colors.env
-  taskrc
 ]
 
 SYMLINKS.each do |file|
