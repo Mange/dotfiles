@@ -16,73 +16,29 @@ pub enum InstallationState {
     Conflict(PathBuf),
 }
 
-#[derive(Debug)]
+#[derive(Debug, Builder)]
+#[builder(setter(into))]
 pub struct Target {
+    #[builder(default = "self.default_name()?")]
     name: String,
     source_path: PathBuf,
     dest_path: PathBuf,
+    #[builder(default)]
     shell_callback: Option<String>,
 }
 
+impl TargetBuilder {
+    fn default_name(&self) -> Result<String, String> {
+        match &self.dest_path {
+            &Some(ref path) => path.file_name()
+                .map(|p| p.to_string_lossy().into_owned())
+                .ok_or_else(|| String::from("Could not determine filename of destination path")),
+            &None => Err(String::from("No destination path is set")),
+        }
+    }
+}
+
 impl Target {
-    pub fn new<P>(source_path: P, destination_path: P, shell_callback: Option<String>) -> Self
-    where
-        P: Into<PathBuf>,
-    {
-        let destination_path = destination_path.into();
-        let name = destination_path
-            .file_name()
-            .unwrap()
-            .to_string_lossy()
-            .into_owned();
-
-        Self {
-            name: name,
-            source_path: source_path.into(),
-            dest_path: destination_path,
-            shell_callback: shell_callback,
-        }
-    }
-
-    pub fn new_to_dir<P>(
-        source_path: P,
-        destination_parent: &Path,
-        shell_callback: Option<String>,
-    ) -> Self
-    where
-        P: Into<PathBuf>,
-    {
-        let source_path = source_path.into();
-        let destination_path;
-        let name;
-
-        {
-            let real_name = source_path.file_name().unwrap();
-            destination_path = destination_parent.join(real_name);
-            name = real_name.to_string_lossy().into_owned();
-        }
-
-        Self {
-            name: name,
-            source_path: source_path,
-            dest_path: destination_path,
-            shell_callback: shell_callback,
-        }
-    }
-
-    pub fn new_with_custom_name<P, S>(source_path: P, destination_path: P, name: S) -> Self
-    where
-        P: Into<PathBuf>,
-        S: Into<String>,
-    {
-        Self {
-            name: name.into(),
-            source_path: source_path.into(),
-            dest_path: destination_path.into(),
-            shell_callback: None,
-        }
-    }
-
     pub fn source_path(&self) -> &Path {
         &self.source_path
     }

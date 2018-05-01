@@ -1,7 +1,7 @@
 use std::path::{Path, PathBuf};
 
 use prelude::*;
-use target::Target;
+use target::{Target, TargetBuilder};
 
 pub fn config_directories(dir: &Path, state: &State) -> Result<Vec<Target>, Error> {
     targets_in_dir(dir, state, new_config_directory)
@@ -29,11 +29,12 @@ fn new_config_directory(path: PathBuf, state: &State) -> Result<Target, Error> {
         .ok_or_else(|| format_err!("Entry at {} had no file name", path.display()))?
         .to_owned();
 
-    Ok(Target::new_with_custom_name(
-        path,
-        state.xdg_config_home().join(&name),
-        format!("config/{}", name.to_string_lossy()),
-    ))
+    Ok(TargetBuilder::default()
+        .source_path(path)
+        .dest_path(state.xdg_config_home().join(&name))
+        .name(format!("config/{}", name.to_string_lossy()))
+        .build()
+        .unwrap())
 }
 
 fn new_data_directory(path: PathBuf, state: &State) -> Result<Target, Error> {
@@ -41,11 +42,12 @@ fn new_data_directory(path: PathBuf, state: &State) -> Result<Target, Error> {
         .ok_or_else(|| format_err!("Entry at {} had no file name", path.display()))?
         .to_owned();
 
-    Ok(Target::new_with_custom_name(
-        path,
-        state.xdg_data_home().join(&name),
-        format!("data/{}", name.to_string_lossy()),
-    ))
+    Ok(TargetBuilder::default()
+        .source_path(path)
+        .dest_path(state.xdg_data_home().join(&name))
+        .name(format!("data/{}", name.to_string_lossy()))
+        .build()
+        .unwrap())
 }
 
 fn new_bin_file(path: PathBuf, state: &State) -> Result<Target, Error> {
@@ -53,9 +55,10 @@ fn new_bin_file(path: PathBuf, state: &State) -> Result<Target, Error> {
         .ok_or_else(|| format_err!("Entry at {} had no file name", path.display()))?
         .to_owned();
 
-    Ok(Target::new_with_custom_name(
-        path,
-        state.home().join("bin").join(&name),
-        format!("~/bin/{}", name.to_string_lossy()),
-    ))
+    Ok(TargetBuilder::default()
+        .source_path(path)
+        .dest_path(state.home().join("bin").join(&name))
+        .name(format!("~/bin/{}", name.to_string_lossy()))
+        .build()
+        .unwrap())
 }

@@ -9,7 +9,7 @@ use pest::Parser;
 use pest::iterators::{Pair, Pairs};
 
 use prelude::*;
-use target::Target;
+use target::{Target, TargetBuilder};
 
 #[derive(Debug)]
 pub struct Manifest {
@@ -72,7 +72,7 @@ impl Entry {
         match self {
             &Entry::Path(ref from, ref to, ref shell_callback) => {
                 if from.exists() {
-                    Ok(vec![Target::new(from, to, shell_callback.clone())])
+                    Ok(vec![new_file_target(from, to, shell_callback.clone())])
                 } else {
                     Err(TargetError::SourceNotFound)
                 }
@@ -88,7 +88,7 @@ impl Entry {
                 self::glob::glob(&glob_str)
                     .map_err(|e| TargetError::InvalidGlob(glob_str.clone(), e))?
                     .map(|entry| match entry {
-                        Ok(path) => Ok(Target::new_to_dir(path, &dest_dir, shell_callback.clone())),
+                        Ok(path) => Ok(new_dir_target(path, &dest_dir, shell_callback.clone())),
                         Err(err) => Err(TargetError::GlobIterationError(err)),
                     })
                     .collect()
@@ -229,6 +229,35 @@ fn shell_callback(pair: Option<Pair<Rule>>) -> Result<Option<String>, Error> {
         }
     }
     Ok(None)
+}
+
+fn new_file_target<P>(source_path: P, destination_path: P, shell_callback: Option<String>) -> Target
+where
+    P: Into<PathBuf>,
+{
+    let destination_path = destination_path.into();
+
+    TargetBuilder::default()
+        .source_path(source_path)
+        .dest_path(destination_path)
+        .shell_callback(shell_callback)
+        .build()
+        .unwrap()
+}
+
+fn new_dir_target(
+    source_path: PathBuf,
+    destination_parent: &Path,
+    shell_callback: Option<String>,
+) -> Target {
+    let destination_path = destination_parent.join(source_path.file_name().unwrap());
+
+    TargetBuilder::default()
+        .source_path(source_path)
+        .dest_path(destination_path)
+        .shell_callback(shell_callback)
+        .build()
+        .unwrap()
 }
 
 #[cfg(test)]
