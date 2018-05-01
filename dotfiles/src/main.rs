@@ -49,6 +49,7 @@ fn define_app<'a, 'b>() -> App<'a, 'b> {
             SubCommand::with_name("install").about("Install all dotfiles where they should be."),
         )
         .subcommand(SubCommand::with_name("cleanup").about("Clean up broken symlinks in $HOME."))
+        .subcommand(SubCommand::with_name("post").about("Runs post.sh script."))
 }
 
 fn main() {
@@ -93,6 +94,7 @@ fn run() -> Result<(), Error> {
     match matches.subcommand() {
         ("install", Some(matches)) => install(&state, matches),
         ("cleanup", Some(matches)) => cleanup(&state, matches),
+        ("post", Some(matches)) => run_post(&state, matches),
         (other, _) => {
             return Err(format_err!("{} subcommand is not yet implemented.", other));
         }
@@ -243,4 +245,36 @@ fn cleanup(state: &State, _matches: &ArgMatches) -> Result<(), Error> {
         info!("Nothing to clean up :)");
     }
     Ok(())
+}
+
+/// Runs post.sh file if it exists.
+fn run_post(state: &State, _matches: &ArgMatches) -> Result<(), Error> {
+    use std::process;
+    let post_file = state.root().join("post.sh");
+
+    if post_file.exists() {
+        debug!("Running {}", post_file.display());
+        match process::Command::new(post_file)
+            .current_dir(state.root())
+            .status()
+        {
+            Ok(status) if status.success() => {
+                debug!("Command finished successfully");
+                Ok(())
+            }
+            Ok(status) => Err(format_err!(
+                "Command failed with exit status {}",
+                status.code().unwrap_or(0)
+            )),
+            Err(error) => Err(error)
+                .context("post.sh script failed")
+                .map_err(Error::from),
+        }
+    } else {
+        warn!(
+            "Cannot find post.sh file ({} does not exist)",
+            post_file.display()
+        );
+        Ok(())
+    }
 }
