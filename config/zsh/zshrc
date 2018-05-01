@@ -4,12 +4,6 @@
 setopt extendedglob
 autoload is-at-least
 
-if is-at-least 4.3; then
-  if [[ -f "${XDG_CONFIG_HOME}/zsh/vendor/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]]; then
-    source "${XDG_CONFIG_HOME}/zsh/vendor/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-  fi
-fi
-
 if [ -f ~/.zshrc.before ]; then
   echo "$(tput setaf 1)\
 Warning: You have a ~/.zshrc.before file. \
@@ -21,11 +15,21 @@ fi
 [ -f "${XDG_CONFIG_HOME}/zsh/zshrc.before.local" ] && source "${XDG_CONFIG_HOME}/zsh/zshrc.before.local" || true
 
 # {{{ Helper functions
-command-exist () { whence $1 > /dev/null; }
+command-exist() { whence $1 > /dev/null; }
 
-alias-if-exist () {
+alias-if-exist() {
   if command-exist $1; then
     alias $2=$1
+  fi
+}
+
+try-source-plugin() {
+  local path="/usr/share/zsh/plugins/${1}/${1}.zsh"
+  if [[ -f "${path}" ]]; then
+    source "${path}"
+    return 0
+  else
+    return 1
   fi
 }
 # }}}
@@ -49,12 +53,6 @@ bindkey -v
 # Load editor support
 autoload edit-command-line
 zle -N edit-command-line
-
-if is-at-least 4.3; then
-  if [[ -f "${XDG_CONFIG_HOME}/zsh/vendor/zsh-history-substring-search/zsh-history-substring-search.zsh" ]]; then
-    source "${XDG_CONFIG_HOME}/zsh/vendor/zsh-history-substring-search/zsh-history-substring-search.zsh"
-  fi
-fi
 
 # Outputs $1 when on insert mode and outputs $2 when on command mode.
 # zle_mode_output "when insert" "when command"
@@ -107,14 +105,13 @@ bindkey -M vicmd '^r' redo
 bindkey -M vicmd 'H' run-help
 bindkey -M viins '^h' run-help
 
-bindkey '^n' history-substring-search-up
-bindkey '^p' history-substring-search-down
-
 bindkey -M viins '^a' beginning-of-line
 bindkey -M viins '^e' end-of-line
 
 bindkey -M vicmd 'v' edit-command-line
 bindkey -M viins '^rv' edit-command-line
+
+# See extra bindkey calls under the Plugins section
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -579,6 +576,15 @@ elif [[ -s /usr/local/rvm/scripts/rvm ]]; then
 elif [[ -s "$HOME/.rvm/scripts/rvm" ]]; then
   # Manually per-user install directory
   source "$HOME/.rvm/scripts/rvm"
+fi
+# }}}
+
+# {{{ Syntax highlighting
+try-source-plugin zsh-syntax-highlighting || true
+
+if try-source-plugin zsh-history-substring-search; then
+  bindkey '^n' history-substring-search-up
+  bindkey '^p' history-substring-search-down
 fi
 # }}}
 
