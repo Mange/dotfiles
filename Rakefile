@@ -5,7 +5,6 @@ SYMLINKS = %w[
   git_template
   gruvbox-colors.env
   taskrc
-  xprofile
 ]
 
 FILES = []

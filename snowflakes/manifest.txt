@@ -18,6 +18,9 @@ zshenv = $HOME/.zshenv
 # profile file is loaded by all kinds of apps; it is not possible to get them all to understand XDG. :(
 profile = $HOME/.profile
 
+# xprofile file is loaded by most Xsession defaults
+xprofile = $HOME/.xprofile
+
 # RVM overwrites my custom $IRBRC setting.
 irbrc = $HOME/.irbrc
 

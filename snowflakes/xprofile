@@ -1,0 +1,5 @@
+# vim: ft=sh
+# This file is loaded by some software. Specifically, lightdm is supposed to
+# read it with this hardcoded path.
+# shellcheck source=/home/mange/.config/xsession/profile
+source "${XDG_CONFIG_HOME:-${HOME}/.config}/xsession/profile"
