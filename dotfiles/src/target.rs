@@ -29,11 +29,11 @@ pub struct Target {
 
 impl TargetBuilder {
     fn default_name(&self) -> Result<String, String> {
-        match &self.dest_path {
-            &Some(ref path) => path.file_name()
+        match self.dest_path {
+            Some(ref path) => path.file_name()
                 .map(|p| p.to_string_lossy().into_owned())
                 .ok_or_else(|| String::from("Could not determine filename of destination path")),
-            &None => Err(String::from("No destination path is set")),
+            None => Err(String::from("No destination path is set")),
         }
     }
 }
@@ -57,7 +57,7 @@ impl Target {
 
             info!("Running shell command:\n  {}", command);
             Some(match process::Command::new("sh")
-                .current_dir(self.destination_path().parent().unwrap())
+                .current_dir(self.dest_path.parent().unwrap())
                 .arg("-c")
                 .arg(&command)
                 .status()
@@ -85,18 +85,17 @@ impl Target {
 
     fn symlink_target(&self) -> Cow<Path> {
         // TODO: Add some tests for this
-        let destination_directory = self.destination_path().parent().unwrap();
-        diff_paths(self.source_path(), destination_directory)
+        let destination_directory = self.dest_path.parent().unwrap();
+        diff_paths(&self.source_path, destination_directory)
             .map(Cow::Owned)
-            .unwrap_or_else(|| Cow::Borrowed(self.source_path()))
+            .unwrap_or_else(|| Cow::Borrowed(self.source_path.as_path()))
     }
 
     pub fn state(&self) -> Result<InstallationState, Error> {
-        let dest_path = self.destination_path();
-        match dest_path.symlink_metadata() {
+        match self.dest_path.symlink_metadata() {
             Ok(metadata) => {
                 if metadata.file_type().is_symlink() {
-                    let mut link_destination = dest_path
+                    let mut link_destination = self.dest_path
                         .read_link()
                         .context("Could not read symlink destination")?;
                     // If link is relative ("../foo"), then calculate the real path based on the
@@ -105,7 +104,7 @@ impl Target {
                         // As we know it's a symlink it must be inside of something, so unwrapping
                         // the parent should be safe. Path::parent returns None when the path is a
                         // root path.
-                        let symlink_parent = dest_path.parent().unwrap();
+                        let symlink_parent = self.dest_path.parent().unwrap();
                         link_destination = symlink_parent.join(link_destination);
                     }
 
@@ -115,7 +114,7 @@ impl Target {
                             .context("Could not canonicalize the symlink")?;
                     }
 
-                    if link_destination == self.source_path().canonicalize()? {
+                    if link_destination == self.source_path.canonicalize()? {
                         Ok(InstallationState::Installed)
                     } else if !link_destination.exists() {
                         Ok(InstallationState::BrokenSymlink(link_destination))
@@ -123,7 +122,7 @@ impl Target {
                         Ok(InstallationState::Conflict(link_destination))
                     }
                 } else {
-                    Ok(InstallationState::Conflict(dest_path.to_path_buf()))
+                    Ok(InstallationState::Conflict(self.dest_path.to_path_buf()))
                 }
             }
             Err(ref err) if err.kind() == io::ErrorKind::NotFound => {
@@ -134,18 +133,17 @@ impl Target {
     }
 
     pub fn install(&self) -> Result<(), Error> {
-        let dest_path = self.destination_path();
         // dest_path will never be "/", so getting the parent should always work.
-        let dest_dir = dest_path.parent().unwrap();
+        let dest_dir = self.dest_path.parent().unwrap();
 
-        match fs::remove_file(&dest_path) {
+        match fs::remove_file(&self.dest_path) {
             Ok(_) => {}
             Err(ref err) if err.kind() == io::ErrorKind::NotFound => {}
             Err(err) => {
                 return Err(err)
                     .context(format!(
                         "Could not remove destination path at {}",
-                        dest_path.display(),
+                        self.dest_path.display(),
                     ))
                     .map_err(Error::from)
             }
@@ -155,10 +153,10 @@ impl Target {
             fs::create_dir_all(dest_dir)?;
         }
 
-        ::std::os::unix::fs::symlink(self.symlink_target().as_ref(), dest_path)?;
+        ::std::os::unix::fs::symlink(self.symlink_target().as_ref(), &self.dest_path)?;
 
         if let Some(result) = self.after_install_action() {
-            result.with_context(|_| format!("Failed to run callback for {}", self.display_name()))?;
+            result.with_context(|_| format!("Failed to run callback for {}", self.name))?;
         }
 
         Ok(())
