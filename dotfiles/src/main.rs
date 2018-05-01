@@ -11,12 +11,12 @@ extern crate pest;
 #[macro_use]
 extern crate pest_derive;
 
-mod config;
-mod state;
+mod command;
+mod files;
 mod logger;
 mod manifest;
-
-mod command;
+mod state;
+mod target;
 
 use clap::{App, AppSettings, Arg, SubCommand};
 use failure::Error;

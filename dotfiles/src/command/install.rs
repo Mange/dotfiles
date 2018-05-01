@@ -1,6 +1,7 @@
 use std::path::Path;
 
-use config::{BinFile, ConfigDirectory, DataDirectory, FindInDir, Installable, InstallationState};
+use target::{FindInDir, Installable, InstallationState};
+use files::{BinFile, ConfigDirectory, DataDirectory};
 use manifest::Manifest;
 use prelude::*;
 

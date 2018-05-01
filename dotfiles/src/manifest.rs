@@ -9,7 +9,7 @@ use pest::Parser;
 use pest::iterators::{Pair, Pairs};
 
 use prelude::*;
-use config::CustomTarget;
+use target::CustomTarget;
 
 #[derive(Debug)]
 pub struct Manifest {
