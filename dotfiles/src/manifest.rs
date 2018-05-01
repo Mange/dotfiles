@@ -9,7 +9,7 @@ use pest::Parser;
 use pest::iterators::{Pair, Pairs};
 
 use prelude::*;
-use target::CustomTarget;
+use target::Target;
 
 #[derive(Debug)]
 pub struct Manifest {
@@ -68,11 +68,11 @@ pub enum TargetError {
 }
 
 impl Entry {
-    pub fn installable_targets(&self) -> Result<Vec<CustomTarget>, TargetError> {
+    pub fn installable_targets(&self) -> Result<Vec<Target>, TargetError> {
         match self {
             &Entry::Path(ref from, ref to, ref shell_callback) => {
                 if from.exists() {
-                    Ok(vec![CustomTarget::new(from, to, shell_callback.clone())])
+                    Ok(vec![Target::new(from, to, shell_callback.clone())])
                 } else {
                     Err(TargetError::SourceNotFound)
                 }
@@ -88,11 +88,7 @@ impl Entry {
                 self::glob::glob(&glob_str)
                     .map_err(|e| TargetError::InvalidGlob(glob_str.clone(), e))?
                     .map(|entry| match entry {
-                        Ok(path) => Ok(CustomTarget::new_to_dir(
-                            path,
-                            &dest_dir,
-                            shell_callback.clone(),
-                        )),
+                        Ok(path) => Ok(Target::new_to_dir(path, &dest_dir, shell_callback.clone())),
                         Err(err) => Err(TargetError::GlobIterationError(err)),
                     })
                     .collect()

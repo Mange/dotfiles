@@ -17,20 +17,114 @@ pub enum InstallationState {
 }
 
 #[derive(Debug)]
-pub struct CustomTarget {
+pub struct Target {
     name: String,
     source_path: PathBuf,
     dest_path: PathBuf,
     shell_callback: Option<String>,
 }
 
-pub trait Installable: Sized {
-    fn source_path(&self) -> &Path;
-    fn destination_path(&self) -> &Path;
-    fn display_name(&self) -> &str;
+impl Target {
+    pub fn new<P>(source_path: P, destination_path: P, shell_callback: Option<String>) -> Self
+    where
+        P: Into<PathBuf>,
+    {
+        let destination_path = destination_path.into();
+        let name = destination_path
+            .file_name()
+            .unwrap()
+            .to_string_lossy()
+            .into_owned();
 
-    fn after_install_action(&self) -> Option<Result<(), Error>> {
-        None
+        Self {
+            name: name,
+            source_path: source_path.into(),
+            dest_path: destination_path,
+            shell_callback: shell_callback,
+        }
+    }
+
+    pub fn new_to_dir<P>(
+        source_path: P,
+        destination_parent: &Path,
+        shell_callback: Option<String>,
+    ) -> Self
+    where
+        P: Into<PathBuf>,
+    {
+        let source_path = source_path.into();
+        let destination_path;
+        let name;
+
+        {
+            let real_name = source_path.file_name().unwrap();
+            destination_path = destination_parent.join(real_name);
+            name = real_name.to_string_lossy().into_owned();
+        }
+
+        Self {
+            name: name,
+            source_path: source_path,
+            dest_path: destination_path,
+            shell_callback: shell_callback,
+        }
+    }
+
+    pub fn new_with_custom_name<P, S>(source_path: P, destination_path: P, name: S) -> Self
+    where
+        P: Into<PathBuf>,
+        S: Into<String>,
+    {
+        Self {
+            name: name.into(),
+            source_path: source_path.into(),
+            dest_path: destination_path.into(),
+            shell_callback: None,
+        }
+    }
+
+    pub fn source_path(&self) -> &Path {
+        &self.source_path
+    }
+
+    pub fn destination_path(&self) -> &Path {
+        &self.dest_path
+    }
+
+    pub fn display_name(&self) -> &str {
+        &self.name
+    }
+
+    pub fn after_install_action(&self) -> Option<Result<(), Error>> {
+        if let Some(ref command) = self.shell_callback {
+            use std::process;
+
+            info!("Running shell command:\n  {}", command);
+            Some(match process::Command::new("sh")
+                .current_dir(self.destination_path().parent().unwrap())
+                .arg("-c")
+                .arg(&command)
+                .status()
+            {
+                Ok(status) if status.success() => {
+                    debug!("Command finished successfully");
+                    Ok(())
+                }
+                Ok(status) => {
+                    error!(
+                        "Command failed with exit status {}",
+                        status.code().unwrap_or(0)
+                    );
+                    // Don't abort the rest of the install because of this.
+                    Ok(())
+                }
+                Err(error) => Err(error)
+                    .context(format!("Could not run manifest callback {}", command))
+                    .map_err(Error::from),
+            })
+        } else {
+            None
+        }
     }
 
     fn symlink_target(&self) -> Cow<Path> {
@@ -41,7 +135,7 @@ pub trait Installable: Sized {
             .unwrap_or_else(|| Cow::Borrowed(self.source_path()))
     }
 
-    fn state(&self) -> Result<InstallationState, Error> {
+    pub fn state(&self) -> Result<InstallationState, Error> {
         let dest_path = self.destination_path();
         match dest_path.symlink_metadata() {
             Ok(metadata) => {
@@ -83,7 +177,7 @@ pub trait Installable: Sized {
         }
     }
 
-    fn install(&self) -> Result<(), Error> {
+    pub fn install(&self) -> Result<(), Error> {
         let dest_path = self.destination_path();
         // dest_path will never be "/", so getting the parent should always work.
         let dest_dir = dest_path.parent().unwrap();
@@ -112,115 +206,5 @@ pub trait Installable: Sized {
         }
 
         Ok(())
-    }
-}
-
-pub trait FindInDir: Sized {
-    fn new_from_path(path: PathBuf, state: &State) -> Result<Self, Error>;
-
-    fn all_in_dir(dir: &Path, state: &State) -> Result<Vec<Self>, Error> {
-        dir.read_dir()?
-            .map(|entry| {
-                let entry = entry?;
-                Self::new_from_path(entry.path(), state)
-            })
-            .collect()
-    }
-}
-
-impl Installable for CustomTarget {
-    fn source_path(&self) -> &Path {
-        &self.source_path
-    }
-
-    fn destination_path(&self) -> &Path {
-        &self.dest_path
-    }
-
-    fn display_name(&self) -> &str {
-        &self.name
-    }
-
-    fn after_install_action(&self) -> Option<Result<(), Error>> {
-        if let Some(ref command) = self.shell_callback {
-            use std::process;
-
-            info!("Running shell command:\n  {}", command);
-            Some(match process::Command::new("sh")
-                .current_dir(self.destination_path().parent().unwrap())
-                .arg("-c")
-                .arg(&command)
-                .status()
-            {
-                Ok(status) if status.success() => {
-                    debug!("Command finished successfully");
-                    Ok(())
-                }
-                Ok(status) => {
-                    error!(
-                        "Command failed with exit status {}",
-                        status.code().unwrap_or(0)
-                    );
-                    // Don't abort the rest of the install because of this.
-                    Ok(())
-                }
-                Err(error) => Err(error)
-                    .context(format!("Could not run manifest callback {}", command))
-                    .map_err(Error::from),
-            })
-        } else {
-            None
-        }
-    }
-}
-
-impl CustomTarget {
-    pub fn new<P>(
-        source_path: P,
-        destination_path: P,
-        shell_callback: Option<String>,
-    ) -> CustomTarget
-    where
-        P: Into<PathBuf>,
-    {
-        let destination_path = destination_path.into();
-        let name = destination_path
-            .file_name()
-            .unwrap()
-            .to_string_lossy()
-            .into_owned();
-
-        CustomTarget {
-            name: name,
-            source_path: source_path.into(),
-            dest_path: destination_path,
-            shell_callback: shell_callback,
-        }
-    }
-
-    pub fn new_to_dir<P>(
-        source_path: P,
-        destination_parent: &Path,
-        shell_callback: Option<String>,
-    ) -> CustomTarget
-    where
-        P: Into<PathBuf>,
-    {
-        let source_path = source_path.into();
-        let destination_path;
-        let name;
-
-        {
-            let real_name = source_path.file_name().unwrap();
-            destination_path = destination_parent.join(real_name);
-            name = real_name.to_string_lossy().into_owned();
-        }
-
-        CustomTarget {
-            name: name,
-            source_path: source_path,
-            dest_path: destination_path,
-            shell_callback: shell_callback,
-        }
     }
 }

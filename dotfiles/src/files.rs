@@ -1,109 +1,61 @@
 use std::path::{Path, PathBuf};
 
 use prelude::*;
-use target::{FindInDir, Installable};
+use target::Target;
 
-#[derive(Debug)]
-pub struct ConfigDirectory {
-    name: String,
-    source_dir: PathBuf,
-    dest_dir: PathBuf,
+pub fn config_directories(dir: &Path, state: &State) -> Result<Vec<Target>, Error> {
+    targets_in_dir(dir, state, new_config_directory)
 }
 
-#[derive(Debug)]
-pub struct DataDirectory {
-    name: String,
-    source_dir: PathBuf,
-    dest_dir: PathBuf,
+pub fn data_directories(dir: &Path, state: &State) -> Result<Vec<Target>, Error> {
+    targets_in_dir(dir, state, new_data_directory)
 }
 
-#[derive(Debug)]
-pub struct BinFile {
-    name: String,
-    source_path: PathBuf,
-    dest_path: PathBuf,
+pub fn bin_files(dir: &Path, state: &State) -> Result<Vec<Target>, Error> {
+    targets_in_dir(dir, state, new_bin_file)
 }
 
-impl Installable for ConfigDirectory {
-    fn source_path(&self) -> &Path {
-        &self.source_dir
-    }
-
-    fn destination_path(&self) -> &Path {
-        &self.dest_dir
-    }
-
-    fn display_name(&self) -> &str {
-        &self.name
-    }
+fn targets_in_dir<F>(dir: &Path, state: &State, f: F) -> Result<Vec<Target>, Error>
+where
+    F: Fn(PathBuf, &State) -> Result<Target, Error>,
+{
+    dir.read_dir()?
+        .map(|entry| f(entry?.path(), state))
+        .collect()
 }
 
-impl FindInDir for ConfigDirectory {
-    fn new_from_path(path: PathBuf, state: &State) -> Result<Self, Error> {
-        let name = path.file_name()
-            .ok_or_else(|| format_err!("Entry at {} had no file name", path.display()))?
-            .to_owned();
+fn new_config_directory(path: PathBuf, state: &State) -> Result<Target, Error> {
+    let name = path.file_name()
+        .ok_or_else(|| format_err!("Entry at {} had no file name", path.display()))?
+        .to_owned();
 
-        Ok(ConfigDirectory {
-            name: format!("config/{}", name.to_string_lossy()),
-            dest_dir: state.xdg_config_home().join(&name),
-            source_dir: path,
-        })
-    }
+    Ok(Target::new_with_custom_name(
+        path,
+        state.xdg_config_home().join(&name),
+        format!("config/{}", name.to_string_lossy()),
+    ))
 }
 
-impl Installable for DataDirectory {
-    fn source_path(&self) -> &Path {
-        &self.source_dir
-    }
+fn new_data_directory(path: PathBuf, state: &State) -> Result<Target, Error> {
+    let name = path.file_name()
+        .ok_or_else(|| format_err!("Entry at {} had no file name", path.display()))?
+        .to_owned();
 
-    fn destination_path(&self) -> &Path {
-        &self.dest_dir
-    }
-
-    fn display_name(&self) -> &str {
-        &self.name
-    }
+    Ok(Target::new_with_custom_name(
+        path,
+        state.xdg_data_home().join(&name),
+        format!("data/{}", name.to_string_lossy()),
+    ))
 }
 
-impl FindInDir for DataDirectory {
-    fn new_from_path(path: PathBuf, state: &State) -> Result<Self, Error> {
-        let name = path.file_name()
-            .ok_or_else(|| format_err!("Entry at {} had no file name", path.display()))?
-            .to_owned();
+fn new_bin_file(path: PathBuf, state: &State) -> Result<Target, Error> {
+    let name = path.file_name()
+        .ok_or_else(|| format_err!("Entry at {} had no file name", path.display()))?
+        .to_owned();
 
-        Ok(DataDirectory {
-            name: format!("data/{}", name.to_string_lossy()),
-            dest_dir: state.xdg_data_home().join(&name),
-            source_dir: path,
-        })
-    }
-}
-
-impl Installable for BinFile {
-    fn source_path(&self) -> &Path {
-        &self.source_path
-    }
-
-    fn destination_path(&self) -> &Path {
-        &self.dest_path
-    }
-
-    fn display_name(&self) -> &str {
-        &self.name
-    }
-}
-
-impl FindInDir for BinFile {
-    fn new_from_path(path: PathBuf, state: &State) -> Result<Self, Error> {
-        let name = path.file_name()
-            .ok_or_else(|| format_err!("Entry at {} had no file name", path.display()))?
-            .to_owned();
-
-        Ok(BinFile {
-            name: format!("~/bin/{}", name.to_string_lossy()),
-            dest_path: state.home().join("bin").join(&name),
-            source_path: path,
-        })
-    }
+    Ok(Target::new_with_custom_name(
+        path,
+        state.home().join("bin").join(&name),
+        format!("~/bin/{}", name.to_string_lossy()),
+    ))
 }

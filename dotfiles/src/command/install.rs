@@ -1,7 +1,7 @@
 use std::path::Path;
 
-use target::{FindInDir, Installable, InstallationState};
-use files::{BinFile, ConfigDirectory, DataDirectory};
+use target::{InstallationState, Target};
+use files;
 use manifest::Manifest;
 use prelude::*;
 
@@ -13,11 +13,11 @@ pub fn run(state: &State, _called_explicitly: bool) -> Result<(), Error> {
     let bin_dir = state.root().join("bin");
     let snowflake_manifest_path = state.root().join("snowflakes").join("manifest.txt");
 
-    let configs = ConfigDirectory::all_in_dir(&config_dir, state)
+    let configs = files::config_directories(&config_dir, state)
         .context("Could not load list of config entries")?;
     let data_entries =
-        DataDirectory::all_in_dir(&data_dir, state).context("Could not load list of data entries")?;
-    let bins = BinFile::all_in_dir(&bin_dir, state)?;
+        files::data_directories(&data_dir, state).context("Could not load list of data entries")?;
+    let bins = files::bin_files(&bin_dir, state)?;
 
     install_targets(&configs)?;
     install_targets(&data_entries)?;
@@ -67,7 +67,7 @@ fn install_via_manifest(manifest_path: &Path) -> Result<(), Error> {
     Ok(())
 }
 
-fn install_targets<T: Installable>(targets: &[T]) -> Result<(), Error> {
+fn install_targets(targets: &[Target]) -> Result<(), Error> {
     targets
         .into_iter()
         .map(|target| {
@@ -84,7 +84,7 @@ fn install_targets<T: Installable>(targets: &[T]) -> Result<(), Error> {
         .collect()
 }
 
-fn install_target<T: Installable>(entry: &T) -> Result<(), Error> {
+fn install_target(entry: &Target) -> Result<(), Error> {
     let state = entry.state().context(format!(
         "Could not determine installation state for {}",
         entry.destination_path().display(),
