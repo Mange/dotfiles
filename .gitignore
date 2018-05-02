@@ -3,6 +3,10 @@
 *.swo
 *~
 
+# Generated install
+bin/dotfiles
+config/dotfiles/path
+
 config/nvim/autoload/plug.vim
 config/nvim/autoload/plug.vim.old
 config/nvim/plugged
