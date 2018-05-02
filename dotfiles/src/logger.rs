@@ -17,6 +17,7 @@ impl Logger {
             stderr: Mutex::new(stderr),
         };
         set_boxed_logger(Box::new(logger)).expect("Could not initialize logger");
+        set_max_level(LevelFilter::Info);
     }
 
     pub fn change_level(level: LevelFilter) {
@@ -35,7 +36,7 @@ impl Log for Logger {
             let color = color(level);
 
             let mut stderr = self.stderr.lock().expect("Stderr stream is poisoned");
-            stderr.fg(color).ok();
+            stderr.fg(color).expect("Failed to set fg color");
             write!(
                 stderr,
                 "{}",
@@ -44,13 +45,16 @@ impl Log for Logger {
                     Level::Warn => "Warning: ",
                     _ => "",
                 }
-            ).ok();
-            write!(stderr, "{}\n", record.args()).ok();
-            stderr.reset().ok();
+            ).expect("Failed to write log prefix");
+            write!(stderr, "{}\n", record.args()).expect("Failed to write log message");
+            stderr.reset().expect("Failed to reset color");
         }
     }
 
-    fn flush(&self) {}
+    fn flush(&self) {
+        let mut stderr = self.stderr.lock().expect("Stderr stream is poisoned");
+        stderr.flush().ok();
+    }
 }
 
 fn color(level: Level) -> color::Color {
