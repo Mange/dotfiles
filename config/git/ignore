@@ -1,8 +1,5 @@
 # Personal, global .gitignore
 
-#-- Autocomplete caches --
-.rake_tasks
-
 #-- Vim doc tags --
 doc/tags
 
