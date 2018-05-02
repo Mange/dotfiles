@@ -44,6 +44,15 @@ fn define_app<'a, 'b>() -> App<'a, 'b> {
                 .long("verbose")
                 .help("Enables more verbose text output"),
         )
+        .arg(
+            Arg::with_name("root")
+                .global(true)
+                .takes_value(true)
+                .value_name("DIR")
+                .long("root")
+                .help("Sets the root of the dotfiles repo.")
+                .long_help("Sets the root of the dotfiles repo. It is read from $XDG_CONFIG_HOME/dotfiles/path by default."),
+        )
         .subcommand(
             SubCommand::with_name("install").about("Install all dotfiles where they should be."),
         )
@@ -86,13 +95,14 @@ fn main() {
 fn run() -> Result<(), Error> {
     let app = define_app();
     let matches = app.get_matches();
-    let state = State::new()?;
 
     if matches.is_present("verbose") {
         Logger::change_level(log::LevelFilter::Debug);
     } else {
         Logger::change_level(log::LevelFilter::Info);
     }
+
+    let state = State::new(&matches)?;
 
     match matches.subcommand() {
         ("install", Some(_)) => command::install(&state, true),

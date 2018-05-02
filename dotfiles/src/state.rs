@@ -1,6 +1,9 @@
 use std::env;
 use std::path::{Path, PathBuf};
+use std::fs::File;
+use std::io::Read;
 use failure::{Error, ResultExt};
+use clap::ArgMatches;
 
 #[derive(Debug)]
 pub struct State {
@@ -11,24 +14,26 @@ pub struct State {
     xdg_data_home: PathBuf,
 }
 
-fn determine_root() -> Result<PathBuf, Error> {
-    let exe_path = env::current_exe().context("Could not find program path")?;
-    // In development, it's common to run this command from within the nested dotfiles directory.
-    // Scan up to find the first directory with a README.md file.
-    let mut root_path = exe_path.parent().unwrap();
-    loop {
-        if root_path.join("README.md").is_file() {
-            return Ok(root_path.into());
-        }
-        match root_path.parent() {
-            Some(parent) => root_path = parent,
-            None => {
-                return Err(format_err!(
-                    "Could not find any directory containing a README.md file from {}",
-                    exe_path.display()
-                ))
-            }
-        }
+fn load_root_path(xdg_config_path: &Path) -> Result<PathBuf, Error> {
+    let path_file = xdg_config_path.join("dotfiles").join("path");
+    if path_file.is_file() {
+        let mut file = File::open(&path_file)
+            .map_err(Error::from)
+            .with_context(|_| format!("Failed to open config file {}", path_file.display()))?;
+
+        let mut contents = String::new();
+        file.read_to_string(&mut contents)
+            .map_err(Error::from)
+            .with_context(|_| format!("Failed to read config file {}", path_file.display()))?;
+
+        Ok(PathBuf::from(contents.trim_right_matches('\n')))
+    } else {
+        Err(
+            format_err!(
+                "Could not find the project root. Please specify the --root option or create a config file at {}",
+                path_file.display()
+            )
+        )
     }
 }
 
@@ -67,13 +72,28 @@ fn determine_xdg_data_home(home: &Path) -> Result<PathBuf, Error> {
 }
 
 impl State {
-    pub fn new() -> Result<State, Error> {
+    pub fn new(args: &ArgMatches) -> Result<State, Error> {
         let home =
             env::home_dir().ok_or_else(|| format_err!("Could not determine home directory"))?;
+
+        let xdg_config_home =
+            determine_xdg_config_home(&home).context("Could not determine XDG_CONFIG_HOME")?;
+
+        let root_path = match args.value_of("root") {
+            Some(path) => PathBuf::from(path),
+            None => load_root_path(&xdg_config_home).context("Could not determine root path")?,
+        };
+
+        if !root_path.is_dir() {
+            return Err(format_err!(
+                "Specified root path {} is not a directory",
+                root_path.display()
+            ));
+        }
+
         Ok(State {
-            root_path: determine_root().context("Could not determine root path")?,
-            xdg_config_home: determine_xdg_config_home(&home)
-                .context("Could not determine XDG_CONFIG_HOME")?,
+            root_path,
+            xdg_config_home,
             xdg_data_home: determine_xdg_data_home(&home)
                 .context("Could not determine XDG_DATA_HOME")?,
             home_path: home,
