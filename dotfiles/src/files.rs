@@ -57,8 +57,8 @@ fn new_bin_file(path: PathBuf, state: &State) -> Result<Target, Error> {
 
     Ok(TargetBuilder::default()
         .source_path(path)
-        .dest_path(state.home().join("bin").join(&name))
-        .name(format!("~/bin/{}", name.to_string_lossy()))
+        .dest_path(state.home().join(".local").join("bin").join(&name))
+        .name(format!("~/.local/bin/{}", name.to_string_lossy()))
         .build()
         .unwrap())
 }

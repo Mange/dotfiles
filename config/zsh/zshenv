@@ -8,7 +8,6 @@ function {
       /usr/sbin
       /sbin
 
-      $HOME/bin
       $HOME/.local/bin
       $HOME/.local/share/umake/bin
 
