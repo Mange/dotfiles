@@ -1,17 +1,6 @@
-*.swp
-*.swn
-*.swo
-*~
+# Generated install
+bin/dotfiles
+config/dotfiles/path
 
-vim/autoload/plug.vim
-vim/autoload/plug.vim.old
-vim/plugged
-vim/session
-vim/spell
-vim/.netrwhist
-vim/tmp
-vim/local_*.vim
-
-vendor/*/
-
-.DS_Store
+# Allow machine-local files that are not added to the repo
+*.local

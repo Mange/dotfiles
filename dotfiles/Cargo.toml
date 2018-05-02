@@ -1,0 +1,19 @@
+[package]
+name = "dotfiles"
+version = "0.1.0"
+authors = ["Magnus Bergmark <magnus.bergmark@gmail.com>"]
+description = "Manages dotfiles from a Git repository."
+
+[dependencies]
+clap = "2.31.2"
+failure = "0.1.1"
+term = "0.5.1"
+pathdiff = "0.1.0"
+pest = "1.0.6"
+pest_derive = "1.0.7"
+glob = "0.2.11"
+derive_builder = "0.5.1"
+
+[dependencies.log]
+version = "0.4.1"
+features = ["std"]

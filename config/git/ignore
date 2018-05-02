@@ -1,0 +1,23 @@
+# Personal, global .gitignore
+
+#-- Vim doc tags --
+doc/tags
+
+#-- Crap and metadata --
+.DS_Store
+*~
+
+#-- Project-specific things --
+.*.local
+notes.local
+.ruby-gemset
+rusty-tags.vi
+
+#-- Editor-specific things --
+*.swp
+*.swo
+/.idea
+.vimrc
+.nvimrc
+*@neomake*
+.*.rs.rustfmt

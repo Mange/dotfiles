@@ -1,6 +1,0 @@
-#!/bin/zsh
-
-# Run local stuff, too.
-if [[ -f ~/.zshprofile.local ]]; then
-  source ~/.zshprofile.local
-fi

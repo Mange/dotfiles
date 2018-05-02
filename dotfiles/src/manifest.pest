@@ -1,0 +1,18 @@
+manifest = { soi ~ ( glob_entry | file_entry )* ~ eoi }
+glob_entry = { glob ~ "->" ~ path ~ optional_shell_callback }
+file_entry = { path ~ "=" ~ path ~ optional_shell_callback }
+
+path = ${ ( env_var | filename )+ }
+glob = ${ ( wildcard | path )+ }
+optional_shell_callback = { !"|" | ( "|" ~ shell_command ) }
+
+filename = @{ ( !newline ~ 'a'..'z' | 'A'..'Z' | '0'..'9' | "_" | "-" ~ !">" | "." | " " | "/" )+ }
+wildcard = @{ "*" }
+shell_command = @{ ( !newline ~ !"#" ~ any )* }
+
+env_var = ${ "$" ~ env_var_name }
+env_var_name = @{ ( 'A'..'Z' | '0'..'9' | "_" )+ }
+
+newline = _{ "\r\n" | "\n" }
+whitespace = _{ " " | "\t" | newline }
+comment = _{ "#" ~ ( !newline ~ any )* }
