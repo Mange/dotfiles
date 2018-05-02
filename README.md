@@ -13,25 +13,36 @@ Quick summary of my stack:
 - **Web browser:** [Firefox] (Developer Edition)
 - **Colors:** [Gruvbox]
 
-## Main level
+## Structure
 
-This is normal user-level dotfiles. It is currently installed using `rake`:
+This repo is structured in three different sections.
 
-```bash
-rake
-```
+ * Root section (actual dotfiles)
+ * Platforms section (setup scripts for setting up machines)
+ * `dotfiles` section (CLI util for managing dotfiles)
 
-## Platforms level
+### Root section
 
-The platforms layer (`platforms` directory) contains setup scripts for setting
-up machines and manage software or system-level configuration on them.
+Dotfiles are mainly placed in accordance with the XDG directory specification.
+This simplifies things a whole lot. You can find files for the configuration
+directory inside the `config` directory, data files inside the `data` directory
+and executables inside the `bin` directory.
+
+Some software does not follow XDG specifications and might require custom
+locations. Those files are inside the `snowflakes` directory, managed with
+`snowflakes/manifest.txt`.
+
+### Platforms section
+
+The `platforms` directory contains setup scripts for setting up machines and
+manage software or system-level configuration on them.
 
 - `platforms/arch.sh` - Sets up wanted software and preferences on an Arch
   machine.
 - `platforms/arch-bootstrap.sh` - Sets up a *new* Arch machine (adds my user,
   clones this repo, etc.).
 
-### How to bootstrap
+#### How to bootstrap
 
 As root, on you newly booted Arch machine:
 
@@ -41,6 +52,25 @@ wget https://github.com/Mange/dotfiles/raw/master/platforms/arch-bootstrap.sh
 chmod +x arch-bootstrap.sh
 ./arch-bootstrap.sh
 ```
+
+
+### `dotfiles`
+
+This CLI utility is written in Rust and can be called to manage the dotfiles in
+this repo, like installing them, etc.
+
+It will be extended in the future to deal with even more parts of this repo.
+
+## How to install
+
+Run `initial-setup.sh` file at the project root. It will compile `dotfiles` and
+use it to install itself in your HOME, together with all the other files.
+
+After this initial install you can call `dotfiles --help` to see other
+operations that you can use.
+
+In order to compile this binary Rust must be installed and set up. You can run
+the platform scripts first in order to bootstrap and prepare your machine.
 
 # Copyright
 
