@@ -58,9 +58,10 @@ fn define_app<'a, 'b>() -> App<'a, 'b> {
         )
         .subcommand(SubCommand::with_name("cleanup").about("Clean up broken symlinks in $HOME."))
         .subcommand(SubCommand::with_name("post").about("Runs post.sh script."))
+        .subcommand(SubCommand::with_name("self-update").about("Recompiles and installs this binary from sources."))
         .subcommand(
             SubCommand::with_name("all")
-                .about("(DEFAULT) Runs cleanup, install and post commands."),
+                .about("(DEFAULT) Runs self-update, cleanup, install and post commands."),
         )
 }
 
@@ -108,6 +109,7 @@ fn run() -> Result<(), Error> {
         ("install", Some(_)) => command::install(&state, true),
         ("cleanup", Some(_)) => command::cleanup(&state, true),
         ("post", Some(_)) => command::post(&state, true),
+        ("self-update", Some(_)) => command::self_update(&state, true),
         ("all", Some(_)) | ("", None) => command::all(&state),
         (other, _) => {
             return Err(format_err!("{} subcommand is not yet implemented.", other));
