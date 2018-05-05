@@ -19,13 +19,6 @@ function {
 
       /opt/*/bin(/N)
       /snap/bin
-      /usr/local/*/bin(/N)
-      /usr/local/opt/*/libexec/bin(/N)
-      /usr/local/share/npm/bin
-
-      /usr/local/bin
-
-      /usr/local/opt/coreutils/libexec/gnubin(/N)
 
       "$path[@]"
     )
