@@ -9,16 +9,12 @@ function {
       /sbin
 
       $HOME/.local/bin
-      $HOME/.local/share/umake/bin
 
       .git/safe/../../bin
 
       $HOME/.rvm/bin
       $HOME/.cargo/bin
       $HOME/.yarn/bin
-
-      /opt/*/bin(/N)
-      /snap/bin
 
       "$path[@]"
     )
