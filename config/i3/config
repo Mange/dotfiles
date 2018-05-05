@@ -4,7 +4,6 @@
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
 # TODO:
-#   * Termite as terminal (too hard on ubuntu; Gentoo or Arch has this solved)
 #   * System mode https://github.com/mohabaks/dotfiles/blob/master/config/i3-gaps/.config/i3/config#L212
 
 # {{{ Basic settings
@@ -136,10 +135,9 @@ bindsym Ctrl+Shift+Escape exec --no-startup-id xmodmap ~/.config/xmodmap/custom_
 bindsym $mod+Return exec i3-sensible-terminal
 
 # Rofi
-set $rofi_theme -lines 8 -eh 2 -width 100 -padding 900 -bw 0 -color-window argb:aa32302f,argb:aaa89984,argb:aaa89984 -line-margin 0 -line-padding 3 -font \\"DejaVu Sans 16\\"
-set $rofi_behavior -matching fuzzy
-bindsym $mod+d exec --no-startup-id "rofi -show combi -modi combi,window,run -combi-modi drun,window $rofi_theme $rofi_behavior"
-bindsym $mod+shift+d exec --no-startup-id "rofi -show run -matching fuzzy $rofi_theme $rofi_behavior"
+set $rofi_behavior -matching fuzzy -show-icons -terminal i3-sensible-terminal
+bindsym $mod+d exec --no-startup-id "rofi -show combi -modi combi,window,run -combi-modi drun,window $rofi_behavior"
+bindsym $mod+shift+d exec --no-startup-id "rofi -show run -matching fuzzy $rofi_behavior"
 # TODO: bindsym $mod+p exec --no-startup-id "some-form-of-rofi-adapter-for-bitwarden"
 
 # Xbacklight
