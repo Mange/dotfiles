@@ -2,7 +2,7 @@
 # bootstrap zsh so it will read all other startup files from the XDG config
 # directory, then load the real zshenv file.
 #
-# shellcheck source=/home/mange/.config/xdg_zealotry
-source "${XDG_CONFIG_HOME:-${HOME}/.config}/xdg_zealotry"
+# shellcheck source=/home/mange/.config/shells/xdg_zealotry
+source "${XDG_CONFIG_HOME:-${HOME}/.config}/shells/xdg_zealotry"
 # shellcheck source=/home/mange/.config/zsh/zshenv
 source "${XDG_CONFIG_HOME}/zsh/zshenv"
