@@ -52,7 +52,7 @@ faded_orange = #af3a03
 
 [colors]
 darkgray = ${gruvbox.gray_244}
-orange = ${xrdb:color9}
+orange = ${gruvbox.neutral_orange}
 white = ${gruvbox.light1}
 background = #00000000
 background-alt = #774e4e4e
@@ -229,13 +229,21 @@ label-separator = |
 inherit = module/base
 type = internal/volume
 
-format-volume = <ramp-volume> <label-volume>
-format-muted = <label-muted>
+format-volume = <ramp-volume> <bar-volume> <label-volume>
+format-muted = <label-muted> <bar-volume>   0%
 
 label-volume = %percentage:3%%
 label-muted = 
 label-muted-foreground = ${colors.darkgray}
 
+bar-volume-width = 10
+bar-volume-gradient = true
+bar-volume-indicator = │
+bar-volume-fill = ─
+bar-volume-empty = ─
+bar-volume-indicator-foreground = ${colors.white}
+bar-volume-fill-foreground = ${colors.darkgray}
+bar-volume-empty-foreground = ${colors.foreground-alt}
 ramp-volume-foreground = ${colors.darkgray}
 ramp-volume-0 = 
 ramp-volume-1 = 
