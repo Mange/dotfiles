@@ -1,30 +1,40 @@
 # vim: ft=sh
 
-export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-${HOME}/.config}"
-export XDG_DATA_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}"
-export XDG_CACHE_HOME="${XDG_CACHE_HOME:-${HOME}/.cache}"
+if [[ $_mange_xdg_zealotry != "yes" ]]; then
+  _mange_xdg_zealotry="yes"
 
-# XDG base directory exports for special snowflakes
+  # It's lovely when all my configs can rely on these variables actually being
+  # set and not have to hardcode the fallback values everywhere.
+  export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-${HOME}/.config}"
+  export XDG_DATA_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}"
+  export XDG_CACHE_HOME="${XDG_CACHE_HOME:-${HOME}/.cache}"
 
-# ZSH
-export ZDOTDIR="${XDG_CONFIG_HOME}/zsh"
-# HISTFILE is set in zshrc
+  #
+  # XDG base directory exports for special snowflakes
+  #
 
-# Ruby
-export GEMRC="${XDG_CONFIG_HOME}/ruby/gemrc"
-export IRBRC="${XDG_CONFIG_HOME}/ruby/irbrc"
+  # ZSH
+  export ZDOTDIR="${XDG_CONFIG_HOME}/zsh"
+  # HISTFILE is set in zshrc
 
-# Postgres
-export PSQLRC="${XDG_CONFIG_HOME}/postgresql/psqlrc"
+  # Ruby
+  export GEMRC="${XDG_CONFIG_HOME}/ruby/gemrc"
+  export IRBRC="${XDG_CONFIG_HOME}/ruby/irbrc"
 
-# tmux
-alias tmux='tmux -f "${XDG_CONFIG_HOME}/tmux/tmux.conf"'
-if [ -n "$XDG_RUNTIME_DIR" ]; then
-  export TMUX_TMPDIR="$XDG_RUNTIME_DIR"
+  # Postgres
+  export PSQLRC="${XDG_CONFIG_HOME}/postgresql/psqlrc"
+
+  # tmux
+  alias tmux='tmux -f "${XDG_CONFIG_HOME}/tmux/tmux.conf"'
+  if [ -n "$XDG_RUNTIME_DIR" ]; then
+    export TMUX_TMPDIR="$XDG_RUNTIME_DIR"
+  fi
+
+  # Taskwarrior
+  export TASKRC="${XDG_CONFIG_HOME}/taskwarrior/config"
+
+  # Xauthority
+  # Temporarily disabled; I need to get lightdm to actually write the file
+  # here. Not worth the fight currently...
+  # export XAUTHORITY="${XDG_RUNTIME_DIR}/Xauthority"
 fi
-
-# Taskwarrior
-export TASKRC="${XDG_CONFIG_HOME}/taskwarrior/config"
-
-# Xauthority
-# export XAUTHORITY="${XDG_RUNTIME_DIR}/Xauthority"

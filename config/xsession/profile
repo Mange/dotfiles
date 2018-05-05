@@ -1,6 +1,13 @@
 #!/usr/bin/env bash
 shopt -s nullglob
 
+
+# shellcheck source=/dev/null
+source "${XDG_CONFIG_HOME:-${HOME}/.config}/shells/common"
+
+# shellcheck source=/dev/null
+source "${XDG_CONFIG_HOME}/shells/enable-rvm"
+
 eval "$(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)"
 export SSH_AUTH_SOCK
 export GNOME_KEYRING_CONTROL

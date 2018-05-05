@@ -1,0 +1,22 @@
+# vim: ft=sh
+
+# Only run in bash or zsh
+if [ -n "${BASH_VERSION:-}" ] || [ -n "${ZSH_VERSION:-}" ]; then
+  if [[ $_mange_rvm_enabled != "yes" ]]; then
+    _mange_rvm_enabled="yes"
+
+    if [[ -s /usr/share/rvm/scripts/rvm ]]; then
+      # Arch-typical install directory
+      # shellcheck source=/dev/null
+      source /usr/share/rvm/scripts/rvm
+    elif [[ -s /usr/local/rvm/scripts/rvm ]]; then
+      # Debian-typical install directory
+      # shellcheck source=/dev/null
+      source /usr/local/rvm/scripts/rvm
+    elif [[ -s "$HOME/.rvm/scripts/rvm" ]]; then
+      # Manually per-user install directory
+      # shellcheck source=/dev/null
+      source "$HOME/.rvm/scripts/rvm"
+    fi
+  fi
+fi

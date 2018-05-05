@@ -21,6 +21,9 @@ profile = $HOME/.profile
 # xprofile file is loaded by most Xsession defaults
 xprofile = $HOME/.xprofile
 
+# Bash does not support XDG directories...
+bashrc = $HOME/.bashrc
+
 # RVM overwrites my custom $IRBRC setting.
 irbrc = $HOME/.irbrc
 

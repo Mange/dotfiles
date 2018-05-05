@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+# Shebang is here for vim syntax coloring; it would be useless to execute it.
+
+# It is important that this works in both bash and zsh, but other shells need
+# not apply.
+if [[ -n $BASH_VERSION || -n $ZSH_VERSION ]]; then
+  if [[ $_mange_customized_paths != "yes" ]]; then
+    _mange_customized_paths="yes"
+
+    if [[ -n "$BASH_VERSION" ]]; then
+      # Bash does not automatically have a $path array like ZSH; create it
+      # manualy by splitting existing PATH variable.
+      IFS=: read -r -a path <<< "$PATH"
+    fi
+
+    path=(
+      /usr/local/sbin
+      /usr/sbin
+      /sbin
+
+      "$HOME/.local/bin"
+
+      .git/safe/../../bin
+
+      "$HOME/.rvm/bin"
+      "$HOME/.cargo/bin"
+      "$HOME/.yarn/bin"
+
+      "${path[@]}"
+    )
+
+    if [[ -n "$ZSH_VERSION" ]]; then
+      # zsh has a way easier time exporting arrays to the path...
+      # -U (unique) removes any duplicated entries
+      export -U path
+    else
+      # Bash cannot filter out duplicated entries in an easy way like that... :(
+      PATH="$(IFS=:; echo "${path[*]}")"
+      export PATH
+      # Remove this temporary variable
+      unset path
+    fi
+  fi
+fi

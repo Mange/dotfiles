@@ -1,0 +1,7 @@
+# vim: ft=sh
+
+# shellcheck source=/dev/null
+source "${XDG_CONFIG_HOME:-${HOME}/.config}/shells/paths"
+
+# shellcheck source=/dev/null
+source "${XDG_CONFIG_HOME:-${HOME}/.config}/shells/xdg_zealotry"
