@@ -3,6 +3,9 @@
 set -e
 dotfiles_root="$(readlink --canonicalize "$(dirname "$0")")"
 
+# shellcheck source=/dev/null
+source "${dotfiles_root}/config/shells/xdg_zealotry"
+
 echo ":: Compiling binary"
 (cd "${dotfiles_root}/dotfiles" && cargo build --release)
 
