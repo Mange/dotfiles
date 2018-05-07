@@ -4,6 +4,9 @@ if has("termguicolor")
   set termguicolor
 endif
 
+" Support system-installed vim plugins
+set runtimepath^=/usr/share/vim/vimfiles
+
 runtime! before/**/*.vim
 
 runtime plugs.vim
