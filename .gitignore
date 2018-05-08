@@ -4,3 +4,6 @@ config/dotfiles/path
 
 # Allow machine-local files that are not added to the repo
 *.local
+
+# Some apps will create cache/data inside the config
+config/nvim/.netrwhist
