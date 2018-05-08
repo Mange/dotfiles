@@ -3,6 +3,9 @@
 rofi.theme: ~/.config/rofi/dark-theme.rasi
 rofi.show-icons: true
 
+! Scale automatically to HiDPI screens
+rofi.dpi: 1
+
 rofi.terminal: i3-sensible-terminal
 
 ! Tab to switch between modi.
