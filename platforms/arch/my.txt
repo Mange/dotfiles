@@ -104,6 +104,8 @@ docker-compose
 # Media
 vlc
 playerctl
+mpv
+youtube-dl
 
 # Fortunes :)
 fortune-mod # adds the fortunes command

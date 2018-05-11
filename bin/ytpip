@@ -1,0 +1,21 @@
+#!/usr/bin/bash
+set -ex
+
+if [[ $# == 1 ]]; then
+  url="$1"
+elif [[ $# == 0 ]]; then
+  # No argument? Let's check the clipboard
+  url="$(xsel --clipboard)"
+  if [[ $url != https* && $url == */watch?v=* ]]; then
+    # Nope, ask for the URL.
+    url=""
+  fi
+fi
+
+if [[ -z "$url" ]]; then
+  url="$(zenity --entry --title "URL" --text "Pick URL for Youtube PiP")"
+fi
+
+exec mpv --really-quiet --volume=50 --autofit=30% --geometry=-10-15 \
+  --ytdl --ytdl-format='mp4[height<=?720]' -ytdl-raw-options=playlist-start=1 \
+  "$url"
