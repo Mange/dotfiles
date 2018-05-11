@@ -135,7 +135,7 @@ bindsym Ctrl+Shift+Escape exec --no-startup-id xmodmap ~/.config/xmodmap/custom_
 bindsym $mod+Return exec i3-sensible-terminal
 
 # Rofi
-bindsym $mod+d exec --no-startup-id "rofi -show combi -modi combi,run,window -combi-modi drun,window"
+bindsym $mod+d exec --no-startup-id "rofi -show combi -modi combi,run,window,emoji -combi-modi drun,window,emoji"
 bindsym $mod+shift+d exec --no-startup-id "rofi -show run"
 # TODO: bindsym $mod+p exec --no-startup-id "some-form-of-rofi-adapter-for-bitwarden"
 
