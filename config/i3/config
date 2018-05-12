@@ -230,6 +230,7 @@ for_window [class="Spotify"] move to workspace $workspace9
 
 assign [class="Slack"] $workspace10
 assign [class="yakyak"] $workspace10
+assign [class="discord"] $workspace10
 
 # CopyQ clipboard manager
 for_window [class="copyq"] floating enable
