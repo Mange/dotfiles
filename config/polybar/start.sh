@@ -11,21 +11,13 @@ start-bars() {
 
 hidpi-settings() {
   export POLYBAR_FONT_0="DejaVu Sans Mono:size=16;1"
-  export POLYBAR_FONT_1="FontAwesome:size=16;1"
-  export POLYBAR_FONT_2="PowerlineSymbols:size=16;1"
-  # Devicons is named icomoon in the font file
-  export POLYBAR_FONT_3="icomoon:size=16;1"
-  export POLYBAR_FONT_4="Material Design Icons:size=16;1"
+  export POLYBAR_FONT_1="Symbols Nerd Font:size=16;1"
   export POLYBAR_BAR_HEIGHT=36
 }
 
 normal-settings() {
   export POLYBAR_FONT_0="DejaVu Sans Mono:size=10;2"
-  export POLYBAR_FONT_1="FontAwesome:size=8;2"
-  export POLYBAR_FONT_2="PowerlineSymbols:size=8;2"
-  # Devicons is named icomoon in the font file
-  export POLYBAR_FONT_3="icomoon:size=8;2"
-  export POLYBAR_FONT_4="Material Design Icons:size=12;3"
+  export POLYBAR_FONT_1="Symbols Nerd Font:size=10;3"
   export POLYBAR_BAR_HEIGHT=26
 }
 

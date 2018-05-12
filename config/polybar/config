@@ -81,9 +81,6 @@ inherit = bar/core
 monitor = ${env:MONITOR}
 font-0 = ${env:POLYBAR_FONT_0}
 font-1 = ${env:POLYBAR_FONT_1}
-font-2 = ${env:POLYBAR_FONT_2}
-font-3 = ${env:POLYBAR_FONT_3}
-font-4 = ${env:POLYBAR_FONT_4}
 height = ${env:POLYBAR_BAR_HEIGHT:20}
 
 [bar/top]
@@ -175,11 +172,11 @@ enable-scroll = false
 fuzzy-match = true
 format-padding = 0
 
-ws-icon-0 = 1:System;
-ws-icon-1 = 2:Code;
-ws-icon-2 = 3:Browse;
+ws-icon-0 = 1:System;
+ws-icon-1 = 2:Code;
+ws-icon-2 = 3:Browse;
 ws-icon-3 = 4;
-ws-icon-4 = 5:Email;
+ws-icon-4 = 5;
 ws-icon-5 = 9:Media;
 ws-icon-6 = 10:Chat;
 ws-icon-default = 
@@ -233,7 +230,7 @@ format-volume = <ramp-volume> <bar-volume> <label-volume>
 format-muted = <label-muted> <bar-volume>   0%
 
 label-volume = %percentage:3%%
-label-muted = 
+label-muted = 
 label-muted-foreground = ${colors.darkgray}
 
 bar-volume-width = 10
@@ -245,9 +242,9 @@ bar-volume-indicator-foreground = ${colors.white}
 bar-volume-fill-foreground = ${colors.darkgray}
 bar-volume-empty-foreground = ${colors.foreground-alt}
 ramp-volume-foreground = ${colors.darkgray}
-ramp-volume-0 = 
-ramp-volume-1 = 
-ramp-volume-2 = 
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
 
 [module/wifi]
 inherit = module/base
@@ -261,13 +258,13 @@ format-disconnected-padding = 2
 ;   <label-connected> (default)
 ;   <ramp-signal>
 format-connected = <label-connected>
-format-connected-prefix = " "
+format-connected-prefix = ""
 format-connected-prefix-foreground = ${colors.darkgray}
 
 ; Available tags:
 ;   <label-disconnected> (default)
 format-disconnected = <label-disconnected>
-format-disconnected-prefix = " "
+format-disconnected-prefix = ""
 format-disconnected-prefix-foreground = ${colors.darkgray}
 
 ; Available tags:
@@ -304,7 +301,7 @@ label-disconnected =
 
 ; Only applies if <animation-packetloss> is used
 animation-packetloss-0 = ⚠
-animation-packetloss-1 = 📶
+animation-packetloss-1 = 
 ; Framerate in milliseconds
 animation-packetloss-framerate = 500
 
@@ -320,13 +317,13 @@ format-disconnected-padding = 2
 ;   <label-connected> (default)
 ;   <ramp-signal>
 format-connected = <label-connected>
-format-connected-prefix = " "
+format-connected-prefix = "  "
 format-connected-prefix-foreground = ${colors.darkgray}
 
 ; Available tags:
 ;   <label-disconnected> (default)
 format-disconnected = <label-disconnected>
-format-disconnected-prefix = " "
+format-disconnected-prefix = "  "
 format-disconnected-prefix-foreground = ${colors.darkgray}
 
 ; Available tags:
