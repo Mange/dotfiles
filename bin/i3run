@@ -1,0 +1,101 @@
+#!/bin/bash
+
+# i3run
+# run, raise or minimize a program depending on its state.
+#
+# https://www.reddit.com/r/i3wm/comments/6x0p0q/oc_i3run/
+# https://gist.github.com/budRich/8810a88a5a24080f4c499c65da76853b
+#
+# if target window doesn't exist, a given command is launched.
+# if target window is on another workspace, it is moved to current
+# workspace. If target window doesn't have focus it will be given focus.
+# If target window has focus it will be sent to the scratchpad.
+#
+# This script is a demo to show some usage of another script i made,
+# i3get. But it is a usable demo. I hope you like it!
+# May the tiles be with you // budRich 2017
+#
+# usage:
+# run i3run with ONE of the following options to define target window:
+# -c CLASS, -i INSTANCE, -t TITLE
+# the last option you should include is: -e COMMAND
+# It is important that -e COMMAND is last of the options.
+#
+# example:
+# i3run -i sublime_text -e subl
+# bindsym Mod4+s exec --no-startup-id exec i3run -i sublime_text -e subl
+#
+# this example will look for a window with the instance sublime_text and
+# focus it if it exist, minimize it if it already is focused and run the
+# command: subl if it doesn't exist.
+
+# i3get is required for this script to work.
+# https://www.reddit.com/r/i3wm/comments/6wyarw/oc_i3get/
+I3GETPATH=$HOME/.local/bin/i3get
+
+# the options and its arguments is identical to what we are passing
+# to i3get later. So we store them in a array: acri for convenience.
+
+while getopts :c:i:t: option
+do
+  case "${option}" in
+    i) acri=("-i" "${OPTARG}") ;;
+    c) acri=("-c" "${OPTARG}") ;;
+    t) acri=("-t" "${OPTARG}") ;;
+  esac
+done
+
+# the -e option is handled in a special way, since it might contain
+# more than one word. This is also the reason we want it as the last option.
+# with these line the whole command after -e is stored in command.
+shift $((--OPTIND))
+command=${@}
+
+# lets get the con_id of the currently active window and the current workspace.
+# we store the results in an array. active window is current[0] and active
+# workspace is current[1]
+current=($(i3get -r nw))
+
+# check what target window is up to:
+target=($(i3get ${acri[@]} -r nwf))
+
+# perform action depending on results
+
+# if window doesn't exist, launch the command.
+# use i3get with -y (synch) option, to catch the con_id of the new window.
+if [[ -z ${target[0]} ]]; then
+  ${command} > /dev/null 2>&1 &
+  target=($(i3get ${acri[@]} -y -r nw))
+fi
+
+# if workspace of target is not equal to current workspace.
+# send target to current workspace.
+# by adding > /dev/null 2>&1 & ,we make sure we don't get annyoing
+# output from i3-msg in our buffer, we direct output to /dev/null instead.
+if [[ ${current[1]} != ${target[1]} ]]; then
+  mrk=$(i3get ${acri[@]} -r m)
+  if [[ -n $mrk ]]; then
+    mrk=${mrk:2:-2}
+    ofs=${mrk%%'-'*}
+    [[ $ofs = 'f' ]] \
+      && fs=enable || fs=disable
+  else
+    [[ ${target[2]#*_} = 'on"' ]] \
+      && fs=enable || fs=disable
+  fi
+
+  i3-msg [con_id=${target[0]}] \
+    move to workspace ${current[1]}, \
+    floating $fs > /dev/null 2>&1
+fi
+
+# if target window is active (current), send it to the scratchpad.
+# else focus target window.
+if [[ ${current[0]} = ${target[0]} ]]; then
+  [[ ${target[2]#*_} != 'on"' ]] && fs=t || fs=f
+  i3-msg [con_id=${target[0]}] \
+  mark "$fs-${target[0]}", \
+  move scratchpad > /dev/null 2>&1
+else
+  i3-msg [con_id=${target[0]}] focus > /dev/null 2>&1
+fi

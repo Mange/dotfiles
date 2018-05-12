@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# i3gw - "ghost window" wrapper for i3
+# ctrl+c, ctrl+v by budRich 2017
+# 
+# https://www.reddit.com/r/i3wm/comments/6x5vgp/oc_i3gw/
+# https://gist.github.com/budRich/d09cbfd07ffdc57680fbc51ffff3687b
+# 
+# i3-msg has an undocumented function (open) that creates
+# empty containers, or as I call them: ghosts.
+# Since these empty containers doesn't contain any windows
+# there is no instance/class/title to identify them, making
+# it difficult to control them. They do however have a con_id and
+# I found the easiest way to keep track of the ghosts is to
+# mark them. That is what this script does, it creates a ghost
+# get its con_id and mark it.
+# 
+# usage:
+# i3gw MARK
+# 
+# example:
+# i3gw casper
+# 
+# this will create a ghost marked casper, you can perform any action
+# you can perform on a regular container.
+# 
+# example:
+# i3-msg [con_mark=casper] move to workspace 2
+# i3-msg [con_mark=casper] split v
+# i3-msg [con_mark=casper] layout tabbed
+# i3-msg [con_mark=casper] kill
+# 
+# the last example (kill), destroys the container.
+
+name=${1:?"usage: i3gw MARK, you didn't request a mark."}
+
+w=$(i3-msg open)
+i3-msg [con_id=${w:22:-2}] floating disable, mark $name
+
+
