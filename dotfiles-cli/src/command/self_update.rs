@@ -40,6 +40,11 @@ fn copy_binary_to_bin_collection(state: &State) -> Result<(), Error> {
         .join("dotfiles");
     let config_path = state.root().join("bin").join("dotfiles");
 
+    // Replacing the existing binary is only possible if the file is unlinked (removed) first.
+    if config_path.exists() {
+        fs::remove_file(&config_path)?;
+    }
+
     fs::copy(&binary_path, &config_path).map_err(|i| {
         format_err!(
             "Failed to copy {} to {}: {}",
