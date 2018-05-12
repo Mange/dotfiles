@@ -8,7 +8,7 @@ pub fn run(state: &State, _called_explicitly: bool) -> Result<(), Error> {
 }
 
 fn compile_binary(state: &State) -> Result<(), Error> {
-    let cli_dir = state.root().join("dotfiles");
+    let cli_dir = state.root().join("dotfiles-cli");
 
     debug!("Compiling dotfiles binary");
     match Command::new("cargo")
@@ -34,7 +34,7 @@ fn compile_binary(state: &State) -> Result<(), Error> {
 fn copy_binary_to_bin_collection(state: &State) -> Result<(), Error> {
     let binary_path = state
         .root()
-        .join("dotfiles")
+        .join("dotfiles-cli")
         .join("target")
         .join("release")
         .join("dotfiles");

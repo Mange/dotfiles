@@ -19,7 +19,7 @@ This repo is structured in three different sections.
 
  * Root section (actual dotfiles)
  * Platforms section (setup scripts for setting up machines)
- * `dotfiles` section (CLI util for managing dotfiles)
+ * `dotfiles-cli` section (CLI util for managing dotfiles)
 
 ### Root section
 
@@ -54,10 +54,10 @@ chmod +x arch-bootstrap.sh
 ```
 
 
-### `dotfiles`
+### `dotfiles-cli`
 
-This CLI utility is written in Rust and can be called to manage the dotfiles in
-this repo, like installing them, etc.
+`dotfiles` is a CLI utility that is written in Rust and can be called to manage
+the dotfiles in this repo; installing files, etc.
 
 It will be extended in the future to deal with even more parts of this repo.
 
