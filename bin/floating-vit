@@ -1,4 +1,4 @@
 #!/bin/bash
 
 # Support for role=floating in i3/config
-exec termite --role=floating -e vit
+exec termite --role=floating --title "floating-vit" -e vit
