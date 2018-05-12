@@ -28,6 +28,7 @@ OPTIONS:
       pacman   (Install software)
       rust     (Rust setup)
       updates  (Installing updates)
+      fast     (Only fast sections; no updates or installs)
 USAGE
 }
 ONLY_SECTION="all"
@@ -60,7 +61,7 @@ while true; do
 done
 
 case "$ONLY_SECTION" in
-  all | pacman | rust | projects | neovim | aur | updates )
+  all | pacman | rust | projects | neovim | aur | updates | fast )
     # Valid; do nothing
     ;;
   *)
@@ -109,6 +110,44 @@ install-pacman() {
     set -e
   else
     echo "${green}Everything installed ✔${reset}"
+  fi
+}
+
+uninstall-pacman() {
+  local filename="$1"
+  local unwanted unwanted_packages installed_packages to_uninstall
+
+  unwanted=$(sed 's/#.*$//' "$filename" | sed '/^$/d' | sort)
+
+  # See if everything is already uninstalled by resolving all the packages
+  # (groups and indvidual) into their individual packages. Then filter them
+  # through the local package database to get a list of installed software.
+  unwanted_packages=$(set +e; echo "$unwanted" | pacman -Sp --print-format "%n" - | sort)
+  installed_packages=$(set +e; echo "$unwanted_packages" | pacman -Q - 2>/dev/null | awk '{ print $1 }' | sort)
+  to_uninstall="$(comm -12 <(echo "$unwanted_packages") <(echo "$installed_packages"))"
+
+  if [[ -n "$to_uninstall" ]]; then
+    subheader "Uninstalling software:"
+    echo "$to_uninstall" | column
+    set +e
+    echo "$red"
+
+    if output="$(echo "$to_uninstall" | $PACMAN -Rs --quiet - 2>&1)"; then
+      echo -n "${green} ✔${reset}"
+    else
+      echo "${red} ✘"
+      echo "${output}${reset}"
+    fi
+    echo "$reset"
+
+    # Remove from aursync repo; in case it was there.
+    for pkg in $to_uninstall; do
+      repo-remove -q /var/cache/pacman/custom/custom.db.tar "$pkg"
+    done
+
+    set -e
+  else
+    echo "${green}Everything uninstalled ✔${reset}"
   fi
 }
 
@@ -264,7 +303,7 @@ init-sudo() {
   sudo echo > /dev/null
 }
 
-if run-section "all"; then
+if run-section "fast"; then
   setup-gpg-auto-retrieve
 fi
 
@@ -273,6 +312,11 @@ if run-section "updates" || run-section "pacman"; then
 
   header "Refreshing pacman cache"
   $PACMAN -S --refresh --quiet
+fi
+
+if run-section "pacman" || run-section "fast"; then
+  header "Uninstall deprecated software"
+  uninstall-pacman "arch/uninstall.txt" || handle-failure
 fi
 
 if run-section "pacman"; then
@@ -303,7 +347,9 @@ if run-section "aur"; then
       compile-install-aur "arch/${HOSTNAME}-aur.txt" || handle-failure
     fi
   fi
+fi
 
+if run-section "fast"; then
   setup-nerd-fonts || handle-failure "Installing Nerd Font overrides"
 fi
 
@@ -346,7 +392,9 @@ fi
 if run-section "all"; then
   init-sudo
   install-fzf || handle-failure
+fi
 
+if run-section "fast"; then
   if hash gsettings 2>/dev/null; then
     gsettings set org.gnome.desktop.background show-desktop-icons false
   fi

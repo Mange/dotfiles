@@ -15,7 +15,7 @@ yakyak        # Desktop client for Google Hangouts
 rofi-emoji
 
 # Fonts (also see my.txt)
-nerd-fonts-complete
+ttf-nerd-fonts-symbols
 
 # Fortunes :)
 fortune-mod-archer

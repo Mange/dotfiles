@@ -1,0 +1,4 @@
+# vim:ft=config:nospell
+
+# replaced with ttf-nerd-fonts-symbols
+nerd-fonts-complete
