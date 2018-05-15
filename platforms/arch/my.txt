@@ -81,6 +81,9 @@ xsel
 
 # Firefox
 firefox-developer-edition
+hunspell
+hunspell-en_US
+# hunspell-sv # only exists in aur, see aur.txt
 
 # GNOME software
 deja-dup
