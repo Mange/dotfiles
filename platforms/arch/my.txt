@@ -38,8 +38,11 @@ task
 tree
 wget
 zsh-completions
-zsh-syntax-highlighting
 zsh-history-substring-search
+zsh-syntax-highlighting
+
+# Ranger
+ranger
 
 # Desktop env
 acpi # for battery indication, etc. in polybar
