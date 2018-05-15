@@ -134,6 +134,10 @@ bindsym Ctrl+Shift+Escape exec --no-startup-id xmodmap ~/.config/xmodmap/custom_
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
 
+# File manager
+bindsym $mod+period exec i3run -c floating-ranger -e termite --class floating-ranger -e ranger
+bindsym $mod+shift+period exec termite -e ranger
+
 # Rofi
 bindsym $mod+d exec --no-startup-id "rofi -show combi -modi combi,run,window,emoji -combi-modi drun,window,emoji"
 bindsym $mod+shift+d exec --no-startup-id "rofi -show run"
@@ -148,7 +152,7 @@ bindsym --release $mod+minus exec gnome-screenshot
 bindsym --release $mod+Shift+minus exec gnome-screenshot --area
 
 # Taskwarrior stuff
-bindsym $mod+t exec i3run -t floating-vit -e floating-vit
+bindsym $mod+t exec i3run -t floating-vit -e termite --class floating-vit -e vit
 bindsym $mod+n exec ~/.cargo/bin/new-task-gtk
 
 # }}}
@@ -240,9 +244,10 @@ for_window [title="New Task"] floating enable
 
 # Floating terminal windows.
 for_window [class="Termite" window_role="floating"] floating enable
+for_window [class="(?i)floating"] floating enable
 
-# Youtube PiP, etc.
-for_window [class="(?i)mpv"] floating enable
+# Youtube PiP
+for_window [title="(?i)youtube pip"] floating enable
 
 # }}}
 

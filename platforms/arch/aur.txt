@@ -32,3 +32,6 @@ fortune-mod-question-answer-jokes
 fortune-mod-rickandmorty
 fortune-mod-southpark
 fortune-mod-vimtips
+
+# Dictionaries
+hunspell-sv

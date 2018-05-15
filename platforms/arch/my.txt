@@ -38,8 +38,27 @@ task
 tree
 wget
 zsh-completions
-zsh-syntax-highlighting
 zsh-history-substring-search
+zsh-syntax-highlighting
+
+# Ranger
+ranger
+
+imagemagick # for image previews, post-processing, etc.
+ghostscript # imagemagick optional dependency for PDF support
+
+atool # for archives
+p7zip
+unrar
+unzip
+xz
+zip
+
+ffmpegthumbnailer # video previews
+highlight # code preview
+mediainfo
+transmission-cli # bittorrent info
+w3m # image previews, etc.
 
 # Desktop env
 acpi # for battery indication, etc. in polybar
@@ -62,6 +81,9 @@ xsel
 
 # Firefox
 firefox-developer-edition
+hunspell
+hunspell-en_US
+# hunspell-sv # only exists in aur, see aur.txt
 
 # GNOME software
 deja-dup
