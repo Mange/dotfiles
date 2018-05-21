@@ -94,7 +94,7 @@ exec --no-startup-id ~/.local/bin/autoscreens
 
 # Compositor
 exec --no-startup-id compton --config ~/.config/compton/compton.conf
-exec --no-startup-id redshift
+exec --no-startup-id redshift-gtk
 
 # Wallpaper, bars, etc.
 exec_always --no-startup-id $wallpaper_command
