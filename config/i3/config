@@ -81,7 +81,7 @@ client.urgent            $bright_red     $bright_red     $light1 $bright_red $br
 # }}}
 
 # {{{ Early startup applications
-set $wallpaper_command ~/bin/set-wallpaper
+set $wallpaper_command ~/.local/bin/set-wallpaper
 set $polybar_command ~/.config/polybar/start.sh
 
 # Lock screen on suspend, after screensaver, etc.
@@ -89,8 +89,8 @@ exec --no-startup-id light-locker
 
 # Keyboard, screens, etc.
 exec --no-startup-id xmodmap ~/.config/xmodmap/custom_keyboard
-exec --no-startup-id ~/bin/dynamic-startup
-exec --no-startup-id ~/bin/autoscreens
+exec --no-startup-id ~/.local/bin/dynamic-startup
+exec --no-startup-id ~/.local/bin/autoscreens
 
 # Compositor
 exec --no-startup-id compton --config ~/.config/compton/compton.conf
