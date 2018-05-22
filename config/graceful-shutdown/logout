@@ -1,0 +1,18 @@
+# vim: ft=config
+# Shut down all programs that I often run and that needs to be shut down
+# gracefully.
+
+# Firefox, so session can be restored properly
+firefox
+
+# Media players
+spotify
+mpv
+
+# Chat apps
+discord
+yakyak
+slack
+
+# Editors
+nvim

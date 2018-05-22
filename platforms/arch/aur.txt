@@ -13,6 +13,7 @@ yakyak        # Desktop client for Google Hangouts
 
 # My own stuff
 rofi-emoji
+graceful-shutdown
 
 # Fonts (also see my.txt)
 ttf-nerd-fonts-symbols
