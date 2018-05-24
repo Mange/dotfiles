@@ -224,7 +224,7 @@ label-separator = |
 
 [module/volume]
 inherit = module/base
-type = internal/volume
+type = internal/pulseaudio
 
 format-volume = <ramp-volume> <bar-volume> <label-volume>
 format-muted = <label-muted> <bar-volume>   0%
