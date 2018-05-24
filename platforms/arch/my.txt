@@ -77,6 +77,7 @@ wireless_tools # for Polybar
 workrave
 xorg-xbacklight
 xsel
+zenity # GUI prompts from scripts (ytpip, etc.)
 
 # Redshift + dependencies
 redshift

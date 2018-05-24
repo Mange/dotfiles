@@ -1,5 +1,5 @@
 #!/usr/bin/bash
-set -ex
+set -e
 
 if [[ $# == 1 ]]; then
   url="$1"
