@@ -288,8 +288,10 @@ export LESS_TERMCAP_so=$'\E[01;44;33m'
 export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;32m'
 
-# LESS should accept ANSI colors and higlight search results
-export LESS="-Rg"
+# Default less(1) options
+# --Raw-control-chars :: Support ANSI color control chars
+# --ignore-case       :: Smart case search (Ignore-case is normal case insensitive search)
+export LESS="--Raw-control-chars --quit-if-one-screen --ignore-case"
 
 # Use lesspipe if installed
 if whence 'lesspipe.sh' > /dev/null; then
