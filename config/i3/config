@@ -157,6 +157,37 @@ bindsym $mod+n exec ~/.cargo/bin/new-task-gtk
 
 # }}}
 
+# {{{ Dropdown terminal
+
+#  Run a floating, hidden terminal window at all times. This window can be
+#  toggled using $mod+g.
+#  (If you accidentally close it, you can open it again using $mod+shift+g.)
+
+set $dropdown_terminal_cmd termite --role dropdown
+set $dropdown_window_cond [class="Termite" window_role="dropdown"]
+
+# Toggle floating and hide the window as soon as it is created. Make it cover
+# 50% of screen in both directions too.
+for_window $dropdown_window_cond \
+    floating enable, \
+    move scratchpad, \
+    border pixel 5, \
+    resize set 50 ppt 50 ppt
+
+# $mod+g toggles the dropdown terminal and moves it to the center.
+bindsym $mod+g $dropdown_window_cond scratchpad show; \
+    $dropdown_window_cond move position center
+
+# $mod+shift+g starts a new instance of the terminal, then runs the same command as $mod+g.
+bindsym $mod+shift+g exec $dropdown_terminal_cmd; \
+    $dropdown_window_cond scratchpad show; \
+    $dropdown_window_cond move position center
+
+# Start it up in the background
+exec --no-startup-id $dropdown_terminal_cmd
+
+# }}}
+
 # {{{ Workspaces
 
 set $workspace1   "1:System"
