@@ -1,15 +1,16 @@
 # vim:ft=config:nospell
 
-copyq         # Clipboard manager with searchable and editable history.
-discord       # All-in-one voice and text chat for gamers that's free and secure.
-dropbox       # A free service that lets you bring your photos, docs, and videos anywhere and share them easily.
-http-prompt   # An interactive HTTP command-line client
-polybar-git   # A fast and easy-to-use status bar
-rvm           # RVM: Ruby Version Manager
-slack-desktop # Slack Desktop (Beta) for Linux
-spotify       # A proprietary music streaming service
-vit           # A terminal interface for Taskwarrior with Vim key bindings and colorization support
-yakyak        # Desktop client for Google Hangouts
+copyq             # Clipboard manager with searchable and editable history.
+discord           # All-in-one voice and text chat for gamers that's free and secure.
+dropbox           # A free service that lets you bring your photos, docs, and videos anywhere and share them easily.
+http-prompt       # An interactive HTTP command-line client
+polybar-git       # A fast and easy-to-use status bar
+rvm               # RVM: Ruby Version Manager
+shadowfox-updater # Dark theme for Firefox
+slack-desktop     # Slack Desktop (Beta) for Linux
+spotify           # A proprietary music streaming service
+vit               # A terminal interface for Taskwarrior with Vim key bindings and colorization support
+yakyak            # Desktop client for Google Hangouts
 
 # My own stuff
 rofi-emoji
