@@ -24,11 +24,15 @@ nag=You have higher priority tasks.
 
 # Urgency config
 
+# Low priority is less important than no priority (use use no priority as
+# "default"; High and Medium increases while Low decreases.
+urgency.uda.priority.L.coefficient=-3.0
+
 # Low Hanging Fruit should be prioritized as it should be quick to complete.
 urgency.user.tag.lhf.coefficient=2.0
 
 # Promises should be prioritized so people don't get sad.
-urgency.user.tag.promise.coefficient=2.0
+urgency.user.tag.promise.coefficient=4.0
 
 # Experiments are not as important.
-urgency.user.tag.experiment.coefficient=0.9
+urgency.user.tag.experiment.coefficient=-2.0
