@@ -11,3 +11,7 @@ racer
 rusty-tags
 cargo-edit
 cargo-watch
+
+# Desktop environment tools
+# (Most of these should move to AUR at some point, I'm sure...)
+run-or-raise

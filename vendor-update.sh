@@ -30,7 +30,3 @@ download bin/i3zen \
 # i3get
 download bin/i3get \
   "https://gist.githubusercontent.com/budRich/892c0153c06a27ea7bc89d8f8dec99d2/raw/f55457f5524b7f1f599663399247ba26e249dbb6/i3get"
-
-# i3run
-download bin/i3run \
-  "https://gist.githubusercontent.com/budRich/8810a88a5a24080f4c499c65da76853b/raw/5c4ea3606f8524c2965c49e5dbe73eb15783ead7/i3run"
