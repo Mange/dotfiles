@@ -56,7 +56,7 @@ fn define_app<'a, 'b>() -> App<'a, 'b> {
         .subcommand(
             SubCommand::with_name("install").about("Install all dotfiles where they should be."),
         )
-        .subcommand(SubCommand::with_name("cleanup").about("Clean up broken symlinks in $HOME."))
+        .subcommand(SubCommand::with_name("cleanup").about("Clean up broken symlinks in installation directories."))
         .subcommand(SubCommand::with_name("post").about("Runs post.sh script."))
         .subcommand(SubCommand::with_name("self-update").about("Recompiles and installs this binary from sources."))
         .subcommand(
