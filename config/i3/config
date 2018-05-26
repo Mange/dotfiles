@@ -274,8 +274,15 @@ for_window [class="copyq"] floating enable
 for_window [title="New Task"] floating enable
 
 # Floating terminal windows.
-for_window [class="Termite" window_role="floating"] floating enable
-for_window [class="(?i)floating"] floating enable
+for_window [class="Termite" window_role="floating"] \
+    floating enable, \
+    resize set 60 ppt 50 ppt, \
+    move position center
+
+for_window [class="(?i)floating"] \
+    floating enable, \
+    resize set 60 ppt 50 ppt, \
+    move position center
 
 # Youtube PiP
 for_window [title="(?i)youtube pip"] floating enable
