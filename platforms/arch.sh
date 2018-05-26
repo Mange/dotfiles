@@ -119,12 +119,23 @@ uninstall-pacman() {
 
   unwanted=$(sed 's/#.*$//' "$filename" | sed '/^$/d' | sort)
 
-  # See if everything is already uninstalled by resolving all the packages
-  # (groups and indvidual) into their individual packages. Then filter them
-  # through the local package database to get a list of installed software.
-  unwanted_packages=$(set +e; echo "$unwanted" | pacman -Sp --print-format "%n" - | sort)
-  installed_packages=$(set +e; echo "$unwanted_packages" | pacman -Q - 2>/dev/null | awk '{ print $1 }' | sort)
-  to_uninstall="$(comm -12 <(echo "$unwanted_packages") <(echo "$installed_packages"))"
+  # Filter out unknown package names (most likely packages installed through AUR
+  # and then removed).
+  unwanted_packages=()
+  for pkg in $unwanted; do
+    # Find exact matches of the package name
+    if pacman -S --quiet -s "$pkg" | grep --quiet "^${pkg}$" ; then
+      unwanted_packages+=("$pkg")
+    fi
+  done
+
+  if [[ "${#unwanted_packages[@]}" -eq 0 ]]; then
+    echo "${green}Everything uninstalled ✔${reset}"
+    return
+  fi
+
+  installed_packages=$(set +e; echo "${unwanted_packages[@]}" | pacman -Q - 2>/dev/null | awk '{ print $1 }' | sort)
+  to_uninstall="$(comm -12 <(echo "${unwanted_packages[@]}" | sort) <(echo "$installed_packages"))"
 
   if [[ -n "$to_uninstall" ]]; then
     subheader "Uninstalling software:"
@@ -132,7 +143,7 @@ uninstall-pacman() {
     set +e
     echo "$red"
 
-    if output="$(echo "$to_uninstall" | $PACMAN -Rs --quiet - 2>&1)"; then
+    if output="$(echo "$to_uninstall" | $PACMAN -Rs - 2>&1)"; then
       echo -n "${green} ✔${reset}"
     else
       echo "${red} ✘"
