@@ -188,6 +188,25 @@ exec --no-startup-id $dropdown_terminal_cmd
 
 # }}}
 
+# {{{ Dropdown Bitwarden
+#  Run a floating, hidden Bitwarden window at all times. This window can be
+#  toggled using $mod+shift+p.
+#  (If you accidentally close it, just start the app again.)
+
+set $bitwarden_window_cond [class="Bitwarden"]
+
+# Toggle floating and hide the window as soon as it is created.
+for_window $bitwarden_window_cond \
+    floating enable, \
+    move scratchpad
+
+# $mod+shift+p toggles the bitwarden window
+bindsym $mod+shift+p $bitwarden_window_cond scratchpad show
+
+# Start it up in the background
+exec --no-startup-id bitwarden
+# }}}
+
 # {{{ Workspaces
 
 set $workspace1   "1:System"
