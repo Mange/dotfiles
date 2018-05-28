@@ -64,6 +64,7 @@ w3m # image previews, etc.
 acpi # for battery indication, etc. in polybar
 blueman
 compton
+dunst # libnotify server
 feh
 i3-gaps
 lxappearance
