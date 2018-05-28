@@ -1,0 +1,27 @@
+#!/bin/bash
+
+set -e
+
+if [[ $1 == "--help" ]]; then
+  echo "USAGE: $0 [--force]"
+  exit 0
+fi
+
+force=no
+
+if [[ $1 == "--force" ]]; then
+  force=yes
+elif [[ $# -gt 0 ]]; then
+  echo "Unknown argument(s): $*" > /dev/stderr
+  exit 1
+fi
+
+if [[ $force == no ]]; then
+  answer=$(echo -e "No, I made a mistake.\\nYes, log out." | rofi -dmenu -p "Really log out?" -i -no-custom || true)
+  if [[ $answer != Yes* ]]; then
+    exit 0
+  fi
+fi
+
+graceful-shutdown --mine --wait-time 10.0 < "$XDG_CONFIG_HOME/graceful-shutdown/logout"
+exec i3-msg exit
