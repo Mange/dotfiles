@@ -23,5 +23,11 @@ if [[ $force == no ]]; then
   fi
 fi
 
+# Unmount all removable storage
+udiskie-umount --all
+
+# Shut down all my apps
 graceful-shutdown --mine --wait-time 10.0 < "$XDG_CONFIG_HOME/graceful-shutdown/logout"
+
+# Shut down i3; essentially logging me out
 exec i3-msg exit

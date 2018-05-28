@@ -73,6 +73,7 @@ pavucontrol
 rofi
 sysstat # sysstat installs mpstat(1) for bar-cpu
 termite
+udiskie # auto-mounter for devices (and tray icon)
 wireless_tools # for Polybar
 workrave
 xorg-xbacklight

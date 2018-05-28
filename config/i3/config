@@ -105,6 +105,7 @@ exec --no-startup-id blueman-applet # Bluetooth
 exec --no-startup-id copyq # Clipboard manager
 exec --no-startup-id dropbox start # Dropbox
 exec --no-startup-id nm-applet # NetworkManager
+exec --no-startup-id udiskie --tray # Device mounter
 
 # To deal with apps requesting privilege elevation
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
