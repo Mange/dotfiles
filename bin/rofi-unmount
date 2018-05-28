@@ -16,5 +16,5 @@ selection="$( \
 # /dev/foo: The Device Name
 if [[ -n "$selection" ]]; then
   device="${selection%%:*}" # Cut at first ":"
-  rofi -e "$(udiskie-umount "$device")"
+  exec udiskie-umount "$device"
 fi

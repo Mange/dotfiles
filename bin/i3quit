@@ -23,6 +23,14 @@ if [[ $force == no ]]; then
   fi
 fi
 
+# Show notification so user knows that the system is shutting down...
+notify-send \
+  --app-name System \
+  --icon /usr/share/icons/gnome/256x256/actions/system-log-out.png \
+  --urgency critical \
+  "Logging out" \
+  "Currently shutting down apps and quitting i3."
+
 # Unmount all removable storage
 udiskie-umount --all
 
