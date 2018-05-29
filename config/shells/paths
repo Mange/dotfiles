@@ -14,16 +14,13 @@ if [[ -n $BASH_VERSION || -n $ZSH_VERSION ]]; then
     fi
 
     path=(
-      /usr/local/sbin
-      /usr/sbin
-      /sbin
-
       "$HOME/.local/bin"
 
       .git/safe/../../bin
 
-      "$HOME/.rvm/bin"
       "$HOME/.cargo/bin"
+      "$HOME/.rvm/bin"
+
       "$HOME/.yarn/bin"
 
       "${path[@]}"
