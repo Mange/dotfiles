@@ -57,7 +57,6 @@ white = ${gruvbox.light1}
 background = #00000000
 background-alt = #774e4e4e
 foreground = ${gruvbox.light1}
-foreground-muted = ${gruvbox.dark3}
 foreground-alt = ${gruvbox.dark2}
 alert = ${gruvbox.bright_red}
 transparent-alert = #77fb4934
@@ -87,17 +86,9 @@ height = ${env:POLYBAR_BAR_HEIGHT:20}
 inherit = bar/base
 top = true
 
-modules-left = cpu ram task-counters
-modules-center = xwindow
-modules-right = volume battery wifi wired date
-
-[bar/bottom]
-inherit = bar/base
-bottom = true
-
-modules-left = i3
+modules-left = i3 task-counters
 modules-center = media-controls
-modules-right = next-task
+modules-right = volume battery wifi date time
 
 tray-detached = false
 tray-position = right
@@ -106,10 +97,9 @@ tray-offset-y = 0
 ;tray-maxsize = 16
 tray-padding = 0
 tray-transparent = true
-tray-scale = 1.0
+tray-scale = ${env:POLYBAR_TRAY_SCALE:1.0}
 
 [module/base]
-format-prefix-foreground = ${colors.darkgray}
 format-padding = 2
 
 [module/media-controls]
@@ -123,8 +113,7 @@ inherit = module/base
 type = custom/script
 exec = ~/.config/polybar/task-counters
 interval = 60
-format-prefix = "Tasks "
-format-prefix-foreground = ${colors.darkgray}
+format-prefix = " "
 click-left = floating-vit
 click-right = i3-sensible-terminal -e vit
 
@@ -148,46 +137,45 @@ ws-icon-5 = 9:Media;
 ws-icon-6 = 10:Chat;
 ws-icon-default = 
 
-format = <label-state> <label-mode>
+format = "<label-state> <label-mode>"
 
 label-mode = "  %mode%  "
 label-mode-background = ${colors.alert}
 
 # Focused is the workspace that is currently getting commands
-label-focused = %icon% %index%
+label-focused = "%index% %icon%"
 label-focused-background = ${colors.background-alt}
-label-focused-padding = 2
-label-focused-underline = ${gruvbox.neutral_purple}
+label-focused-padding = 1
 
 # Unfocused are workspaces that are not visible
-label-unfocused = %icon% %index%
+label-unfocused = "%index% %icon%"
 label-unfocused-foreground = ${colors.darkgray}
-label-unfocused-padding = 2
-label-unfocused-underline = ${colors.background-alt}
+label-unfocused-padding = 1
 
 # Urgent are workspaces with important events
-label-urgent = %icon%! %index%
-label-urgent-padding = 2
+label-urgent = "%index% %icon%!"
+label-urgent-padding = 1
 label-urgent-background = ${colors.transparent-alert}
-label-urgent-underline = ${colors.alert}
 
 # Visible are selected workspaces on other screens
-label-visible = %icon% %index%
+label-visible = "%index% %icon%"
 label-visible-foreground = ${colors.darkgray}
-label-visible-padding = 2
-label-visible-underline = ${colors.darkgray}
+label-visible-padding = 1
 
 [module/date]
 inherit = module/base
 type = internal/date
-format-prefix = " "
+format-prefix = " "
 date-alt = %A vecka %W
-# $gruvbox.light2
-date = %{F#d5c4a1}%F%{F-} %H:%M
-interval = 5
-format-foreground = ${colors.foreground}
+date = %F%
+interval = 120
 
-label-separator = |
+[module/time]
+inherit = module/base
+type = internal/date
+format-prefix = " "
+date = %H:%M
+interval = 10
 
 [module/volume]
 inherit = module/base
@@ -198,7 +186,7 @@ format-muted = <label-muted> <bar-volume>   0%
 
 label-volume = %percentage:3%%
 label-muted = 
-label-muted-foreground = ${colors.darkgray}
+label-muted-foreground = ${colors.orange}
 
 bar-volume-width = 10
 bar-volume-gradient = true
@@ -208,7 +196,6 @@ bar-volume-empty = ─
 bar-volume-indicator-foreground = ${colors.white}
 bar-volume-fill-foreground = ${colors.darkgray}
 bar-volume-empty-foreground = ${colors.foreground-alt}
-ramp-volume-foreground = ${colors.darkgray}
 ramp-volume-0 = 
 ramp-volume-1 = 
 ramp-volume-2 = 
@@ -272,53 +259,6 @@ animation-packetloss-1 = 
 ; Framerate in milliseconds
 animation-packetloss-framerate = 500
 
-[module/wired]
-inherit = module/base
-type = internal/network
-interface = ${env:POLYBAR_ETHERNET_DEVICE:enp3s0}
-interval = 3.0
-format-connected-padding = 2
-format-disconnected-padding = 2
-
-; Available tags:
-;   <label-connected> (default)
-;   <ramp-signal>
-format-connected = <label-connected>
-format-connected-prefix = "  "
-format-connected-prefix-foreground = ${colors.darkgray}
-
-; Available tags:
-;   <label-disconnected> (default)
-format-disconnected = <label-disconnected>
-format-disconnected-prefix = "  "
-format-disconnected-prefix-foreground = ${colors.darkgray}
-
-; Available tags:
-;   <label-connected> (default)
-;   <label-packetloss>
-;   <animation-packetloss>
-format-packetloss = <animation-packetloss> <label-connected>
-
-; Available tokens:
-;   %ifname%    [wireless+wired]
-;   %local_ip%  [wireless+wired]
-;   %essid%     [wireless]
-;   %signal%    [wireless]
-;   %upspeed%   [wireless+wired]
-;   %downspeed% [wireless+wired]
-;   %linkspeed% [wired]
-; Default: %ifname% %local_ip%
-label-connected =  %local_ip%
-
-; Available tokens:
-;   %ifname%    [wireless+wired]
-; Default: (none)
-label-disconnected =
-
-[module/xwindow]
-inherit = module/base
-type = internal/xwindow
-
 [module/battery]
 inherit = module/base
 type = internal/battery
@@ -348,21 +288,5 @@ ramp-capacity-2 = 
 ramp-capacity-2-foreground = ${gruvbox.bright_yellow}
 ramp-capacity-3 = 
 ramp-capacity-4 = 
-
-[module/cpu]
-inherit = module/base
-type = internal/cpu
-format = <label>
-format-prefix = "CPU "
-format-prefix-foreground = ${colors.darkgray}
-label = %percentage:3%%
-
-[module/ram]
-inherit = module/base
-type = internal/memory
-format = <label>
-format-prefix = "RAM "
-format-prefix-foreground = ${colors.darkgray}
-label = %gb_used:5%
 
 ; vim:ft=dosini

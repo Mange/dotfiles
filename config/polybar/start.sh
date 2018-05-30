@@ -6,19 +6,20 @@ stop-existing() {
 
 start-bars() {
   polybar top &
-  polybar bottom &
 }
 
 hidpi-settings() {
-  export POLYBAR_FONT_0="DejaVu Sans Mono:size=16;1"
-  export POLYBAR_FONT_1="Symbols Nerd Font:size=16;1"
+  export POLYBAR_FONT_0="Symbols Nerd Font:size=16;0"
+  export POLYBAR_FONT_1="DejaVu Sans Mono:size=16;0"
   export POLYBAR_BAR_HEIGHT=36
+  export POLYBAR_TRAY_SCALE=2.0
 }
 
 normal-settings() {
-  export POLYBAR_FONT_0="DejaVu Sans Mono:size=10;2"
-  export POLYBAR_FONT_1="Symbols Nerd Font:size=10;3"
+  export POLYBAR_FONT_0="Symbols Nerd Font:size=10;0"
+  export POLYBAR_FONT_1="DejaVu Sans Mono:size=10;0"
   export POLYBAR_BAR_HEIGHT=26
+  export POLYBAR_TRAY_SCALE=1.0
 }
 
 machine-settings() {
