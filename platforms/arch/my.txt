@@ -93,6 +93,12 @@ hunspell
 hunspell-en_US
 # hunspell-sv # only exists in aur, see aur.txt
 
+# Other spell check libraries
+aspell
+aspell-en
+aspell-sv
+ispell
+
 # GNOME software
 deja-dup
 gnome-calculator
