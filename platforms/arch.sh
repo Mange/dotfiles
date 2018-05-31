@@ -84,7 +84,7 @@ install-pacman() {
   local filename="$1"
   local wanted_software wanted_packages installed_packages needed
 
-  wanted_software=$(sed 's/#.*$//' "$filename" | sed '/^$/d' | sort)
+  wanted_software=$(sed 's/\s*#.*$//' "$filename" | sed '/^$/d' | sort)
 
   # See if everything is already installed by resolving all the packages
   # (groups and indvidual) into their individual packages. Then filter them
@@ -133,7 +133,7 @@ uninstall-pacman() {
     echo "${green}Everything uninstalled ✔${reset}"
     return
   fi
- 
+
   installed_packages=$(set +e; echo "${unwanted_packages[@]}" | pacman -Q - 2>/dev/null | awk '{ print $1 }' | sort)
   to_uninstall="$(comm -12 <(echo "${unwanted_packages[@]}" | sort) <(echo "$installed_packages"))"
 
