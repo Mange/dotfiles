@@ -20,6 +20,8 @@ graceful-shutdown
 
 # Fonts (also see my.txt)
 ttf-nerd-fonts-symbols
+ttf-ancient-fonts # Just because it is cool
+ttf-monaco
 
 # Fortunes :)
 fortune-mod-archer

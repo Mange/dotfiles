@@ -20,10 +20,26 @@ source-highlight # and lesspipe uses this to highlight code
 
 # Fonts
 # nerd-fonts installed in aur.txt
-noto-fonts
-noto-fonts-emoji
-noto-fonts-extra
-ttf-dejavu
+ttf-dejavu # My main font
+ttf-fira-mono
+otf-fira-mono
+ttf-hack
+ttf-inconsolata
+
+noto-fonts       # Android
+noto-fonts-emoji # Emoji
+noto-fonts-extra # etc.
+ttf-droid        # Android
+ttf-roboto       # Android
+
+ttf-liberation # Arial, Times New Roman, etc.
+ttf-freefont # FreeMono; monospaced Unicode font. Popular in Kaomoji, etc.
+
+# Eastern fonts, for Kaomoji, when opening Japanese websites, etc.
+otf-ipafont # Japanese
+ttf-arphic-uming # Chinese
+ttf-baekmuk # Korean
+ttf-indic-otf # Indic; includes ಠ_ಠ
 
 # CLI env
 curl
