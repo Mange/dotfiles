@@ -1,0 +1,70 @@
+; vim:ft=ini
+
+[general]
+status_path = "~/.local/share/vdirsyncer/status"
+
+[pair contacts]
+a = "contacts_local"
+b = "contacts_remote"
+collections = ["from a", "from b"]
+
+[storage contacts_local]
+type = "filesystem"
+path = "~/Contacts/personal"
+fileext = ".vcf"
+
+[storage contacts_remote]
+type = "google_contacts"
+token_file = "~/.local/share/vdirsyncer/contacts_token"
+client_id = "727231548834-6arhcpcs9ed1it49pj0t8nrqkirjqqcp.apps.googleusercontent.com"
+client_secret.fetch = ["command", "cat", "/home/mange/.local/share/vdirsyncer/google_client_secret"]
+
+[pair work_contacts]
+a = "work_contacts_local"
+b = "work_contacts_remote"
+collections = ["from a", "from b"]
+
+[storage work_contacts_local]
+type = "filesystem"
+path = "~/Contacts/work"
+fileext = ".vcf"
+
+[storage work_contacts_remote]
+type = "google_contacts"
+token_file = "~/.local/share/vdirsyncer/work_contacts_token"
+client_id = "727231548834-6arhcpcs9ed1it49pj0t8nrqkirjqqcp.apps.googleusercontent.com"
+client_secret.fetch = ["command", "cat", "/home/mange/.local/share/vdirsyncer/google_client_secret"]
+
+[pair calendar]
+a = "calendar_local"
+b = "calendar_remote"
+collections = ["from a", "from b"]
+metadata = ["color", "displayname"]
+
+[storage calendar_local]
+type = "filesystem"
+path = "~/Calendar/personal"
+fileext = ".ics"
+
+[storage calendar_remote]
+type = "google_calendar"
+token_file = "~/.local/share/vdirsyncer/calendar_token"
+client_id = "727231548834-6arhcpcs9ed1it49pj0t8nrqkirjqqcp.apps.googleusercontent.com"
+client_secret.fetch = ["command", "cat", "/home/mange/.local/share/vdirsyncer/google_client_secret"]
+
+[pair work_calendar]
+a = "work_calendar_local"
+b = "work_calendar_remote"
+collections = ["from a", "from b"]
+metadata = ["color", "displayname"]
+
+[storage work_calendar_local]
+type = "filesystem"
+path = "~/Calendar/work"
+fileext = ".ics"
+
+[storage work_calendar_remote]
+type = "google_calendar"
+token_file = "~/.local/share/vdirsyncer/work_calendar_token"
+client_id = "727231548834-6arhcpcs9ed1it49pj0t8nrqkirjqqcp.apps.googleusercontent.com"
+client_secret.fetch = ["command", "cat", "/home/mange/.local/share/vdirsyncer/google_client_secret"]
