@@ -169,12 +169,13 @@ set $dropdown_terminal_cmd termite --role dropdown
 set $dropdown_window_cond [class="Termite" window_role="dropdown"]
 
 # Toggle floating and hide the window as soon as it is created. Make it cover
-# 50% of screen in both directions too.
+# a slightly-bigger-than-default size too. (Percent resize does not work in
+# multi-screen contexts)
 for_window $dropdown_window_cond \
     floating enable, \
+    resize set 900 600, \
     move scratchpad, \
-    border pixel 5, \
-    resize set 50 ppt 50 ppt
+    border pixel 5
 
 # $mod+g toggles the dropdown terminal and moves it to the center.
 bindsym $mod+g $dropdown_window_cond scratchpad show; \
