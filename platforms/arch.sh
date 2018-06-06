@@ -302,6 +302,13 @@ setup-nerd-fonts() {
   fi
 }
 
+enable-user-systemd-unit() {
+  if [[ $(systemctl is-enabled --user "$1") != "enabled" ]]; then
+    subheader "Enabling $1 at login"
+    systemctl enable --user "$1" || handle-failure "Enabling $1 at login"
+  fi
+}
+
 enable-systemd-unit() {
   if [[ $(systemctl is-enabled "$1") != "enabled" ]]; then
     subheader "Enabling $1 at boot"
@@ -416,6 +423,10 @@ if run-section "fast"; then
   enable-systemd-unit "NetworkManager"
   enable-systemd-unit "lightdm"
   enable-systemd-unit "bluetooth"
+
+  if [[ -f ~/.local/share/vdirsyncer/google_client_secret ]]; then
+    enable-user-systemd-unit "vdirsyncer.timer"
+  fi
 
   if hash docker 2>/dev/null; then
     enable-systemd-unit "docker"
