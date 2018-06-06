@@ -1,4 +1,4 @@
-# vim:ft=text:nospell
+# vim:ft=config:nospell
 # My stuff
 
 # Neovim
@@ -61,7 +61,16 @@ zsh-syntax-highlighting
 libqalculate
 gnuplot # For plotting support
 
-# Ranger
+# CLI calendar
+khal
+python-setproctitle
+
+vdirsyncer
+python-requests-oauthlib # Google support for vdirsyncer
+
+#
+# Ranger (CLI file manager)
+#
 ranger
 
 imagemagick # for image previews, post-processing, etc.
@@ -80,7 +89,9 @@ mediainfo
 transmission-cli # bittorrent info
 w3m # image previews, etc.
 
+#
 # Desktop env
+#
 acpi # for battery indication, etc. in polybar
 blueman
 compton
@@ -153,15 +164,19 @@ seahorse
 shotwell
 system-config-printer
 
-# Docker
-docker
-docker-compose
-
 # Media
 vlc
 playerctl
 mpv
 youtube-dl
+
+#
+# Misc
+#
+
+# Docker
+docker
+docker-compose
 
 # Fortunes :)
 fortune-mod # adds the fortunes command

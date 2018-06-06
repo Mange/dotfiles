@@ -7,6 +7,9 @@ if [[ -d ~/.config/zsh/vendor ]]; then
   rm -rf ~/.config/zsh/vendor
 fi
 
+# Create directory for vdirsyncer settings
+mkdir -p ~/.local/share/vdirsyncer
+
 # Install Vim plugs
 if [[ ! -f "${XDG_DATA_HOME}/nvim/site/autoload/plug.vim" ]]; then
   echo "Downloading Vim plug"
