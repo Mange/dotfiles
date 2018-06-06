@@ -57,6 +57,10 @@ zsh-completions
 zsh-history-substring-search
 zsh-syntax-highlighting
 
+# Calculator
+libqalculate
+gnuplot # For plotting support
+
 # Ranger
 ranger
 
