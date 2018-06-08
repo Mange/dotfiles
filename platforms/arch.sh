@@ -307,12 +307,23 @@ enable-user-systemd-unit() {
     subheader "Enabling $1 at login"
     systemctl enable --user "$1" || handle-failure "Enabling $1 at login"
   fi
+
+
+  if [[ $(systemctl is-active --user "$1") != "active" ]]; then
+    subheader "Starting $1"
+    systemctl start --user "$1" || handle-failure "Starting $1"
+  fi
 }
 
 enable-systemd-unit() {
   if [[ $(systemctl is-enabled "$1") != "enabled" ]]; then
     subheader "Enabling $1 at boot"
     sudo systemctl enable "$1" || handle-failure "Enabling $1 at boot"
+  fi
+
+  if [[ $(systemctl is-active "$1") != "active" ]]; then
+    subheader "Starting $1"
+    sudo systemctl start "$1" || handle-failure "Starting $1"
   fi
 }
 
