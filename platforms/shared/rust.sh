@@ -97,6 +97,6 @@ install-nightly-crates() {
 }
 
 cargo-update() {
-  header "Updating all creates"
+  header "Updating all crates"
   run-rust-cmd cargo install-update -a
 }
