@@ -93,6 +93,7 @@ w3m # image previews, etc.
 # Desktop env
 #
 acpi # for battery indication, etc. in polybar
+autorandr
 blueman
 compton
 dunst # libnotify server

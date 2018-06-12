@@ -1,0 +1,4 @@
+#!/usr/bin/sh
+
+set-wallpaper
+"${XDG_CONFIG_HOME:-$HOME/.config}/polybar/start.sh"
