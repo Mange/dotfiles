@@ -125,7 +125,7 @@
     #   %n  progress value if set without any extra characters
     #   %%  Literal %
     # Markup is allowed
-    format = "<b>%s</b>\n%b"
+    format = "<b>%s</b> (%a)\n%p %b"
 
     # Alignment of message text.
     # Possible values are "left", "center" and "right".
@@ -285,6 +285,18 @@
 # to "".
 # NOTE: It might be helpful to run dunst -print in a terminal in order
 # to find fitting options for rules.
+
+# I want to match only on calendar notifications from Google Calendar in
+# Firefox, but that's not really possible because Firefox does not send any
+# details about that to match on. Instead, utilize that I get very few
+# notifications from *other* things in Firefox and just mark all Firefox
+# notifications as critical.
+# Maybe this could be improved at some point further down the line...
+[firefox-calendar]
+  appname = "Firefox Developer Edition"
+  urgency = critical
+  timeout = 0
+  set_transient = no
 
 #[espeak]
 #    summary = "*"
