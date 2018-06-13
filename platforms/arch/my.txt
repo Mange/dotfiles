@@ -65,7 +65,7 @@ gnuplot # For plotting support
 khal
 python-setproctitle
 
-vdirsyncer
+# vdirsyncer # temporarily use vdirsyncer-git
 python-requests-oauthlib # Google support for vdirsyncer
 
 #

@@ -2,3 +2,4 @@
 
 # replaced with ttf-nerd-fonts-symbols
 nerd-fonts-complete
+vdirsyncer # temporarily use vdirsyncer-git
