@@ -15,6 +15,7 @@ fileext = ".vcf"
 
 [storage contacts_remote]
 type = "google_contacts"
+read_only = true
 token_file = "~/.local/share/vdirsyncer/contacts_token"
 client_id = "727231548834-6arhcpcs9ed1it49pj0t8nrqkirjqqcp.apps.googleusercontent.com"
 client_secret.fetch = ["command", "cat", "/home/mange/.local/share/vdirsyncer/google_client_secret"]
@@ -31,6 +32,7 @@ fileext = ".vcf"
 
 [storage work_contacts_remote]
 type = "google_contacts"
+read_only = true
 token_file = "~/.local/share/vdirsyncer/work_contacts_token"
 client_id = "727231548834-6arhcpcs9ed1it49pj0t8nrqkirjqqcp.apps.googleusercontent.com"
 client_secret.fetch = ["command", "cat", "/home/mange/.local/share/vdirsyncer/google_client_secret"]
@@ -48,6 +50,7 @@ fileext = ".ics"
 
 [storage calendar_remote]
 type = "google_calendar"
+read_only = true
 token_file = "~/.local/share/vdirsyncer/calendar_token"
 client_id = "727231548834-6arhcpcs9ed1it49pj0t8nrqkirjqqcp.apps.googleusercontent.com"
 client_secret.fetch = ["command", "cat", "/home/mange/.local/share/vdirsyncer/google_client_secret"]
@@ -65,6 +68,7 @@ fileext = ".ics"
 
 [storage work_calendar_remote]
 type = "google_calendar"
+read_only = true
 token_file = "~/.local/share/vdirsyncer/work_calendar_token"
 client_id = "727231548834-6arhcpcs9ed1it49pj0t8nrqkirjqqcp.apps.googleusercontent.com"
 client_secret.fetch = ["command", "cat", "/home/mange/.local/share/vdirsyncer/google_client_secret"]
