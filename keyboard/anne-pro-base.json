@@ -327,17 +327,17 @@
       "w": 2,
       "h": 2
     },
-    "\n\n\n,\n\n\n\n\n<",
+    "\n\n\n\n\n\n\n\n, <",
     {
       "w": 2,
       "h": 2
     },
-    "\n\n\n.\n\n\n\n\n>",
+    "\n\n\nINS\n\n\n\n\n. >",
     {
       "w": 2,
       "h": 2
     },
-    "\n\n\n/\n\n\n\n\n?",
+    "\n\n\nDEL\n\n\n\n\n/ ?",
     {
       "t": "#fcfcfc",
       "a": 5,
