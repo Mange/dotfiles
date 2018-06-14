@@ -1,0 +1,8 @@
+settings:
+  ghost_others: true
+modifiers:
+  "Hyper":
+    key_color: "#ff0000"
+  "<i class='kb kb-Return-2'></i>":
+    bottom_left: "New terminal"
+    bottom_left_color: "#ff0000"

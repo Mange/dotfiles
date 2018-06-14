@@ -9,8 +9,26 @@ require 'pry'
 DOWNLOAD_NAME = 'keyboard-layout.png'.freeze
 
 def main
-  layout_file = find_layout_file
-  image_file = layout_file.sub(/\.json$/, '.png')
+  if ARGV.include?('--help')
+    print_help
+    exit
+  end
+
+  if ARGV.size != 2
+    print_help
+    exit 1
+  end
+
+  layout_file = ARGV[0]
+  image_file = ARGV[1]
+
+  # Basic sanity check
+  if File.extname(layout_file) != ".json"
+    raise "Oops? Expected layout file to be a .json file!"
+  end
+  if File.extname(image_file) != ".png"
+    raise "Oops? Expected image file to be a .png file!"
+  end
 
   driver = setup_firefox
   driver.navigate.to 'http://www.keyboard-layout-editor.com/#/'
@@ -18,9 +36,16 @@ def main
   download_image(driver, image_file)
 end
 
-def find_layout_file
-  # TODO: Read from ARGV
-  File.expand_path('../anne-pro-base.json', __FILE__)
+def print_help
+  STDERR.puts <<~HELP
+    Usage: #$0 [LAYOUT_FILE] [IMAGE_FILE]
+
+    Generates an image from the specified LAYOUT_FILE and saves it as a PNG
+    image at IMAGE_FILE.
+
+    Example:
+      #$0 foo.json rendered_foo.png
+  HELP
 end
 
 def setup_firefox
@@ -53,7 +78,7 @@ def upload_layout(driver, layout_file)
     uploader
   )
   sleep 0.1 # Wait for JS to execute script
-  uploader.send_keys(layout_file)
+  uploader.send_keys(File.expand_path(layout_file))
 end
 
 def download_image(driver, image_file)
@@ -104,12 +129,7 @@ def wait_for_file_to_download(filename)
 end
 
 def rename_downloaded_image(downloaded_file, target_file)
-  if File.exist?(target_file) && File.read(target_file) != File.read(downloaded_file)
-    print "#{target_file} already exists and is different. Overwrite? [Yn]"
-    answer = gets.chomp
-    if answer != "y" && answer != "Y" && answer != ""
-      raise "Aborted"
-    end
+  if File.exist?(target_file)
     File.delete(target_file)
   end
 
