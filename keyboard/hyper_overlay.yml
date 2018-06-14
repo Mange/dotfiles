@@ -1,0 +1,209 @@
+settings:
+  ghost_others: true
+modifiers:
+  "Hyper":
+    key_color: "#ff0000"
+  "uArr": # Shift
+    key_color: "#ff52f8"
+  "Ctrl":
+    key_color: "#00ff00"
+
+  "kb-Return-2": # Enter
+    top_center: ""
+    center: "New terminal"
+    center_color: "#ff0000"
+
+  "C":
+    center_left: "Reload i3"
+    center_left_color: "#ff52f8"
+
+  "R":
+    center_left: "Restart i3"
+    center_left_color: "#ff52f8"
+    bottom_right: ""
+
+  "E":
+    center_left: "Log out"
+    center_left_color: "#ff52f8"
+
+  "Esc":
+    top_center: "Esc / `"
+    center_left: "(Esc) Lock screen"
+    center_left_color: "#ff52f8"
+    bottom_right: "(`) Last workspace"
+    bottom_right_color: "#ff0000"
+
+  "X":
+    center_left: "Reflow screens"
+    center_left_color: "#ff52f8"
+
+  ".":
+    bottom_left: "Ranger (floating)"
+    bottom_left_color: "#ff0000"
+    center_left: "Ranger (full)"
+    center_left_color: "#ff52f8"
+    bottom_right: ""
+
+  "D":
+    bottom_left: "Rofi"
+    bottom_left_color: "#ff0000"
+    center_left: "Rofi (run modi)"
+    center_left_color: "#ff52f8"
+
+  "-":
+    bottom_left: "Save screenshot"
+    bottom_left_color: "#ff0000"
+    center_left: "Area screenshot"
+    center_left_color: "#ff52f8"
+    bottom_right: ""
+
+  "T":
+    bottom_left: "Show tasks (floating)"
+    bottom_left_color: "#ff0000"
+    bottom_right: ""
+
+  "N":
+    bottom_left: "Add new task"
+    bottom_left_color: "#ff0000"
+
+  "G":
+    bottom_left: "Terminal (dropdown)"
+    bottom_left_color: "#ff0000"
+    center_left: "(Start dropdown Terminal)"
+    center_left_color: "#ff52f8"
+
+  "P":
+    center_left: "Password manager (dropdown)"
+    center_left_color: "#ff52f8"
+    bottom_right: ""
+
+  "1":
+    bottom_left: "System workspace"
+    bottom_left_color: "#ff0000"
+    bottom_right: ""
+
+  "2":
+    bottom_left: "Code workspace"
+    bottom_left_color: "#ff0000"
+    bottom_right: ""
+
+  "3":
+    bottom_left: "Browse workspace"
+    bottom_left_color: "#ff0000"
+    bottom_right: ""
+
+  "4":
+    bottom_left: "4th workspace"
+    bottom_left_color: "#ff0000"
+    bottom_right: ""
+
+  "5":
+    bottom_left: "5th workspace"
+    bottom_left_color: "#ff0000"
+    bottom_right: ""
+
+  "6":
+    bottom_left: "6th workspace"
+    bottom_left_color: "#ff0000"
+    bottom_right: ""
+
+  "7":
+    bottom_left: "7th workspace"
+    bottom_left_color: "#ff0000"
+    bottom_right: ""
+
+  "8":
+    bottom_left: "8th workspace"
+    bottom_left_color: "#ff0000"
+    bottom_right: ""
+
+  "9":
+    bottom_left: "Media workspace"
+    bottom_left_color: "#ff0000"
+    bottom_right: ""
+
+  "0":
+    bottom_left: "Chat workspace"
+    bottom_left_color: "#ff0000"
+    bottom_right: ""
+
+  "H":
+    top_center: ""
+    bottom_right: ""
+    bottom_left: "Screen ←"
+    center: "Focus ←"
+    center_color: "#ff0000"
+    bottom_left_color: "#00ff00"
+
+  "J":
+    top_center: ""
+    bottom_right: ""
+    center: "Focus ↓"
+    bottom_left: "Screen ↓"
+    center_color: "#ff0000"
+    bottom_left_color: "#00ff00"
+
+  "K":
+    top_center: ""
+    bottom_right: ""
+    center: "Focus ↑"
+    bottom_left: "Screen ↑"
+    center_color: "#ff0000"
+    bottom_left_color: "#00ff00"
+
+  "L":
+    top_center: ""
+    bottom_right: ""
+    center: "Focus →"
+    bottom_left: "Screen →"
+    center_color: "#ff0000"
+    bottom_left_color: "#00ff00"
+
+  "Q":
+    bottom_left: "Toggle split/stacked"
+    bottom_left_color: "#ff0000"
+    center_left: "Kill window"
+    center_left_color: "#ff52f8"
+
+  "V":
+    bottom_left: "Vertcal split"
+    bottom_left_color: "#ff0000"
+
+  "S":
+    bottom_left: "Horizontal split"
+    bottom_left_color: "#ff0000"
+
+  "F":
+    bottom_left: "Toggle fullscreen"
+    bottom_left_color: "#ff0000"
+
+  "W":
+    bottom_left: "Stacked layout"
+    bottom_left_color: "#ff0000"
+    center_left: "Tabbed layout"
+    center_left_color: "#ff52f8"
+
+  "mdash": # Space
+    bottom_left: "Focus floating"
+    bottom_left_color: "#ff0000"
+    center_left: "Toggle floating"
+    center_left_color: "#ff52f8"
+
+  "A":
+    bottom_left: "Focus parent"
+    bottom_left_color: "#ff0000"
+    center_left: "Focus child"
+    center_left_color: "#ff52f8"
+
+  "Z":
+    bottom_left: "Zen mode"
+    bottom_left_color: "#ff0000"
+
+  "R":
+    bottom_left: "Resize mode"
+    bottom_left_color: "#ff0000"
+    bottom_right: ""
+
+  "M":
+    bottom_left: "Media mode"
+    bottom_left_color: "#ff0000"

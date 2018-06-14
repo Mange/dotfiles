@@ -36,8 +36,15 @@ class Keyboard
   end
 
   def find_key(text:)
+    matcher =
+      if text !~ /[a-z]/i
+        Regexp.new(Regexp.quote(text))
+      else
+        Regexp.new("\\b#{Regexp.quote(text)}\\b")
+      end
+
     rows.each do |row|
-      if (key = row.keys.find { |key| key.text.strip == text })
+      if (key = row.keys.find { |key| matcher.match?(key.text) })
         return key
       end
     end
