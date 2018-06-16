@@ -9,7 +9,6 @@ modifiers:
     key_color: "#00ff00"
 
   "kb-Return-2": # Enter
-    top_center: ""
     center: "New terminal"
     center_color: "#ff0000"
 
@@ -30,8 +29,9 @@ modifiers:
     top_center: "Esc / `"
     center_left: "(Esc) Lock screen"
     center_left_color: "#ff52f8"
-    bottom_right: "(`) Last workspace"
-    bottom_right_color: "#ff0000"
+    bottom_left: "(`) Last workspace"
+    bottom_left_color: "#ff0000"
+    bottom_right: ""
 
   "X":
     center_left: "Reflow screens"
@@ -130,33 +130,37 @@ modifiers:
   "H":
     top_center: ""
     bottom_right: ""
-    bottom_left: "Screen ←"
     center: "Focus ←"
     center_color: "#ff0000"
+    center_size: 8
+    bottom_left: "Focus screen ←"
     bottom_left_color: "#00ff00"
 
   "J":
     top_center: ""
     bottom_right: ""
     center: "Focus ↓"
-    bottom_left: "Screen ↓"
     center_color: "#ff0000"
+    center_size: 8
+    bottom_left: "Focus screen ↓"
     bottom_left_color: "#00ff00"
 
   "K":
     top_center: ""
     bottom_right: ""
     center: "Focus ↑"
-    bottom_left: "Screen ↑"
     center_color: "#ff0000"
+    center_size: 8
+    bottom_left: "Focus screen ↑"
     bottom_left_color: "#00ff00"
 
   "L":
     top_center: ""
     bottom_right: ""
     center: "Focus →"
-    bottom_left: "Screen →"
     center_color: "#ff0000"
+    center_size: 8
+    bottom_left: "Focus screen →"
     bottom_left_color: "#00ff00"
 
   "Q":

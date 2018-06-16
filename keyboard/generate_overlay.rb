@@ -23,6 +23,8 @@ using Refinements
 DEFAULT_OPTIONS = {
   'a' => 0,
   'c' => '#cccccc',
+  'fa' => [nil] * 12,
+  'f' => 3,
 }.freeze
 
 class Keyboard
@@ -143,6 +145,19 @@ class Key
     :center_color,
     :bottom_center_color,
     :front_center_color,
+
+    :upper_left_size,
+    :bottom_left_size,
+    :top_right_size,
+    :bottom_right_size,
+    :front_left_size,
+    :front_right_size,
+    :center_left_size,
+    :center_right_size,
+    :top_center_size,
+    :center_size,
+    :bottom_center_size,
+    :front_center_size,
   )
 
   def initialize(options, text)
@@ -153,6 +168,7 @@ class Key
     @options = options
     parse_text(text, alignment)
     parse_color(options['t'], alignment)
+    parse_sizes(options['fa'])
   end
 
   [
@@ -195,6 +211,26 @@ class Key
     end
   end
 
+  [
+    :upper_left_size,
+    :bottom_left_size,
+    :top_right_size,
+    :bottom_right_size,
+    :front_left_size,
+    :front_right_size,
+    :center_left_size,
+    :center_right_size,
+    :top_center_size,
+    :center_size,
+    :bottom_center_size,
+    :front_center_size,
+  ].each do |name|
+    define_method("#{name}=") do |new_value|
+      instance_variable_set("@#{name}", new_value)
+      rerender_size_options
+    end
+  end
+
   def local_options
     options.slice('x', 'y', 'w', 'h', 'x2', 'y2', 'w2', 'h2', 'l', 'n')
   end
@@ -213,6 +249,44 @@ class Key
 
   def key_color=(value)
     options['c'] = value
+  end
+
+  def default_size
+    option('f')
+  end
+
+  def default_size=(size)
+    options['f'] = size
+    rerender_size_options
+  end
+
+  def render_full_fa
+    [
+      upper_left_size,
+      bottom_left_size,
+      top_right_size,
+      bottom_right_size,
+      front_left_size,
+      front_right_size,
+      center_left_size,
+      center_right_size,
+      top_center_size,
+      center_size,
+      bottom_center_size,
+      front_center_size,
+    ]
+  end
+
+  def render_simplified_fa
+    sizes = render_full_fa.
+      map { |size| size || default_size }. # replace placeholder nil with actual default
+      reverse.drop_while { |size| size == default_size } # cut off redundant end sizes
+
+    if sizes.empty?
+      [default_size]
+    else
+      sizes.reverse
+    end
   end
 
   def text
@@ -237,6 +311,11 @@ class Key
     rendered_options = options.unmerge(current_global_state)
     # Update global state for the next render
     current_global_state.merge!(global_options)
+
+    # simplify fa
+    if rendered_options['fa']
+      rendered_options['fa'] = render_simplified_fa
+    end
 
     rendered_text =
       if current_global_state['a'].to_i > 0 && text =~ /\A(\n)*[^\n]+(\n)*\z/m
@@ -310,6 +389,22 @@ class Key
     end
   end
 
+  def parse_sizes(list)
+    list ||= []
+    @upper_left_size = list[0]
+    @bottom_left_size = list[1]
+    @top_right_size = list[2]
+    @bottom_right_size = list[3]
+    @front_left_size = list[4]
+    @front_right_size = list[5]
+    @center_left_size = list[6]
+    @center_right_size = list[7]
+    @top_center_size = list[8]
+    @center_size = list[9]
+    @bottom_center_size = list[10]
+    @front_center_size = list[11]
+  end
+
   def rerender_color_option
     rendered_colors = [
       @upper_left_color,
@@ -332,6 +427,10 @@ class Key
       else
         rstrip_newlines(rendered_colors)
       end
+  end
+
+  def rerender_size_options
+    options['fa'] = render_full_fa
   end
 
   def blank_is_nil(str)
@@ -402,8 +501,12 @@ def run_tests
         ],
       )
 
-      keyboard.rows.first.keys[0].options.must_equal({'c' => '#cccccc', 'a' => 0})
-      keyboard.rows.first.keys[1].options.must_equal({'c' => '#cccccc', 'a' => 0})
+      keyboard.rows.first.keys[0].options.must_equal(
+        {'c' => '#cccccc', 'a' => 0, 'f' => 3, 'fa' => [nil] * 12},
+      )
+      keyboard.rows.first.keys[1].options.must_equal(
+        {'c' => '#cccccc', 'a' => 0, 'f' => 3, 'fa' => [nil] * 12},
+      )
     end
 
     it "keeps track of global options" do
@@ -443,6 +546,21 @@ def run_tests
       key.text.must_equal "\n\n\nRGB\n\n\n\n\nR"
     end
 
+    it "parses keycap sizes" do
+      key = Key.new({"f" => 4, "fa" => [1, 2, 3]}, "Foo\nbar\nbaz\nqux")
+
+      key.upper_left.must_equal "Foo"
+      key.upper_left_size.must_equal 1
+      key.bottom_left.must_equal "bar"
+      key.bottom_left_size.must_equal 2
+      key.top_right.must_equal "baz"
+      key.top_right_size.must_equal 3
+      key.bottom_right.must_equal "qux"
+      key.bottom_right_size.must_be_nil
+
+      key.options['fa'].must_equal [1, 2, 3]
+    end
+
     it "renders without redundant global state" do
       global_state = {'t' => '#ff0000'}
       key = Key.new({'t' => '#ff0000'}, 'Hello world')
@@ -477,6 +595,15 @@ def run_tests
       render.(key).must_equal(["A"])
       key.bottom_left = "B"
       render.(key).must_equal(["A\nB"])
+    end
+
+    it "renders simplified size specification when possible" do
+      key = Key.new({"f" => 4, "fa" => [1, 2, 3, 4, 4, 4, 4]}, "Foo\nbar\nbaz\nqux")
+
+      rendered_options, _ = key.render(current_global_state: DEFAULT_OPTIONS.dup)
+
+      rendered_options["f"].must_equal 4
+      rendered_options["fa"].must_equal [1, 2, 3]
     end
   end
 
@@ -534,6 +661,40 @@ def run_tests
           {'t' => "#000000\n#ffff00"}, "A\nHello",
         ],
       ]))
+    end
+
+    it "changes font size of text on keys" do
+      keyboard = Keyboard.new([{}, [{'f' => 4}, "A", "B\nHello\nWorld", "C", "D"]])
+      overlay = Overlay.new(
+        "modifiers" => {
+          "B" => {"default_size" => 3, "upper_left_size" => 4, "top_right_size" => 2},
+        },
+      )
+
+      overlay.apply(keyboard)
+
+      keyboard.rows.first.keys[0].option('f').must_equal 4
+      keyboard.rows.first.keys[0].option('fa').must_equal [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]
+
+      keyboard.rows.first.keys[1].option('f').must_equal 3
+      keyboard.rows.first.keys[1].option('fa').must_equal [4, nil, 2, nil, nil, nil, nil, nil, nil, nil, nil, nil]
+
+      keyboard.rows.first.keys[2].option('f').must_equal 4
+      keyboard.rows.first.keys[2].option('fa').must_equal [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]
+
+      keyboard.rows.first.keys[3].option('f').must_equal 4
+      keyboard.rows.first.keys[3].option('fa').must_equal [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]
+
+      rendered = JSON.parse(keyboard.render)
+      rendered.must_equal([
+        {},
+        [
+          {'f' => 4}, "A",
+          {'f' => 3, 'fa' => [4, 3, 2]}, "B\nHello\nWorld",
+          {'f' => 4, 'fa' => [4]}, "C",
+          "D",
+        ],
+      ])
     end
   end
 end
