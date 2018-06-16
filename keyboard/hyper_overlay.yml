@@ -50,7 +50,7 @@ modifiers:
     center_left: "Rofi (run modi)"
     center_left_color: "#ff52f8"
 
-  "-":
+  "- _":
     bottom_left: "Save screenshot"
     bottom_left_color: "#ff0000"
     center_left: "Area screenshot"
@@ -77,58 +77,57 @@ modifiers:
     center_left_color: "#ff52f8"
     bottom_right: ""
 
-  "1":
+  "1 !":
     bottom_left: "System workspace"
     bottom_left_color: "#ff0000"
     bottom_right: ""
 
-  "2":
+  "2 @":
     bottom_left: "Code workspace"
     bottom_left_color: "#ff0000"
     bottom_right: ""
 
-  "3":
+  "3 #":
     bottom_left: "Browse workspace"
     bottom_left_color: "#ff0000"
     bottom_right: ""
 
-  "4":
+  "4 $":
     bottom_left: "4th workspace"
     bottom_left_color: "#ff0000"
     bottom_right: ""
 
-  "5":
+  "5 %":
     bottom_left: "5th workspace"
     bottom_left_color: "#ff0000"
     bottom_right: ""
 
-  "6":
+  "6 ^":
     bottom_left: "6th workspace"
     bottom_left_color: "#ff0000"
     bottom_right: ""
 
-  "7":
+  "7 &":
     bottom_left: "7th workspace"
     bottom_left_color: "#ff0000"
     bottom_right: ""
 
-  "8":
+  "8 *":
     bottom_left: "8th workspace"
     bottom_left_color: "#ff0000"
     bottom_right: ""
 
-  "9":
+  "9 (":
     bottom_left: "Media workspace"
     bottom_left_color: "#ff0000"
     bottom_right: ""
 
-  "0":
+  "0 )":
     bottom_left: "Chat workspace"
     bottom_left_color: "#ff0000"
     bottom_right: ""
 
   "H":
-    top_center: ""
     bottom_right: ""
     center: "Focus ←"
     center_color: "#ff0000"
@@ -137,7 +136,6 @@ modifiers:
     bottom_left_color: "#00ff00"
 
   "J":
-    top_center: ""
     bottom_right: ""
     center: "Focus ↓"
     center_color: "#ff0000"
@@ -146,7 +144,6 @@ modifiers:
     bottom_left_color: "#00ff00"
 
   "K":
-    top_center: ""
     bottom_right: ""
     center: "Focus ↑"
     center_color: "#ff0000"
@@ -155,7 +152,6 @@ modifiers:
     bottom_left_color: "#00ff00"
 
   "L":
-    top_center: ""
     bottom_right: ""
     center: "Focus →"
     center_color: "#ff0000"

@@ -3,6 +3,7 @@
 require 'json'
 require 'yaml'
 require 'pry'
+require 'set'
 
 # So sue me...
 module Refinements
@@ -25,6 +26,7 @@ DEFAULT_OPTIONS = {
   'c' => '#cccccc',
   'fa' => [nil] * 12,
   'f' => 3,
+  'g' => false,
 }.freeze
 
 class Keyboard
@@ -37,20 +39,10 @@ class Keyboard
     @rows = Row.parse_multi(data[1, data.size])
   end
 
-  def find_key(text:)
-    matcher =
-      if text !~ /[a-z]/i
-        Regexp.new(Regexp.quote(text))
-      else
-        Regexp.new("\\b#{Regexp.quote(text)}\\b")
-      end
-
+  def each_key
     rows.each do |row|
-      if (key = row.keys.find { |key| matcher.match?(key.text) })
-        return key
-      end
+      row.keys.each { |key| yield key }
     end
-    raise "Could not find a key with text #{text.inspect}"
   end
 
   def render
@@ -260,6 +252,14 @@ class Key
     rerender_size_options
   end
 
+  def ghosted?
+    option('g') || false
+  end
+
+  def ghosted=(bool)
+    options['g'] = bool
+  end
+
   def render_full_fa
     [
       upper_left_size,
@@ -452,8 +452,21 @@ class Overlay
   end
 
   def apply(keyboard)
-    modifiers.each do |modifier|
-      modifier.apply_to(keyboard)
+    ghost_others = settings.fetch('ghost_others', false)
+    unmatched_modifiers = modifiers.to_set
+
+    keyboard.each_key do |key|
+      matched = modifiers.select { |modifier| modifier.match?(key) }
+      if matched.empty?
+        key.ghosted = true if ghost_others
+      else
+        matched.each { |matcher| matcher.apply_to(key) }
+        unmatched_modifiers -= matched
+      end
+    end
+
+    unless unmatched_modifiers.empty?
+      raise "Some overlays did not match any keys: #{unmatched_modifiers.map(&:text).inspect}"
     end
   end
 end
@@ -466,8 +479,20 @@ class Modifier
     @changes = changes
   end
 
-  def apply_to(keyboard)
-    key = keyboard.find_key(text: text)
+  def matcher
+    @matcher ||=
+      if text !~ /[a-z]/i
+        Regexp.new(Regexp.quote(text))
+      else
+        Regexp.new("\\b#{Regexp.quote(text)}\\b")
+      end
+  end
+
+  def match?(key)
+    matcher.match?(key.text)
+  end
+
+  def apply_to(key)
     changes.each_pair do |change, value|
       key.public_send("#{change}=", value)
     end
@@ -502,10 +527,23 @@ def run_tests
       )
 
       keyboard.rows.first.keys[0].options.must_equal(
-        {'c' => '#cccccc', 'a' => 0, 'f' => 3, 'fa' => [nil] * 12},
+        {
+          'c' => '#cccccc',
+          'a' => 0,
+          'f' => 3,
+          'fa' => [nil] * 12,
+          'g' => false,
+        },
       )
+
       keyboard.rows.first.keys[1].options.must_equal(
-        {'c' => '#cccccc', 'a' => 0, 'f' => 3, 'fa' => [nil] * 12},
+        {
+          'c' => '#cccccc',
+          'a' => 0,
+          'f' => 3,
+          'fa' => [nil] * 12,
+          'g' => false,
+        },
       )
     end
 
@@ -693,6 +731,35 @@ def run_tests
           {'f' => 3, 'fa' => [4, 3, 2]}, "B\nHello\nWorld",
           {'f' => 4, 'fa' => [4]}, "C",
           "D",
+        ],
+      ])
+    end
+
+    it "ghosts keys that was not matched when told to" do
+      keyboard = Keyboard.new([{}, [{}, "A", "B", "C", "D"]])
+      overlay = Overlay.new(
+        "settings" => {"ghost_others" => true},
+        "modifiers" => {
+          "B" => {},
+          "C" => {"upper_left" => "C (still here)"},
+        },
+      )
+
+      overlay.apply(keyboard)
+
+      keyboard.rows.first.keys[0].ghosted?.must_equal true
+      keyboard.rows.first.keys[1].ghosted?.must_equal false
+      keyboard.rows.first.keys[2].ghosted?.must_equal false
+      keyboard.rows.first.keys[3].ghosted?.must_equal true
+
+      rendered = JSON.parse(keyboard.render)
+      rendered.must_equal([
+        {},
+        [
+          {'g' => true}, "A",
+          {'g' => false}, "B",
+          "C (still here)",
+          {'g' => true}, "D",
         ],
       ])
     end
