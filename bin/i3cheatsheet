@@ -1,0 +1,11 @@
+#!/usr/bin/bash
+
+# TODO: Stop hardcoding the path
+image_file="$HOME/Projects/dotfiles/keyboard/hyper_overlay.png"
+title="i3 cheatsheet"
+
+# Kill the program if already running
+if ! pkill -TERM --full "$title"; then
+  # …or start it if not running.
+  feh --image-bg black --auto-zoom --borderless --title "i3 cheatsheet" "$image_file"
+fi

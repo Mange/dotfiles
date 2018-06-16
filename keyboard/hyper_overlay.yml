@@ -207,3 +207,7 @@ modifiers:
   "M":
     bottom_left: "Media mode"
     bottom_left_color: "#ff0000"
+
+  "/ ?":
+    center_left: "Toggle this cheatsheet"
+    center_left_color: "#ffff00"

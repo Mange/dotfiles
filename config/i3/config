@@ -110,6 +110,9 @@ exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 # }}}
 
 # {{{ i3 shortcuts
+# Show keyboard cheatsheet
+bindsym $mod+Shift+slash exec i3cheatsheet
+
 # reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
@@ -305,6 +308,11 @@ for_window [class="(?i)floating"] \
 
 # Youtube PiP
 for_window [title="(?i)youtube pip"] floating enable
+
+# Cheatsheet images
+for_window [title="i3 cheatsheet"] \
+  floating enable, \
+  move position center
 
 # }}}
 
