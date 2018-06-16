@@ -7,6 +7,11 @@ if [[ -d ~/.config/zsh/vendor ]]; then
   rm -rf ~/.config/zsh/vendor
 fi
 
+# Make sure termite has a config
+if [[ ! -f "$XDG_CONFIG_HOME/termite/config" ]]; then
+  "${HOME}/.local/bin/termite-config"
+fi
+
 # Create directory for vdirsyncer settings
 mkdir -p ~/.local/share/vdirsyncer
 
