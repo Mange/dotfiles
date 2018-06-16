@@ -60,7 +60,7 @@ foreground_bold = #ebdbb2
 cursor          = #ebdbb2
 # background      = #282828
 # http://hex2rgba.devoth.com/
-background = rgba(40, 40, 40, 0.90)
+background = rgba(40, 40, 40, 0.80)
 
 # 16 color space
 
