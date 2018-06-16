@@ -15,6 +15,5 @@ When pressing Hyper, the following shortcuts become available.
 | Color   | Modifiers                                         |
 |---------|---------------------------------------------------|
 | Red     | <kbd>Hyper</kbd>                                  |
-| Magenta | <kbd>Hyper</kbd> <kbd>Shift</kbd>                 |
-| Green   | <kbd>Hyper</kbd> <kbd>Ctrl</kbd>                  |
-| Teal    | <kbd>Hyper</kbd> <kbd>Ctrl</kbd> <kbd>Shift</kbd> |
+| Yellow  | <kbd>Hyper</kbd> <kbd>Shift</kbd>                 |
+| Blue    | <kbd>Hyper</kbd> <kbd>Ctrl</kbd>                  |
