@@ -1,7 +1,7 @@
 settings:
   ghost_others: true
 modifiers:
-  "Hyper":
+  "kb-logo-windows-8": # Win / Super
     key_color: "#ff0000"
   "uArr": # Shift
     key_color: "#857f00"
@@ -211,3 +211,12 @@ modifiers:
   "/ ?":
     center_left: "Toggle this cheatsheet"
     center_left_color: "#ffff00"
+
+  "I":
+    bottom_left: "Notification close"
+    bottom_left_color: "#ff0000"
+    center_left: "Notification context menu"
+    center_left_color: "#ffff00"
+    top_right: "Notification history"
+    top_right_color: "#0085ff"
+

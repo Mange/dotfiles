@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
 # TODO: Stop hardcoding the path
-image_file="$HOME/Projects/dotfiles/keyboard/hyper_overlay.png"
+image_file="$HOME/Projects/dotfiles/keyboard/super_overlay.png"
 title="i3 cheatsheet"
 
 # Kill the program if already running

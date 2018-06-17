@@ -6,22 +6,18 @@ I use an Anne Pro 60% keyboard that looks like this (with my custom layout set):
 
 ![](anne-pro-base.png)
 
-Hyper is my own modifier that is added using `Xmodmap`; it does not exist on
-other keyboard layouts. It is meant to be a key that I know no app will be
-using unless I bind to it, and I have it reserved for "global" shortcuts, like
-dealing with my window manager, etc.
+## Super keybinds
 
-## Hyper keybinds
+When holding Super ("Windows key", "Logo key", etc.), the following shortcuts
+become available:
 
-When holding Hyper, the following shortcuts become available:
-
-![](hyper_overlay.png)
+![](super_overlay.png)
 
 | Color   | Modifiers                                         |
 |---------|---------------------------------------------------|
-| Red     | <kbd>Hyper</kbd>                                  |
-| Yellow  | <kbd>Hyper</kbd> <kbd>Shift</kbd>                 |
-| Blue    | <kbd>Hyper</kbd> <kbd>Ctrl</kbd>                  |
+| Red     | <kbd>Super</kbd>                                  |
+| Yellow  | <kbd>Super</kbd> <kbd>Shift</kbd>                 |
+| Blue    | <kbd>Super</kbd> <kbd>Ctrl</kbd>                  |
 
 This cheatsheet can be shown on the current screen with
-<kbd>Hyper</kbd> <kbd>?</kbd>.
+<kbd>Super</kbd> <kbd>?</kbd>.

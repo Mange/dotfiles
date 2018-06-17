@@ -20,14 +20,3 @@ keycode 60 = period greater U2026 U2026
 add mod1 = Alt_L Meta_L
 ! Alt R / Apple Keyboard Right Alt
 keycode 108 = Mode_switch
-
-! Caps Lock = Hyper
-! This configuration binds the keycode for caps lock (66) directly to Hyper_L
-! instead of trying to reassign Caps_Lock to Hyper_L. This is needed because
-! something on my system is already redefining 66 to Escape, so no Caps_Lock is
-! even defined. This should actually work as well on a system that has done
-! nothing to Caps_Lock already. I leave "clear Lock" for those systems.
-clear Lock
-remove Mod4 = Hyper_L
-add Mod3 = Hyper_L
-keycode 66 = Hyper_L

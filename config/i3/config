@@ -7,8 +7,8 @@
 #   * System mode https://github.com/mohabaks/dotfiles/blob/master/config/i3-gaps/.config/i3/config#L212
 
 # {{{ Basic settings
-# Mod3 is my Hyper (see $XDG_CONFIG_HOME/xmodmap/custom_keyboard)
-set $mod Mod3
+# Mod4 is Super (Win key)
+set $mod Mod4
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
