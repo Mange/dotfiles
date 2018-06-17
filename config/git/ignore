@@ -21,3 +21,4 @@ rusty-tags.vi
 .nvimrc
 *@neomake*
 .*.rs.rustfmt
+.#*
