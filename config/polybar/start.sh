@@ -12,13 +12,15 @@ hidpi-settings() {
   export POLYBAR_FONT_0="Symbols Nerd Font:size=16;0"
   export POLYBAR_FONT_1="DejaVu Sans Mono:size=16;0"
   export POLYBAR_BAR_HEIGHT=36
-  export POLYBAR_TRAY_SCALE=2.0
+  export POLYBAR_TRAY_SIZE=32
+  export POLYBAR_TRAY_SCALE=1.2
 }
 
 normal-settings() {
   export POLYBAR_FONT_0="Symbols Nerd Font:size=10;0"
   export POLYBAR_FONT_1="DejaVu Sans Mono:size=10;0"
   export POLYBAR_BAR_HEIGHT=26
+  export POLYBAR_TRAY_SIZE=24
   export POLYBAR_TRAY_SCALE=1.0
 }
 
