@@ -3,6 +3,7 @@
 # Temporary
 vdirsyncer-git # https://github.com/pimutils/vdirsyncer/issues/745
 
+autorandr
 bitwarden         # Password manager
 bitwarden-cli     # CLI for password manager
 copyq             # Clipboard manager with searchable and editable history.
