@@ -29,6 +29,14 @@ if player_status=$(playerctl status 2>/dev/null); then
   artist="$(playerctl metadata artist 2>/dev/null)"
   title="$(playerctl metadata title 2>/dev/null)"
 
+  if [[ ${#artist} -gt 30 ]]; then
+    artist="${artist:0:29}…"
+  fi
+
+  if [[ ${#title} -gt 40 ]]; then
+    title="${title:0:39}…"
+  fi
+
   echo "${before_text}${previous_button} ${playback_button} ${next_button} ${artist} - ${title}${after_text}"
 else
   echo "${play_icon}"
