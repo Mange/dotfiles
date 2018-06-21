@@ -130,6 +130,28 @@ aspell-en
 aspell-sv
 ispell
 
+#
+# KDE software
+#
+plasma-meta # Install basics of the KDE environment (themes, daemons, etc.)
+# (it also installs wallpapers and actual shell, but disk space is not
+# really a problem; it's nive not having to repeat all of that software
+# in here and keep the list up to date)
+
+dolphin
+filelight
+kgpg
+
+# Optional deps for KDE software
+qt5-webengine            # HTML thumbnailer
+qt5-imageformats         # thumbnails for additional image formats
+kimageformats            # thumbnails for additional image formats
+taglib                   # audio file thumbnails
+khtml                    # man kioslave
+kde-cli-tools            # for editing file type options
+ffmpegthumbs             # video thumbnails
+kdegraphics-thumbnailers # PDF and PS thumbnails
+
 # GNOME software
 deja-dup
 gnome-calculator
