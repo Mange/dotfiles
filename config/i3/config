@@ -73,11 +73,11 @@ set $faded_purple "#8f3f71"
 set $faded_aqua "#427b58"
 set $faded_orange "#af3a03"
 
-# setting                outline         bg              text    indicator   child_border
-client.focused           $neutral_purple $neutral_purple $light0 $light3     $bright_purple
-client.focused_inactive  $faded_purple   $faded_purple   $light0 $light3     $faded_purple
-client.unfocused         $dark3          $dark3          $light1 $light3     $dark3
-client.urgent            $bright_red     $bright_red     $light1 $bright_red $bright_red
+# setting                outline         bg              text    indicator     child_border
+client.focused           $neutral_purple $neutral_purple $light0 $neutral_blue $bright_purple
+client.focused_inactive  $faded_purple   $faded_purple   $light0 $neutral_blue $faded_purple
+client.unfocused         $dark3          $dark3          $light1 $faded_blue   $dark3
+client.urgent            $bright_red     $bright_red     $light1 $bright_red   $bright_red
 # }}}
 
 # {{{ Early startup applications
