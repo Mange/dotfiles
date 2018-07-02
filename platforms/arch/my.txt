@@ -138,6 +138,9 @@ plasma-meta # Install basics of the KDE environment (themes, daemons, etc.)
 # really a problem; it's nive not having to repeat all of that software
 # in here and keep the list up to date)
 
+qt5ct # Helps enabling QT integration into non-kde desktop environments
+oxygen-icons
+
 dolphin
 filelight
 kgpg
