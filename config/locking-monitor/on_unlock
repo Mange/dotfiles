@@ -1,0 +1,6 @@
+#!/usr/bin/bash
+
+# Make sure keyboard is set up correctly. Replugging a keyboard resets Xmodmap,
+# and this is common as I unplug my keyboard from my laptop before it goes to
+# sleep.
+fix-keyboard

@@ -83,6 +83,7 @@ client.urgent            $bright_red     $bright_red     $light1 $bright_red   $
 # {{{ Early startup applications
 # Lock screen on suspend, after screensaver, etc.
 exec --no-startup-id light-locker
+exec --no-startup-id ~/.local/bin/locking-monitor
 
 # Keyboard, screens, etc.
 exec --no-startup-id ~/.local/bin/fix-keyboard

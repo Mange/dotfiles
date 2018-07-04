@@ -1,0 +1,4 @@
+#!/usr/bin/bash
+
+# Pause music, if playing
+playerctl pause
