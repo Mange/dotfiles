@@ -4,3 +4,6 @@
 # and this is common as I unplug my keyboard from my laptop before it goes to
 # sleep.
 fix-keyboard
+
+# Reflow screens
+autorandr --change
