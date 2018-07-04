@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+config_dir="${XDG_CONFIG_HOME}/xmodmap"
+
+xmodmap "${config_dir}/custom_keyboard"
+
+case "$(hostname)" in
+  bilquis)
+    # Built-in laptop keyboard cannot be reprogrammed in hardware.
+    xmodmap "${config_dir}/caps_is_super"
+    ;;
+  *)
+    # Do nothing extra
+    ;;
+esac

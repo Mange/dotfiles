@@ -1,0 +1,10 @@
+! Some keyboards are dumb keyboards. Actually, *most* keyboards are dumb. They
+! don't have their own firmware where I can remap keys for the physical
+! keyboard.
+! Such keyboards need software to remap Caps Lock to Super.
+
+! Remove caps lock key (66) from the "lock" modifier. Now it's a basic key that
+! does nothing.
+clear Lock
+
+keysym Caps_Lock = Super_L

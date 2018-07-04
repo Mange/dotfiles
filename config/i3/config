@@ -85,7 +85,7 @@ client.urgent            $bright_red     $bright_red     $light1 $bright_red   $
 exec --no-startup-id light-locker
 
 # Keyboard, screens, etc.
-exec --no-startup-id xmodmap ~/.config/xmodmap/custom_keyboard
+exec --no-startup-id ~/.local/bin/fix-keyboard
 exec --no-startup-id autorandr --change
 exec --no-startup-id ~/.local/bin/dynamic-startup
 
@@ -127,7 +127,7 @@ bindsym $mod+Shift+Escape exec light-locker-command -l
 bindsym $mod+Shift+x exec --no-startup-id autorandr --change
 
 # In case of emergency
-bindsym Ctrl+Shift+Escape exec --no-startup-id xmodmap ~/.config/xmodmap/custom_keyboard
+bindsym Ctrl+Shift+Escape exec --no-startup-id ~/.local/bin/fix-keyboard
 
 # }}}
 
