@@ -21,6 +21,12 @@ if [[ $_mange_xdg_zealotry != "yes" ]]; then
   export GEMRC="${XDG_CONFIG_HOME}/ruby/gemrc"
   export IRBRC="${XDG_CONFIG_HOME}/ruby/irbrc"
 
+  # npm (…are assholes)
+  # https://github.com/npm/npm/issues/6675
+  export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME}/npm/config"
+  export NPM_CONFIG_CACHE="${XDG_CACHE_HOME}/npm"
+  export NPM_CONFIG_TMP="${XDG_RUNTIME_DIR}/npm"
+
   # Postgres
   export PSQLRC="${XDG_CONFIG_HOME}/postgresql/psqlrc"
 

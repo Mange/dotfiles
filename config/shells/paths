@@ -20,11 +20,16 @@ if [[ -n $BASH_VERSION || -n $ZSH_VERSION ]]; then
 
       "$HOME/.cargo/bin"
       "$HOME/.rvm/bin"
+      "$XDG_DATA_HOME/npm/packages/bin"
 
       "$HOME/.yarn/bin"
 
       "${path[@]}"
     )
+
+    # Also set up custom MANPATH
+    MANPATH="${XDG_DATA_HOME}/npm/packages/share/man:$(manpath --quiet)"
+    export MANPATH
 
     if [[ -n "$ZSH_VERSION" ]]; then
       # zsh has a way easier time exporting arrays to the path...
