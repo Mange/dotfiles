@@ -97,6 +97,7 @@ blueman
 compton
 dunst # libnotify server
 feh
+gucharmap
 i3-gaps
 lxappearance
 lxrandr
