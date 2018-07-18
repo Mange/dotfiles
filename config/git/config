@@ -32,12 +32,17 @@
 [log]
 	showSignature = false
 
-# Merge settings and style
+# Merge/difftool settings and style
 [merge]
 	conflictstyle = diff3
 	tool = vimdiff
-[merge "fugitive"]
-	cmd = mvim -f -c \"Gdiff\" \"$MERGED\"
+[diff]
+  tool = vimdiff
+[mergetool]
+  prompt = true
+  keepBackup = false
+[mergetool "vimdiff"]
+  cmd = nvim -d "$LOCAL" "$BASE" "$REMOTE" "$MERGED" -c '$wincmd w' -c 'wincmd J' -c 'windo set wrap'
 
 # Magic rebases
 [rebase]

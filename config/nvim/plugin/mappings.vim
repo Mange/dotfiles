@@ -73,3 +73,13 @@ nmap <leader>t :split<CR>:Note TODO<CR>
 " <leader>A for case-insensitive, <leader>a for smart-case
 nmap <leader>a *:AgFromSearch<CR>
 nmap <leader>A *:Ag -i "\b<C-r><C-w>\b"<CR>
+
+" Helpers for diff mode ("vimdiff")
+if &diff
+  set cursorline
+  " Start with current search ("/" register) set to search for conflicts.
+  let @/ = "<<<<<"
+  nmap <leader>1 :diffget LOCAL<cr>
+  nmap <leader>2 :diffget BASE<cr>
+  nmap <leader>3 :diffget REMOTE<cr>
+endif
