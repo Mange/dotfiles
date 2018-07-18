@@ -1,7 +1,6 @@
 ! vim: ft=xdefaults
 
 rofi.theme: ~/.config/rofi/dark-theme.rasi
-rofi.show-icons: true
 
 ! Scale automatically to HiDPI screens
 rofi.dpi: 1
