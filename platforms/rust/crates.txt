@@ -7,7 +7,6 @@ ripgrep
 exa
 
 # Rust development
-racer
 rusty-tags
 cargo-edit
 cargo-watch
