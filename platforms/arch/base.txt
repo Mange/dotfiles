@@ -9,6 +9,7 @@ wget
 bluez        # Bluetooth
 bluez-utils  # Bluetooth
 btrfs-progs  # btrfs (filesystem)
+dnsutils     # host(1), etc.
 exfat-utils  # exFAT (filesystem)
 nfs-utils    # NFS (filesystem)
 ntfs-3g      # NTFS (filesystem)
