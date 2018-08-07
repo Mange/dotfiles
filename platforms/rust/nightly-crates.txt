@@ -1,3 +1,2 @@
 # Rust development
-clippy
 racer

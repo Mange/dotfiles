@@ -20,6 +20,7 @@ install-rustup-components() {
   run-rust-cmd rustup component add rls-preview
   run-rust-cmd rustup component add rust-analysis
   run-rust-cmd rustup component add rustfmt-preview
+  run-rust-cmd rustup component add clippy-preview --toolchain=nightly
 }
 
 run-rust-cmd() {
