@@ -67,6 +67,8 @@ Plug 'dahu/vim-asciidoc'
 """ JS
 Plug 'vim-scripts/JSON.vim'
 Plug 'jelera/vim-javascript-syntax', {'for': 'javascript'}
+Plug 'posva/vim-vue', {'for': ['javascript', 'typescript', 'vue']}
+Plug 'leafgarland/typescript-vim', {'for': ['javascript', 'typescript', 'vue']}
 
 """ HTML/CSS
 Plug 'gregsexton/MatchTag', {'for': 'html'}
