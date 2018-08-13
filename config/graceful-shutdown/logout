@@ -10,9 +10,12 @@ spotify
 mpv
 
 # Chat apps
-discord
+Discord
 yakyak
 slack
 
 # Editors
 nvim
+
+# Misc
+copyq
