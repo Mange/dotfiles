@@ -7,4 +7,8 @@
 ! does nothing.
 clear Lock
 
-keysym Caps_Lock = Super_L
+! If Caps_Lock has been changed before the Caps_Lock symbol stops working.
+! Instead use the keycode, which is the same on every system I've ever tried
+! this on.
+! keysym Caps_Lock = Super_L
+keycode 66 = Super_L
