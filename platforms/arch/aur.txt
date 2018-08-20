@@ -3,6 +3,15 @@
 # Temporary
 vdirsyncer-git # https://github.com/pimutils/vdirsyncer/issues/745
 
+# I fucking hate Node
+# I don't want it, but I need it for other software and it refuses to
+# follow XDG. One can force it to do so, but then nvm does not work and
+# I need nvm on one of my machines as a dependency. So now it needs to
+# infect all my systems.
+# Fuck Node and all the shit that spawned from it. A fucking mistake
+# on the face of the earth is what it is.
+nvm
+
 autorandr
 bitwarden         # Password manager
 bitwarden-cli     # CLI for password manager
