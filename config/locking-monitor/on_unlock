@@ -6,4 +6,16 @@
 fix-keyboard
 
 # Reflow screens
-autorandr --change
+# autorandr --change
+
+# Show reminder, if it was more than 1 hour since last locked
+last_lock_file="$XDG_RUNTIME_DIR/locking-monitor-time-of-last-lock"
+if [[ -f "$last_lock_file" ]]; then
+  time_of_last_lock=$(cat "$last_lock_file")
+  one_hour_ago=$(date -d "1 hour ago" +%s)
+  if [[ "$time_of_last_lock" -lt "$one_hour_ago" ]]; then
+
+    startup-reminder
+
+  fi
+fi
