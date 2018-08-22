@@ -435,6 +435,8 @@ if run-section "fast"; then
   enable-systemd-unit "lightdm"
   enable-systemd-unit "bluetooth"
 
+  enable-user-systemd-unit "syncthing"
+
   if [[ -f ~/.local/share/vdirsyncer/google_client_secret ]]; then
     enable-user-systemd-unit "vdirsyncer.timer"
   fi

@@ -200,6 +200,10 @@ youtube-dl
 # Misc
 #
 
+# Syncthing
+syncthing
+syncthing-gtk
+
 # Docker
 docker
 docker-compose
