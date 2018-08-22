@@ -131,6 +131,12 @@ aspell-en
 aspell-sv
 ispell
 
+# Zathura PDF viewer
+zathura
+zathura-cb # Adds comic book support to zathura
+zathura-djvu # DjVu support for Zathura
+zathura-pdf-mupdf # EPUB, PDF and XPS support based on MuPDF
+
 #
 # KDE software
 #
