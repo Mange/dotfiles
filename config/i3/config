@@ -101,7 +101,6 @@ exec_always --no-startup-id ~/.config/polybar/start.sh
 # Daemons
 exec --no-startup-id blueman-applet # Bluetooth
 exec --no-startup-id copyq # Clipboard manager
-exec --no-startup-id dropbox start # Dropbox
 exec --no-startup-id syncthing-gtk --minimized
 exec --no-startup-id dunst # Notification server
 exec --no-startup-id nm-applet # NetworkManager

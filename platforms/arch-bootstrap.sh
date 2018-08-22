@@ -117,7 +117,7 @@ automatically in this shell.
 Things you now need to do in order to fully bootstrap the system:
 
   1. Get your password manager up and running.
-  2. Log in to Dropbox.
+  2. Add important devices/folders to syncthing (especially Security).
   3. Log in to Firefox to sync things.
   4. Change the upstream of the dotfiles repo to SSH if you want to be able to
      push changes to them.

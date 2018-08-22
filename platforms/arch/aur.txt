@@ -17,7 +17,6 @@ bitwarden         # Password manager
 bitwarden-cli     # CLI for password manager
 copyq             # Clipboard manager with searchable and editable history.
 discord           # All-in-one voice and text chat for gamers that's free and secure.
-dropbox           # A free service that lets you bring your photos, docs, and videos anywhere and share them easily.
 http-prompt       # An interactive HTTP command-line client
 polybar-git       # A fast and easy-to-use status bar
 rvm               # RVM: Ruby Version Manager

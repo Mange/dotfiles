@@ -3,3 +3,6 @@
 # replaced with ttf-nerd-fonts-symbols
 nerd-fonts-complete
 vdirsyncer # temporarily use vdirsyncer-git
+
+# Replaced with syncthing
+dropbox
