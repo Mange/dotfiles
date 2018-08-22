@@ -423,6 +423,7 @@ bindsym $mod+m mode "media"
 
 exec spotify-with-hidpi-support
 exec workrave
+exec startup-reminder
 
 exec i3-msg 'workspace $workspace10; layout stacked; exec slack; exec yakyak; exec discord'
 exec i3-msg 'workspace $workspace3; exec gtk-launch firefox-developer-edition'

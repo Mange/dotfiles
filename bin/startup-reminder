@@ -1,0 +1,16 @@
+#!/usr/bin/bash
+
+if [[ $1 == "--help" ]]; then
+  echo "Usage: $0"
+  echo ""
+  echo "Shows a notification with your current reminder in ~/Reminder, if it"
+  echo "exists and have any contents."
+fi
+
+if [[ -s ~/Reminder ]]; then
+  notify-send \
+    --app-name "Reminder" \
+    --icon=starred \
+    "Reminder" \
+    "$(cat ~/Reminder)"
+fi
