@@ -9,13 +9,13 @@
 # Use the command 'task show' to see all defaults and overrides
 
 # Files
-data.location=~/Dropbox/Taskwarrior
+data.location=~/.local/share/taskwarrior
 
 # Color theme
 include ~/.config/taskwarrior/gruvbox-dark-256.theme
 
 # Inthe.AM
-include ~/Dropbox/Taskwarrior/Inthe.AM/credentials
+include ~/.local/share/taskwarrior/Inthe.AM/credentials
 
 # Generic
 
