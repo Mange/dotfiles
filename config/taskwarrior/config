@@ -15,9 +15,15 @@ data.location=~/.local/share/taskwarrior
 include ~/.config/taskwarrior/gruvbox-dark-256.theme
 
 # Generic
-
 weekstart=Monday
-nag=You have higher priority tasks.
+
+# Custom report "scoped"; it's "all" but optionally filtered according to local-overrides.
+report.scoped.columns=id,status.short,uuid.short,start.active,entry.age,end.age,depends.indicator,priority,project.parent,tags.count,recur.indicator,wait.remaining,scheduled.remaining,due,until.remaining,description
+report.scoped.description=All tasks (scoped)
+report.scoped.labels=ID,St,UUID,A,Age,Done,D,P,Project,Tags,R,Wait,Sch,Due,Until,Description
+report.scoped.sort=entry-
+report.scoped.filter=
+
 
 # Urgency config
 
@@ -33,3 +39,8 @@ urgency.user.tag.promise.coefficient=4.0
 
 # Experiments are not as important.
 urgency.user.tag.experiment.coefficient=-2.0
+
+#
+# Local filtering rules (no work tasks at home, ex.)
+#
+include ~/.config/taskwarrior/local-overrides

@@ -12,6 +12,11 @@ if [[ ! -f "$XDG_CONFIG_HOME/termite/config" ]]; then
   "${HOME}/.local/bin/termite-config"
 fi
 
+# Create local-overrides template for Taskwarrior, if missing
+if [[ ! -f "$XDG_CONFIG_HOME/taskwarrior/local-overrides" ]]; then
+  cp "$XDG_CONFIG_HOME/taskwarrior/local-overrides.example" "$XDG_CONFIG_HOME/taskwarrior/local-overrides"
+fi
+
 # Create directory for vdirsyncer settings
 mkdir -p ~/.local/share/vdirsyncer
 
