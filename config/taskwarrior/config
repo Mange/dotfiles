@@ -16,6 +16,7 @@ include ~/.config/taskwarrior/gruvbox-dark-256.theme
 
 # Generic
 weekstart=Monday
+verbose=blank,label,new-id,affected,edit,special,project,sync
 
 # Custom report "scoped"; it's "all" but optionally filtered according to local-overrides.
 report.scoped.columns=id,status.short,uuid.short,start.active,entry.age,end.age,depends.indicator,priority,project.parent,tags.count,recur.indicator,wait.remaining,scheduled.remaining,due,until.remaining,description
