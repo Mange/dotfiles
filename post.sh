@@ -29,8 +29,10 @@ if [[ ! -f "${XDG_DATA_HOME}/nvim/site/autoload/plug.vim" ]]; then
     "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
 fi
 
-# Update / install Vim plugins
-nvim -u "${XDG_CONFIG_HOME}/nvim/plugs.vim" +PlugInstall +qa
+# Install Vim plugins
+if [[ ! -d "${XDG_DATA_HOME}/nvim/plugged" ]]; then
+  nvim -u "${XDG_CONFIG_HOME}/nvim/plugs.vim" +PlugInstall +qa
+fi
 
 if [[ "$SHELL" != *zsh ]]; then
   echo "Warning: You seem to be using a shell different from zsh (${SHELL})" > /dev/stderr
