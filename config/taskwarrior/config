@@ -14,9 +14,6 @@ data.location=~/.local/share/taskwarrior
 # Color theme
 include ~/.config/taskwarrior/gruvbox-dark-256.theme
 
-# Inthe.AM
-include ~/.local/share/taskwarrior/Inthe.AM/credentials
-
 # Generic
 
 weekstart=Monday
