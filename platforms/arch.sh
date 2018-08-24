@@ -444,6 +444,11 @@ if run-section "fast"; then
   if hash docker 2>/dev/null; then
     enable-systemd-unit "docker"
   fi
+
+  if ! timedatectl show | grep -q "^NTP=yes"; then
+    subheader "Enabling timesync (NTP)"
+    sudo timedatectl set-ntp true
+  fi
 fi
 
 if run-section "updates"; then
