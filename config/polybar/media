@@ -1,30 +1,24 @@
 #!/usr/bin/env bash
 
-next_icon=ﭠ
-previous_icon=ﭢ
-play_icon=喇
-pause_icon=
+playing_icon=
+paused_icon=
 
 # shellcheck source=/home/mange/.local/share/gruvbox/colors.env
 source "${XDG_DATA_HOME}/gruvbox/colors.env"
-
-previous_button="%{A1:playerctl previous:}${previous_icon}%{A}"
-next_button="%{A2:playerctl next:}${next_icon}%{A}"
 
 if player_status=$(playerctl status 2>/dev/null); then
   before_text=""
   after_text=""
 
   if [[ $player_status == "Paused" ]]; then
-    playback_icon="$play_icon"
-    before_text="%{F${dark3}}"
+    playback_icon="$paused_icon"
+    before_text="%{F${dark4}}"
     after_text="%{F-}"
   elif [[ $player_status == "Stopped" ]]; then
-    playback_icon="${play_icon}"
+    playback_icon="${paused_icon}"
   else
-    playback_icon="$pause_icon"
+    playback_icon="$playing_icon"
   fi
-  playback_button="%{A3:playerctl play-pause:}${playback_icon}%{A}"
 
   artist="$(playerctl metadata artist 2>/dev/null)"
   title="$(playerctl metadata title 2>/dev/null)"
@@ -37,7 +31,7 @@ if player_status=$(playerctl status 2>/dev/null); then
     title="${title:0:39}…"
   fi
 
-  echo "${before_text}${previous_button} ${playback_button} ${next_button} ${artist} - ${title}${after_text}"
+  echo "${before_text} ${playback_icon} ${artist} - ${title}${after_text}"
 else
   echo "${play_icon}"
 fi

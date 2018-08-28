@@ -88,7 +88,7 @@ top = true
 
 modules-left = i3 task-counters
 modules-center = media-controls
-modules-right = volume battery wifi date time
+modules-right = volume battery wifi time
 
 tray-detached = false
 tray-position = right
@@ -106,6 +106,7 @@ format-padding = 2
 inherit = module/base
 type = custom/script
 exec = ~/.config/polybar/media
+click-left = playerctl play-pause
 click-right = run-or-raise 'class = "Spotify"' spotify
 
 [module/task-counters]
@@ -166,27 +167,28 @@ label-visible-padding = 1
 inherit = module/base
 type = internal/date
 format-prefix = " "
-date-alt = %A vecka %W
-date = %F%
 interval = 120
 
 [module/time]
 inherit = module/base
 type = internal/date
 format-prefix = " "
-date = %H:%M
-interval = 10
+label = %date% %time%
+date = %F%
+date-alt = %A vecka %W
+time = %H:%M
+interval = 1
 
 [module/volume]
 inherit = module/base
 type = internal/pulseaudio
 
-format-volume = <ramp-volume> <bar-volume> <label-volume>
-format-muted = <label-muted> <bar-volume>   0%
+format-volume = <ramp-volume> <label-volume>
+format-muted = <label-muted> 0%
+format-muted-foreground = ${colors.orange}
 
-label-volume = %percentage:3%%
+label-volume = %percentage%%
 label-muted = 
-label-muted-foreground = ${colors.orange}
 
 bar-volume-width = 10
 bar-volume-gradient = true
@@ -206,7 +208,7 @@ type = internal/network
 interface = ${env:POLYBAR_WIFI_DEVICE:wlp110s0}
 interval = 3.0
 format-connected-padding = 2
-format-disconnected-padding = 2
+format-disconnected-padding = 0
 
 ; Available tags:
 ;   <label-connected> (default)
