@@ -115,7 +115,7 @@ type = custom/script
 exec = ~/.config/polybar/task-counters
 interval = 60
 format-prefix = " "
-click-left = floating-vit
+click-left = run-or-raise 'class = "floating-vit"' termite --class floating-vit -e vit
 click-right = i3-sensible-terminal -e vit
 
 [module/i3]
