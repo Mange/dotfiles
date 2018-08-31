@@ -42,6 +42,7 @@ ttf-baekmuk # Korean
 ttf-indic-otf # Indic; includes ಠ_ಠ
 
 # CLI env
+bat
 curl
 exa
 htop
