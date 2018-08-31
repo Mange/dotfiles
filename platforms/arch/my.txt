@@ -43,12 +43,14 @@ ttf-indic-otf # Indic; includes ಠ_ಠ
 
 # CLI env
 curl
+exa
 htop
 httpie
 jq
 keybase
 nmap
 parallel
+ripgrep
 rsync
 task
 tree
