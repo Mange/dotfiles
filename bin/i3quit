@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -e
-
 if [[ $1 == "--help" ]]; then
   echo "USAGE: $0 [--force]"
   exit 0
@@ -34,8 +32,13 @@ notify-send \
 # Unmount all removable storage
 udiskie-umount --all
 
+# Shut down Firefox without using signals as it does not properly support them yet
+wmctrl -c firefox
+
 # Shut down all my apps
-graceful-shutdown --mine --wait-time 10.0 < "$XDG_CONFIG_HOME/graceful-shutdown/logout"
+graceful-shutdown \
+  --mine --whole-command --wait-time 15.0 \
+  < "$XDG_CONFIG_HOME/graceful-shutdown/logout"
 
 # Shut down i3; essentially logging me out
 exec i3-msg exit

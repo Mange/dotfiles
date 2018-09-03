@@ -2,20 +2,17 @@
 # Shut down all programs that I often run and that needs to be shut down
 # gracefully.
 
-# Firefox, so session can be restored properly
-firefox
-
 # Media players
-spotify
+spotify (--force-device|$)
 mpv
 
 # Chat apps
-Discord
-yakyak
-slack
+Discord$
+/electron .*yakyak/app$
+slack$
 
 # Editors
 nvim
 
 # Misc
-copyq
+copyq$
