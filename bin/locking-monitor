@@ -2,14 +2,37 @@
 # Runs in the background and keeps track of when the user's session is
 # locked/unlocked. When a locking event happens the appropriate script runs.
 
-if [[ -z "$XDG_SESSION_ID" ]]; then
-  echo "ERROR: No \$XDG_SESSION_ID value present!" > /dev/stderr
-  exit 2
+# Determine current session path
+# Get the current user's sessions, then grep out the first one.
+# Example reply:
+# method return time=1535970362.689864 sender=:1.17 -> destination=:1.2751 serial=710 reply_serial=2
+#    variant       array [
+#          struct {
+#             string "2"
+#             object path "/org/freedesktop/login1/session/_32"
+#          }
+#       ]
+session_path=$(
+  dbus-send \
+    --system \
+    --print-reply \
+    --type=method_call \
+    --dest='org.freedesktop.login1' \
+    "/org/freedesktop/login1/user/_$(id -u)" \
+    org.freedesktop.DBus.Properties.Get \
+    string:org.freedesktop.login1.User \
+    string:Sessions |
+  grep -oE "(/org/freedesktop/login1/session/_[0-9]+)" |
+  head -n1
+)
+
+if [[ -z $session_path ]]; then
+  echo "Could not determine your session path!" > /dev/stderr
+  exit 1
 fi
 
 interface=org.freedesktop.login1.Session
-session="/org/freedesktop/login1/session/$XDG_SESSION_ID"
-matcher="type=signal,path=${session},interface=${interface}"
+matcher="type=signal,path=${session_path},interface=${interface}"
 
 lock_script="${XDG_CONFIG_HOME}/locking-monitor/on_lock"
 unlock_script="${XDG_CONFIG_HOME}/locking-monitor/on_unlock"
@@ -31,11 +54,13 @@ dbus-monitor --system "$matcher" 2>/dev/null |
     case "$member" in
       Lock)
         if [[ -x "$lock_script" ]]; then
+          echo "$(date)	Running $lock_script"
           "$lock_script"
         fi
         ;;
       Unlock)
         if [[ -x "$unlock_script" ]]; then
+          echo "$(date)	Running $unlock_script"
           "$unlock_script"
         fi
         ;;
