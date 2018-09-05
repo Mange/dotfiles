@@ -135,11 +135,11 @@ bindsym Ctrl+Shift+Escape exec --no-startup-id ~/.local/bin/fix-keyboard
 # {{{ Program shortcuts
 
 # start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec kitty
 
 # File manager
-bindsym $mod+period exec run-or-raise 'class = "floating-ranger"' termite --class floating-ranger -e ranger
-bindsym $mod+shift+period exec termite -e ranger
+bindsym $mod+period exec run-or-raise 'class = "floating-ranger"' kitty --class floating-ranger ranger
+bindsym $mod+shift+period exec kitty ranger
 
 # Rofi
 bindsym $mod+d exec --no-startup-id "rofi -show combi -modi combi,run,window,emoji -combi-modi drun,window,emoji"
@@ -155,7 +155,7 @@ bindsym --release $mod+minus exec gnome-screenshot
 bindsym --release $mod+Shift+minus exec gnome-screenshot --area
 
 # Taskwarrior stuff
-bindsym $mod+t exec run-or-raise 'class = "floating-vit"' termite --class floating-vit -e vit
+bindsym $mod+t exec run-or-raise 'class = "floating-vit"' kitty --class floating-vit vit
 bindsym $mod+n exec ~/.cargo/bin/new-task-gtk
 
 # }}}
@@ -166,8 +166,8 @@ bindsym $mod+n exec ~/.cargo/bin/new-task-gtk
 #  toggled using $mod+g.
 #  (If you accidentally close it, you can open it again using $mod+shift+g.)
 
-set $dropdown_terminal_cmd termite --role dropdown
-set $dropdown_window_cond [class="Termite" window_role="dropdown"]
+set $dropdown_terminal_cmd kitty --class dropdown_kitty
+set $dropdown_window_cond [class="dropdown_kitty"]
 
 # Toggle floating and hide the window as soon as it is created. Make it cover
 # a slightly-bigger-than-default size too. (Percent resize does not work in
@@ -297,7 +297,7 @@ for_window [class="copyq"] floating enable
 for_window [title="New Task"] floating enable
 
 # Floating terminal windows.
-for_window [class="Termite" window_role="floating"] \
+for_window [class="kitty" window_role="floating"] \
     floating enable, \
     resize set 60 ppt 50 ppt, \
     move position center

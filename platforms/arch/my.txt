@@ -74,7 +74,8 @@ python-requests-oauthlib # Google support for vdirsyncer
 #
 # Ranger (CLI file manager)
 #
-ranger
+# ranger # (using ranger-git from AUR right now: https://github.com/ranger/ranger/issues/983)
+python-pillow # for kitty image previews
 
 imagemagick # for image previews, post-processing, etc.
 ghostscript # imagemagick optional dependency for PDF support
@@ -102,6 +103,7 @@ dunst # libnotify server
 feh
 gucharmap
 i3-gaps
+kitty
 lxappearance
 lxrandr
 network-manager-applet
