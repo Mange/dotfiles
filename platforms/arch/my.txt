@@ -22,6 +22,7 @@ source-highlight # and lesspipe uses this to highlight code
 # nerd-fonts installed in aur.txt
 ttf-dejavu # My main font
 ttf-fira-mono
+ttf-fira-code
 otf-fira-mono
 ttf-hack
 ttf-inconsolata
