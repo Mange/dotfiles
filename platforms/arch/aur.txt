@@ -12,6 +12,9 @@ vdirsyncer-git # https://github.com/pimutils/vdirsyncer/issues/745
 # on the face of the earth is what it is.
 nvm
 
+# https://github.com/ranger/ranger/issues/983
+ranger-git
+
 autorandr
 bitwarden         # Password manager
 bitwarden-cli     # CLI for password manager

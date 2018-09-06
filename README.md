@@ -9,7 +9,7 @@ Quick summary of my stack:
   [polybar] (bars) + [compton] (compositor)
 - **Editor:** [Neovim]
 - **Shell:** [ZSH]
-- **Terminal emulator:** [termite]
+- **Terminal emulator:** [kitty]
 - **Web browser:** [Firefox] (Developer Edition)
 - **Colors:** [Gruvbox]
 
@@ -91,6 +91,6 @@ repository.
 [compton]: https://github.com/chjj/compton
 [Neovim]: https://neovim.io/
 [ZSH]: http://zsh.sourceforge.net/
-[termite]: https://github.com/thestinger/termite
+[kitty]: https://sw.kovidgoyal.net/kitty/
 [Firefox]: https://www.mozilla.org/en-US/firefox/
 [Gruvbox]: https://github.com/morhetz/gruvbox
