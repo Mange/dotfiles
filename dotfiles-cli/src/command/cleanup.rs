@@ -24,7 +24,11 @@ fn clean_up_symlinks(directory: &Path) -> i32 {
     match delete_broken_symlinks(directory) {
         Ok(cleaned) => cleaned,
         Err(error) => {
-            error!("Failed to clean up symlinks in {}: {}", directory.display(), error);
+            error!(
+                "Failed to clean up symlinks in {}: {}",
+                directory.display(),
+                error
+            );
             0
         }
     }
@@ -39,7 +43,7 @@ fn delete_broken_symlinks(directory: &Path) -> Result<i32, Error> {
         if is_broken_symlink(&path).unwrap_or(false) {
             match delete_symlink(&path) {
                 Ok(_) => cleaned += 1,
-                Err(error) => error!("Could not delete symlink: {}", error)
+                Err(error) => error!("Could not delete symlink: {}", error),
             }
         }
     }

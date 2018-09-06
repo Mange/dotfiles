@@ -14,6 +14,8 @@ extern crate pest_derive;
 #[macro_use]
 extern crate derive_builder;
 
+extern crate dirs;
+
 mod command;
 mod files;
 mod logger;
@@ -24,8 +26,8 @@ mod target;
 use clap::{App, AppSettings, Arg, SubCommand};
 use failure::Error;
 
-use state::State;
 use logger::Logger;
+use state::State;
 
 mod prelude {
     pub use failure::{Error, ResultExt};
@@ -111,8 +113,6 @@ fn run() -> Result<(), Error> {
         ("post", Some(_)) => command::post(&state, true),
         ("self-update", Some(_)) => command::self_update(&state, true),
         ("all", Some(_)) | ("", None) => command::all(&state),
-        (other, _) => {
-            return Err(format_err!("{} subcommand is not yet implemented.", other));
-        }
+        (other, _) => Err(format_err!("{} subcommand is not yet implemented.", other)),
     }
 }

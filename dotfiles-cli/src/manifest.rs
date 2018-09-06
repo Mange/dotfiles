@@ -5,8 +5,8 @@ use std::fs::File;
 use std::io::Read;
 use std::path::{Path, PathBuf};
 
-use pest::Parser;
 use pest::iterators::{Pair, Pairs};
+use pest::Parser;
 
 use prelude::*;
 use target::{Target, TargetBuilder};
@@ -70,14 +70,14 @@ pub enum TargetError {
 impl Entry {
     pub fn installable_targets(&self) -> Result<Vec<Target>, TargetError> {
         match self {
-            &Entry::Path(ref from, ref to, ref shell_callback) => {
+            Entry::Path(ref from, ref to, ref shell_callback) => {
                 if from.exists() {
                     Ok(vec![new_file_target(from, to, shell_callback.clone())])
                 } else {
                     Err(TargetError::SourceNotFound)
                 }
             }
-            &Entry::Glob(ref glob_str, ref dest_dir, ref shell_callback) => {
+            Entry::Glob(ref glob_str, ref dest_dir, ref shell_callback) => {
                 if dest_dir.exists() && dest_dir.metadata().map(|md| md.is_file()).unwrap_or(false)
                 {
                     return Err(TargetError::DestinationIsNotDirectory(
@@ -115,8 +115,8 @@ impl Entry {
 impl fmt::Display for Entry {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            &Entry::Path(ref from, _, _) => write!(f, "path {}", from.display()),
-            &Entry::Glob(ref pattern, _, _) => write!(f, "glob {}", pattern),
+            Entry::Path(ref from, _, _) => write!(f, "path {}", from.display()),
+            Entry::Glob(ref pattern, _, _) => write!(f, "glob {}", pattern),
         }
     }
 }
@@ -151,7 +151,7 @@ struct ManifestParser;
 
 // To make sure that changing the pest file causes a recompilation
 #[cfg(debug_assertions)]
-const _GRAMMAR: &'static str = include_str!("manifest.pest");
+const _GRAMMAR: &str = include_str!("manifest.pest");
 
 fn manifest(pairs: Pairs<Rule>) -> Result<Vec<Entry>, Error> {
     pairs
@@ -169,7 +169,7 @@ fn manifest(pairs: Pairs<Rule>) -> Result<Vec<Entry>, Error> {
 
 fn glob_entry(mut pairs: Pairs<Rule>) -> Result<Entry, Error> {
     Ok(Entry::Glob(
-        String::from(glob(pairs.next().unwrap())?),
+        glob(pairs.next().unwrap())?,
         PathBuf::from(path(pairs.next().unwrap())?),
         shell_callback(pairs.next())?,
     ))
@@ -282,9 +282,11 @@ mod tests {
         let manifest = Manifest::parse("a = b", &PathBuf::from("/tmp")).unwrap();
         assert_eq!(
             manifest.entries,
-            vec![
-                Entry::Path(PathBuf::from("/tmp/a"), PathBuf::from("/tmp/b"), None),
-            ]
+            vec![Entry::Path(
+                PathBuf::from("/tmp/a"),
+                PathBuf::from("/tmp/b"),
+                None,
+            )]
         );
     }
 
@@ -305,9 +307,11 @@ mod tests {
         let manifest = Manifest::parse("a/b/c = /x/y/z", &PathBuf::from("/tmp")).unwrap();
         assert_eq!(
             manifest.entries,
-            vec![
-                Entry::Path(PathBuf::from("/tmp/a/b/c"), PathBuf::from("/x/y/z"), None),
-            ]
+            vec![Entry::Path(
+                PathBuf::from("/tmp/a/b/c"),
+                PathBuf::from("/x/y/z"),
+                None,
+            )]
         );
     }
 
@@ -319,9 +323,11 @@ mod tests {
 
         assert_eq!(
             manifest.entries,
-            vec![
-                Entry::Path(PathBuf::from("/tmp/a"), PathBuf::from("/foo/bar"), None),
-            ]
+            vec![Entry::Path(
+                PathBuf::from("/tmp/a"),
+                PathBuf::from("/foo/bar"),
+                None,
+            )]
         );
     }
 
@@ -349,13 +355,11 @@ mod tests {
 
         assert_eq!(
             manifest.entries,
-            vec![
-                Entry::Glob(
-                    String::from("/tmp/foo/bar/*"),
-                    PathBuf::from("/tmp/to/bar"),
-                    None,
-                ),
-            ]
+            vec![Entry::Glob(
+                String::from("/tmp/foo/bar/*"),
+                PathBuf::from("/tmp/to/bar"),
+                None,
+            )]
         );
     }
 
@@ -392,13 +396,11 @@ mod tests {
 
         assert_eq!(
             manifest.entries,
-            vec![
-                Entry::Glob(
-                    String::from("/tmp/bar/*"),
-                    PathBuf::from("/tmp/drinks"),
-                    Some(String::from("ls .")),
-                ),
-            ]
+            vec![Entry::Glob(
+                String::from("/tmp/bar/*"),
+                PathBuf::from("/tmp/drinks"),
+                Some(String::from("ls .")),
+            )]
         );
     }
 }

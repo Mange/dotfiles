@@ -1,9 +1,10 @@
+extern crate dirs;
+use clap::ArgMatches;
+use failure::{Error, ResultExt};
 use std::env;
-use std::path::{Path, PathBuf};
 use std::fs::File;
 use std::io::Read;
-use failure::{Error, ResultExt};
-use clap::ArgMatches;
+use std::path::{Path, PathBuf};
 
 #[derive(Debug)]
 pub struct State {
@@ -74,7 +75,7 @@ fn determine_xdg_data_home(home: &Path) -> Result<PathBuf, Error> {
 impl State {
     pub fn new(args: &ArgMatches) -> Result<State, Error> {
         let home =
-            env::home_dir().ok_or_else(|| format_err!("Could not determine home directory"))?;
+            dirs::home_dir().ok_or_else(|| format_err!("Could not determine home directory"))?;
 
         let xdg_config_home =
             determine_xdg_config_home(&home).context("Could not determine XDG_CONFIG_HOME")?;

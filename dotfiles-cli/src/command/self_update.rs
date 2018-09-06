@@ -1,6 +1,6 @@
 use prelude::*;
-use std::process::Command;
 use std::fs;
+use std::process::Command;
 
 /// Install/update myself
 pub fn run(state: &State, _called_explicitly: bool) -> Result<(), Error> {

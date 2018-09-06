@@ -13,6 +13,7 @@ pest = "1.0.6"
 pest_derive = "1.0.7"
 glob = "0.2.11"
 derive_builder = "0.5.1"
+dirs = "1.0.3"
 
 [dependencies.log]
 version = "0.4.1"

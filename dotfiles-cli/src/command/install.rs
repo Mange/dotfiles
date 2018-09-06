@@ -1,9 +1,9 @@
 use std::path::Path;
 
-use target::{InstallationState, Target};
 use files;
 use manifest::Manifest;
 use prelude::*;
+use target::{InstallationState, Target};
 
 /// Install dotfiles.
 pub fn run(state: &State, _called_explicitly: bool) -> Result<(), Error> {
@@ -34,7 +34,7 @@ fn install_via_manifest(manifest_path: &Path) -> Result<(), Error> {
     for entry in manifest.entries() {
         match entry.installable_targets() {
             Ok(targets) => {
-                if targets.len() > 0 {
+                if !targets.is_empty() {
                     install_targets(&targets)?
                 } else {
                     warn!("No targets found for {}", entry);

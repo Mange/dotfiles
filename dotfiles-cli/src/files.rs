@@ -25,7 +25,8 @@ where
 }
 
 fn new_config_directory(path: PathBuf, state: &State) -> Result<Target, Error> {
-    let name = path.file_name()
+    let name = path
+        .file_name()
         .ok_or_else(|| format_err!("Entry at {} had no file name", path.display()))?
         .to_owned();
 
@@ -38,7 +39,8 @@ fn new_config_directory(path: PathBuf, state: &State) -> Result<Target, Error> {
 }
 
 fn new_data_directory(path: PathBuf, state: &State) -> Result<Target, Error> {
-    let name = path.file_name()
+    let name = path
+        .file_name()
         .ok_or_else(|| format_err!("Entry at {} had no file name", path.display()))?
         .to_owned();
 
@@ -51,7 +53,8 @@ fn new_data_directory(path: PathBuf, state: &State) -> Result<Target, Error> {
 }
 
 fn new_bin_file(path: PathBuf, state: &State) -> Result<Target, Error> {
-    let name = path.file_name()
+    let name = path
+        .file_name()
         .ok_or_else(|| format_err!("Entry at {} had no file name", path.display()))?
         .to_owned();
 

@@ -3,8 +3,8 @@ extern crate term;
 
 use std::sync::Mutex;
 
-use log::{set_boxed_logger, set_max_level, Level, LevelFilter, Log, Metadata, Record};
 use self::term::{color, StderrTerminal};
+use log::{set_boxed_logger, set_max_level, Level, LevelFilter, Log, Metadata, Record};
 
 pub struct Logger {
     stderr: Mutex<Box<StderrTerminal>>,
@@ -46,7 +46,7 @@ impl Log for Logger {
                     _ => "",
                 }
             ).expect("Failed to write log prefix");
-            write!(stderr, "{}\n", record.args()).expect("Failed to write log message");
+            writeln!(stderr, "{}", record.args()).expect("Failed to write log message");
             stderr.reset().expect("Failed to reset color");
         }
     }

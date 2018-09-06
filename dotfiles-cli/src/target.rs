@@ -1,7 +1,7 @@
 extern crate pathdiff;
 
-use std::path::{Path, PathBuf};
 use std::borrow::Cow;
+use std::path::{Path, PathBuf};
 use std::{fs, io};
 
 use self::pathdiff::diff_paths;
@@ -30,7 +30,8 @@ pub struct Target {
 impl TargetBuilder {
     fn default_name(&self) -> Result<String, String> {
         match self.dest_path {
-            Some(ref path) => path.file_name()
+            Some(ref path) => path
+                .file_name()
                 .map(|p| p.to_string_lossy().into_owned())
                 .ok_or_else(|| String::from("Could not determine filename of destination path")),
             None => Err(String::from("No destination path is set")),
@@ -95,7 +96,8 @@ impl Target {
         match self.dest_path.symlink_metadata() {
             Ok(metadata) => {
                 if metadata.file_type().is_symlink() {
-                    let mut link_destination = self.dest_path
+                    let mut link_destination = self
+                        .dest_path
                         .read_link()
                         .context("Could not read symlink destination")?;
                     // If link is relative ("../foo"), then calculate the real path based on the
