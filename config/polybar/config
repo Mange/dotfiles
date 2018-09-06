@@ -115,7 +115,7 @@ type = custom/script
 exec = ~/.config/polybar/task-counters
 interval = 60
 format-prefix = " "
-click-left = run-or-raise 'class = "floating-vit"' kitty --class floating-vit vit
+click-left = toggle-dropdown dropdown_vit kitty --class dropdown_vit vit
 click-right = kitty vit
 
 [module/i3]

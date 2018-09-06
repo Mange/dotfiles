@@ -136,9 +136,10 @@ bindsym Ctrl+Shift+Escape exec --no-startup-id ~/.local/bin/fix-keyboard
 
 # start a terminal
 bindsym $mod+Return exec kitty
+bindsym $mod+g exec toggle-dropdown dropdown_kitty kitty --class dropdown_kitty
 
 # File manager
-bindsym $mod+period exec run-or-raise 'class = "floating-ranger"' kitty --class floating-ranger ranger
+bindsym $mod+period exec toggle-dropdown dropdown_ranger kitty --class dropdown_ranger ranger
 bindsym $mod+shift+period exec kitty ranger
 
 # Rofi
@@ -155,60 +156,18 @@ bindsym --release $mod+minus exec gnome-screenshot
 bindsym --release $mod+Shift+minus exec gnome-screenshot --area
 
 # Taskwarrior stuff
-bindsym $mod+t exec run-or-raise 'class = "floating-vit"' kitty --class floating-vit vit
+bindsym $mod+t exec toggle-dropdown dropdown_vit kitty --class dropdown_vit vit
 bindsym $mod+n exec ~/.cargo/bin/new-task-gtk
 
-# }}}
+# Bitwarden
+bindsym $mod+shift+p exec toggle-dropdown Bitwarden bitwarden
 
-# {{{ Dropdown terminal
+# Toggle floating as soon as dropdown windows are created to avoid flickering.
+for_window [class="dropdown_kitty"] floating enable, border pixel 5
+for_window [class="dropdown_ranger"] floating enable
+for_window [class="dropdown_vit"] floating enable
+for_window [class="Bitwarden"] floating enable
 
-#  Run a floating, hidden terminal window at all times. This window can be
-#  toggled using $mod+g.
-#  (If you accidentally close it, you can open it again using $mod+shift+g.)
-
-set $dropdown_terminal_cmd kitty --class dropdown_kitty
-set $dropdown_window_cond [class="dropdown_kitty"]
-
-# Toggle floating and hide the window as soon as it is created. Make it cover
-# a slightly-bigger-than-default size too. (Percent resize does not work in
-# multi-screen contexts)
-for_window $dropdown_window_cond \
-    floating enable, \
-    resize set 900 600, \
-    move scratchpad, \
-    border pixel 5
-
-# $mod+g toggles the dropdown terminal and moves it to the center.
-bindsym $mod+g $dropdown_window_cond scratchpad show; \
-    $dropdown_window_cond move position center
-
-# $mod+shift+g starts a new instance of the terminal, then runs the same command as $mod+g.
-bindsym $mod+shift+g exec $dropdown_terminal_cmd; \
-    $dropdown_window_cond scratchpad show; \
-    $dropdown_window_cond move position center
-
-# Start it up in the background
-exec --no-startup-id $dropdown_terminal_cmd
-
-# }}}
-
-# {{{ Dropdown Bitwarden
-#  Run a floating, hidden Bitwarden window at all times. This window can be
-#  toggled using $mod+shift+p.
-#  (If you accidentally close it, just start the app again.)
-
-set $bitwarden_window_cond [class="Bitwarden"]
-
-# Toggle floating and hide the window as soon as it is created.
-for_window $bitwarden_window_cond \
-    floating enable, \
-    move scratchpad
-
-# $mod+shift+p toggles the bitwarden window
-bindsym $mod+shift+p $bitwarden_window_cond scratchpad show
-
-# Start it up in the background
-exec --no-startup-id bitwarden
 # }}}
 
 # {{{ Workspaces

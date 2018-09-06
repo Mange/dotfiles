@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+usage() {
+  cat <<-HELP
+If a program is running, toggle it on the i3 scratchpad. If not running, start
+it.
+
+Usage: $0 <CLASS_NAME> <COMMAND...>
+
+Example:
+  toggle-dropdown my_class kitty --class my_class
+HELP
+}
+
+if [[ $1 == "--help" ]]; then
+  usage
+  exit 0
+elif [[ $# -lt 2 ]]; then
+  usage
+  exit 1
+fi
+
+class_name=$1
+shift
+filter="[class=\"$class_name\"]"
+
+enable_floating="floating enable"
+enable_scratchpad="move scratchpad"
+move="move position center"
+resize="resize set 50 ppt 50 ppt"
+toggle="scratchpad show"
+
+# Check if class_name is running in i3
+if i3-msg -t get_tree | grep -q "\"class\":\"${class_name}\""; then
+  # Window exists; toggle it
+  i3-msg "${filter} ${toggle}, ${resize}, ${move}" >/dev/null
+else
+  # Window does not exist. Create it!
+  # window rules (for_window) should be hiding it automatically, so toggle it
+  # back again. (Only way to get this toggle behavior to work: Move it to
+  # scratchpad. Moving to scratchpad hides it. Must happen via window rules or
+  # else we get a lot of flickering.)
+  i3-msg "exec $*" >/dev/null
+  sleep 0.5
+  i3-msg "${filter} ${enable_scratchpad}, ${enable_floating}, ${toggle}, ${resize}, ${move}" \
+    >/dev/null
+fi
