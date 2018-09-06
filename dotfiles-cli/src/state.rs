@@ -1,7 +1,6 @@
 extern crate dirs;
 use clap::ArgMatches;
 use failure::{Error, ResultExt};
-use std::env;
 use std::fs::File;
 use std::io::Read;
 use std::path::{Path, PathBuf};
@@ -38,37 +37,29 @@ fn load_root_path(xdg_config_path: &Path) -> Result<PathBuf, Error> {
     }
 }
 
-fn determine_xdg_config_home(home: &Path) -> Result<PathBuf, Error> {
-    match env::var_os("XDG_CONFIG_HOME") {
-        Some(var) => {
-            let path = PathBuf::from(var);
+fn determine_xdg_config_home() -> Result<PathBuf, Error> {
+    match dirs::config_dir() {
+        Some(path) => {
             if path.is_dir() {
                 Ok(path)
             } else {
-                Err(format_err!(
-                    "{} is not a directory (set in $XDG_CONFIG_HOME)",
-                    path.display()
-                ))
+                Err(format_err!("{} is not a directory", path.display()))
             }
         }
-        None => Ok(home.join(".config").to_path_buf()),
+        None => Err(format_err!("Could not determine config dir")),
     }
 }
 
-fn determine_xdg_data_home(home: &Path) -> Result<PathBuf, Error> {
-    match env::var_os("XDG_DATA_HOME") {
-        Some(var) => {
-            let path = PathBuf::from(var);
+fn determine_xdg_data_home() -> Result<PathBuf, Error> {
+    match dirs::data_local_dir() {
+        Some(path) => {
             if path.is_dir() {
                 Ok(path)
             } else {
-                Err(format_err!(
-                    "{} is not a directory (set in $XDG_DATA_HOME)",
-                    path.display()
-                ))
+                Err(format_err!("{} is not a directory", path.display()))
             }
         }
-        None => Ok(home.join(".local").join("share").to_path_buf()),
+        None => Err(format_err!("Could not determine local data dir")),
     }
 }
 
@@ -77,8 +68,7 @@ impl State {
         let home =
             dirs::home_dir().ok_or_else(|| format_err!("Could not determine home directory"))?;
 
-        let xdg_config_home =
-            determine_xdg_config_home(&home).context("Could not determine XDG_CONFIG_HOME")?;
+        let xdg_config_home = determine_xdg_config_home()?;
 
         let root_path = match args.value_of("root") {
             Some(path) => PathBuf::from(path),
@@ -95,8 +85,7 @@ impl State {
         Ok(State {
             root_path,
             xdg_config_home,
-            xdg_data_home: determine_xdg_data_home(&home)
-                .context("Could not determine XDG_DATA_HOME")?,
+            xdg_data_home: determine_xdg_data_home()?,
             home_path: home,
         })
     }
