@@ -19,7 +19,7 @@ floating_modifier $mod
 
 hide_edge_borders both
 smart_borders no_gaps
-gaps inner 11
+gaps inner 10
 gaps outer 0
 
 new_window pixel 2
