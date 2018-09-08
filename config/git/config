@@ -6,37 +6,37 @@
 
 # That's me!
 [user]
-	name = Magnus Bergmark
-	email = magnus.bergmark@gmail.com
-	signingkey = 4D8E0309
+  name = Magnus Bergmark
+  email = magnus.bergmark@gmail.com
+  signingkey = 4D8E0309
 [github]
-	user = Mange
+  user = Mange
 
 # Custom colors, pagers, etc.
 [color "branch"]
-	remote = blue
-	current = bold green
-	local = green
+  remote = blue
+  current = bold green
+  local = green
 [color "diff-highlight"]
-	oldNormal = red bold
-	oldHighlight = red bold 52
-	newNormal = green bold
-	newHighlight = green bold 22
+  oldNormal = red bold
+  oldHighlight = red bold 52
+  newNormal = green bold
+  newHighlight = green bold 22
 [pager]
-	show = diff-so-fancy | less --tabs=4 -RXin
-	diff = diff-so-fancy | less --tabs=4 -RXin
+  show = diff-so-fancy | less --tabs=4 -RXin
+  diff = diff-so-fancy | less --tabs=4 -RXin
 
 # Sign commits
 [commit]
-	gpgsign = true
+  gpgsign = true
 [log]
-	showSignature = false
-	date = format:%Y-%m-%d %H:%M
+  showSignature = false
+  date = format:%Y-%m-%d %H:%M
 
 # Merge/difftool settings and style
 [merge]
-	conflictstyle = diff3
-	tool = vimdiff
+  conflictstyle = diff3
+  tool = vimdiff
 [diff]
   tool = vimdiff
 [mergetool]
@@ -47,14 +47,14 @@
 
 # Magic rebases
 [rebase]
-	autosquash = true
-	stat = true
+  autosquash = true
+  stat = true
 
 # Aliases
 [alias]
-	new = !sh -c 'git log $1@{1}..$1@{0} \"$@\"'
-	prune = !git remote | xargs -n 1 git remote prune
+  new = !sh -c 'git log $1@{1}..$1@{0} \"$@\"'
+  prune = !git remote | xargs -n 1 git remote prune
 
 # Nicer diffs
 [diff]
-	compactionHeuristic = true
+  compactionHeuristic = true
