@@ -34,10 +34,17 @@ report.scoped.filter=
 urgency.uda.priority.L.coefficient=-3.0
 
 # Low Hanging Fruit should be prioritized as it should be quick to complete.
-urgency.user.tag.lhf.coefficient=2.0
+urgency.user.tag.lhf.coefficient=1.8
 
 # Promises should be prioritized so people don't get sad.
 urgency.user.tag.promise.coefficient=4.0
+
+# Bugs should be prioritized because who likes them?
+urgency.user.tag.bug.coefficient=2.0
+
+# Boost things that I personally want to do, even if they might not be very
+# important (priority).
+urgency.user.tag.boost.coefficient=3.5
 
 # Experiments are not as important.
 urgency.user.tag.experiment.coefficient=-2.0
