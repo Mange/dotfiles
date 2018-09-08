@@ -3,6 +3,7 @@
 set -e
 
 # Generate Rust tags if project is a Rust crate and tooling is in place.
+# Generate Ruby tags if project is a Ruby app/lib and tooling is in place.
 if [ -f Cargo.toml ] && hash rusty-tags 2>/dev/null; then
   # Find source code of current toolchain if not already defined.
   if [ -z "$RUST_SRC_PATH" ] && hash rustc 2>/dev/null; then
@@ -10,6 +11,8 @@ if [ -f Cargo.toml ] && hash rusty-tags 2>/dev/null; then
     export RUST_SRC_PATH
   fi
   rusty-tags --quiet vi
+elif [ -f Gemfile ] && hash ripper-tags 2>/dev/null; then
+  ripper-tags -R
 else
   # Generate normal ctags instead
   trap 'rm -f .git/tags.$$' EXIT

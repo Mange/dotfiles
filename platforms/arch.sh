@@ -358,6 +358,7 @@ if run-section "pacman"; then
   done
 
   install-ruby-via-rvm || handle-failure "Installing Ruby"
+  install-ripper-tags || handle-failure "Installing ripper-tags"
 fi
 
 if run-section "aur"; then
@@ -458,4 +459,7 @@ if run-section "updates"; then
 
   subheader "Installing package updates"
   $PACMAN -Su
+
+  subheader "Installing RVM/Ruby updates"
+  update-ripper-tags || handle-failure "Updating ripper-tags"
 fi

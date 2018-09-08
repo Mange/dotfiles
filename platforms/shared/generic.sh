@@ -43,3 +43,29 @@ install-ruby-via-rvm() {
   subheader "Setting latest ruby as default version"
   rvm use --default ruby
 }
+
+install-ripper-tags() {
+  local gemset="$HOME/.rvm/gemsets/global.gems"
+
+  if [[ ! -f $gemset ]]; then
+    echo "${yellow}WARN: Cannot find the global gemset; aborting just to be safe.${reset}"
+    return 1
+  fi
+
+  if ! grep -q ripper-tags "$gemset"; then
+    header "Installing ripper-tags"
+    subheader "Marking it for installation on all Ruby upgrades"
+    echo ripper-tags >> "$gemset"
+
+    subheader "Installing ripper-tags in all installed rubies"
+    rvm all 'do' bash -c 'ruby -v; gem install ripper-tags'
+
+    echo "${green}Done!${reset}"
+  fi
+}
+
+update-ripper-tags() {
+  if hash ripper-tags 2>/dev/null; then
+    rvm all 'do' bash -c 'ruby -v; gem update ripper-tags'
+  fi
+}

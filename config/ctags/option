@@ -7,3 +7,5 @@
 --exclude=*.min.js
 --exclude=.git
 --exclude=.bundle
+--exclude=target
+--exclude=tmp
