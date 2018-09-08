@@ -423,7 +423,7 @@ function is256color() {
 }
 
 function colortest() {
-  for code in {000..255}; do print -P -- "%F{$code}$code%f"; done | column -x -s ' '
+  msgcat --color=test
 }
 # }}}
 # {{{ Prompt settings and configuration
