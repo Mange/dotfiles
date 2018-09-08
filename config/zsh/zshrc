@@ -415,10 +415,10 @@ autoload colors
 colors
 
 function is256color() {
-  if [[ $TERM == *256* ]]; then
-    return true
+  if [[ $(tput colors) -ge 256 ]]; then
+    true
   else
-    return false
+    false
   fi
 }
 
