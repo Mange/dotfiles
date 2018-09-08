@@ -326,7 +326,7 @@ if command-exist ag; then
 fi
 # }}}
 # {{{ Git settings and shortcuts
-git_log_format='%C(bold blue)%h%C(reset) %C(yellow)%G?%C(reset) - %C(bold green)%ar%C(reset) - %C(bold black)%an %C(auto)%d%C(reset) %C(magenta)%GS%n''  %s%n'
+git_log_format='%C(bold blue)%h%Creset %C(bold)%s%Creset%C(auto)%d%n%C(dim white)%ad %C(nodim green)(%ar)%Creset - %an%C(yellow)%+N%n%Creset'
 
 alias-if-exist hub git
 

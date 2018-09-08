@@ -31,6 +31,7 @@
 	gpgsign = true
 [log]
 	showSignature = false
+	date = format:%Y-%m-%d %H:%M
 
 # Merge/difftool settings and style
 [merge]
