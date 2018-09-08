@@ -1,0 +1,40 @@
+#!/usr/bin/env ruby
+# frozen_string_literals: true
+
+require "set"
+
+# ESC [ .... m
+# Grouped because then String#split will include this delimiter in the iteration
+ansi_color_pattern = /(\e\[[^m]*m)/
+
+graph_characters = {
+  "" => "",
+  "|" => "┃",
+  "*" => "🟊",
+  "\\" => "╲",
+  "/" => "╱",
+}.freeze
+
+original_characters = graph_characters.keys.to_set.freeze
+
+begin
+  ARGF.each_line do |line|
+    graph_mode = true
+    line.split(ansi_color_pattern).each_slice(2) do |(string, next_color)|
+      if graph_mode
+        normalized = string.strip
+        if original_characters.include?(normalized)
+          print string.sub(normalized, graph_characters[normalized]), next_color
+        else
+          graph_mode = false
+          print string, next_color
+        end
+      else
+        print string, next_color
+      end
+    end
+  end
+rescue Errno::EPIPE
+  # Pipe is closed. We don't care. Just don't output anything more...
+  exit 0
+end
