@@ -9,3 +9,9 @@ source "${XDG_CONFIG_HOME:-${HOME}/.config}/shells/xdg_zealotry"
 # Only load my own custom Ranger config; not the global config. This allows me
 # to remove things from the official configuration and to override mappings.
 export RANGER_LOAD_DEFAULT_RC=FALSE
+
+# Have current hostname in ENV for easy reference in config files, etc.
+# Dont use either $HOST or $HOSTNAME as those are set automatically by zsh /
+# bash.
+MY_HOST="$(hostname)"
+export MY_HOST
