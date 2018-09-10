@@ -45,12 +45,21 @@ install-ruby-via-rvm() {
 }
 
 install-ripper-tags() {
-  local gemset="$HOME/.rvm/gemsets/global.gems"
+  # shellcheck source=/dev/null
+  source "${XDG_CONFIG_HOME}/shells/enable-rvm"
 
-  if [[ ! -f $gemset ]]; then
-    echo "${yellow}WARN: Cannot find the global gemset; aborting just to be safe.${reset}"
+  if [[ -f "$HOME/.rvm/gemsets/global.gems" ]]; then
+    install-ripper-tags-local
+  elif [[ -f "/usr/share/rvm/gemsets/global.gems" ]]; then
+    install-ripper-tags-global
+  else
+    echo "${yellow}WARN: Cannot find ~/.rvm; aborting just to be safe.${reset}"
     return 1
   fi
+}
+
+install-ripper-tags-local() {
+  local gemset="$HOME/.rvm/gemsets/global.gems"
 
   if ! grep -q ripper-tags "$gemset"; then
     header "Installing ripper-tags"
@@ -64,7 +73,25 @@ install-ripper-tags() {
   fi
 }
 
+install-ripper-tags-global() {
+  local gemset="/usr/share/rvm/gemsets/global.gems"
+
+  if ! grep -q ripper-tags "$gemset"; then
+    header "Installing ripper-tags"
+    subheader "Marking it for installation on all Ruby upgrades"
+    echo ripper-tags | sudo tee -a "$gemset" > /dev/null
+
+    subheader "Installing ripper-tags in all installed rubies"
+    rvm all 'do' bash -c 'ruby -v; gem install ripper-tags'
+
+    echo "${green}Done!${reset}"
+  fi
+}
+
 update-ripper-tags() {
+  # shellcheck source=/dev/null
+  source "${XDG_CONFIG_HOME}/shells/enable-rvm"
+
   if hash ripper-tags 2>/dev/null; then
     rvm all 'do' bash -c 'ruby -v; gem update ripper-tags'
   fi
