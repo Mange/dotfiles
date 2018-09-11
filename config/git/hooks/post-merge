@@ -1,2 +1,2 @@
 #!/bin/sh
-.git/hooks/tags >/dev/null 2>&1 &
+"$(dirname "$0")/tags" >/dev/null 2>&1 &
