@@ -1,0 +1,12 @@
+# vim:ft=sh
+# Copy this file as options.local to enable backups on this machine.
+# shellcheck disable=2034
+
+# Check for disk uuid and name with
+#   lsblk; ls -l /dev/disk/by-uuid
+# disk_uuid=SOME_UUID
+# disk_name="Mange Backup"
+
+# shellcheck disable=2034
+mountpoint="/var/run/media/mange/${disk_name}"
+backup_dir="${mountpoint}/$(hostname)"

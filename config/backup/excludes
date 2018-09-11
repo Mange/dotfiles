@@ -1,0 +1,15 @@
+/home/mange/.config/backup/passphrase.local
+/home/mange/.cache
+/home/mange/.rvm
+/home/mange/.multirust
+/home/mange/.cargo
+/home/mange/.Xauthority
+/home/mange/.ICEauthority
+/home/mange/.yarn
+/home/mange/.bundle
+/home/mange/.node-gyp
+/home/mange/.local/share/npm
+**/node_modules
+
+/home/mange/Downloads
+/home/mange/Media
