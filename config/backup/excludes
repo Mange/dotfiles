@@ -2,6 +2,7 @@
 /home/mange/.cache
 /home/mange/.rvm
 /home/mange/.multirust
+/home/mange/.rustup
 /home/mange/.cargo
 /home/mange/.Xauthority
 /home/mange/.ICEauthority
@@ -9,7 +10,11 @@
 /home/mange/.bundle
 /home/mange/.node-gyp
 /home/mange/.local/share/npm
+/home/mange/.local/share/Trash/
 **/node_modules
+**/target/debug
+**/target/release
+**/tmp
 
 /home/mange/Downloads
 /home/mange/Media
