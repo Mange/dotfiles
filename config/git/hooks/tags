@@ -12,7 +12,12 @@ if [ -f Cargo.toml ] && hash rusty-tags 2>/dev/null; then
   fi
   rusty-tags --quiet vi
 elif [ -f Gemfile ] && hash ripper-tags 2>/dev/null; then
-  ripper-tags -R
+  trap 'rm -f .git/tags.$$' EXIT
+  ripper-tags \
+    -R --tag-relative \
+    -f .git/tags.$$ \
+    --exclude config/routes/
+  mv .git/tags.$$ .git/tags
 else
   # Generate normal ctags instead
   trap 'rm -f .git/tags.$$' EXIT
