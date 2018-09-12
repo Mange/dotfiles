@@ -259,22 +259,43 @@ copy-replace-with-diff() {
   local source="$1"
   local target="$2"
 
-  if [[ ! -f "$target" ]] || confirm-diff "$target" "$source"; then
-    cp "$source" "$target"
-    return 0
-  else
-    return 1
+  # If file exists, and is not identical then ask the user if it should be
+  # installed or not.
+  if [[ -f "$target" ]]; then
+    if is-identical-file "$target" "$source"; then
+      return 0
+    elif ! confirm-diff "$target" "$source"; then
+      # Abort
+      return 0
+    fi
   fi
+
+  cp "$source" "$target"
 }
 
 sudo-copy-replace-with-diff() {
   local source="$1"
   local target="$2"
 
-  if [[ ! -f "$target" ]] || confirm-diff "$target" "$source"; then
-    sudo cp "$source" "$target"
-    sudo chown root:root "$target"
-    sudo chmod u=rw,og=r "$target"
+  if [[ -f "$target" ]]; then
+    if is-identical-file "$target" "$source"; then
+      return 0
+    elif ! confirm-diff "$target" "$source"; then
+      # Abort
+      return 0
+    fi
+  fi
+
+  sudo cp "$source" "$target"
+  sudo chown root:root "$target"
+  sudo chmod u=rw,og=r "$target"
+}
+
+is-identical-file() {
+  local a="$1"
+  local b="$2"
+
+  if diff -q "$a" "$b"; then
     return 0
   else
     return 1
@@ -292,7 +313,7 @@ confirm-diff() {
   fi
 
   if diff="$("${differ}" -u "${old}" "${new}" 2>&1)"; then
-    # File matches. Nothing to do! :)
+    echo "Warning: confirm-diff got two identical files '${old}' '${new}'" > /dev/stderr
     return 0
   else
     echo "${yellow}Installed file differs from repo file:${reset}"
@@ -478,7 +499,6 @@ if run-section "fast"; then
     enable-systemd-unit "docker"
   fi
 
-  subheader "Enabling backup system"
   sudo-copy-replace-with-diff \
     "shared/duplicity-backup.service" \
     "/etc/systemd/system/duplicity-backup.service"
