@@ -45,6 +45,7 @@ ttf-indic-otf # Indic; includes ಠ_ಠ
 # CLI env
 bat
 curl
+duplicity # Backup tool
 exa
 htop
 httpie
@@ -169,7 +170,6 @@ ffmpegthumbs             # video thumbnails
 kdegraphics-thumbnailers # PDF and PS thumbnails
 
 # GNOME software
-deja-dup
 gnome-calculator
 gnome-calendar
 gnome-characters

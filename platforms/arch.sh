@@ -255,39 +255,53 @@ EOF
     sudo rm -rf /opt/aurutils
 }
 
-configure-lightdm() {
-  local config=/etc/lightdm/lightdm-gtk-greeter.conf
-  local dotfile_config=../lightdm-gtk-greeter.conf
+sudo-copy-replace-with-diff() {
+  local source="$1"
+  local target="$2"
+
+  if [[ ! -f "$target" ]] || confirm-diff "$target" "$source"; then
+    sudo cp "$source" "$target"
+    sudo chown root:root "$target"
+    sudo chmod u=rw,og=r "$target"
+    return 0
+  else
+    return 1
+  fi
+}
+
+confirm-diff() {
+  local old="$1"
+  local new="$2"
+
   local differ=diff
 
   if hash colordiff 2>/dev/null; then
     differ=colordiff
   fi
 
-  if [[ -f $config ]]; then
-    if diff="$("${differ}" -u "${config}" "${dotfile_config}" 2>&1)"; then
-      # File matches. Nothing to do! :)
-      return
-    else
-      header "Configuring LightDM"
-      echo "${yellow}Server config differs from config in dotfiles:${reset}"
-      echo "${diff}"
-      echo "Overwrite config? [yN] "
-      read -r answer
-      if [[ $answer != "y" && $answer != "Y" ]]; then
-        echo "Aborting"
-        handle-failure "Config not applied"
-        return
-      fi
-    fi
+  if diff="$("${differ}" -u "${old}" "${new}" 2>&1)"; then
+    # File matches. Nothing to do! :)
+    return 0
   else
-    # File did not exist
-    header "Configuring LightDM"
+    echo "${yellow}Installed file differs from repo file:${reset}"
+    echo "${diff}"
+    echo "Overwrite config? [yN] "
+    read -r answer
+    if [[ $answer = "y" || $answer = "Y" ]]; then
+      return 0
+    else
+      echo "${red}Aborting${reset}"
+      return 1
+    fi
   fi
+}
 
-  sudo cp "${dotfile_config}" "$config"
-  sudo chown root:root "$config"
-  sudo chmod u=rw,og=r "$config"
+configure-lightdm() {
+  local config=/etc/lightdm/lightdm-gtk-greeter.conf
+  local dotfile_config=../lightdm-gtk-greeter.conf
+
+  header "Configuring LightDM"
+  sudo-copy-replace-with-diff "$dotfile_config" "$config" || handle-failure
 }
 
 setup-nerd-fonts() {
@@ -445,6 +459,15 @@ if run-section "fast"; then
   if hash docker 2>/dev/null; then
     enable-systemd-unit "docker"
   fi
+
+  subheader "Enabling backup system"
+  sudo-copy-replace-with-diff \
+    "shared/duplicity-backup.service" \
+    "/etc/systemd/system/duplicity-backup.service"
+  sudo-copy-replace-with-diff \
+    "shared/duplicity-backup.timer" \
+    "/etc/systemd/system/duplicity-backup.timer"
+  enable-systemd-unit "duplicity-backup.timer"
 
   if ! timedatectl show | grep -q "^NTP=yes"; then
     subheader "Enabling timesync (NTP)"
