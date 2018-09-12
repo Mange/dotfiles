@@ -255,6 +255,18 @@ EOF
     sudo rm -rf /opt/aurutils
 }
 
+copy-replace-with-diff() {
+  local source="$1"
+  local target="$2"
+
+  if [[ ! -f "$target" ]] || confirm-diff "$target" "$source"; then
+    cp "$source" "$target"
+    return 0
+  else
+    return 1
+  fi
+}
+
 sudo-copy-replace-with-diff() {
   local source="$1"
   local target="$2"
@@ -442,6 +454,12 @@ if run-section "fast"; then
   if hash gsettings 2>/dev/null; then
     gsettings set org.gnome.desktop.background show-desktop-icons false
   fi
+
+  header "Setting up user directories"
+  copy-replace-with-diff \
+    "shared/user-dirs.dirs" \
+    "$HOME/.config/user-dirs.dirs"
+  create-user-dirs
 
   configure-lightdm
 
