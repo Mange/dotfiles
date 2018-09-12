@@ -27,6 +27,9 @@ bashrc = $HOME/.bashrc
 # RVM overwrites my custom $IRBRC setting.
 irbrc = $HOME/.irbrc
 
+# Vit (Taskwarrior)
+vitrc = $HOME/.vitrc
+
 # RSpec does not support XDG yet
 # PR opened: https://github.com/rspec/rspec-core/pull/2538
 rspec = $HOME/.rspec
