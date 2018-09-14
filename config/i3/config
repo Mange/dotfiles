@@ -85,8 +85,11 @@ client.urgent            $bright_red     $bright_red     $light1 $bright_red   $
 exec --no-startup-id light-locker
 exec --no-startup-id ~/.local/bin/locking-monitor
 
+# To deal with apps requesting privilege elevation
+exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+
 # Keyboard, screens, etc.
-exec --no-startup-id ~/.local/bin/fix-keyboard
+exec_always --no-startup-id ~/.local/bin/fix-keyboard
 exec --no-startup-id autorandr --change
 exec --no-startup-id ~/.local/bin/dynamic-startup
 
@@ -105,9 +108,6 @@ exec --no-startup-id syncthing-gtk --minimized
 exec --no-startup-id dunst # Notification server
 exec --no-startup-id nm-applet # NetworkManager
 exec --no-startup-id udiskie --tray # Device mounter
-
-# To deal with apps requesting privilege elevation
-exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 # }}}
 
 # {{{ i3 shortcuts
