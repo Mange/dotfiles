@@ -20,10 +20,18 @@ export QT_AUTO_SCREEN_SCALE_FACTOR=1
 # For apps that cannot scale automatically, configure per-host
 case "$(hostname --short)" in
 bilquis)
-  export GDK_SCALE=2
+  export GDK_SCALE=1
   ;;
 *)
   export GDK_SCALE=1
   ;;
 esac
 
+# Try to fix the screen setup before starting i3
+# This might help set sane defaults for programs starting up. Generally, I
+# might have a single HiDPI display connected but it might be turned off. That
+# does not mean that I want HiDPI on all other screens; I want it on no
+# screens.
+# Autorandr sets the DPI too, which should enable/disable autoscaling for
+# some apps.
+autorandr --change
