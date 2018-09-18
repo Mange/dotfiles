@@ -375,8 +375,7 @@ setopt auto_resume   # "man" automatically resumes "man command" if in backgroun
 setopt check_jobs    # print job statuses on exit, and cancel exiting the first time
 setopt hup           # HUP any jobs when exiting
 # }}}
-# {{{ Ruby development with Bundler
-alias be='bundle exec'
+# {{{ Ruby development with Bundler / binstubs / etc.
 
 bundle-exec () {
   if [ -f "bin/$1" ]; then
@@ -386,13 +385,26 @@ bundle-exec () {
     "bin/$cmd" "$@"
   elif [ -f Gemfile ]; then
     echo "(→ bundle exec $*)"
-    bundle exec "$@"
+    command bundle exec "$@"
   else
     $@
   fi
 }
 
-for gem in cap cucumber guard rspec spork; do
+binstub-exec() {
+  if [ -f "bin/$1" ]; then
+    echo "(→ bin/$*)"
+    cmd=$1
+    shift
+    "bin/$cmd" "$@"
+  else
+    $@
+  fi
+}
+
+alias bundle="binstub-exec bundle"
+
+for gem in guard rspec rails rubocop rake; do
   alias $gem="bundle-exec $gem"
 done
 
