@@ -90,7 +90,7 @@ exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 
 # Keyboard, screens, etc.
 exec_always --no-startup-id ~/.local/bin/fix-keyboard
-exec --no-startup-id autorandr --change
+exec --no-startup-id autorandr --change --default horizontal
 exec --no-startup-id ~/.local/bin/dynamic-startup
 
 # Compositor
@@ -125,7 +125,7 @@ bindsym $mod+Shift+e exec i3quit
 bindsym $mod+Shift+Escape exec light-locker-command -l
 
 # Reflow screens
-bindsym $mod+Shift+x exec --no-startup-id autorandr --change
+bindsym $mod+Shift+x exec --no-startup-id autorandr --change --default horizontal
 
 # In case of emergency
 bindsym Ctrl+Shift+Escape exec --no-startup-id ~/.local/bin/fix-keyboard
