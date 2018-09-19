@@ -6,7 +6,8 @@
 fix-keyboard
 
 # Reflow screens
-# autorandr --change
+# Temporarily disabled because of --fb hack in autorandr
+# autorandr --change --default horizontal
 
 # Show reminder, if it was more than 1 hour since last locked
 last_lock_file="$XDG_RUNTIME_DIR/locking-monitor-time-of-last-lock"

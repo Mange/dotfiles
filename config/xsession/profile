@@ -34,4 +34,5 @@ esac
 # screens.
 # Autorandr sets the DPI too, which should enable/disable autoscaling for
 # some apps.
-autorandr --change
+# If autorandr fails, fall back on running normal xrandr --auto.
+autorandr --change --default horizontal || xrandr --auto

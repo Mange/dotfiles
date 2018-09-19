@@ -9,9 +9,11 @@ off
 output DP-3
 mode 2560x1440
 pos 0x0
+primary
 rate 59.95
 output DP-1
 mode 1920x1200
-pos 2560x240
+pos 2560x0
 rate 59.95
 rotate left
+fb 3760x1920
