@@ -40,7 +40,7 @@ if [[ $_mange_xdg_zealotry != "yes" ]]; then
   export TASKRC="${XDG_CONFIG_HOME}/taskwarrior/config"
 
   # ctags
-  export CTAGS="--options=\"${XDG_CONFIG_HOME}/ctags/options\""
+  export CTAGS="--options=${XDG_CONFIG_HOME}/ctags/option"
 
   # Xauthority
   # Temporarily disabled; I need to get lightdm to actually write the file
