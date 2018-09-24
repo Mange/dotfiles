@@ -1,12 +1,18 @@
 #!/bin/bash
 # Disable HiDPI scaling; might get triggered from the 4K internal laptop screen
 # For some reason, setting the DPI will freeze one of the screens. That's
-# really weird. Running --auto on it will make it unfreeze again. I really
-# don't understand what is causing this.
-xrandr --dpi 96 --output DP-1 --auto
+# really weird.
+# It seems like calling --auto on it afterwards unfreezes it sometimes;
+# sometimes you could rotate it back and forwards once to unfreeze it.
+xrandr --dpi 96
+sleep 0.5
+xrandr --output DP-1 --auto
 
 # Restart i3 to take the new DPI into consideration
 i3-msg restart
+
+# Wait for i3 to start
+sleep 0.4
 
 i3-msg '[workspace="^(1|2|3|4|5|6|7):"] move workspace to output DP-3'
 i3-msg '[workspace="^(8|9|10):"] move workspace to output DP-1'
