@@ -4,3 +4,5 @@ source "${XDG_CONFIG_HOME:-${HOME}/.config}/shells/common"
 
 # shellcheck source=/dev/null
 source "${XDG_CONFIG_HOME}/shells/enable-rvm"
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
