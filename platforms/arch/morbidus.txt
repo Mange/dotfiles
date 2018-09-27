@@ -2,6 +2,7 @@
 # morbidus-specific
 nvidia
 nvidia-utils
+nvidia-settings
 
 # Deluge GTK client
 deluge

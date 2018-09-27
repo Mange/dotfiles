@@ -8,11 +8,9 @@ xrandr --dpi 96
 sleep 0.5
 xrandr --output DP-1 --auto
 
-# Restart i3 to take the new DPI into consideration
-i3-msg restart
-
-# Wait for i3 to start
-sleep 0.4
-
 i3-msg '[workspace="^(1|2|3|4|5|6|7):"] move workspace to output DP-3'
 i3-msg '[workspace="^(8|9|10):"] move workspace to output DP-1'
+sleep 0.5
+
+# Restart i3 to take the new DPI into consideration
+i3-msg restart

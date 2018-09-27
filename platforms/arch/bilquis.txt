@@ -2,6 +2,7 @@
 # bilquis-specific
 nvidia
 nvidia-utils
+nvidia-settings
 
 wpa_supplicant
 
