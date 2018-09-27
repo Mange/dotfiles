@@ -1,0 +1,4 @@
+#!/bin/sh
+# Alias for nvim for programs that assume my editor configuration (or don't
+# load my shell variables).
+exec nvim "$@"
