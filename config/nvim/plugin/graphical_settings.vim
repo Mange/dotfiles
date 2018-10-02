@@ -13,18 +13,7 @@ if exists("&colorcolumn")
   set colorcolumn=+1,+2,+3
 endif
 
-if has("gui_macvim")
-  set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h14,\ DejaVu\ Sans\ Mono:h14
-  " Fullscreen takes up entire screen
-  set fuoptions=maxhorz,maxvert
-  set transparency=0
-
-  " Don't clobber system clipboard in visual mode
-  " OS X don't have selection/clipboard distinction ("* vs "+ registers)
-  set guioptions-=a
-else
-  set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 10,\ DejaVu\ Sans\ Mono\ 10
-endif
+set guifont=Fira\ Code\ 10
 
 " Shortcuts to use system clipboard
 if v:progname =~? "gvim"

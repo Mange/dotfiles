@@ -40,7 +40,7 @@ textbox-prompt-sep {
   border-color: @background;
   spacing: 2;
 
-  font: "DejaVu Sans 16";
+  font: "Fira Sans Condensed, Medium Condensed 16";
 }
 
 #window {
