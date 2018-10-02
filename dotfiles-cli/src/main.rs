@@ -74,16 +74,14 @@ fn main() {
         Ok(_) => {}
         Err(error) => {
             let mut message = String::new();
-            let mut indentation = 0;
 
             message.push_str(&format!("{}\n", error));
 
-            for cause in error.iter_causes() {
+            for (indentation, cause) in error.iter_causes().enumerate() {
                 for _ in 0..indentation {
                     message.push_str("  ");
                 }
                 message.push_str(&format!("Caused by: {}\n", cause));
-                indentation += 1;
             }
 
             error!("{}", message);
