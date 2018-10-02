@@ -67,7 +67,7 @@ cnoremap $$ <C-R>=expand('%:h').'/'<cr>
 nmap <leader>q :%bd<CR>
 
 " Open TODO
-nmap <leader>t :split<CR>:Note TODO<CR>
+nmap <leader>t :split<CR>:e todo.txt<CR>
 
 " Search for word in vim *and* Ag at the same time
 " <leader>A for case-insensitive, <leader>a for smart-case
