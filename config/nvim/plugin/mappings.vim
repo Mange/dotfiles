@@ -1,9 +1,3 @@
-" Navigate display lines
-nnoremap j gj
-nnoremap k gk
-xnoremap j gj
-xnoremap k gk
-
 " Jump to alternative file
 map <leader><leader> :A<CR>
 
@@ -32,13 +26,6 @@ inoremap <C-s> <C-o>:w<CR>
 noremap <C-d> :wq<CR>
 inoremap <C-d> <Esc>:wq<CR>
 
-" Heresy!
-imap <C-a> <C-o>^
-imap <C-e> <C-o>$
-
-" Hashcolon!
-imap <C-l> :<Space>
-
 " Quick list shortcuts
 nmap <Tab> :cn<CR>
 nmap <S-Tab> :cp<CR>
@@ -52,8 +39,6 @@ vmap sh <Plug>SearchHighlightingToggleHlsearch
 map <expr> Q ''
 
 " Fugitive mappings
-nmap <F1> :Gstatus<CR>
-nmap <F2> :Gcommit --all<CR>
 nmap <leader>gs :Gstatus<CR>
 nmap <leader>ga :Gw<CR>
 nmap <leader>gc :Gcommit<CR>
@@ -67,7 +52,7 @@ cnoremap $$ <C-R>=expand('%:h').'/'<cr>
 nmap <leader>q :%bd<CR>
 
 " Open TODO
-nmap <leader>t :split<CR>:e todo.txt<CR>
+nmap <leader>t :split todo.txt<CR>
 
 " Search for word in vim *and* Ag at the same time
 " <leader>A for case-insensitive, <leader>a for smart-case
