@@ -16,7 +16,6 @@ Plug 'vim-scripts/ingo-library' | Plug 'vim-scripts/SearchHighlighting'
 Plug 'Yggdroot/indentLine'
 Plug 'airblade/vim-gitgutter'
 Plug 'mhinz/vim-startify'
-Plug 'rizzatti/dash.vim'
 Plug 'rking/ag.vim', {'on': ['Ag', 'AgFromSearch']}
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
