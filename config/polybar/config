@@ -88,7 +88,7 @@ top = true
 
 modules-left = i3 task-counters
 modules-center = media-controls
-modules-right = volume battery wifi time
+modules-right = pending-updates volume battery wifi time
 
 tray-detached = false
 tray-position = right
@@ -178,6 +178,14 @@ date = %F%
 date-alt = %A vecka %W
 time = %H:%M
 interval = 1
+
+[module/pending-updates]
+inherit = module/base
+type = custom/script
+exec = ~/.config/polybar/pending-updates
+interval = 240
+format-prefix = " "
+click-left = kitty zsh -c "sudo pacman -Syu"
 
 [module/volume]
 inherit = module/base
