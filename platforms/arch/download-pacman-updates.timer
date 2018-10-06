@@ -1,0 +1,11 @@
+[Unit]
+Description="Download pacman updates at some intervals"
+
+[Timer]
+WakeSystem=false
+OnStartupSec=5m
+OnUnitInactiveSec=6h
+Wants=network-online.target
+
+[Install]
+WantedBy=timers.target

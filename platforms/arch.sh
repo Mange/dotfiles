@@ -521,10 +521,20 @@ if run-section "fast"; then
     "/etc/systemd/system/duplicity-backup.timer"
   enable-systemd-unit "duplicity-backup.timer"
 
+  sudo-copy-replace-with-diff \
+    "arch/download-pacman-updates.service" \
+    "/etc/systemd/system/download-pacman-updates.service"
+  sudo-copy-replace-with-diff \
+    "arch/download-pacman-updates.timer" \
+    "/etc/systemd/system/download-pacman-updates.timer"
+  enable-systemd-unit "download-pacman-updates.timer"
+
   if ! timedatectl show | grep -q "^NTP=yes"; then
     subheader "Enabling timesync (NTP)"
     sudo timedatectl set-ntp true
   fi
+
+  sudo systemctl daemon-reload
 fi
 
 if run-section "updates"; then
