@@ -331,7 +331,7 @@ confirm-diff() {
 
 configure-lightdm() {
   local config=/etc/lightdm/lightdm-gtk-greeter.conf
-  local dotfile_config=../lightdm-gtk-greeter.conf
+  local dotfile_config=shared/lightdm-gtk-greeter.conf
 
   header "Configuring LightDM"
   sudo-copy-replace-with-diff "$dotfile_config" "$config" || handle-failure
@@ -490,6 +490,10 @@ if run-section "fast"; then
     "shared/user-dirs.dirs" \
     "$HOME/.config/user-dirs.dirs"
   create-user-dirs
+
+  header "Setting up wallpapers"
+  sudo rsync --archive --delete ../data/wallpapers/ /usr/share/wallpapers/Mange || handle-failure "running rsync"
+  sudo chown -R root:root /usr/share/wallpapers/Mange
 
   configure-lightdm
   configure-polkit
