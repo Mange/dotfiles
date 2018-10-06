@@ -137,7 +137,7 @@ bindsym $mod+Return exec kitty
 bindsym $mod+g exec toggle-dropdown dropdown_kitty kitty --class dropdown_kitty
 
 # File manager
-bindsym $mod+period exec toggle-dropdown dropdown_ranger kitty --class dropdown_ranger ranger
+bindsym $mod+period exec toggle-dropdown dropdown_ranger kitty --class dropdown_ranger zsh -ic ranger
 bindsym $mod+shift+period exec kitty ranger
 
 # Rofi
