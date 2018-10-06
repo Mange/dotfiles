@@ -337,6 +337,15 @@ configure-lightdm() {
   sudo-copy-replace-with-diff "$dotfile_config" "$config" || handle-failure
 }
 
+configure-polkit() {
+  header "Configuring PolicyKit"
+
+  local config=/etc/polkit-1/rules.d/blueman.rules
+  local dotfile_config=./arch/polkit-blueman.rules
+
+  sudo-copy-replace-with-diff "$dotfile_config" "$config" || handle-failure
+}
+
 setup-nerd-fonts() {
   local package_config=/etc/fonts/conf.avail/10-nerd-font-symbols.conf
   local user_config=${XDG_CONFIG_HOME:-~/.config}/fontconfig/conf.d/10-nerd-font-symbols.conf
@@ -483,6 +492,7 @@ if run-section "fast"; then
   create-user-dirs
 
   configure-lightdm
+  configure-polkit
 
   header "Configuring Systemd"
   enable-systemd-unit "NetworkManager"
