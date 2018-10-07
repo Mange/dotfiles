@@ -1,6 +1,12 @@
+# A note about the shortcut colors:
+#   - Green = Will return to tydra after
+#   - Red = Will exit tydra
+#   - Blue = Opens another tydra menu
+#   - Yellow and Cyan are special colors for certain menus.
+#
 global:
   layout: columns
-  shortcut_color: red
+  shortcut_color: green
 pages:
   root:
     title: Welcome
@@ -29,7 +35,7 @@ pages:
 
           - shortcut: T
             title: Start vit
-            shortcut_color: green
+            shortcut_color: red
             mode: exec
             command: vit
 
@@ -41,11 +47,13 @@ pages:
           - shortcut: r
             title: Edit reminder
             mode: exec
+            shortcut_color: red
             command: nvim ~/Reminder
 
           - shortcut: o
             title: Edit local overrides
             mode: exec
+            shortcut_color: red
             command: |
               nvim "$XDG_CONFIG_HOME/taskwarrior/local-overrides"
 
@@ -53,13 +61,13 @@ pages:
         entries:
           - shortcut: d
             title: Downloads
-            shortcut_color: green
+            shortcut_color: red
             return: false
             mode: background
             command: kitty -e "zsh -c \"ranger ~/Downloads\""
           - shortcut: D
             title: Downloads (GUI)
-            shortcut_color: green
+            shortcut_color: red
             return: false
             command: dolphin ~/Downloads
             mode: background
@@ -71,11 +79,16 @@ pages:
             return: power
             shortcut_color: blue
 
+          - shortcut: f
+            title: Filesystem menu
+            return: fs
+            shortcut_color: blue
+
           - shortcut: u
             title: Audio settings
             return: false
             mode: background
-            shortcut_color: green
+            shortcut_color: red
             command: pavucontrol
 
           # TODO: Command to toggle default audio sink (requires being able to
@@ -84,7 +97,7 @@ pages:
           - shortcut: w
             title: Wifi menu
             mode: exec
-            shortcut_color: green
+            shortcut_color: red
             command: nmtui connect
 
           - shortcut: i
@@ -95,14 +108,36 @@ pages:
       - entries:
           - shortcut: q
             title: Quit
-            shortcut_color: green
+            shortcut_color: red
             return: false
+
+  fs:
+    title: Filesystem
+    settings:
+      layout: list
+    groups:
+      - entries:
+          - shortcut: u
+            title: "Unmount media (select)"
+            return: true
+            command: rofi-unmount
+
+          - shortcut: U
+            title: "Unmount media (all)"
+            return: false
+            shortcut_color: red
+            command: udiskie-umount --all
+
+          - shortcut: q
+            title: Go back
+            shortcut_color: blue
+            return: root
 
   power:
     title: Power settings
     settings:
       layout: list
-      shortcut_color: green
+      shortcut_color: red
     groups:
       - entries:
           - shortcut: s
@@ -129,23 +164,25 @@ pages:
     title: i3 settings
     settings:
       layout: columns
-      shortcut_color: green
     groups:
       - title: Config
         entries:
           - shortcut: r
             title: Reload config
             mode: exec
+            shortcut_color: red
             command: i3-msg reload
 
           - shortcut: x
             title: Restart
             mode: exec
+            shortcut_color: red
             command: i3-msg Restart
 
           - shortcut: "?"
             title: Show cheatsheet
             mode: exec
+            shortcut_color: red
             command: i3cheatsheet
 
       - title: Gaps
@@ -194,5 +231,5 @@ pages:
       - entries:
           - shortcut: q
             title: Quit
-            shortcut_color: green
+            shortcut_color: blue
             return: false
