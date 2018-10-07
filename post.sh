@@ -7,11 +7,6 @@ if [[ -d ~/.config/zsh/vendor ]]; then
   rm -rf ~/.config/zsh/vendor
 fi
 
-# Make sure termite has a config
-if [[ ! -f "$XDG_CONFIG_HOME/termite/config" ]]; then
-  "${HOME}/.local/bin/termite-config"
-fi
-
 # Create local-overrides template for Taskwarrior, if missing
 if [[ ! -f "$XDG_CONFIG_HOME/taskwarrior/local-overrides" ]]; then
   cp "$XDG_CONFIG_HOME/taskwarrior/local-overrides.example" "$XDG_CONFIG_HOME/taskwarrior/local-overrides"
