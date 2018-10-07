@@ -4,13 +4,6 @@
 setopt extendedglob
 autoload is-at-least
 
-if [ -f ~/.zshrc.before ]; then
-  echo "$(tput setaf 1)\
-Warning: You have a ~/.zshrc.before file. \
-Move it to ${XDG_CONFIG_HOME}/zsh/zshrc.before.local!\
-$(tput sgr0)" > /dev/stderr
-  source ~/.zshrc.before
-fi
 # Chain with true to avoid $? being false
 [ -f "${XDG_CONFIG_HOME}/zsh/zshrc.before.local" ] && source "${XDG_CONFIG_HOME}/zsh/zshrc.before.local" || true
 
@@ -564,13 +557,6 @@ stty -ixon -ixoff
 [ -f $HOME/.travis/travis.sh ] && source $HOME/.travis/travis.sh
 # }}}
 
-if [ -f ~/.zshrc.after ]; then
-  echo "$(tput setaf 1)\
-Warning: You have a ~/.zshrc.after file. \
-Move it to ${XDG_CONFIG_HOME}/zsh/zshrc.after.local!\
-$(tput sgr0)" > /dev/stderr
-  source ~/.zshrc.after
-fi
 # Chain with true to avoid $? being false
 [ -f "${XDG_CONFIG_HOME}/zsh/zshrc.after.local" ] && source "${XDG_CONFIG_HOME}/zsh/zshrc.after.local" || true
 
