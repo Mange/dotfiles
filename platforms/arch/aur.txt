@@ -30,8 +30,9 @@ vit               # A terminal interface for Taskwarrior with Vim key bindings a
 yakyak            # Desktop client for Google Hangouts
 
 # My own stuff
-rofi-emoji
 graceful-shutdown
+rofi-emoji
+tydra
 
 # Fonts (also see my.txt)
 ttf-nerd-fonts-symbols

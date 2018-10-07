@@ -136,6 +136,9 @@ bindsym Ctrl+Shift+Escape exec --no-startup-id ~/.local/bin/fix-keyboard
 bindsym $mod+Return exec kitty
 bindsym $mod+g exec toggle-dropdown dropdown_kitty kitty --class dropdown_kitty
 
+# tydra
+bindsym $mod+shift+Return exec kitty --class dropdown_tydra zsh -ic "tydra ~/.config/tydra/main.yml"
+
 # File manager
 bindsym $mod+period exec toggle-dropdown dropdown_ranger kitty --class dropdown_ranger zsh -ic ranger
 bindsym $mod+shift+period exec kitty ranger
@@ -164,6 +167,13 @@ bindsym $mod+shift+p exec toggle-dropdown Bitwarden bitwarden
 for_window [class="dropdown_kitty"] floating enable, border pixel 5
 for_window [class="dropdown_ranger"] floating enable
 for_window [class="dropdown_vit"] floating enable
+
+for_window [class="dropdown_tydra"] \
+    floating enable, \
+    border pixel 5, \
+    resize set 60 ppt 50 ppt, \
+    move position center
+
 for_window [class="Bitwarden"] floating enable
 
 # }}}

@@ -1,0 +1,198 @@
+global:
+  layout: columns
+  shortcut_color: red
+pages:
+  root:
+    title: Welcome
+    groups:
+      - title: TODO / Calendars
+        entries:
+          - shortcut: a
+            title: Add task
+            return: true
+            mode: wait
+            command: |
+              clear
+              echo -n "Add: "
+              read -r input
+              if [ -n "$input" ]; then
+                task add $input
+              else
+                echo "Aborted"
+              fi
+
+          - shortcut: t
+            title: Show next 5 tasks
+            return: true
+            command: clear; task next limit:5
+            mode: wait
+
+          - shortcut: T
+            title: Start vit
+            shortcut_color: green
+            mode: exec
+            command: vit
+
+          - shortcut: c
+            title: Show calendar
+            return: true
+            command: khal interactive
+
+          - shortcut: r
+            title: Edit reminder
+            mode: exec
+            command: nvim ~/Reminder
+
+          - shortcut: o
+            title: Edit local overrides
+            mode: exec
+            command: |
+              nvim "$XDG_CONFIG_HOME/taskwarrior/local-overrides"
+
+      - title: Shortcuts
+        entries:
+          - shortcut: d
+            title: Downloads
+            shortcut_color: green
+            return: false
+            mode: background
+            command: kitty -e "zsh -c \"ranger ~/Downloads\""
+          - shortcut: D
+            title: Downloads (GUI)
+            shortcut_color: green
+            return: false
+            command: dolphin ~/Downloads
+            mode: background
+
+      - title: System
+        entries:
+          - shortcut: p
+            title: Power menu
+            return: power
+            shortcut_color: blue
+
+          - shortcut: u
+            title: Audio settings
+            return: false
+            mode: background
+            shortcut_color: green
+            command: pavucontrol
+
+          # TODO: Command to toggle default audio sink (requires being able to
+          # show current sink)
+
+          - shortcut: w
+            title: Wifi menu
+            mode: exec
+            shortcut_color: green
+            command: nmtui connect
+
+          - shortcut: i
+            title: i3
+            return: i3
+            shortcut_color: blue
+
+      - entries:
+          - shortcut: q
+            title: Quit
+            shortcut_color: green
+            return: false
+
+  power:
+    title: Power settings
+    settings:
+      layout: list
+      shortcut_color: green
+    groups:
+      - entries:
+          - shortcut: s
+            title: Suspend
+            mode: exec
+            command: systemctl suspend
+
+          - shortcut: h
+            title: Hibernate
+            mode: exec
+            command: systemctl hibernate
+
+          - shortcut: l
+            title: Log out
+            mode: exec
+            command: i3quit --force
+
+          - shortcut: q
+            title: Go back
+            shortcut_color: blue
+            return: root
+
+  i3:
+    title: i3 settings
+    settings:
+      layout: columns
+      shortcut_color: green
+    groups:
+      - title: Config
+        entries:
+          - shortcut: r
+            title: Reload config
+            mode: exec
+            command: i3-msg reload
+
+          - shortcut: x
+            title: Restart
+            mode: exec
+            command: i3-msg Restart
+
+          - shortcut: "?"
+            title: Show cheatsheet
+            mode: exec
+            command: i3cheatsheet
+
+      - title: Gaps
+        entries:
+          - shortcut: "="
+            title: Increase inner
+            mode: background
+            return: true
+            shortcut_color: yellow
+            command: i3-msg gaps inner current plus 5
+
+          - shortcut: "-"
+            title: Decrease inner
+            mode: background
+            return: true
+            shortcut_color: yellow
+            command: i3-msg gaps inner current minus 5
+
+          - shortcut: "0"
+            title: Reset inner
+            mode: background
+            return: true
+            shortcut_color: yellow
+            command: i3-msg gaps inner current set 10
+
+          - shortcut: k
+            title: Increase outer
+            mode: background
+            return: true
+            shortcut_color: cyan
+            command: i3-msg gaps outer current plus 5
+
+          - shortcut: j
+            title: Decrease outer
+            mode: background
+            return: true
+            shortcut_color: cyan
+            command: i3-msg gaps outer current minus 5
+
+          - shortcut: h
+            title: Reset outer
+            mode: background
+            return: true
+            shortcut_color: cyan
+            command: i3-msg gaps outer current set 0
+      - entries:
+          - shortcut: q
+            title: Quit
+            shortcut_color: green
+            return: false
