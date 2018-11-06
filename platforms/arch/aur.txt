@@ -57,3 +57,10 @@ fortune-mod-vimtips
 
 # Dictionaries
 hunspell-sv
+
+# Elm language
+elm-platform-bin
+elm-test
+elm-oracle
+elm-format-bin
+create-elm-app

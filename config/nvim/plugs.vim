@@ -69,10 +69,11 @@ Plug 'vim-scripts/SyntaxRange', {'for': 'asciidoc'}
 Plug 'dahu/vim-asciidoc', {'for': 'asciidoc'}
 
 """ JS
-Plug 'vim-scripts/JSON.vim'
+Plug 'ElmCast/elm-vim', {'for': 'elm'}
 Plug 'jelera/vim-javascript-syntax', {'for': 'javascript'}
-Plug 'posva/vim-vue', {'for': ['javascript', 'typescript', 'vue']}
 Plug 'leafgarland/typescript-vim', {'for': ['javascript', 'typescript', 'vue']}
+Plug 'posva/vim-vue', {'for': ['javascript', 'typescript', 'vue']}
+Plug 'vim-scripts/JSON.vim'
 
 """ HTML/CSS
 Plug 'gregsexton/MatchTag', {'for': 'html'}
