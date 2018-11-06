@@ -89,8 +89,12 @@ install-ripper-tags-global() {
 }
 
 update-ripper-tags() {
-  # shellcheck source=/dev/null
-  source "${XDG_CONFIG_HOME}/shells/enable-rvm"
+  if [[ -s /usr/share/rvm/scripts/rvm ]]; then
+    source /usr/share/rvm/scripts/rvm
+  else
+    echo "ERROR: RVM isn't installed?" >/dev/stderr
+    return 1
+  fi
 
   if hash ripper-tags 2>/dev/null; then
     rvm all 'do' bash -c 'ruby -v; gem update ripper-tags'
