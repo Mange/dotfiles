@@ -18,3 +18,8 @@ Source: https://whvn.cc/276932
 ## `wallhaven-624057.jpg`
 
 Source: https://alpha.wallhaven.cc/wallpaper/624057
+
+## `wallhaven-618670.jpg`
+by **John Towner**
+
+Source: https://alpha.wallhaven.cc/wallpaper/618670
