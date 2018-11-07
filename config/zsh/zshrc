@@ -2,7 +2,9 @@
 # vim: fdm=marker:
 
 setopt extendedglob
+zmodload zsh/datetime
 autoload is-at-least
+autoload -Uz add-zsh-hook
 
 # Chain with true to avoid $? being false
 [ -f "${XDG_CONFIG_HOME}/zsh/zshrc.before.local" ] && source "${XDG_CONFIG_HOME}/zsh/zshrc.before.local" || true
@@ -410,6 +412,7 @@ fpath=("${XDG_CONFIG_HOME}/zsh/funcs" $fpath)
 
 autoload run-changed-specs
 autoload run-branch-specs
+autoload seconds-to-human
 
 compdef run-changed-specs=rspec
 compdef run-branch-specs=rspec
@@ -473,9 +476,10 @@ function() {
     zstyle ':vcs_info:*:prompt:*' nvcsformats   "" ""
 
     # Generate VCS info just before rendering prompt
-    function precmd {
+    function mange-prompt-precmd-vcs {
       vcs_info 'prompt'
     }
+    add-zsh-hook precmd mange-prompt-precmd-vcs
   else
     export vcs_info_msg_0_="zsh too old"
   fi
@@ -493,6 +497,27 @@ function enable-check-for-changes() {
 #
 # Helper functions to be used when building the prompt
 #
+
+# Keep track of how long a command runs for
+function mange-prompt-preexec() {
+  cmd_timestamp=$EPOCHSECONDS
+
+  # shows the current dir and executed command in the title when a process is active
+  print -Pn "\e]0;"
+  echo -nE "$PWD:t: $2"
+  print -Pn "\a"
+}
+function mange-prompt-precmd() {
+  local stop=$EPOCHSECONDS
+  local start=${cmd_timestamp:-$stop}
+  local elapsed=$((stop-start))
+  if ((elapsed >= 10)); then
+    echo -e "${bg[cyan]}${fg[black]}🕓 $(seconds-to-human $elapsed)${reset_color}${fg[cyan]}${reset_color}"
+  fi
+  unset cmd_timestamp
+}
+add-zsh-hook preexec mange-prompt-preexec
+add-zsh-hook precmd mange-prompt-precmd
 
 # Show verbose mode information
 function vi_mode_prompt_info {
@@ -512,12 +537,6 @@ function prompt_end_character {
 # Actually set up the PROMPT and RPROMPT variables
 #
 function {
-  if is256color; then
-    local current_time="%F{247}%D{%H:%M:%S}"
-  else
-    local current_time="%F{white}%D{%H:%M:%S}"
-  fi
-
   if [[ -n $SSH_CLIENT ]]; then
     if is256color; then
       local host="%F{241}@%F{60}%4m "
@@ -538,18 +557,15 @@ function {
   fi
 
   local dir="%B%F{blue}%4~%b"
-  local last_status="%(?.. %F{red}%?)"
-  local current_jobs="%(1j.%F{magenta}%B%j%b.)"
+  local last_status="%(?..%F{red}🗲%? )"
+  local current_jobs="%(1j.%F{magenta}🗗%B%j%b .)"
   local end='$(prompt_end_character)%f%k%b'
 
   export RPROMPT='$(vi_mode_prompt_info)$vcs_info_msg_0_'
-  export PROMPT="${user}${host}${current_time}${last_status} ${dir} ${current_jobs}${end}"
+  export PROMPT="${user}${host}${last_status}${current_jobs}${dir} ${end}"
 }
 # }}}
 # {{{ Misc
-# Report command time when it took more than this number of seconds
-export REPORTTIME=10
-
 # Disable flow control to allow ctrl-s and ctrl-q in terminal
 stty -ixon -ixoff
 

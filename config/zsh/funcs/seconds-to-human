@@ -1,0 +1,16 @@
+# vim: ft=sh
+# Based on https://github.com/therealklanni/purity/blob/68370739de5efeb4dcceacb0d0758f96eb58e033/purity.zsh#L20-L33
+
+# turns seconds into human readable time
+# 165392 => 1d 21h 56m 32s
+function seconds-to-human() {
+	local tmp=$1
+	local days=$(( tmp / 60 / 60 / 24 ))
+	local hours=$(( tmp / 60 / 60 % 24 ))
+	local minutes=$(( tmp / 60 % 60 ))
+	local seconds=$(( tmp % 60 ))
+	(( days > 0 )) && echo -n "${days}d "
+	(( hours > 0 )) && echo -n "${hours}h "
+	(( minutes > 0 )) && echo -n "${minutes}m "
+	echo "${seconds}s"
+}
