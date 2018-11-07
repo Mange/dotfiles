@@ -7,8 +7,8 @@ endif
 call plug#begin($XDG_DATA_HOME . '/nvim/plugged')
 
 """ Looks
-Plug 'ap/vim-css-color', {'for': ['css', 'html', 'scss', 'conf']}
 Plug 'bling/vim-airline'
+Plug 'lilydjwg/colorizer'
 Plug 'morhetz/gruvbox'
 
 """ Utility
