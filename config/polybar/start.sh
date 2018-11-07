@@ -5,7 +5,12 @@ stop-existing() {
 }
 
 start-bars() {
-  polybar top &
+  local is_primary="${1}"
+  if [[ $is_primary == "yes" ]]; then
+    polybar primary &
+  else
+    polybar secondary &
+  fi
 }
 
 hidpi-settings() {
@@ -35,14 +40,16 @@ machine-settings() {
 
 start-on-hidpi() {
   local input_name="${1}"
-  echo "Starting top and bottom bars on ${input_name} (HiDPI)"
-  (hidpi-settings; machine-settings; export MONITOR="${input_name}"; start-bars)
+  local is_primary="${2}"
+  echo "Starting bar(s) on ${input_name} (HiDPI)"
+  (hidpi-settings; machine-settings; export MONITOR="${input_name}"; start-bars "$is_primary")
 }
 
 start-on-normal() {
   local input_name="${1}"
-  echo "Starting top and bottom bars on ${input_name} (normal)"
-  (normal-settings; machine-settings; export MONITOR="${input_name}"; start-bars)
+  local is_primary="${2}"
+  echo "Starting bar(s) on ${input_name} (normal)"
+  (normal-settings; machine-settings; export MONITOR="${input_name}"; start-bars "$is_primary")
 }
 
 start-on-each-screen() {
@@ -55,13 +62,15 @@ start-on-each-screen() {
       input_name=$(echo "${line}" | awk '{ print $4 }')
       # Extract full resolution part, then remove the "/598" and "/336+0+0" parts.
       resolution=$(echo "${line}" | awk '{ print $3 }' | sed 's#/[^x]*##g')
+      # Primary marker ("*") shows if this is the primary screen
+      is_primary=$(echo "${line}" | awk '{ print $2 }' | grep -q '\*' && echo "yes")
 
       # Guess that we are on an HiDPI screen depending on screen height
       height=$(echo "${resolution}" | cut -d 'x' -f 2)
       if [[ ${height} -gt 2000 ]]; then
-        start-on-hidpi "${input_name}"
+        start-on-hidpi "${input_name}" "${is_primary}"
       else
-        start-on-normal "${input_name}"
+        start-on-normal "${input_name}" "${is_primary}"
       fi
     done
 }

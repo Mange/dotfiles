@@ -1,9 +1,14 @@
 ;:set syn=dosini
 
 [settings]
-screenchange-reload = true
+screenchange-reload = false
 
 [gruvbox]
+; aarrggbb, editor highlight might be off
+dark0_transparent = #55282828
+dark0_transparent1 = #77282828
+bright_red_transparent = #55fb4934
+
 # Taken from https://github.com/morhetz/gruvbox/blob/master/colors/gruvbox.vim
 dark0_hard = #1d2021
 dark0 = #282828
@@ -50,17 +55,6 @@ faded_purple = #8f3f71
 faded_aqua = #427b58
 faded_orange = #af3a03
 
-[colors]
-darkgray = ${gruvbox.gray_244}
-orange = ${gruvbox.neutral_orange}
-white = ${gruvbox.light1}
-background = #00000000
-background-alt = #774e4e4e
-foreground = ${gruvbox.light1}
-foreground-alt = ${gruvbox.dark2}
-alert = ${gruvbox.bright_red}
-transparent-alert = #77fb4934
-
 [bar/core]
 override-redirect = false
 locale = sv_SE.UTF-8
@@ -68,11 +62,11 @@ enable-ipc = true
 
 fixed-center = true
 
-background = ${colors.background}
-foreground = ${colors.foreground}
+background = ${gruvbox.dark0_transparent}
+foreground = ${gruvbox.light1}
 
-line-color = ${colors.white}
-line-size = 6
+line-color = ${gruvbox.bright_purple}
+line-size = 1
 
 [bar/base]
 inherit = bar/core
@@ -82,22 +76,33 @@ font-0 = ${env:POLYBAR_FONT_0}
 font-1 = ${env:POLYBAR_FONT_1}
 height = ${env:POLYBAR_BAR_HEIGHT:20}
 
-[bar/top]
+[bar/primary]
 inherit = bar/base
 top = true
 
-modules-left = i3 task-counters
-modules-center = media-controls
-modules-right = pending-updates volume battery wifi time
+modules-left = task-counters pending-updates media-controls
+modules-center = i3
+modules-right = volume battery wifi time
 
 tray-detached = false
 tray-position = right
 tray-offset-x = 0
 tray-offset-y = 0
 tray-maxsize = ${env:POLYBAR_TRAY_SIZE:24}
-tray-padding = 0
-tray-transparent = true
+tray-padding = 4
+tray-transparent = false
+tray-background = ${gruvbox.dark0_transparent}
 tray-scale = ${env:POLYBAR_TRAY_SCALE:1.0}
+
+[bar/secondary]
+inherit = bar/base
+top = true
+
+modules-left =
+modules-center = i3
+modules-right = volume battery time
+
+tray-position = none
 
 [module/base]
 format-padding = 2
@@ -141,26 +146,30 @@ ws-icon-default = 
 format = "<label-state> <label-mode>"
 
 label-mode = "  %mode%  "
-label-mode-background = ${colors.alert}
+label-mode-background = ${gruvbox.bright_red_transparent}
 
 # Focused is the workspace that is currently getting commands
 label-focused = "%index% %icon%"
-label-focused-background = ${colors.background-alt}
+label-focused-foreground = ${gruvbox.light0}
+label-focused-background = ${gruvbox.dark0_transparent1}
+label-focused-underline = ${gruvbox.bright_purple}
 label-focused-padding = 1
 
 # Unfocused are workspaces that are not visible
 label-unfocused = "%index% %icon%"
-label-unfocused-foreground = ${colors.darkgray}
+label-unfocused-foreground = ${gruvbox.light3}
 label-unfocused-padding = 1
 
 # Urgent are workspaces with important events
 label-urgent = "%index% %icon%!"
 label-urgent-padding = 1
-label-urgent-background = ${colors.transparent-alert}
+label-urgent-background = ${gruvbox.bright_red_transparent}
 
 # Visible are selected workspaces on other screens
 label-visible = "%index% %icon%"
-label-visible-foreground = ${colors.darkgray}
+label-visible-foreground = ${gruvbox.light3}
+label-visible-background = ${gruvbox.dark0_transparent1}
+label-visible-underline = ${gruvbox.light3}
 label-visible-padding = 1
 
 [module/date]
@@ -193,19 +202,11 @@ type = internal/pulseaudio
 
 format-volume = <ramp-volume> <label-volume>
 format-muted = <label-muted> 0%
-format-muted-foreground = ${colors.orange}
+format-muted-foreground = ${gruvbox.bright_purple}
 
 label-volume = %percentage%%
 label-muted = 
 
-bar-volume-width = 10
-bar-volume-gradient = true
-bar-volume-indicator = │
-bar-volume-fill = ─
-bar-volume-empty = ─
-bar-volume-indicator-foreground = ${colors.white}
-bar-volume-fill-foreground = ${colors.darkgray}
-bar-volume-empty-foreground = ${colors.foreground-alt}
 ramp-volume-0 = 
 ramp-volume-1 = 
 ramp-volume-2 = 
@@ -223,13 +224,13 @@ format-disconnected-padding = 0
 ;   <ramp-signal>
 format-connected = <label-connected>
 format-connected-prefix = ""
-format-connected-prefix-foreground = ${colors.darkgray}
+format-connected-prefix-foreground = ${gruvbox.bright_green}
 
 ; Available tags:
 ;   <label-disconnected> (default)
 format-disconnected = <label-disconnected>
 format-disconnected-prefix = ""
-format-disconnected-prefix-foreground = ${colors.darkgray}
+format-disconnected-prefix-foreground = ${gruvbox.bright_purple}
 
 ; Available tags:
 ;   <label-connected> (default)
@@ -281,19 +282,19 @@ format-charging-padding = 2
 format-discharging-padding = 2
 format-full-padding = 2
 
-animation-charging-foreground = ${colors.darkgray}
+animation-charging-foreground = ${gruvbox.light1}
 animation-charging-0 = 
 animation-charging-1 = 
 animation-charging-2 = 
 animation-charging-3 = 
 animation-charging-4 = 
-animation-charging-framerate=750
+animation-charging-framerate=1500
 
-ramp-capacity-foreground = ${colors.darkgray}
+ramp-capacity-foreground = ${gruvbox.light1}
 ramp-capacity-0 = 
-ramp-capacity-0-foreground = ${colors.alert}
+ramp-capacity-0-foreground = ${gruvbox.bright_red}
 ramp-capacity-1 = 
-ramp-capacity-1-foreground = ${gruvbox.neutral_red}
+ramp-capacity-1-foreground = ${gruvbox.bright_red}
 ramp-capacity-2 = 
 ramp-capacity-2-foreground = ${gruvbox.bright_yellow}
 ramp-capacity-3 = 

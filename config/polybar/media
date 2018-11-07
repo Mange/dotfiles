@@ -7,13 +7,8 @@ paused_icon=
 source "${XDG_DATA_HOME}/gruvbox/colors.env"
 
 if player_status=$(playerctl status 2>/dev/null); then
-  before_text=""
-  after_text=""
-
   if [[ $player_status == "Paused" ]]; then
     playback_icon="$paused_icon"
-    before_text="%{F${dark4}}"
-    after_text="%{F-}"
   elif [[ $player_status == "Stopped" ]]; then
     playback_icon="${paused_icon}"
   else
@@ -31,7 +26,7 @@ if player_status=$(playerctl status 2>/dev/null); then
     title="${title:0:39}…"
   fi
 
-  echo "${before_text} ${playback_icon} ${artist} - ${title}${after_text}"
+  echo "${playback_icon} ${artist} - ${title}"
 else
   echo "${play_icon}"
 fi
