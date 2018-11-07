@@ -318,12 +318,35 @@ confirm-diff() {
   else
     echo "${yellow}Installed file differs from repo file:${reset}"
     echo "${diff}"
-    echo "Overwrite config? [yN] "
-    read -r answer
-    if [[ $answer = "y" || $answer = "Y" ]]; then
+    if confirm "Overwrite config?" "n"; then
       return 0
     else
       echo "${red}Aborting${reset}"
+      return 1
+    fi
+  fi
+}
+
+confirm() {
+  local message="${1}"
+  local default="${2:-n}"
+  local prompt
+  if [[ $default == "y" ]]; then
+    prompt="Yn"
+  else
+    prompt="yN"
+  fi
+
+  echo -n "${message} [${prompt}] "
+  read -r answer
+  if [[ $answer = "y" || $answer = "Y" ]]; then
+    return 0
+  elif [[ $answer = "n" || $answer = "N" ]]; then
+    return 1
+  else
+    if [[ $default == "y" ]]; then
+      return 0
+    else
       return 1
     fi
   fi
@@ -521,10 +544,14 @@ fi
 if run-section "updates"; then
   header "Installing updates"
   subheader "Installing AUR updates"
-  aursync --no-view --no-confirm --update || handle-failure
+  if confirm "Really install all AUR updates now?" "n"; then
+    aursync --no-view --no-confirm --update || handle-failure
+  fi
 
   subheader "Installing package updates"
-  $PACMAN -Su
+  if confirm "Really install all updates now?" "n"; then
+    $PACMAN -Su
+  fi
 
   subheader "Installing RVM/Ruby updates"
   update-ripper-tags || handle-failure "Updating ripper-tags"
