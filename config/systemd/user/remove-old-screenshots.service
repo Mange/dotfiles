@@ -1,0 +1,6 @@
+[Unit]
+Description="Delete old screenshots."
+
+[Service]
+Type=simple
+ExecStart=/home/mange/.local/bin/remove-old-screenshots
