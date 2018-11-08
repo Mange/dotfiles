@@ -162,6 +162,8 @@ oxygen-icons
 dolphin
 filelight
 kgpg
+ark # Archive manager
+unarchiver # RAR support for Ark
 
 # Optional deps for KDE software
 qt5-webengine            # HTML thumbnailer
