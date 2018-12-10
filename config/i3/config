@@ -254,7 +254,7 @@ assign [class="Evolution"] $workspace5
 for_window [class="Spotify"] move to workspace $workspace9
 
 assign [class="Slack"] $workspace10
-assign [class="yakyak"] $workspace10
+assign [class="TelegramDesktop"] $workspace10
 assign [class="discord"] $workspace10
 
 # CopyQ clipboard manager
@@ -392,7 +392,7 @@ exec spotify-with-hidpi-support
 exec workrave
 exec startup-reminder
 
-exec i3-msg 'workspace $workspace10; layout stacked; exec slack; exec yakyak; exec discord'
+exec i3-msg 'workspace $workspace10; layout stacked; exec slack; exec telegram-desktop; exec discord'
 exec i3-msg 'workspace $workspace3; exec gtk-launch firefox-developer-edition'
 
 exec i3-msg 'workspace $workspace1'

@@ -8,7 +8,7 @@ mpv
 
 # Chat apps
 Discord$
-/electron .*yakyak/app$
+telegram-desktop
 slack$
 
 # Editors

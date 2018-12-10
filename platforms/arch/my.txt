@@ -116,6 +116,7 @@ network-manager-applet
 pavucontrol
 rofi
 sysstat # sysstat installs mpstat(1) for bar-cpu
+telegram-desktop
 udiskie # auto-mounter for devices (and tray icon)
 wireless_tools # for Polybar
 wmctrl # for i3quit, etc.
