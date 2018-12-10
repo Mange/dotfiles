@@ -1,0 +1,107 @@
+" vim: set filetype=vim foldmethod=marker:
+sanitise tridactyllocal tridactylsync
+
+" {{{ Settings
+" Editor command is Neovim in Kitty
+set editorcmd kitty nvim "%f"
+
+set theme dark
+
+" }}}
+
+" {{{ Binds
+
+bind J back
+bind K forward
+bind H tabprev
+bind L tabnext
+
+" Make gu take you back to subreddit from comments
+bindurl reddit.com gu urlparent 4
+
+" Comment toggler for Reddit and Hacker News
+bind ;c hint -c [class*="expand"],[class="togg"]
+
+" Allow Ctrl-a to select all in the commanline
+unbind --mode=ex <C-a>
+" }}}
+
+" {{{ Autocmds
+
+" {{{ Rewrite bad URLs
+" New reddit is bad
+autocmd DocStart www.reddit.com js tri.excmds.urlmodify("-t", "www", "old")
+" Mosquito nets won't make themselves
+autocmd DocStart www.amazon.co.uk js tri.excmds.urlmodify("-t", "www", "smile")
+" I totally never make this error
+autocmd DocStart hement.se js tri.excmds.urlmodify("-t", "hement", "hemnet")
+" }}}
+
+" }}}
+
+" {{{ Special pages
+
+" {{{ Gmail
+unbindurl mail.google.com j " Next email
+unbindurl mail.google.com k " Previous email
+unbindurl mail.google.com e " Archive
+unbindurl mail.google.com u " Go back to list
+unbindurl mail.google.com c " Compose
+unbindurl mail.google.com x " Select conversation
+
+unbindurl mail.google.com ga " All email
+unbindurl mail.google.com gi " Inbox
+unbindurl mail.google.com gl " Labels
+unbindurl mail.google.com , " Focus toolbar
+
+unbindurl mail.google.com a " Reply All
+unbindurl mail.google.com r " Reply
+unbindurl mail.google.com m " Mute
+unbindurl mail.google.com f " Forward
+unbindurl mail.google.com y " Remove label
+unbindurl mail.google.com s " Star
+unbindurl mail.google.com - " Not important
+unbindurl mail.google.com + " Important
+
+unbindurl mail.google.com ]
+unbindurl mail.google.com [
+unbindurl mail.google.com }
+unbindurl mail.google.com {
+
+unbindurl mail.google.com I " Mark as read
+unbindurl mail.google.com U " Mark as unread
+" }}}
+
+" {{{ Trello
+unbindurl trello.com/b/ j
+unbindurl trello.com/b/ k
+unbindurl trello.com/b/ l
+unbindurl trello.com/b/ b
+unbindurl trello.com/b/ c
+unbindurl trello.com/b/ e
+
+unbindurl trello.com/b/ f
+unbindurl trello.com/b/ 1
+unbindurl trello.com/b/ 2
+unbindurl trello.com/b/ 3
+unbindurl trello.com/b/ 4
+unbindurl trello.com/b/ 5
+unbindurl trello.com/b/ 6
+unbindurl trello.com/b/ 7
+unbindurl trello.com/b/ 8
+unbindurl trello.com/b/ 9
+unbindurl trello.com/b/ 0
+unbindurl trello.com/b/ ;
+unbindurl trello.com/b/ m
+unbindurl trello.com/b/ n
+unbindurl trello.com/b/ >
+unbindurl trello.com/b/ <
+unbindurl trello.com/b/ q
+unbindurl trello.com/b/ <space>
+unbindurl trello.com/b/ t
+unbindurl trello.com/b/ v
+unbindurl trello.com/b/ x
+unbindurl trello.com/b/ ?
+" }}}
+"
+" }}}
