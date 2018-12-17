@@ -152,15 +152,15 @@ unset -f try-editor
 
 zmodload zsh/complist
 
-# Homebrew puts a lot of completions in here
-if [ -d /usr/local/share/zsh/site-functions ]; then
-  fpath=(/usr/local/share/zsh/site-functions $fpath)
-fi
-
 # Use my custom completions too
 fpath=("${XDG_CONFIG_HOME}/zsh/completion" $fpath)
 
 autoload -U compinit && compinit -d "${XDG_CACHE_HOME}/zcompdump"
+
+# Add AWS completions if aws is installed
+if [[ -f ~/.local/bin/aws_zsh_completer.sh ]]; then
+  source ~/.local/bin/aws_zsh_completer.sh
+fi
 
 # Find out what an alias stands for and complete like if it was the original command
 # This gives me git completion for my git aliases, for example
