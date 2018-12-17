@@ -16,8 +16,9 @@ bind K forward
 bind H tabprev
 bind L tabnext
 
-" Make gu take you back to subreddit from comments
-bindurl reddit.com gu urlparent 4
+" ;f for pages where "f" is bound to something else. Open in new tab since
+" that seems to be a special page you want to remain on.
+bind ;f hint -l
 
 " Comment toggler for Reddit and Hacker News
 bind ;c hint -c [class*="expand"],[class="togg"]
@@ -38,8 +39,6 @@ autocmd DocStart hement.se js tri.excmds.urlmodify("-t", "hement", "hemnet")
 " }}}
 
 " }}}
-
-" {{{ Special pages
 
 " {{{ Gmail
 unbindurl mail.google.com j " Next email
@@ -103,5 +102,8 @@ unbindurl trello.com/b/ v
 unbindurl trello.com/b/ x
 unbindurl trello.com/b/ ?
 " }}}
-"
+
+" {{{ Reddit
+" Make gu take you back to subreddit from comments
+bindurl reddit.com gu urlparent 4
 " }}}
