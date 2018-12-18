@@ -91,6 +91,13 @@ pages:
             shortcut_color: red
             command: pavucontrol
 
+          - shortcut: b
+            title: Bluetooth settings
+            return: false
+            mode: background
+            shortcut_color: red
+            command: blueman-manager
+
           # TODO: Command to toggle default audio sink (requires being able to
           # show current sink)
 
