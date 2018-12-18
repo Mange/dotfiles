@@ -28,6 +28,9 @@ slack-desktop     # Slack Desktop (Beta) for Linux
 spotify           # A proprietary music streaming service
 vit               # A terminal interface for Taskwarrior with Vim key bindings and colorization support
 
+# Fork of compton with better blurring
+compton-tryone-git
+
 # My own stuff
 graceful-shutdown
 rofi-emoji

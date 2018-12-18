@@ -104,7 +104,7 @@ w3m # image previews, etc.
 #
 acpi # for battery indication, etc. in polybar
 blueman
-compton
+# compton # disabled for AUR compton-tryone-git
 dunst # libnotify server
 feh
 gucharmap
