@@ -106,7 +106,7 @@ bindkey -M viins '^rv' edit-command-line
 
 # Use highlight to preview FZF files under CTRL+T
 if command-exist highlight; then
-  export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
+  export FZF_CTRL_T_OPTS="--preview '(bat --style=numbers --color=always {} || cat {} || tree -C {}) 2> /dev/null | head -200'"
 fi
 
 # Use ripgrep to populate fzf
