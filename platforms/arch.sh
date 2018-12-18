@@ -393,6 +393,18 @@ enable-systemd-unit() {
   fi
 }
 
+enable-user-systemd-unit() {
+  if [[ $(systemctl is-enabled --user "$1") != "enabled" ]]; then
+    subheader "Enabling $1 at login"
+    systemctl enable --user "$1" || handle-failure "Enabling $1 at login"
+  fi
+
+  if [[ $(systemctl is-active --user "$1") != "active" ]]; then
+    subheader "Starting $1"
+    systemctl start --user "$1" || handle-failure "Starting $1"
+  fi
+}
+
 init-sudo() {
   # Ask for password up front
   sudo echo > /dev/null
@@ -537,6 +549,8 @@ if run-section "fast"; then
     subheader "Enabling timesync (NTP)"
     sudo timedatectl set-ntp true
   fi
+
+  enable-user-systemd-unit "redshift"
 
   sudo systemctl daemon-reload
 fi

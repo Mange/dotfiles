@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+if [[ $(systemctl is-active --user redshift) == "active" ]]; then
+  echo ""
+else
+  echo ""
+fi

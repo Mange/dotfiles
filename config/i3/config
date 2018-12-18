@@ -93,7 +93,6 @@ exec --no-startup-id ~/.local/bin/dynamic-startup
 
 # Compositor
 exec --no-startup-id compton --config ~/.config/compton/compton.conf
-exec --no-startup-id redshift-gtk
 
 # Wallpaper, bars, etc.
 exec_always --no-startup-id ~/.local/bin/set-wallpaper

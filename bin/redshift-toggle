@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+if [[ $1 == "--help" ]]; then
+  echo "Toggles redshift on/off depending on current state."
+  exit 0
+fi
+
+if [[ $(systemctl is-active --user redshift) == "active" ]]; then
+  systemctl stop --user redshift
+else
+  systemctl start --user redshift
+fi
