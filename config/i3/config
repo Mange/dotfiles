@@ -146,7 +146,7 @@ bindsym $mod+shift+period exec kitty ranger
 # Rofi
 bindsym $mod+d exec --no-startup-id "rofi -show combi -modi combi,run,window,emoji -combi-modi drun,window,emoji"
 bindsym $mod+shift+d exec --no-startup-id "rofi -show run"
-# TODO: bindsym $mod+p exec --no-startup-id "some-form-of-rofi-adapter-for-bitwarden"
+bindsym $mod+p exec --no-startup-id "mange-bwmenu --clear 20 --state-path \\"${XDG_RUNTIME_DIR}/bwmenu-state\\""
 
 # Xbacklight
 bindsym XF86MonBrightnessUp exec xbacklight -inc 10
