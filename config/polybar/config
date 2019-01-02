@@ -90,7 +90,6 @@ tray-offset-x = 0
 tray-offset-y = 0
 tray-maxsize = ${env:POLYBAR_TRAY_SIZE:24}
 tray-padding = 4
-tray-transparent = false
 tray-background = ${gruvbox.dark0_transparent}
 tray-scale = ${env:POLYBAR_TRAY_SCALE:1.0}
 
