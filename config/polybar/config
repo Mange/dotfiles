@@ -82,7 +82,7 @@ top = true
 
 modules-left = task-counters pending-updates media-controls
 modules-center = i3
-modules-right = redshift volume battery wifi time
+modules-right = volume battery wifi time redshift
 
 tray-detached = false
 tray-position = right
@@ -100,7 +100,7 @@ top = true
 
 modules-left =
 modules-center = i3
-modules-right = redshift volume battery time
+modules-right = volume battery time redshift
 
 tray-position = none
 
