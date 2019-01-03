@@ -13,6 +13,16 @@ case "$(hostname)" in
 
     # Disable touchpad while typing
     xinput set-prop "${touchpad}" "libinput Disable While Typing Enabled" 1
+
+    # Start Slack
+    i3-msg exec slack
+    ;;
+  morbidus)
+    # Start Discord
+    i3-msg exec discord
+
+    # Start steam
+    i3-msg exec gtk-launch com.valvesoftware.Steam
     ;;
   *)
     ;;
