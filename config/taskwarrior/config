@@ -50,6 +50,11 @@ urgency.user.tag.boost.coefficient=3.5
 urgency.user.tag.experiment.coefficient=-2.0
 
 #
+# My own personal taskd server credentials
+#
+include ~/Security/Taskwarrior/credentials
+
+#
 # Local filtering rules (no work tasks at home, ex.)
 #
 include ~/.config/taskwarrior/local-overrides
