@@ -102,7 +102,7 @@ exec_always --no-startup-id ~/.config/polybar/start.sh
 exec --no-startup-id parcellite --no-icon # Clipboard manager
 exec --no-startup-id syncthing-gtk --minimized
 exec --no-startup-id dunst # Notification server
-exec --no-startup-id udiskie --tray # Device mounter
+exec --no-startup-id udiskie --no-automount --smart-tray # Device mounter
 # }}}
 
 # {{{ i3 shortcuts
