@@ -99,7 +99,7 @@ exec_always --no-startup-id ~/.local/bin/set-wallpaper
 exec_always --no-startup-id ~/.config/polybar/start.sh
 
 # Daemons
-exec --no-startup-id copyq # Clipboard manager
+exec --no-startup-id parcellite --no-icon # Clipboard manager
 exec --no-startup-id syncthing-gtk --minimized
 exec --no-startup-id dunst # Notification server
 exec --no-startup-id udiskie --tray # Device mounter
@@ -253,9 +253,6 @@ for_window [class="Spotify"] move to workspace $workspace9
 assign [class="Slack"] $workspace10
 assign [class="TelegramDesktop"] $workspace10
 assign [class="discord"] $workspace10
-
-# CopyQ clipboard manager
-for_window [class="copyq"] floating enable
 
 # My own task runners
 for_window [title="New Task"] floating enable

@@ -2,3 +2,6 @@
 
 # Replaced with compton-tryone-git in AUR
 compton
+
+# Replaced with parcellite
+copyq
