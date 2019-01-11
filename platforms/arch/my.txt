@@ -110,6 +110,7 @@ feh
 gucharmap
 i3-gaps
 kitty
+ktouch # I'm practicing touch typing
 lxappearance
 lxrandr
 network-manager-applet
