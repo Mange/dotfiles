@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+
+# TODO: Also select active rows.
+# TODO: Nice font-icons in the menu.
+# TODO: Improve display of entries.
+
+# Bash seems to be a huge limitation now on how to mark rows as active because
+# we cannot set state in the loop and then use it after the loop has finished
+# (at least not in a good way). Port to Ruby? Did Rofi accept options in STDIN
+# somehow? Only first line?
+
+selected_device=$(
+  # bluetoothctl emits other junk on stdout; grep for lines we want
+  echo "paired-devices" | bluetoothctl |
+    grep "Device " |
+    while IFS= read -r device; do
+      id=$(echo "$device" | awk '{ print $2 }')
+      name=$(echo "$device" | cut -d " " -f 3-)
+
+      info=$(echo "info $id" | bluetoothctl)
+      connected=$(
+        if [[ $(echo "$info" | grep "Connected: " | awk '{ print $2 }') == "yes" ]]; then
+          echo " (Connected)"
+        fi
+      )
+
+      echo "$name [$id]${connected}"
+    done |
+    rofi -dmenu -p "Select device" -i -no-custom
+)
+
+if [[ -n $selected_device ]]; then
+  selected_name="${selected_device/ \[*}"
+  selected_id=$(echo "$selected_device" | grep -oE '\[[^]]+\]' | tr -d '[]')
+
+  if echo "$selected_device" | grep -q "(Connected)"; then
+    echo "disconnect $selected_id" | bluetoothctl
+    notify-send \
+      --app-name=bt-select \
+      --icon=/usr/share/icons/Adwaita/48x48/status/bluetooth-disabled-symbolic.symbolic.png \
+      --category=device.removed \
+      "Disconnecting" \
+      "Disconnecting from ${selected_name}"
+  else
+    echo "connect $selected_id" | bluetoothctl
+    notify-send \
+      --app-name=bt-select \
+      --icon=/usr/share/icons/Adwaita/48x48/status/bluetooth-active-symbolic.symbolic.png \
+      --category=device.added \
+      "Connecting" \
+      "Connecting to ${selected_name}"
+  fi
+fi

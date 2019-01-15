@@ -92,6 +92,13 @@ pages:
             command: pavucontrol
 
           - shortcut: b
+            title: Bluetooth device selector
+            return: false
+            mode: background
+            shortcut_color: red
+            command: bt-select
+
+          - shortcut: B
             title: Bluetooth settings
             return: false
             mode: background
