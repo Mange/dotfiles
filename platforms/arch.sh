@@ -151,7 +151,7 @@ uninstall-pacman() {
     fi
     echo "$reset"
 
-    # Remove from aursync repo; in case it was there.
+    # Remove from aur repo; in case it was there.
     for pkg in $to_uninstall; do
       repo-remove -q /var/cache/pacman/custom/custom.db.tar "$pkg"
     done
@@ -178,7 +178,7 @@ compile-install-aur() {
     subheader "Compiling $package" -n
     set +e
 
-    if output="$(aursync --no-view --no-confirm "$package" 2>&1)"; then
+    if output="$(aur sync --no-view --no-confirm "$package" 2>&1)"; then
       echo "${green} ✔"
       subheader "Installing $package" -n
 
@@ -249,7 +249,7 @@ EOF
     fi
 
     subheader "Installing aurutils using aurutils (whoa!)"
-    aursync --no-view --no-confirm aurutils
+    aur sync --no-view --no-confirm aurutils
 
     subheader "Cleaning up source"
     sudo rm -rf /opt/aurutils
@@ -440,12 +440,12 @@ if run-section "pacman"; then
 fi
 
 if run-section "aur"; then
-  if ! hash aursync 2>/dev/null; then
+  if ! hash aur 2>/dev/null; then
     init-sudo
     compile-aurutils || handle-failure
   fi
 
-  if hash aursync 2>/dev/null; then
+  if hash aur 2>/dev/null; then
     init-sudo
     header "Compile and install AUR software"
     compile-install-aur arch/aur.txt || handle-failure
@@ -559,7 +559,7 @@ if run-section "updates"; then
   header "Installing updates"
   subheader "Installing AUR updates"
   if confirm "Really install all AUR updates now?" "n"; then
-    aursync --no-view --no-confirm --update || handle-failure
+    aur sync --no-view --no-confirm -u || handle-failure
   fi
 
   subheader "Installing package updates"
