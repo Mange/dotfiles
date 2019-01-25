@@ -82,7 +82,7 @@ top = true
 
 modules-left = task-counters pending-updates media-controls
 modules-center = i3
-modules-right = volume battery wifi time redshift
+modules-right = weather volume battery wifi redshift time
 
 tray-detached = false
 tray-position = right
@@ -99,7 +99,7 @@ top = true
 
 modules-left =
 modules-center = i3
-modules-right = volume battery time redshift
+modules-right = weather volume battery redshift time
 
 tray-position = none
 
@@ -193,7 +193,16 @@ type = custom/script
 exec = ~/.config/polybar/pending-updates
 interval = 240
 format-prefix = " "
-click-left = kitty zsh -c "sudo pacman -Syu"
+click-left = kitty --hold zsh -c "sudo pacman -Syu"
+
+[module/weather]
+inherit = module/base
+type = custom/script
+exec = weather --oneline
+interval = 600
+format-prefix =
+click-left = kitty --hold weather
+click-right =
 
 [module/redshift]
 inherit = module/base

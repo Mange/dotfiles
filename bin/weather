@@ -1,0 +1,147 @@
+#!/usr/bin/bash
+
+location_file="${XDG_DATA_HOME}/weather-location"
+default_lang="${LANG%_*}"
+
+print_usage() {
+  cat <<USAGE
+Usage: $0 [options] [location]
+
+Will show weather forecast for selected location. Location will be selected
+from the passed location name, or fall back to location in a config file, or
+lastly to the location of your IP.
+
+Location file: ${location_file}
+
+OPTIONS:
+  --help                   - Show this help text.
+  --verbose                - Show raw command when executing.
+  -1, --oneline            - Show only simple oneline forecase.
+  -s, --simple             - Only do day/night instead of morning/afternoon/
+                             evening/night.
+  -l LANG, --language=LANG - Use provided language. Will default to ${default_lang} (from \$LANG).
+  -t, --today              - Only show today's forecast. Same as --days=0.
+  -d DAYS, --days=DAYS     - Show DAYS of forecast (0-2).
+  -L, --show-location      - Show location. Default when no location is given.
+  --no-show-location       - Don't show location.
+  --no-colors              - Don't use colors.
+  --500-iq-mode            - Use archaic and stupid units, popular only with
+                             hamburgers.
+USAGE
+}
+
+if ! TEMP=$(
+  getopt \
+    -o '1sl:td:L' \
+    --long 'help,verbose,oneline,simple,language:,today,days:,show-location,no-show-location,no-colors,500-iq-mode' \
+    -- "$@"
+); then
+  echo "Failed to parse arguments…" >&2
+  exit 1
+fi
+eval set -- "$TEMP"
+unset TEMP
+
+lang="$default_lang"
+format=""
+simple=""
+days="2"
+quiet="Q"
+pick_quiet_automatically="yes"
+no_colors=""
+units="m"
+verbose="no"
+
+while true; do
+  case "$1" in
+  '--help')
+    print_usage
+    exit 0
+  ;;
+  '--verbose')
+    verbose="yes"
+    shift
+  ;;
+  '-1' | '--oneline')
+    format="&format=1"
+    shift
+  ;;
+  '-s' | '--simple')
+    simple="n"
+    shift
+  ;;
+  '-l' | '--language')
+    lang="$2"
+    shift 2
+  ;;
+  '-t' | '--today')
+    days="0"
+    shift
+  ;;
+  '-d' | '--days')
+    days="$2"
+    shift 2
+  ;;
+  '-L' | '--show-location')
+    quiet=""
+    pick_quiet_automatically="no"
+    shift
+  ;;
+  '--no-show-location')
+    quiet="Q"
+    pick_quiet_automatically="no"
+    shift
+  ;;
+  '--no-colors')
+    no_colors="T"
+    shift
+  ;;
+  '--500-iq-mode')
+    units="u"
+    shift
+  ;;
+  '--')
+    shift
+    break
+  ;;
+  *)
+    echo "Unknown option: $1" >&2
+    echo "" >&2
+    print_usage >&2
+    exit 1
+  ;;
+  esac
+done
+
+if [[ "$days" -lt 0 ]]; then
+  echo "Days must be between 0 and 2. $days is too little!" >&2
+  exit 1
+elif [[ "$days" -gt 2 ]]; then
+  echo "Days must be between 0 and 2. $days is too much!" >&2
+  exit 1
+fi
+
+if [[ -n $1 ]]; then
+  location="$1"
+  if [[ "$pick_quiet_automatically" == "yes" ]]; then
+    quiet="" # Show location to verify match
+  fi
+elif [[ -f "$location_file" ]]; then
+  location="$(cat "$location_file")"
+  if [[ "$pick_quiet_automatically" == "yes" ]]; then
+    quiet="Q" # Don't show location when using configured location
+  fi
+else
+  location=""
+  if [[ "$pick_quiet_automatically" == "yes" ]]; then
+    quiet="" # Show location when inferred by IP
+  fi
+fi
+
+url="wttr.in/$(echo "${location}" | tr ' ' '+')?F${simple}${days}${quiet}${no_colors}${units}${format}"
+
+if [[ "$verbose" == "yes" ]]; then
+  echo "curl -s -H \"Accept-Language: ${lang}\" \"$url\""
+fi
+
+curl -s -H "Accept-Language: ${lang}" "$url"
