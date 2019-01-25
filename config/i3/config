@@ -130,15 +130,15 @@ bindsym Ctrl+Shift+Escape exec --no-startup-id ~/.local/bin/fix-keyboard
 # {{{ Program shortcuts
 
 # start a terminal
-bindsym $mod+Return exec kitty
-bindsym $mod+g exec toggle-dropdown dropdown_kitty kitty --class dropdown_kitty
+bindsym $mod+Return exec kitty --single-instance
+bindsym $mod+g exec toggle-dropdown dropdown_kitty kitty --single-instance --class dropdown_kitty
 
 # tydra
-bindsym $mod+shift+Return exec kitty --class dropdown_tydra zsh -ic "tydra ~/.config/tydra/main.yml"
+bindsym $mod+shift+Return exec kitty --single-instance --class dropdown_tydra zsh -ic "tydra ~/.config/tydra/main.yml"
 
 # File manager
-bindsym $mod+period exec toggle-dropdown dropdown_ranger kitty --class dropdown_ranger zsh -ic ranger
-bindsym $mod+shift+period exec kitty ranger
+bindsym $mod+period exec toggle-dropdown dropdown_ranger kitty --single-instance --class dropdown_ranger zsh -ic ranger
+bindsym $mod+shift+period exec kitty --single-instance ranger
 
 # Rofi
 bindsym $mod+d exec --no-startup-id "rofi -show combi -modi combi,run,window,emoji -combi-modi drun,window,emoji"
@@ -154,7 +154,7 @@ bindsym --release $mod+minus exec gnome-screenshot
 bindsym --release $mod+Shift+minus exec gnome-screenshot --area
 
 # Taskwarrior stuff
-bindsym $mod+t exec toggle-dropdown dropdown_vit kitty --class dropdown_vit vit
+bindsym $mod+t exec toggle-dropdown dropdown_vit kitty --single-instance --class dropdown_vit vit
 bindsym $mod+n exec ~/.cargo/bin/new-task-gtk
 
 # Bitwarden

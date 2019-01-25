@@ -5,7 +5,7 @@ rofi.theme: ~/.config/rofi/dark-theme.rasi
 ! Scale automatically to HiDPI screens
 rofi.dpi: 1
 
-rofi.terminal: kitty
+rofi.terminal: kitty --single-instance
 
 ! Tab to switch between modi.
 rofi.kb-row-tab:

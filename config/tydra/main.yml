@@ -64,7 +64,7 @@ pages:
             shortcut_color: red
             return: false
             mode: background
-            command: kitty -e "zsh -c \"ranger ~/Downloads\""
+            command: kitty --single-instance -e "zsh -c \"ranger ~/Downloads\""
           - shortcut: D
             title: Downloads (GUI)
             shortcut_color: red
