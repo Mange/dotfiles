@@ -38,6 +38,9 @@ tydra
 # Docker
 docker-credential-secretservice
 
+# Dev tools
+pgcli
+
 # Fonts (also see my.txt)
 ttf-nerd-fonts-symbols
 ttf-ancient-fonts # Just because it is cool
