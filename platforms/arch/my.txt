@@ -53,6 +53,7 @@ duplicity # Backup tool
 exa
 htop
 httpie
+hub
 jq
 keybase
 nmap
