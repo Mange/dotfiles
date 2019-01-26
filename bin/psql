@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# Run pgcli instead of psql
+
+if hash pgcli 2>/dev/null; then
+  exec pgcli "$@"
+else
+  # Oh noes! pgcli is not installed. Fall back to native psql.
+  # shellcheck disable=SC2230 # "command -v" cannot do "which --all"
+  original="$(which --all psql | grep -v "$0" | head -n 1)"
+  if [[ -z "$original" ]]; then
+    echo "Could not find either pgcli or psql installed on this machine." >&2
+    exit 1
+  else
+    exec "$original" "$@"
+  fi
+fi
