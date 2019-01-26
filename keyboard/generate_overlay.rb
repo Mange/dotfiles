@@ -1,19 +1,20 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
-require 'json'
-require 'yaml'
-require 'pry'
-require 'set'
+require "json"
+require "yaml"
+require "pry"
+require "set"
 
 # So sue me...
 module Refinements
   refine Hash do
     def slice(*keys)
-      self.each_with_object({}) { |(k, v), r| r[k] = v if keys.include?(k) }
+      each_with_object({}) { |(k, v), r| r[k] = v if keys.include?(k) }
     end
 
     def unmerge(other)
-      self.each_with_object({}) do |(k, v), r|
+      each_with_object({}) do |(k, v), r|
         r[k] = v if other[k] != v
       end
     end
@@ -22,11 +23,11 @@ end
 using Refinements
 
 DEFAULT_OPTIONS = {
-  'a' => 0,
-  'c' => '#cccccc',
-  'fa' => [nil] * 12,
-  'f' => 3,
-  'g' => false,
+  "a" => 0,
+  "c" => "#cccccc",
+  "fa" => [nil] * 12,
+  "f" => 3,
+  "g" => false,
 }.freeze
 
 class Keyboard
@@ -35,6 +36,7 @@ class Keyboard
 
   def initialize(data)
     raise ArgumentError, "Data must be an array" unless data.is_a?(Array)
+
     @settings = data.first
     @rows = Row.parse_multi(data[1, data.size])
   end
@@ -60,7 +62,9 @@ class Row
   def self.parse_multi(rows)
     result = []
     rows.each do |row|
-      last_global_options = result.last&.last_global_options || DEFAULT_OPTIONS.dup
+      last_global_options =
+        result.last&.last_global_options || DEFAULT_OPTIONS.dup
+
       result << parse(row, global_options: last_global_options)
     end
     result
@@ -81,7 +85,8 @@ class Row
         global_options = result.last.global_options
       elsif entry.is_a?(Hash)
         if buffer
-          raise "Found two hashes in a row! #{buffer.inspect} and #{entry.inspect}"
+          raise "Found two hashes in a row! #{buffer.inspect} and " \
+            "#{entry.inspect}"
         end
         buffer = entry
       else
@@ -94,6 +99,7 @@ class Row
 
   def initialize(keys)
     raise ArgumentError, "Keys must be an array" unless keys.is_a?(Array)
+
     @keys = keys
   end
 
@@ -108,7 +114,8 @@ class Row
   end
 end
 
-class Key
+class Key # rubocop:disable Metrics/ClassLength
+  # rubocop:disable Layout/EmptyLinesAroundArguments
   attr_reader(
     :options,
 
@@ -151,51 +158,52 @@ class Key
     :bottom_center_size,
     :front_center_size,
   )
+  # rubocop:enable Layout/EmptyLinesAroundArguments
 
   def initialize(options, text)
     raise ArgumentError, "Options must be a Hash" unless options.is_a?(Hash)
     raise ArgumentError, "Text must be a String" unless text.is_a?(String)
 
-    alignment = options['a']
+    alignment = options["a"]
     @options = options
     parse_text(text, alignment)
-    parse_color(options['t'], alignment)
-    parse_sizes(options['fa'])
+    parse_color(options["t"], alignment)
+    parse_sizes(options["fa"])
   end
 
-  [
-    :upper_left,
-    :bottom_left,
-    :top_right,
-    :bottom_right,
-    :front_left,
-    :front_right,
-    :center_left,
-    :center_right,
-    :top_center,
-    :center,
-    :bottom_center,
-    :front_center,
+  %i[
+    upper_left
+    bottom_left
+    top_right
+    bottom_right
+    front_left
+    front_right
+    center_left
+    center_right
+    top_center
+    center
+    bottom_center
+    front_center
   ].each do |name|
     define_method("#{name}=") do |new_value|
-      options['a'] = 0
+      options["a"] = 0
       instance_variable_set("@#{name}", new_value)
     end
   end
 
-  [
-    :upper_left_color,
-    :bottom_left_color,
-    :top_right_color,
-    :bottom_right_color,
-    :front_left_color,
-    :front_right_color,
-    :center_left_color,
-    :center_right_color,
-    :top_center_color,
-    :center_color,
-    :bottom_center_color,
-    :front_center_color,
+  %i[
+    upper_left_color
+    bottom_left_color
+    top_right_color
+    bottom_right_color
+    front_left_color
+    front_right_color
+    center_left_color
+    center_right_color
+    top_center_color
+    center_color
+    bottom_center_color
+    front_center_color
   ].each do |name|
     define_method("#{name}=") do |new_value|
       instance_variable_set("@#{name}", new_value)
@@ -203,19 +211,19 @@ class Key
     end
   end
 
-  [
-    :upper_left_size,
-    :bottom_left_size,
-    :top_right_size,
-    :bottom_right_size,
-    :front_left_size,
-    :front_right_size,
-    :center_left_size,
-    :center_right_size,
-    :top_center_size,
-    :center_size,
-    :bottom_center_size,
-    :front_center_size,
+  %i[
+    upper_left_size
+    bottom_left_size
+    top_right_size
+    bottom_right_size
+    front_left_size
+    front_right_size
+    center_left_size
+    center_right_size
+    top_center_size
+    center_size
+    bottom_center_size
+    front_center_size
   ].each do |name|
     define_method("#{name}=") do |new_value|
       instance_variable_set("@#{name}", new_value)
@@ -224,11 +232,11 @@ class Key
   end
 
   def local_options
-    options.slice('x', 'y', 'w', 'h', 'x2', 'y2', 'w2', 'h2', 'l', 'n')
+    options.slice("x", "y", "w", "h", "x2", "y2", "w2", "h2", "l", "n")
   end
 
   def global_options
-    options.slice('c', 't', 'g', 'a', 'f', 'f2', 'p', 'fa')
+    options.slice("c", "t", "g", "a", "f", "f2", "p", "fa")
   end
 
   def option(name)
@@ -236,28 +244,28 @@ class Key
   end
 
   def key_color
-    options['c']
+    options["c"]
   end
 
   def key_color=(value)
-    options['c'] = value
+    options["c"] = value
   end
 
   def default_size
-    option('f')
+    option("f")
   end
 
   def default_size=(size)
-    options['f'] = size
+    options["f"] = size
     rerender_size_options
   end
 
   def ghosted?
-    option('g') || false
+    option("g") || false
   end
 
   def ghosted=(bool)
-    options['g'] = bool
+    options["g"] = bool
   end
 
   def render_full_fa
@@ -279,8 +287,10 @@ class Key
 
   def render_simplified_fa
     sizes = render_full_fa.
-      map { |size| size || default_size }. # replace placeholder nil with actual default
-      reverse.drop_while { |size| size == default_size } # cut off redundant end sizes
+      # replace placeholder nil with actual default
+      map { |size| size || default_size }.
+      # cut off redundant end sizes
+      reverse.drop_while { |size| size == default_size }
 
     if sizes.empty?
       [default_size]
@@ -313,12 +323,10 @@ class Key
     current_global_state.merge!(global_options)
 
     # simplify fa
-    if rendered_options['fa']
-      rendered_options['fa'] = render_simplified_fa
-    end
+    rendered_options["fa"] = render_simplified_fa if rendered_options["fa"]
 
     rendered_text =
-      if current_global_state['a'].to_i > 0 && text =~ /\A(\n)*[^\n]+(\n)*\z/m
+      if current_global_state["a"].to_i.positive? && text =~ /\A(\n)*[^\n]+(\n)*\z/m
         text.strip
       else
         text
@@ -421,8 +429,8 @@ class Key
       @front_center_color,
     ].join("\n")
 
-    options['t'] =
-      if options['a'].to_i > 0 && rendered_colors =~ /\A(\n)*[^\n]+(\n)*\z/m
+    options["t"] =
+      if options["a"].to_i.positive? && rendered_colors =~ /\A(\n)*[^\n]+(\n)*\z/m
         rendered_colors.strip
       else
         rstrip_newlines(rendered_colors)
@@ -430,16 +438,17 @@ class Key
   end
 
   def rerender_size_options
-    options['fa'] = render_full_fa
+    options["fa"] = render_full_fa
   end
 
   def blank_is_nil(str)
     return nil if str.nil?
+
     str unless str.empty?
   end
 
   def rstrip_newlines(str)
-    str.sub(/\n+\z/, '')
+    str.sub(/\n+\z/, "")
   end
 end
 
@@ -447,12 +456,14 @@ class Overlay
   attr_reader :settings, :modifiers
 
   def initialize(data)
-    @settings = data.fetch('settings', {})
-    @modifiers = data.fetch('modifiers', {}).map { |text, changes| Modifier.new(text, changes) }
+    @settings = data.fetch("settings", {})
+    @modifiers = data.fetch("modifiers", {}).map do |text, changes|
+      Modifier.new(text, changes)
+    end
   end
 
   def apply(keyboard)
-    ghost_others = settings.fetch('ghost_others', false)
+    ghost_others = settings.fetch("ghost_others", false)
     unmatched_modifiers = modifiers.to_set
 
     keyboard.each_key do |key|
@@ -466,7 +477,8 @@ class Overlay
     end
 
     unless unmatched_modifiers.empty?
-      raise "Some overlays did not match any keys: #{unmatched_modifiers.map(&:text).inspect}"
+      raise "Some overlays did not match any keys: " \
+        "#{unmatched_modifiers.map(&:text).inspect}"
     end
   end
 end
@@ -481,7 +493,7 @@ class Modifier
 
   def matcher
     @matcher ||=
-      if text !~ /[a-z]/i
+      if !/[a-z]/i.match?(text)
         Regexp.new(Regexp.quote(text))
       else
         Regexp.new("\\b#{Regexp.quote(text)}\\b")
@@ -500,16 +512,17 @@ class Modifier
 end
 
 def run_tests
-  require 'minitest/autorun'
-  require 'minitest/pride'
+  require "minitest/autorun"
+  require "minitest/pride"
 
+  # rubocop:disable Metrics/BlockLength
   describe Keyboard do
     it "parses simple keys" do
       keyboard = Keyboard.new(
         [
           {},
-          ["A", "B", "C"],
-          ["D", "E"],
+          %w[A B C],
+          %w[D E],
         ],
       )
 
@@ -522,35 +535,31 @@ def run_tests
       keyboard = Keyboard.new(
         [
           {},
-          ["A", "B"],
+          %w[A B],
         ],
       )
 
       keyboard.rows.first.keys[0].options.must_equal(
-        {
-          'c' => '#cccccc',
-          'a' => 0,
-          'f' => 3,
-          'fa' => [nil] * 12,
-          'g' => false,
-        },
+        "c" => "#cccccc",
+        "a" => 0,
+        "f" => 3,
+        "fa" => [nil] * 12,
+        "g" => false,
       )
 
       keyboard.rows.first.keys[1].options.must_equal(
-        {
-          'c' => '#cccccc',
-          'a' => 0,
-          'f' => 3,
-          'fa' => [nil] * 12,
-          'g' => false,
-        },
+        "c" => "#cccccc",
+        "a" => 0,
+        "f" => 3,
+        "fa" => [nil] * 12,
+        "g" => false,
       )
     end
 
     it "keeps track of global options" do
       rows_data = [
-        [{'a' => 2, 't' => '#ff0000', 'x' => 4}, 'A', 'B'],
-        [{'a' => 3, 'y' => 2}, 'C', {'t' => '#00ff00'}, 'D'],
+        [{"a" => 2, "t" => "#ff0000", "x" => 4}, "A", "B"],
+        [{"a" => 3, "y" => 2}, "C", {"t" => "#00ff00"}, "D"],
       ]
       keyboard = Keyboard.new([{}, *rows_data])
 
@@ -558,21 +567,21 @@ def run_tests
       keyboard.rows[0].keys.size.must_equal 2
       keyboard.rows[1].keys.size.must_equal 2
 
-      keyboard.rows[0].keys[0].center_left.must_equal 'A'
-      keyboard.rows[0].keys[0].center_left_color.must_equal '#ff0000'
-      keyboard.rows[0].keys[0].option('x').must_equal 4
+      keyboard.rows[0].keys[0].center_left.must_equal "A"
+      keyboard.rows[0].keys[0].center_left_color.must_equal "#ff0000"
+      keyboard.rows[0].keys[0].option("x").must_equal 4
 
-      keyboard.rows[0].keys[1].center_left.must_equal 'B'
-      keyboard.rows[0].keys[1].center_left_color.must_equal '#ff0000'
-      keyboard.rows[0].keys[1].option('x').must_be_nil # per-key setting
+      keyboard.rows[0].keys[1].center_left.must_equal "B"
+      keyboard.rows[0].keys[1].center_left_color.must_equal "#ff0000"
+      keyboard.rows[0].keys[1].option("x").must_be_nil # per-key setting
 
-      keyboard.rows[1].keys[0].center.must_equal 'C'
-      keyboard.rows[1].keys[0].center_color.must_equal '#ff0000'
-      keyboard.rows[1].keys[0].option('y').must_equal 2
+      keyboard.rows[1].keys[0].center.must_equal "C"
+      keyboard.rows[1].keys[0].center_color.must_equal "#ff0000"
+      keyboard.rows[1].keys[0].option("y").must_equal 2
 
-      keyboard.rows[1].keys[1].center.must_equal 'D'
-      keyboard.rows[1].keys[1].center_color.must_equal '#00ff00'
-      keyboard.rows[1].keys[1].option('y').must_be_nil # per-key setting
+      keyboard.rows[1].keys[1].center.must_equal "D"
+      keyboard.rows[1].keys[1].center_color.must_equal "#00ff00"
+      keyboard.rows[1].keys[1].option("y").must_be_nil # per-key setting
     end
   end
 
@@ -596,49 +605,51 @@ def run_tests
       key.bottom_right.must_equal "qux"
       key.bottom_right_size.must_be_nil
 
-      key.options['fa'].must_equal [1, 2, 3]
+      key.options["fa"].must_equal [1, 2, 3]
     end
 
     it "renders without redundant global state" do
-      global_state = {'t' => '#ff0000'}
-      key = Key.new({'t' => '#ff0000'}, 'Hello world')
+      global_state = {"t" => "#ff0000"}
+      key = Key.new({"t" => "#ff0000"}, "Hello world")
 
       rendered = key.render(current_global_state: global_state)
-      rendered.must_equal ['Hello world']
-      global_state.must_equal({'t' => '#ff0000'})
+      rendered.must_equal ["Hello world"]
+      global_state.must_equal("t" => "#ff0000")
     end
 
     it "updates global state on rendering" do
-      global_state = {'t' => '#ff0000'}
-      key = Key.new({'t' => '#ff0000', 'a' => 3}, 'Hello world')
+      global_state = {"t" => "#ff0000"}
+      key = Key.new({"t" => "#ff0000", "a" => 3}, "Hello world")
 
       rendered = key.render(current_global_state: global_state)
-      rendered.must_equal [{'a' => 3}, 'Hello world']
-      global_state.must_equal({'t' => '#ff0000', 'a' => 3})
+      rendered.must_equal [{"a" => 3}, "Hello world"]
+      global_state.must_equal("t" => "#ff0000", "a" => 3)
     end
 
     it "renders aligned text when possible" do
       render = ->(key) { key.render(current_global_state: DEFAULT_OPTIONS.dup) }
 
-      render.(Key.new({'a' => 0}, "A")).must_equal(["A"])
-      render.(Key.new({'a' => 1}, "A")).must_equal([{'a' => 1}, "A"])
-      render.(Key.new({'a' => 2}, "A")).must_equal([{'a' => 2}, "A"])
-      render.(Key.new({'a' => 3}, "A")).must_equal([{'a' => 3}, "A"])
-      render.(Key.new({'a' => 5}, "A")).must_equal([{'a' => 5}, "A"])
-      render.(Key.new({'a' => 6}, "A")).must_equal([{'a' => 6}, "A"])
-      render.(Key.new({'a' => 7}, "A")).must_equal([{'a' => 7}, "A"])
+      render.call(Key.new({"a" => 0}, "A")).must_equal(["A"])
+      render.call(Key.new({"a" => 1}, "A")).must_equal([{"a" => 1}, "A"])
+      render.call(Key.new({"a" => 2}, "A")).must_equal([{"a" => 2}, "A"])
+      render.call(Key.new({"a" => 3}, "A")).must_equal([{"a" => 3}, "A"])
+      render.call(Key.new({"a" => 5}, "A")).must_equal([{"a" => 5}, "A"])
+      render.call(Key.new({"a" => 6}, "A")).must_equal([{"a" => 6}, "A"])
+      render.call(Key.new({"a" => 7}, "A")).must_equal([{"a" => 7}, "A"])
 
-      key = Key.new({'a' => 1}, "")
+      key = Key.new({"a" => 1}, "")
       key.upper_left = "A"
-      render.(key).must_equal(["A"])
+      render.call(key).must_equal(["A"])
       key.bottom_left = "B"
-      render.(key).must_equal(["A\nB"])
+      render.call(key).must_equal(["A\nB"])
     end
 
     it "renders simplified size specification when possible" do
-      key = Key.new({"f" => 4, "fa" => [1, 2, 3, 4, 4, 4, 4]}, "Foo\nbar\nbaz\nqux")
+      key = Key.new(
+        {"f" => 4, "fa" => [1, 2, 3, 4, 4, 4, 4]}, "Foo\nbar\nbaz\nqux"
+      )
 
-      rendered_options, _ = key.render(current_global_state: DEFAULT_OPTIONS.dup)
+      rendered_options, = key.render(current_global_state: DEFAULT_OPTIONS.dup)
 
       rendered_options["f"].must_equal 4
       rendered_options["fa"].must_equal [1, 2, 3]
@@ -650,37 +661,37 @@ def run_tests
       h1 = {a: 1, b: 2, d: 8}
       h2 = {a: 3, b: 2, c: 1}
 
-      (h1.unmerge(h2)).must_equal({a: 1, d: 8})
-      (h2.unmerge(h1)).must_equal({a: 3, c: 1})
+      h1.unmerge(h2).must_equal(a: 1, d: 8)
+      h2.unmerge(h1).must_equal(a: 3, c: 1)
     end
   end
 
   describe Overlay do
     it "changes color of keys" do
-      keyboard = Keyboard.new([{}, [{'c' => '#000000'}, "A", "B", "C", "D"]])
+      keyboard = Keyboard.new([{}, [{"c" => "#000000"}, "A", "B", "C", "D"]])
       overlay = Overlay.new("modifiers" => {"B" => {"key_color" => "#ffff00"}})
 
       overlay.apply(keyboard)
 
-      keyboard.rows.first.keys[0].option('c').must_equal '#000000'
-      keyboard.rows.first.keys[1].option('c').must_equal '#ffff00'
-      keyboard.rows.first.keys[2].option('c').must_equal '#000000'
-      keyboard.rows.first.keys[3].option('c').must_equal '#000000'
+      keyboard.rows.first.keys[0].option("c").must_equal "#000000"
+      keyboard.rows.first.keys[1].option("c").must_equal "#ffff00"
+      keyboard.rows.first.keys[2].option("c").must_equal "#000000"
+      keyboard.rows.first.keys[3].option("c").must_equal "#000000"
 
       rendered = keyboard.render
       rendered.must_equal(JSON.pretty_generate([
         {},
         [
-          {'c' => '#000000'}, "A",
-          {'c' => '#ffff00'}, "B",
-          {'c' => '#000000'}, "C",
+          {"c" => "#000000"}, "A",
+          {"c" => "#ffff00"}, "B",
+          {"c" => "#000000"}, "C",
           "D",
         ],
       ]))
     end
 
     it "adds colored text on keys" do
-      keyboard = Keyboard.new([{}, [{'t' => '#000000'}, "A"]])
+      keyboard = Keyboard.new([{}, [{"t" => "#000000"}, "A"]])
       overlay = Overlay.new(
         "modifiers" => {"A" => {"bottom_left_color" => "#ffff00", "bottom_left" => "Hello"}},
       )
@@ -690,46 +701,67 @@ def run_tests
       key = keyboard.rows.first.keys.first
 
       key.text.must_equal "A\nHello"
-      key.option('t').must_equal "#000000\n#ffff00"
+      key.option("t").must_equal "#000000\n#ffff00"
 
       rendered = keyboard.render
       rendered.must_equal(JSON.pretty_generate([
         {},
         [
-          {'t' => "#000000\n#ffff00"}, "A\nHello",
+          {"t" => "#000000\n#ffff00"}, "A\nHello",
         ],
       ]))
     end
 
     it "changes font size of text on keys" do
-      keyboard = Keyboard.new([{}, [{'f' => 4}, "A", "B\nHello\nWorld", "C", "D"]])
+      keyboard = Keyboard.new([
+        {},
+        [
+          {"f" => 4},
+          "A",
+          "B\nHello\nWorld",
+          "C",
+          "D",
+        ],
+      ])
       overlay = Overlay.new(
         "modifiers" => {
-          "B" => {"default_size" => 3, "upper_left_size" => 4, "top_right_size" => 2},
+          "B" => {
+            "default_size" => 3,
+            "upper_left_size" => 4,
+            "top_right_size" => 2,
+          },
         },
       )
 
       overlay.apply(keyboard)
 
-      keyboard.rows.first.keys[0].option('f').must_equal 4
-      keyboard.rows.first.keys[0].option('fa').must_equal [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]
+      keyboard.rows.first.keys[0].option("f").must_equal 4
+      keyboard.rows.first.keys[0].option("fa").must_equal(
+        [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil],
+      )
 
-      keyboard.rows.first.keys[1].option('f').must_equal 3
-      keyboard.rows.first.keys[1].option('fa').must_equal [4, nil, 2, nil, nil, nil, nil, nil, nil, nil, nil, nil]
+      keyboard.rows.first.keys[1].option("f").must_equal 3
+      keyboard.rows.first.keys[1].option("fa").must_equal(
+        [4, nil, 2, nil, nil, nil, nil, nil, nil, nil, nil, nil],
+      )
 
-      keyboard.rows.first.keys[2].option('f').must_equal 4
-      keyboard.rows.first.keys[2].option('fa').must_equal [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]
+      keyboard.rows.first.keys[2].option("f").must_equal 4
+      keyboard.rows.first.keys[2].option("fa").must_equal(
+        [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil],
+      )
 
-      keyboard.rows.first.keys[3].option('f').must_equal 4
-      keyboard.rows.first.keys[3].option('fa').must_equal [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]
+      keyboard.rows.first.keys[3].option("f").must_equal 4
+      keyboard.rows.first.keys[3].option("fa").must_equal(
+        [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil],
+      )
 
       rendered = JSON.parse(keyboard.render)
       rendered.must_equal([
         {},
         [
-          {'f' => 4}, "A",
-          {'f' => 3, 'fa' => [4, 3, 2]}, "B\nHello\nWorld",
-          {'f' => 4, 'fa' => [4]}, "C",
+          {"f" => 4}, "A",
+          {"f" => 3, "fa" => [4, 3, 2]}, "B\nHello\nWorld",
+          {"f" => 4, "fa" => [4]}, "C",
           "D",
         ],
       ])
@@ -756,14 +788,15 @@ def run_tests
       rendered.must_equal([
         {},
         [
-          {'g' => true}, "A",
-          {'g' => false}, "B",
+          {"g" => true}, "A",
+          {"g" => false}, "B",
           "C (still here)",
-          {'g' => true}, "D",
+          {"g" => true}, "D",
         ],
       ])
     end
   end
+  # rubocop:enable Metrics/BlockLength
 end
 
 if ARGV.first == "test"
