@@ -74,6 +74,7 @@ inherit = bar/core
 monitor = ${env:MONITOR}
 font-0 = ${env:POLYBAR_FONT_0}
 font-1 = ${env:POLYBAR_FONT_1}
+font-2 = ${env:POLYBAR_FONT_2}
 height = ${env:POLYBAR_BAR_HEIGHT:20}
 
 [bar/primary]
