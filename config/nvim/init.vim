@@ -24,3 +24,6 @@ set modelines=5
 " Allow project-specific .vimrc
 set exrc
 set secure " Don't allow certain things in project RCs that are not owned by me
+
+" Set terminal/window title from current file.
+set title
