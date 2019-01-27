@@ -34,6 +34,10 @@ vitrc = $HOME/.vitrc
 # PR opened: https://github.com/rspec/rspec-core/pull/2538
 rspec = $HOME/.rspec
 
+# Rubocop does not support XDG yet
+# PR: https://github.com/rubocop-hq/rubocop/pull/6682
+rubocop.yml = $HOME/.rubocop.yml
+
 # fontconfig already supports XDG, but system needs to be able to place files
 # in here too so I don't want to place the entire directory under source control.
 fonts-conf.d/* -> $XDG_CONFIG_HOME/fontconfig/conf.d | fc-cache
