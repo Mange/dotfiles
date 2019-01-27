@@ -1,0 +1,82 @@
+#!/bin/bash
+
+usage() {
+  cat <<USAGE
+Usage: $0 COMMAND [ARG…]
+   or: $0 --debug
+
+Tries to run COMMAND in the same CWD as the currently focused window. Will
+start in \$HOME if CWD cannot be determined.
+
+With --debug option, no command will run. Instead a list of pids and their CWDs
+will be printed out. Added as a notification if no stdout is present.
+USAGE
+}
+
+debug_mode=no
+if [[ $1 == "--help" ]]; then
+  usage
+  exit 0
+elif [[ $# -le 0 ]]; then
+  usage >&2
+  exit 1
+elif [[ $# -eq 1 ]] && [[ $1 == "--debug" ]]; then
+  debug_mode=yes
+fi
+
+# Find PID of active window
+PID=$(
+  xprop -id "$(xprop -root | awk '/_NET_ACTIVE_WINDOW\(WINDOW\)/{print $NF}')" | \
+    grep -m 1 PID | \
+    cut -d " " -f 3
+)
+
+# List all pids running in this window; for example a terminal might be running
+# a shell that is running an editor.
+# There's always a risk that the deepest process is short-lived (maybe it's
+# running this script itself, after all, which would match the "pstree" command
+# below), so iterate each process (but in reverse order) until a working PID is
+# found.
+#
+# -T hides threads so we can focus on processes only.
+# -p shows pid.
+# -A uses ASCII trees, so it's easier to split the list and pick the last process.
+#
+# pstree might look like this:
+# kitty(21645)---zsh(21650)-+-cat(27539)
+#                           `-samedir(27538)---pstree(27547)
+#
+# Use sed to split it so at most one process is on each line, then strip out
+# everything that isn't a number.
+#
+# Then use tac to reverse the order.
+#
+# Then check each one for a valid CWD and continue when one is found.
+#
+pids=$(pstree -lpAT "$PID" | sed -Ee 's/-.-/\n/g' -e 's/[^0-9\n]*//g' | tac)
+debug_output=""
+
+while read -r pid; do
+  if dir="$(readlink /proc/"$pid"/cwd)"; then
+    if [[ $debug_mode == "yes" ]]; then
+      debug_output="${debug_output}
+$pid ($(cat /proc/"$pid"/comm)): $dir"
+    else
+      cd "$dir" && exec "$@"
+    fi
+  elif [[ $debug_mode == "yes" ]]; then
+    debug_output="${debug_output}
+$pid gone"
+  fi
+done <<< "$pids"
+
+if [[ $debug_mode == "yes" ]]; then
+  if [[ -t 1 ]]; then
+    echo $"$debug_output"
+  else
+    notify-send "samedir" $"$debug_output"
+  fi
+else
+  # Cannot determine CWD, let's just start in HOME
+  cd "$HOME" && exec "$@"
+fi
