@@ -17,6 +17,7 @@ ranger-git
 
 autorandr
 bitwarden-cli     # CLI for password manager
+bitwarden-rofi    # Bitwarden in Rofi
 discord           # All-in-one voice and text chat for gamers that's free and secure.
 http-prompt       # An interactive HTTP command-line client
 polybar-git       # A fast and easy-to-use status bar
