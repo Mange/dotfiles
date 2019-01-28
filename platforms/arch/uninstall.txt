@@ -1,7 +1,4 @@
 # vim:ft=config:nospell
 
-# Replaced with compton-tryone-git in AUR
-compton
-
-# Replaced with parcellite
-copyq
+# Replaced by bwpass
+bitwarden

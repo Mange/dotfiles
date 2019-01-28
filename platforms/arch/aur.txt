@@ -16,7 +16,6 @@ nvm
 ranger-git
 
 autorandr
-bitwarden         # Password manager
 bitwarden-cli     # CLI for password manager
 discord           # All-in-one voice and text chat for gamers that's free and secure.
 http-prompt       # An interactive HTTP command-line client
