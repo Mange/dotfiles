@@ -3,9 +3,6 @@
 #
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
-# TODO:
-#   * System mode https://github.com/mohabaks/dotfiles/blob/master/config/i3-gaps/.config/i3/config#L212
-
 # {{{ Basic settings
 # Mod4 is Super (Win key)
 set $mod Mod4
@@ -105,73 +102,309 @@ exec --no-startup-id dunst # Notification server
 exec --no-startup-id udiskie --no-automount --smart-tray # Device mounter
 # }}}
 
-# {{{ i3 shortcuts
-# Show keyboard cheatsheet
-bindsym $mod+Shift+slash exec i3cheatsheet
+# {{{ Shortcuts
 
-# reload the configuration file
-bindsym $mod+Shift+c reload
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r restart
-# exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec i3quit
+set $terminal kitty --single-instance
+set $browser firefox-developer-edition
+set $browsername Firefox Developer Edition
 
-# Lock screen
-bindsym $mod+Shift+Escape exec light-locker-command -l
+# number row
 
-# Reflow screens
-bindsym $mod+Shift+x exec --no-startup-id autorandr --change --default horizontal
+# Escape and grave share physical button. I sometimes have Fn pressed and
+# sometimes now; I don't care. Either should do the same.
+# Label: Last Workspace
+bindsym $mod+grave        workspace back_and_forth
+bindsym $mod+Escape       workspace back_and_forth
+# Label: Lock screen
+bindsym $mod+shift+Escape exec light-locker-command -l
 
-# In case of emergency
-bindsym Ctrl+Shift+Escape exec --no-startup-id ~/.local/bin/fix-keyboard
+# Label: System workspace
+bindsym $mod+1        workspace $workspace1
+# Label: Move to System workspace
+bindsym $mod+shift+1  move container to workspace $workspace1
 
-# }}}
+# Label: Code workspace
+bindsym $mod+2        workspace $workspace2
+# Label: Move to Code workspace
+bindsym $mod+shift+2  move container to workspace $workspace2
 
-# {{{ Program shortcuts
+# Label: Browse workspace
+bindsym $mod+3        workspace $workspace3
+# Label: Move to Browse workspace
+bindsym $mod+shift+3  move container to workspace $workspace3
 
-# start a terminal
-bindsym $mod+Return exec kitty --single-instance
-bindsym $mod+g exec toggle-dropdown dropdown_kitty kitty --single-instance --class dropdown_kitty
+# Label: Workspace 4
+bindsym $mod+4        workspace $workspace4
+# Label: Move to workspace 4
+bindsym $mod+shift+4  move container to workspace $workspace4
 
-# tydra
-bindsym $mod+shift+Return exec kitty --single-instance --class dropdown_tydra zsh -ic "tydra ~/.config/tydra/main.yml"
+# Label: Workspace 5
+bindsym $mod+5        workspace $workspace5
+# Label: Move to workspace 5
+bindsym $mod+shift+5  move container to workspace $workspace5
 
-# File manager
-bindsym $mod+period exec toggle-dropdown dropdown_ranger kitty --single-instance --class dropdown_ranger zsh -ic ranger
-bindsym $mod+shift+period exec kitty --single-instance ranger
+# Label: Workspace 6
+bindsym $mod+6        workspace $workspace6
+# Label: Move to workspace 6
+bindsym $mod+shift+6  move container to workspace $workspace6
 
-# Rofi
-bindsym $mod+d exec --no-startup-id "rofi -show combi -modi combi,run,window,emoji -combi-modi drun,window,emoji"
-bindsym $mod+shift+d exec --no-startup-id "rofi -show run"
+# Label: Workspace 7
+bindsym $mod+7        workspace $workspace7
+# Label: Move to workspace 7
+bindsym $mod+shift+7  move container to workspace $workspace7
+
+# Label: Workspace 8
+bindsym $mod+8        workspace $workspace8
+# Label: Move to workspace 8
+bindsym $mod+shift+8  move container to workspace $workspace8
+
+# Label: Media workspace
+bindsym $mod+9        workspace $workspace9
+# Label: Move to Media workspace
+bindsym $mod+shift+9  move container to workspace $workspace9
+
+# Label: Chat workspace
+bindsym $mod+0        workspace $workspace10
+# Label: Move to Chat workspace
+bindsym $mod+shift+0  move container to workspace $workspace10
+
+# Label: Screenshot (fullscreen)
+bindsym --release $mod+minus exec gnome-screenshot
+# Label: Screenshot (area)
+bindsym --release $mod+shift+minus exec gnome-screenshot --area
+
+# 1st row
+
+# Label: Toggle layouts
+bindsym $mod+q        layout toggle all
+# Label: Kill window
+bindsym $mod+shift+q  kill
+
+# Label: Focus browser
+bindsym $mod+w        exec run-or-raise 'class = "$browsername"' $browser
+## Label: Run cmd
+# bindsym $mod+shift+w  cmd
+
+# Label: Focus editor
+bindsym $mod+e        exec focus-editor
+## Label: Run cmd
+# bindsym $mod+shift+e  cmd
+
+# Label: Resize mode
+bindsym $mod+r        mode "resize"
+## Label: Run cmd
+# bindsym $mod+shift+r  cmd
+
+# Label: Dropdown tasks
+bindsym $mod+t        exec toggle-dropdown dropdown_vit $terminal --class dropdown_vit vit
+## Label: Run cmd
+# bindsym $mod+shift+t  cmd
+
+## Label: Run cmd
+# bindsym $mod+y        cmd
+## Label: Run cmd
+# bindsym $mod+shift+y  cmd
+
+# Label: Focus offhand
+bindsym $mod+u        [con_mark="offhand"] focus
+# Label: Mark offhand
+bindsym $mod+shift+u  unmark offhand; mark offhand
+
+# Bindings taken by dunst
+# Label: Notification close
+# USED: $mod+i
+# Label: Notification context menu
+# USED: $mod+shift+i
+# Label: Notification history
+# USED: $mod+ctrl+i
+
+## Label: Run cmd
+# bindsym $mod+o        cmd
+## Label: Run cmd
+# bindsym $mod+shift+o  cmd
+
+# Label: Passwords rofi
 bindsym $mod+p exec --no-startup-id "mange-bwmenu --clear 20 --state-path \\"${XDG_RUNTIME_DIR}/bwmenu-state\\""
+## Label: Run cmd
+# bindsym $mod+shift+p  cmd
 
-# Xbacklight
+# 2nd row
+
+## Label: Run cmd
+# bindsym $mod+a        cmd
+## Label: Run cmd
+# bindsym $mod+shift+a  cmd
+
+# Label: Split
+bindsym $mod+s        split toggle
+## Label: Run cmd
+# bindsym $mod+shift+s  cmd
+
+## Label: Run cmd
+# bindsym $mod+d        cmd
+## Label: Run cmd
+# bindsym $mod+shift+d  cmd
+
+# Label: Fullscreen toggle
+bindsym $mod+f        fullscreen toggle
+# Label: Floating toggle
+bindsym $mod+shift+f  floating toggle
+
+# Label: Dropdown terminal
+bindsym $mod+g        exec toggle-dropdown dropdown_kitty $terminal --class dropdown_kitty
+# Label: Dropdown calculator
+bindsym $mod+shift+g  exec toggle-dropdown dropdown_calc $terminal --class dropdown_calc qalc
+
+# Label: Focus ←
+bindsym $mod+h        focus left
+# Label: Move ←
+bindsym $mod+shift+h  move left
+# Label: Monitor ←
+bindsym $mod+ctrl+h   focus output left
+bindsym $mod+shift+ctrl+h move workspace to output left
+
+# Label: Focus ↓
+bindsym $mod+j        focus down
+# Label: Move ↓
+bindsym $mod+shift+j  move down
+# Label: Monitor ↓
+bindsym $mod+ctrl+j   focus output down
+bindsym $mod+shift+ctrl+j move workspace to output down
+
+# Label: Focus ↑
+bindsym $mod+k        focus up
+# Label: Move ↑
+bindsym $mod+shift+k  move up
+# Label: Monitor ↑
+bindsym $mod+ctrl+k   focus output up
+bindsym $mod+shift+ctrl+k move workspace to output up
+
+# Label: Focus →
+bindsym $mod+l        focus right
+# Label: Move →
+bindsym $mod+shift+l  move right
+# Label: Monitor →
+bindsym $mod+ctrl+l   focus output right
+bindsym $mod+shift+ctrl+l move workspace to output right
+
+# Label: Terminal in same dir
+bindsym $mod+Return        exec samedir $terminal
+# Label: Terminal
+bindsym $mod+shift+Return  exec $terminal
+
+# 3rd row
+
+# Label: Log out
+bindsym $mod+z        exec i3quit
+# Label: i3 reload
+bindsym $mod+shift+z  reload
+# Label: Restart i3
+bindsym $mod+ctrl+z   restart
+
+# Label: Reflow screens
+bindsym $mod+x        exec --no-startup-id autorandr --change --default horizontal
+## Label: Run cmd
+# bindsym $mod+shift+x  cmd
+
+## Label: Run cmd
+# bindsym $mod+c        cmd
+## Label: Run cmd
+# bindsym $mod+shift+c  cmd
+
+## Label: Run cmd
+# bindsym $mod+v        cmd
+# Bound by parcellite
+# Label: Clipboard manager
+# USED: $mod+shift+v
+
+# Label: Goto
+bindsym $mod+b        exec i3-input -F '[con_mark="%s"] focus' -P "Go to:"
+# Label: Mark
+bindsym $mod+shift+b  exec i3-input -F 'mark "%s"' -P "Mark:"
+# Label: Remove mark
+bindsym $mod+ctrl+b   exec i3-input -F 'unmark "%s"' -P "Unmark:"
+
+# Label: Focus floating/tiling
+bindsym $mod+n        focus mode_toggle
+# Label: Focus parent
+bindsym $mod+shift+n  focus parent
+# Label: Focus child
+bindsym $mod+ctrl+n   focus child
+
+# Label: Media mode
+bindsym $mod+m        mode "media"
+## Label: Run cmd
+# bindsym $mod+shift+m  cmd
+
+## Label: Run cmd
+# bindsym $mod+comma        cmd
+## Label: Run cmd
+# bindsym $mod+shift+comma  cmd
+
+## Label: Run cmd
+# bindsym $mod+period        cmd
+## Label: Run cmd
+# bindsym $mod+shift+period  cmd
+
+# Ranger won't pick up CWD unless invoked from inside a shell. Running ranger
+# directly in Kitty does not work well.
+# Label: Ranger
+bindsym $mod+slash        exec samedir $terminal zsh -ic ranger
+# Label: Toggle cheatsheet
+bindsym $mod+shift+slash  exec i3cheatsheet
+
+# Label: Rofi
+bindsym $mod+space exec --no-startup-id "rofi -show combi -modi combi,run,window,emoji -combi-modi drun,window,emoji"
+# Label: Tydra
+bindsym $mod+shift+space exec $terminal --class dropdown_tydra zsh -ic "tydra ~/.config/tydra/main.yml"
+
+# Media keys and other misc
+
 bindsym XF86MonBrightnessUp exec xbacklight -inc 10
 bindsym XF86MonBrightnessDown exec xbacklight -dec 10
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioPlay  exec --no-startup-id playerctl play-pause
+bindsym XF86AudioPause exec --no-startup-id playerctl play-pause
+bindsym XF86AudioNext  exec --no-startup-id playerctl next
+bindsym XF86AudioPrev  exec --no-startup-id playerctl previous
 
-# Screenshots
-bindsym --release $mod+minus exec gnome-screenshot
-bindsym --release $mod+Shift+minus exec gnome-screenshot --area
+# In case of emergency
+bindsym ctrl+shift+Escape exec --no-startup-id ~/.local/bin/fix-keyboard
 
-# Taskwarrior stuff
-bindsym $mod+t exec toggle-dropdown dropdown_vit kitty --single-instance --class dropdown_vit vit
-bindsym $mod+n exec ~/.cargo/bin/new-task-gtk
+# Modes
+mode "media" {
+  # Media player controls (se also "
+  bindsym j  exec --no-startup-id playerctl play-pause
+  bindsym k exec --no-startup-id playerctl play-pause
+  bindsym l  exec --no-startup-id playerctl next
+  bindsym h  exec --no-startup-id playerctl previous
 
-# Bitwarden
-bindsym $mod+shift+p exec toggle-dropdown Bitwarden bitwarden
+  # Pulse Audio controls
+  bindsym plus exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
+  bindsym minus exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
+  bindsym 0 exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
 
-# Toggle floating as soon as dropdown windows are created to avoid flickering.
-for_window [class="dropdown_kitty"] floating enable, border pixel 5
-for_window [class="dropdown_ranger"] floating enable
-for_window [class="dropdown_vit"] floating enable
+  # back to normal: Enter / Escape / Space
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+  bindsym Space mode "default"
+}
 
-for_window [class="dropdown_tydra"] \
-    floating enable, \
-    border pixel 5, \
-    resize set 60 ppt 50 ppt, \
-    move position center
+mode "resize" {
+  # These bindings trigger as soon as you enter the resize mode
 
-for_window [class="Bitwarden"] floating enable
+  bindsym h resize shrink width 10 px or 10 ppt
+  bindsym j resize grow height 10 px or 10 ppt
+  bindsym k resize shrink height 10 px or 10 ppt
+  bindsym l resize grow width 10 px or 10 ppt
+
+  # back to normal: Enter or Escape
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+  bindsym $mod+r mode "default"
+}
 
 # }}}
 
@@ -188,74 +421,35 @@ set $workspace8   "8"
 set $workspace9   "9:Media"
 set $workspace10 "10:Chat"
 
-# switch to workspace
-bindsym $mod+grave workspace back_and_forth
-bindsym $mod+Escape workspace back_and_forth
-bindsym $mod+1 workspace $workspace1
-bindsym $mod+2 workspace $workspace2
-bindsym $mod+3 workspace $workspace3
-bindsym $mod+4 workspace $workspace4
-bindsym $mod+5 workspace $workspace5
-bindsym $mod+6 workspace $workspace6
-bindsym $mod+7 workspace $workspace7
-bindsym $mod+8 workspace $workspace8
-bindsym $mod+9 workspace $workspace9
-bindsym $mod+0 workspace $workspace10
-
-# switch to output
-bindsym $mod+Ctrl+h focus output left
-bindsym $mod+Ctrl+j focus output down
-bindsym $mod+Ctrl+k focus output up
-bindsym $mod+Ctrl+l focus output right
-
 # Switching to active workspace does nothing
 workspace_auto_back_and_forth no
-
-# move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace $workspace1
-bindsym $mod+Shift+2 move container to workspace $workspace2
-bindsym $mod+Shift+3 move container to workspace $workspace3
-bindsym $mod+Shift+4 move container to workspace $workspace4
-bindsym $mod+Shift+5 move container to workspace $workspace5
-bindsym $mod+Shift+6 move container to workspace $workspace6
-bindsym $mod+Shift+7 move container to workspace $workspace7
-bindsym $mod+Shift+8 move container to workspace $workspace8
-bindsym $mod+Shift+9 move container to workspace $workspace9
-bindsym $mod+Shift+0 move container to workspace $workspace10
-
-# Move workspaces
-bindsym $mod+Shift+Ctrl+h move workspace to output left
-bindsym $mod+Shift+Ctrl+j move workspace to output down
-bindsym $mod+Shift+Ctrl+k move workspace to output up
-bindsym $mod+Shift+Ctrl+l move workspace to output right
 
 # }}}
 
 # {{{ Assignments
 
-# Chromium apps have instance names beginning with "crx_", so by looking for
-# that AND the title, we can determine which app it is. Some of the apps does
-# not assign instance/title before application finishes loading, and in that
-# case cannot be placed automatically using assign.
-# Using for_window instead might be better, but it also means that they are
-# frozen to that workspace, which is unacceptable in some cases.
+# Toggle floating as soon as dropdown windows are created to avoid flickering.
+for_window [class="dropdown_*"] floating enable
+for_window [class="dropdown_kitty"] border pixel 5
 
-# DevDocs API Documentation app (Chromium)
-for_window [instance="^crx_" title="^DevDocs"] move to workspace $workspace3
-
-assign [class="Evolution"] $workspace5
+for_window [class="dropdown_tydra"] \
+    border pixel 5, \
+    resize set 60 ppt 50 ppt, \
+    move position center
 
 # Spotify does not set class before displaying window, so force window movement
 # always instead.
 # https://github.com/i3/i3/issues/2060
 for_window [class="Spotify"] move to workspace $workspace9
 
+for_window [window_role="GtkFileChooserDialog"] \
+  resize set 800 600, \
+  move position center
+
+assign [class="Firefox"] $workspace3
 assign [class="Slack"] $workspace10
 assign [class="TelegramDesktop"] $workspace10
 assign [class="discord"] $workspace10
-
-# My own task runners
-for_window [title="New Task"] floating enable
 
 # Floating terminal windows.
 for_window [class="kitty" window_role="floating"] \
@@ -278,108 +472,6 @@ for_window [title="i3 cheatsheet"] \
 
 # }}}
 
-# {{{ Window management
-
-# kill focused window
-bindsym $mod+Shift+q kill
-
-# change focus
-bindsym $mod+h focus left
-bindsym $mod+j focus down
-bindsym $mod+k focus up
-bindsym $mod+l focus right
-
-# move focused window
-bindsym $mod+Shift+h move left
-bindsym $mod+Shift+j move down
-bindsym $mod+Shift+k move up
-bindsym $mod+Shift+l move right
-
-# split in horizontal orientation (note: this would be called vertical split in Vim)
-bindsym $mod+v split h
-
-# split in vertical orientation (note: this would be called horizontal split in Vim)
-bindsym $mod+s split v
-
-# enter fullscreen mode for the focused container
-bindsym $mod+f fullscreen toggle
-
-# change container layout (stacked, tabbed, toggle split)
-bindsym $mod+w       layout stacking
-bindsym $mod+shift+w layout tabbed
-bindsym $mod+q       layout toggle split
-
-# toggle tiling / floating
-bindsym $mod+Shift+space floating toggle
-
-# change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
-
-# focus the parent container
-bindsym $mod+a focus parent
-
-# focus the child container
-bindsym $mod+shift+a focus child
-
-# zen mode
-bindsym $mod+z exec i3zen
-
-# }}}
-
-# {{{ Resize mode
-# resize window (you can also use the mouse for that)
-mode "resize" {
-  # These bindings trigger as soon as you enter the resize mode
-
-  bindsym h resize shrink width 10 px or 10 ppt
-  bindsym j resize grow height 10 px or 10 ppt
-  bindsym k resize shrink height 10 px or 10 ppt
-  bindsym l resize grow width 10 px or 10 ppt
-
-  # back to normal: Enter or Escape
-  bindsym Return mode "default"
-  bindsym Escape mode "default"
-  bindsym $mod+r mode "default"
-}
-
-bindsym $mod+r mode "resize"
-# }}}
-
-# {{{ Media mode and bindings
-
-# Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% #increase sound volume
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% #decrease sound volume
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle # mute sound
-bindsym Control+XF86AudioMute exec pavucontrol
-
-# Media player controls
-bindsym XF86AudioPlay  exec --no-startup-id playerctl play-pause
-bindsym XF86AudioPause exec --no-startup-id playerctl play-pause
-bindsym XF86AudioNext  exec --no-startup-id playerctl next
-bindsym XF86AudioPrev  exec --no-startup-id playerctl previous
-
-mode "media" {
-  # Media player controls (se also "
-  bindsym j  exec --no-startup-id playerctl play-pause
-  bindsym k exec --no-startup-id playerctl play-pause
-  bindsym l  exec --no-startup-id playerctl next
-  bindsym h  exec --no-startup-id playerctl previous
-
-  # Pulse Audio controls
-  bindsym plus exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% #increase sound volume
-  bindsym minus exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% #decrease sound volume
-  bindsym 0 exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle # mute sound
-
-  # back to normal: Enter / Escape / Space
-  bindsym Return mode "default"
-  bindsym Escape mode "default"
-  bindsym Space mode "default"
-}
-
-bindsym $mod+m mode "media"
-# }}}
-
 # {{{ Late startup programs
 
 exec spotify-with-hidpi-support
@@ -387,7 +479,5 @@ exec workrave
 exec startup-reminder
 
 exec i3-msg 'workspace $workspace10; layout stacked; exec telegram-desktop'
-exec i3-msg 'workspace $workspace3; exec gtk-launch firefox-developer-edition'
-
-exec i3-msg 'workspace $workspace1'
+exec i3-msg 'workspace $workspace3; exec $browser; workspace $workspace1'
 # }}}
