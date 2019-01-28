@@ -3,7 +3,7 @@ sanitise tridactyllocal tridactylsync
 
 " {{{ Settings
 " Editor command is Neovim in Kitty
-set editorcmd kitty --single-instance nvim "%f"
+set editorcmd kitty nvim "%f"
 
 set theme dark
 

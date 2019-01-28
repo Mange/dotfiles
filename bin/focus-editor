@@ -3,4 +3,4 @@
 
 run-or-raise \
   'class = "kitty" && title = "NVIM"' \
-  samedir kitty --single-instance nvim
+  samedir kitty nvim

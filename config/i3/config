@@ -104,7 +104,7 @@ exec --no-startup-id udiskie --no-automount --smart-tray # Device mounter
 
 # {{{ Shortcuts
 
-set $terminal kitty --single-instance
+set $terminal kitty
 set $browser firefox-developer-edition
 set $browsername Firefox Developer Edition
 

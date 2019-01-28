@@ -120,8 +120,8 @@ type = custom/script
 exec = ~/.config/polybar/task-counters
 interval = 60
 format-prefix = " "
-click-left = toggle-dropdown dropdown_vit kitty --single-instance --class dropdown_vit vit
-click-right = kitty --single-instance vit
+click-left = toggle-dropdown dropdown_vit kitty --class dropdown_vit vit
+click-right = kitty vit
 
 [module/i3]
 inherit = module/base
@@ -194,7 +194,7 @@ type = custom/script
 exec = ~/.config/polybar/pending-updates
 interval = 240
 format-prefix = " "
-click-left = kitty --single-instance --hold zsh -c "sudo pacman -Syu"
+click-left = kitty --hold zsh -c "sudo pacman -Syu"
 
 [module/weather]
 inherit = module/base
@@ -202,7 +202,7 @@ type = custom/script
 exec = weather --oneline
 interval = 600
 format-prefix =
-click-left = kitty --single-instance --hold weather
+click-left = kitty --hold weather
 click-right =
 
 [module/redshift]
