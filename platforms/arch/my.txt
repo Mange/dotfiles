@@ -58,6 +58,7 @@ jq
 keybase
 nmap
 parallel
+pulsemixer
 ripgrep
 rsync
 task
