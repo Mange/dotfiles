@@ -8,7 +8,6 @@ call plug#begin($XDG_DATA_HOME . '/nvim/plugged')
 
 """ Looks
 Plug 'bling/vim-airline'
-Plug 'lilydjwg/colorizer'
 Plug 'morhetz/gruvbox'
 
 """ Utility
@@ -33,18 +32,23 @@ Plug 'bronson/vim-trailing-whitespace'
 Plug 'junegunn/vim-easy-align'
 Plug 'kien/rainbow_parentheses.vim'
 Plug 'machakann/vim-highlightedyank'
-Plug 'maralla/completor.vim'
 Plug 'michaeljsmith/vim-indent-object'
-Plug 'neomake/neomake'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tommcdo/vim-exchange'
 Plug 'tpope/vim-abolish' " Smart S/re/repl/
 Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-endwise'
+" Conflicts with coc: https://github.com/tpope/vim-endwise/issues/22
+" Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-speeddating' " CTRL-X/A works on dates
 Plug 'tpope/vim-surround'
 Plug 'vim-scripts/ZoomWin'
+
+""" Language server support
+Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
+
+""" Markdown
+Plug 'tpope/vim-markdown'
 
 """ Ruby
 Plug 'joker1007/vim-ruby-heredoc-syntax', {'for': 'ruby'}
@@ -58,7 +62,6 @@ Plug 'vim-scripts/ruby-matchit', {'for': 'ruby'}
 
 """ Rust
 Plug 'rust-lang/rust.vim'
-Plug 'racer-rust/vim-racer', {'for': 'rust'}
 
 """ ASCIIdoc
 let vimple_init_vars = 0 " https://github.com/dahu/vimple/issues/11
