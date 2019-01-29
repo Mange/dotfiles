@@ -12,15 +12,21 @@ function! s:Shared()
   endif
 
   " Improve warning look
-  " Gruvbox has styles for Syntastic built in, so reuse them for Neomake
-  hi clear NeomakeWarning
-  hi clear NeomakeError
+  hi RedUndercurl cterm=undercurl gui=undercurl guisp=#fb4934
+  hi YellowUndercurl cterm=undercurl gui=undercurl guisp=#fabd2f
+  hi BlueUndercurl cterm=undercurl gui=undercurl guisp=#83a598
 
-  hi link NeomakeError SyntasticError
-  hi link NeomakeWarning SyntasticWarning
+  hi link ALEError RedUndercurl
+  hi link ALEWarning YellowUndercurl
+  hi link ALEInfo BlueUndercurl
 
-  hi link NeomakeErrorSign GruvboxRedSign
-  hi link NeomakeWarningSign GruvboxYellowSign
+  hi link ALEErrorSign GruvboxRedSign
+  hi link ALEWarningSign GruvboxYellowSign
+  hi link ALEInfoSign GruvboxBlueSign
+
+  hi link ALEVirtualTextWarning GruvboxYellowBold
+  hi link ALEVirtualTextError GruvboxRedBold
+  hi link ALEVirtualTextInfo GruvboxBlueBold
 endfunction
 
 command! Dark call s:Dark()

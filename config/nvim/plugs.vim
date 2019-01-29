@@ -44,11 +44,10 @@ Plug 'tpope/vim-speeddating' " CTRL-X/A works on dates
 Plug 'tpope/vim-surround'
 Plug 'vim-scripts/ZoomWin'
 
-""" Language server support
+""" Language server support, linting, etc.
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
-
-""" Markdown
-Plug 'tpope/vim-markdown'
+Plug 'w0rp/ale'
+Plug 'sheerun/vim-polyglot'
 
 """ Ruby
 Plug 'joker1007/vim-ruby-heredoc-syntax', {'for': 'ruby'}
@@ -57,33 +56,9 @@ Plug 'tpope/vim-bundler', {'for': 'ruby'}
 Plug 'tpope/vim-rails', {'for': 'ruby'}
 Plug 'tpope/vim-rake', {'for': 'ruby'}
 Plug 'tpope/vim-rvm', {'for': 'ruby'}
-Plug 'vim-ruby/vim-ruby', {'for': 'ruby'}
 Plug 'vim-scripts/ruby-matchit', {'for': 'ruby'}
-
-""" Rust
-Plug 'rust-lang/rust.vim'
-
-""" ASCIIdoc
-let vimple_init_vars = 0 " https://github.com/dahu/vimple/issues/11
-Plug 'dahu/vimple', {'for': 'asciidoc'}
-Plug 'dahu/Asif', {'for': 'asciidoc'}
-Plug 'Raimondi/VimRegStyle', {'for': 'asciidoc'}
-Plug 'vim-scripts/SyntaxRange', {'for': 'asciidoc'}
-Plug 'dahu/vim-asciidoc', {'for': 'asciidoc'}
-
-""" JS
-Plug 'ElmCast/elm-vim', {'for': 'elm'}
-Plug 'jelera/vim-javascript-syntax', {'for': 'javascript'}
-Plug 'leafgarland/typescript-vim', {'for': ['javascript', 'typescript', 'vue']}
-Plug 'posva/vim-vue', {'for': ['javascript', 'typescript', 'vue']}
-Plug 'vim-scripts/JSON.vim'
 
 """ HTML/CSS
 Plug 'gregsexton/MatchTag', {'for': 'html'}
-Plug 'othree/html5-syntax.vim', {'for': 'html'}
-
-""" Misc
-Plug 'jparise/vim-graphql', {'for': 'graphql'}
-Plug 'hashivim/vim-terraform', {'for': 'terraform'}
 
 call plug#end()
