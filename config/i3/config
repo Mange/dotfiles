@@ -224,7 +224,7 @@ bindsym $mod+shift+u  unmark offhand; mark offhand
 # bindsym $mod+shift+o  cmd
 
 # Label: Passwords rofi
-bindsym $mod+p exec --no-startup-id "mange-bwmenu --clear 20 --state-path \\"${XDG_RUNTIME_DIR}/bwmenu-state\\""
+bindsym $mod+p exec --no-startup-id "bwmenu --clear 20 --state-path \\"${XDG_RUNTIME_DIR}/bwmenu-state\\""
 ## Label: Run cmd
 # bindsym $mod+shift+p  cmd
 
