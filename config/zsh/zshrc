@@ -407,6 +407,8 @@ for gem in guard rspec rails rubocop rake; do
   alias $gem="bundle-exec $gem"
 done
 
+alias wer="watchexec -ce rb --"
+
 # }}}
 # {{{ Autoload functions
 
