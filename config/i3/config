@@ -90,6 +90,10 @@ exec --no-startup-id ~/.local/bin/dynamic-startup
 
 # Compositor
 exec --no-startup-id compton --config ~/.config/compton/compton.conf
+# Sometimes redshift fails to auto-start; perhaps because it tries to start a
+# bit too early or something. Manually start on logging in, after the X server
+# is guaranteed to be running.
+exec --no-startup-id systemctl --user start redshift
 
 # Wallpaper, bars, etc.
 exec_always --no-startup-id ~/.local/bin/set-wallpaper

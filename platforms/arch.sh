@@ -33,7 +33,6 @@ USAGE
 }
 ONLY_SECTION="all"
 
-
 if ! OPTS="$(getopt -n "$0" --longoptions "help,only:" --options "o:" --shell bash -- "$@")"; then
   exit 1
 fi
@@ -474,23 +473,32 @@ if run-section "neovim"; then
     header "Neovim"
     init-sudo
 
-    subheader "Python plugin"
-    if hash pip 2>/dev/null; then
-      sudo pip install -q neovim && echo "${green}✔ OK${reset}" || handle-failure
+    subheader "Python 2 plugin"
+    if hash pip2 2>/dev/null; then
+      (sudo pip2 install --upgrade -q neovim && echo "${green}✔ OK${reset}") || handle-failure
     else
-      echo "${red}pip not installed${reset}"
+      echo "${red}pip2 not installed${reset}"
+    fi
+
+    subheader "Python 3 plugin"
+    if hash pip3 2>/dev/null; then
+      (sudo pip3 install --upgrade -q neovim && echo "${green}✔ OK${reset}") || handle-failure
+    else
+      echo "${red}pip3 not installed${reset}"
     fi
 
     subheader "Ruby plugin"
     if hash gem 2>/dev/null; then
-      gem install -q neovim && echo "${green}✔ OK${reset}" || handle-failure
+      (gem install -q neovim && echo "${green}✔ OK${reset}") || handle-failure
     else
       echo "${red}Ruby/gem not installed${reset}"
     fi
 
     subheader "NodeJS plugin"
-    if hash npm 2>/dev/null; then
-      sudo npm install -g neovim && echo "${green}✔ OK${reset}" || handle-failure
+    # Hardcoded to system-installed npm to avoid collisions with nvm. Neovim
+    # will load the system npm as it is not backed by my ZSH shell.
+    if [[ -f /usr/bin/npm ]]; then
+      (sudo /usr/bin/npm install -g neovim && echo "${green}✔ OK${reset}") || handle-failure
     else
       echo "${red}npm not installed${reset}"
     fi

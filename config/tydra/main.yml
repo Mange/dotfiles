@@ -85,7 +85,14 @@ pages:
             shortcut_color: blue
 
           - shortcut: u
-            title: Audio settings
+            title: Audio mixer (TUI)
+            return: false
+            mode: exec
+            shortcut_color: red
+            command: pulsemixer
+
+          - shortcut: U
+            title: Audio settings (GUI)
             return: false
             mode: background
             shortcut_color: red
