@@ -178,6 +178,10 @@ zstyle ':completion:*' completer _complete _approximate
 # In case I didn't already have all the sbin dirs in PATH, I would add them here
 zstyle ':complete:sudo:' environ HOME="/root"
 
+# Commands that should be completed like other commands
+compdef run-changed-specs=rspec
+compdef run-branch-specs=rspec
+
 #
 # Pimpin' format
 #
@@ -410,12 +414,7 @@ autoload zmv
 
 fpath=("${XDG_CONFIG_HOME}/zsh/funcs" $fpath)
 
-autoload run-changed-specs
-autoload run-branch-specs
 autoload seconds-to-human
-
-compdef run-changed-specs=rspec
-compdef run-branch-specs=rspec
 
 # }}}
 # {{{ Color shortcuts and magic
