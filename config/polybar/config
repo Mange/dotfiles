@@ -184,7 +184,7 @@ type = internal/date
 format-prefix = " "
 label = %date% %time%
 date = %F%
-date-alt = %A vecka %W
+date-alt = %A vecka %V
 time = %H:%M
 interval = 1
 
