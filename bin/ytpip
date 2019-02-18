@@ -6,7 +6,7 @@ if [[ $# == 1 ]]; then
 elif [[ $# == 0 ]]; then
   # No argument? Let's check the clipboard
   url="$(xsel --clipboard)"
-  if [[ $url != https* && $url == */watch?v=* ]]; then
+  if [[ $url != https*tube*/watch?v=* ]]; then
     # Nope, ask for the URL.
     url=""
   fi
