@@ -33,3 +33,32 @@ Style/GuardClause:
 
 Style/IfUnlessModifier:
   Enabled: false
+
+# Allow "fail" over "raise" when you think it's more clear.
+# I personally use it in specs sometimes to say "fail this spec with this
+# message".
+Style/SignalException:
+  Enabled: false
+
+Style/BlockDelimiters:
+  Enabled: true
+  EnforcedStyle: braces_for_chaining
+  Exclude:
+    - 'spec/**/*'
+
+Metrics/BlockLength:
+  ExcludedMethods:
+    - refine
+    - describe
+    - context
+    - shared_examples
+  Exclude:
+    - 'Rakefile'
+    - '**/*.rake'
+    - 'spec/*_spec.rb'
+    - 'spec/**/*_spec.rb'
+    - 'spec/shared_examples/*.rb'
+
+Metrics/LineLength:
+  IgnoredPatterns:
+    - '^\s*it\s' # Test names can be long
