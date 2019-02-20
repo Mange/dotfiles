@@ -6,7 +6,5 @@ source "$HOME/.config/backup/shared_setup.bash"
 # shellcheck disable=2154
 PASSPHRASE="$(cat "$passphrase_file")" \
   duplicity \
-  --exclude-filelist "$excludes_file" \
-  --full-if-older-than 1M \
-  "$HOME" \
+  collection-status \
   "$backup_url"

@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# My wrapper around (currently) duplicity
+
+usage() {
+  cat <<USAGE
+Usage: $0 <command> [duplicity options]
+
+Commands:
+  - run               (Make a new backup)
+  - collection-status (List all backups)
+USAGE
+}
+
+if [[ $# -lt 1 ]]; then
+  usage
+  exit 1
+elif [[ $1 == "--help" ]]; then
+  usage
+  exit 0
+fi
+
+command="$1"
+shift
+
+script="${XDG_CONFIG_HOME}/backup/${command}"
+
+if [[ -x "$script" ]]; then
+  exec "$script" "$@"
+fi
