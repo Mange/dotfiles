@@ -421,7 +421,7 @@ set $workspace4   "4"
 set $workspace5   "5"
 set $workspace6   "6"
 set $workspace7   "7"
-set $workspace8   "8"
+set $workspace8   "8:Game"
 set $workspace9   "9:Media"
 set $workspace10 "10:Chat"
 
@@ -451,6 +451,7 @@ for_window [window_role="GtkFileChooserDialog"] \
   move position center
 
 assign [class="Firefox"] $workspace3
+assign [class="Steam"] $workspace8
 assign [class="Slack"] $workspace10
 assign [class="TelegramDesktop"] $workspace10
 assign [class="discord"] $workspace10

@@ -22,7 +22,7 @@ case "$(hostname)" in
     i3-msg exec discord
 
     # Start steam
-    i3-msg exec gtk-launch com.valvesoftware.Steam
+    i3-msg exec gtk-launch steam
     ;;
   *)
     ;;
