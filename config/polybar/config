@@ -2,12 +2,22 @@
 
 [settings]
 screenchange-reload = false
+throttle-ms = 50
+throttle-limit = 5
+compositing-underline = source
+compositing-overline = source
+compositing-background = source
 
 [gruvbox]
 ; aarrggbb, editor highlight might be off
 dark0_transparent = #55282828
 dark0_transparent1 = #77282828
 bright_red_transparent = #55fb4934
+bright_purple_transparent = #55d3869b
+faded_aqua_transparent1 = #77427b58
+bright_aqua_transparent = #558ec07c
+faded_blue_transparent1 = #77076678
+bright_blue_transparent = #5583a598
 
 # Taken from https://github.com/morhetz/gruvbox/blob/master/colors/gruvbox.vim
 dark0_hard = #1d2021
@@ -64,9 +74,8 @@ fixed-center = true
 
 background = ${gruvbox.dark0_transparent}
 foreground = ${gruvbox.light1}
-
-line-color = ${gruvbox.bright_purple}
-line-size = 1
+line-color = ${gruvbox.dark0_transparent}
+line-size = ${env:POLYBAR_BAR_PADDING:4}
 
 [bar/base]
 inherit = bar/core
@@ -75,7 +84,11 @@ monitor = ${env:MONITOR}
 font-0 = ${env:POLYBAR_FONT_0}
 font-1 = ${env:POLYBAR_FONT_1}
 font-2 = ${env:POLYBAR_FONT_2}
-height = ${env:POLYBAR_BAR_HEIGHT:20}
+
+height = ${env:POLYBAR_BAR_HEIGHT:34}
+
+; Make cursor look like the pointer (hand) when hovering clickable modules
+cursor-click = pointer
 
 [bar/primary]
 inherit = bar/base
@@ -83,7 +96,7 @@ top = true
 
 modules-left = task-counters pending-updates media-controls
 modules-center = i3
-modules-right = weather volume battery wifi redshift time
+modules-right = weather volume battery wifi redshift clock time
 
 tray-detached = false
 tray-position = right
@@ -106,6 +119,8 @@ tray-position = none
 
 [module/base]
 format-padding = 2
+format-overline = ${gruvbox.dark0_transparent}
+format-underline = ${gruvbox.dark0_transparent}
 
 [module/media-controls]
 inherit = module/base
@@ -119,7 +134,6 @@ inherit = module/base
 type = custom/script
 exec = ~/.config/polybar/task-counters
 interval = 60
-format-prefix = " "
 click-left = toggle-dropdown dropdown_vit kitty --class dropdown_vit vit
 click-right = kitty vit
 
@@ -132,7 +146,6 @@ index-sort = true
 enable-click = true
 enable-scroll = false
 fuzzy-match = true
-format-padding = 0
 
 ws-icon-0 = 1:System;
 ws-icon-1 = 2:Code;
@@ -150,57 +163,51 @@ label-mode = "  %mode%  "
 label-mode-background = ${gruvbox.bright_red_transparent}
 
 # Focused is the workspace that is currently getting commands
-label-focused = "%index% %icon%"
-label-focused-foreground = ${gruvbox.light0}
-label-focused-background = ${gruvbox.dark0_transparent1}
-label-focused-underline = ${gruvbox.bright_purple}
-label-focused-padding = 1
+label-focused = "%{B#778f3f71} %index% %{B#55d3869b} %icon% %name% %{B-}"
+label-focused-margin = 1
 
 # Unfocused are workspaces that are not visible
-label-unfocused = "%index% %icon%"
-label-unfocused-foreground = ${gruvbox.light3}
-label-unfocused-padding = 1
+label-unfocused = "%{B#cc3c3836} %index% %{B#773c3836} %icon% %name% %{B-}"
+label-unfocused-margin = 1
 
 # Urgent are workspaces with important events
-label-urgent = "%index% %icon%!"
-label-urgent-padding = 1
+label-urgent = "%{B#779d0006} %index% %{B#553c3836} %icon% %name% %{B-}"
+label-urgent-margin = 1
 label-urgent-background = ${gruvbox.bright_red_transparent}
 
 # Visible are selected workspaces on other screens
-label-visible = "%index% %icon%"
-label-visible-foreground = ${gruvbox.light3}
-label-visible-background = ${gruvbox.dark0_transparent1}
-label-visible-underline = ${gruvbox.light3}
-label-visible-padding = 1
+label-visible = "%{B#77d3869b} %index% %{B#553c3836} %icon% %name% %{B-}"
+label-visible-margin = 1
 
-[module/date]
+[module/clock]
 inherit = module/base
-type = internal/date
-format-prefix = " "
-interval = 120
+type = custom/script
+exec = ~/.config/polybar/clock-icon
+format-background = ${gruvbox.faded_aqua_transparent1}
+format-padding = 1
+format-margin = 0
 
 [module/time]
 inherit = module/base
 type = internal/date
-format-prefix = " "
 label = %date% %time%
 date = %F%
 date-alt = %A vecka %V
 time = %H:%M
 interval = 1
+format-background = ${gruvbox.bright_aqua_transparent}
 
 [module/pending-updates]
 inherit = module/base
 type = custom/script
 exec = ~/.config/polybar/pending-updates
 interval = 240
-format-prefix = " "
 click-left = kitty --hold zsh -c "sudo pacman -Syu"
 
 [module/weather]
 inherit = module/base
 type = custom/script
-exec = weather --oneline
+exec = ~/.config/polybar/module yellow $(weather --oneline)
 interval = 600
 format-prefix =
 click-left = kitty --hold weather
@@ -219,16 +226,24 @@ click-right =
 inherit = module/base
 type = internal/pulseaudio
 
-format-volume = <ramp-volume> <label-volume>
-format-muted = <label-muted> 0%
-format-muted-foreground = ${gruvbox.bright_purple}
+format-volume = "<ramp-volume><label-volume>"
+format-muted = "%{B#cc282828}  %{B-}<label-muted>"
 
-label-volume = %percentage%%
-label-muted = 
+format-volume-overline = ${gruvbox.dark0_transparent}
+format-volume-underline = ${gruvbox.dark0_transparent}
+format-muted-overline = ${gruvbox.dark0_transparent}
+format-muted-underline = ${gruvbox.dark0_transparent}
 
-ramp-volume-0 = 
-ramp-volume-1 = 
-ramp-volume-2 = 
+label-volume = " %percentage:3%% "
+label-volume-background = ${gruvbox.bright_blue_transparent}
+; label-muted = " "
+label-muted = " %percentage:3%% "
+label-muted-background = ${gruvbox.dark0_transparent1}
+
+ramp-volume-0 = "  "
+ramp-volume-1 = "  "
+ramp-volume-2 = "  "
+ramp-volume-background = ${gruvbox.faded_blue_transparent1}
 
 [module/wifi]
 inherit = module/base

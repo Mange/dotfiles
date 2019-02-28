@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
-playing_icon=
-paused_icon=
+playing_icon=▶
+paused_icon=⏸
+
+root="$(dirname "$0")"
 
 # shellcheck source=/home/mange/.local/share/gruvbox/colors.env
 source "${XDG_DATA_HOME}/gruvbox/colors.env"
@@ -26,7 +28,7 @@ if player_status=$(playerctl status 2>/dev/null); then
     title="${title:0:39}…"
   fi
 
-  echo "${playback_icon} ${artist} - ${title}"
+  "$root/module" blue "${playback_icon}" "${artist} - ${title}"
 else
-  echo "${play_icon}"
+  "$root/module" blue "${playing_icon}" ""
 fi

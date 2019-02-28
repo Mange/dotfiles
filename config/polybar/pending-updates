@@ -1,4 +1,10 @@
 #!/usr/bin/env bash
 #
 
-pacman -Qu | wc -l
+root="$(dirname "$0")"
+
+updates="$(pacman -Qu | wc -l)"
+
+if [[ "$updates" -gt 0 ]]; then
+  "$root/module" aqua "📦" "$updates"
+fi
