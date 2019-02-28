@@ -3,8 +3,3 @@
 nvidia
 nvidia-utils
 nvidia-settings
-
-# Deluge GTK client
-deluge
-python2-notify
-pygtk
