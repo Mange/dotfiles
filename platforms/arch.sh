@@ -560,6 +560,10 @@ if run-section "fast"; then
 
   enable-user-systemd-unit "redshift"
 
+  if [[ $HOSTNAME == "morbidus" ]]; then
+    enable-systemd-unit avahi-daemon
+  fi
+
   sudo systemctl daemon-reload
 fi
 
