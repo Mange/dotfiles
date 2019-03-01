@@ -99,9 +99,9 @@ cursor-click = pointer
 inherit = bar/base
 top = true
 
-modules-left = task-counters pending-updates media-controls
-modules-center = i3
-modules-right = weather volume battery wifi redshift clock time
+modules-left = i3 media-controls
+modules-center = window-title
+modules-right = task-counters pending-updates weather volume battery wifi redshift clock time
 
 tray-detached = false
 tray-position = right
@@ -116,9 +116,9 @@ tray-scale = ${env:POLYBAR_TRAY_SCALE:1.0}
 inherit = bar/base
 top = true
 
-modules-left =
-modules-center = i3
-modules-right = weather volume battery redshift clock time
+modules-left = i3
+modules-center = window-title
+modules-right = battery clock time
 
 tray-position = none
 
@@ -178,6 +178,15 @@ label-urgent = " %{B#77af3a03} %index% %{B#55fe8019} %icon% %name% %{B-}"
 
 # Visible are selected workspaces on other screens
 label-visible = " %{B#77d3869b} %index% %{B#553c3836} %icon% %name% %{B-}"
+
+[module/window-title]
+inherit = module/base
+type = internal/xwindow
+; NOTE: Counts the invisible %{} tokens, so this is (37 +) 50
+label-maxlen = 87
+
+label =" %{B#cc3c3836} 类 %{B#aa3c3836} %title% %{B-}"
+label-empty =
 
 [module/clock]
 inherit = module/base
