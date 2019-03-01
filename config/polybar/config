@@ -118,12 +118,12 @@ top = true
 
 modules-left =
 modules-center = i3
-modules-right = weather volume battery redshift time
+modules-right = weather volume battery redshift clock time
 
 tray-position = none
 
 [module/base]
-format-padding = 2
+format-padding = 1
 format-overline = ${gruvbox.dark0_transparent}
 format-underline = ${gruvbox.dark0_transparent}
 
@@ -168,29 +168,22 @@ label-mode = "  %mode%  "
 label-mode-background = ${gruvbox.bright_red_transparent}
 
 # Focused is the workspace that is currently getting commands
-label-focused = "%{B#778f3f71} %index% %{B#55d3869b} %icon% %name% %{B-}"
-label-focused-margin = 1
+label-focused = " %{B#778f3f71} %index% %{B#55d3869b} %icon% %name% %{B-}"
 
 # Unfocused are workspaces that are not visible
-label-unfocused = "%{B#cc3c3836} %index% %{B#773c3836} %icon% %name% %{B-}"
-label-unfocused-margin = 1
+label-unfocused = " %{B#cc3c3836} %index% %{B#aa3c3836} %icon% %name% %{B-}"
 
 # Urgent are workspaces with important events
-label-urgent = "%{B#77af3a03} %index% %{B#55fe8019} %icon% %name% %{B-}"
-label-urgent-margin = 1
-label-urgent-background = ${gruvbox.bright_red_transparent}
+label-urgent = " %{B#77af3a03} %index% %{B#55fe8019} %icon% %name% %{B-}"
 
 # Visible are selected workspaces on other screens
-label-visible = "%{B#77d3869b} %index% %{B#553c3836} %icon% %name% %{B-}"
-label-visible-margin = 1
+label-visible = " %{B#77d3869b} %index% %{B#553c3836} %icon% %name% %{B-}"
 
 [module/clock]
 inherit = module/base
 type = custom/script
 exec = ~/.config/polybar/clock-icon
 format-background = ${gruvbox.faded_aqua_transparent1}
-format-padding = 1
-format-margin = 0
 
 [module/time]
 inherit = module/base
@@ -214,7 +207,6 @@ inherit = module/base
 type = custom/script
 exec = ~/.config/polybar/weather
 interval = 600
-format-prefix =
 click-left = kitty --hold weather
 click-right =
 
@@ -223,7 +215,6 @@ inherit = module/base
 type = custom/script
 exec = ~/.config/polybar/redshift-status
 interval = 60
-format-prefix =
 click-left = redshift-toggle
 click-right =
 
