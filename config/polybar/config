@@ -176,7 +176,7 @@ label-unfocused = "%{B#cc3c3836} %index% %{B#773c3836} %icon% %name% %{B-}"
 label-unfocused-margin = 1
 
 # Urgent are workspaces with important events
-label-urgent = "%{B#779d0006} %index% %{B#553c3836} %icon% %name% %{B-}"
+label-urgent = "%{B#77af3a03} %index% %{B#55fe8019} %icon% %name% %{B-}"
 label-urgent-margin = 1
 label-urgent-background = ${gruvbox.bright_red_transparent}
 
