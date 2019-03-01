@@ -12,12 +12,17 @@ compositing-background = source
 ; aarrggbb, editor highlight might be off
 dark0_transparent = #55282828
 dark0_transparent1 = #77282828
-bright_red_transparent = #55fb4934
-bright_purple_transparent = #55d3869b
-faded_aqua_transparent1 = #77427b58
 bright_aqua_transparent = #558ec07c
-faded_blue_transparent1 = #77076678
 bright_blue_transparent = #5583a598
+bright_green_transparent = #55b8bb26
+bright_orange_transparent = #55fe8019
+bright_purple_transparent = #55d3869b
+bright_red_transparent = #55fb4934
+faded_aqua_transparent1 = #77427b58
+faded_blue_transparent1 = #77076678
+faded_green_transparent1 = #7779740e
+faded_orange_transparent1 = #77af3a03
+faded_red_transparent1 = #779d0006
 
 # Taken from https://github.com/morhetz/gruvbox/blob/master/colors/gruvbox.vim
 dark0_hard = #1d2021
@@ -250,7 +255,7 @@ inherit = module/base
 type = internal/network
 interface = ${env:POLYBAR_WIFI_DEVICE:wlp110s0}
 interval = 3.0
-format-connected-padding = 2
+format-connected-padding = 0
 format-disconnected-padding = 0
 
 ; Available tags:
@@ -258,19 +263,35 @@ format-disconnected-padding = 0
 ;   <ramp-signal>
 format-connected = <label-connected>
 format-connected-prefix = ""
-format-connected-prefix-foreground = ${gruvbox.bright_green}
+format-connected-prefix-padding = 1
+format-connected-prefix-background = ${gruvbox.faded_green_transparent1}
+label-connected-background = ${gruvbox.bright_green_transparent}
+label-connected-padding = 1
+format-connected-overline = ${gruvbox.dark0_transparent}
+format-connected-underline = ${gruvbox.dark0_transparent}
 
 ; Available tags:
 ;   <label-disconnected> (default)
 format-disconnected = <label-disconnected>
 format-disconnected-prefix = ""
-format-disconnected-prefix-foreground = ${gruvbox.bright_purple}
+format-disconnected-prefix-padding = 1
+format-disconnected-prefix-background = ${gruvbox.faded_red_transparent1}
+label-disconnected-background = ${gruvbox.bright_red_transparent}
+label-disconnected-padding = 1
+format-disconnected-overline = ${gruvbox.dark0_transparent}
+format-disconnected-underline = ${gruvbox.dark0_transparent}
 
 ; Available tags:
 ;   <label-connected> (default)
 ;   <label-packetloss>
 ;   <animation-packetloss>
 format-packetloss = <animation-packetloss> <label-connected>
+animation-packetloss-padding = 1
+animation-packetloss-background = ${gruvbox.faded_red_transparent1}
+label-packetloss-background = ${gruvbox.bright_red_transparent}
+label-packetloss-padding = 1
+format-packetloss-overline = ${gruvbox.dark0_transparent}
+format-packetloss-underline = ${gruvbox.dark0_transparent}
 
 ; Available tokens:
 ;   %ifname%    [wireless+wired]
@@ -309,29 +330,40 @@ inherit = module/base
 type = internal/battery
 full-at = 100
 
-format-charging = <animation-charging> <label-charging>
-format-discharging = <ramp-capacity> <label-discharging>
-format-full = <ramp-capacity> <label-full>
+format-charging = <animation-charging><label-charging>
+format-discharging = "<ramp-capacity><label-discharging>%{B-}"
+format-full = <ramp-capacity><label-full>
 format-charging-padding = 2
 format-discharging-padding = 2
 format-full-padding = 2
 
-animation-charging-foreground = ${gruvbox.light1}
-animation-charging-0 = 
-animation-charging-1 = 
-animation-charging-2 = 
-animation-charging-3 = 
-animation-charging-4 = 
+format-charging-overline = ${gruvbox.dark0_transparent}
+format-charging-underline = ${gruvbox.dark0_transparent}
+format-discharging-overline = ${gruvbox.dark0_transparent}
+format-discharging-underline = ${gruvbox.dark0_transparent}
+format-full-overline = ${gruvbox.dark0_transparent}
+format-full-underline = ${gruvbox.dark0_transparent}
+
+label-full-background = ${gruvbox.bright_green_transparent}
+label-full-padding = 1
+label-charging-background = ${gruvbox.bright_orange_transparent}
+label-charging-padding = 1
+; label-discharging-background = ${gruvbox.bright_orange_transparent}
+label-discharging-padding = 1
+
+animation-charging-background = ${gruvbox.faded_orange_transparent1}
+animation-charging-0 = "  "
+animation-charging-1 = "  "
+animation-charging-2 = "  "
+animation-charging-3 = "  "
+animation-charging-4 = "  "
 animation-charging-framerate=1500
 
 ramp-capacity-foreground = ${gruvbox.light1}
-ramp-capacity-0 = 
-ramp-capacity-0-foreground = ${gruvbox.bright_red}
-ramp-capacity-1 = 
-ramp-capacity-1-foreground = ${gruvbox.bright_red}
-ramp-capacity-2 = 
-ramp-capacity-2-foreground = ${gruvbox.bright_yellow}
-ramp-capacity-3 = 
-ramp-capacity-4 = 
+ramp-capacity-0 = "%{B#779d0006}  %{B#55fb4934}"
+ramp-capacity-1 = "%{B#779d0006}  %{B#55fb4934}"
+ramp-capacity-2 = "%{B#77af3a03}  %{B#55fb4934}"
+ramp-capacity-3 = "%{B#7779740e}  %{B#55b8bb26}"
+ramp-capacity-4 = "%{B#7779740e}  %{B#55b8bb26}"
 
 ; vim:ft=dosini
