@@ -207,7 +207,7 @@ click-left = kitty --hold zsh -c "sudo pacman -Syu"
 [module/weather]
 inherit = module/base
 type = custom/script
-exec = ~/.config/polybar/module yellow $(weather --oneline)
+exec = ~/.config/polybar/weather
 interval = 600
 format-prefix =
 click-left = kitty --hold weather

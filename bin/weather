@@ -1,4 +1,5 @@
 #!/usr/bin/bash
+set -e
 
 location_file="${XDG_DATA_HOME}/weather-location"
 default_lang="${LANG%_*}"
@@ -141,7 +142,14 @@ fi
 url="wttr.in/$(echo "${location}" | tr ' ' '+')?F${simple}${days}${quiet}${no_colors}${units}${format}"
 
 if [[ "$verbose" == "yes" ]]; then
-  echo "curl -s -H \"Accept-Language: ${lang}\" \"$url\""
+  echo "curl --fail -s -H \"Accept-Language: ${lang}\" \"$url\""
 fi
 
-curl -s -H "Accept-Language: ${lang}" "$url"
+output=$(curl --fail -s -H "Accept-Language: ${lang}" "$url")
+if [[ $? == 0 ]] && [[ -n "$output" ]] && [[ ! "$output" == *"Sorry, "* ]]; then
+  echo "$output"
+else
+  echo "Weather service failed:" >&2
+  echo "$output" >&2
+  exit 1
+fi

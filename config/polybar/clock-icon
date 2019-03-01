@@ -6,7 +6,7 @@ time=
 if [[ $# -gt 0 ]]; then
   time=("$1" "$2")
 else
-  time=($(date +"%I %M"))
+  read -ra time < <(date +"%I %M")
 fi
 
 hour="${time[0]#0}"
