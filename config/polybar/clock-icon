@@ -9,7 +9,7 @@ else
   time=($(date +"%I %M"))
 fi
 
-hour="${time[0]}"
+hour="${time[0]#0}"
 minute="${time[1]#0}"
 
 # NOTE: date's %I starts on 1, not on 0, so twelve must be last in this series.
