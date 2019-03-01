@@ -8,7 +8,6 @@ set showcmd      " display incomplete commands
 set laststatus=2 " Always show status for last window
 set incsearch
 set number       " line numbers
-set relativenumber
 set nobackup
 set autoread
 set ignorecase
