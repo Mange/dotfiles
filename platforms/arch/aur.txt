@@ -27,6 +27,9 @@ vit               # A terminal interface for Taskwarrior with Vim key bindings a
 # Fork of compton with better blurring
 compton-tryone-git
 
+# Überzug, for rendering images on the terminal in ex. vifm
+python-ueberzug
+
 # My own stuff
 graceful-shutdown
 rofi-emoji
