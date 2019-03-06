@@ -81,10 +81,9 @@ python-setproctitle
 python-requests-oauthlib # Google support for vdirsyncer
 
 #
-# Ranger (CLI file manager)
+# vifm (CLI file manager)
 #
-# ranger # (using ranger-git from AUR right now: https://github.com/ranger/ranger/issues/983)
-python-pillow # for kitty image previews
+vifm
 
 imagemagick # for image previews, post-processing, etc.
 ghostscript # imagemagick optional dependency for PDF support
@@ -100,7 +99,6 @@ ffmpegthumbnailer # video previews
 highlight # code preview
 mediainfo
 transmission-cli # bittorrent info
-w3m # image previews, etc.
 
 #
 # Desktop env
