@@ -1,23 +1,23 @@
-output DVI-I-0
-off
-output DVI-I-1
-off
-output HDMI-0
+output DP-0
 off
 output DP-1
 off
-output DP-3
+output HDMI-0
 off
-output DP-4
+output DP-3
 off
 output DP-5
 off
-output DP-0
+output USB-C-0
+off
+output DP-2
+gamma 1.25:1.0:0.833
 mode 2560x1440
 pos 0x0
 primary
 rate 143.86
-output DP-2
+output DP-4
+gamma 1.25:1.0:0.833
 mode 1920x1200
-pos 2560x0
+pos 2560x144
 rate 59.95
