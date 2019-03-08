@@ -433,6 +433,16 @@ nnoremap <space>c :write | edit $MYVIFMRC | restart<cr>
 " Toggle wrap setting on <space>w key
 nnoremap <space>w :set wrap!<cr>
 
+" Faster window/tab/history navigation
+nnoremap <C-h> :wincmd h<cr>
+nnoremap <C-j> :wincmd j<cr>
+nnoremap <C-k> :wincmd k<cr>
+nnoremap <C-l> :wincmd l<cr>
+nnoremap H :tabprev<cr>
+nnoremap L :tabnext<cr>
+nnoremap J :histprev<cr>
+nnoremap K :histnext<cr>
+
 " ------------------------------------------------------------------------------
 
 " Various customization examples
