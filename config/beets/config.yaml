@@ -1,0 +1,57 @@
+# TODO:
+#   * Is it possible to use the "missing" plugin to flip lonesome tracks over
+#   to "singleton", so I only look at them as individual tracks and not part of
+#   albums?
+
+directory: ~/Media/Music
+library: ~/Media/Music/beets.db
+
+plugins: embedart fetchart lastgenre lyrics mbsync smartplaylist thumbnails fuzzy missing random
+
+import:
+  move: yes # Move files instead of copying them
+  write: yes # Write tags to files
+  languages: ["sv", "en"]
+
+  # Don't assume files in the same directory belong to the same album.
+  # Sometimes I want to import a bunch of music files that are not actually an
+  # album.
+  group_albums: yes
+
+  # "Wake me if you need me"
+  bell: yes
+
+match:
+  # I get no media from visual media like this, so don't even try to match on
+  # it.
+  ignored_media: ['Data CD', 'DVD', 'DVD-Video', 'Blu-ray', 'HD-DVD',
+                  'VCD', 'SVCD', 'UMD', 'VHS']
+  ignore_video_tracks: yes
+
+  strong_rec_thresh: 0.07 # Auto-accept matches of 93%+
+
+  distance_weights:
+    # I sometimes keeps singular songs that I like from albums of music I don't
+    # like. I should still be able to import them without getting prompted
+    # because "Oh no, maybe this is the wrong album as you only have 2/13 songs
+    # from it!".
+    missing_tracks: 0.1
+
+paths:
+  default: "Artists/$albumartist/[$year] $album%aunique{albumartist album,albumtype label catalognum albumdisambig}/$track. $title"
+  albumtype:soundtrack: "Soundtracks/$album [$year]/$track. $title"
+  singleton: "Artists/$artist/$title"
+  comp: "Compilations/[$year] $album%aunique{albumartist album,albumtype label catalognum albumdisambig}/$track. $title"
+
+lastgenre:
+  # I like very specific genres ("Viking Metal" over "Rock", "Witch House" over
+  # "Industrial", and so on)
+  prefer_specific: yes
+
+smartplaylist:
+  # Enable when (if?) MPD is enabled later
+  # relative_to: ~/Media/Music
+  playlist_dir: ~/Media/Playlists
+  playlists:
+    - name: "Witch House"
+      query: 'genre:"Witch House"'

@@ -8,3 +8,4 @@ config/dotfiles/path
 # Some apps will create cache/data inside the config
 config/nvim/.netrwhist
 config/nvim/spell
+config/beets/state*
