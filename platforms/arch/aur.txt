@@ -12,9 +12,6 @@ vdirsyncer-git # https://github.com/pimutils/vdirsyncer/issues/745
 # on the face of the earth is what it is.
 nvm
 
-# https://github.com/ranger/ranger/issues/983
-ranger-git
-
 autorandr
 bitwarden-cli     # CLI for password manager
 bitwarden-rofi    # Bitwarden in Rofi
@@ -29,6 +26,9 @@ vit               # A terminal interface for Taskwarrior with Vim key bindings a
 
 # Fork of compton with better blurring
 compton-tryone-git
+
+# Überzug, for rendering images on the terminal in ex. vifm
+python-ueberzug
 
 # My own stuff
 graceful-shutdown

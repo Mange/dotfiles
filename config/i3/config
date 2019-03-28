@@ -350,10 +350,8 @@ bindsym $mod+m        mode "media"
 ## Label: Run cmd
 # bindsym $mod+shift+period  cmd
 
-# Ranger won't pick up CWD unless invoked from inside a shell. Running ranger
-# directly in Kitty does not work well.
-# Label: Ranger
-bindsym $mod+slash        exec samedir $terminal zsh -ic ranger
+# Label: Vifm
+bindsym $mod+slash        exec samedir $terminal vifm
 # Label: Toggle cheatsheet
 bindsym $mod+shift+slash  exec i3cheatsheet
 

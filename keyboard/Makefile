@@ -1,7 +1,7 @@
 .DEFAULT_GOAL := default
 .PHONY: default base
 
-images := anne-pro-base.png $(patsubst %.yml,%.png,$(wildcard *.yml))
+images := anne-pro-base.png super_overlay.png $(patsubst %.yml,%.png,$(wildcard *.yml))
 
 %.png: %.json generate_screenshot.rb
 	./generate_screenshot.rb $< $@
