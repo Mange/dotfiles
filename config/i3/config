@@ -449,10 +449,23 @@ for_window [window_role="GtkFileChooserDialog"] \
   move position center
 
 assign [class="Firefox"] $workspace3
-assign [class="Steam"] $workspace8
 assign [class="Slack"] $workspace10
 assign [class="TelegramDesktop"] $workspace10
 assign [class="discord"] $workspace10
+
+# Steam
+assign [class="Steam"] $workspace8 # Main Steam window
+assign [title="^Steam$"] $workspace8 # "Installing updates"
+for_window [class="^Steam$" title="^Friends$"] floating enable
+for_window [class="^Steam$" title="Steam - News"] floating enable
+for_window [class="^Steam$" title=".* - Chat"] floating enable
+for_window [class="^Steam$" title="^Settings$"] floating enable
+for_window [class="^Steam$" title=".* - event started"] floating enable
+for_window [class="^Steam$" title=".* CD key"] floating enable
+for_window [class="^Steam$" title="^Steam - Self Updater$"] floating enable
+for_window [class="^Steam$" title="^Screenshot Uploader$"] floating enable
+for_window [class="^Steam$" title="^Steam Guard - Computer Authorization Required$"] floating enable
+for_window [title="^Steam Keyboard$"] floating enable
 
 # Floating terminal windows.
 for_window [class="kitty" window_role="floating"] \
