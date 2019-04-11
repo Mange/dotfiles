@@ -538,6 +538,10 @@ if run-section "fast"; then
   fi
 
   sudo-copy-replace-with-diff \
+    "shared/polkit/50-udiskie.rules" \
+    "/etc/polkit-1/rules.d/50-udiskie.rules"
+
+  sudo-copy-replace-with-diff \
     "shared/duplicity-backup.service" \
     "/etc/systemd/system/duplicity-backup.service"
   sudo-copy-replace-with-diff \
