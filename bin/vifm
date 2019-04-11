@@ -18,6 +18,6 @@ else
   trap cleanup EXIT
   tail --follow "$FIFO_UEBERZUG" | ueberzug layer --silent --parser bash &
 
-  "$original"
+  "$original" "$@"
   cleanup
 fi
