@@ -164,12 +164,12 @@ pages:
           - shortcut: s
             title: Suspend
             mode: exec
-            command: systemctl suspend
+            command: "udiskie-umount --all && systemctl suspend"
 
           - shortcut: h
             title: Hibernate
             mode: exec
-            command: systemctl hibernate
+            command: "udiskie-umount --all && systemctl hibernate"
 
           - shortcut: l
             title: Log out
