@@ -48,6 +48,7 @@ Plug 'vim-scripts/ZoomWin'
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
 Plug 'w0rp/ale'
 Plug 'sheerun/vim-polyglot'
+Plug 'calviken/vim-gdscript3'
 
 """ Ruby
 Plug 'joker1007/vim-ruby-heredoc-syntax', {'for': 'ruby'}
