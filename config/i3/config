@@ -12,6 +12,8 @@ font pango:Fira Sans Regular 8
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
+focus_follows_mouse no
+
 hide_edge_borders both
 smart_borders no_gaps
 gaps inner 10
