@@ -343,10 +343,10 @@ vnoremap w :view<cr>gv
 nnoremap gb :file &<cr>l
 
 " Yank current directory path into the clipboard
-nnoremap yd :!echo %d | xclip %i<cr>
+nnoremap yd :!echo -n %d | xsel --input --clipboard %i<cr>
 
 " Yank current file path into the clipboard
-nnoremap yf :!echo %c:p | xclip %i<cr>
+nnoremap yf :!echo -n %c:p | xsel --input --clipboard %i<cr>
 
 " Mappings for faster renaming
 nnoremap I cw<c-a>
