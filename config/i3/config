@@ -265,7 +265,7 @@ bindsym $mod+h        focus left
 bindsym $mod+shift+h  move left
 # Label: Monitor ←
 bindsym $mod+ctrl+h   focus output left
-bindsym $mod+shift+ctrl+h move workspace to output left
+bindsym $mod+shift+ctrl+h move workspace to output left, focus
 
 # Label: Focus ↓
 bindsym $mod+j        focus down
@@ -273,7 +273,7 @@ bindsym $mod+j        focus down
 bindsym $mod+shift+j  move down
 # Label: Monitor ↓
 bindsym $mod+ctrl+j   focus output down
-bindsym $mod+shift+ctrl+j move workspace to output down
+bindsym $mod+shift+ctrl+j move workspace to output down, focus
 
 # Label: Focus ↑
 bindsym $mod+k        focus up
@@ -281,7 +281,7 @@ bindsym $mod+k        focus up
 bindsym $mod+shift+k  move up
 # Label: Monitor ↑
 bindsym $mod+ctrl+k   focus output up
-bindsym $mod+shift+ctrl+k move workspace to output up
+bindsym $mod+shift+ctrl+k move workspace to output up, focus
 
 # Label: Focus →
 bindsym $mod+l        focus right
@@ -289,7 +289,7 @@ bindsym $mod+l        focus right
 bindsym $mod+shift+l  move right
 # Label: Monitor →
 bindsym $mod+ctrl+l   focus output right
-bindsym $mod+shift+ctrl+l move workspace to output right
+bindsym $mod+shift+ctrl+l move workspace to output right, focus
 
 # Label: Terminal in same dir
 bindsym $mod+Return        exec samedir $terminal
