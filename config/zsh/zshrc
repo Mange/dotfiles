@@ -504,10 +504,12 @@ function mange-prompt-preexec() {
   cmd_timestamp=$EPOCHSECONDS
 
   # shows the current dir and executed command in the title when a process is active
-  print -Pn "\e]0;"
-  echo -nE "$PWD:t: $2"
-  print -Pn "\a"
+  local terminal_title_format="$2 [%4~]"
+  print -Pn "\033]0;${terminal_title_format}\007"
 }
+
+# - Show time taken for long-running commands
+# - Set terminal title
 function mange-prompt-precmd() {
   local stop=$EPOCHSECONDS
   local start=${cmd_timestamp:-$stop}
@@ -516,6 +518,10 @@ function mange-prompt-precmd() {
     echo -e "${bg[cyan]}${fg[black]}🕓 $(seconds-to-human $elapsed)${reset_color}${fg[cyan]}${reset_color}"
   fi
   unset cmd_timestamp
+
+  # Set terminal title, using prompt format.
+  local terminal_title_format="zsh [%4~]"
+  print -Pn "\033]0;${terminal_title_format}\007"
 }
 add-zsh-hook preexec mange-prompt-preexec
 add-zsh-hook precmd mange-prompt-precmd
