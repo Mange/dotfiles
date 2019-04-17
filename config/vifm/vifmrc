@@ -353,14 +353,21 @@ nnoremap I cw<c-a>
 nnoremap cc cw<c-u>
 nnoremap A cw
 
+" Disable built-in space binding (doesn't seem to work)
+nunmap <space>
+unmap <space>
+
+" Mark file and move to next entry in list
+nnoremap <wait> <space><space> tj
+
 " Open console in current directory
-nnoremap <space>t :!kitty 2>/dev/null &<cr>
+nnoremap <wait> <space>t :!kitty 2>/dev/null &<cr>
 
 " Open editor to edit vifmrc and apply settings after returning to vifm
-nnoremap <space>c :write | edit $MYVIFMRC | restart<cr>
+nnoremap <wait> <space>c :write | edit $MYVIFMRC | restart<cr>
 
 " Toggle wrap setting on <space>w key
-nnoremap <space>w :set wrap!<cr>
+nnoremap <wait> <space>w :set wrap!<cr>
 
 " Faster window/tab/history navigation
 nnoremap <C-h> :wincmd h<cr>
