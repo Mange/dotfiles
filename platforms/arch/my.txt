@@ -82,6 +82,7 @@ python-requests-oauthlib # Google support for vdirsyncer
 
 #
 # vifm (CLI file manager)
+# also see aur.txt for extra dependencies and helpers
 #
 vifm
 
@@ -96,6 +97,7 @@ xz
 zip
 
 ffmpegthumbnailer # video previews
+pdftoppm # PDF previews
 highlight # code preview
 mediainfo
 transmission-cli # bittorrent info

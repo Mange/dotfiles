@@ -121,30 +121,31 @@ command! fzf :set noquickview | :execute 'goto "'.system('find | fzf --height 10
 " You can also add %CLEAR if you want to clear screen before running FUSE
 " program.
 
-" Pdf
-filextype *.pdf zathura %c %i &, apvlv %c, xpdf %c
-fileviewer *.pdf pdftotext -nopgbrk %c -
+" Pdf / comics / etc
+filextype *.pdf,*.cbr,*.cbz zathura %c %i &
+fileviewer *.pdf
+        \ vifmimg pdfpreview %px %py %pw %ph %c
+        \ %pc
+        \ vifmimg clear
+fileviewer *.epub
+        \ vifmimg epubpreview %px %py %pw %ph %c
+        \ %pc
+        \ vifmimg clear
 
 " PostScript
 filextype *.ps,*.eps,*.ps.gz
         \ {View in zathura}
         \ zathura %f,
-        \ {View in gv}
-        \ gv %c %i &,
 
 " Djvu
 filextype *.djvu
         \ {View in zathura}
         \ zathura %f,
-        \ {View in apvlv}
-        \ apvlv %f,
 
 " Audio
 filetype *.wav,*.mp3,*.flac,*.m4a,*.wma,*.ape,*.ac3,*.og[agx],*.spx,*.opus
-       \ {Play using ffplay}
-       \ ffplay -nodisp -autoexit %c,
-       \ {Play using MPlayer}
-       \ mplayer %f,
+       \ {Play using mpv}
+       \ mpv %f,
 fileviewer *.mp3 mp3info
 fileviewer *.flac soxi
 
@@ -152,25 +153,20 @@ fileviewer *.flac soxi
 filextype *.avi,*.mp4,*.wmv,*.dat,*.3gp,*.ogv,*.mkv,*.mpg,*.mpeg,*.vob,
          \*.fl[icv],*.m2v,*.mov,*.webm,*.ts,*.mts,*.m4v,*.r[am],*.qt,*.divx,
          \*.as[fx]
-        \ {View using ffplay}
-        \ ffplay -fs -autoexit %f,
-        \ {View using Dragon}
-        \ dragon %f:p,
-        \ {View using mplayer}
-        \ mplayer %f,
+        \ {View using mpv}
+        \ mpv %f,
 fileviewer *.avi,*.mp4,*.wmv,*.dat,*.3gp,*.ogv,*.mkv,*.mpg,*.mpeg,*.vob,
           \*.fl[icv],*.m2v,*.mov,*.webm,*.ts,*.mts,*.m4v,*.r[am],*.qt,*.divx,
           \*.as[fx]
-         \ ffprobe -pretty %c 2>&1
+        \ vifmimg videopreview %px %py %pw %ph %c
+        \ %pc
+        \ vifmimg clear
 
 " Web
+fileviewer *.html,*.htm w3m -dump %c
 filextype *.html,*.htm
-        \ {Open with dwb}
-        \ dwb %f %i &,
-        \ {Open with firefox}
-        \ firefox %f &,
-        \ {Open with uzbl}
-        \ uzbl-browser %f %i &,
+        \ {Open with Firefox}
+        \ firefox-developer-edition %f &,
 filetype *.html,*.htm links, lynx
 
 " Object
@@ -184,24 +180,16 @@ fileviewer *.[1-8] man ./%c | col -b
 filextype *.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm
         \ {View in sxiv}
         \ sxiv %f,
-        \ {View in gpicview}
-        \ gpicview %c,
         \ {View in shotwell}
         \ shotwell,
-fileviewer *.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm
+fileviewer *.bmp,*.jpg,*.jpeg,*.png,*.xpm
         \ vifmimg draw %px %py %pw %ph %c
         \ %pc
         \ vifmimg clear
-
-" OpenRaster
-filextype *.ora
-        \ {Edit in MyPaint}
-        \ mypaint %f,
-
-" Mindmap
-filextype *.vym
-        \ {Open with VYM}
-        \ vym %f &,
+fileviewer *.gif
+        \ vifmimg gifpreview %px %py %pw %ph %c
+        \ %pc
+        \ vifmimg clear
 
 " MD5
 filetype *.md5
@@ -240,22 +228,22 @@ filetype *.zip,*.jar,*.war,*.ear,*.oxt,*.apkg
        \ zip -sf %c | less,
        \ {Extract here}
        \ tar -xf %c,
-fileviewer *.zip,*.jar,*.war,*.ear,*.oxt zip -sf %c
+fileviewer *.zip,*.jar,*.war,*.ear,*.oxt atool -l %c
 
 " ArchiveMount
 filetype *.tar,*.tar.bz2,*.tbz2,*.tgz,*.tar.gz,*.tar.xz,*.txz
        \ {Mount with archivemount}
        \ FUSE_MOUNT|archivemount %SOURCE_FILE %DESTINATION_DIR,
-fileviewer *.tgz,*.tar.gz tar -tzf %c
-fileviewer *.tar.bz2,*.tbz2 tar -tjf %c
-fileviewer *.tar.txz,*.txz xz --list %c
-fileviewer *.tar tar -tf %c
+fileviewer *.tgz,*.tar.gz atool -l %c
+fileviewer *.tar.bz2,*.tbz2 atool -l %c
+fileviewer *.tar.txz,*.txz atool -l %c
+fileviewer *.tar atool -l %c
 
 " Rar2FsMount and rar archives
 filetype *.rar
        \ {Mount with rar2fs}
        \ FUSE_MOUNT|rar2fs %SOURCE_FILE %DESTINATION_DIR,
-fileviewer *.rar unrar v %c
+fileviewer *.rar atool -l %c
 
 " IsoMount
 filetype *.iso
@@ -282,17 +270,14 @@ fileviewer *.7z 7z l %c
 filextype *.odt,*.doc,*.docx,*.xls,*.xlsx,*.odp,*.pptx libreoffice %f &
 fileviewer *.doc catdoc %c
 fileviewer *.docx docx2txt.pl %f -
-
-" TuDu files
-filetype *.tudu tudu -f %c
-
-" Qt projects
-filextype *.pro qtcreator %f &
+fileviewer *.csv sed "s/,,,,/,,-,,/g;s/,,/ /g" %c | column -t | sed "s/ - / /g" | cut -c -%pw
 
 " Directories
+fileviewer ../ tree %c -L 1 --dirsfirst
+fileviewer */ tree %c -L 1 --dirsfirst
 filextype */
-        \ {View in thunar}
-        \ Thunar %f &,
+        \ {View in Dolphin}
+        \ dolphin %f &,
 
 " Open all other files with default system programs (you can also remove all
 " :file[x]type commands above to ensure they don't interfere with system-wide
