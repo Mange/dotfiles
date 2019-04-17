@@ -325,6 +325,8 @@ fileviewer *[^/]
 " How to block a built-in mapping:
 " nnoremap <left> <nop>
 
+nnoremap q ZQ
+
 " FZF on Ctrl-T (shell-like) and Ctrl-P (vim-like)
 nnoremap <C-p> :fzf<cr>
 nnoremap <C-t> :fzf<cr>
