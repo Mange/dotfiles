@@ -25,6 +25,16 @@ Plug 'tpope/vim-vinegar' " Improves netrw, adds '-' binding to open current dir 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
+""" Note taking / TODOs
+" vimwiki
+Plug 'vimwiki/vimwiki'
+
+" taskwarrior
+Plug 'blindFS/vim-taskwarrior'
+
+" taskwarrior in vimwiki
+Plug 'tbabej/taskwiki', { 'do': 'sudo pip3 install --upgrade -r requirements.txt' }
+
 """ Editor functionality
 Plug 'AndrewRadev/switch.vim'
 Plug 'Shougo/context_filetype.vim' " Tries to add support for languages-inside-languages (fenced code blocks, etc.)
@@ -42,7 +52,6 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-speeddating' " CTRL-X/A works on dates
 Plug 'tpope/vim-surround'
 Plug 'vim-scripts/ZoomWin'
-Plug 'vimwiki/vimwiki'
 
 """ Language server support, linting, etc.
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
