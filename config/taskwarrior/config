@@ -19,15 +19,9 @@ include ~/.config/taskwarrior/gruvbox-dark-256.theme
 weekstart=Monday
 verbose=blank,label,new-id,affected,edit,special,project,sync
 
-# Custom report "scoped"; it's "all" but optionally filtered according to local-overrides.
-report.scoped.columns=id,status.short,uuid.short,start.active,entry.age,end.age,depends.indicator,priority,project.parent,tags.count,recur.indicator,wait.remaining,scheduled.remaining,due,until.remaining,description
-report.scoped.description=All tasks (scoped)
-report.scoped.labels=ID,St,UUID,A,Age,Done,D,P,Project,Tags,R,Wait,Sch,Due,Until,Description
-report.scoped.sort=entry-
-report.scoped.filter=
-
-
+#
 # Urgency config
+#
 
 # Low priority is less important than no priority (use use no priority as
 # "default"; High and Medium increases while Low decreases.
@@ -48,6 +42,12 @@ urgency.user.tag.boost.coefficient=3.5
 
 # Experiments are not as important.
 urgency.user.tag.experiment.coefficient=-2.0
+
+#
+# Contexts
+#
+context.home=project.not:Hemnet
+context.work=project.not:Home
 
 #
 # My own personal taskd server credentials
