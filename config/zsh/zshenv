@@ -10,3 +10,8 @@ if [ ! -t ] || [[ $VIM != "" ]]; then
   source "${XDG_CONFIG_HOME}/shells/enable-rvm"
 fi
 
+# Use an askpass program for sudo password prompts when
+# terminal is not available.
+if [[ -z $SUDO_ASKPASS ]] && hash ksshaskpass 2>/dev/null; then
+  export SUDO_ASKPASS="$(which ksshaskpass)"
+fi
