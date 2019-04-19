@@ -11,5 +11,9 @@ let hemnet_wiki.html_template = '~/Documents/Wiki/html/hemnet/'
 let hemnet_wiki.auto_tags = 1
 
 let g:vimwiki_list = [personal_wiki, hemnet_wiki]
-let g:vimwiki_listsyms = ' ○◐●'
+
+" Not supported by taskwiki
+" https://github.com/tbabej/taskwiki/issues/119
+" let g:vimwiki_listsyms = ' ○◐●'
+
 let g:vimwiki_folding = 'list'
