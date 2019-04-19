@@ -1,7 +1,7 @@
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
 
-set history=50
+set history=100
 set undolevels=1000
 set ruler        " show the cursor position all the time
 set showcmd      " display incomplete commands
