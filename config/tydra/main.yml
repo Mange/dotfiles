@@ -27,6 +27,11 @@ pages:
                 echo "Aborted"
               fi
 
+          - shortcut: s
+            title: Vimwiki
+            command: kitty nvim +VimwikiIndex
+            mode: background
+
           - shortcut: t
             title: Show next 5 tasks
             return: true
