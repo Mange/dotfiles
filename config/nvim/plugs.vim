@@ -42,6 +42,7 @@ Plug 'bronson/vim-trailing-whitespace'
 Plug 'junegunn/vim-easy-align'
 Plug 'kien/rainbow_parentheses.vim'
 Plug 'machakann/vim-highlightedyank'
+Plug 'meain/vim-package-info', { 'do': 'npm install' }
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tommcdo/vim-exchange'
