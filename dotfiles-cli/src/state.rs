@@ -26,7 +26,7 @@ fn load_root_path(xdg_config_path: &Path) -> Result<PathBuf, Error> {
             .map_err(Error::from)
             .with_context(|_| format!("Failed to read config file {}", path_file.display()))?;
 
-        Ok(PathBuf::from(contents.trim_right_matches('\n')))
+        Ok(PathBuf::from(contents.trim_end_matches('\n')))
     } else {
         Err(
             format_err!(
