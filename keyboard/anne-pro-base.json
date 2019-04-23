@@ -117,7 +117,8 @@
         3,
         3,
         3,
-        8
+        8,
+        7
       ],
       "w": 2,
       "h": 2
@@ -190,7 +191,7 @@
       "w": 3.5,
       "h": 2
     },
-    "\n\n\n\n\n\n\n\n<i class='kb kb-logo-windows-8'></i>",
+    "\n\n\n\n\n\n\n\n<i class='kb kb-logo-windows-8'></i> (hold)\nEsc (Press)",
     {
       "w": 2,
       "h": 2

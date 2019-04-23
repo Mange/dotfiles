@@ -492,12 +492,7 @@ class Modifier
   end
 
   def matcher
-    @matcher ||=
-      if !/[a-z]/i.match?(text)
-        Regexp.new(Regexp.quote(text))
-      else
-        Regexp.new("\\b#{Regexp.quote(text)}\\b")
-      end
+    @matcher ||= build_matcher
   end
 
   def match?(key)
@@ -507,6 +502,20 @@ class Modifier
   def apply_to(key)
     changes.each_pair do |change, value|
       key.public_send("#{change}=", value)
+    end
+  end
+
+  private
+  def build_matcher
+    # "/foo/" is a regexp /foo/
+    match = %r{^/([^/]+)/$}.match(text)
+
+    if match
+      Regexp.new(match[1])
+    elsif /[a-z]/i.match?(text)
+      Regexp.new("\\b#{Regexp.quote(text)}\\b")
+    else
+      Regexp.new(Regexp.quote(text))
     end
   end
 end

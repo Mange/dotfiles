@@ -17,6 +17,8 @@ overlay = {
   "modifiers" => {
     "kb-logo-windows-8" => { # Win / Super
       "key_color" => COLOR,
+      "top_center" => "",
+      "center" => "",
     },
     "uArr" => { # Shift
       "key_color" => COLOR_SHIFT,
@@ -43,8 +45,8 @@ SPECIAL_KEYS = {
   "8" => "8 *",
   "9" => "9 (",
   "0" => "0 )",
-  "grave" => "Esc",
-  "escape" => "Esc",
+  "grave" => "/Esc$/",
+  "escape" => "/Esc$/",
 }.freeze
 
 MODIFIERS = {
