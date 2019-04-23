@@ -15,3 +15,7 @@ esac
 
 # Make Super_L Escape when just quickly pressed
 killall xcape 2>/dev/null; xcape -e 'Super_L=Escape'
+
+# Faster key repeat rate
+# 300ms until repeating, then 40 keys per second
+xset r rate 300 40
