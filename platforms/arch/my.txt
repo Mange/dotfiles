@@ -97,7 +97,7 @@ xz
 zip
 
 ffmpegthumbnailer # video previews
-pdftoppm # PDF previews
+poppler # PDF previews
 highlight # code preview
 mediainfo
 transmission-cli # bittorrent info
