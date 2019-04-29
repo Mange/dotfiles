@@ -1,0 +1,121 @@
+#!/usr/bin/env bash
+
+mbsync_config="${XDG_CONFIG_HOME:-$HOME/.config}/isync/mbsyncrc"
+mail_dir="$HOME/Mail"
+mailboxes=(
+  "$(find "$mail_dir" -mindepth 1 -maxdepth 1 -type d -exec basename "{}" ";")"
+)
+
+print_usage() {
+  cat <<USAGE
+Usage: $(basename "$0") [options] <commands…>
+
+Options:
+  --help  - Show this help and exit
+
+Commands:
+  list
+    List mailboxes.
+
+  sync
+    Sync all mailboxes, updating status during the sync.
+
+  status
+    Show current status.
+
+  help
+    Show this help and ext.
+USAGE
+}
+
+perform_list() {
+  for box in "${mailboxes[@]}"; do
+    echo "${box} - $(get_box_name "$box")"
+  done
+}
+
+perform_sync() {
+  for box in "${mailboxes[@]}"; do
+    echo "Syncing $(get_box_name "$box")"
+    write_status "$box" "🔃"
+    mbsync --config "$mbsync_config" "$box"
+    write_status "$box"
+  done
+}
+
+perform_status() {
+  for box in "${mailboxes[@]}"; do
+    echo -n "$(get_box_name "$box"): "
+    read_status "$box"
+  done
+}
+
+read_status() {
+  local box="$1"
+  cat "${mail_dir}/${box}/.mailboxes-state"
+}
+
+write_status() {
+  local box="$1"
+  local icon="$2"
+  local message
+  local new_email
+  new_email="$(count_new_mail "$box")"
+
+  if [[ "$new_email" -gt 0 ]]; then
+    message="${icon:-📬} ${new_email}"
+  else
+    message="${icon:-📭} ${new_email}"
+  fi
+
+  echo "$message" > "${mail_dir}/${box}/.mailboxes-state"
+}
+
+count_new_mail() {
+  local box="$1"
+  find \
+    "${mail_dir}/${box}/Inbox/new" \
+    "${mail_dir}/${box}/INBOX/new" \
+    "${mail_dir}/${box}/inbox/new" \
+    -type f \
+    2> /dev/null \
+    | wc -l
+}
+
+get_box_name() {
+  local box="$1"
+
+  if [[ -f "${mail_dir}/${box}/.mailboxes-name" ]]; then
+    cat "${mail_dir}/${box}/.mailboxes-name"
+  else
+    echo "$box"
+  fi
+}
+
+while [[ -n "$1" ]]; do
+  case "$1" in
+    --help | help)
+      print_usage
+      exit 0
+      ;;
+    list)
+      shift
+      perform_list "$@"
+      exit 0
+      ;;
+    sync)
+      shift
+      perform_sync "$@"
+      exit 0
+      ;;
+    status)
+      shift
+      perform_status "$@"
+      exit 0
+      ;;
+    *)
+      echo "Unknown option \"$1\"" >&2
+      print_usage >&2
+      exit 1
+  esac
+done

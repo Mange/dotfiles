@@ -1,11 +1,11 @@
 [Unit]
 Description="Run duplicity at some intervals"
+Wants=local-fs.target
 
 [Timer]
 WakeSystem=false
 OnStartupSec=30m
 OnUnitInactiveSec=1h
-Wants=local-fs.target
 
 [Install]
 WantedBy=timers.target

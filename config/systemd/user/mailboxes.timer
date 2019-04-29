@@ -1,11 +1,11 @@
 [Unit]
 Description="Syncs mailboxes at intervals"
+Wants=network-online.target
 
 [Timer]
 WakeSystem=false
 OnStartupSec=2m
 OnUnitInactiveSec=5m
-Wants=network-online.target
 
 [Install]
 WantedBy=timers.target
