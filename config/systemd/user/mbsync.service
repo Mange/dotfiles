@@ -1,0 +1,6 @@
+[Unit]
+Description="Syncs all mailboxes via mbsync"
+
+[Service]
+Type=simple
+ExecStart=mbsync --config /home/mange/.config/isync/mbsyncrc --all --verbose
