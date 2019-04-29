@@ -36,10 +36,20 @@ perform_list() {
 
 perform_sync() {
   for box in "${mailboxes[@]}"; do
-    echo "Syncing $(get_box_name "$box")"
-    write_status "$box" "🔃"
+    name="$(get_box_name "$box")"
+    echo "Syncing ${name}"
+
+    unread_before="$(write_status "$box" "🔃")"
     mbsync --config "$mbsync_config" "$box"
-    write_status "$box"
+    unread_after="$(write_status "$box")"
+
+    new_email=$((unread_after - unread_before))
+    if [[ $new_email -gt 0 ]]; then
+      notify-send \
+        --icon /usr/share/icons/oxygen/base/32x32/actions/mail-message-new.png \
+        "mailboxes" \
+        "You have ${new_email} new email(s) in ${name}"
+    fi
   done
 }
 
@@ -69,6 +79,7 @@ write_status() {
   fi
 
   echo "$message" > "${mail_dir}/${box}/.mailboxes-state"
+  echo "$new_email"
 }
 
 count_new_mail() {
