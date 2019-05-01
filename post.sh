@@ -1,17 +1,6 @@
 #!/usr/bin/env bash
 # Run after installing dotfiles to perform extra work.
 
-# Clean up old installations of ZSH syntax highlighting, etc.
-if [[ -d ~/.config/zsh/vendor ]]; then
-  echo "Deleting old zsh/vendor directory"
-  rm -rf ~/.config/zsh/vendor
-fi
-
-# Create local-overrides template for Taskwarrior, if missing
-if [[ ! -f "$XDG_CONFIG_HOME/taskwarrior/local-overrides" ]]; then
-  cp "$XDG_CONFIG_HOME/taskwarrior/local-overrides.example" "$XDG_CONFIG_HOME/taskwarrior/local-overrides"
-fi
-
 # Create directory for vdirsyncer settings
 mkdir -p ~/.local/share/vdirsyncer
 
