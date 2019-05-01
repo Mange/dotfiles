@@ -4,6 +4,9 @@
 # Create directory for vdirsyncer settings
 mkdir -p ~/.local/share/vdirsyncer
 
+# Create directory for emails
+mkdir -p ~/Mail/gmail
+
 # Install Vim plugs
 if [[ ! -f "${XDG_DATA_HOME}/nvim/site/autoload/plug.vim" ]]; then
   echo "Downloading Vim plug"
