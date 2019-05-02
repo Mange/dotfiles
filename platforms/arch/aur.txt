@@ -28,7 +28,8 @@ vit               # A terminal interface for Taskwarrior with Vim key bindings a
 compton-tryone-git
 
 # Vifm stuff
-python-ueberzug # Überzug, for rendering images on the terminal in ex. vifm
+# Broken right now; install manually with `pip install ueberzug` instead
+# python-ueberzug # Überzug, for rendering images on the terminal in ex. vifm
 epub-thumbnailer-git
 cover-thumbnailer-git
 
