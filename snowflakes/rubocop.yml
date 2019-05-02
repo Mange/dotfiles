@@ -19,7 +19,7 @@ Layout/SpaceInsideHashLiteralBraces:
 Style/Documentation:
   Enabled: false
 
-Layout/IndentArray:
+Layout/IndentFirstArrayElement:
   EnforcedStyle: consistent
 
 Layout/MultilineMethodCallIndentation:
