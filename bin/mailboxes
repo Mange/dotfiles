@@ -47,8 +47,11 @@ perform_sync() {
     if [[ $new_email -gt 0 ]]; then
       notify-send \
         --icon /usr/share/icons/oxygen/base/32x32/actions/mail-message-new.png \
-        "mailboxes" \
-        "You have ${new_email} new email(s) in ${name}"
+        --urgency low \
+        --category email.arrived \
+        --app-name "mailboxes" \
+        "New email in ${name}" \
+        "You have ${new_email} new email(s) in ${name}. Total unread is ${unread_after}."
     fi
   done
 }
