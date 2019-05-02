@@ -2,9 +2,9 @@
 
 mbsync_config="${XDG_CONFIG_HOME:-$HOME/.config}/isync/mbsyncrc"
 mail_dir="$HOME/Mail"
-mailboxes=(
-  "$(find "$mail_dir" -mindepth 1 -maxdepth 1 -type d -exec basename "{}" ";")"
-)
+
+readarray -t mailboxes < \
+  <(find "$mail_dir" -mindepth 1 -maxdepth 1 -type d -exec basename "{}" ";")
 
 print_usage() {
   cat <<USAGE
@@ -65,7 +65,13 @@ perform_status() {
 
 read_status() {
   local box="$1"
-  cat "${mail_dir}/${box}/.mailboxes-state"
+  local statefile="${mail_dir}/${box}/.mailboxes-state"
+
+  if [[ -f "$statefile" ]]; then
+    cat "${mail_dir}/${box}/.mailboxes-state"
+  else
+    echo ""
+  fi
 }
 
 write_status() {

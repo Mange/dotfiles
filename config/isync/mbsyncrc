@@ -1,3 +1,7 @@
+##########################
+# Personal
+##########################
+
 IMAPAccount magnus.bergmark@gmail.com
 Host imap.gmail.com
 User magnus.bergmark@gmail.com
@@ -19,6 +23,37 @@ Slave :gmail-local:
 # Exclude everything under the internal [Gmail] folder, except the interesting folders
 # Also exclude "Call Log", an older directory of calls and legacy labels.
 Patterns * ![Gmail]* "[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail" "[Gmail]/Drafts" !"Call log" !Legacy/*
+
+# Automatically create missing mailboxes, both locally and on the server
+Create Both
+# Save the synchronization state files in the relevant directory
+SyncState *
+
+##########################
+# Hemnet
+##########################
+
+IMAPAccount magnus.bergmark@hemnet.se
+Host imap.gmail.com
+User magnus.bergmark@hemnet.se
+PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/Security/mbsync_gmail_hemnet.gpg"
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+IMAPStore hemnet-remote
+Account magnus.bergmark@hemnet.se
+
+MaildirStore hemnet-local
+Path ~/Mail/hemnet/
+Inbox ~/Mail/hemnet/Inbox
+SubFolders Verbatim
+
+Channel hemnet
+Master :hemnet-remote:
+Slave :hemnet-local:
+# Exclude everything under the internal [Gmail] folder, except the interesting folders
+# Also exclude "Call Log", an older directory of calls and legacy labels.
+Patterns * ![Gmail]* "[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail" "[Gmail]/Drafts"
 
 # Automatically create missing mailboxes, both locally and on the server
 Create Both

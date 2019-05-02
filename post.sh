@@ -6,6 +6,9 @@ mkdir -p ~/.local/share/vdirsyncer
 
 # Create directory for emails
 mkdir -p ~/Mail/gmail
+echo "Personal" > ~/Mail/gmail/.mailboxes-name
+mkdir -p ~/Mail/hemnet
+echo "Hemnet" > ~/Mail/hemnet/.mailboxes-name
 
 # Install Vim plugs
 if [[ ! -f "${XDG_DATA_HOME}/nvim/site/autoload/plug.vim" ]]; then
