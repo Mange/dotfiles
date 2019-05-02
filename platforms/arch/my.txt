@@ -23,7 +23,7 @@ source-highlight # and lesspipe uses this to highlight code
 # Yubikey
 yubikey-manager
 yubikey-manager-qt
-ccsid # smartcard drivers + pcscd
+ccid # smartcard drivers + pcscd
 
 # Fonts
 # Fira Sans / Fira Code is my main font set
