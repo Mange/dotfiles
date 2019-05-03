@@ -238,5 +238,6 @@ docker-compose
 fortune-mod # adds the fortunes command
 # extra collections of fortunes are installed via aur
 
-# isync / mbsync
+# Mail, etc.
 isync
+neomutt
