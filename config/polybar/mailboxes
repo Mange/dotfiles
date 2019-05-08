@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+root="$(dirname "$0")"
+readarray -t boxes < <(mailboxes list)
+
+trim() {
+    local trimmed
+    read -r trimmed
+
+    # Strip leading space.
+    trimmed="${trimmed## }"
+    # Strip trailing space.
+    trimmed="${trimmed%% }"
+
+    echo "$trimmed"
+}
+
+for box_name in "${boxes[@]}"; do
+  (
+    set -e
+    box="$(echo "$box_name" | cut -d "-" -f 1 | trim)"
+    name="$(echo "$box_name" | cut -d "-" -f 2- | trim)"
+    status="$(mailboxes status "$box")"
+    icon="$(echo "$status" | cut -d " " -f 1)"
+    unread="$(echo "$status" | cut -d " " -f 2)"
+
+    if [[ $unread -gt 10 ]]; then
+      "$root/module" orange "$icon" "$unread ($name)"
+    elif [[ $unread -gt 5 ]]; then
+      "$root/module" yellow "$icon" "$unread ($name)"
+    elif [[ $unread -gt 0 ]]; then
+      "$root/module" green "$icon" "$unread ($name)"
+    fi
+
+    echo -n " "
+  )
+done | trim

@@ -14,14 +14,14 @@ Options:
   --help  - Show this help and exit
 
 Commands:
-  list
+  list [--no-names]
     List mailboxes.
 
   sync
     Sync all mailboxes, updating status during the sync.
 
-  status
-    Show current status.
+  status [mailbox]
+    Show current status or all, or selected mailbox.
 
   help
     Show this help and ext.
@@ -29,8 +29,15 @@ USAGE
 }
 
 perform_list() {
+  local show_names="yes"
+  [[ "$1" == "--no-names" ]] && show_names="no"
+
   for box in "${mailboxes[@]}"; do
-    echo "${box} - $(get_box_name "$box")"
+    if [[ $show_names == "yes" ]]; then
+      echo "${box} - $(get_box_name "$box")"
+    else
+      echo "${box}"
+    fi
   done
 }
 
@@ -57,10 +64,15 @@ perform_sync() {
 }
 
 perform_status() {
-  for box in "${mailboxes[@]}"; do
-    echo -n "$(get_box_name "$box"): "
+  local box="$1"
+  if [[ -n $box ]]; then
     read_status "$box"
-  done
+  else
+    for box in "${mailboxes[@]}"; do
+      echo -n "$(get_box_name "$box"): "
+      read_status "$box"
+    done
+  fi
 }
 
 read_status() {
