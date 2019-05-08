@@ -100,6 +100,7 @@ write_status() {
   fi
 
   echo "$message" > "${mail_dir}/${box}/.mailboxes-state"
+  (set +e; polybar-msg hook mailboxes 1)
   echo "$new_email"
 }
 

@@ -206,9 +206,10 @@ format-background = ${gruvbox.bright_aqua_transparent}
 
 [module/mailboxes]
 inherit = module/base
-type = custom/script
-exec = ~/.config/polybar/mailboxes
-interval = 120
+type = custom/ipc
+hook-0 = ~/.config/polybar/mailboxes
+; Note: 1-indexed, so 1 is the one on index 0
+initial = 1
 
 [module/pending-updates]
 inherit = module/base
