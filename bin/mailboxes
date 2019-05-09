@@ -4,7 +4,13 @@ mbsync_config="${XDG_CONFIG_HOME:-$HOME/.config}/isync/mbsyncrc"
 mail_dir="$HOME/Mail"
 
 readarray -t mailboxes < \
-  <(find "$mail_dir" -mindepth 1 -maxdepth 1 -type d -exec basename "{}" ";")
+  <(
+    find "$mail_dir" \
+      -mindepth 1 -maxdepth 1 \
+      -not -name '.*' \
+      -type d \
+      -exec basename "{}" ";"
+  )
 
 print_usage() {
   cat <<USAGE
