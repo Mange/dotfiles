@@ -55,32 +55,37 @@ perform_sync() {
 
 perform_box_sync() {
   local box="$1"
+  local lockfile="${mail_dir}/${box}/.mailboxes-lock"
   local name
   name="$(get_box_name "$box")"
 
   echo "= ${name} ="
 
-  unread_before="$(write_status "$box" "🔃")"
+  if aquire_lock "$lockfile"; then
+    unread_before="$(write_status "$box" "🔃")"
 
-  echo "Updating local tagging"
-  afew --move --verbose
+    echo "Updating local tagging"
+    afew --move --verbose
 
-  echo "Syncing with remote"
-  mbsync --config "$mbsync_config" "$box"
+    echo "Syncing with remote"
+    mbsync --config "$mbsync_config" "$box"
 
-  echo "Indexing messages"
-  notmuch new
+    echo "Indexing messages"
+    notmuch new
 
-  unread_after="$(write_status "$box")"
-  new_email=$((unread_after - unread_before))
-  if [[ $new_email -gt 0 ]]; then
-    notify-send \
-      --icon /usr/share/icons/oxygen/base/32x32/actions/mail-message-new.png \
-      --urgency low \
-      --category email.arrived \
-      --app-name "mailboxes" \
-      "New email in ${name}" \
-      "You have ${new_email} new email(s) in ${name}. Total unread is ${unread_after}."
+    unread_after="$(write_status "$box")"
+    new_email=$((unread_after - unread_before))
+    if [[ $new_email -gt 0 ]]; then
+      notify-send \
+        --icon /usr/share/icons/oxygen/base/32x32/actions/mail-message-new.png \
+        --urgency low \
+        --category email.arrived \
+        --app-name "mailboxes" \
+        "New email in ${name}" \
+        "You have ${new_email} new email(s) in ${name}. Total unread is ${unread_after}."
+    fi
+
+    unlock "$lockfile"
   fi
 }
 
@@ -104,6 +109,28 @@ read_status() {
     cat "${mail_dir}/${box}/.mailboxes-state"
   else
     echo ""
+  fi
+}
+
+aquire_lock() {
+  local path="$1"
+
+  if [[ -f "$path" ]]; then
+    echo "Lockfile present. Aborting."
+    return 1
+  else
+    echo "" > "$path"
+    return 0
+  fi
+}
+
+unlock() {
+  local path="$1"
+  # Just to be very very sure here
+  if [[ "$path" == *-lock ]]; then
+    rm -r "$path"
+  else
+    die "That does not look like a lockfile to me: ${path}"
   fi
 }
 
