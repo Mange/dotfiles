@@ -24,14 +24,24 @@ for box_name in "${boxes[@]}"; do
     icon="$(echo "$status" | cut -d " " -f 1)"
     unread="$(echo "$status" | cut -d " " -f 2)"
 
-    if [[ $unread -gt 10 ]]; then
-      "$root/module" orange "$icon" "$unread ($name)"
-    elif [[ $unread -gt 5 ]]; then
-      "$root/module" yellow "$icon" "$unread ($name)"
-    elif [[ $unread -gt 0 ]]; then
-      "$root/module" green "$icon" "$unread ($name)"
+    text="${unread}"
+
+    # If this computer has more than 1 mailbox, show the name of the mailbox
+    # next to the counter so it's possible to see which mailbox has unread mail
+    # in it.
+    if [[ "${#boxes[@]}" -gt 1 ]]; then
+      text="${text} (${name})"
     fi
 
-    echo -n " "
+    if [[ $unread -gt 10 ]]; then
+      "$root/module" orange "$icon" "$text"
+      echo -n " "
+    elif [[ $unread -gt 5 ]]; then
+      "$root/module" yellow "$icon" "$text"
+      echo -n " "
+    elif [[ $unread -gt 0 ]]; then
+      "$root/module" green "$icon" "$text"
+      echo -n " "
+    fi
   )
 done | trim
