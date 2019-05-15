@@ -3,31 +3,145 @@
 ##########################
 
 IMAPAccount magnus.bergmark@gmail.com
-Host imap.gmail.com
-User magnus.bergmark@gmail.com
-PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/Security/mbsync_gmail_personal.gpg"
-SSLType IMAPS
-CertificateFile /etc/ssl/certs/ca-certificates.crt
+  Host imap.gmail.com
+  User magnus.bergmark@gmail.com
+  PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/Security/mbsync_gmail_personal.gpg"
+  SSLType IMAPS
+  CertificateFile /etc/ssl/certs/ca-certificates.crt
 
 IMAPStore gmail-remote
-Account magnus.bergmark@gmail.com
+  Account magnus.bergmark@gmail.com
 
 MaildirStore gmail-local
-Path ~/Mail/gmail/
-Inbox ~/Mail/gmail/Inbox
-SubFolders Verbatim
+  Path ~/Mail/gmail/
+  Inbox ~/Mail/gmail/Inbox
+  Inbox ~/Mail/gmail/trash
+  SubFolders Verbatim
 
-Channel gmail
-Master :gmail-remote:
-Slave :gmail-local:
-# Exclude everything under the internal [Gmail] folder, except the interesting folders
-# Also exclude "Call Log", an older directory of calls and legacy labels.
-Patterns * ![Gmail]* "[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail" "[Gmail]/Drafts" !"Call log" !Legacy/*
+# Set up channels. We need custom channels for some directories to name them in
+# a way that works well with notmuch and afew (aka no spaces).
 
-# Automatically create missing mailboxes, both locally and on the server
-Create Both
-# Save the synchronization state files in the relevant directory
-SyncState *
+Channel gmail-inbox
+  Master :gmail-remote:"Inbox"
+  Slave :gmail-local:inbox
+  Create Slave
+  SyncState *
+
+Channel gmail-trash
+  Master :gmail-remote:"[Gmail]/Trash"
+  Slave :gmail-local:trash
+  Create Slave
+  SyncState *
+
+Channel gmail-github
+  Master :gmail-remote:"GitHub"
+  Slave :gmail-local:github
+  Create Slave
+  SyncState *
+
+Channel gmail-purchases
+  Master :gmail-remote:"K\&APY-p"
+  Slave :gmail-local:purchases
+  Create Slave
+  SyncState *
+
+Channel gmail-skola
+  Master :gmail-remote:"Skola"
+  Slave :gmail-local:school
+  Create Slave
+  SyncState *
+
+Channel gmail-github
+  Master :gmail-remote:"GitHub"
+  Slave :gmail-local:github
+  Create Slave
+  SyncState *
+
+Channel gmail-work
+  Master :gmail-remote:"Jobb"
+  Slave :gmail-local:work
+  Create Slave
+  SyncState *
+
+Channel gmail-work-hemnet
+  Master :gmail-remote:"Jobb/Hemnet"
+  Slave :gmail-local:work/hemnet
+  Create Slave
+  SyncState *
+
+Channel gmail-work-lerduvan
+  Master :gmail-remote:"Jobb/Lerduvan"
+  Slave :gmail-local:work/lerduvan
+  Create Slave
+  SyncState *
+
+Channel gmail-work-mitti
+  Master :gmail-remote:"Jobb/Mitt I"
+  Slave :gmail-local:work/mitti
+  Create Slave
+  SyncState *
+
+Channel gmail-registrations
+  Master :gmail-remote:"Registreringsmail"
+  Slave :gmail-local:registrations
+  Create Slave
+  SyncState *
+
+Channel gmail-sent
+  Master :gmail-remote:"[Gmail]/Sent Mail"
+  Slave :gmail-local:sent
+  Create Slave
+  SyncState *
+
+Channel gmail-drafts
+  Master :gmail-remote:"[Gmail]/Drafts"
+  Slave :gmail-local:drafts
+  Create Slave
+  SyncState *
+
+Channel gmail-archive
+  Master :gmail-remote:"[Gmail]/All Mail"
+  Slave :gmail-local:archive
+  Create Slave
+  SyncState *
+
+Channel gmail-starred
+  Master :gmail-remote:"[Gmail]/Starred"
+  Slave :gmail-local:starred
+  Create Slave
+  SyncState *
+
+Channel gmail-important
+  Master :gmail-remote:"[Gmail]/Important"
+  Slave :gmail-local:important
+  Create Slave
+  SyncState *
+
+Channel gmail-game-deals
+  Master :gmail-remote:"Game Deals"
+  Slave :gmail-local:game-deals
+  Create Slave
+  SyncState *
+
+# Join all the channels into a single group
+Group gmail
+  Channel gmail-drafts
+  Channel gmail-game-deals
+  Channel gmail-github
+  Channel gmail-important
+  Channel gmail-inbox
+  Channel gmail-purchases
+  Channel gmail-registrations
+  Channel gmail-sent
+  Channel gmail-skola
+  Channel gmail-starred
+  Channel gmail-trash
+  Channel gmail-work
+  Channel gmail-work-hemnet
+  Channel gmail-work-lerduvan
+  Channel gmail-work-mitti
+  Channel gmail-archive
+
 
 ##########################
 # Hemnet
