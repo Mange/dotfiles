@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# shellcheck source=/home/mange/.config/shells/common
+source "${HOME}/.config/shells/common"
+
 mbsync_config="${XDG_CONFIG_HOME:-$HOME/.config}/isync/mbsyncrc"
 mail_dir="$HOME/Mail"
 
