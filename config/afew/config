@@ -1,0 +1,14 @@
+; vim: ft=ini
+; [SpamFilter]
+
+; [KillThreadsFilter]
+
+; [ListMailsFilter]
+
+; [ArchiveSentMailsFilter]
+
+[FolderNameFilter]
+maildir_separator = /
+folder_blacklist = Inbox [Gmail] All\ mail
+
+; [InboxFilter]

@@ -241,3 +241,6 @@ fortune-mod # adds the fortunes command
 # Mail, etc.
 isync
 neomutt
+notmuch
+notmuch-vim
+afew
