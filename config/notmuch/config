@@ -49,7 +49,7 @@ other_email=magnus.bergmark@hemnet.se;
 #
 [new]
 tags=new
-ignore=.mbsyncstate;.uidvalidity;.mailboxes-name;.mailboxes-state
+ignore=.mbsyncstate;.uidvalidity;.mailboxes-name;.mailboxes-state;.mbsyncstate.journal;.mbsyncstate.new
 
 # Search configuration
 #

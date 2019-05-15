@@ -1,14 +1,23 @@
 ; vim: ft=ini
-; [SpamFilter]
+[KillThreadsFilter]
 
-; [KillThreadsFilter]
+[ListMailsFilter]
 
-; [ListMailsFilter]
-
-; [ArchiveSentMailsFilter]
+[ArchiveSentMailsFilter]
 
 [FolderNameFilter]
 maildir_separator = /
-folder_blacklist = Inbox [Gmail] All\ mail
+folder_blacklist = inbox archive
 
-; [InboxFilter]
+[InboxFilter]
+
+[MailMover]
+folders = gmail/inbox gmail/important gmail/archive
+max_age = 30
+
+; Required for mbsync
+rename = True
+
+gmail/inbox = 'NOT tag:inbox':gmail/archive
+gmail/important = 'NOT tag:important':gmail/archive
+gmail/archive = 'tag:important AND NOT folder:gmail/important':gmail/important
