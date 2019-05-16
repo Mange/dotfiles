@@ -12,7 +12,7 @@ folder_blacklist = inbox archive
 [InboxFilter]
 
 [MailMover]
-folders = gmail/inbox gmail/important gmail/archive
+folders = gmail/inbox gmail/important gmail/archive hemnet/inbox hemnet/important hemnet/archive
 max_age = 30
 
 ; Required for mbsync
@@ -21,3 +21,7 @@ rename = True
 gmail/inbox = 'NOT tag:inbox':gmail/archive
 gmail/important = 'NOT tag:important':gmail/archive
 gmail/archive = 'tag:important AND NOT folder:gmail/important':gmail/important
+
+hemnet/inbox = 'NOT tag:inbox':hemnet/archive
+hemnet/important = 'NOT tag:important':hemnet/archive
+hemnet/archive = 'tag:important AND NOT folder:hemnet/important':hemnet/important
