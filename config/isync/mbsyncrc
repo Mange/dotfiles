@@ -33,12 +33,6 @@ Channel gmail-trash
   Create Slave
   SyncState *
 
-Channel gmail-github
-  Master :gmail-remote:"GitHub"
-  Slave :gmail-local:github
-  Create Slave
-  SyncState *
-
 Channel gmail-purchases
   Master :gmail-remote:"K\&APY-p"
   Slave :gmail-local:purchases
@@ -148,28 +142,155 @@ Group gmail
 ##########################
 
 IMAPAccount magnus.bergmark@hemnet.se
-Host imap.gmail.com
-User magnus.bergmark@hemnet.se
-PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/Security/mbsync_gmail_hemnet.gpg"
-SSLType IMAPS
-CertificateFile /etc/ssl/certs/ca-certificates.crt
+  Host imap.gmail.com
+  User magnus.bergmark@hemnet.se
+  PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/Security/mbsync_gmail_hemnet.gpg"
+  SSLType IMAPS
+  CertificateFile /etc/ssl/certs/ca-certificates.crt
 
 IMAPStore hemnet-remote
-Account magnus.bergmark@hemnet.se
+  Account magnus.bergmark@hemnet.se
 
 MaildirStore hemnet-local
-Path ~/Mail/hemnet/
-Inbox ~/Mail/hemnet/Inbox
-SubFolders Verbatim
+  Path ~/Mail/hemnet/
+  Inbox ~/Mail/hemnet/Inbox
+  SubFolders Verbatim
 
-Channel hemnet
-Master :hemnet-remote:
-Slave :hemnet-local:
-# Exclude everything under the internal [Gmail] folder, except the interesting folders
-# Also exclude "Call Log", an older directory of calls and legacy labels.
-Patterns * ![Gmail]* "[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail" "[Gmail]/Drafts"
+# Set up channels. We need custom channels for some directories to name them in
+# a way that works well with notmuch and afew (aka no spaces).
 
-# Automatically create missing mailboxes, both locally and on the server
-Create Both
-# Save the synchronization state files in the relevant directory
-SyncState *
+Channel hemnet-inbox
+  Master :hemnet-remote:"Inbox"
+  Slave :hemnet-local:inbox
+  Create Slave
+  SyncState *
+
+Channel hemnet-trash
+  Master :hemnet-remote:"[Gmail]/Papperskorgen"
+  Slave :hemnet-local:trash
+  Create Slave
+  SyncState *
+
+Channel hemnet-github
+  Master :hemnet-remote:"Github"
+  Slave :hemnet-local:github
+  Create Slave
+  SyncState *
+
+Channel hemnet-automated
+  Master :hemnet-remote:"Automated"
+  Slave :hemnet-local:automated
+  Create Slave
+  SyncState *
+
+Channel hemnet-automated-payment
+  Master :hemnet-remote:"Automated/Payment"
+  Slave :hemnet-local:automated/payment
+  Create Slave
+  SyncState *
+
+Channel hemnet-calendar
+  Master :hemnet-remote:"Calendar"
+  Slave :hemnet-local:calendar
+  Create Slave
+  SyncState *
+
+Channel hemnet-detectify
+  Master :hemnet-remote:"Detectify"
+  Slave :hemnet-local:detectify
+  Create Slave
+  SyncState *
+
+Channel hemnet-security
+  Master :hemnet-remote:"Security"
+  Slave :hemnet-local:security
+  Create Slave
+  SyncState *
+
+Channel hemnet-dev-dept
+  Master :hemnet-remote:"Dev department"
+  Slave :hemnet-local:dev-department
+  Create Slave
+  SyncState *
+
+Channel hemnet-newsletter
+  Master :hemnet-remote:"Newsletter"
+  Slave :hemnet-local:newsletter
+  Create Slave
+  SyncState *
+
+Channel hemnet-kundportalen
+  Master :hemnet-remote:"Kundportalen"
+  Slave :hemnet-local:kundportalen
+  Create Slave
+  SyncState *
+
+Channel hemnet-oncall
+  Master :hemnet-remote:"On call"
+  Slave :hemnet-local:oncall
+  Create Slave
+  SyncState *
+
+Channel hemnet-sent
+  Master :hemnet-remote:"[Gmail]/Skickat"
+  Slave :hemnet-local:sent
+  Create Slave
+  SyncState *
+
+Channel hemnet-drafts
+  Master :hemnet-remote:"[Gmail]/Utkast"
+  Slave :hemnet-local:drafts
+  Create Slave
+  SyncState *
+
+Channel hemnet-archive
+  Master :hemnet-remote:"[Gmail]/Alla mail"
+  Slave :hemnet-local:archive
+  Create Slave
+  SyncState *
+
+Channel hemnet-starred
+  Master :hemnet-remote:"[Gmail]/Stj&AOQ-rnm&AOQ-rkta"
+  Slave :hemnet-local:starred
+  Create Slave
+  SyncState *
+
+Channel hemnet-important
+  Master :hemnet-remote:"[Gmail]/Viktigt"
+  Slave :hemnet-local:important
+  Create Slave
+  SyncState *
+
+Channel hemnet-ci
+  Master :hemnet-remote:"CI"
+  Slave :hemnet-local:ci
+  Create Slave
+  SyncState *
+
+Channel hemnet-desk
+  Master :hemnet-remote:"Desk"
+  Slave :hemnet-local:desk
+  Create Slave
+  SyncState *
+
+# Join all the channels into a single group
+Group hemnet
+  Channel hemnet-automated
+  Channel hemnet-automated-payment
+  Channel hemnet-calendar
+  Channel hemnet-ci
+  Channel hemnet-desk
+  Channel hemnet-detectify
+  Channel hemnet-dev-dept
+  Channel hemnet-drafts
+  Channel hemnet-github
+  Channel hemnet-important
+  Channel hemnet-inbox
+  Channel hemnet-kundportalen
+  Channel hemnet-newsletter
+  Channel hemnet-oncall
+  Channel hemnet-security
+  Channel hemnet-sent
+  Channel hemnet-starred
+  Channel hemnet-trash
+  Channel hemnet-archive
