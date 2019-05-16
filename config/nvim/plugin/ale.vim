@@ -9,6 +9,12 @@ let g:ale_virtualtext_prefix = " ❯ "
 " disable, or have issues with vim-package-info
 let g:ale_virtualtext_cursor = 0
 
+let g:ale_fixers = {
+\   'ruby': [
+\       'rubocop',
+\   ],
+\}
+
 " Use `[e` and `]e` for navigate linter errors
 nmap <silent> [e <Plug>(ale_previous_wrap)
 nmap <silent> ]e <Plug>(ale_next_wrap)
