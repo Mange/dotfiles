@@ -242,3 +242,10 @@ docker-compose
 # Fortunes :)
 fortune-mod # adds the fortunes command
 # extra collections of fortunes are installed via aur
+
+# Mail, etc.
+isync
+neomutt
+notmuch
+notmuch-vim
+afew

@@ -101,7 +101,7 @@ top = true
 
 modules-left = i3 media-controls
 modules-center = window-title
-modules-right = task-counters pending-updates weather volume battery wifi redshift clock time
+modules-right = task-counters mailboxes pending-updates weather volume battery wifi redshift clock time
 
 tray-detached = false
 tray-position = right
@@ -203,6 +203,13 @@ date-alt = %A vecka %V
 time = %H:%M
 interval = 1
 format-background = ${gruvbox.bright_aqua_transparent}
+
+[module/mailboxes]
+inherit = module/base
+type = custom/ipc
+hook-0 = ~/.config/polybar/mailboxes
+; Note: 1-indexed, so 1 is the one on index 0
+initial = 1
 
 [module/pending-updates]
 inherit = module/base

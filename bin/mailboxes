@@ -1,0 +1,199 @@
+#!/usr/bin/env bash
+
+# shellcheck source=/home/mange/.config/shells/common
+source "${HOME}/.config/shells/common"
+
+mbsync_config="${XDG_CONFIG_HOME:-$HOME/.config}/isync/mbsyncrc"
+mail_dir="$HOME/Mail"
+
+readarray -t mailboxes < \
+  <(
+    find "$mail_dir" \
+      -mindepth 1 -maxdepth 1 \
+      -not -name '.*' \
+      -type d \
+      -exec basename "{}" ";"
+  )
+
+print_usage() {
+  cat <<USAGE
+Usage: $(basename "$0") [options] <commands…>
+
+Options:
+  --help  - Show this help and exit
+
+Commands:
+  list [--no-names]
+    List mailboxes.
+
+  sync
+    Sync all mailboxes, updating status during the sync.
+
+  status [mailbox]
+    Show current status or all, or selected mailbox.
+
+  help
+    Show this help and ext.
+USAGE
+}
+
+perform_list() {
+  local show_names="yes"
+  [[ "$1" == "--no-names" ]] && show_names="no"
+
+  for box in "${mailboxes[@]}"; do
+    if [[ $show_names == "yes" ]]; then
+      echo "${box} - $(get_box_name "$box")"
+    else
+      echo "${box}"
+    fi
+  done
+}
+
+perform_sync() {
+  for box in "${mailboxes[@]}"; do
+    perform_box_sync "$box"
+  done
+}
+
+perform_box_sync() {
+  local box="$1"
+  local lockfile="${mail_dir}/${box}/.mailboxes-lock"
+  local name
+  name="$(get_box_name "$box")"
+
+  echo "= ${name} ="
+
+  if aquire_lock "$lockfile"; then
+    unread_before="$(write_status "$box" "🔃")"
+
+    echo "Updating local tagging"
+    afew --move --verbose
+
+    echo "Syncing with remote"
+    mbsync --config "$mbsync_config" "$box"
+
+    echo "Indexing messages"
+    notmuch new
+
+    unread_after="$(write_status "$box")"
+    new_email=$((unread_after - unread_before))
+    if [[ $new_email -gt 0 ]]; then
+      notify-send \
+        --icon /usr/share/icons/oxygen/base/32x32/actions/mail-message-new.png \
+        --urgency low \
+        --category email.arrived \
+        --app-name "mailboxes" \
+        "New email in ${name}" \
+        "You have ${new_email} new email(s) in ${name}. Total unread is ${unread_after}."
+    fi
+
+    unlock "$lockfile"
+  fi
+}
+
+perform_status() {
+  local box="$1"
+  if [[ -n $box ]]; then
+    read_status "$box"
+  else
+    for box in "${mailboxes[@]}"; do
+      echo -n "$(get_box_name "$box"): "
+      read_status "$box"
+    done
+  fi
+}
+
+read_status() {
+  local box="$1"
+  local statefile="${mail_dir}/${box}/.mailboxes-state"
+
+  if [[ -f "$statefile" ]]; then
+    cat "${mail_dir}/${box}/.mailboxes-state"
+  else
+    echo ""
+  fi
+}
+
+aquire_lock() {
+  local path="$1"
+
+  if [[ -f "$path" ]]; then
+    echo "Lockfile present. Aborting."
+    return 1
+  else
+    echo "" > "$path"
+    return 0
+  fi
+}
+
+unlock() {
+  local path="$1"
+  # Just to be very very sure here
+  if [[ "$path" == *-lock ]]; then
+    rm -r "$path"
+  else
+    die "That does not look like a lockfile to me: ${path}"
+  fi
+}
+
+write_status() {
+  local box="$1"
+  local icon="$2"
+  local message
+  local new_email
+  new_email="$(count_new_mail "$box")"
+
+  if [[ "$new_email" -gt 0 ]]; then
+    message="${icon:-📬} ${new_email}"
+  else
+    message="${icon:-📭} ${new_email}"
+  fi
+
+  echo "$message" > "${mail_dir}/${box}/.mailboxes-state"
+  (set +e; polybar-msg hook mailboxes 1)
+  echo "$new_email"
+}
+
+count_new_mail() {
+  local box="$1"
+  notmuch count --output=threads "folder:${box}/inbox" tag:unread
+}
+
+get_box_name() {
+  local box="$1"
+
+  if [[ -f "${mail_dir}/${box}/.mailboxes-name" ]]; then
+    cat "${mail_dir}/${box}/.mailboxes-name"
+  else
+    echo "$box"
+  fi
+}
+
+while [[ -n "$1" ]]; do
+  case "$1" in
+    --help | help)
+      print_usage
+      exit 0
+      ;;
+    list)
+      shift
+      perform_list "$@"
+      exit 0
+      ;;
+    sync)
+      shift
+      perform_sync "$@"
+      exit 0
+      ;;
+    status)
+      shift
+      perform_status "$@"
+      exit 0
+      ;;
+    *)
+      echo "Unknown option \"$1\"" >&2
+      print_usage >&2
+      exit 1
+  esac
+done
