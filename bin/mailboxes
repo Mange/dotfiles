@@ -68,6 +68,8 @@ perform_box_sync() {
     unread_before="$(write_status "$box" "🔃")"
 
     echo "Updating local tagging"
+    notmuch new
+    afew --tag --new --verbose
     afew --move --verbose
 
     echo "Syncing with remote"
@@ -75,6 +77,7 @@ perform_box_sync() {
 
     echo "Indexing messages"
     notmuch new
+    afew --tag --new --verbose
 
     unread_after="$(write_status "$box")"
     new_email=$((unread_after - unread_before))
