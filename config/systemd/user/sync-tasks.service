@@ -1,0 +1,9 @@
+[Unit]
+Description="Sync all taskwarrior tasks"
+Wants=network-online.target
+
+[Service]
+Type=simple
+Environment=TASKRC=/home/mange/.config/taskwarrior/config
+ExecStart=task sync
+

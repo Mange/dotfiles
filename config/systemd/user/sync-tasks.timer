@@ -1,0 +1,11 @@
+[Unit]
+Description="Sync taskwarrior tasks at intervals"
+Wants=network-online.target
+
+[Timer]
+WakeSystem=false
+OnStartupSec=10m
+OnUnitInactiveSec=30m
+
+[Install]
+WantedBy=timers.target
