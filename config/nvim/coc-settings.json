@@ -1,3 +1,6 @@
 {
-  "coc.preferences.diagnostic.enable": false
+  "coc.preferences.diagnostic.enable": false,
+  "coc.preferences.diagnostic.displayByAle": true,
+  "coc.preferences.codeLens.enable": true,
+  "suggest.enablePreview": true
 }
