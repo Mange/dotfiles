@@ -22,6 +22,8 @@ Plug 'tpope/vim-eunuch' " Adds things like :Move, :Rename, :SudoWrite, etc.
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-vinegar' " Improves netrw, adds '-' binding to open current dir in netrw, etc.
 
+Plug 'liuchengxu/vim-which-key'
+
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
