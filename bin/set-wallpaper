@@ -1,7 +1,12 @@
 #!/bin/bash
 set -e
 
-wallpaper="${XDG_DATA_HOME}/wallpapers/wallhaven-618670.jpg"
+wallpaper="${XDG_DATA_HOME}/wallpapers/current.jpg"
+
+if [[ ! -f "$wallpaper" ]]; then
+  wallpaper="${XDG_DATA_HOME}/wallpapers/dark.jpg"
+fi
+
 number_of_monitors=$(xrandr --listmonitors | grep "Monitors: " | awk '{ print $2 }')
 
 if [[ $number_of_monitors -gt 0 ]]; then

@@ -11,3 +11,6 @@ if [[ "$new_style" != dark && "$new_style" != light ]]; then
 fi
 
 ln -sf "./gruvbox_${new_style}.conf" "${XDG_CONFIG_HOME}/kitty/theme.conf"
+ln -sf "./${new_style}.jpg" "${XDG_DATA_HOME}/wallpapers/current.jpg"
+
+set-wallpaper

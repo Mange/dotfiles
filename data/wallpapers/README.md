@@ -23,3 +23,8 @@ Source: https://alpha.wallhaven.cc/wallpaper/624057
 by **John Towner**
 
 Source: https://alpha.wallhaven.cc/wallpaper/618670
+
+## `wallhaven-760322.jpg
+by **hellonomad.com**
+
+Source: https://alpha.wallhaven.cc/wallpaper/760322
