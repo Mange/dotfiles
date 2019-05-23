@@ -1,0 +1,47 @@
+# vim: ft=sh
+# Shell function in order to be able to affect outside environment variables.
+
+function theme() {
+  local usage="
+theme <light|dark|reload>
+
+Toggle between light and dark theme in most apps, or reload colors in current
+terminal."
+  local new_style
+  local should_reload
+
+  case "$1" in
+    dark)
+      new_style=dark
+      should_reload=1
+      ;;
+    light)
+      new_style=light
+      should_reload=1
+      ;;
+    reload)
+      should_reload=1
+      ;;
+    --help)
+      echo "$usage"
+      return 0
+      ;;
+    *)
+      echo "$usage" >&2
+      return 1
+  esac
+
+  if [[ -n $new_style ]]; then
+    ln -sf "./gruvbox_${new_style}.conf" "${XDG_CONFIG_HOME}/kitty/theme.conf"
+    export KITTY_THEME="$new_style"
+  fi
+
+  if [[ -n $should_reload ]]; then
+    # Reload colors in current window. There does not seem to be a way to send
+    # this command to all alive kitty processes without doing some really
+    # complicated setup.
+    if [[ "$TERM" == *-kitty ]]; then
+      kitty @ set-colors --all --configured "${XDG_CONFIG_HOME}/kitty/theme.conf"
+    fi
+  fi
+}

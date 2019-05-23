@@ -52,4 +52,8 @@ if has("termguicolors")     " set true colors
     set termguicolors
 endif
 
-call s:Dark()
+if $KITTY_THEME == "light"
+  call s:Light()
+else
+  call s:Dark()
+endif

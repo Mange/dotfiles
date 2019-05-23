@@ -417,6 +417,7 @@ autoload zmv
 fpath=("${XDG_CONFIG_HOME}/zsh/funcs" $fpath)
 
 autoload seconds-to-human
+autoload theme
 
 # }}}
 # {{{ Color shortcuts and magic
