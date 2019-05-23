@@ -1,5 +1,5 @@
 let g:gruvbox_contrast_dark='medium'
-let g:gruvbox_contrast_light='medium'
+let g:gruvbox_contrast_light='hard'
 let g:gruvbox_improved_warnings=1
 colorscheme gruvbox
 
