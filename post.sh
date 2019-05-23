@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # Run after installing dotfiles to perform extra work.
 
-# Create symlink for kitty theme if missing
+# Setup theme if it appears to not be set up already
 if [[ ! -s "${XDG_CONFIG_HOME}/kitty/theme.conf" ]]; then
-  ln -s "./gruvbox_dark.conf" "${XDG_CONFIG_HOME}/kitty/theme.conf"
+  ~/.local/bin/_theme_set dark
 fi
 
 # Create directory for vdirsyncer settings

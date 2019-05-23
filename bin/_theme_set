@@ -1,0 +1,13 @@
+#!/usr/bin/bash
+# Don't call this directly; instead use the shell-function "theme"
+
+set -e
+new_style="$1"
+
+# Sanity check that the theme is actually one that is supported
+if [[ "$new_style" != dark && "$new_style" != light ]]; then
+  echo "Unknown theme: \"$new_style\"" >&2
+  exit 1
+fi
+
+ln -sf "./gruvbox_${new_style}.conf" "${XDG_CONFIG_HOME}/kitty/theme.conf"

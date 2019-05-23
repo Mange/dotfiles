@@ -32,16 +32,11 @@ terminal."
   esac
 
   if [[ -n $new_style ]]; then
-    ln -sf "./gruvbox_${new_style}.conf" "${XDG_CONFIG_HOME}/kitty/theme.conf"
     export KITTY_THEME="$new_style"
+    ~/.local/bin/_theme_set "$new_style"
   fi
 
   if [[ -n $should_reload ]]; then
-    # Reload colors in current window. There does not seem to be a way to send
-    # this command to all alive kitty processes without doing some really
-    # complicated setup.
-    if [[ "$TERM" == *-kitty ]]; then
-      kitty @ set-colors --all --configured "${XDG_CONFIG_HOME}/kitty/theme.conf"
-    fi
+    ~/.local/bin/_theme_reload_window
   fi
 }
