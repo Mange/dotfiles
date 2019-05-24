@@ -8,67 +8,8 @@ compositing-underline = source
 compositing-overline = source
 compositing-background = source
 
-[gruvbox]
-; aarrggbb, editor highlight might be off
-dark0_transparent = #55282828
-dark0_transparent1 = #77282828
-bright_aqua_transparent = #558ec07c
-bright_blue_transparent = #5583a598
-bright_green_transparent = #55b8bb26
-bright_orange_transparent = #55fe8019
-bright_purple_transparent = #55d3869b
-bright_red_transparent = #55fb4934
-faded_aqua_transparent1 = #77427b58
-faded_blue_transparent1 = #77076678
-faded_green_transparent1 = #7779740e
-faded_orange_transparent1 = #77af3a03
-faded_red_transparent1 = #779d0006
-
-# Taken from https://github.com/morhetz/gruvbox/blob/master/colors/gruvbox.vim
-dark0_hard = #1d2021
-dark0 = #282828
-dark0_soft = #32302f
-dark1 = #3c3836
-dark2 = #504945
-dark3 = #665c54
-dark4 = #7c6f64
-dark4_256 = #7c6f64
-
-gray_245 = #928374
-gray_244 = #928374
-
-light0_hard = #f9f5d7
-light0 = #fbf1c7
-light0_soft = #f2e5bc
-light1 = #ebdbb2
-light2 = #d5c4a1
-light3 = #bdae93
-light4 = #a89984
-light4_256 = #a89984
-
-bright_red = #fb4934
-bright_green = #b8bb26
-bright_yellow = #fabd2f
-bright_blue = #83a598
-bright_purple = #d3869b
-bright_aqua = #8ec07c
-bright_orange = #fe8019
-
-neutral_red = #cc241d
-neutral_green = #98971a
-neutral_yellow = #d79921
-neutral_blue = #458588
-neutral_purple = #b16286
-neutral_aqua = #689d6a
-neutral_orange = #d65d0e
-
-faded_red = #9d0006
-faded_green = #79740e
-faded_yellow = #b57614
-faded_blue = #076678
-faded_purple = #8f3f71
-faded_aqua = #427b58
-faded_orange = #af3a03
+[theme]
+include-file = /home/mange/.config/polybar/theme.ini
 
 [bar/core]
 override-redirect = false
@@ -77,9 +18,9 @@ enable-ipc = true
 
 fixed-center = true
 
-background = ${gruvbox.dark0_transparent}
-foreground = ${gruvbox.light1}
-line-color = ${gruvbox.dark0_transparent}
+foreground = ${theme.foreground}
+background = ${theme.background}
+line-color = ${theme.background}
 line-size = ${env:POLYBAR_BAR_PADDING:4}
 
 [bar/base]
@@ -109,7 +50,7 @@ tray-offset-x = 0
 tray-offset-y = 0
 tray-maxsize = ${env:POLYBAR_TRAY_SIZE:24}
 tray-padding = 4
-tray-background = ${gruvbox.dark0_transparent}
+tray-background = ${theme.background}
 tray-scale = ${env:POLYBAR_TRAY_SCALE:1.0}
 
 [bar/secondary]
@@ -124,8 +65,8 @@ tray-position = none
 
 [module/base]
 format-padding = 1
-format-overline = ${gruvbox.dark0_transparent}
-format-underline = ${gruvbox.dark0_transparent}
+format-overline = ${theme.background}
+format-underline = ${theme.background}
 
 [module/media-controls]
 inherit = module/base
@@ -155,29 +96,43 @@ fuzzy-match = true
 ws-icon-0 = 1:System;
 ws-icon-1 = 2:Code;
 ws-icon-2 = 3:Browse;
-ws-icon-3 = 4;
-ws-icon-4 = 5;
-ws-icon-5 = 8:Game;
-ws-icon-6 = 9:Media;
-ws-icon-7 = 10:Chat;
+ws-icon-3 = 4;➍
+ws-icon-4 = 5;➎
+ws-icon-5 = 6;➏
+ws-icon-6 = 7;❼
+ws-icon-7 = 8:Game;
+ws-icon-8 = 9:Media;
+ws-icon-9 = 10:Chat;
 ws-icon-default = 
 
 format = "<label-state> <label-mode>"
 
 label-mode = "  %mode%  "
-label-mode-background = ${gruvbox.bright_red_transparent}
+label-mode-background = ${theme.red_background}
 
 # Focused is the workspace that is currently getting commands
-label-focused = " %{B#778f3f71} %index% %{B#55d3869b} %icon% %name% %{B-}"
+label-focused = " %icon% "
+label-focused-background = ${theme.purple_background0}
+label-focused-underline = ${theme.background}
+label-focused-overline = ${theme.background}
 
 # Unfocused are workspaces that are not visible
-label-unfocused = " %{B#cc3c3836} %index% %{B#aa3c3836} %icon% %name% %{B-}"
+label-unfocused = " %icon% "
+label-unfocused-background = ${theme.gray_background2}
+label-unfocused-overline = ${theme.background}
+label-unfocused-underline = ${theme.background}
 
 # Urgent are workspaces with important events
-label-urgent = " %{B#77af3a03} %index% %{B#55fe8019} %icon% %name% %{B-}"
+label-urgent = " %icon% "
+label-urgent-background = ${theme.orange_background}
+label-urgent-overline = ${theme.background}
+label-urgent-underline = ${theme.background}
 
 # Visible are selected workspaces on other screens
-label-visible = " %{B#77d3869b} %index% %{B#553c3836} %icon% %name% %{B-}"
+label-visible = " %icon% "
+label-visible-background = ${theme.purple_background1}
+label-visible-overline = ${theme.background}
+label-visible-underline = ${theme.background}
 
 [module/window-title]
 inherit = module/base
@@ -185,14 +140,14 @@ type = internal/xwindow
 ; NOTE: Counts the invisible %{} tokens, so this is (37 +) 50
 label-maxlen = 87
 
-label =" %{B#cc3c3836} 类 %{B#aa3c3836} %title% %{B-}"
+label ="  类 %title%"
 label-empty =
 
 [module/clock]
 inherit = module/base
 type = custom/script
 exec = ~/.config/polybar/clock-icon
-format-background = ${gruvbox.faded_aqua_transparent1}
+format-background = ${theme.aqua_background1}
 
 [module/time]
 inherit = module/base
@@ -202,7 +157,7 @@ date = %F%
 date-alt = %A vecka %V
 time = %H:%M
 interval = 1
-format-background = ${gruvbox.bright_aqua_transparent}
+format-background = ${theme.aqua_background}
 
 [module/mailboxes]
 inherit = module/base
@@ -239,23 +194,23 @@ inherit = module/base
 type = internal/pulseaudio
 
 format-volume = "<ramp-volume><label-volume>"
-format-muted = "%{B#cc282828}  %{B-}<label-muted>"
+format-muted = "  <label-muted>"
 
-format-volume-overline = ${gruvbox.dark0_transparent}
-format-volume-underline = ${gruvbox.dark0_transparent}
-format-muted-overline = ${gruvbox.dark0_transparent}
-format-muted-underline = ${gruvbox.dark0_transparent}
+format-volume-overline = ${theme.background}
+format-volume-underline = ${theme.background}
+format-muted-overline = ${theme.background}
+format-muted-underline = ${theme.background}
 
 label-volume = " %percentage:3%% "
-label-volume-background = ${gruvbox.bright_blue_transparent}
+label-volume-background = ${theme.blue_background}
 ; label-muted = " "
 label-muted = " %percentage:3%% "
-label-muted-background = ${gruvbox.dark0_transparent1}
+label-muted-background = ${theme.gray_background}
 
 ramp-volume-0 = "  "
 ramp-volume-1 = "  "
 ramp-volume-2 = "  "
-ramp-volume-background = ${gruvbox.faded_blue_transparent1}
+ramp-volume-background = ${theme.blue_background1}
 
 [module/wifi]
 inherit = module/base
@@ -271,22 +226,22 @@ format-disconnected-padding = 0
 format-connected = <label-connected>
 format-connected-prefix = ""
 format-connected-prefix-padding = 1
-format-connected-prefix-background = ${gruvbox.faded_green_transparent1}
-label-connected-background = ${gruvbox.bright_green_transparent}
+format-connected-prefix-background = ${theme.green_background1}
+label-connected-background = ${theme.green_background}
 label-connected-padding = 1
-format-connected-overline = ${gruvbox.dark0_transparent}
-format-connected-underline = ${gruvbox.dark0_transparent}
+format-connected-overline = ${theme.background}
+format-connected-underline = ${theme.background}
 
 ; Available tags:
 ;   <label-disconnected> (default)
 format-disconnected = <label-disconnected>
 format-disconnected-prefix = ""
 format-disconnected-prefix-padding = 1
-format-disconnected-prefix-background = ${gruvbox.faded_red_transparent1}
-label-disconnected-background = ${gruvbox.bright_red_transparent}
+format-disconnected-prefix-background = ${theme.red_background1}
+label-disconnected-background = ${theme.red_background}
 label-disconnected-padding = 1
-format-disconnected-overline = ${gruvbox.dark0_transparent}
-format-disconnected-underline = ${gruvbox.dark0_transparent}
+format-disconnected-overline = ${theme.background}
+format-disconnected-underline = ${theme.background}
 
 ; Available tags:
 ;   <label-connected> (default)
@@ -294,11 +249,11 @@ format-disconnected-underline = ${gruvbox.dark0_transparent}
 ;   <animation-packetloss>
 format-packetloss = <animation-packetloss> <label-connected>
 animation-packetloss-padding = 1
-animation-packetloss-background = ${gruvbox.faded_red_transparent1}
-label-packetloss-background = ${gruvbox.bright_red_transparent}
+animation-packetloss-background = ${theme.red_background1}
+label-packetloss-background = ${theme.red_background}
 label-packetloss-padding = 1
-format-packetloss-overline = ${gruvbox.dark0_transparent}
-format-packetloss-underline = ${gruvbox.dark0_transparent}
+format-packetloss-overline = ${theme.background}
+format-packetloss-underline = ${theme.background}
 
 ; Available tokens:
 ;   %ifname%    [wireless+wired]
@@ -344,21 +299,21 @@ format-charging-padding = 2
 format-discharging-padding = 2
 format-full-padding = 2
 
-format-charging-overline = ${gruvbox.dark0_transparent}
-format-charging-underline = ${gruvbox.dark0_transparent}
-format-discharging-overline = ${gruvbox.dark0_transparent}
-format-discharging-underline = ${gruvbox.dark0_transparent}
-format-full-overline = ${gruvbox.dark0_transparent}
-format-full-underline = ${gruvbox.dark0_transparent}
+format-charging-overline = ${theme.background}
+format-charging-underline = ${theme.background}
+format-discharging-overline = ${theme.background}
+format-discharging-underline = ${theme.background}
+format-full-overline = ${theme.background}
+format-full-underline = ${theme.background}
 
-label-full-background = ${gruvbox.bright_green_transparent}
+label-full-background = ${theme.green_background}
 label-full-padding = 1
-label-charging-background = ${gruvbox.bright_orange_transparent}
+label-charging-background = ${theme.orange_background}
 label-charging-padding = 1
-; label-discharging-background = ${gruvbox.bright_orange_transparent}
+; label-discharging-background = ${theme.orange_background}
 label-discharging-padding = 1
 
-animation-charging-background = ${gruvbox.faded_orange_transparent1}
+animation-charging-background = ${theme.orange_background1}
 animation-charging-0 = "  "
 animation-charging-1 = "  "
 animation-charging-2 = "  "
@@ -366,7 +321,7 @@ animation-charging-3 = "  "
 animation-charging-4 = "  "
 animation-charging-framerate=1500
 
-ramp-capacity-foreground = ${gruvbox.light1}
+ramp-capacity-foreground = ${theme.foreground}
 ramp-capacity-0 = "%{B#779d0006}  %{B#55fb4934}"
 ramp-capacity-1 = "%{B#779d0006}  %{B#55fb4934}"
 ramp-capacity-2 = "%{B#77af3a03}  %{B#55fb4934}"
