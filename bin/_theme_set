@@ -10,9 +10,11 @@ if [[ "$new_style" != dark && "$new_style" != light ]]; then
   exit 1
 fi
 
+echo "$new_style" > "${XDG_RUNTIME_DIR}/current_theme"
+
 ln -sf "./gruvbox_${new_style}.conf" "${XDG_CONFIG_HOME}/kitty/theme.conf"
 ln -sf "./theme_${new_style}.ini" "${XDG_CONFIG_HOME}/polybar/theme.ini"
 ln -sf "./${new_style}.jpg" "${XDG_DATA_HOME}/wallpapers/current.jpg"
 
 set-wallpaper
-i3-msg exec "${XDG_CONFIG_HOME}/polybar/start.sh" >/dev/null
+polybar-msg cmd restart 2>/dev/null

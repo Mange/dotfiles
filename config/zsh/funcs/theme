@@ -32,11 +32,20 @@ terminal."
   esac
 
   if [[ -n $new_style ]]; then
-    export KITTY_THEME="$new_style"
     ~/.local/bin/_theme_set "$new_style"
   fi
 
   if [[ -n $should_reload ]]; then
     ~/.local/bin/_theme_reload_window
+
+    # Load the current style from disk
+    if [[ -z $new_style ]]; then
+      new_style="$(cat "${XDG_RUNTIME_DIR}/current_theme")"
+    fi
+
+    # Set the shell variable so other programs can pick it up
+    if [[ -n $new_style ]]; then
+      export KITTY_THEME="$new_style"
+    fi
   fi
 }
