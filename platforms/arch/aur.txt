@@ -26,6 +26,7 @@ vit               # A terminal interface for Taskwarrior with Vim key bindings a
 
 # Fork of compton with better blurring
 compton-tryone-git
+flashfocus-git # Flash windows when focus changes
 
 # Vifm stuff
 # Broken right now; install manually with `pip install ueberzug` instead
