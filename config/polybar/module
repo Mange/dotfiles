@@ -2,7 +2,7 @@
 
 # Usage: [color] [icon] [text…]
 
-# shellsheck source=/home/mange/.local/share/gruvbox/colors.env
+# shellcheck source=/home/mange/.local/share/gruvbox/colors.env
 source ~/.local/share/gruvbox/colors.env
 
 if [[ $# -lt 3 ]]; then

@@ -40,9 +40,9 @@ cursor-click = pointer
 inherit = bar/base
 top = true
 
-modules-left = i3 media-controls
-modules-center = window-title
-modules-right = task-counters mailboxes pending-updates weather volume battery wifi redshift clock time
+modules-left = i3 window-title
+modules-center = time battery-warning
+modules-right = task-counters mailboxes volume wifi
 
 tray-detached = false
 tray-position = right
@@ -50,30 +50,23 @@ tray-offset-x = 0
 tray-offset-y = 0
 tray-maxsize = ${env:POLYBAR_TRAY_SIZE:24}
 tray-padding = 4
-tray-background = ${theme.background}
+tray-background = ${theme.box_background}
 tray-scale = ${env:POLYBAR_TRAY_SCALE:1.0}
 
 [bar/secondary]
 inherit = bar/base
 top = true
 
-modules-left = i3
-modules-center = window-title
-modules-right = battery clock time
+modules-left = i3 window-title
+modules-center = time battery-warning
+modules-right = task-counters mailboxes volume wifi
 
 tray-position = none
 
 [module/base]
 format-padding = 1
-format-overline = ${theme.background}
-format-underline = ${theme.background}
-
-[module/media-controls]
-inherit = module/base
-type = custom/script
-exec = ~/.config/polybar/media
-click-left = playerctl play-pause
-click-right = run-or-raise 'class = "Spotify"' spotify
+format-margin = 1
+format-background = ${theme.box_background}
 
 [module/task-counters]
 inherit = module/base
@@ -113,26 +106,18 @@ label-mode-background = ${theme.red_background}
 # Focused is the workspace that is currently getting commands
 label-focused = " %icon% "
 label-focused-background = ${theme.purple_background0}
-label-focused-underline = ${theme.background}
-label-focused-overline = ${theme.background}
 
 # Unfocused are workspaces that are not visible
 label-unfocused = " %icon% "
 label-unfocused-background = ${theme.gray_background2}
-label-unfocused-overline = ${theme.background}
-label-unfocused-underline = ${theme.background}
 
 # Urgent are workspaces with important events
 label-urgent = " %icon% "
 label-urgent-background = ${theme.orange_background}
-label-urgent-overline = ${theme.background}
-label-urgent-underline = ${theme.background}
 
 # Visible are selected workspaces on other screens
 label-visible = " %icon% "
 label-visible-background = ${theme.purple_background1}
-label-visible-overline = ${theme.background}
-label-visible-underline = ${theme.background}
 
 [module/window-title]
 inherit = module/base
@@ -140,77 +125,46 @@ type = internal/xwindow
 ; NOTE: Counts the invisible %{} tokens, so this is (37 +) 50
 label-maxlen = 87
 
-label ="  类 %title%"
+label =" 类 %title%"
 label-empty =
-
-[module/clock]
-inherit = module/base
-type = custom/script
-exec = ~/.config/polybar/clock-icon
-format-background = ${theme.aqua_background1}
 
 [module/time]
 inherit = module/base
 type = internal/date
-label = %date% %time%
-date = %F%
+label = %time% %date%
+date = %d/%m
 date-alt = %A vecka %V
 time = %H:%M
 interval = 1
-format-background = ${theme.aqua_background}
+format-background = ${theme.box_background}
 
 [module/mailboxes]
 inherit = module/base
 type = custom/ipc
 hook-0 = ~/.config/polybar/mailboxes
-; Note: 1-indexed, so 1 is the one on index 0
+; Note: 1-indexed, so 1 is hook-0
 initial = 1
-
-[module/pending-updates]
-inherit = module/base
-type = custom/script
-exec = ~/.config/polybar/pending-updates
-interval = 240
-click-left = kitty --hold zsh -c "sudo pacman -Syu"
-
-[module/weather]
-inherit = module/base
-type = custom/script
-exec = ~/.config/polybar/weather
-interval = 600
-click-left = kitty --hold weather
-click-right =
-
-[module/redshift]
-inherit = module/base
-type = custom/script
-exec = ~/.config/polybar/redshift-status
-interval = 60
-click-left = redshift-toggle
-click-right =
 
 [module/volume]
 inherit = module/base
 type = internal/pulseaudio
+format-volume-margin = 1
+format-volume-padding = 1
+format-muted-margin = 1
+format-muted-padding = 1
+format-volume-background = ${theme.box_background}
+format-muted-background = ${theme.box_background}
 
-format-volume = "<ramp-volume><label-volume>"
+format-volume = " <ramp-volume><label-volume>"
 format-muted = "  <label-muted>"
 
-format-volume-overline = ${theme.background}
-format-volume-underline = ${theme.background}
-format-muted-overline = ${theme.background}
-format-muted-underline = ${theme.background}
-
-label-volume = " %percentage:3%% "
-label-volume-background = ${theme.blue_background}
+label-volume = "%percentage:3%%"
 ; label-muted = " "
-label-muted = " %percentage:3%% "
-label-muted-background = ${theme.gray_background}
+label-muted = "%percentage:3%%"
 
-ramp-volume-0 = "  "
-ramp-volume-1 = "  "
-ramp-volume-2 = "  "
-ramp-volume-background = ${theme.blue_background1}
+ramp-volume-0 = " "
+ramp-volume-1 = " "
+ramp-volume-2 = " "
 
 [module/wifi]
 inherit = module/base
@@ -229,8 +183,6 @@ format-connected-prefix-padding = 1
 format-connected-prefix-background = ${theme.green_background1}
 label-connected-background = ${theme.green_background}
 label-connected-padding = 1
-format-connected-overline = ${theme.background}
-format-connected-underline = ${theme.background}
 
 ; Available tags:
 ;   <label-disconnected> (default)
@@ -240,8 +192,6 @@ format-disconnected-prefix-padding = 1
 format-disconnected-prefix-background = ${theme.red_background1}
 label-disconnected-background = ${theme.red_background}
 label-disconnected-padding = 1
-format-disconnected-overline = ${theme.background}
-format-disconnected-underline = ${theme.background}
 
 ; Available tags:
 ;   <label-connected> (default)
@@ -252,8 +202,6 @@ animation-packetloss-padding = 1
 animation-packetloss-background = ${theme.red_background1}
 label-packetloss-background = ${theme.red_background}
 label-packetloss-padding = 1
-format-packetloss-overline = ${theme.background}
-format-packetloss-underline = ${theme.background}
 
 ; Available tokens:
 ;   %ifname%    [wireless+wired]
@@ -287,26 +235,19 @@ animation-packetloss-1 = 
 ; Framerate in milliseconds
 animation-packetloss-framerate = 500
 
-[module/battery]
+[module/battery-warning]
 inherit = module/base
 type = internal/battery
-full-at = 100
+full-at = 95
 
-format-charging = <animation-charging><label-charging>
-format-discharging = "<ramp-capacity><label-discharging>%{B-}"
-format-full = <ramp-capacity><label-full>
+format-charging = " <label-charging>
+format-discharging = "<ramp-capacity><label-discharging>"
+format-full = ""
 format-charging-padding = 2
 format-discharging-padding = 2
-format-full-padding = 2
+format-full-padding = 0
 
-format-charging-overline = ${theme.background}
-format-charging-underline = ${theme.background}
-format-discharging-overline = ${theme.background}
-format-discharging-underline = ${theme.background}
-format-full-overline = ${theme.background}
-format-full-underline = ${theme.background}
-
-label-full-background = ${theme.green_background}
+label-full-background = ${theme.background}
 label-full-padding = 1
 label-charging-background = ${theme.orange_background}
 label-charging-padding = 1
@@ -314,18 +255,24 @@ label-charging-padding = 1
 label-discharging-padding = 1
 
 animation-charging-background = ${theme.orange_background1}
-animation-charging-0 = "  "
-animation-charging-1 = "  "
-animation-charging-2 = "  "
-animation-charging-3 = "  "
-animation-charging-4 = "  "
+animation-charging-0 = " "
+animation-charging-1 = " "
+animation-charging-2 = " "
+animation-charging-3 = " "
+animation-charging-4 = " "
+animation-charging-5 = " "
+animation-charging-6 = " "
 animation-charging-framerate=1500
 
 ramp-capacity-foreground = ${theme.foreground}
-ramp-capacity-0 = "%{B#779d0006}  %{B#55fb4934}"
-ramp-capacity-1 = "%{B#779d0006}  %{B#55fb4934}"
-ramp-capacity-2 = "%{B#77af3a03}  %{B#55fb4934}"
-ramp-capacity-3 = "%{B#7779740e}  %{B#55b8bb26}"
-ramp-capacity-4 = "%{B#7779740e}  %{B#55b8bb26}"
+ramp-capacity-0 = " "
+ramp-capacity-1 = " "
+ramp-capacity-2 = " "
+ramp-capacity-3 = " "
+ramp-capacity-4 = " "
+ramp-capacity-5 = " "
+ramp-capacity-6 = " "
+ramp-capacity-7 = " "
+ramp-capacity-8 = " "
 
 ; vim:ft=dosini

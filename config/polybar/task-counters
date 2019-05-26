@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-# shellcheck source=../../data/gruvbox/colors.env
-source "${XDG_DATA_HOME}/gruvbox/colors.env"
-
 root="$(dirname "$0")"
 
 task_cmd="task rc.echo.command=no rc._forcecolor=no rc.blanklines=false rc.hooks=off rc.verbose=nothing"
@@ -14,9 +11,9 @@ overdue=$($task_cmd +OVERDUE all | wc -l)
 today=$($task_cmd +TODAY all | wc -l)
 week=$($task_cmd +WEEK all | wc -l)
 
-"$root/module" green "📓" "${ready} [${today}/${week}]"
+echo -n " ${today}/${week}/${ready}"
 
 if [[ $overdue -gt 0 ]]; then
   echo -n " "
-	"$root/module" "red" "❗" "${overdue}"
+	echo -n " ${overdue}"
 fi

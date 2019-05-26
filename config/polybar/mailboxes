@@ -33,14 +33,8 @@ for box_name in "${boxes[@]}"; do
       text="${text} (${name})"
     fi
 
-    if [[ $unread -gt 10 ]]; then
-      "$root/module" orange "$icon" "$text"
-      echo -n " "
-    elif [[ $unread -gt 5 ]]; then
-      "$root/module" yellow "$icon" "$text"
-      echo -n " "
-    elif [[ $unread -gt 0 ]]; then
-      "$root/module" green "$icon" "$text"
+    if [[ $unread -gt 0 ]]; then
+      echo "$icon $text"
       echo -n " "
     fi
   )
