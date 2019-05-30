@@ -7,9 +7,11 @@
 
 [FolderNameFilter]
 maildir_separator = /
-folder_blacklist = inbox archive
+folder_blacklist = archive
 
-[InboxFilter]
+[Filter]
+message = 'Removing the "new" tags'
+tags = -new
 
 [MailMover]
 folders = gmail/inbox gmail/important gmail/archive hemnet/inbox hemnet/important hemnet/archive
