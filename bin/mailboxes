@@ -67,17 +67,18 @@ perform_box_sync() {
   if aquire_lock "$lockfile"; then
     unread_before="$(write_status "$box" "🔃")"
 
-    echo "Updating local tagging"
-    notmuch new
-    afew --tag --new --verbose
-    afew --move --verbose
+    # Initial index makes sure that changes made locally will be applied to the
+    # server when it is finally synced.
+    echo "Indexing local messages"
+    index_and_tag_emails "$box"
 
     echo "Syncing with remote"
-    mbsync --config "$mbsync_config" "$box"
+    verbose mbsync --config "$mbsync_config" "$box"
 
-    echo "Indexing messages"
-    notmuch new
-    afew --tag --new --verbose
+    # Then index again in case any new messages were downloaded from the
+    # server, or emails were moved server-side before the sync started.
+    echo "Indexing messages again"
+    index_and_tag_emails "$box"
 
     unread_after="$(write_status "$box")"
     new_email=$((unread_after - unread_before))
@@ -93,6 +94,22 @@ perform_box_sync() {
 
     unlock "$lockfile"
   fi
+}
+
+index_and_tag_emails() {
+  local box="$1"
+
+  # Index new emails…
+  verbose notmuch new
+  # …and auto-tag them
+  verbose afew --tag --new --verbose
+
+  # Emails that are no longer in inbox should get the inbox tag removed
+  verbose notmuch tag -inbox -- "path:${box}/**" AND tag:inbox AND NOT "path:${box}/inbox/**"
+
+  # Move files on disk to match their tags. This enables the changes to be
+  # synced to the server.
+  verbose afew --move --verbose
 }
 
 perform_status() {
@@ -171,6 +188,16 @@ get_box_name() {
   else
     echo "$box"
   fi
+}
+
+verbose() {
+  if [[ -t 2 ]]; then
+    echo -e "\e[37m# ${*}\e[0m" >&2
+  else
+    echo "$@" >&2
+  fi
+
+  "$@"
 }
 
 while [[ -n "$1" ]]; do
