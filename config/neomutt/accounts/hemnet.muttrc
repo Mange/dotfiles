@@ -1,0 +1,21 @@
+# vim: filetype=neomuttrc
+
+# muttrc file for account hemnet
+set realname = "Magnus Bergmark"
+set from = "magnus.bergmark@hemnet.se"
+set sendmail = "msmtp -a hemnet"
+alias me Magnus Bergmark <magnus.bergmark@hemnet.se>
+set folder = "~/Mail/hemnet"
+set header_cache = "~/.cache/neomutt/hemnet/headers"
+set message_cachedir = "~/.cache/neomutt/hemnet/bodies"
+set mbox_type = Maildir
+
+unmailboxes *
+mailboxes `email-sidebar-mailboxes hemnet`
+
+set spoolfile = "+inbox"
+set record = "+sent"
+set postponed = "+drafts"
+set trash = "+trash"
+
+macro index,pager e '<clear-flag>N<save-message>+archive<enter>' "Archive + mark as read"

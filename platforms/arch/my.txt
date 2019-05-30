@@ -244,8 +244,8 @@ fortune-mod # adds the fortunes command
 # extra collections of fortunes are installed via aur
 
 # Mail, etc.
-isync
-neomutt
-notmuch
-notmuch-vim
-afew
+isync # Email sync via IMAP
+neomutt # Email client
+notmuch # Email indexer and search engine
+notmuch-vim # Email client (does not work with rvm, it appears)
+afew # Notmuch tagger

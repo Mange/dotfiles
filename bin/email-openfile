@@ -1,0 +1,12 @@
+#!/bin/sh
+
+tmpdir="/tmp/$USER-email-tmp"
+if ! [ -d "$tmpdir" ]; then
+  mkdir -p "$tmpdir"
+  chmod 700 "$tmpdir"
+fi
+
+file="$tmpdir/$(basename "$1")"
+rm -f "$file"
+cp "$1" "$file"
+setsid xdg-open "$file" >/dev/null 2>&1 &
