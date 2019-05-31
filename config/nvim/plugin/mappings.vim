@@ -124,7 +124,7 @@ nmap <leader>T :Tags<cr>
 let g:which_key_map.T = 'fzf-tags'
 " }}}
 
-" {{{ Fugitive mappings
+" {{{ Global fugitive mappings
 let g:which_key_map.g = { "name": "+git" }
 
 nmap <leader>gs :Gstatus<CR>
