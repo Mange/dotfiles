@@ -30,6 +30,7 @@ monitor = ${env:MONITOR}
 font-0 = ${env:POLYBAR_FONT_0}
 font-1 = ${env:POLYBAR_FONT_1}
 font-2 = ${env:POLYBAR_FONT_2}
+font-3 = "Symbols Nerd Font:scale=48;4"
 
 height = ${env:POLYBAR_BAR_HEIGHT:34}
 
@@ -41,8 +42,8 @@ inherit = bar/base
 top = true
 
 modules-left = i3 window-title
-modules-center = time battery-warning
-modules-right = task-counters mailboxes volume wifi
+modules-center = time date
+modules-right = task-counters mailboxes volume wifi battery
 
 tray-detached = false
 tray-position = right
@@ -50,7 +51,7 @@ tray-offset-x = 0
 tray-offset-y = 0
 tray-maxsize = ${env:POLYBAR_TRAY_SIZE:24}
 tray-padding = 4
-tray-background = ${theme.box_background}
+tray-background = ${theme.background}
 tray-scale = ${env:POLYBAR_TRAY_SCALE:1.0}
 
 [bar/secondary]
@@ -58,15 +59,14 @@ inherit = bar/base
 top = true
 
 modules-left = i3 window-title
-modules-center = time battery-warning
-modules-right = task-counters mailboxes volume wifi
+modules-center = time date
+modules-right = task-counters mailboxes volume wifi battery-warning
 
 tray-position = none
 
 [module/base]
 format-padding = 1
 format-margin = 1
-format-background = ${theme.box_background}
 
 [module/task-counters]
 inherit = module/base
@@ -104,39 +104,45 @@ label-mode = "  %mode%  "
 label-mode-background = ${theme.red_background}
 
 # Focused is the workspace that is currently getting commands
-label-focused = " %icon% "
+label-focused = "  %icon%  "
 label-focused-background = ${theme.purple_background0}
+label-focused-font = 4
 
 # Unfocused are workspaces that are not visible
-label-unfocused = " %icon% "
-label-unfocused-background = ${theme.gray_background2}
+label-unfocused = "  %icon%  "
+label-unfocused-font = 4
 
 # Urgent are workspaces with important events
-label-urgent = " %icon% "
+label-urgent = "  %icon%  "
 label-urgent-background = ${theme.orange_background}
+label-urgent-font = 4
 
 # Visible are selected workspaces on other screens
-label-visible = " %icon% "
+label-visible = "  %icon%  "
 label-visible-background = ${theme.purple_background1}
+label-visible-font = 4
 
 [module/window-title]
 inherit = module/base
 type = internal/xwindow
-; NOTE: Counts the invisible %{} tokens, so this is (37 +) 50
-label-maxlen = 87
+label-maxlen = 40
 
-label =" 类 %title%"
+label = "%title%"
 label-empty =
 
 [module/time]
 inherit = module/base
 type = internal/date
-label = %time% %date%
-date = %d/%m
-date-alt = %A vecka %V
+label =  %time%
 time = %H:%M
 interval = 1
-format-background = ${theme.box_background}
+
+[module/date]
+inherit = module/base
+type = internal/date
+label =  %date%
+date = %a %d %b (v%V)
+interval = 30
 
 [module/mailboxes]
 inherit = module/base
@@ -152,8 +158,6 @@ format-volume-margin = 1
 format-volume-padding = 1
 format-muted-margin = 1
 format-muted-padding = 1
-format-volume-background = ${theme.box_background}
-format-muted-background = ${theme.box_background}
 
 format-volume = " <ramp-volume><label-volume>"
 format-muted = "  <label-muted>"
@@ -235,26 +239,19 @@ animation-packetloss-1 = 
 ; Framerate in milliseconds
 animation-packetloss-framerate = 500
 
-[module/battery-warning]
+[module/battery]
 inherit = module/base
 type = internal/battery
-full-at = 95
 
-format-charging = " <label-charging>
+format-charging = " <label-charging>"
 format-discharging = "<ramp-capacity><label-discharging>"
-format-full = ""
+format-full = x
 format-charging-padding = 2
 format-discharging-padding = 2
 format-full-padding = 0
 
-label-full-background = ${theme.background}
-label-full-padding = 1
-label-charging-background = ${theme.orange_background}
-label-charging-padding = 1
-; label-discharging-background = ${theme.orange_background}
-label-discharging-padding = 1
+label-full = ""
 
-animation-charging-background = ${theme.orange_background1}
 animation-charging-0 = " "
 animation-charging-1 = " "
 animation-charging-2 = " "

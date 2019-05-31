@@ -65,7 +65,7 @@ perform_box_sync() {
   echo "= ${name} ="
 
   if aquire_lock "$lockfile"; then
-    unread_before="$(write_status "$box" "🔃")"
+    unread_before="$(write_status "$box" "痢")"
 
     # Initial index makes sure that changes made locally will be applied to the
     # server when it is finally synced.
@@ -163,12 +163,7 @@ write_status() {
   local message
   local new_email
   new_email="$(count_new_mail "$box")"
-
-  if [[ "$new_email" -gt 0 ]]; then
-    message="${icon:-📬} ${new_email}"
-  else
-    message="${icon:-📭} ${new_email}"
-  fi
+  message="${icon:-} ${new_email}"
 
   echo "$message" > "${mail_dir}/${box}/.mailboxes-state"
   (set +e; polybar-msg hook mailboxes 1)
