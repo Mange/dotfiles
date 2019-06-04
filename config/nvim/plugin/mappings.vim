@@ -84,6 +84,10 @@ let g:which_key_map.A = 'project-isearch-word'
 
 let g:which_key_map.l = { "name": "+language-server" }
 
+" Run codelens action
+nmap <leader>ll <Plug>(coc-codelens-action)
+let g:which_key_map.l.l = "codelens-action"
+
 " Remap for rename current word
 nmap <leader>lr <Plug>(coc-rename)
 let g:which_key_map.l.r = "rename"
@@ -122,9 +126,18 @@ let g:which_key_map.l.p = "resume-last-list"
 " {{{ fzf finders
 nmap <leader>T :Tags<cr>
 let g:which_key_map.T = 'fzf-tags'
+
+nmap <leader>b :Buffers<cr>
+let g:which_key_map.b = 'fzf-buffers'
+
+nmap <leader>? :Helptags<cr>
+let g:which_key_map["?"] = 'fzf-helptags'
+
+nmap <leader>f :Filetypes<cr>
+let g:which_key_map.f = 'fzf-filetypes'
 " }}}
 
-" {{{ Global fugitive mappings
+" {{{ Git mappings
 let g:which_key_map.g = { "name": "+git" }
 
 nmap <leader>gs :Gstatus<CR>
@@ -139,6 +152,8 @@ let g:which_key_map.g.c = 'commit'
 nmap <leader>gC :Gcommit --all<CR>
 let g:which_key_map.g.C = 'commit-all'
 
+nmap <leader>g/ :Commits<CR>
+let g:which_key_map.g["/"] = 'fzf-commits'
 " }}}
 
 " {{{ Helpers for diff mode ("vimdiff")
