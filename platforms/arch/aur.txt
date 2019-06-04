@@ -29,8 +29,6 @@ compton-tryone-git
 flashfocus-git # Flash windows when focus changes
 
 # Vifm stuff
-# Broken right now; install manually with `pip install ueberzug` instead
-# python-ueberzug # Überzug, for rendering images on the terminal in ex. vifm
 epub-thumbnailer-git
 cover-thumbnailer-git
 
