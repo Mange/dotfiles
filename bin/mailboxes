@@ -191,15 +191,15 @@ write_status() {
   local box="$1"
   local icon="$2"
   local message
-  local unread_important_email
-  local unread_email
-  unread_important_email="$(count_email_inbox "$box" tag:important AND tag:unread)"
-  unread_email="$(count_email_inbox "$box" tag:unread)"
-  message="${icon:-} ${unread_important_email}:${unread_email}"
+  local unread_important
+  local unread_all
+  unread_important="$(count_email_inbox "$box" tag:important AND tag:unread)"
+  unread_all="$(count_email_inbox "$box" tag:unread)"
+  message="${icon:-} ${unread_important}:${unread_all}"
 
   echo "$message" > "${mail_dir}/${box}/.mailboxes-state"
   (set +e; polybar-msg hook mailboxes 1 >/dev/null 2>/dev/null)
-  echo "$unread_email"
+  echo "$unread_important"
 }
 
 count_email_inbox() {
