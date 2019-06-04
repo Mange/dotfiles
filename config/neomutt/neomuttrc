@@ -9,6 +9,7 @@
 #   - Replicate more shortcuts from gmail web interface
 #   - Integrate notmuch
 
+set delete # Delete ("remove from tag") without confirmation
 set fast_reply # Go straight to compose when replying
 set fcc_attach # save attachments with the body
 set forward_format = "Fwd: %s"
@@ -20,10 +21,22 @@ set markers = no # Hide "+" at wrapped lines
 set mime_forward = yes # attachments are forwarded
 set rfc2047_parameters = yes # Decode attachment names from RFC2047
 set sleep_time = 0
-set sort = "reverse-threads"
-set sort_aux = last-date-received
+set sort = "threads"
+set sort_aux = reverse-last-date-received
+set sort_re
 set use_from = yes # Generate "From:" header
 set wait_key = no # Don't "Press key to continue"
+set quit # Quit without confirmation
+unset confirmappend # Move messages to another mailbox without confirmation
+unset mark_old # "Unread" is enough, no need for "New/Old"
+unset move # Gmail does this
+unset resolve # Cursor should stay on the email when modifying it
+
+set pager_index_lines = 8
+set pager_context = 5
+set pager_stop
+set menu_scroll
+set smart_wrap
 
 set reverse_name # reply as reciever
 set reverse_realname

@@ -10,12 +10,19 @@ set header_cache = "~/.cache/neomutt/gmail/headers"
 set message_cachedir = "~/.cache/neomutt/gmail/bodies"
 set mbox_type = Maildir
 
+# Disable saving outgoing mail since Gmail saves them by default.
+set record = ""
+
 unmailboxes *
 mailboxes `email-sidebar-mailboxes gmail`
 
 set spoolfile = "+inbox"
 set record = "+sent"
 set postponed = "+drafts"
-set trash = "+trash"
+# Don't set this, or else all emails that are moved from a folder will instead
+# be moved to the trash and synced to the server as "deleted".
+# With this unset, then email files are deleted on disk which will be synced as
+# "Remove label" to the server.
+# set trash = "+trash"
 
-macro index,pager e '<clear-flag>N<save-message>+archive<enter>' "Archive + mark as read"
+macro index,pager e "<clear-flag>N<tag-prefix><save-message>+archive\n<next-undeleted><sync-mailbox>" "Archive + mark as read"
