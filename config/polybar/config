@@ -150,6 +150,8 @@ type = custom/ipc
 hook-0 = ~/.config/polybar/mailboxes
 ; Note: 1-indexed, so 1 is hook-0
 initial = 1
+click-left = systemctl --user start mailboxes.service
+click-right = kitty neomutt
 
 [module/volume]
 inherit = module/base
