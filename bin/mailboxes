@@ -29,8 +29,9 @@ Commands:
   sync [mailbox]
     Sync selected or all mailboxes, updating status during the sync.
 
-  status [mailbox]
-    Show current status or all, or selected mailbox.
+  status [--refresh] [mailbox]
+    Show current status or all, or selected mailbox. Optionally refresh status
+    instead of reading cached status.
 
   help
     Show this help and ext.
@@ -119,11 +120,34 @@ index_and_tag_emails() {
 }
 
 perform_status() {
-  local box="$1"
+  local box
+  local refresh=no
+
+  while [[ -n "$1" ]]; do
+    case "$1" in
+      "--refresh")
+        refresh=yes
+        shift
+        ;;
+      -*)
+        die "Unrecognized status option: $1"
+        ;;
+      *)
+        break
+        ;;
+    esac
+  done
+
   if [[ -n $box ]]; then
+    if [[ $refresh == yes ]]; then
+      write_status "$box" >/dev/null
+    fi
     read_status "$box"
   else
     for box in "${mailboxes[@]}"; do
+      if [[ $refresh == yes ]]; then
+        write_status "$box" >/dev/null
+      fi
       echo -n "$(get_box_name "$box"): "
       read_status "$box"
     done
@@ -167,18 +191,21 @@ write_status() {
   local box="$1"
   local icon="$2"
   local message
-  local new_email
-  new_email="$(count_new_mail "$box")"
-  message="${icon:-} ${new_email}"
+  local unread_important_email
+  local unread_email
+  unread_important_email="$(count_email_inbox "$box" tag:important AND tag:unread)"
+  unread_email="$(count_email_inbox "$box" tag:unread)"
+  message="${icon:-} ${unread_important_email}:${unread_email}"
 
   echo "$message" > "${mail_dir}/${box}/.mailboxes-state"
-  (set +e; polybar-msg hook mailboxes 1)
-  echo "$new_email"
+  (set +e; polybar-msg hook mailboxes 1 >/dev/null 2>/dev/null)
+  echo "$unread_email"
 }
 
-count_new_mail() {
+count_email_inbox() {
   local box="$1"
-  notmuch count --output=threads "folder:${box}/inbox" tag:unread
+  shift
+  notmuch count --output=threads "folder:${box}/inbox" AND "$@"
 }
 
 get_box_name() {
@@ -199,6 +226,11 @@ verbose() {
   fi
 
   "$@"
+}
+
+die() {
+  echo "$@" >&2
+  exit 1
 }
 
 while [[ -n "$1" ]]; do
