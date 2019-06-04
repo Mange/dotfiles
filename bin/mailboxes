@@ -26,8 +26,8 @@ Commands:
   list [--no-names]
     List mailboxes.
 
-  sync
-    Sync all mailboxes, updating status during the sync.
+  sync [mailbox]
+    Sync selected or all mailboxes, updating status during the sync.
 
   status [mailbox]
     Show current status or all, or selected mailbox.
@@ -51,9 +51,15 @@ perform_list() {
 }
 
 perform_sync() {
-  for box in "${mailboxes[@]}"; do
+  local box="$1"
+
+  if [[ -n $box ]]; then
     perform_box_sync "$box"
-  done
+  else
+    for box in "${mailboxes[@]}"; do
+      perform_box_sync "$box"
+    done
+  fi
 }
 
 perform_box_sync() {
