@@ -1,34 +1,28 @@
 #!/usr/bin/env bash
 
-playing_icon=▶
-paused_icon=⏸
-
-root="$(dirname "$0")"
-
-# shellcheck source=/home/mange/.local/share/gruvbox/colors.env
-source "${XDG_DATA_HOME}/gruvbox/colors.env"
+no_media_icon=ﱙ
+playing_icon=喇
+paused_icon=
 
 if player_status=$(playerctl status 2>/dev/null); then
-  if [[ $player_status == "Paused" ]]; then
-    playback_icon="$paused_icon"
-  elif [[ $player_status == "Stopped" ]]; then
+  if [[ $player_status == "Paused" || $player_status == "Stopped" ]]; then
     playback_icon="${paused_icon}"
   else
-    playback_icon="$playing_icon"
+    playback_icon="${playing_icon}"
   fi
 
   artist="$(playerctl metadata artist 2>/dev/null)"
   title="$(playerctl metadata title 2>/dev/null)"
 
-  if [[ ${#artist} -gt 30 ]]; then
-    artist="${artist:0:29}…"
+  if [[ ${#artist} -gt 25 ]]; then
+    artist="${artist:0:24}…"
   fi
 
-  if [[ ${#title} -gt 40 ]]; then
-    title="${title:0:39}…"
+  if [[ ${#title} -gt 30 ]]; then
+    title="${title:0:29}…"
   fi
 
-  "$root/module" blue "${playback_icon}" "${artist} - ${title}"
+  echo -n "${playback_icon} ${artist} // ${title}"
 else
-  "$root/module" blue "${playing_icon}" ""
+  echo -n "${no_media_icon} "
 fi

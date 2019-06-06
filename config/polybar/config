@@ -41,7 +41,7 @@ cursor-click = pointer
 inherit = bar/base
 top = true
 
-modules-left = i3 window-title
+modules-left = i3 media-info
 modules-center = time date
 modules-right = task-counters mailboxes volume wifi battery
 
@@ -58,7 +58,7 @@ tray-scale = ${env:POLYBAR_TRAY_SCALE:1.0}
 inherit = bar/base
 top = true
 
-modules-left = i3 window-title
+modules-left = i3 media-info
 modules-center = time date
 modules-right = task-counters mailboxes volume wifi battery-warning
 
@@ -121,6 +121,13 @@ label-urgent-font = 4
 label-visible = "  %icon%  "
 label-visible-background = ${theme.purple_background1}
 label-visible-font = 4
+
+[module/media-info]
+inherit = module/base
+type = custom/script
+exec = ~/.config/polybar/media
+click-left = playerctl play-pause
+click-right = run-or-raise 'class = "Spotify"' spotify-with-hidpi-support
 
 [module/window-title]
 inherit = module/base
