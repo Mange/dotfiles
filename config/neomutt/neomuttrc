@@ -70,3 +70,8 @@ macro index,pager i2 '<sync-mailbox><enter-command>source ~/.config/neomutt/acco
 
 # Default to private email
 source ~/.config/neomutt/accounts/gmail.muttrc
+
+# Viewing email
+macro index,pager \cb "<pipe-message> urlscan<Enter>" "call urlscan to extract URLs out of a message"
+macro attach,compose \cb "<pipe-entry> urlscan<Enter>" "call urlscan to extract URLs out of a message"
+
