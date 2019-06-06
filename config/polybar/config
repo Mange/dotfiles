@@ -186,8 +186,6 @@ format-disconnected-padding = 0
 format-connected = <label-connected>
 format-connected-prefix = ""
 format-connected-prefix-padding = 1
-format-connected-prefix-background = ${theme.green_background1}
-label-connected-background = ${theme.green_background}
 label-connected-padding = 1
 
 ; Available tags:
