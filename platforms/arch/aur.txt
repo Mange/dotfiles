@@ -42,6 +42,7 @@ docker-credential-secretservice
 
 # Dev tools
 pgcli
+jiq # interactive jq
 
 # Fonts (also see my.txt)
 ttf-nerd-fonts-symbols
