@@ -37,11 +37,66 @@ umask 002
 # Default:        *?_-.[]~=/&;!#$%^(){}<>
 export WORDCHARS='*?[]~&;!#$%^(){}'
 
-bindkey -v
+# Vim keys in shell
+bindkey -d # Delete all existing keybinds
+bindkey -v # Use vimkeys by default
+
+# Delete EMACS-like bindings to retrain my muscle memory
+# See info about how this works here: https://unix.stackexchange.com/a/320432
+bindkey -s '^[OC' '\a' # → ?
+bindkey -s '^[OD' '\a' # ← ?
+bindkey -s '^[[C' '\a' # →
+bindkey -s '^[[D' '\a' # ←
+bindkey -s '^[OA' '\a' # Up ?
+bindkey -s '^[OB' '\a' # Down ?
+bindkey -s '^[[A' '\a' # Up
+bindkey -s '^[[B' '\a' # Down
+bindkey -s '^A' '\a'
+
+# New line
+bindkey -M viins '^J' self-insert
+
+# Vim-like bindings
+# Stolen from https://github.com/sharat87/zsh-vim-mode/blob/master/zsh-vim-mode.plugin.zsh
+
+# Fix more vim-like bindings (instead of vi)
+# vi bindings do not kill beyond the start of Insert mode (e.g. enter insert
+# and press backspace and nothing happens)
+bindkey "^W" backward-kill-word    # vi-backward-kill-word
+bindkey "^H" backward-delete-char  # vi-backward-delete-char
+bindkey "^U" backward-kill-line    # vi-kill-line
+bindkey "^?" backward-delete-char  # vi-backward-delete-char
+
+bindkey -M vicmd 'yy' vi-yank-whole-line
+bindkey -M vicmd 'Y' vi-yank-eol
+
+bindkey -M vicmd 'u' undo
+bindkey -M vicmd '^R' redo
+
+bindkey -M vicmd 'K' run-help
 
 # Load editor support
 autoload edit-command-line
 zle -N edit-command-line
+bindkey -M vicmd 'v' edit-command-line
+
+# See extra bindkey calls under the Plugins section
+
+if [ -f ~/.fzf.zsh ]; then
+  source ~/.fzf.zsh
+  bindkey -M vicmd "/" fzf-history-widget
+  bindkey "^P" fzf-file-widget
+fi
+
+# Use highlight to preview FZF files under CTRL+T
+if command-exist highlight; then
+  export FZF_CTRL_T_OPTS="--preview '(bat --style=numbers --color=always {} || cat {} || tree -C {}) 2> /dev/null | head -200'"
+fi
+
+# Use ripgrep to populate fzf
+if command-exist rg; then
+  export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
+fi
 
 # Outputs $1 when on insert mode and outputs $2 when on command mode.
 # zle_mode_output "when insert" "when command"
@@ -58,61 +113,6 @@ function zle-keymap-select {
   zle reset-prompt
 }
 zle -N zle-keymap-select
-
-# ^LeftArrow, ^RightArrow
-bindkey '[1;5C' forward-word
-bindkey '[1;5D' backward-word
-
-# New line
-bindkey -M viins '^J' self-insert
-
-# Vim-like bindings
-# Stolen from https://github.com/sharat87/zsh-vim-mode/blob/master/zsh-vim-mode.plugin.zsh
-
-# Fix more vim-like bindings (instead of vi)
-# vi bindings do not kill beyond the start of Insert mode (e.g. enter insert
-# and press backspace and nothing happens)
-bindkey "^W" backward-kill-word    # vi-backward-kill-word
-bindkey "^H" backward-delete-char  # vi-backward-delete-char
-bindkey "^U" backward-kill-line    # vi-kill-line
-bindkey "^?" backward-delete-char  # vi-backward-delete-char
-
-# Home key variants
-bindkey '\e[1~' vi-beginning-of-line
-bindkey '\eOH' vi-beginning-of-line
-
-# End key variants
-bindkey '\e[4~' vi-end-of-line
-bindkey '\eOF' vi-end-of-line
-
-bindkey -M vicmd 'yy' vi-yank-whole-line
-bindkey -M vicmd 'Y' vi-yank-eol
-
-bindkey -M vicmd 'u' undo
-bindkey -M vicmd '^r' redo
-
-bindkey -M vicmd 'H' run-help
-bindkey -M viins '^h' run-help
-
-bindkey -M viins '^a' beginning-of-line
-bindkey -M viins '^e' end-of-line
-
-bindkey -M vicmd 'v' edit-command-line
-bindkey -M viins '^rv' edit-command-line
-
-# See extra bindkey calls under the Plugins section
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# Use highlight to preview FZF files under CTRL+T
-if command-exist highlight; then
-  export FZF_CTRL_T_OPTS="--preview '(bat --style=numbers --color=always {} || cat {} || tree -C {}) 2> /dev/null | head -200'"
-fi
-
-# Use ripgrep to populate fzf
-if command-exist rg; then
-  export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
-fi
 
 # }}}
 # {{{ ls (Colors, etc.)
@@ -589,12 +589,13 @@ stty -ixon -ixoff
 source "${XDG_CONFIG_HOME}/shells/enable-rvm"
 # }}}
 
-# {{{ Syntax highlighting
+# {{{ Plugins (Syntax highlighting, better history search)
 try-source-plugin zsh-syntax-highlighting || true
 
 if try-source-plugin zsh-history-substring-search; then
-  bindkey '^n' history-substring-search-up
-  bindkey '^p' history-substring-search-down
+  bindkey -M viins '^N' history-substring-search-up
+  bindkey -M vicmd 'k' history-substring-search-up
+  bindkey -M vicmd 'j' history-substring-search-down
 fi
 # }}}
 
