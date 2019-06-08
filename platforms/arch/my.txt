@@ -68,13 +68,16 @@ prettyping
 pulsemixer
 ripgrep
 rsync
-task
 tldr
 tree
 wget
 zsh-completions
 zsh-history-substring-search
 zsh-syntax-highlighting
+
+# Task keeping
+task
+vit
 
 # Calculator
 libqalculate
