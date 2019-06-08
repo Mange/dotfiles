@@ -131,7 +131,8 @@ alias l='ls -l'
 
 # Replace l with exa if exa is installed
 if command-exist exa; then
-  alias l='exa --long --color-scale --git'
+  alias ls='exa --group-directories-first'
+  alias l='exa --group-directories-first --long --color-scale --git'
 fi
 
 # }}}
@@ -250,7 +251,7 @@ cd () {
 }
 
 # Display contents of current directory when changing directories
-function chpwd { ls }
+function chpwd { exa --group-directories-first || ls }
 # }}}
 # {{{ History
 export HISTSIZE=5000
