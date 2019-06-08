@@ -249,8 +249,8 @@ cd () {
 function chpwd { ls }
 # }}}
 # {{{ History
-export HISTSIZE=500
-export SAVEHIST=500
+export HISTSIZE=5000
+export SAVEHIST=5000
 export HISTFILE="${XDG_DATA_HOME}/zsh/history"
 
 if [[ ! -d "$(dirname "$HISTFILE")" ]]; then
@@ -267,6 +267,8 @@ setopt append_history
 setopt hist_ignore_all_dups
 # verify ! expansions
 setopt hist_verify
+# skip history entry if command starts with a space
+setopt hist_ignore_space
 
 # }}}
 # {{{ Pager
