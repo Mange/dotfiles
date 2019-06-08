@@ -13,8 +13,12 @@ autoload -Uz add-zsh-hook
 command-exist() { whence $1 > /dev/null; }
 
 alias-if-exist() {
-  if command-exist $1; then
-    alias $2=$1
+  local old_command=$1
+  shift
+  local new_command=$1
+
+  if command-exist $new_command; then
+    alias $old_command="$*"
   fi
 }
 
@@ -307,21 +311,13 @@ alias -g CP='| copy'
 # }}}
 # {{{ Command replacements / aliases for commands with non-standard names
 # Colordiff
-alias-if-exist colordiff diff
-
-if command-exist ag; then
-  # I should not use Ack anymore
-  ack() {
-    echo "Use Ag, dummy!"
-    sleep 1
-    ag $@
-  }
-fi
+alias-if-exist diff colordiff
+alias-if-exist ping prettyping --nolegend
 # }}}
 # {{{ Git settings and shortcuts
 git_log_format='%C(bold blue)%h%Creset %C(bold)%s%Creset%C(auto)%d%n%C(dim white)%ad %C(nodim green)(%ar)%Creset - %an%C(yellow)%+N%n%Creset'
 
-alias-if-exist hub git
+alias-if-exist git hub
 
 alias checkout='git checkout'
 alias master="git checkout master"

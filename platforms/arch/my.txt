@@ -64,6 +64,7 @@ jq
 keybase
 nmap
 parallel
+prettyping
 pulsemixer
 ripgrep
 rsync
