@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 # Run after installing dotfiles to perform extra work.
 
+# Create directory for ZSH history, etc., if it does not exist already.
+mkdir -p "${XDG_DATA_HOME}/zsh"
+
 # Setup theme if it appears to not be set up already
 if [[ ! -s "${XDG_CONFIG_HOME}/kitty/theme.conf" ]]; then
   ~/.local/bin/_theme_set dark

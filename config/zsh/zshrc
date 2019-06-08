@@ -253,14 +253,6 @@ export HISTSIZE=5000
 export SAVEHIST=5000
 export HISTFILE="${XDG_DATA_HOME}/zsh/history"
 
-if [[ ! -d "$(dirname "$HISTFILE")" ]]; then
-  mkdir -p "$(dirname "$HISTFILE")"
-fi
-
-if [[ ! -e $HISTFILE ]]; then
-  touch $HISTFILE
-fi
-
 # don't replace history when process exits
 setopt append_history
 # remove old dups when added again
