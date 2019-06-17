@@ -27,6 +27,8 @@ Plug 'liuchengxu/vim-which-key'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
+Plug 'liuchengxu/vista.vim'
+
 """ Note taking / TODOs
 " vimwiki
 Plug 'vimwiki/vimwiki'

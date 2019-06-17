@@ -72,6 +72,10 @@ call which_key#register(g:mapleader, "g:which_key_map")
 nmap <leader>q :%bd<CR>
 let g:which_key_map.q = 'close-all'
 
+" Toggle Vista panel
+nmap <leader>t :Vista!!<CR>
+let g:which_key_map.t = 'vista-toggle'
+
 " Search for word in vim *and* Ag at the same time
 " <leader>A for case-insensitive, <leader>a for smart-case
 nmap <leader>a *:AgFromSearch<CR>
