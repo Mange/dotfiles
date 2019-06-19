@@ -23,12 +23,14 @@ OPTIONS:
 
     SECTIONS:
       all      (All sections)
+      fast     (Only fast sections; no updates or installs)
+      updates  (Installing updates)
+
       aur      (Install AUR software and tools)
       neovim   (Neovim support)
       pacman   (Install software)
+      pip      (Install software based on python pip)
       rust     (Rust setup)
-      updates  (Installing updates)
-      fast     (Only fast sections; no updates or installs)
 USAGE
 }
 ONLY_SECTION="all"
@@ -60,7 +62,7 @@ while true; do
 done
 
 case "$ONLY_SECTION" in
-  all | pacman | rust | projects | neovim | aur | updates | fast )
+  all | pacman | rust | projects | neovim | aur | updates | fast | pip )
     # Valid; do nothing
     ;;
   *)
@@ -204,6 +206,34 @@ compile-install-aur() {
     echo "${yellow}${errors} package(s) failed to install. ${installed} installed successfully.${reset}"
     handle-failure
   fi
+}
+
+install-pip-software() {
+    header "Installing PIP software"
+
+    wanted_software=(
+      pgcli
+    )
+
+    for package in "${wanted_software[@]}"; do
+      if pip show "$package" >/dev/null 2>/dev/null; then
+        subheader "Upgrading $package" -n
+        if output="$(sudo pip install -U "$package" 2>&1)"; then
+          echo "${green} ✔"
+        else
+          echo "${red} ✘ - FAILED"
+          echo "$output"
+        fi
+      else
+        subheader "Installing $package" -n
+        if output="$(sudo pip install "$package" 2>&1)"; then
+          echo "${green} ✔"
+        else
+          echo "${red} ✘ - FAILED"
+          echo "$output"
+        fi
+      fi
+    done
 }
 
 compile-aurutils() {
@@ -454,6 +484,11 @@ if run-section "aur"; then
       compile-install-aur "arch/${HOSTNAME}-aur.txt" || handle-failure
     fi
   fi
+fi
+
+if run-section "pip"; then
+  init-sudo
+  install-pip-software || handle-failure "Installing Python PIP software"
 fi
 
 if run-section "fast"; then

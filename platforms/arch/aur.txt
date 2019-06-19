@@ -41,7 +41,7 @@ tydra
 docker-credential-secretservice
 
 # Dev tools
-pgcli
+# pgcli # Install via pip instead; it keeps breaking on AUR
 jiq # interactive jq
 
 # Fonts (also see my.txt)
