@@ -44,6 +44,7 @@ export WORDCHARS='*?[]~&;!#$%^(){}'
 # Vim keys in shell
 bindkey -d # Delete all existing keybinds
 bindkey -v # Use vimkeys by default
+KEYTIMEOUT=1 # 10ms delay for Escape key
 
 # Delete EMACS-like bindings to retrain my muscle memory
 # See info about how this works here: https://unix.stackexchange.com/a/320432
