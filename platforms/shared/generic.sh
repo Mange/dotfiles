@@ -44,6 +44,63 @@ install-ruby-via-rvm() {
   rvm use --default ruby
 }
 
+install-solargraph() {
+  # shellcheck source=/dev/null
+  source "${XDG_CONFIG_HOME}/shells/enable-rvm"
+
+  if [[ -f "$HOME/.rvm/gemsets/global.gems" ]]; then
+    install-solargraph-local
+  elif [[ -f "/usr/share/rvm/gemsets/global.gems" ]]; then
+    install-solargraph-global
+  else
+    echo "${yellow}WARN: Cannot find ~/.rvm; aborting just to be safe.${reset}"
+    return 1
+  fi
+}
+
+install-solargraph-local() {
+  local gemset="$HOME/.rvm/gemsets/global.gems"
+
+  if ! grep -q solargraph "$gemset"; then
+    header "Installing solargraph"
+    subheader "Marking it for installation on all Ruby upgrades"
+    echo solargraph >> "$gemset"
+
+    subheader "Installing solargraph in all installed rubies"
+    rvm all 'do' bash -c 'ruby -v; gem install solargraph'
+
+    echo "${green}Done!${reset}"
+  fi
+}
+
+install-solargraph-global() {
+  local gemset="/usr/share/rvm/gemsets/global.gems"
+
+  if ! grep -q solargraph "$gemset"; then
+    header "Installing solargraph"
+    subheader "Marking it for installation on all Ruby upgrades"
+    echo solargraph | sudo tee -a "$gemset" > /dev/null
+
+    subheader "Installing solargraph in all installed rubies"
+    rvm all 'do' bash -c 'ruby -v; gem install solargraph'
+
+    echo "${green}Done!${reset}"
+  fi
+}
+
+update-solargraph() {
+  if [[ -s /usr/share/rvm/scripts/rvm ]]; then
+    source /usr/share/rvm/scripts/rvm
+  else
+    echo "ERROR: RVM isn't installed?" >/dev/stderr
+    return 1
+  fi
+
+  if hash solargraph 2>/dev/null; then
+    rvm all 'do' bash -c 'ruby -v; gem update solargraph'
+  fi
+}
+
 install-ripper-tags() {
   # shellcheck source=/dev/null
   source "${XDG_CONFIG_HOME}/shells/enable-rvm"

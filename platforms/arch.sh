@@ -466,6 +466,7 @@ if run-section "pacman"; then
 
   install-ruby-via-rvm || handle-failure "Installing Ruby"
   install-ripper-tags || handle-failure "Installing ripper-tags"
+  install-solargraph || handle-failure "Installing solargraph"
 fi
 
 if run-section "aur"; then
@@ -621,4 +622,5 @@ if run-section "updates"; then
 
   subheader "Installing RVM/Ruby updates"
   update-ripper-tags || handle-failure "Updating ripper-tags"
+  update-solargraph || handle-failure "Updating solargraph"
 fi
