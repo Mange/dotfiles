@@ -497,8 +497,11 @@ function mange-prompt-preexec() {
   cmd_timestamp=$EPOCHSECONDS
 
   # shows the current dir and executed command in the title when a process is active
-  local terminal_title_format="$2 [%4~]"
-  print -Pn "\033]0;${terminal_title_format}\007"
+  (
+    setopt nopromptsubst
+    local terminal_title_format="$2 [%4~]"
+    print -Pn "\033]0;${terminal_title_format}\007"
+  )
 }
 
 # - Show time taken for long-running commands
