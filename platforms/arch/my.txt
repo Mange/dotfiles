@@ -61,7 +61,6 @@ htop
 httpie
 hub
 jq
-keybase
 nmap
 parallel
 prettyping
@@ -141,6 +140,10 @@ xcape # Make Super into both Super and Escape
 xorg-xbacklight
 xsel
 zenity # GUI prompts from scripts (ytpip, etc.)
+
+# Keybase
+keybase
+keybase-gui
 
 # Redshift + dependencies
 redshift
