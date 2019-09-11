@@ -44,7 +44,7 @@ ttf-droid        # Android
 ttf-roboto       # Android
 
 ttf-liberation # Arial, Times New Roman, etc.
-ttf-freefont # FreeMono; monospaced Unicode font. Popular in Kaomoji, etc.
+gnu-free-fonts # FreeMono; monospaced Unicode font. Popular in Kaomoji, etc.
 
 # Eastern fonts, for Kaomoji, when opening Japanese websites, etc.
 otf-ipafont # Japanese
