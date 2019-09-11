@@ -17,10 +17,16 @@ install-rustup-components() {
 
   header "Adding Rust editor components"
   run-rust-cmd rustup component add rust-src
-  run-rust-cmd rustup component add rls-preview
+  run-rust-cmd rustup component add clippy
+  run-rust-cmd rustup component add rls
   run-rust-cmd rustup component add rust-analysis
-  run-rust-cmd rustup component add rustfmt-preview
-  run-rust-cmd rustup component add clippy-preview --toolchain=nightly
+  run-rust-cmd rustup component add rustfmt
+
+  run-rust-cmd rustup component add rust-src --toolchain=nightly
+  run-rust-cmd rustup component add clippy --toolchain=nightly
+  run-rust-cmd rustup component add rls --toolchain=nightly
+  run-rust-cmd rustup component add rust-analysis --toolchain=nightly
+  run-rust-cmd rustup component add rustfmt --toolchain=nightly
 }
 
 run-rust-cmd() {
