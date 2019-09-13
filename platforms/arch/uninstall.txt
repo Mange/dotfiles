@@ -2,3 +2,9 @@
 
 # Replaced by bwpass
 bitwarden
+
+# Replaced with xss-lock
+light-locker
+
+# Replaced with i3lock-color
+gnome-screensaver

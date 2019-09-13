@@ -1,7 +1,0 @@
-#!/usr/bin/bash
-
-# Record when it was locked
-date +%s > "$XDG_RUNTIME_DIR/locking-monitor-time-of-last-lock"
-
-# Pause music, if playing
-playerctl pause

@@ -120,7 +120,8 @@ blueman
 dunst # libnotify server
 feh
 gucharmap
-i3-gaps
+i3-gaps # WM fork
+i3lock-color # Lockscreen (for xss-lock, etc.)
 kitty
 ktouch # I'm practicing touch typing
 lxappearance
@@ -139,6 +140,7 @@ workrave
 xcape # Make Super into both Super and Escape
 xorg-xbacklight
 xsel
+xss-lock # Screenlocker
 zenity # GUI prompts from scripts (ytpip, etc.)
 
 # Keybase
@@ -208,7 +210,6 @@ gnome-icon-theme-extras
 gnome-keyring
 gnome-online-accounts
 gnome-photos
-gnome-screensaver
 gnome-screenshot
 gnome-session
 gnome-settings-daemon

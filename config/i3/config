@@ -78,9 +78,10 @@ client.urgent            $bright_red     $bright_red     $light1 $bright_red   $
 # }}}
 
 # {{{ Early startup applications
+
 # Lock screen on suspend, after screensaver, etc.
-exec --no-startup-id light-locker
-exec --no-startup-id ~/.local/bin/locking-monitor
+exec --no-startup-id xset s 660 # lock after 11 minutes
+exec --no-startup-id xss-lock --transfer-sleep-lock -- lock-screen
 
 # To deal with apps requesting privilege elevation
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
@@ -119,7 +120,7 @@ set $browsername Firefox Developer Edition
 bindsym $mod+grave        workspace back_and_forth
 bindsym $mod+Escape       workspace back_and_forth
 # Label: Lock screen
-bindsym $mod+shift+Escape exec light-locker-command -l
+bindsym $mod+shift+Escape exec xdg-screensaver activate
 
 # Label: System workspace
 bindsym $mod+1        workspace $workspace1

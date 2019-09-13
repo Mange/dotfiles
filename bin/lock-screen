@@ -1,0 +1,77 @@
+#!/bin/bash
+# Lock screen, executing some things before and some things after unlocking again.
+
+# The sleep_lock and normal_lock code is based on
+# /usr/share/doc/xss-lock/transfer-sleep-lock-i3lock.sh
+
+i3lock_options=(
+  "--pass-media-keys"
+  "--blur=2"
+  "--clock"
+)
+
+sleep_lock() {
+  kill_i3lock() {
+    pkill --exact --user $EUID "$@" i3lock
+  }
+
+  trap kill_i3lock TERM INT
+
+  # Make sure i3lock does not inherit a copy of XSS_SLEEP_LOCK_FD
+  i3lock "${i3lock_options[@]}" {XSS_SLEEP_LOCK_FD}<&-
+
+  # Lock is now ready, feel free to sleep. Closing FD.
+  exec {XSS_SLEEP_LOCK_FD}<&-
+
+  # Wait for lock to be unlocked
+  while kill_i3lock -0; do
+    sleep 0.5
+  done
+}
+
+normal_lock() {
+  trap 'kill %%' TERM INT
+  i3lock --nofork "${i3lock_options[@]}" &
+  wait
+}
+
+#
+# Before lock
+#
+
+locked_at_timestamp=$(date +%s)
+
+# Pause playing media
+previous_player_status=$(playerctl status)
+[ "$previous_player_status" = "Playing" ] && playerctl pause
+
+#
+# Lock
+#
+
+# If XSS_SLEEP_LOCK_FD is passed, then the machine is going to sleep and this
+# script should signal that the lock is done by closing that FD.
+# If not, it's a standard lock which is a lot simpler.
+if [ -e "/dev/fd/${XSS_SLEEP_LOCK_FD:--1}" ]; then
+  sleep_lock
+else
+  normal_lock
+fi
+
+#
+# After unlock
+#
+
+# Make sure keyboard is set up correctly. Replugging a keyboard resets Xmodmap,
+# and this is common as I unplug my keyboard from my laptop before it goes to
+# sleep.
+fix-keyboard
+
+# Resume media if lock screen paused it
+[ "$previous_player_status" = "Playing" ] && playerctl play
+
+# Show reminder, if it was more than 1 hour since last locked
+one_hour_ago=$(date -d "1 hour ago" +%s)
+if [ "$locked_at_timestamp" -lt "$one_hour_ago" ]; then
+    startup-reminder
+fi

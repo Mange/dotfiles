@@ -23,7 +23,6 @@ tmux
 zsh
 
 # Graphical environment
-light-locker # lock screen on suspend, or after screensaver starts
 lightdm
 lightdm-gtk-greeter
 lightdm-gtk-greeter-settings
