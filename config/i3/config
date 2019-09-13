@@ -85,15 +85,13 @@ exec --no-startup-id ~/.local/bin/locking-monitor
 # To deal with apps requesting privilege elevation
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 
-# Keyboard, screens, etc.
-exec_always --no-startup-id ~/.local/bin/fix-keyboard
-exec --no-startup-id autorandr --change --default horizontal
-exec --no-startup-id ~/.local/bin/dynamic-startup
-
 # Compositor
 exec --no-startup-id compton --config ~/.config/compton/compton.conf
 exec --no-startup-id flashfocus
 exec --no-startup-id systemctl --user start redshift
+
+# Keyboard, screens, host-specific, etc.
+exec --no-startup-id ~/.local/bin/dynamic-startup
 
 # Wallpaper, bars, etc.
 exec_always --no-startup-id ~/.local/bin/set-wallpaper

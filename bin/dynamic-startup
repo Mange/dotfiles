@@ -1,9 +1,13 @@
 #!/usr/bin/env bash
 # Dynamic startup programs that I cannot represent well in i3 config.
-set -e
+
+~/.local/bin/fix-keyboard
 
 case "$(hostname)" in
   bilquis)
+    xrandr --dpi 96
+    [[ "$(autorandr --detected)" == "bilquis-work" ]] && xrandr --output DP-0 --off
+
     touchpad="SynPS/2 Synaptics TouchPad"
     # Natural scrolling
     xinput set-prop "${touchpad}" "libinput Natural Scrolling Enabled" 1
@@ -27,3 +31,5 @@ case "$(hostname)" in
   *)
     ;;
 esac
+
+autorandr --change --default horizontal
