@@ -1,15 +1,17 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
+
 # This is some of the most ugly Ruby I've ever written. But it works, and
 # that's the most important part! I'll rework and refactor it as time goes on
 # and more features are needed.
 
-require 'selenium-webdriver'
-require 'pry'
+require "selenium-webdriver"
+require "pry"
 
-DOWNLOAD_NAME = 'keyboard-layout.png'.freeze
+DOWNLOAD_NAME = "keyboard-layout.png"
 
 def main
-  if ARGV.include?('--help')
+  if ARGV.include?("--help")
     print_help
     exit
   end
@@ -31,29 +33,29 @@ def main
   end
 
   driver = setup_firefox
-  driver.navigate.to 'http://www.keyboard-layout-editor.com/#/'
+  driver.navigate.to "http://www.keyboard-layout-editor.com/#/"
   upload_layout(driver, layout_file)
   download_image(driver, image_file)
 end
 
 def print_help
-  STDERR.puts <<~HELP
-    Usage: #$0 [LAYOUT_FILE] [IMAGE_FILE]
+  warn <<~HELP
+    Usage: #{$PROGRAM_NAME} [LAYOUT_FILE] [IMAGE_FILE]
 
     Generates an image from the specified LAYOUT_FILE and saves it as a PNG
     image at IMAGE_FILE.
 
     Example:
-      #$0 foo.json rendered_foo.png
+      #{$PROGRAM_NAME} foo.json rendered_foo.png
   HELP
 end
 
 def setup_firefox
   profile = Selenium::WebDriver::Firefox::Profile.new
-  profile['browser.download.folderList'] = 2
-  profile['browser.download.manager.showWhenStarting'] = false
-  profile['browser.download.dir'] = Dir.pwd
-  profile['browser.helperApps.neverAsk.saveToDisk'] = 'image/png'
+  profile["browser.download.folderList"] = 2
+  profile["browser.download.manager.showWhenStarting"] = false
+  profile["browser.download.dir"] = Dir.pwd
+  profile["browser.helperApps.neverAsk.saveToDisk"] = "image/png"
 
   options = Selenium::WebDriver::Firefox::Options.new
   options.profile = profile
@@ -75,7 +77,7 @@ def upload_layout(driver, layout_file)
     'arguments[0].style = ""; ' \
       'arguments[0].style.display = "block"; ' \
       'arguments[0].style.visibility = "visible";',
-    uploader
+    uploader,
   )
   sleep 0.1 # Wait for JS to execute script
   uploader.send_keys(File.expand_path(layout_file))
@@ -83,10 +85,10 @@ end
 
 def download_image(driver, image_file)
   # Download PNG
-  download_button = driver.find_elements(tag_name: 'button').detect { |b| b.text.include?("Download") }
+  download_button = driver.find_elements(tag_name: "button").detect { |b| b.text.include?("Download") }
   download_button.click
 
-  download_png = driver.find_elements(tag_name: 'a').detect { |b| b.text =~ /Download PNG/i }
+  download_png = driver.find_elements(tag_name: "a").detect { |b| b.text =~ /Download PNG/i }
 
   File.delete(DOWNLOAD_NAME) if File.exist?(DOWNLOAD_NAME)
   wait_for_file_to_download(DOWNLOAD_NAME) do
@@ -105,7 +107,7 @@ def wait_for_file_to_download(filename)
   loop do
     sleep 0.1
 
-    if File.exists?(filename)
+    if File.exist?(filename)
       break
     end
 
