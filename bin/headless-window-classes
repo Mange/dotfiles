@@ -1,0 +1,8 @@
+#!/bin/sh
+
+tmp="$(mktemp)"
+
+xwininfo -root -tree > "$tmp"
+kitty --detach --hold bat "$tmp"
+sleep 3
+rm "$tmp"

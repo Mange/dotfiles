@@ -176,6 +176,8 @@ bindsym $mod+shift+0  move container to workspace $workspace10
 bindsym --release $mod+minus exec gnome-screenshot
 # Label: Screenshot (area)
 bindsym --release $mod+shift+minus exec gnome-screenshot --area
+# Label: Show window classes
+bindsym --release $mod+ctrl+minus exec headless-window-classes
 
 # 1st row
 
