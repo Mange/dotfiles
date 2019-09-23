@@ -1,0 +1,34 @@
+#!/usr/bin/bash
+# Fake xscreensaver shim to get xdg-screensaver (workrave, etc.) to work with
+# my custom screen locking setup.
+
+while [ -n "$1" ]; do
+  case "$1" in
+    -version)
+      echo "Yes, I'm here"
+      exit 0
+      ;;
+
+    -display)
+      shift 2
+      ;;
+
+    -deactivate)
+      killall -HUP xss-lock
+      xset s reset
+      exit 0
+      ;;
+
+    -activate)
+      # Do nothing
+      ;;
+
+    -lock)
+      exec lock-screen
+      ;;
+
+    *)
+      echo "This is a fake command shim. I only support -deactivate, -activate, and -lock" >&2
+      exit 1
+  esac
+done

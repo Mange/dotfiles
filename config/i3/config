@@ -120,7 +120,7 @@ set $browsername Firefox Developer Edition
 bindsym $mod+grave        workspace back_and_forth
 bindsym $mod+Escape       workspace back_and_forth
 # Label: Lock screen
-bindsym $mod+shift+Escape exec xdg-screensaver activate
+bindsym $mod+shift+Escape exec lock-screen
 
 # Label: System workspace
 bindsym $mod+1        workspace $workspace1
