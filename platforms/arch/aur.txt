@@ -45,6 +45,7 @@ docker-credential-secretservice
 jiq # interactive jq
 
 # Fonts (also see my.txt)
+font-victor-mono
 ttf-nerd-fonts-symbols
 ttf-ancient-fonts # Just because it is cool
 ttf-monaco

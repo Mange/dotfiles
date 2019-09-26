@@ -26,7 +26,6 @@ yubikey-manager-qt
 ccid # smartcard drivers + pcscd
 
 # Fonts
-# Fira Sans / Fira Code is my main font set
 ttf-fira-code
 ttf-fira-mono
 otf-fira-mono
