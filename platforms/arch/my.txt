@@ -2,7 +2,7 @@
 # My stuff
 
 # Neovim
-neovim
+# neovim # Using neovim-git via AUR right now
 python # For neovim plugins
 nodejs # For neovim plugins
 npm # To install neovim package for nodejs

@@ -1,5 +1,9 @@
 # vim:ft=config:nospell
 
+# Text editors
+neovim-git
+neovim-gtk-git
+
 # Temporary
 vdirsyncer-git # https://github.com/pimutils/vdirsyncer/issues/745
 
