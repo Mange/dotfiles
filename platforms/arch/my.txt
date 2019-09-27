@@ -175,16 +175,22 @@ zathura-pdf-mupdf # EPUB, PDF and XPS support based on MuPDF
 #
 plasma-meta # Install basics of the KDE environment (themes, daemons, etc.)
 # (it also installs wallpapers and actual shell, but disk space is not
-# really a problem; it's nive not having to repeat all of that software
+# really a problem; it's nice not having to repeat all of that software
 # in here and keep the list up to date)
+
+# Some package groups of useful software. (Mainly trying to avoid kdegames)
+kdebase       # Base software
+kdeadmin      # Administrative software
+kdepim        # PIM software
+kdegraphics   # Graphics/images/colors/video software
+kdesdk        # Development software
+kdeutils      # Utilities
+kdenetwork    # Networked software
 
 qt5ct # Helps enabling QT integration into non-kde desktop environments
 oxygen-icons
 
-dolphin
-filelight
-kgpg
-ark # Archive manager
+filelight # Disk space visualizer
 unarchiver # RAR support for Ark
 
 # Optional deps for KDE software
@@ -197,7 +203,9 @@ kde-cli-tools            # for editing file type options
 ffmpegthumbs             # video thumbnails
 kdegraphics-thumbnailers # PDF and PS thumbnails
 
+#
 # GNOME software
+#
 gnome-calculator
 gnome-calendar
 gnome-characters
