@@ -27,6 +27,7 @@ rvm               # RVM: Ruby Version Manager
 shadowfox-updater # Dark theme for Firefox
 slack-desktop     # Slack Desktop (Beta) for Linux
 spotify           # A proprietary music streaming service
+firefox-tridactyl-native # Native plugin for Firefox Tricactyl
 
 # Fork of compton with better blurring
 compton-tryone-git
