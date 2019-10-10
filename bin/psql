@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Run pgcli instead of psql (if stdin is a terminal)
 
-if hash pgcli 2>/dev/null && [[ -t 0 ]]; then
+if hash pgcli 2>/dev/null && [[ -t 0 ]] && [[ -z "$USE_REAL_PSQL" ]]; then
   exec pgcli "$@"
 else
   # Run normal psql instead of pgcli. Determine which command would've been run
