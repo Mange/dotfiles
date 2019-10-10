@@ -480,8 +480,8 @@ for_window [class="(?i)floating"] \
     resize set 60 ppt 50 ppt, \
     move position center
 
-# Youtube PiP
-for_window [title="(?i)youtube pip"] floating enable
+# Youtube PiP / ytpip
+for_window [title="(?i)youtube pip"] floating enable, sticky enable
 
 # Cheatsheet images
 for_window [title="i3 cheatsheet"] \
