@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
 # Cut off the box name.
-# "Foo: <icon> <important unread>:<unread>
-mailboxes status | cut -d ":" -f 2- | tr "\n" " "
+#   "Foo: <icon> <important unread>:<unread>"
+# then change the remaining colon to a dot.
+mailboxes status | cut -d ":" -f 2- | tr "\n" " " | sed 'y#:#/#'
