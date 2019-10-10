@@ -243,8 +243,8 @@ bindsym $mod+p exec --no-startup-id "bwmenu --clear 20"
 
 # Label: Split
 bindsym $mod+s        split toggle
-## Label: Run cmd
-# bindsym $mod+shift+s  cmd
+# Label: Toggle sticky
+bindsym $mod+shift+s  sticky toggle
 
 ## Label: Run cmd
 # bindsym $mod+d        cmd
