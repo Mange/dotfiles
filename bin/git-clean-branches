@@ -1,0 +1,92 @@
+#!/usr/bin/bash
+
+confirm=yes
+verbosity=verbose
+
+function print_usage() {
+  cat <<EOF
+Usage: git clean-branches [options]
+
+Removes branches that are merged and gone from the upstream.
+
+Options:
+
+  --verbose | -v
+    Show deleted branches.
+
+  --quiet | -q
+    Do not show deleted branches.
+
+  --confirm | -i
+    Confirm the deletion before proceeding.
+
+  --force | -f
+    Delete without any confirmation.
+EOF
+}
+
+while [[ -n "$1" ]]; do
+  case "$1" in
+    --help)
+      print_usage
+      exit 0
+      ;;
+
+    --verbose | -v)
+      verbosity=verbose
+      shift
+      ;;
+
+    --quiet | -q)
+      verbosity=quiet
+      shift
+      ;;
+
+    --confirm | -i)
+      confirm=yes
+      shift
+      ;;
+
+    --force | -f)
+      confirm=no
+      shift
+      ;;
+
+    *)
+      echo "Unknown option: $1" >&2
+      exit 1
+  esac
+done
+
+gone_branches="$(
+  git branch --verbose --merged master |
+    grep -v " master " |
+    grep '\[gone\]' |
+    awk 'NF'
+)"
+
+if [[ "$(echo -n "$gone_branches" | wc -l)" -eq 0 ]]; then
+  if [[ "$verbosity" == "verbose" ]]; then
+    echo "Nothing to delete"
+  fi
+  exit 0
+fi
+
+if [[ "$confirm" == "yes" ]]; then
+  echo "Will delete the following branches:" >&2
+  echo "$gone_branches" >&2
+  echo "" >&2
+  echo -n "Confirm deletion [Yn]: " >&2
+  read -r answer
+  if [[ "$answer" != "y" && "$answer" != "" ]]; then
+    echo "Aborting" >&2
+    exit 0
+  fi
+fi
+
+for branch in $(echo "$gone_branches" | awk '{ print $1 }'); do
+  if [[ "$verbosity" == "verbose" ]]; then
+    echo "Deleting \"$branch\""
+  fi
+  git branch -d "$branch"
+done
