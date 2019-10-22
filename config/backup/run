@@ -2,11 +2,25 @@
 
 # shellcheck source=/dev/null
 source "$HOME/.config/backup/shared_setup.bash"
+set -e
 
 # shellcheck disable=2154
-PASSPHRASE="$(cat "$passphrase_file")" \
-  duplicity \
+PASSPHRASE="$(cat "$passphrase_file")"
+export PASSPHRASE
+
+# Create new backup
+duplicity \
   --exclude-filelist "$excludes_file" \
   --full-if-older-than 1M \
   "$HOME" \
   "$backup_url"
+
+# Cleanup old backups:
+#   * Leave up to 6 full (e.g. 6 months)
+#   * Keep incremental backups for the last 2 full (e.g. 2 months)
+#
+duplicity remove-all-but-n-full 6 --force "$backup_url"
+duplicity remove-all-inc-of-but-n-full 2 --force "$backup_url"
+
+# Just to be sure. You never know…
+unset PASSPHRASE
