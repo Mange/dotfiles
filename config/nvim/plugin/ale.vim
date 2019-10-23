@@ -15,6 +15,10 @@ let g:ale_fixers = {
 \   ],
 \}
 
+let g:ale_pattern_options = {
+\   '.*\.rasi$': {'ale_enabled': 0},
+\}
+
 " Use `[e` and `]e` for navigate linter errors
 nmap <silent> [e <Plug>(ale_previous_wrap)
 nmap <silent> ]e <Plug>(ale_next_wrap)
