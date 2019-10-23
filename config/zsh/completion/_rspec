@@ -1,4 +1,4 @@
 #compdef rspec
 # vim:ft=zsh:
 
-compadd -P spec/ `ls spec/**/*_spec.rb | sed -E "s/spec\///g"`
+compadd -P spec/ `ls spec/**/*_spec.rb | sed -E "s/^spec\///"`
