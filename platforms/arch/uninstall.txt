@@ -8,3 +8,9 @@ light-locker
 
 # Replaced with i3lock-color
 gnome-screensaver
+
+# Replaced with discord-canary
+discord
+
+# Stopped using shadow-fox
+shadowfox-updater
