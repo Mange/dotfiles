@@ -600,6 +600,7 @@ if run-section "fast"; then
   fi
 
   enable-user-systemd-unit "redshift"
+  enable-user-systemd-unit "spotifyd"
 
   if [[ $HOSTNAME == "morbidus" ]]; then
     enable-systemd-unit avahi-daemon

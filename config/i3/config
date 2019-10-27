@@ -441,6 +441,7 @@ for_window [class="dropdown_tydra"] \
     resize set 60 ppt 50 ppt, \
     move position center
 
+assign [class="spotify-tui"] $workspace9
 # Spotify does not set class before displaying window, so force window movement
 # always instead.
 # https://github.com/i3/i3/issues/2060
@@ -492,9 +493,9 @@ for_window [title="i3 cheatsheet"] \
 
 # {{{ Late startup programs
 
-exec spotify-with-hidpi-support
 exec workrave
 exec startup-reminder
+exec kitty --class "spotify-tui" spt
 
 exec i3-msg 'workspace $workspace10; layout stacked; exec telegram-desktop'
 exec i3-msg 'workspace $workspace3; exec $browser; workspace $workspace1'

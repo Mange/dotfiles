@@ -26,6 +26,8 @@ polybar-git       # A fast and easy-to-use status bar
 rvm               # RVM: Ruby Version Manager
 slack-desktop     # Slack Desktop (Beta) for Linux
 spotify           # A proprietary music streaming service
+spotifyd-full     # Headless FLOSS version of Spotify
+spotify-tui       # TUI frontent for Spotify Connect / spotifyd
 firefox-tridactyl-native # Native plugin for Firefox Tricactyl
 
 # Fork of compton with better blurring
