@@ -432,6 +432,8 @@ workspace_auto_back_and_forth no
 
 # {{{ Assignments
 
+for_window [workspace=$workspace10] layout stacked
+
 # Toggle floating as soon as dropdown windows are created to avoid flickering.
 for_window [class="dropdown_*"] floating enable
 for_window [class="dropdown_kitty"] border pixel 5
@@ -495,8 +497,8 @@ for_window [title="i3 cheatsheet"] \
 
 exec workrave
 exec startup-reminder
+exec telegram-desktop
+exec $browser
 exec kitty --class "spotify-tui" spt
 
-exec i3-msg 'workspace $workspace10; layout stacked; exec telegram-desktop'
-exec i3-msg 'workspace $workspace3; exec $browser; workspace $workspace1'
 # }}}
