@@ -64,6 +64,11 @@ bind index,pager \Co sidebar-open
 bind index,pager \Cp sidebar-prev-new
 bind index,pager \Cn sidebar-next-new
 
+# Sync mailbox one in a while to match what is happening with notmuch / mailboxes, etc.
+timeout-hook 'exec sync-mailbox'
+startup-hook 'exec sync-mailbox'
+shutdown-hook 'exec sync-mailbox'
+
 bind index,pager i noop
 macro index,pager i1 '<sync-mailbox><enter-command>source ~/.config/neomutt/accounts/gmail.muttrc<enter><change-folder>!<enter>;<check-stats>' "Switch to gmail"
 macro index,pager i2 '<sync-mailbox><enter-command>source ~/.config/neomutt/accounts/hemnet.muttrc<enter><change-folder>!<enter>;<check-stats>' "Switch to hemnet"
