@@ -61,6 +61,7 @@ set timeoutlen=500
 nnoremap <silent> <leader> :<c-u>WhichKey g:mapleader<CR>
 vnoremap <silent> <leader> :<c-u>WhichKeyVisual g:mapleader<CR>
 
+let g:which_key_use_floating_win = 1
 let g:which_key_map =  {}
 
 " Jump to alternative file
