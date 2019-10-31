@@ -44,6 +44,7 @@ set wildmode=list:longest,full
 set listchars=tab:→\ ,eol:¬,nbsp:•
 
 " Tags
+set tags^=./.git/tags; " Load tags written by my Git hooks
 set tags+=./rusty-tags.vi; " Semicolon means search parents recursively until found
 if !empty($RUST_SRC_PATH)
   set tags+=$RUST_SRC_PATH/rusty-tags.vi
