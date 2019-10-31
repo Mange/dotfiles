@@ -6,13 +6,13 @@ output DP-4
 off
 output DP-0
 off
-output DP-3
-mode 2560x1440
-pos 0x0
-primary
-rate 59.95
 output DP-1
 mode 1920x1200
 pos 2560x0
 rate 59.95
 rotate left
+output DP-3
+mode 2560x1440
+pos 0x240
+primary
+rate 59.95
