@@ -7,6 +7,7 @@ case "$(hostname)" in
   bilquis)
     xrandr --dpi 96
     [[ "$(autorandr --detected)" == "bilquis-work" ]] && xrandr --output DP-0 --off
+    xrandr --dpi 96
 
     touchpad="SynPS/2 Synaptics TouchPad"
     # Natural scrolling
@@ -33,3 +34,4 @@ case "$(hostname)" in
 esac
 
 autorandr --change --default horizontal
+xrandr --dpi 96
