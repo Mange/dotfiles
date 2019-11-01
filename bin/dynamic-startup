@@ -24,7 +24,7 @@ case "$(hostname)" in
     ;;
   morbidus)
     # Start Discord
-    i3-msg exec discord
+    i3-msg exec discord-canary
 
     # Start steam
     i3-msg exec gtk-launch steam
