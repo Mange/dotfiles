@@ -110,6 +110,7 @@ exec --no-startup-id unclutter # Hide mouse cursor when not in use
 
 set $terminal kitty
 set $browser firefox-developer-edition
+set $browserclass firefoxdeveloperedition
 set $browsername Firefox Developer Edition
 
 # number row
@@ -187,7 +188,7 @@ bindsym $mod+q        layout toggle all
 bindsym $mod+shift+q  kill
 
 # Label: Focus browser
-bindsym $mod+w        exec run-or-raise 'class = "$browsername"' $browser
+bindsym $mod+w        exec run-or-raise 'class = "$browserclass"' $browser
 ## Label: Run cmd
 # bindsym $mod+shift+w  cmd
 
