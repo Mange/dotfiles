@@ -6,7 +6,6 @@
 
 i3lock_options=(
   "--pass-media-keys"
-  "--blur=2"
   "--clock"
 )
 
@@ -38,6 +37,18 @@ normal_lock() {
 #
 # Before lock
 #
+
+background_image=
+if hash maim 2>/dev/null; then
+  # Make a blurred screenshot
+  background_image="$(blurred-screenshot)"
+fi
+
+if [ -n "$background_image" ] && [ -f "$background_image" ]; then
+  i3lock_options+=("--image=$background_image")
+else
+  i3lock_options+=("--blur=2")
+fi
 
 locked_at_timestamp=$(date +%s)
 

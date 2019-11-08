@@ -1,0 +1,18 @@
+#!/bin/sh
+set -e
+
+base="${XDG_CACHE_HOME:-$HOME/.cache}/lockscreen"
+
+if maim --hidecursor "${base}.in.png"; then
+  # ffmpeg method is faster than imagemagick method and also looks slightly
+  # better.
+  if hash ffmpeg 2>/dev/null; then
+    rm -f "${base}.png" # ffmpeg asks if it's okay to overwrite the file
+    ffmpeg -loglevel 0 -i "${base}.in.png" -vf "gblur=sigma=15" "${base}.png"
+  elif hash convert 2>/dev/null; then
+    convert "${base}.in.png" -scale 10% -interpolate Catrom -resize 1000% "${base}.png"
+  else
+    exit 0
+  fi
+  echo "${base}.png"
+fi
