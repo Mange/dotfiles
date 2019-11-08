@@ -26,4 +26,4 @@ if [[ $# -gt 0 ]]; then
   exit 1
 fi
 
-find "$dir" -maxdepth 1 \( -iname 'Skärmbild från *.png' -or -iname 'Screenshot from *.png' \) -mtime "+${max_days}" "${commands[@]}"
+find "$dir" -maxdepth 1 -iname 'Screenshot *.png' -mtime "+${max_days}" "${commands[@]}"

@@ -1,0 +1,16 @@
+#!/bin/sh
+set -e
+
+filename="$HOME/Media/Pictures/Screenshot $(date +"%Y-%m-%d %H:%M:%S").png"
+
+case $1 in
+  area)
+    maim --select --shader=boxzoom "$filename"
+    ;;
+  full | "")
+    maim "$filename"
+    ;;
+  *)
+    echo "Invalid variant"
+    exit 1
+esac

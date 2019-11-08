@@ -218,7 +218,6 @@ gnome-icon-theme-extras
 gnome-keyring
 gnome-online-accounts
 gnome-photos
-gnome-screenshot
 gnome-session
 gnome-settings-daemon
 gnome-system-log

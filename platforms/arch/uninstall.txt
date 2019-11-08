@@ -18,3 +18,6 @@ shadowfox-updater
 # Replaced with fortune-mod-portal-game
 fortune-mod-portal
 fortune-mod-portal2
+
+# Replaced with maim
+gnome-screenshot
