@@ -7,6 +7,11 @@
 i3lock_options=(
   "--pass-media-keys"
   "--clock"
+  "--show-failed-attempts"
+  "--timecolor=ffffffff"
+  "--datecolor=ffffffff"
+  "--datestr=%A, %d %B %Y"
+  "--composite"
 )
 
 sleep_lock() {
