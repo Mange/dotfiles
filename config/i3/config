@@ -501,5 +501,6 @@ exec startup-reminder
 exec telegram-desktop
 exec $browser
 exec kitty --class "spotify-tui" spt
+exec keybase-gui
 
 # }}}
