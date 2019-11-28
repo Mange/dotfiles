@@ -1,6 +1,11 @@
 AllCops:
   TargetRubyVersion: 2.5
 
+# This is just too stupid to even imagine being set to "true" by default. Yet,
+# here we are…
+Style/AsciiComments:
+  Enabled: false
+
 Style/StringLiterals:
   EnforcedStyle: double_quotes
 
