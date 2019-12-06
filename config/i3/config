@@ -301,7 +301,7 @@ bindsym $mod+shift+Return  exec $terminal
 
 # 3rd row
 
-# Label: Log out
+# Label: Quit
 bindsym $mod+z        exec i3quit
 # Label: i3 reload
 bindsym $mod+shift+z  reload

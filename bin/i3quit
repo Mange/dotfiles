@@ -1,21 +1,46 @@
 #!/bin/bash
 
-if [[ $1 == "--help" ]]; then
-  echo "USAGE: $0 [--force]"
-  exit 0
-fi
-
 force=no
+action=
 
-if [[ $1 == "--force" ]]; then
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    logout)
+      action="logout"
+      shift
+      ;;
+    poweroff)
+      action="poweroff"
+      shift
+      ;;
+    reboot)
+      action="reboot"
+      shift
+      ;;
+    --force)
+      force=yes
+      shift
+      ;;
+    --help)
+      echo "USAGE: $0 [logout|poweroff|reboot] [--force]"
+      exit 0
+      ;;
+    *)
+      echo "Unknown argument(s): $*" >&2
+      exit 1
+  esac
+done
+
+if [[ -z "$action" ]]; then
   force=yes
-elif [[ $# -gt 0 ]]; then
-  echo "Unknown argument(s): $*" > /dev/stderr
-  exit 1
+  action=$(echo -e "logout\\npoweroff\\nreboot\\ncancel" | rofi -dmenu -p "Quit?" -i -no-custom || true)
+  if [[ $action == cancel ]] || [[ -z "$action" ]]; then
+    exit 0
+  fi
 fi
 
 if [[ $force == no ]]; then
-  answer=$(echo -e "No, I made a mistake.\\nYes, log out." | rofi -dmenu -p "Really log out?" -i -no-custom || true)
+  answer=$(echo -e "No, I made a mistake.\\nYes, ${action}." | rofi -dmenu -p "Really ${action}?" -i -no-custom || true)
   if [[ $answer != Yes* ]]; then
     exit 0
   fi
@@ -26,7 +51,7 @@ notify-send \
   --app-name System \
   --icon /usr/share/icons/gnome/256x256/actions/system-log-out.png \
   --urgency critical \
-  "Logging out" \
+  "Quitting" \
   "Currently shutting down apps and quitting i3."
 
 # Unmount all removable storage
@@ -40,5 +65,15 @@ graceful-shutdown \
   --mine --whole-command --wait-time 15.0 \
   < "$XDG_CONFIG_HOME/graceful-shutdown/logout"
 
-# Shut down i3; essentially logging me out
-exec i3-msg exit
+case "$action" in
+  logout)
+    # Shut down i3; essentially logging me out
+    exec i3-msg exit
+    ;;
+  poweroff)
+    exec systemctl poweroff
+    ;;
+  reboot)
+    exec systemctl reboot
+    ;;
+esac
