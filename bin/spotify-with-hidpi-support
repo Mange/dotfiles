@@ -1,7 +1,0 @@
-#!/bin/sh
-
-if [ -n "$GDK_SCALE" ]; then
-  exec spotify --force-device-scale-factor="$GDK_SCALE"
-else
-  exec spotify
-fi

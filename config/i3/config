@@ -500,7 +500,7 @@ exec workrave
 exec startup-reminder
 exec telegram-desktop
 exec $browser
-exec kitty --class "spotify-tui" spt
+exec spotify
 exec keybase-gui
 
 # }}}

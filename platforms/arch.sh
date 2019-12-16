@@ -434,6 +434,13 @@ enable-user-systemd-unit() {
   fi
 }
 
+disable-user-systemd-unit() {
+  if [[ $(systemctl is-enabled --user "$1") == "enabled" ]]; then
+    subheader "Disabling $1 at login"
+    systemctl disable --user "$1" || handle-failure "Disabling $1 at login"
+  fi
+}
+
 init-sudo() {
   # Ask for password up front
   sudo echo > /dev/null
@@ -600,7 +607,7 @@ if run-section "fast"; then
   fi
 
   enable-user-systemd-unit "redshift"
-  enable-user-systemd-unit "spotifyd"
+  disable-user-systemd-unit "spotifyd"
 
   if [[ $HOSTNAME == "morbidus" ]]; then
     enable-systemd-unit avahi-daemon
