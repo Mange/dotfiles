@@ -4,6 +4,12 @@ nvidia
 nvidia-utils
 nvidia-settings
 
+# drawing
+libwacom
+xf86-input-wacom
+kcm-wacomtablet
+krita
+
 # beets
 beets
 bs1770gain # ReplayGain plugin
