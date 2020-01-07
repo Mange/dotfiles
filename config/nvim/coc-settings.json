@@ -1,6 +1,9 @@
 {
-  "coc.preferences.diagnostic.enable": false,
-  "coc.preferences.diagnostic.displayByAle": true,
-  "coc.preferences.codeLens.enable": true,
-  "suggest.enablePreview": true
+  "codeLens.enable": true,
+  "diagnostic.enable": false,
+  "diagnostic.displayByAle": true,
+  "suggest.enablePreview": true,
+  "solargraph.hover": true,
+  "solargraph.symbols": true,
+  "solargraph.useBundler": false
 }
