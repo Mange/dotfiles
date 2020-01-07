@@ -28,6 +28,7 @@ OPTIONS:
 
       aur      (Install AUR software and tools)
       neovim   (Neovim support)
+      doom     (Install Doom Emacs, refresh config, etc)
       pacman   (Install software)
       pip      (Install software based on python pip)
       rust     (Rust setup)
@@ -62,7 +63,7 @@ while true; do
 done
 
 case "$ONLY_SECTION" in
-  all | pacman | rust | projects | neovim | aur | updates | fast | pip )
+  all | pacman | rust | projects | neovim | aur | updates | fast | pip | doom )
     # Valid; do nothing
     ;;
   *)
@@ -548,6 +549,23 @@ if run-section "neovim"; then
     else
       echo "${red}npm not installed${reset}"
     fi
+  fi
+fi
+
+if run-section "doom"; then
+  header "Doom Emacs"
+  if [[ ! -d ~/.config/doom ]]; then
+    subheader "Place missing dotfiles"
+    dotfiles install || handle-failure
+  fi
+
+  if [[ ! -d ~/.emacs.d/ ]]; then
+    subheader "Installing Doom Emacs"
+    git clone https://github.com/hlissner/doom-emacs ~/.emacs.d
+    ~/.emacs.d/bin/doom install
+  else
+    subheader "Updating Doom Emacs"
+    ~/.emacs.d/bin/doom upgrade
   fi
 fi
 

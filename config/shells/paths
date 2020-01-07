@@ -23,6 +23,7 @@ if [[ -n $BASH_VERSION || -n $ZSH_VERSION ]]; then
       "$XDG_DATA_HOME/npm/packages/bin"
 
       "$HOME/.yarn/bin"
+      "$HOME/.emacs.d/bin"
 
       "${path[@]}"
     )
