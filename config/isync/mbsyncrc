@@ -26,96 +26,128 @@ Channel gmail-inbox
   Slave :gmail-local:inbox
   Create Slave
   SyncState *
+  Sync All
+  Expunge Both
 
 Channel gmail-trash
   Master :gmail-remote:"[Gmail]/Trash"
   Slave :gmail-local:trash
   Create Slave
   SyncState *
+  Sync All
+  Expunge Both
 
 Channel gmail-purchases
   Master :gmail-remote:"K\&APY-p"
   Slave :gmail-local:purchases
   Create Slave
   SyncState *
+  Sync All
+  Expunge Both
 
 Channel gmail-skola
   Master :gmail-remote:"Skola"
   Slave :gmail-local:school
   Create Slave
   SyncState *
+  Sync All
+  Expunge Both
 
 Channel gmail-github
   Master :gmail-remote:"GitHub"
   Slave :gmail-local:github
   Create Slave
   SyncState *
+  Sync All
+  Expunge Both
 
 Channel gmail-work
   Master :gmail-remote:"Jobb"
   Slave :gmail-local:work
   Create Slave
   SyncState *
+  Sync All
+  Expunge Both
 
 Channel gmail-work-hemnet
   Master :gmail-remote:"Jobb/Hemnet"
   Slave :gmail-local:work/hemnet
   Create Slave
   SyncState *
+  Sync All
+  Expunge Both
 
 Channel gmail-work-lerduvan
   Master :gmail-remote:"Jobb/Lerduvan"
   Slave :gmail-local:work/lerduvan
   Create Slave
   SyncState *
+  Sync All
+  Expunge Both
 
 Channel gmail-work-mitti
   Master :gmail-remote:"Jobb/Mitt I"
   Slave :gmail-local:work/mitti
   Create Slave
   SyncState *
+  Sync All
+  Expunge Both
 
 Channel gmail-registrations
   Master :gmail-remote:"Registreringsmail"
   Slave :gmail-local:registrations
   Create Slave
   SyncState *
+  Sync All
+  Expunge Both
 
 Channel gmail-sent
   Master :gmail-remote:"[Gmail]/Sent Mail"
   Slave :gmail-local:sent
   Create Slave
   SyncState *
+  Sync All
+  Expunge Both
 
 Channel gmail-drafts
   Master :gmail-remote:"[Gmail]/Drafts"
   Slave :gmail-local:drafts
   Create Slave
   SyncState *
+  Sync All
+  Expunge Both
 
 Channel gmail-archive
   Master :gmail-remote:"[Gmail]/All Mail"
   Slave :gmail-local:archive
   Create Slave
   SyncState *
+  Sync All
+  Expunge Slave
 
 Channel gmail-starred
   Master :gmail-remote:"[Gmail]/Starred"
   Slave :gmail-local:starred
   Create Slave
   SyncState *
+  Sync All
+  Expunge Both
 
 Channel gmail-important
   Master :gmail-remote:"[Gmail]/Important"
   Slave :gmail-local:important
   Create Slave
   SyncState *
+  Sync All
+  Expunge Both
 
 Channel gmail-game-deals
   Master :gmail-remote:"Game Deals"
   Slave :gmail-local:game-deals
   Create Slave
   SyncState *
+  Sync All
+  Expunge Both
 
 # Join all the channels into a single group
 Group gmail
@@ -164,114 +196,152 @@ Channel hemnet-inbox
   Slave :hemnet-local:inbox
   Create Slave
   SyncState *
+  Sync All
+  Expunge Both
 
 Channel hemnet-trash
   Master :hemnet-remote:"[Gmail]/Papperskorgen"
   Slave :hemnet-local:trash
   Create Slave
   SyncState *
+  Sync All
+  Expunge Both
 
 Channel hemnet-github
   Master :hemnet-remote:"Github"
   Slave :hemnet-local:github
   Create Slave
   SyncState *
+  Sync All
+  Expunge Both
 
 Channel hemnet-automated
   Master :hemnet-remote:"Automated"
   Slave :hemnet-local:automated
   Create Slave
   SyncState *
+  Sync All
+  Expunge Both
 
 Channel hemnet-automated-payment
   Master :hemnet-remote:"Automated/Payment"
   Slave :hemnet-local:automated/payment
   Create Slave
   SyncState *
+  Sync All
+  Expunge Both
 
 Channel hemnet-calendar
   Master :hemnet-remote:"Calendar"
   Slave :hemnet-local:calendar
   Create Slave
   SyncState *
+  Sync All
+  Expunge Both
 
 Channel hemnet-detectify
   Master :hemnet-remote:"Detectify"
   Slave :hemnet-local:detectify
   Create Slave
   SyncState *
+  Sync All
+  Expunge Both
 
 Channel hemnet-security
   Master :hemnet-remote:"Security"
   Slave :hemnet-local:security
   Create Slave
   SyncState *
+  Sync All
+  Expunge Both
 
 Channel hemnet-dev-dept
   Master :hemnet-remote:"Dev department"
   Slave :hemnet-local:dev-department
   Create Slave
   SyncState *
+  Sync All
+  Expunge Both
 
 Channel hemnet-newsletter
   Master :hemnet-remote:"Newsletter"
   Slave :hemnet-local:newsletter
   Create Slave
   SyncState *
+  Sync All
+  Expunge Both
 
 Channel hemnet-kundportalen
   Master :hemnet-remote:"Kundportalen"
   Slave :hemnet-local:kundportalen
   Create Slave
   SyncState *
+  Sync All
+  Expunge Both
 
 Channel hemnet-oncall
   Master :hemnet-remote:"On call"
   Slave :hemnet-local:oncall
   Create Slave
   SyncState *
+  Sync All
+  Expunge Both
 
 Channel hemnet-sent
   Master :hemnet-remote:"[Gmail]/Skickat"
   Slave :hemnet-local:sent
   Create Slave
   SyncState *
+  Sync All
+  Expunge Both
 
 Channel hemnet-drafts
   Master :hemnet-remote:"[Gmail]/Utkast"
   Slave :hemnet-local:drafts
   Create Slave
   SyncState *
+  Sync All
+  Expunge Both
 
 Channel hemnet-archive
   Master :hemnet-remote:"[Gmail]/Alla mail"
   Slave :hemnet-local:archive
   Create Slave
   SyncState *
+  Sync All
+  Expunge Slave
 
 Channel hemnet-starred
   Master :hemnet-remote:"[Gmail]/Stj&AOQ-rnm&AOQ-rkta"
   Slave :hemnet-local:starred
   Create Slave
   SyncState *
+  Sync All
+  Expunge Both
 
 Channel hemnet-important
   Master :hemnet-remote:"[Gmail]/Viktigt"
   Slave :hemnet-local:important
   Create Slave
   SyncState *
+  Sync All
+  Expunge Both
 
 Channel hemnet-ci
   Master :hemnet-remote:"CI"
   Slave :hemnet-local:ci
   Create Slave
   SyncState *
+  Sync All
+  Expunge Both
 
 Channel hemnet-desk
   Master :hemnet-remote:"Desk"
   Slave :hemnet-local:desk
   Create Slave
   SyncState *
+  Sync All
+  Expunge Both
 
 # Join all the channels into a single group
 Group hemnet
