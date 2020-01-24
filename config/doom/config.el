@@ -50,25 +50,55 @@
 ;; they are implemented.
 
 (setq
-  projectile-project-search-path '("~/Projects")
-  )
+ projectile-project-search-path '("~/Projects")
+ )
 
 (map!
-  :niv "C-s" 'save-buffer
-  :n "C-h" 'evil-window-left
-  :n "C-j" 'evil-window-down
-  :n "C-k" 'evil-window-up
-  :n "C-l" 'evil-window-down
-  :n "L" 'centaur-tabs-forward
-  :n "H" 'centaur-tabs-backward
-  )
+ :niv "C-s" 'save-buffer
+ :n "C-h" 'evil-window-left
+ :n "C-j" 'evil-window-down
+ :n "C-k" 'evil-window-up
+ :n "C-l" 'evil-window-right
+ :n "L" 'centaur-tabs-forward
+ :n "H" 'centaur-tabs-backward
+ )
 
-; Make C-k work in search results too
+                                        ; Make C-k work in search results, command output, etc. too
 (map!
  :map 'grep-mode-map
  :n "C-k" 'evil-window-up
  :n "C-j" 'evil-window-down
-)
+ )
 
-; Tabs should be grouped by project, but by file type
+(map!
+ :map 'company-active-map
+ :n "C-k" 'evil-window-up
+ :n "C-j" 'evil-window-down
+ )
+
+                                        ; C-k and C-j shadows useful bindings from time machine.
+(map!
+ :map 'git-timemachine-mode-map
+ :n "J" 'git-timemachine-show-next-revision
+ :n "K" 'git-timemachine-show-previous-revision
+ )
+
+                                        ; Tabs should be grouped by project, but by file type
 (setq centaur-tabs-buffer-groups-function 'centaur-tabs-projectile-buffer-groups)
+
+(add-hook 'enh-ruby-mode-hook
+          (lambda()
+            (setq-local flycheck-command-wrapper-function
+                        (lambda (command)
+                          (append '("bundle" "exec") command)))))
+
+
+; ws-butler doesn't seem to work too well. Anyway, I'm fine with being the
+; "whitespace police" and just fix all lines in a file. If it gets noisy, I'll
+; commit the whitespace changes in a separate commit anyway.
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+(setq
+  show-trailing-whitespace t
+  whitespace-style '(face tabs trailing lines-tail empty space-before-tab space-after-tab tab-mark newline-mark)
+  )
+;; (remove-hook 'after-change-major-mode-hook 'doom-highlight-non-default-indentation-h)
