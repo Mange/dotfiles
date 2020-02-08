@@ -518,14 +518,14 @@ if run-section "neovim"; then
 
     subheader "Python 2 plugin"
     if hash pip2 2>/dev/null; then
-      (sudo pip2 install --upgrade -q neovim && echo "${green}✔ OK${reset}") || handle-failure
+      (sudo pip2 install --upgrade --upgrade-strategy eager -q neovim && echo "${green}✔ OK${reset}") || handle-failure
     else
       echo "${red}pip2 not installed${reset}"
     fi
 
     subheader "Python 3 plugin"
     if hash pip3 2>/dev/null; then
-      (sudo pip3 install --upgrade -q neovim && echo "${green}✔ OK${reset}") || handle-failure
+      (sudo pip3 install --upgrade --upgrade-strategy eager -q neovim && echo "${green}✔ OK${reset}") || handle-failure
     else
       echo "${red}pip3 not installed${reset}"
     fi
@@ -538,10 +538,13 @@ if run-section "neovim"; then
     fi
 
     subheader "NodeJS plugin"
-    # Hardcoded to system-installed npm to avoid collisions with nvm. Neovim
-    # will load the system npm as it is not backed by my ZSH shell.
-    if [[ -f /usr/bin/npm ]]; then
-      (sudo /usr/bin/npm install -g neovim && echo "${green}✔ OK${reset}") || handle-failure
+    if hash npm 2>/dev/null; then
+      # Install both on hardcoded system path and in current nvm environment.
+      (sudo npm install -g neovim && echo "${green}✔ OK${reset}") || handle-failure
+
+      if [[ -f /usr/bin/npm ]]; then
+        (sudo /usr/bin/npm install -g neovim && echo "${green}✔ OK${reset}") || handle-failure
+      fi
     else
       echo "${red}npm not installed${reset}"
     fi
