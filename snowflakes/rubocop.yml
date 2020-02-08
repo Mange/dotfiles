@@ -24,7 +24,7 @@ Layout/SpaceInsideHashLiteralBraces:
 Style/Documentation:
   Enabled: false
 
-Layout/IndentFirstArrayElement:
+Layout/FirstArrayElementIndentation:
   EnforcedStyle: consistent
 
 Layout/MultilineMethodCallIndentation:
@@ -39,7 +39,7 @@ Style/GuardClause:
 Style/IfUnlessModifier:
   Enabled: false
 
-Layout/AlignArguments:
+Layout/ArgumentAlignment:
   Enabled: false
   EnforcedStyle: with_fixed_indentation
 
@@ -68,6 +68,6 @@ Metrics/BlockLength:
     - 'spec/**/*_spec.rb'
     - 'spec/shared_examples/*.rb'
 
-Metrics/LineLength:
+Layout/LineLength:
   IgnoredPatterns:
     - '^\s*it\s' # Test names can be long
