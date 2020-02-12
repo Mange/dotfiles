@@ -6,7 +6,7 @@
 #
 
 print-sha() {
-  sha=$(cat - | grep -o "[a-f0-9]\{7,\}")
+  sha=$(cat - | grep -m1 -o "[a-f0-9]\{7,\}" | head -n1)
   echo "$sha"
 }
 
@@ -29,7 +29,7 @@ git-fshow() {
 ctrl-s:toggle-sort,\
 pgup:preview-page-up,\
 pgdn:preview-page-down"
-		--preview 'f() { set -- $(echo -- "$@" | grep -o "[a-f0-9]\{7\}"); [ $# -eq 0 ] || git show --color=always $1; }; f {}'
+		--preview 'f() { set -- $(echo -- "$@" | grep -m1 -o "[a-f0-9]\{7\}" | head -n1); [ $# -eq 0 ] || git show --color=always $1; }; f {}'
 	)
   local sha=$($g | $fzf | print-sha)
 
