@@ -1,7 +1,11 @@
 let g:gruvbox_contrast_dark='medium'
 let g:gruvbox_contrast_light='hard'
 let g:gruvbox_improved_warnings=1
-let g:gruvbox_italic=1
+
+" This would make all comments italic. I want to place it only on some keywords
+" in some languages manually instead.
+let g:gruvbox_italic=0
+
 colorscheme gruvbox
 
 function! s:Shared()
@@ -11,6 +15,19 @@ function! s:Shared()
     " Transparent background
     hi Normal ctermbg=None guibg=None
   endif
+
+  " Italics on some things
+  hi GruvboxRedItalic ctermfg=167 guifg=#fb4934 cterm=italic gui=italic
+  hi GruvboxAquaItalic ctermfg=108 guifg=#8ec07c cterm=italic gui=italic
+
+  hi link rustConditional GruvboxRedItalic
+  hi link rustRepeat GruvboxRedItalic
+  hi link rustKeyword GruvboxRedItalic
+
+  hi link rubyClass GruvboxAquaItalic
+  hi link rubyModule GruvboxAquaItalic
+  hi link cssAtRule GruvboxAquaItalic
+  hi link cssAtKeyword GruvboxAquaItalic
 
   " Improve warning look
   hi RedUndercurl cterm=undercurl gui=undercurl guisp=#fb4934
