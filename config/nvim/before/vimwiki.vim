@@ -1,3 +1,5 @@
+let g:taskwiki_taskrc_location = '~/.config/taskwarrior/config'
+
 let personal_wiki = {}
 let personal_wiki.path = '~/Documents/Wiki/Personal/'
 let personal_wiki.template_path = '~/Documents/Wiki/templates/personal/'
