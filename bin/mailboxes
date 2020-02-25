@@ -8,7 +8,7 @@ mail_dir="$HOME/Mail"
 
 readarray -t mailboxes < \
   <(
-    find "$mail_dir" \
+    find "${mail_dir}/" \
       -mindepth 1 -maxdepth 1 \
       -not -name '.*' \
       -type d \
