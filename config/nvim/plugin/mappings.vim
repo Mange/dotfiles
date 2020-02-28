@@ -76,7 +76,7 @@ let g:which_key_map.w = { 'name' : '+window' }
 
 " {{{ Leader root
 nmap <leader><space> :Switch<cr>
-let g:which_key_map[" "] = 'switch'
+let g:which_key_map[' '] = 'switch'
 " }}}
 
 " {{{ Leader +buffer
@@ -120,38 +120,38 @@ let g:which_key_map.b.l = 'goto-last'
 " TODO: linter stuff, autofix stuff (no searching)
 
 nmap <leader>ca <Plug>(coc-codelens-action)
-let g:which_key_map.c.a = "codelens-action"
+let g:which_key_map.c.a = 'codelens-action'
 
 vmap <leader>cA  <Plug>(coc-codeaction-selected)
 nmap <leader>cA  <Plug>(coc-codeaction)
-let g:which_key_map.c.A = "code-action"
+let g:which_key_map.c.A = 'code-action'
 
 nmap <leader>cr <Plug>(coc-rename)
-let g:which_key_map.c.r = "rename"
+let g:which_key_map.c.r = 'rename'
 
 vmap <leader>c= <Plug>(coc-format-selected)
 nmap <leader>c= <Plug>(coc-format-selected)
-let g:which_key_map.c["="] = "lsp-format-selected"
+let g:which_key_map.c['='] = 'lsp-format-selected'
 
 nmap <leader>cf  <Plug>(coc-fix-current)
-let g:which_key_map.c.f = "fix-current"
+let g:which_key_map.c.f = 'fix-current'
 
 nnoremap <silent> <leader>cd  :<C-u>CocList diagnostics<cr>
-let g:which_key_map.c.d = "diagnostics"
+let g:which_key_map.c.d = 'diagnostics'
 nnoremap <silent> <leader>ce  :<C-u>CocList extensions<cr>
-let g:which_key_map.c.e = "extensions"
+let g:which_key_map.c.e = 'extensions'
 nnoremap <silent> <leader>c:  :<C-u>CocList commands<cr>
-let g:which_key_map.c[":"] = "commands"
+let g:which_key_map.c[':'] = 'commands'
 nnoremap <silent> <leader>co  :<C-u>CocList outline<cr>
-let g:which_key_map.c.o = "outline"
+let g:which_key_map.c.o = 'outline'
 nnoremap <silent> <leader>cs  :<C-u>CocList -I symbols<cr>
-let g:which_key_map.c.s = "project-symbols"
+let g:which_key_map.c.s = 'project-symbols'
 nnoremap <silent> <leader>cj  :<C-u>CocNext<CR>
-let g:which_key_map.c.j = "next"
+let g:which_key_map.c.j = 'next'
 nnoremap <silent> <leader>ck  :<C-u>CocPrev<CR>
-let g:which_key_map.c.k = "previous"
+let g:which_key_map.c.k = 'previous'
 nnoremap <silent> <leader>cp  :<C-u>CocListResume<CR>
-let g:which_key_map.c.p = "resume-last-list"
+let g:which_key_map.c.p = 'resume-last-list'
 " }}}
 
 " {{{ Leader +file/fold
@@ -167,40 +167,40 @@ nmap <leader>fi :fold<CR>
 let g:which_key_map.f.i = 'insert-fold'
 
 nmap <leader>f> :set foldlevel+=1 \| :set foldlevel?<CR>
-let g:which_key_map.f[">"] = 'increase-foldlevel'
+let g:which_key_map.f['>'] = 'increase-foldlevel'
 
 nmap <leader>f< :set foldlevel-=1 \| :set foldlevel?<CR>
-let g:which_key_map.f["<"] = 'decrease-foldlevel'
+let g:which_key_map.f['<'] = 'decrease-foldlevel'
 
 nmap <leader>f0 :set foldlevel=0<CR>
-let g:which_key_map.f["0"] = 'foldlevel-0'
+let g:which_key_map.f['0'] = 'foldlevel-0'
 
 nmap <leader>f1 :set foldlevel=1<CR>
-let g:which_key_map.f["1"] = 'foldlevel-1'
+let g:which_key_map.f['1'] = 'foldlevel-1'
 
 nmap <leader>f2 :set foldlevel=2<CR>
-let g:which_key_map.f["2"] = 'foldlevel-2'
+let g:which_key_map.f['2'] = 'foldlevel-2'
 
 nmap <leader>f3 :set foldlevel=3<CR>
-let g:which_key_map.f["3"] = 'foldlevel-3'
+let g:which_key_map.f['3'] = 'foldlevel-3'
 
 nmap <leader>f4 :set foldlevel=4<CR>
-let g:which_key_map.f["4"] = 'foldlevel-4'
+let g:which_key_map.f['4'] = 'foldlevel-4'
 
 nmap <leader>f5 :set foldlevel=5<CR>
-let g:which_key_map.f["5"] = 'foldlevel-5'
+let g:which_key_map.f['5'] = 'foldlevel-5'
 
 nmap <leader>f6 :set foldlevel=6<CR>
-let g:which_key_map.f["6"] = 'foldlevel-6'
+let g:which_key_map.f['6'] = 'foldlevel-6'
 
 nmap <leader>f7 :set foldlevel=7<CR>
-let g:which_key_map.f["7"] = 'foldlevel-7'
+let g:which_key_map.f['7'] = 'foldlevel-7'
 
 nmap <leader>f8 :set foldlevel=8<CR>
-let g:which_key_map.f["8"] = 'foldlevel-8'
+let g:which_key_map.f['8'] = 'foldlevel-8'
 
 nmap <leader>f9 :set foldlevel=9<CR>
-let g:which_key_map.f["9"] = 'foldlevel-9'
+let g:which_key_map.f['9'] = 'foldlevel-9'
 
 " }}}
 
@@ -222,7 +222,7 @@ nmap <leader>gp <Plug>(GitGutterPreviewHunk)
 let g:which_key_map.g.p = 'preview-hunk'
 
 nmap <leader>g/ :Commits<CR>
-let g:which_key_map.g["/"] = 'fzf-commits'
+let g:which_key_map.g['/'] = 'fzf-commits'
 
 let g:which_key_map.g.c = {
       \ 'name' : '+create',
@@ -248,7 +248,7 @@ nmap <leader>nw :VimwikiTabIndex<cr>
 let g:which_key_map.n.w = 'wiki-tab'
 
 nmap <leader>n/ :FZF ~/Documents/Wiki<cr>
-let g:which_key_map.n["/"] = 'find-entry'
+let g:which_key_map.n['/'] = 'find-entry'
 
 nmap <leader>nW :2VimwikiTabIndex<cr>
 let g:which_key_map.n.W = 'work-wiki-tab'
@@ -292,29 +292,29 @@ nmap <leader>tv :Vista!!<CR>
 let g:which_key_map.t.v = 'vista-pane'
 
 nmap <leader>t* <Plug>SearchHighlightingAutoSearch
-let g:which_key_map.t["*"] = 'auto-search'
+let g:which_key_map.t['*'] = 'auto-search'
 
 nmap <leader>tl :set list! \| set list?<cr>
-let g:which_key_map.t.l = "listchars"
+let g:which_key_map.t.l = 'listchars'
 
 nmap <leader>tn :set number! \| set number?<cr>
-let g:which_key_map.t.n = "number"
+let g:which_key_map.t.n = 'number'
 
 nmap <leader>tw :set wrap! \| set wrap?<cr>
-let g:which_key_map.t.w = "wrap"
+let g:which_key_map.t.w = 'wrap'
 
 nmap <leader>ts :set spell! \| set spell?<cr>
-let g:which_key_map.t.s = "spell"
+let g:which_key_map.t.s = 'spell'
 
 nmap <leader>tc :set cursorline! \| set cursorline?<cr>
-let g:which_key_map.t.c = "cursorline"
+let g:which_key_map.t.c = 'cursorline'
 
 nmap <leader>tC :set cursorcolumn! \| set cursorcolumn?<cr>
-let g:which_key_map.t.C = "cursorcolumn"
+let g:which_key_map.t.C = 'cursorcolumn'
 
 " (thanks to SearchHighlighting plugin)
 nmap <leader>th <Plug>SearchHighlightingToggleHlsearch
-let g:which_key_map.t.h = "hlsearch"
+let g:which_key_map.t.h = 'hlsearch'
 
 nmap <leader>tq :ClistToggle<cr>
 let g:which_key_map.t.q = 'quickfix'
@@ -329,7 +329,7 @@ let g:which_key_map.t.q = 'quickfix'
 if &diff
   set cursorline
   " Start with current search ("/" register) set to search for conflicts.
-  let @/ = "<<<<<"
+  let @/ = '<<<<<'
   nmap <leader>1 :diffget LOCAL<cr>
   let g:which_key_map.1 = 'diff-take-local'
   nmap <leader>2 :diffget BASE<cr>
@@ -339,5 +339,5 @@ if &diff
 endif
 " }}}
 
-call which_key#register(g:mapleader, "g:which_key_map")
+call which_key#register(g:mapleader, 'g:which_key_map')
 " }}}
