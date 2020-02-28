@@ -51,7 +51,7 @@ inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<S-TAB>"
 
 let g:mapleader = "\<Space>"
 let g:maplocalleader = "\\"
-set timeoutlen=200
+set timeoutlen=400 " Affects all key timeouts, not just leaders sadly.
 
 nnoremap <silent> <leader> :<c-u>WhichKey g:mapleader<CR>
 vnoremap <silent> <leader> :<c-u>WhichKeyVisual g:mapleader<CR>
