@@ -30,3 +30,14 @@ function! DirsCD(...)
         \ })
 endfunction
 command! -nargs=1 DirsCD :call DirsCD("<args>")
+
+" Toggle the clist window, e.g. open if not open, and close if open.
+function! ClistToggle(...)
+  let windows = filter(getwininfo(), 'v:val.quickfix && !v:val.loclist')
+  if len(windows) == 1
+      exec "cclose"
+  else
+      exec "botright copen"
+  endif
+endfunction
+command! -nargs=0 ClistToggle :call ClistToggle()

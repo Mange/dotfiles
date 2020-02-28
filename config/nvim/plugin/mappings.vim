@@ -205,7 +205,7 @@ let g:which_key_map.f["9"] = 'foldlevel-9'
 " }}}
 
 " {{{ Leader +git
-" TODO: stage hunk, preview hunk, open browser, find, more..?
+" TODO: open browser, find, more..?
 nmap <leader>gg :Gstatus<CR>
 let g:which_key_map.g.g = 'status'
 
@@ -274,6 +274,14 @@ let g:which_key_map.s.w = 'project-search-word'
 
 nmap <leader>st :Tags<cr>
 let g:which_key_map.s.t = 'fzf-tags'
+
+" Go back to the previous quickfix list (e.g. older search results)
+nmap <leader>sk :colder<cr>
+let g:which_key_map.s.k = 'list-older'
+
+" Go to the next quickfix list (e.g. newer search results)
+nmap <leader>sj :cnewer<cr>
+let g:which_key_map.s.j = 'list-newer'
 " }}}
 
 " {{{ Leader +toggle
@@ -307,6 +315,9 @@ let g:which_key_map.t.C = "cursorcolumn"
 " (thanks to SearchHighlighting plugin)
 nmap <leader>th <Plug>SearchHighlightingToggleHlsearch
 let g:which_key_map.t.h = "hlsearch"
+
+nmap <leader>tq :ClistToggle<cr>
+let g:which_key_map.t.q = 'quickfix'
 " }}}
 
 " {{{ Leader +window
