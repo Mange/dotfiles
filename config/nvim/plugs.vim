@@ -42,6 +42,7 @@ Plug 'tbabej/taskwiki', { 'do': 'sudo pip3 install --upgrade -r requirements.txt
 """ Editor functionality
 Plug 'AndrewRadev/switch.vim'
 Plug 'Shougo/context_filetype.vim' " Tries to add support for languages-inside-languages (fenced code blocks, etc.)
+Plug 'SirVer/ultisnips'
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'junegunn/vim-easy-align'
 Plug 'kien/rainbow_parentheses.vim'

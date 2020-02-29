@@ -1,0 +1,45 @@
+#
+# Global functions
+#
+
+global !p
+def write_instance_vars(arglist, snip):
+	args = str(arglist).split(',')
+	for arg in args:
+		name = arg.strip().replace(':', ' ').split(' ', 1)[0]
+		if name:
+			snip += '  @{} = {}'.format(name, name)
+		else:
+			snip += ''
+endglobal
+
+#
+# Snippets
+#
+snippet req "require" b
+require "${1:file}"
+$0
+endsnippet
+
+snippet defi "def initialize ..."
+def initialize($1)`!p write_instance_vars(t[1],snip)`$0
+end
+endsnippet
+
+snippet spec "spec file ..."
+# frozen_string_literal: true
+
+require "${1:spec_helper}"
+
+RSpec.describe ${2:`!p snip.rv = snip.basename.replace('_spec', '').title().replace('_', '')`} do
+	$0
+end
+endsnippet
+
+snippet class "class file ..."
+# frozen_string_literal: true
+
+class ${2:`!p snip.rv = snip.basename.title().replace('_', '')`}
+	$0
+end
+endsnippet

@@ -1,5 +1,7 @@
 " vim: foldmethod=marker foldlevel=1
 
+" Autocomplete and snippets is configured in coc.vim
+
 " {{{ Base mappings
 
 " Unmap Q
@@ -36,14 +38,6 @@ nmap <S-Tab> :cp<CR>
 " $$ expands to current buffer's path in command mode
 cnoremap %% <C-R>=expand('%')<cr>
 cnoremap $$ <C-R>=expand('%:h').'/'<cr>
-
-" }}}
-
-" {{{ Autocomplete
-
-" Use tab for autocompletions
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<S-TAB>"
 
 " }}}
 
