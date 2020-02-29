@@ -26,11 +26,6 @@ inoremap <C-s> <C-o>:w<CR>
 noremap <C-c><C-c> :wq<CR>
 inoremap <C-c><C-c> <Esc>:wq<CR>
 
-" Quick list shortcuts
-nmap <Tab> :cn<CR>
-nmap <S-Tab> :cp<CR>
-
-
 " }}}
 
 " {{{ Command mode
@@ -71,6 +66,12 @@ let g:which_key_map.w = { 'name' : '+window' }
 " {{{ Leader root
 nmap <leader><space> :Switch<cr>
 let g:which_key_map[' '] = 'switch'
+
+" Quick list shortcuts
+nmap <leader><tab> :cn<CR>
+let g:which_key_map['\<tab>'] = 'quickfix-next'
+nmap <leader><s-tab> :cp<CR>
+let g:which_key_map['\<s-tab>'] = 'quickfix-previous'
 " }}}
 
 " {{{ Leader +buffer
