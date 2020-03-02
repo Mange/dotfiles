@@ -42,7 +42,7 @@ inherit = bar/base
 top = true
 
 modules-left = i3 media-info
-modules-center = time date
+modules-center = clock date
 modules-right = task-counters mailboxes volume wifi battery
 
 tray-detached = false
@@ -59,7 +59,7 @@ inherit = bar/base
 top = true
 
 modules-left = i3 media-info
-modules-center = time date
+modules-center = clock date
 modules-right = task-counters mailboxes volume wifi battery-warning
 
 tray-position = none
@@ -137,12 +137,11 @@ label-maxlen = 40
 label = "%title%"
 label-empty =
 
-[module/time]
+[module/clock]
 inherit = module/base
-type = internal/date
-label =  %time%
-time = %H:%M
-interval = 1
+type = custom/script
+exec = ~/.config/polybar/clock
+interval = 30
 
 [module/date]
 inherit = module/base
