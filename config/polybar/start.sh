@@ -13,6 +13,15 @@ start-bars() {
   fi
 }
 
+load-env-file() {
+  local filename="$1"
+
+  set -o allexport
+  # shellcheck source=/dev/null
+  source "$filename"
+  set +o allexport
+}
+
 hidpi-settings() {
   export POLYBAR_FONT_0="Symbols Nerd Font:size=16;0"
   export POLYBAR_FONT_1="Fira Sans Regular:size=16;0"
@@ -37,7 +46,7 @@ machine-settings() {
   filename="$(dirname "$0")/machine-$(hostname --short).env"
 
   if [[ -f $filename ]]; then
-    export $(grep -Ev "\\s*#" "$filename" | xargs)
+    load-env-file "$filename"
   fi
 }
 
@@ -45,14 +54,24 @@ start-on-hidpi() {
   local input_name="${1}"
   local is_primary="${2}"
   echo "Starting bar(s) on ${input_name} (HiDPI)"
-  (hidpi-settings; machine-settings; export MONITOR="${input_name}"; start-bars "$is_primary")
+  (
+    hidpi-settings
+    machine-settings
+    export MONITOR="${input_name}"
+    start-bars "$is_primary"
+  )
 }
 
 start-on-normal() {
   local input_name="${1}"
   local is_primary="${2}"
   echo "Starting bar(s) on ${input_name} (normal)"
-  (normal-settings; machine-settings; export MONITOR="${input_name}"; start-bars "$is_primary")
+  (
+    normal-settings
+    machine-settings
+    export MONITOR="${input_name}"
+    start-bars "$is_primary"
+  )
 }
 
 start-on-each-screen() {
