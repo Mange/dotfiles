@@ -1,0 +1,227 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+begin
+  require "dbus"
+rescue LoadError
+  # Assume RVM and try to install it
+  system("gem install ruby-dbus") && exec($PROGRAM_NAME, *ARGV)
+  puts "Install ruby-dbus"
+  exit 1
+end
+
+# TODO: Make this script persistent and respond to D-Bus signals too. It would
+# then show real-time status at all times.
+
+class Timer
+  def initialize(core_interface, name)
+    @core = core_interface
+    @name = name
+  end
+
+  def read_state
+    TimerState.new(
+      idle: idle,
+      elapsed: elapsed,
+      overdue: overdue,
+      remaining: remaining,
+    )
+  end
+
+  private
+  attr_reader :core, :config, :name
+
+  def idle
+    core.GetTimerIdle(name).first
+  end
+
+  def elapsed
+    core.GetTimerElapsed(name).first
+  end
+
+  def overdue
+    core.GetTimerOverdue(name).first
+  end
+
+  def remaining
+    core.GetTimerRemaining(name).first
+  end
+end
+
+TimerState = Struct.new(
+  :idle,
+  :elapsed,
+  :overdue,
+  :remaining,
+  keyword_init: true,
+) do
+  def phase(delta)
+    if idle.positive?
+      :idle
+    elsif (remaining - delta).positive?
+      :active
+    else
+      :overdue
+    end
+  end
+end
+
+def format_time(seconds)
+  # (More than an hour will be shown as > 60 for space reasons, e.g. "80:00"
+  # instead of "01:20:00")
+  min = seconds / 60
+  sec = seconds % 60
+  format("%<min>02d:%<sec>02d", min: min, sec: sec)
+end
+
+class Renderer
+  def initialize(mode, rest_state, micro_state)
+    @render_mutex = Mutex.new
+    @update_mutex = Mutex.new
+
+    update(mode, rest_state, micro_state)
+  end
+
+  def update(mode, rest_state, micro_state)
+    @update_mutex.synchronize do
+      @mode = mode
+      @rest_state = rest_state
+      @micro_state = micro_state
+      @loaded_at = monotonic_now
+    end
+  end
+
+  def render
+    @render_mutex.synchronize do
+      print "  "
+      if @mode != "normal"
+        puts "%{F#d5c4a1}paused%{F-}"
+      else
+        render_timer_state(@micro_state)
+        print " / "
+        render_timer_state(@rest_state)
+        puts ""
+      end
+      STDOUT.flush
+    end
+  end
+
+  private
+  def render_timer_state(state)
+    dt = delta
+    case state.phase(dt)
+    when :idle
+      print "%{F#b8bb26}idle"
+    when :active
+      print "%{F#fabd2f}", format_time(state.remaining - dt)
+    when :overdue
+      print "%{F#fb4934}", format_time(state.overdue + dt)
+    end
+    print "%{F-}"
+  end
+
+  def delta
+    monotonic_now - @loaded_at
+  end
+
+  def monotonic_now
+    Process.clock_gettime(Process::CLOCK_MONOTONIC)
+  end
+end
+
+class Program
+  attr_reader :bus, :core_interface, :rest, :micro, :renderer
+
+  SIGNALS = %w[
+    BreakPostponed
+    BreakSkipped
+    DailylimitChanged
+    MicrobreakChanged
+    OperationModeChanged
+    RestbreakChanged
+    UsageModeChanged
+  ].freeze
+
+  def initialize
+    @render_mutex = Mutex.new
+    @bus = DBus::SessionBus.instance
+
+    service = @bus.service("org.workrave.Workrave")
+    workrave = service.object("/org/workrave/Workrave/Core")
+    workrave.introspect
+
+    @core_interface = workrave["org.workrave.CoreInterface"]
+    @rest = Timer.new(@core_interface, "restbreak")
+    @micro = Timer.new(@core_interface, "microbreak")
+    @renderer = Renderer.new(operation_mode, @rest.read_state, @micro.read_state)
+  end
+
+  def listen
+    SIGNALS.each do |signal|
+      core_interface.on_signal(signal) { update }
+    end
+  end
+
+  def update
+    renderer.update(operation_mode, @rest.read_state, @micro.read_state)
+  end
+
+  private
+  def operation_mode
+    @core_interface.GetOperationMode().first
+  end
+end
+
+program = Program.new
+program.listen
+
+# Ruby dbus is not thread safe and needs to run in the main thread. While this
+# is running we can receive signals, but cannot do any other queries on it from
+# other threads.
+#
+# Here's a trick:
+#   Let the socket handling main loop run for a short time, then stop it.
+#   Trigger a force refresh while it is shutting down. Then start it up again.
+#
+# It's like a very horrible manual "context switch". However, it will lead to
+# very hacky and laggy refreshes as the restarts will overlap on signals and
+# rendering times.
+#
+# A better solution is probably to try to do the thing that `DBus::Main#run`
+# does manually and build our own main loop.
+#     renderer = Thread.new do
+#       loop do
+#         program.renderer.render
+#         sleep 1
+#       end
+#     end
+#     dbus = DBus::Main.new
+#     dbus << program.bus
+#     restarter = Thread.new do
+#       loop do
+#         sleep 2
+#         dbus.quit
+#         program.update
+#         dbus.run
+#       end
+#     end
+#     dbus.run
+#     restarter.join
+#     renderer.join
+
+# main loop
+refresh_rate = 1 # second
+loop do
+  ready = IO.select([program.bus.message_queue.socket], [], [], refresh_rate)
+  if ready
+    begin
+      program.bus.message_queue.buffer_from_socket_nonblock
+    rescue EOFError, SystemCallError
+      exit 5 # socket died
+    end
+  else
+    # No signal received; let's do a manual refresh
+    program.update
+  end
+  program.renderer.render
+end
