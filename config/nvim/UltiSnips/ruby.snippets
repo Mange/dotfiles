@@ -36,10 +36,18 @@ RSpec.describe ${2:`!p snip.rv = snip.basename.replace('_spec', '').title().repl
 end
 endsnippet
 
-snippet class "class file ..."
+snippet classf "class file ..."
 # frozen_string_literal: true
 
 class ${2:`!p snip.rv = snip.basename.title().replace('_', '')`}
+	$0
+end
+endsnippet
+
+snippet modulef "module file ..."
+# frozen_string_literal: true
+
+module ${2:`!p snip.rv = snip.basename.title().replace('_', '')`}
 	$0
 end
 endsnippet
