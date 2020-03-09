@@ -29,7 +29,7 @@ pages:
 
           - shortcut: s
             title: Vimwiki
-            command: kitty nvim +VimwikiIndex
+            command: open-wiki
             mode: background
 
           - shortcut: t

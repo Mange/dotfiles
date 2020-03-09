@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+set -e
+if [[ -t 1 ]]; then
+  is_in_terminal=yes
+else
+  is_in_terminal=no
+fi
+
+if [[ $is_in_terminal == yes ]]; then
+  finder=("fzf")
+else
+  finder=("rofi" "-dmenu" "-i")
+fi
+
+wikipath=~/Documents/Wiki/
+
+selected_filename=$(
+  find "$wikipath" -not -path '*/.stversions/*' -and -name '*.wiki' -printf '%C@\t%P\n' | \
+    sort --numeric --reverse | \
+    cut -d $'\t' -f 2- | \
+    "${finder[@]}"
+)
+
+path="${wikipath}${selected_filename}"
+
+if [[ -f "$path" ]]; then
+  if [[ $is_in_terminal == yes ]]; then
+    exec nvim "$path"
+  else
+    kitty nvim "$path"
+  fi
+else
+  if [[ $is_in_terminal == yes ]]; then
+    echo "Could not find ${path}"
+  else
+    notify-send \
+      --urgency=critical \
+      --icon=error \
+      --app-name \
+      "open-wiki" \
+      "Could not open" "Could not find ${path}"
+  fi
+fi
