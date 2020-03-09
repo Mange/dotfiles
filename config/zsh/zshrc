@@ -589,8 +589,9 @@ try-source-plugin zsh-syntax-highlighting || true
 
 if try-source-plugin zsh-history-substring-search; then
   bindkey -M viins '^N' history-substring-search-up
-  bindkey -M vicmd 'k' history-substring-search-up
-  bindkey -M vicmd 'j' history-substring-search-down
+  bindkey -M viins '^P' history-substring-search-down
+  bindkey -M vicmd '^N' history-substring-search-up
+  bindkey -M vicmd '^P' history-substring-search-down
 fi
 # }}}
 
