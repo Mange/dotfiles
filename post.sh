@@ -26,6 +26,13 @@ if [[ ! -d "${XDG_DATA_HOME}/nvim/plugged" ]]; then
   nvim -u "${XDG_CONFIG_HOME}/nvim/plugs.vim" +PlugInstall +qa
 fi
 
+# Install zsh plugins
+if [[ -d "${XDG_CONFIG_HOME}/zsh/fzf-tab" ]]; then
+  (cd "${XDG_CONFIG_HOME}/zsh/fzf-tab" && git pull --rebase --quiet)
+else
+  git clone https://github.com/Aloxaf/fzf-tab "${XDG_CONFIG_HOME}/zsh/fzf-tab"
+fi
+
 if [[ "$SHELL" != *zsh ]]; then
   echo "Warning: You seem to be using a shell different from zsh (${SHELL})" > /dev/stderr
   echo "Fix this by running:" > /dev/stderr

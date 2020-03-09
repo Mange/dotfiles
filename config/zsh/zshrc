@@ -188,20 +188,8 @@ zstyle ':complete:sudo:' environ HOME="/root"
 compdef run-changed-specs=rspec
 compdef run-branch-specs=rspec
 
-#
-# Pimpin' format
-#
-
-# List completion candidates in groups
-zstyle ':completion:*' group-name ''
-# Looks of group headings
-zstyle ':completion:*:descriptions' format "%B%K{blue}%F{white}>> %d%b%f%k"
-# "No match" warning
-zstyle ':completion:*:warnings' format "%F{red}no match for: %f%d"
-
-# Colors
-zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
-zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
+# Show completion group names
+zstyle ':completion:*:descriptions' format "%d"
 # }}}
 # {{{ Named Directories
 # Make certain paths into named directories ("~name" instead of "/path/to/name")
@@ -584,7 +572,7 @@ stty -ixon -ixoff
 source "${XDG_CONFIG_HOME}/shells/enable-rvm"
 # }}}
 
-# {{{ Plugins (Syntax highlighting, better history search)
+# {{{ Plugins
 try-source-plugin zsh-syntax-highlighting || true
 
 if try-source-plugin zsh-history-substring-search; then
@@ -592,6 +580,39 @@ if try-source-plugin zsh-history-substring-search; then
   bindkey -M viins '^P' history-substring-search-down
   bindkey -M vicmd '^N' history-substring-search-up
   bindkey -M vicmd '^P' history-substring-search-down
+fi
+
+if command-exist fzf && [[ -f ~/.config/zsh/fzf-tab/fzf-tab.plugin.zsh ]]; then
+  source ~/.config/zsh/fzf-tab/fzf-tab.plugin.zsh
+
+  FZF_TAB_COMMAND=(
+      fzf
+      --ansi   # Enable ANSI color support, necessary for showing groups
+      --expect='$continuous_trigger' # For continuous completion
+      '--color=hl:$(( $#headers == 0 ? 108 : 255 ))'
+      --nth=2,3 --delimiter='\x00'  # Don't search prefix
+      --layout=reverse --height='${FZF_TMUX_HEIGHT:=75%}'
+      --tiebreak=begin -m --bind=tab:down,ctrl-j:accept,change:top,ctrl-space:toggle --cycle
+      '--query=$query'   # $query will be expanded to query string at runtime.
+      '--header-lines=$#headers' # $#headers will be expanded to lines of headers at runtime
+  )
+  zstyle ':fzf-tab:*' command $FZF_TAB_COMMAND
+
+  # disable sort when completing options of any command
+  zstyle ':completion:complete:*:options' sort false
+
+  # give a preview when completing `kill`
+  zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm,cmd -w -w"
+  zstyle ':fzf-tab:complete:kill:argument-rest' extra-opts '--preview=echo $(<{f})' --preview-window=down:3:wrap
+
+  # (experimental) give a preview of directory when completing cd
+  local extract="
+  # trim input
+  in=\${\${\"\$(<{f})\"%\$'\0'*}#*\$'\0'}
+  # get ctxt for current completion
+  local -A ctxt=(\"\${(@ps:\2:)CTXT}\")
+  "
+  zstyle ':fzf-tab:complete:cd*' extra-opts --preview=$extract"exa -1 --color=always \${~ctxt[hpre]}\$in"
 fi
 # }}}
 
