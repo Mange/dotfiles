@@ -81,7 +81,7 @@ textbox {
 }
 
 inputbar {
-  children:   [ textbox-prompt-colon,entry,case-indicator ];
+  children:   [ prompt,textbox-prompt-colon,entry,case-indicator ];
   spacing: 0;
 }
 
