@@ -191,6 +191,14 @@ pages:
     settings:
       layout: columns
     groups:
+      - title: Workspaces
+        entries:
+          - shortcut: "s"
+            title: Swap workspaces
+            mode: exec
+            return: false
+            shortcut_color: red
+            command: i3-swap-ws
       - title: Config
         entries:
           - shortcut: r

@@ -1,0 +1,43 @@
+#!/bin/sh
+set -e
+
+available_workspaces=$(
+  {
+    i3-msg -t get_workspaces | \
+      jq -r 'map(.name) | join("\n")'
+
+    grep -F "set \$workspace" "${XDG_CONFIG_HOME}/i3/config" | \
+      grep -oE '"[^"]+"' | \
+      tr -d '"'
+  } | sort -nu
+)
+
+current_workspace=$(
+  i3-msg -t get_workspaces | \
+    jq -r 'map(select(.visible).name)[0]'
+)
+
+if [ "$current_workspace" = "null" ]; then
+  current_workspace=""
+fi
+
+selected_index=$((
+  $(
+    echo "$available_workspaces" | \
+      grep -nm1 "$current_workspace" | \
+      cut -d ':' -f 1
+  ) - 1
+))
+
+target_workspace=$(
+  echo "$available_workspaces" | \
+    rofi -dmenu -x "$selected_index" -p "Swap with"
+)
+
+if [ -n "$target_workspace" ] && [ "$target_workspace" != "$current_workspace" ]; then
+  i3-msg "
+    rename workspace \"$current_workspace\" to swapper;
+    rename workspace \"$target_workspace\" to \"$current_workspace\";
+    rename workspace swapper to \"$target_workspace\";
+  "
+fi
