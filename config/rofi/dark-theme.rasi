@@ -11,20 +11,26 @@ configuration {
 }
 
 * {
-  active-foreground: @foreground;
   normal-foreground: @foreground;
-  urgent-foreground: @foreground;
+  normal-background: @background;
+  active-foreground: #83a598;
+  active-background: @background;
+  urgent-foreground: #fe8019;
+  urgent-background: @background;
 
-  alternate-active-foreground: @foreground;
-  alternate-normal-foreground: @foreground;
-  alternate-urgent-foreground: @foreground;
+  alternate-normal-foreground: @normal-foreground;
+  alternate-normal-background: transparent;
+  alternate-active-foreground: @active-foreground;
+  alternate-active-background: transparent;
+  alternate-urgent-foreground: @urgent-foreground;
+  alternate-urgent-background: transparent;
 
   selected-active-background: #3c383699;
-  selected-active-foreground: @foreground;
+  selected-active-foreground: @active-foreground;
   selected-normal-background: #50494599;
-  selected-normal-foreground: @foreground;
+  selected-normal-foreground: @normal-foreground;
   selected-urgent-background: #665c5499;
-  selected-urgent-foreground: @foreground;
+  selected-urgent-foreground: @urgent-foreground;
 
   background: #282828;
   background-transparent: #282828aa;
@@ -68,7 +74,6 @@ button {
 button.selected {
   background-color: @accent-foreground;
 }
-
 
 message {
   border: 2px 0px 0px;
@@ -120,42 +125,47 @@ element {
   padding: 4px 20px;
 }
 
-element.normal.normal {
+element normal.normal {
   text-color: @normal-foreground;
 }
 
-element.normal.urgent {
+element normal.urgent {
+  background-color: @urgent-background;
   text-color: @urgent-foreground;
 }
 
-element.normal.active {
+element normal.active {
+  background-color: @active-background;
   text-color: @active-foreground;
 }
 
-element.selected.normal {
+element selected.normal {
   background-color: @selected-normal-background;
   text-color: @selected-normal-foreground;
 }
 
-element.selected.urgent {
+element selected.urgent {
   background-color: @selected-urgent-background;
   text-color: @selected-urgent-foreground;
 }
 
-element.selected.active {
+element selected.active {
   background-color: @selected-active-background;
   text-color: @selected-active-foreground;
 }
 
-element.alternate.normal {
+element alternate.normal {
+  background-color: @alternate-normal-background;
   text-color: @alternate-normal-foreground;
 }
 
-element.alternate.urgent {
+element alternate.urgent {
+  background-color: @alternate-urgent-background;
   text-color: @alternate-urgent-foreground;
 }
 
-element.alternate.active {
+element alternate.active {
+  background-color: @alternate-active-background;
   text-color: @alternate-active-foreground;
 }
 
