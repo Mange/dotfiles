@@ -31,7 +31,7 @@ selected_index=$((
 
 target_workspace=$(
   echo "$available_workspaces" | \
-    rofi -dmenu -x "$selected_index" -p "Swap with"
+    rofi -dmenu -a "$selected_index" -p "Swap with"
 )
 
 if [ -n "$target_workspace" ] && [ "$target_workspace" != "$current_workspace" ]; then
