@@ -39,5 +39,6 @@ if [ -n "$target_workspace" ] && [ "$target_workspace" != "$current_workspace" ]
     rename workspace \"$current_workspace\" to swapper;
     rename workspace \"$target_workspace\" to \"$current_workspace\";
     rename workspace swapper to \"$target_workspace\";
+    workspace \"$current_workspace\";
   "
 fi
