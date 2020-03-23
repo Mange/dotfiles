@@ -1,4 +1,9 @@
 #compdef rspec
 # vim:ft=zsh:
 
-compadd -P spec/ `ls spec/**/*_spec.rb | sed -E "s/^spec\///"`
+compadd $(
+  find \
+    "(" -type d -and -path './spec/*' ")" -or \
+    "(" -type f -and -name '*_spec.rb' ")" | \
+  sed 's/^.\///'
+)
