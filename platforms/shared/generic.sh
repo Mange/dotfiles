@@ -33,7 +33,7 @@ install-ruby-via-rvm() {
   if [[ -s /usr/share/rvm/scripts/rvm ]]; then
     source /usr/share/rvm/scripts/rvm
   else
-    echo "ERROR: RVM isn't installed?" >/dev/stderr
+    echo "ERROR: RVM isn't installed?" >&2
     return 1
   fi
 
@@ -92,7 +92,7 @@ update-solargraph() {
   if [[ -s /usr/share/rvm/scripts/rvm ]]; then
     source /usr/share/rvm/scripts/rvm
   else
-    echo "ERROR: RVM isn't installed?" >/dev/stderr
+    echo "ERROR: RVM isn't installed?" >&2
     return 1
   fi
 
@@ -149,7 +149,7 @@ update-ripper-tags() {
   if [[ -s /usr/share/rvm/scripts/rvm ]]; then
     source /usr/share/rvm/scripts/rvm
   else
-    echo "ERROR: RVM isn't installed?" >/dev/stderr
+    echo "ERROR: RVM isn't installed?" >&2
     return 1
   fi
 
