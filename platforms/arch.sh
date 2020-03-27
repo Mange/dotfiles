@@ -253,6 +253,10 @@ compile-aurutils() {
     sudo chown -R "$USER:$USER" /opt/aurutils
     sudo chmod -R u+wX /opt/aurutils
     gpg --recv-keys 6bc26a17b9b7018a
+
+    # Install dependencies
+    sudo pacman -S --needed expac diffstat
+
     (cd /opt/aurutils; makepkg -i)
 
     subheader "Setting up local repository"
