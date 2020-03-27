@@ -34,7 +34,7 @@ ttf-dejavu
 ttf-hack
 ttf-inconsolata
 
-# nerd-fonts installed in aur.txt
+ttf-nerd-fonts-symbols
 noto-fonts       # Android
 noto-fonts-emoji # Emoji
 noto-fonts-extra # etc.
