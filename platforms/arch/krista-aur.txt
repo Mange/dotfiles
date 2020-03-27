@@ -1,0 +1,4 @@
+# vim:ft=text:nospell
+# AUR, krista-specific
+
+system76-driver

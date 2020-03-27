@@ -1,0 +1,5 @@
+
+# vim:ft=text:nospell
+# krista-specific
+
+bolt # Thunderbolt 3 dock manager
