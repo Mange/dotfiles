@@ -1,6 +1,11 @@
 #!/bin/bash
 set -e
 
+if [ $(id -u) -eq 0 ]; then
+	echo "Must not be run as root!" >&2
+	exit 127
+fi
+
 cd "$(dirname "$0")"
 . ./support/functions.bash
 
