@@ -61,6 +61,7 @@ hub
 jq
 nmap
 parallel
+pastel
 prettyping
 pulsemixer
 ripgrep
