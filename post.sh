@@ -33,6 +33,9 @@ else
   git clone https://github.com/Aloxaf/fzf-tab "${XDG_CONFIG_HOME}/zsh/fzf-tab"
 fi
 
+# Clean up left-overs, if found
+rm -f ~/.fzf.{bash,zsh}
+
 if [[ "$SHELL" != *zsh ]]; then
   echo "Warning: You seem to be using a shell different from zsh (${SHELL})" > /dev/stderr
   echo "Fix this by running:" > /dev/stderr
