@@ -60,7 +60,7 @@ top = true
 
 modules-left = i3 media-info
 modules-center = clock date
-modules-right = task-counters mailboxes volume wifi battery-warning
+modules-right = task-counters mailboxes volume wifi battery
 
 tray-position = none
 
@@ -257,6 +257,7 @@ format-discharging-padding = 2
 format-full-padding = 0
 
 label-full = ""
+label-discharging = "%percentage%% (%time%)"
 
 animation-charging-0 = " "
 animation-charging-1 = " "
