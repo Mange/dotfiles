@@ -72,6 +72,7 @@ shutdown-hook 'exec sync-mailbox'
 bind index,pager i noop
 macro index,pager i1 '<sync-mailbox><enter-command>source ~/.config/neomutt/accounts/gmail.muttrc<enter><change-folder>!<enter>;<check-stats>' "Switch to gmail"
 macro index,pager i2 '<sync-mailbox><enter-command>source ~/.config/neomutt/accounts/hemnet.muttrc<enter><change-folder>!<enter>;<check-stats>' "Switch to hemnet"
+macro index,pager i3 '<sync-mailbox><enter-command>source ~/.config/neomutt/accounts/devbox.muttrc<enter><change-folder>!<enter>;<check-stats>' "Switch to devbox"
 
 # Default to private email
 source ~/.config/neomutt/accounts/gmail.muttrc

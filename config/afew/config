@@ -14,7 +14,7 @@ message = 'Removing the "new" tags'
 tags = -new
 
 [MailMover]
-folders = gmail/inbox gmail/important gmail/archive hemnet/inbox hemnet/important hemnet/archive
+folders = gmail/inbox gmail/important gmail/archive hemnet/inbox hemnet/important hemnet/archive devbox/inbox devbox/important devbox/archive
 max_age = 30
 
 ; Required for mbsync
@@ -27,3 +27,7 @@ gmail/archive = 'tag:important AND NOT folder:gmail/important':gmail/important
 hemnet/inbox = 'NOT tag:inbox':hemnet/archive
 hemnet/important = 'NOT tag:important':hemnet/archive
 hemnet/archive = 'tag:important AND NOT folder:hemnet/important':hemnet/important
+
+devbox/inbox = 'NOT tag:inbox':devbox/archive
+devbox/important = 'NOT tag:important':devbox/archive
+devbox/archive = 'tag:important AND NOT folder:devbox/important':devbox/important
