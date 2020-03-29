@@ -15,6 +15,7 @@ lsof
 nfs-utils    # NFS (filesystem)
 ntfs-3g      # NTFS (filesystem)
 openssh      # SSH client
+polkit
 pulseaudio   # Audio server
 xdg-utils    # Desktop software support
 

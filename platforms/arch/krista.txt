@@ -3,5 +3,4 @@
 # krista-specific
 
 bolt # Thunderbolt 3 dock manager
-
 arandr
