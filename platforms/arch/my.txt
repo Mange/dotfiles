@@ -266,6 +266,7 @@ notmuch # Email indexer and search engine
 notmuch-vim # Email client (does not work with rvm, it appears)
 afew # Notmuch tagger
 urlscan # Pick URLs from HTML
+w3m # For HTML email reading
 
 # Misc developer tooling
 postgresql # Required for pgcli and also installs psql
