@@ -45,6 +45,9 @@ if [[ $_mange_xdg_zealotry != "yes" ]]; then
   # notmuch
   export NOTMUCH_CONFIG="${XDG_CONFIG_HOME}/notmuch/config"
 
+  # Go >:(
+  export GOPATH="${XDG_DATA_HOME}/go"
+
   # Xauthority
   # Temporarily disabled; I need to get lightdm to actually write the file
   # here. Not worth the fight currently...

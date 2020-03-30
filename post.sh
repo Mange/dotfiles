@@ -35,6 +35,10 @@ fi
 
 # Clean up left-overs, if found
 rm -f ~/.fzf.{bash,zsh}
+# Migrate GOPATH
+if [[ -n "$GOPATH" ]] && [[ -d ~/go ]] && ! [[ -d "$GOPATH" ]]; then
+  mkdir -p "$(dirname "$GOPATH")" && mv ~/go "$GOPATH"
+fi
 
 if [[ "$SHELL" != *zsh ]]; then
   echo "Warning: You seem to be using a shell different from zsh (${SHELL})" > /dev/stderr
