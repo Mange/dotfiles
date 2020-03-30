@@ -49,6 +49,7 @@ migrate_xdg() {
 migrate_xdg ~/go "$GOPATH"
 migrate_xdg ~/.cargo "$CARGO_HOME"
 migrate_xdg ~/.rustup "$RUSTUP_HOME"
+migrate_xdg ~/.gnupg "$GNUPGHOME"
 
 if [[ "$SHELL" != *zsh ]]; then
   echo "Warning: You seem to be using a shell different from zsh (${SHELL})" > /dev/stderr

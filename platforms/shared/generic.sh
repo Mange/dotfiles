@@ -6,20 +6,22 @@ install-fzf() {
 }
 
 setup-gpg-auto-retrieve() {
-  if [[ ! -d ~/.gnupg ]]; then
+  GNUPGHOME="${GNUPGHOME:-~/.gnupg}"
+
+  if [[ ! -d "$GNUPGHOME" ]]; then
     # Generate a GPG directory by running a command
     gpg --list-keys 2>/dev/null >/dev/null
 
-    if [[ ! -d ~/.gnupg ]]; then
-      echo "WARNING: Could not generate ~/.gnupg directory!"
+    if [[ ! -d "$GNUPGHOME" ]]; then
+      echo "WARNING: Could not generate $GNUPGHOME directory!"
       return 1
     fi
   fi
 
-  if ! grep -qE "^keyserver-options auto-key-retrieve" ~/.gnupg/gpg.conf 2>/dev/null; then
+  if ! grep -qE "^keyserver-options auto-key-retrieve" "${GNUPGHOME}/gpg.conf" 2>/dev/null; then
     header "Setting up GPG to auto-retreive keys"
 
-    echo "keyserver-options auto-key-retrieve" >> ~/.gnupg/gpg.conf
+    echo "keyserver-options auto-key-retrieve" >> "${GNUPGHOME}/gpg.conf"
   fi
 }
 
