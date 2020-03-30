@@ -35,10 +35,20 @@ fi
 
 # Clean up left-overs, if found
 rm -f ~/.fzf.{bash,zsh}
-# Migrate GOPATH
-if [[ -n "$GOPATH" ]] && [[ -d ~/go ]] && ! [[ -d "$GOPATH" ]]; then
-  mkdir -p "$(dirname "$GOPATH")" && mv ~/go "$GOPATH"
-fi
+
+# Migrate some XDG stuff
+migrate_xdg() {
+  local from="$1"
+  local to="$2"
+
+  if [[ -n "$to" ]] && [[ -d "$from" ]] && ! [[ -d "$to" ]]; then
+    echo "Moving $from → $to"
+    mkdir -p "$(dirname "$to")" && mv "$from" "$to"
+  fi
+}
+migrate_xdg ~/go "$GOPATH"
+migrate_xdg ~/.cargo "$CARGO_HOME"
+migrate_xdg ~/.rustup "$RUSTUP_HOME"
 
 if [[ "$SHELL" != *zsh ]]; then
   echo "Warning: You seem to be using a shell different from zsh (${SHELL})" > /dev/stderr
