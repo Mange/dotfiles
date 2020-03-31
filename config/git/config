@@ -3,6 +3,7 @@
 # Use global hooks
 [core]
   hooksPath = ~/.config/git/hooks
+	pager = delta --$(cat ${XDG_RUNTIME_DIR}/current_theme || echo dark)
 
 # That's me!
 [user]
@@ -22,9 +23,6 @@
   oldHighlight = red bold 52
   newNormal = green bold
   newHighlight = green bold 22
-[pager]
-  show = diff-so-fancy | less --tabs=4 -RXin
-  diff = diff-so-fancy | less --tabs=4 -RXin
 
 # Sign commits
 [commit]
