@@ -223,7 +223,7 @@ install-pip-software() {
     for package in "${wanted_software[@]}"; do
       if pip show "$package" >/dev/null 2>/dev/null; then
         subheader "Upgrading $package" -n
-        if output="$(sudo pip install -U "$package" 2>&1)"; then
+        if output="$(sudo pip install --user --upgrade "$package" 2>&1)"; then
           echo "${green} ✔"
         else
           echo "${red} ✘ - FAILED"
@@ -231,7 +231,7 @@ install-pip-software() {
         fi
       else
         subheader "Installing $package" -n
-        if output="$(sudo pip install "$package" 2>&1)"; then
+        if output="$(sudo pip install --user "$package" 2>&1)"; then
           echo "${green} ✔"
         else
           echo "${red} ✘ - FAILED"
@@ -527,14 +527,14 @@ if run-section "neovim"; then
 
     subheader "Python 2 plugin"
     if hash pip2 2>/dev/null; then
-      (sudo pip2 install --upgrade --upgrade-strategy eager -q neovim && echo "${green}✔ OK${reset}") || handle-failure
+      (sudo pip2 install --user --upgrade --upgrade-strategy eager -q neovim && echo "${green}✔ OK${reset}") || handle-failure
     else
       echo "${red}pip2 not installed${reset}"
     fi
 
     subheader "Python 3 plugin"
     if hash pip3 2>/dev/null; then
-      (sudo pip3 install --upgrade --upgrade-strategy eager -q neovim && echo "${green}✔ OK${reset}") || handle-failure
+      (sudo pip3 install --user --upgrade --upgrade-strategy eager -q neovim && echo "${green}✔ OK${reset}") || handle-failure
     else
       echo "${red}pip3 not installed${reset}"
     fi

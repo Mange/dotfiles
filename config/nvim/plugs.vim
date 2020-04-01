@@ -37,7 +37,7 @@ Plug 'vimwiki/vimwiki'
 Plug 'blindFS/vim-taskwarrior'
 
 " taskwarrior in vimwiki
-Plug 'tbabej/taskwiki', { 'do': 'sudo pip3 install --upgrade -r requirements.txt' }
+Plug 'tbabej/taskwiki', { 'do': 'sudo pip3 install --user --upgrade -r requirements.txt' }
 
 """ Editor functionality
 Plug 'AndrewRadev/switch.vim'
