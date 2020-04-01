@@ -5,7 +5,8 @@ neovim-git
 neovim-gtk-git
 
 # Temporary
-vdirsyncer-git # https://github.com/pimutils/vdirsyncer/issues/745
+# Actually, it's just completely broken now :(
+# vdirsyncer-git # https://github.com/pimutils/vdirsyncer/issues/745
 
 # I fucking hate Node
 # I don't want it, but I need it for other software and it refuses to
