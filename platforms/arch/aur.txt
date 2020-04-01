@@ -16,7 +16,6 @@ vdirsyncer-git # https://github.com/pimutils/vdirsyncer/issues/745
 # on the face of the earth is what it is.
 nvm
 
-autorandr
 bitwarden-cli     # CLI for password manager
 bitwarden-rofi    # Bitwarden in Rofi
 discord-canary    # All-in-one voice and text chat for gamers that's free and secure.

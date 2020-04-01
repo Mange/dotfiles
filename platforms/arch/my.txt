@@ -114,6 +114,7 @@ transmission-cli # bittorrent info
 # Desktop env
 #
 acpi # for battery indication, etc. in polybar
+autorandr
 blueman
 # compton # disabled for AUR compton-tryone-git
 dunst # libnotify server
