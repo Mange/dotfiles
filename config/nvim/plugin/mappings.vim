@@ -270,6 +270,10 @@ let g:which_key_map.s.w = 'project-search-word'
 nmap <leader>st :Tags<cr>
 let g:which_key_map.s.t = 'fzf-tags'
 
+" Search for TODOs and other notes
+nmap <leader>so :Ag! "(TODO\|FIXME)"<CR>
+let g:which_key_map.s.o = 'project-search-todos'
+
 " Go back to the previous quickfix list (e.g. older search results)
 nmap <leader>sk :colder<cr>
 let g:which_key_map.s.k = 'list-older'
