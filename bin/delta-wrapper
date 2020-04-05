@@ -1,0 +1,5 @@
+#!/bin/sh
+
+theme=$(cat "${XDG_RUNTIME_DIR}/current_theme" 2>/dev/null || echo dark)
+
+exec delta "--${theme}"

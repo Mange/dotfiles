@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 # Run after installing dotfiles to perform extra work.
 
+# Setup theme file
+[[ ! -f "${XDG_RUNTIME_DIR}/current-theme" ]] && echo "dark" > "${XDG_RUNTIME_DIR}/current-theme"
+
 # Create directory for ZSH history, etc., if it does not exist already.
 mkdir -p "${XDG_DATA_HOME}/zsh"
 

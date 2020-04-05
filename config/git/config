@@ -3,7 +3,7 @@
 # Use global hooks
 [core]
   hooksPath = ~/.config/git/hooks
-	pager = delta --$(cat ${XDG_RUNTIME_DIR}/current_theme || echo dark)
+	pager = delta-wrapper
 
 # That's me!
 [user]
