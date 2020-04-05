@@ -1,26 +1,31 @@
 #!/bin/sh
 
-# Set brightness via xbrightness when redshift status changes
+# Set brightness via brightnessclt when redshift status changes
 
 # Set brightness values for each status.
 # Range from 1 to 100 is valid
-brightness_day="100"
-brightness_transition="50"
-brightness_night="10"
+brightness_day="100%"
+brightness_transition="50%"
+brightness_night="20%"
+# Animating the change is currently not possible natively.
+# See https://github.com/Hummer12007/brightnessctl/issues/26
+#
 # Set fade time for changes to one minute
-fade_time=60000
+# fade_time=60000
 
 case $1 in
 	period-changed)
-		case $3 in
+    # prev_period=$2
+    new_period=$3
+		case $new_period in
 			night)
-				xbacklight -set $brightness_night -time $fade_time
+        brightnessctl set "$brightness_night"
 				;;
 			transition)
-				xbacklight -set $brightness_transition -time $fade_time
+        brightnessctl set "$brightness_transition"
 				;;
 			daytime)
-				xbacklight -set $brightness_day -time $fade_time
+        brightnessctl set "$brightness_day"
 				;;
 		esac
 		;;

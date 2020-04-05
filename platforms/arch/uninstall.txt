@@ -2,3 +2,6 @@
 
 # Replaced by git-delta
 diff-so-fancy
+
+# Replaced by brightnessctl
+xorg-xbacklight

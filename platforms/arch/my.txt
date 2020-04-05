@@ -115,8 +115,9 @@ transmission-cli # bittorrent info
 #
 acpi # for battery indication, etc. in polybar
 autorandr
-blueman
 # compton # disabled for AUR compton-tryone-git
+blueman
+brightnessctl
 dunst # libnotify server
 feh
 gucharmap
@@ -139,7 +140,6 @@ wireless_tools # for Polybar
 wmctrl # for i3quit, etc.
 workrave
 xcape # Make Super into both Super and Escape
-xorg-xbacklight
 xsel
 xss-lock # Screenlocker
 zenity # GUI prompts from scripts (ytpip, etc.)
