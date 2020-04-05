@@ -3,60 +3,10 @@
 if [[ $_mange_xdg_zealotry != "yes" ]]; then
   _mange_xdg_zealotry="yes"
 
-  # It's lovely when all my configs can rely on these variables actually being
-  # set and not have to hardcode the fallback values everywhere.
-  export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-${HOME}/.config}"
-  export XDG_DATA_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}"
-  export XDG_CACHE_HOME="${XDG_CACHE_HOME:-${HOME}/.cache}"
+  set -a
+  # shellcheck source=../environment.d/10-xdg-zealotry.conf
+  . "$HOME/.config/environment.d/10-xdg-zealotry.conf"
+  set +a
 
-  #
-  # XDG base directory exports for special snowflakes
-  #
-
-  # ZSH
-  export ZDOTDIR="${XDG_CONFIG_HOME}/zsh"
-  # HISTFILE is set in zshrc
-
-  # Ruby
-  export GEMRC="${XDG_CONFIG_HOME}/ruby/gemrc"
-  export IRBRC="${XDG_CONFIG_HOME}/ruby/irbrc"
-
-  # Rust
-  export CARGO_HOME="${XDG_DATA_HOME}/cargo"
-  export RUSTUP_HOME="${XDG_DATA_HOME}/rustup"
-
-  # npm (…are assholes)
-  # https://github.com/npm/npm/issues/6675
-  export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME}/npm/config"
-  export NPM_CONFIG_CACHE="${XDG_CACHE_HOME}/npm"
-  export NPM_CONFIG_TMP="${XDG_RUNTIME_DIR}/npm"
-
-  # Postgres
-  export PSQLRC="${XDG_CONFIG_HOME}/postgresql/psqlrc"
-
-  # GNUGP / GPG
-  export GNUPGHOME="${XDG_DATA_HOME}/gnupg"
-
-  # tmux
   alias tmux='tmux -f "${XDG_CONFIG_HOME}/tmux/tmux.conf"'
-  if [ -n "$XDG_RUNTIME_DIR" ]; then
-    export TMUX_TMPDIR="$XDG_RUNTIME_DIR"
-  fi
-
-  # Taskwarrior
-  export TASKRC="${XDG_CONFIG_HOME}/taskwarrior/config"
-
-  # ctags
-  export CTAGS="--options=${XDG_CONFIG_HOME}/ctags/option"
-
-  # notmuch
-  export NOTMUCH_CONFIG="${XDG_CONFIG_HOME}/notmuch/config"
-
-  # Go >:(
-  export GOPATH="${XDG_DATA_HOME}/go"
-
-  # Xauthority
-  # Temporarily disabled; I need to get lightdm to actually write the file
-  # here. Not worth the fight currently...
-  # export XAUTHORITY="${XDG_RUNTIME_DIR}/Xauthority"
 fi
