@@ -80,16 +80,16 @@ let g:which_key_map['\<s-tab>'] = 'quickfix-previous'
 nmap <leader>bb :Buffers<cr>
 let g:which_key_map.b.b = 'fzf-buffers'
 
-map <leader>ba :silent A<CR>
+map <leader>ba :A<CR>
 let g:which_key_map.b.a = 'goto-alternative'
 
-map <leader>bA :silent AV<CR>
+map <leader>bA :AS<CR>
 let g:which_key_map.b.A = 'split-alternative'
 
-map <leader>br :silent R<CR>
+map <leader>br :R<CR>
 let g:which_key_map.b.r = 'goto-related'
 
-map <leader>bR :silent RS<CR>
+map <leader>bR :RS<CR>
 let g:which_key_map.b.R = 'split-related'
 
 map <leader>bd :bd<CR>
