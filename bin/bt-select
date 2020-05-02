@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
 function icon() {
-  local device_id="$1"
-  local info
+  local info="$1"
   local icon
   info=$(echo "info ${device_id}" | bluetoothctl)
 
@@ -36,49 +35,59 @@ function icon() {
   esac
 }
 
-selected_device=$(
-  selections=()
-  connected_indices=()
-  ids=()
-  index=0
+is_in_array() {
+  local needle="$1"
+  shift
 
-  mapfile -t devices < <(
-    echo "paired-devices" | bluetoothctl | grep "Device " | sort
-  )
-
-  # bluetoothctl emits other junk on stdout; grep for lines we want
-  for device in "${devices[@]}"; do
-    id=$(echo "$device" | awk '{ print $2 }')
-    name=$(echo "$device" | cut -d " " -f 3-)
-
-    info=$(echo "info $id" | bluetoothctl)
-
-    connected=""
-    if [[ $(echo "$info" | grep "Connected: " | awk '{ print $2 }') == "yes" ]]; then
-      connected=" (Connected)"
-      connected_indices+=("-a" "$index")
+  for item in "$@"; do
+    if [[ "$item" == "$needle" ]]; then
+      return 0
     fi
-
-    ids+=("$id")
-    selections+=("$(icon "$id") ${name}${connected}")
-    index=$((index+1))
   done
 
-  selected_index=$(
-    printf '%s\n' "${selections[@]}" | \
-      rofi -dmenu -p "Select device" -i -no-custom -format i "${connected_indices[@]}"
-  )
+  return 1
+}
 
-  if [[ -n $selected_index ]]; then
-    echo "${ids[$selected_index]}"
-  fi
+selection_options=()
+connected_indices=("1")
+ids=()
+names=()
+choices=()
+index=0
+
+mapfile -t devices < <(
+  echo "paired-devices" | bluetoothctl | grep "Device " | sort
 )
 
-if [[ -n $selected_device ]]; then
-  selected_name="${selected_device/ \[*}"
-  selected_id=$(echo "$selected_device" | grep -oE '\[[^]]+\]' | tr -d '[]')
+# bluetoothctl emits other junk on stdout; grep for lines we want
+for device in "${devices[@]}"; do
+  id=$(echo "$device" | awk '{ print $2 }')
+  name=$(echo "$device" | cut -d " " -f 3-)
+  info=$(echo "info $id" | bluetoothctl)
+  title="$(icon "$info") ${name}"
 
-  if echo "$selected_device" | grep -q "(Connected)"; then
+  if [[ $(echo "$info" | grep -m1 "Connected: " | awk '{ print $2 }') == "yes" ]]; then
+    title="${title} (Connected)"
+    connected_indices+=("$index")
+    selection_options+=("-a" "$index")
+  fi
+
+  ids+=("$id")
+  names+=("$name")
+  choices+=("$title")
+  index=$((index+1))
+done
+
+selected_index=$(
+  printf '%s\n' "${choices[@]}" | \
+    rofi -dmenu -p "Select device" -i -no-custom -format i "${selection_options[@]}"
+)
+
+if [[ -n $selected_index ]]; then
+  selected_name="${names[$selected_index]}"
+  selected_id="${ids[$selected_index]}"
+
+  if is_in_array "$selected_index" "${connected_indices[@]}"; then
     echo "disconnect $selected_id" | bluetoothctl
     notify-send \
       --app-name=bt-select \
