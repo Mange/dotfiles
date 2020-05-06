@@ -320,8 +320,30 @@ let g:which_key_map.t.q = 'quickfix'
 " }}}
 
 " {{{ Leader +window
-" TODO: Open new window, close current window, resize window, only window, fzf
-" window
+" TODO: close current window, resize window, only window
+nmap <leader>ww :Windows<cr>
+let g:which_key_map.w.w = 'select'
+
+nmap <leader>wh <C-w>h
+let g:which_key_map.w.h = 'left'
+
+nmap <leader>wj <C-w>j
+let g:which_key_map.w.j = 'down'
+
+nmap <leader>wk <C-w>k
+let g:which_key_map.w.k = 'up'
+
+nmap <leader>wl <C-w>l
+let g:which_key_map.w.l = 'right'
+
+nmap <leader>ws <C-w>s
+let g:which_key_map.w.s = 'split-horizontal'
+
+nmap <leader>wv <C-w>v
+let g:which_key_map.w.v = 'split-vertical'
+
+nmap <leader>wq <C-w>q
+let g:which_key_map.w.q = 'close'
 " }}}
 
 " {{{ Helpers for diff mode ("vimdiff")
