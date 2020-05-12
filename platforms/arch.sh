@@ -223,7 +223,7 @@ install-pip-software() {
     for package in "${wanted_software[@]}"; do
       if pip show "$package" >/dev/null 2>/dev/null; then
         subheader "Upgrading $package" -n
-        if output="$(sudo pip install --user --upgrade "$package" 2>&1)"; then
+        if output="$(pip install --user --upgrade "$package" 2>&1)"; then
           echo "${green} ✔"
         else
           echo "${red} ✘ - FAILED"
@@ -231,7 +231,7 @@ install-pip-software() {
         fi
       else
         subheader "Installing $package" -n
-        if output="$(sudo pip install --user "$package" 2>&1)"; then
+        if output="$(pip install --user "$package" 2>&1)"; then
           echo "${green} ✔"
         else
           echo "${red} ✘ - FAILED"
