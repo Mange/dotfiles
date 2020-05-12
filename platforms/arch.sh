@@ -1,6 +1,11 @@
 #!/bin/bash
 set -e
 
+if [ $(id -u) -eq 0 ]; then
+	echo "Must not be run as root!" >&2
+	exit 127
+fi
+
 cd "$(dirname "$0")"
 . ./support/functions.bash
 
@@ -218,7 +223,7 @@ install-pip-software() {
     for package in "${wanted_software[@]}"; do
       if pip show "$package" >/dev/null 2>/dev/null; then
         subheader "Upgrading $package" -n
-        if output="$(sudo pip install -U "$package" 2>&1)"; then
+        if output="$(sudo pip install --user --upgrade "$package" 2>&1)"; then
           echo "${green} ✔"
         else
           echo "${red} ✘ - FAILED"
@@ -226,7 +231,7 @@ install-pip-software() {
         fi
       else
         subheader "Installing $package" -n
-        if output="$(sudo pip install "$package" 2>&1)"; then
+        if output="$(sudo pip install --user "$package" 2>&1)"; then
           echo "${green} ✔"
         else
           echo "${red} ✘ - FAILED"
@@ -248,6 +253,10 @@ compile-aurutils() {
     sudo chown -R "$USER:$USER" /opt/aurutils
     sudo chmod -R u+wX /opt/aurutils
     gpg --recv-keys 6bc26a17b9b7018a
+
+    # Install dependencies
+    sudo pacman -S --needed expac diffstat
+
     (cd /opt/aurutils; makepkg -i)
 
     subheader "Setting up local repository"
@@ -518,14 +527,14 @@ if run-section "neovim"; then
 
     subheader "Python 2 plugin"
     if hash pip2 2>/dev/null; then
-      (sudo pip2 install --upgrade --upgrade-strategy eager -q neovim && echo "${green}✔ OK${reset}") || handle-failure
+      (sudo pip2 install --user --upgrade --upgrade-strategy eager -q neovim && echo "${green}✔ OK${reset}") || handle-failure
     else
       echo "${red}pip2 not installed${reset}"
     fi
 
     subheader "Python 3 plugin"
     if hash pip3 2>/dev/null; then
-      (sudo pip3 install --upgrade --upgrade-strategy eager -q neovim && echo "${green}✔ OK${reset}") || handle-failure
+      (sudo pip3 install --user --upgrade --upgrade-strategy eager -q neovim && echo "${green}✔ OK${reset}") || handle-failure
     else
       echo "${red}pip3 not installed${reset}"
     fi

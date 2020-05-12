@@ -1,10 +1,12 @@
-#!/usr/bin/env bash
+#!/bin/sh
 config_dir="${XDG_CONFIG_HOME}/xmodmap"
 
 xmodmap "${config_dir}/custom_keyboard"
+programmable_keyboard=no
 
 case "$(hostname)" in
   morbidus)
+    programmable_keyboard=yes
     # Setup tablet, if plugged in
     if xinput list --name-only | grep -q "Wacom Intuos S"; then
       stylus="Wacom Intuos S Pen stylus"
@@ -16,13 +18,16 @@ case "$(hostname)" in
     fi
     ;;
   bilquis)
-    # Built-in laptop keyboard cannot be reprogrammed in hardware.
-    xmodmap "${config_dir}/caps_is_super"
     ;;
   *)
     # Do nothing extra
     ;;
 esac
+
+# Some keyboards cannot be reprogrammed in hardware.
+if [ "$programmable_keyboard" = "no" ]; then
+  xmodmap "${config_dir}/caps_is_super"
+fi
 
 # Make Super_L Escape when just quickly pressed
 killall xcape 2>/dev/null; xcape -e 'Super_L=Escape'

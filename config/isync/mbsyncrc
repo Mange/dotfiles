@@ -364,3 +364,94 @@ Group hemnet
   Channel hemnet-starred
   Channel hemnet-trash
   Channel hemnet-archive
+
+##########################
+# Devbox
+##########################
+
+IMAPAccount magnus@devbox.com
+  Host imap.gmail.com
+  User magnus@devbox.com
+  PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/Security/mbsync_gmail_devbox.gpg"
+  SSLType IMAPS
+  CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+IMAPStore devbox-remote
+  Account magnus@devbox.com
+
+MaildirStore devbox-local
+  Path ~/Mail/devbox/
+  Inbox ~/Mail/devbox/Inbox
+  Inbox ~/Mail/devbox/trash
+  SubFolders Verbatim
+
+# Set up channels. We need custom channels for some directories to name them in
+# a way that works well with notmuch and afew (aka no spaces).
+
+Channel devbox-inbox
+  Master :devbox-remote:"Inbox"
+  Slave :devbox-local:inbox
+  Create Slave
+  SyncState *
+  Sync All
+  Expunge Both
+
+Channel devbox-trash
+  Master :devbox-remote:"[Gmail]/Papperskorgen"
+  Slave :devbox-local:trash
+  Create Slave
+  SyncState *
+  Sync All
+  Expunge Both
+
+Channel devbox-sent
+  Master :devbox-remote:"[Gmail]/Skickat"
+  Slave :devbox-local:sent
+  Create Slave
+  SyncState *
+  Sync All
+  Expunge Both
+
+Channel devbox-drafts
+  Master :devbox-remote:"[Gmail]/Utkast"
+  Slave :devbox-local:drafts
+  Create Slave
+  SyncState *
+  Sync All
+  Expunge Both
+
+Channel devbox-archive
+  Master :devbox-remote:"[Gmail]/Alla mail"
+  Slave :devbox-local:archive
+  Create Slave
+  SyncState *
+  Sync All
+  Expunge Slave
+
+Channel devbox-starred
+  Master :devbox-remote:"[Gmail]/Stj&AOQ-rnm&AOQ-rkta"
+  Slave :devbox-local:starred
+  Create Slave
+  SyncState *
+  Sync All
+  Expunge Both
+
+Channel devbox-important
+  Master :devbox-remote:"[Gmail]/Viktigt"
+  Slave :devbox-local:important
+  Create Slave
+  SyncState *
+  Sync All
+  Expunge Both
+
+# Join all the channels into a single group
+Group devbox
+  Channel devbox-inbox
+  Channel devbox-important
+  Channel devbox-starred
+  Channel devbox-drafts
+  Channel devbox-sent
+  Channel devbox-trash
+  Channel devbox-archive
+
+

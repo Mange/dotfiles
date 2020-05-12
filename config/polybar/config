@@ -60,7 +60,7 @@ top = true
 
 modules-left = i3 media-info
 modules-center = clock date
-modules-right = task-counters mailboxes volume wifi battery-warning
+modules-right = task-counters mailboxes volume wifi battery
 
 tray-position = none
 
@@ -250,13 +250,14 @@ inherit = module/base
 type = internal/battery
 
 format-charging = " <label-charging>"
-format-discharging = "<ramp-capacity><label-discharging>"
+format-discharging = "<ramp-capacity><label-discharging>%{F-}"
 format-full = x
 format-charging-padding = 2
 format-discharging-padding = 2
 format-full-padding = 0
 
 label-full = ""
+label-discharging = "%percentage%% (%time%)"
 
 animation-charging-0 = " "
 animation-charging-1 = " "
@@ -268,11 +269,11 @@ animation-charging-6 = " "
 animation-charging-framerate=1500
 
 ramp-capacity-foreground = ${theme.foreground}
-ramp-capacity-0 = " "
-ramp-capacity-1 = " "
-ramp-capacity-2 = " "
-ramp-capacity-3 = " "
-ramp-capacity-4 = " "
+ramp-capacity-0 = "%{F#fb4934} "
+ramp-capacity-1 = "%{F#fb4934} "
+ramp-capacity-2 = "%{F#fb4934} "
+ramp-capacity-3 = "%{F#fabd2f} "
+ramp-capacity-4 = "%{F#fabd2f} "
 ramp-capacity-5 = " "
 ramp-capacity-6 = " "
 ramp-capacity-7 = " "

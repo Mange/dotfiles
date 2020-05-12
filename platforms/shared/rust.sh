@@ -1,9 +1,15 @@
 #!/bin/bash
 set -e
 
+if [[ -z "$CARGO_HOME" ]]; then
+  CARGO_HOME="$HOME/.cargo"
+fi
+
 install-or-update-rustup() {
-  if [[ ! -f ~/.cargo/env ]]; then
+  if [[ ! -f "$CARGO_HOME/env" ]]; then
     header "Installing rustup"
+    export CARGO_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/cargo"
+    export RUSTUP_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/rustup"
     curl https://sh.rustup.rs -sSf | sh
   else
     header "Updating Rust"
@@ -32,10 +38,11 @@ install-rustup-components() {
 run-rust-cmd() {
   if hash "$1" 2>/dev/null; then
     command "$@"
-  elif [[ -f ~/.cargo/env ]]; then
+  elif [[ -f "$CARGO_HOME/env" ]]; then
     # This is handled by my dotfiles already, but this script can run before
     # the dotfiles have been installed so deal with that.
-    source ~/.cargo/env
+    # shellcheck source=/home/mange/.local/share/cargo/env
+    source "$CARGO_HOME/env"
     command "$@"
   else
     echo "Cargo/Rustup is not installed!"

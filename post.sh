@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 # Run after installing dotfiles to perform extra work.
 
+# Setup theme file
+[[ ! -f "${XDG_RUNTIME_DIR}/current-theme" ]] && echo "dark" > "${XDG_RUNTIME_DIR}/current-theme"
+
 # Create directory for ZSH history, etc., if it does not exist already.
 mkdir -p "${XDG_DATA_HOME}/zsh"
 
@@ -32,6 +35,24 @@ if [[ -d "${XDG_CONFIG_HOME}/zsh/fzf-tab" ]]; then
 else
   git clone https://github.com/Aloxaf/fzf-tab "${XDG_CONFIG_HOME}/zsh/fzf-tab"
 fi
+
+# Clean up left-overs, if found
+rm -f ~/.fzf.{bash,zsh}
+
+# Migrate some XDG stuff
+migrate_xdg() {
+  local from="$1"
+  local to="$2"
+
+  if [[ -n "$to" ]] && [[ -d "$from" ]] && ! [[ -d "$to" ]]; then
+    echo "Moving $from → $to"
+    mkdir -p "$(dirname "$to")" && mv "$from" "$to"
+  fi
+}
+migrate_xdg ~/go "$GOPATH"
+migrate_xdg ~/.cargo "$CARGO_HOME"
+migrate_xdg ~/.rustup "$RUSTUP_HOME"
+migrate_xdg ~/.gnupg "$GNUPGHOME"
 
 if [[ "$SHELL" != *zsh ]]; then
   echo "Warning: You seem to be using a shell different from zsh (${SHELL})" > /dev/stderr

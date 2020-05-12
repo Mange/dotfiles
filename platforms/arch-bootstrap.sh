@@ -56,6 +56,16 @@ if ! groups "$username" | grep -qE '\bwheel\b'; then
   (set -x; gpasswd -a "$username" wheel)
 fi
 
+if ! groups "$username" | grep -qE '\bvideo\b'; then
+  echo ">> Adding $username to video group (control brightness)" >/dev/stderr
+  (set -x; gpasswd -a "$username" video)
+fi
+
+if ! groups "$username" | grep -qE '\binput\b'; then
+  echo ">> Adding $username to input group (control LEDs)" >/dev/stderr
+  (set -x; gpasswd -a "$username" input)
+fi
+
 if ! groups "$username" | grep -qE '\bdocker\b'; then
   echo ">> Adding $username to docker group" >/dev/stderr
   # groupadd --force exits with 0 even if group alrady exists

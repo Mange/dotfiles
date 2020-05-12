@@ -34,7 +34,7 @@ ttf-dejavu
 ttf-hack
 ttf-inconsolata
 
-# nerd-fonts installed in aur.txt
+ttf-nerd-fonts-symbols
 noto-fonts       # Android
 noto-fonts-emoji # Emoji
 noto-fonts-extra # etc.
@@ -61,6 +61,7 @@ hub
 jq
 nmap
 parallel
+pastel
 prettyping
 pulsemixer
 ripgrep
@@ -113,8 +114,10 @@ transmission-cli # bittorrent info
 # Desktop env
 #
 acpi # for battery indication, etc. in polybar
-blueman
+autorandr
 # compton # disabled for AUR compton-tryone-git
+blueman
+brightnessctl
 dunst # libnotify server
 feh
 gucharmap
@@ -137,7 +140,6 @@ wireless_tools # for Polybar
 wmctrl # for i3quit, etc.
 workrave
 xcape # Make Super into both Super and Escape
-xorg-xbacklight
 xsel
 xss-lock # Screenlocker
 zenity # GUI prompts from scripts (ytpip, etc.)
@@ -265,3 +267,7 @@ notmuch # Email indexer and search engine
 notmuch-vim # Email client (does not work with rvm, it appears)
 afew # Notmuch tagger
 urlscan # Pick URLs from HTML
+w3m # For HTML email reading
+
+# Misc developer tooling
+postgresql # Required for pgcli and also installs psql

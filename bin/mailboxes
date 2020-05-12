@@ -26,12 +26,12 @@ Commands:
   list [--no-names]
     List mailboxes.
 
-  sync [mailbox]
+  sync [mailbox...]
     Sync selected or all mailboxes, updating status during the sync.
 
-  status [--refresh] [mailbox]
-    Show current status or all, or selected mailbox. Optionally refresh status
-    instead of reading cached status.
+  status [--refresh] [--] [mailbox...]
+    Show current status or all, or selected mailbox(es). Optionally refresh
+    status instead of reading cached status.
 
   help
     Show this help and ext.
@@ -52,15 +52,34 @@ perform_list() {
 }
 
 perform_sync() {
-  local box="$1"
+  local box
+  local boxes
 
-  if [[ -n $box ]]; then
-    perform_box_sync "$box"
+  while [[ -n "$1" ]]; do
+    case "$1" in
+      --)
+        shift
+        break
+        ;;
+      -*)
+        die "Unrecognized status option: $1"
+        ;;
+      *)
+        break
+        ;;
+    esac
+  done
+
+  if [[ $# -gt 0 ]]; then
+    boxes=( "$@" )
   else
-    for box in "${mailboxes[@]}"; do
-      perform_box_sync "$box"
-    done
+    boxes=( "${mailboxes[@]}" )
   fi
+
+  for box in "${boxes[@]}"; do
+    ensure_valid_box "$box"
+    perform_box_sync "$box"
+  done
 }
 
 perform_box_sync() {
@@ -121,6 +140,7 @@ index_and_tag_emails() {
 
 perform_status() {
   local box
+  local boxes
   local refresh=no
 
   while [[ -n "$1" ]]; do
@@ -128,6 +148,10 @@ perform_status() {
       "--refresh")
         refresh=yes
         shift
+        ;;
+      --)
+        shift
+        break
         ;;
       -*)
         die "Unrecognized status option: $1"
@@ -138,19 +162,27 @@ perform_status() {
     esac
   done
 
-  if [[ -n $box ]]; then
+  if [[ $# -gt 0 ]]; then
+    boxes=( "$@" )
+  else
+    boxes=( "${mailboxes[@]}" )
+  fi
+
+  for box in "${boxes[@]}"; do
+    ensure_valid_box "$box"
     if [[ $refresh == yes ]]; then
       write_status "$box" >/dev/null
     fi
+    echo -n "$(get_box_name "$box"): "
     read_status "$box"
-  else
-    for box in "${mailboxes[@]}"; do
-      if [[ $refresh == yes ]]; then
-        write_status "$box" >/dev/null
-      fi
-      echo -n "$(get_box_name "$box"): "
-      read_status "$box"
-    done
+  done
+}
+
+ensure_valid_box() {
+  local box="$1"
+
+  if ! [[ -d "${mail_dir}/${box}" ]]; then
+    die "Not a valid mailbox: $box"
   fi
 }
 

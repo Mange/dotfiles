@@ -12,7 +12,10 @@
 /home/mange/.yarn
 /home/mange/.bundle
 /home/mange/.node-gyp
+/home/mange/.local/share/cargo
+/home/mange/.local/share/go
 /home/mange/.local/share/npm
+/home/mange/.local/share/rustup
 /home/mange/.local/share/Trash/
 **/node_modules
 **/target/debug

@@ -3,13 +3,9 @@
 
 ~/.local/bin/fix-keyboard
 
-case "$(hostname)" in
-  bilquis)
-    xrandr --dpi 96
-    [[ "$(autorandr --detected)" == "bilquis-work" ]] && xrandr --output DP-0 --off
-    xrandr --dpi 96
+function setup_touchpad() {
+    touchpad="$1"
 
-    touchpad="SynPS/2 Synaptics TouchPad"
     # Natural scrolling
     xinput set-prop "${touchpad}" "libinput Natural Scrolling Enabled" 1
 
@@ -18,10 +14,22 @@ case "$(hostname)" in
 
     # Disable touchpad while typing
     xinput set-prop "${touchpad}" "libinput Disable While Typing Enabled" 1
+}
 
+case "$(hostname)" in
+  bilquis)
+    xrandr --dpi 96
+    [[ "$(autorandr --detected)" == "bilquis-work" ]] && xrandr --output DP-0 --off
+    xrandr --dpi 96
+    setup_touchpad "SynPS/2 Synaptics TouchPad"
     # Start Slack
     i3-msg exec slack
     ;;
+
+  krista)
+    setup_touchpad "SynPS/2 Synaptics TouchPad"
+    ;;
+
   morbidus)
     # Start Discord
     i3-msg exec discord-canary
