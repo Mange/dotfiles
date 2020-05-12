@@ -82,7 +82,7 @@ type = custom/script
 exec = ~/.config/polybar/toggl watch 10
 tail = true
 click-left =  ~/.config/polybar/toggl notify
-click-middle = toggldesktop
+click-middle = toggle-dropdown "Toggl Desktop" toggldesktop
 click-right =  ~/.config/polybar/toggl start-stop
 
 [module/i3]

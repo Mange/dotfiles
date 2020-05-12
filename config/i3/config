@@ -204,8 +204,8 @@ bindsym $mod+r        mode "resize"
 
 # Label: Dropdown tasks
 bindsym $mod+t        exec toggle-dropdown dropdown_vit $terminal --class dropdown_vit vit
-## Label: Run cmd
-# bindsym $mod+shift+t  cmd
+# Label: Show Toggl
+bindsym $mod+shift+t  exec toggle-dropdown "Toggl Desktop" toggldesktop
 
 ## Label: Run cmd
 # bindsym $mod+y        cmd
