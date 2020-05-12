@@ -35,6 +35,7 @@ OPTIONS:
       neovim   (Neovim support)
       pacman   (Install software)
       pip      (Install software based on python pip)
+      npm      (Install software based on Node.js NPM)
       rust     (Rust setup)
 USAGE
 }
@@ -67,7 +68,7 @@ while true; do
 done
 
 case "$ONLY_SECTION" in
-  all | pacman | rust | projects | neovim | aur | updates | fast | pip )
+  all | pacman | rust | projects | neovim | aur | updates | fast | pip | npm )
     # Valid; do nothing
     ;;
   *)
@@ -232,6 +233,36 @@ install-pip-software() {
       else
         subheader "Installing $package" -n
         if output="$(pip install --user "$package" 2>&1)"; then
+          echo "${green} ✔"
+        else
+          echo "${red} ✘ - FAILED"
+          echo "$output"
+        fi
+      fi
+    done
+}
+
+install-npm-software() {
+    header "Installing NPM software"
+
+    wanted_software=()
+
+    if [[ $HOSTNAME == krista ]]; then
+      wanted_software+=(toggl-cli)
+    fi
+
+    for package in "${wanted_software[@]}"; do
+      if npm list -g "$package" >/dev/null 2>/dev/null; then
+        subheader "Upgrading $package" -n
+        if output="$(sudo npm upgrade -g "$package" 2>&1)"; then
+          echo "${green} ✔"
+        else
+          echo "${red} ✘ - FAILED"
+          echo "$output"
+        fi
+      else
+        subheader "Installing $package" -n
+        if output="$(sudo npm install -g "$package" 2>&1)"; then
           echo "${green} ✔"
         else
           echo "${red} ✘ - FAILED"
@@ -506,6 +537,11 @@ fi
 if run-section "pip"; then
   init-sudo
   install-pip-software || handle-failure "Installing Python PIP software"
+fi
+
+if run-section "npm"; then
+  init-sudo
+  install-npm-software || handle-failure "Installing NodeJS NPM software"
 fi
 
 if run-section "fast"; then

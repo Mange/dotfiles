@@ -8,3 +8,5 @@ system76-oled
 system76-io-dkms
 system76-driver
 system76-power
+
+toggldesktop-bin
