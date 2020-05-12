@@ -87,7 +87,7 @@ bindkey -M vicmd 'v' edit-command-line
 
 # See extra bindkey calls under the Plugins section
 
-if [ -f ~/.fzf ]; then
+if [ -d ~/.fzf ]; then
   source ~/.fzf/shell/completion.zsh 2> /dev/null
   source ~/.fzf/shell/key-bindings.zsh
 
