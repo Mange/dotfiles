@@ -43,7 +43,7 @@ top = true
 
 modules-left = i3 media-info
 modules-center = clock date
-modules-right = task-counters mailboxes volume wifi battery
+modules-right = toggl task-counters mailboxes volume wifi battery
 
 tray-detached = false
 tray-position = right
@@ -60,7 +60,7 @@ top = true
 
 modules-left = i3 media-info
 modules-center = clock date
-modules-right = task-counters mailboxes volume wifi battery
+modules-right = toggl task-counters mailboxes volume wifi battery
 
 tray-position = none
 
@@ -75,6 +75,15 @@ exec = ~/.config/polybar/task-counters
 interval = 60
 click-left = toggle-dropdown dropdown_vit kitty --class dropdown_vit vit
 click-right = kitty vit
+
+[module/toggl]
+inherit = module/base
+type = custom/script
+exec = ~/.config/polybar/toggl watch 10
+tail = true
+click-left =  ~/.config/polybar/toggl notify
+click-middle = toggldesktop
+click-right =  ~/.config/polybar/toggl start-stop
 
 [module/i3]
 inherit = module/base
