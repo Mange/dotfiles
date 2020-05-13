@@ -5,3 +5,8 @@ diff-so-fancy
 
 # Replaced by brightnessctl
 xorg-xbacklight
+
+# Just not used anymore
+khal
+vdirsyncer-git
+vdirsyncer
