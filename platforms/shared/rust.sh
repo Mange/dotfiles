@@ -13,26 +13,30 @@ install-or-update-rustup() {
     curl https://sh.rustup.rs -sSf | sh
   else
     header "Updating Rust"
-    run-rust-cmd rustup update
+    run-rust-cmd-quietly rustup update
   fi
 }
 
 install-rustup-components() {
   header "Installing Nightly Rust"
-  run-rust-cmd rustup install nightly
+  run-rust-cmd-quietly rustup install nightly
 
   header "Adding Rust editor components"
-  run-rust-cmd rustup component add rust-src
-  run-rust-cmd rustup component add clippy
-  run-rust-cmd rustup component add rls
-  run-rust-cmd rustup component add rust-analysis
-  run-rust-cmd rustup component add rustfmt
+  run-rust-cmd-quietly rustup component add rust-src
+  run-rust-cmd-quietly rustup component add clippy
+  run-rust-cmd-quietly rustup component add rls
+  run-rust-cmd-quietly rustup component add rust-analysis
+  run-rust-cmd-quietly rustup component add rustfmt
 
-  run-rust-cmd rustup component add rust-src --toolchain=nightly
-  run-rust-cmd rustup component add clippy --toolchain=nightly
-  run-rust-cmd rustup component add rls --toolchain=nightly
-  run-rust-cmd rustup component add rust-analysis --toolchain=nightly
-  run-rust-cmd rustup component add rustfmt --toolchain=nightly
+  run-rust-cmd-quietly rustup component add rust-src --toolchain=nightly
+  run-rust-cmd-quietly rustup component add clippy --toolchain=nightly
+  run-rust-cmd-quietly rustup component add rls --toolchain=nightly
+  run-rust-cmd-quietly rustup component add rust-analysis --toolchain=nightly
+  run-rust-cmd-quietly rustup component add rustfmt --toolchain=nightly
+}
+
+run-rust-cmd-quietly() {
+  run-command-quietly "$*" < <("$@" 2>&1)
 }
 
 run-rust-cmd() {
@@ -112,5 +116,5 @@ install-nightly-crates() {
 
 cargo-update() {
   header "Updating all crates"
-  run-rust-cmd cargo install-update -a
+  run-rust-cmd-quietly cargo install-update -a
 }

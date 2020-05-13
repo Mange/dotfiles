@@ -17,13 +17,7 @@ export -f overline
 
 header() {
   echo
-  if [[ "$BASH_VERSION" < "4" ]]; then
-    # Mac OS comes with a very old version of bash
-    # No uppercase for me.
-    local message="$1"
-  else
-    local message="${1^^}"
-  fi
+  local message="${1^^}" # Uppercase message
   echo "${yellow}‣ ${green}${message}${reset}"
   echo -n "$yellow"
   overline $((${#1} + 2))
@@ -41,13 +35,13 @@ export -f subheader
 
 handle-failure() {
   if [[ -n "$1" ]]; then
-    echo -n "${red}Command failed: ${1}${reset} "
+    echo "${red}Command failed: ${1}${reset} "
   else
-    echo -n "${red}Command failed!${reset} "
+    echo "${red}Command failed!${reset} "
   fi
 
   echo -n "Continue? [Yn] "
-  read -r answer
+  read -r answer </dev/tty
   if [[ $answer != "" && $answer != "y" && $answer != "Y" ]]; then
     echo "Aborting"
     exit 1
@@ -55,3 +49,32 @@ handle-failure() {
 }
 export -f handle-failure
 
+run-command-quietly() {
+  local sub_pid=$!
+  local sub_code=
+  local caption="$1"
+  local output
+
+  if [[ -n "$caption" ]]; then
+    subheader "$caption" -n
+  fi
+  echo -n "$red"
+
+  output="$(cat -)"
+  set +e
+  wait "$sub_pid"
+  sub_code=$?
+  set -e
+
+  if [[ $sub_code -eq 0 ]]; then
+    echo -n "${green} ✔${reset}"
+  else
+    echo "${red} ✘"
+    echo "${output}${reset}"
+    handle-failure "${caption}"
+  fi
+  echo "$reset"
+
+  return $sub_code
+}
+export -f run-command-quietly

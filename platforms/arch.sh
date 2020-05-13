@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-if [ $(id -u) -eq 0 ]; then
+if [[ "$(id -u)" -eq 0 ]]; then
 	echo "Must not be run as root!" >&2
 	exit 127
 fi
@@ -106,14 +106,9 @@ install-pacman() {
     # --needed does not reinstall already installed software. Just to be safe.
     set +e
     echo "$red"
-
-    if output="$(echo "$needed" | $PACMAN -S --quiet --needed - 2>&1)"; then
-      echo -n "${green} ✔${reset}"
-    else
-      echo "${red} ✘"
-      echo "${output}${reset}"
-    fi
-    echo "$reset"
+    run-command-quietly "" < <(
+      echo "$needed" | $PACMAN -S --quiet --needed - 2>&1
+    )
     set -e
   else
     echo "${green}Everything installed ✔${reset}"
@@ -150,13 +145,9 @@ uninstall-pacman() {
     set +e
     echo "$red"
 
-    if output="$(echo "$to_uninstall" | $PACMAN -Rs - 2>&1)"; then
-      echo -n "${green} ✔${reset}"
-    else
-      echo "${red} ✘"
-      echo "${output}${reset}"
-    fi
-    echo "$reset"
+    run-command-quietly "" < <(
+      echo "$to_uninstall" | $PACMAN -Rs - 2>&1
+    )
 
     # Remove from aur repo; in case it was there.
     for pkg in $to_uninstall; do
@@ -182,28 +173,20 @@ compile-install-aur() {
       continue
     fi
 
-    subheader "Compiling $package" -n
-    set +e
-
-    if output="$(aur sync --no-view --no-confirm "$package" 2>&1)"; then
-      echo "${green} ✔"
-      subheader "Installing $package" -n
-
-      if output="$($PACMAN -S --quiet --needed "$package" 2>&1)"; then
-        echo "${green} ✔"
+    if run-command-quietly "Compiling package $package" < <(
+      aur sync --no-view --no-confirm "$package" 2>&1
+    ); then
+      if run-command-quietly "Installing package $package" < <(
+        $PACMAN -S --quiet --needed "$package" 2>&1
+      ); then
         installed=$((installed + 1))
       else
-        echo "${red} ✘ - FAILED"
-        echo "$output"
         errors=$((errors + 1))
       fi
     else
-      echo "${red} ✘ - FAILED"
-      echo "$output"
       errors=$((errors + 1))
     fi
-    echo -n "${reset}"
-    set -e
+
   done < <(sed 's/#.*$//' "$filename" | sed '/^$/d')
 
   if [[ $errors -eq 0 ]]; then
@@ -223,21 +206,13 @@ install-pip-software() {
 
     for package in "${wanted_software[@]}"; do
       if pip show "$package" >/dev/null 2>/dev/null; then
-        subheader "Upgrading $package" -n
-        if output="$(pip install --user --upgrade "$package" 2>&1)"; then
-          echo "${green} ✔"
-        else
-          echo "${red} ✘ - FAILED"
-          echo "$output"
-        fi
+        run-command-quietly "Upgrading $package" < <(
+          pip install --user --upgrade "$package" 2>&1
+        )
       else
-        subheader "Installing $package" -n
-        if output="$(pip install --user "$package" 2>&1)"; then
-          echo "${green} ✔"
-        else
-          echo "${red} ✘ - FAILED"
-          echo "$output"
-        fi
+        run-command-quietly "Installing $package" < <(
+          pip install --user "$package" 2>&1
+        )
       fi
     done
 }
@@ -253,21 +228,13 @@ install-npm-software() {
 
     for package in "${wanted_software[@]}"; do
       if npm list -g "$package" >/dev/null 2>/dev/null; then
-        subheader "Upgrading $package" -n
-        if output="$(sudo npm upgrade -g "$package" 2>&1)"; then
-          echo "${green} ✔"
-        else
-          echo "${red} ✘ - FAILED"
-          echo "$output"
-        fi
+        run-command-quietly "Upgrading $package" < <(
+          sudo npm upgrade -g "$package" 2>&1
+        )
       else
-        subheader "Installing $package" -n
-        if output="$(sudo npm install -g "$package" 2>&1)"; then
-          echo "${green} ✔"
-        else
-          echo "${red} ✘ - FAILED"
-          echo "$output"
-        fi
+        run-command-quietly "Installing $package" < <(
+          sudo npm install -g "$package" 2>&1
+        )
       fi
     done
 }
@@ -407,7 +374,7 @@ confirm() {
   fi
 
   echo -n "${message} [${prompt}] "
-  read -r answer
+  read -r answer </dev/tty
   if [[ $answer = "y" || $answer = "Y" ]]; then
     return 0
   elif [[ $answer = "n" || $answer = "N" ]]; then
@@ -451,33 +418,27 @@ setup-nerd-fonts() {
 }
 
 enable-systemd-unit() {
-  if [[ $(systemctl is-enabled "$1") != "enabled" ]]; then
-    subheader "Enabling $1 at boot"
-    sudo systemctl enable "$1" || handle-failure "Enabling $1 at boot"
-  fi
-
-  if [[ $(systemctl is-active "$1") != "active" ]]; then
-    subheader "Starting $1"
-    sudo systemctl start "$1" || handle-failure "Starting $1"
+  if [[ $(systemctl is-enabled "$1") != "enabled" ]] || [[ $(systemctl is-active "$1") != "active" ]]; then
+    run-command-quietly "Starting and enabling $1 at boot" < <(
+      sudo systemctl enable --now "$1" 2>&1
+    )
   fi
 }
 
 enable-user-systemd-unit() {
-  if [[ $(systemctl is-enabled --user "$1") != "enabled" ]]; then
-    subheader "Enabling $1 at login"
-    systemctl enable --user "$1" || handle-failure "Enabling $1 at login"
-  fi
-
-  if [[ $(systemctl is-active --user "$1") != "active" ]]; then
-    subheader "Starting $1"
-    systemctl start --user "$1" || handle-failure "Starting $1"
+  if [[ $(systemctl is-enabled --user "$1") != "enabled" ]] || [[ $(systemctl is-active --user "$1") != "active" ]]; then
+    init-sudo
+    run-command-quietly "Starting and enabling $1 at login" < <(
+      systemctl enable --user --now "$1" 2>&1
+    )
   fi
 }
 
 disable-user-systemd-unit() {
-  if [[ $(systemctl is-enabled --user "$1") == "enabled" ]]; then
-    subheader "Disabling $1 at login"
-    systemctl disable --user "$1" || handle-failure "Disabling $1 at login"
+  if [[ $(systemctl is-enabled --user "$1") == "enabled" ]] || [[ $(systemctl is-active --user "$1") == "active" ]]; then
+    run-command-quietly "Stopping and disabling $1 at login" < <(
+      sudo systemctl disable --user --now "$1" 2>&1
+    )
   fi
 }
 
@@ -487,6 +448,7 @@ init-sudo() {
 }
 
 if run-section "fast"; then
+  header "Setting up GPG"
   setup-gpg-auto-retrieve
 fi
 
@@ -494,7 +456,9 @@ if run-section "updates" || run-section "pacman"; then
   init-sudo
 
   header "Refreshing pacman cache"
-  $PACMAN -S --refresh --quiet
+  run-command-quietly "Refreshing pacman" < <(
+    $PACMAN -S --refresh --quiet 2>&1
+  )
 fi
 
 if run-section "pacman" || run-section "fast"; then
@@ -511,9 +475,10 @@ if run-section "pacman"; then
     fi
   done
 
+  header "Ruby setup and packages"
   install-ruby-via-rvm || handle-failure "Installing Ruby"
-  install-ripper-tags || handle-failure "Installing ripper-tags"
-  install-solargraph || handle-failure "Installing solargraph"
+  install-global-ruby-gem "ripper-tags"
+  install-global-ruby-gem "solargraph"
 fi
 
 if run-section "aur"; then
@@ -561,38 +526,43 @@ if run-section "neovim"; then
     header "Neovim"
     init-sudo
 
-    subheader "Python 2 plugin"
-    if hash pip2 2>/dev/null; then
-      (sudo pip2 install --user --upgrade --upgrade-strategy eager -q neovim && echo "${green}✔ OK${reset}") || handle-failure
-    else
-      echo "${red}pip2 not installed${reset}"
-    fi
-
-    subheader "Python 3 plugin"
-    if hash pip3 2>/dev/null; then
-      (sudo pip3 install --user --upgrade --upgrade-strategy eager -q neovim && echo "${green}✔ OK${reset}") || handle-failure
-    else
-      echo "${red}pip3 not installed${reset}"
-    fi
-
-    subheader "Ruby plugin"
-    if hash gem 2>/dev/null; then
-      (gem install -q neovim && echo "${green}✔ OK${reset}") || handle-failure
-    else
-      echo "${red}Ruby/gem not installed${reset}"
-    fi
-
-    subheader "NodeJS plugin"
-    if hash npm 2>/dev/null; then
-      # Install both on hardcoded system path and in current nvm environment.
-      (sudo npm install -g neovim && echo "${green}✔ OK${reset}") || handle-failure
-
-      if [[ -f /usr/bin/npm ]]; then
-        (sudo /usr/bin/npm install -g neovim && echo "${green}✔ OK${reset}") || handle-failure
+    run-command-quietly "Python 2 plugin" < <(
+      if hash pip2 2>/dev/null; then
+        sudo pip2 install --user --upgrade --upgrade-strategy eager -q neovim 2>&1
+      else
+        echo "pip2 not installed!"
+        exit 1
       fi
-    else
-      echo "${red}npm not installed${reset}"
-    fi
+    )
+
+    run-command-quietly "Python 3 plugin" < <(
+      if hash pip3 2>/dev/null; then
+        sudo pip3 install --user --upgrade --upgrade-strategy eager -q neovim 2>&1
+      else
+      echo "pip3 not installed!"
+      exit 1
+      fi
+    )
+
+    run-command-quietly "Ruby plugin" < <(
+      if hash gem 2>/dev/null; then
+        gem install -q neovim 2>&1
+      else
+        echo "Ruby/gem not installed"
+        exit 1
+      fi
+    )
+
+    run-command-quietly "NodeJS plugin" < <(
+      if hash npm 2>/dev/null; then
+        # Install both on hardcoded system path and in current nvm environment.
+        sudo npm install -g neovim 2>&1
+        [[ -f /usr/bin/npm ]] && sudo /usr/bin/npm install -g neovim 2>&1
+      else
+        echo "npm not installed"
+        exit 1
+      fi
+    )
   fi
 fi
 
@@ -677,6 +647,8 @@ if run-section "updates"; then
   fi
 
   subheader "Installing RVM/Ruby updates"
-  update-ripper-tags || handle-failure "Updating ripper-tags"
-  update-solargraph || handle-failure "Updating solargraph"
+  update-global-ruby-gem "ripper-tags"
+  update-global-ruby-gem "solargraph"
 fi
+
+echo ""
