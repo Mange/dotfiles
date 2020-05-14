@@ -52,7 +52,7 @@ notify-send \
   --icon /usr/share/icons/gnome/256x256/actions/system-log-out.png \
   --urgency critical \
   "Quitting" \
-  "Currently shutting down apps and quitting i3."
+  "Currently shutting down apps and logging out."
 
 # Unmount all removable storage
 udiskie-umount --all
@@ -67,8 +67,21 @@ graceful-shutdown \
 
 case "$action" in
   logout)
-    # Shut down i3; essentially logging me out
-    exec i3-msg exit
+    case "${DESKTOP_SESSION}" in
+      i3)
+        i3-msg exit
+        ;;
+      awesome)
+        awesome-client "awesome.quit()"
+        ;;
+      *)
+        notify-send \
+          --app-name System \
+          --icon /usr/share/icons/gnome/256x256/actions/system-log-out.png \
+          --urgency critical \
+          "Quitting" \
+          "Desktop session is unsupported: \"${DESKTOP_SESSION}\""
+    esac
     ;;
   poweroff)
     exec systemctl poweroff

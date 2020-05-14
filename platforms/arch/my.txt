@@ -137,7 +137,7 @@ telegram-desktop
 udiskie # auto-mounter for devices (and tray icon)
 unclutter # Hide mouse cursor when not in use
 wireless_tools # for Polybar
-wmctrl # for i3quit, etc.
+wmctrl # for wmquit, etc.
 workrave
 xcape # Make Super into both Super and Escape
 xsel

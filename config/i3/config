@@ -302,7 +302,7 @@ bindsym $mod+shift+Return  exec $terminal
 # 3rd row
 
 # Label: Quit
-bindsym $mod+z        exec i3quit
+bindsym $mod+z        exec wmquit
 # Label: i3 reload
 bindsym $mod+shift+z  reload
 # Label: Restart i3

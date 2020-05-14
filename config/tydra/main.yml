@@ -179,7 +179,7 @@ pages:
           - shortcut: l
             title: Log out
             mode: exec
-            command: i3quit --force
+            command: wmquit --force
 
           - shortcut: q
             title: Go back
