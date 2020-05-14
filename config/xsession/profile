@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 shopt -s nullglob
 
 # shellcheck source=/dev/null
@@ -17,7 +17,7 @@ export GNOME_KEYRING_CONTROL
 # Disable HiDPI
 export QT_AUTO_SCREEN_SCALE_FACTOR=1
 export GDK_SCALE=1
-Xrdb -merge <(echo Xft.dpi: 96)
+xrdb -merge <(echo Xft.dpi: 96)
 xrandr --dpi 96
 
 # Try to fix the screen setup before starting i3
@@ -33,9 +33,9 @@ autorandr --change --default horizontal || xrandr --auto
 # Awesome WM's early autostart stuff
 if [[ "$DESKTOP_SESSION" == "awesome" ]]; then
   # Compositor and graphics
-  compton --config ~/.config/compton/compton.conf
-  flashfocus
-  systemctl --user start redshift
+  wm-start compton --config ~/.config/compton/compton.conf
+  wm-start flashfocus
+  wm-start systemctl --user start redshift
 
   # Keyboard, screens, host-specific, etc.
   ~/.local/bin/dynamic-startup
