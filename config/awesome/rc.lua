@@ -50,6 +50,11 @@ beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 terminal = "kitty"
 
 modkey = "Mod4" -- Super
+-- Readable names for mouse buttons
+left_click = 1
+right_click = 3
+scroll_up = 4
+scroll_down = 5
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
@@ -78,24 +83,24 @@ mytextclock = wibox.widget.textclock()
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
-                    awful.button({ }, 1, function(t) t:view_only() end),
-                    awful.button({ modkey }, 1, function(t)
+                    awful.button({ }, left_click, function(t) t:view_only() end),
+                    awful.button({ modkey }, left_click, function(t)
                                               if client.focus then
                                                   client.focus:move_to_tag(t)
                                               end
                                           end),
-                    awful.button({ }, 3, awful.tag.viewtoggle),
-                    awful.button({ modkey }, 3, function(t)
+                    awful.button({ }, right_click, awful.tag.viewtoggle),
+                    awful.button({ modkey }, right_click, function(t)
                                               if client.focus then
                                                   client.focus:toggle_tag(t)
                                               end
                                           end),
-                    awful.button({ }, 4, function(t) awful.tag.viewnext(t.screen) end),
-                    awful.button({ }, 5, function(t) awful.tag.viewprev(t.screen) end)
+                    awful.button({ }, scroll_up, function(t) awful.tag.viewnext(t.screen) end),
+                    awful.button({ }, scroll_down, function(t) awful.tag.viewprev(t.screen) end)
                 )
 
 local tasklist_buttons = gears.table.join(
-                     awful.button({ }, 1, function (c)
+                     awful.button({ }, left_click, function (c)
                                               if c == client.focus then
                                                   c.minimized = true
                                               else
@@ -106,13 +111,13 @@ local tasklist_buttons = gears.table.join(
                                                   )
                                               end
                                           end),
-                     awful.button({ }, 3, function()
+                     awful.button({ }, right_click, function()
                                               awful.menu.client_list({ theme = { width = 250 } })
                                           end),
-                     awful.button({ }, 4, function ()
+                     awful.button({ }, scroll_up, function ()
                                               awful.client.focus.byidx(1)
                                           end),
-                     awful.button({ }, 5, function ()
+                     awful.button({ }, scroll_down, function ()
                                               awful.client.focus.byidx(-1)
                                           end))
 
@@ -144,10 +149,10 @@ awful.screen.connect_for_each_screen(function(s)
     -- We need one layoutbox per screen.
     s.mylayoutbox = awful.widget.layoutbox(s)
     s.mylayoutbox:buttons(gears.table.join(
-                           awful.button({ }, 1, function () awful.layout.inc( 1) end),
-                           awful.button({ }, 3, function () awful.layout.inc(-1) end),
-                           awful.button({ }, 4, function () awful.layout.inc( 1) end),
-                           awful.button({ }, 5, function () awful.layout.inc(-1) end)))
+                           awful.button({ }, left_click, function () awful.layout.inc( 1) end),
+                           awful.button({ }, right_click, function () awful.layout.inc(-1) end),
+                           awful.button({ }, scroll_up, function () awful.layout.inc( 1) end),
+                           awful.button({ }, scroll_down, function () awful.layout.inc(-1) end)))
     -- Create a taglist widget
     s.mytaglist = awful.widget.taglist {
         screen  = s,
@@ -186,8 +191,8 @@ end)
 
 -- {{{ Mouse bindings
 root.buttons(gears.table.join(
-    awful.button({ }, 4, awful.tag.viewnext),
-    awful.button({ }, 5, awful.tag.viewprev)
+    awful.button({ }, scroll_up, awful.tag.viewnext),
+    awful.button({ }, scroll_down, awful.tag.viewprev)
 ))
 -- }}}
 
@@ -386,14 +391,14 @@ for i = 1, 9 do
 end
 
 clientbuttons = gears.table.join(
-    awful.button({ }, 1, function (c)
+    awful.button({ }, left_click, function (c)
         c:emit_signal("request::activate", "mouse_click", {raise = true})
     end),
-    awful.button({ modkey }, 1, function (c)
+    awful.button({ modkey }, left_click, function (c)
         c:emit_signal("request::activate", "mouse_click", {raise = true})
         awful.mouse.client.move(c)
     end),
-    awful.button({ modkey }, 3, function (c)
+    awful.button({ modkey }, right_click, function (c)
         c:emit_signal("request::activate", "mouse_click", {raise = true})
         awful.mouse.client.resize(c)
     end)
