@@ -9,3 +9,6 @@ config/dotfiles/path
 config/nvim/.netrwhist
 config/nvim/spell
 config/beets/state*
+
+# Project files
+.luacheckcache

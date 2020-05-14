@@ -144,6 +144,14 @@ xsel
 xss-lock # Screenlocker
 zenity # GUI prompts from scripts (ytpip, etc.)
 
+# Awesome WM experiment
+awesome
+luarocks
+# TODO:
+# luarocks install --server=http://luarocks.org/dev lua-lsp
+# luarocks install luacheck
+# luarocks install lcf # formatter
+
 # Keybase
 keybase
 keybase-gui
