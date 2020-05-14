@@ -23,7 +23,7 @@ case "$(hostname)" in
     xrandr --dpi 96
     setup_touchpad "SynPS/2 Synaptics TouchPad"
     # Start Slack
-    i3-msg exec slack
+    wm-start slack
     ;;
 
   krista)
@@ -32,10 +32,10 @@ case "$(hostname)" in
 
   morbidus)
     # Start Discord
-    i3-msg exec discord-canary
+    wm-start discord-canary
 
     # Start steam
-    i3-msg exec gtk-launch steam
+    wm-start gtk-launch steam
     ;;
   *)
     ;;

@@ -1,0 +1,32 @@
+#!/bin/bash
+
+if [[ "$1" == "--help" ]]; then
+  cat <<EOF
+Usage: wm-start [command…]
+
+Spawns a command from the current window manager. This command has
+support for both Awesome and i3.
+
+The DESKTOP_SESSION env variable must be set in order for this to
+work.
+EOF
+fi
+
+case "${DESKTOP_SESSION}" in
+  i3)
+    i3-msg exec "$*"
+    ;;
+  awesome)
+    escaped="$(
+      printf '"%q", ' "$@" |
+        sed 's/\\ / /; s/, $//'
+    )"
+    awesome-client "awesome.spawn { ${escaped} }"
+    ;;
+  *)
+    # shrug… I guess we'll just try to start it in the background
+    # instead.
+    nohup "$@" 2>/dev/null >/dev/null &
+    disown
+    ;;
+esac

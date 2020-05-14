@@ -29,3 +29,20 @@ xrandr --dpi 96
 # some apps.
 # If autorandr fails, fall back on running normal xrandr --auto.
 autorandr --change --default horizontal || xrandr --auto
+
+# Awesome WM's early autostart stuff
+if [[ "$DESKTOP_SESSION" == "awesome" ]]; then
+  # Compositor and graphics
+  compton --config ~/.config/compton/compton.conf
+  flashfocus
+  systemctl --user start redshift
+
+  # Keyboard, screens, host-specific, etc.
+  ~/.local/bin/dynamic-startup
+
+  # Daemons
+  wm-start parcellite --no-icon # Clipboard manager
+  wm-start syncthing-gtk --minimized
+  wm-start udiskie --no-automount --smart-tray # Device mounter
+  wm-start unclutter # Hide mouse cursor when not in use
+fi
