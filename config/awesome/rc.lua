@@ -46,6 +46,10 @@ end
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 
+-- Setup gaps
+beautiful.useless_gap = 5
+beautiful.gap_single_client = false
+
 -- This is used later as the default terminal
 terminal = "kitty"
 
