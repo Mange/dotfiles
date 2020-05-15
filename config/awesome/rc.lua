@@ -202,9 +202,15 @@ root.buttons(gears.table.join(
 
 -- {{{ Key bindings
 
-local function focus(direction)
+-- local function focus(direction)
+--   return function()
+--     awful.client.focus.global_bydirection(direction)
+--   end
+-- end
+
+local function focus_idx(offset)
   return function()
-    awful.client.focus.global_bydirection(direction)
+    awful.client.focus.byidx(offset)
   end
 end
 
@@ -219,10 +225,12 @@ globalkeys = gears.table.join(
     awful.key({modkey, "Control"}, "z", awesome.restart, {description = "Restart Awesome", group = "Awesome"}),
 
     -- Group: Client
-    awful.key({modkey}, "h", focus("left"), {description = "Focus ←", group = "Client"}),
-    awful.key({modkey}, "j", focus("down"), {description = "Focus ↓", group = "Client"}),
-    awful.key({modkey}, "k", focus("up"), {description = "Focus ↑", group = "Client"}),
-    awful.key({modkey}, "l", focus("right"), {description = "Focus →", group = "Client"}),
+    -- awful.key({modkey}, "h", focus("left"), {description = "Focus ←", group = "Client"}),
+    -- awful.key({modkey}, "j", focus("down"), {description = "Focus ↓", group = "Client"}),
+    -- awful.key({modkey}, "k", focus("up"), {description = "Focus ↑", group = "Client"}),
+    -- awful.key({modkey}, "l", focus("right"), {description = "Focus →", group = "Client"}),
+    awful.key({modkey}, "j", focus_idx(1), {description = "Focus next", group = "Client"}),
+    awful.key({modkey}, "k", focus_idx(-1), {description = "Focus previous", group = "Client"}),
 
     -- Group: Apps
 
