@@ -36,6 +36,7 @@ do
 end
 -- }}}
 
+utils = require("utils")
 keys = require("keys")
 dropdown = require("dropdown")
 
@@ -287,5 +288,7 @@ dofile(config_dir .. "/titlebars.lua")
 -- }}}
 
 -- {{{ Startup apps
-awesome.spawn("dynamic-startup", false)
+utils.on_first_start(function()
+  awful.spawn.once("dynamic-startup")
+end)
 -- }}}
