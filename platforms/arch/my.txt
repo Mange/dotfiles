@@ -81,13 +81,6 @@ vit
 libqalculate
 gnuplot # For plotting support
 
-# CLI calendar
-khal
-python-setproctitle
-
-# vdirsyncer # temporarily use vdirsyncer-git
-python-requests-oauthlib # Google support for vdirsyncer
-
 #
 # vifm (CLI file manager)
 # also see aur.txt for extra dependencies and helpers

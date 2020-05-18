@@ -9,8 +9,7 @@ _shell_name=$(set +e; \command \ps -p $$ -o ucomm=)
 # Use interactive, scripting-based RVM in Bash and ZSH
 case "$_shell_name" in
   (*zsh|*bash)
-    if [[ $_mange_rvm_enabled != "yes" ]]; then
-      _mange_rvm_enabled="yes"
+    if ! type rvm >/dev/null 2>/dev/null; then
       if [[ -s /usr/share/rvm/scripts/rvm ]]; then
         # Arch-typical install directory
         # shellcheck source=/dev/null
@@ -38,3 +37,18 @@ case "$_shell_name" in
 esac
 
 unset _shell_name
+
+# For direct use in some scripts where this file is not sourced; mainly Bash
+# subshells and whatnot.
+if [[ -z "$RVM_BIN" ]]; then
+  if [[ -f /usr/share/rvm/bin/rvm ]]; then
+    # Arch-typical install directory
+    export RVM_BIN=/usr/share/rvm/bin/rvm
+  elif [[ -f /usr/local/rvm/bin/rvm ]]; then
+    # Debian-typical install directory
+    export RVM_BIN=/usr/local/rvm/bin/rvm
+  elif [[ -f "$HOME/.rvm/bin/rvm" ]]; then
+    # Manually per-user install directory
+    export RVM_BIN="$HOME/.rvm/bin/rvm"
+  fi
+fi

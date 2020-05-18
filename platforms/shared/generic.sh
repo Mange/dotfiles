@@ -9,19 +9,21 @@ setup-gpg-auto-retrieve() {
   GNUPGHOME="${GNUPGHOME:-~/.gnupg}"
 
   if [[ ! -d "$GNUPGHOME" ]]; then
-    # Generate a GPG directory by running a command
-    gpg --list-keys 2>/dev/null >/dev/null
+    run-command-quietly "Setting up $GNUPGHOME" < <(
+      # Generate a GPG directory by running a command
+      gpg --list-keys 2>/dev/null >/dev/null
 
-    if [[ ! -d "$GNUPGHOME" ]]; then
-      echo "WARNING: Could not generate $GNUPGHOME directory!"
-      return 1
-    fi
+      if [[ ! -d "$GNUPGHOME" ]]; then
+        echo "WARNING: Could not generate $GNUPGHOME directory!"
+        exit 1
+      fi
+    )
   fi
 
   if ! grep -qE "^keyserver-options auto-key-retrieve" "${GNUPGHOME}/gpg.conf" 2>/dev/null; then
-    header "Setting up GPG to auto-retreive keys"
-
-    echo "keyserver-options auto-key-retrieve" >> "${GNUPGHOME}/gpg.conf"
+    run-command-quietly "Setting up GPG to auto-retreive keys" < <(
+      echo "keyserver-options auto-key-retrieve" >> "${GNUPGHOME}/gpg.conf"
+    )
   fi
 }
 
@@ -32,132 +34,84 @@ install-ruby-via-rvm() {
 
   header "Installing Ruby"
 
-  if [[ -s /usr/share/rvm/scripts/rvm ]]; then
-    source /usr/share/rvm/scripts/rvm
-  else
-    echo "ERROR: RVM isn't installed?" >&2
+  # shellcheck source=/dev/null
+  source "${XDG_CONFIG_HOME}/shells/enable-rvm"
+  if [[ -z "$RVM_BIN" ]]; then
+    echo "RVM is not installed" >&2
     return 1
   fi
 
-  subheader "Installing latest Ruby via RVM"
-  rvm install ruby
+  run-command-quietly "Installing latest Ruby via RVM" < <(
+    "${RVM_BIN:-rvm}" install ruby
+  )
 
-  subheader "Setting latest ruby as default version"
-  rvm use --default ruby
+  run-command-quietly "Setting latest ruby as default version" < <(
+    "${RVM_BIN:-rvm}" use --default ruby
+  )
 }
 
-install-solargraph() {
+install-global-ruby-gem() {
+  local name="$1"
+
+  # shellcheck source=/dev/null
+  source "${XDG_CONFIG_HOME}/shells/enable-rvm"
+  if [[ -z "$RVM_BIN" ]]; then
+    echo "RVM is not installed" >&2
+    return 1
+  fi
+
+  if [[ -f "$HOME/.rvm/gemsets/global.gems" ]]; then
+    install-global-ruby-gem-user "$name"
+  elif [[ -f "/usr/share/rvm/gemsets/global.gems" ]]; then
+    install-global-ruby-gem-system "$name"
+  else
+    echo "${yellow}WARN: Cannot find RVM; aborting just to be safe.${reset}"
+    return 1
+  fi
+}
+
+install-global-ruby-gem-user() {
+  local name="$1"
+  local gemset="$HOME/.rvm/gemsets/global.gems"
+
+  if ! grep -q "$name" "$gemset"; then
+    header "Installing $name"
+    run-command-quietly "Marking it for installation on all Ruby upgrades" < <(
+      echo "$name" >> "$gemset"
+    )
+
+    run-command-quietly "Installing $name in all installed rubies" < <(
+      "${RVM_BIN:-rvm}" all 'do' bash -c "ruby -v; gem install '$name'" 2>&1
+    )
+  fi
+}
+
+install-global-ruby-gem-system() {
+  local name="$1"
+  local gemset="/usr/share/rvm/gemsets/global.gems"
+
+  if ! grep -q "$name" "$gemset"; then
+    header "Installing $name"
+    init-sudo
+    run-command-quietly "Marking it for installation on all Ruby upgrades" < <(
+      echo "$name" | sudo tee -a "$gemset" > /dev/null
+    )
+
+    run-command-quietly "Installing $name in all installed rubies" < <(
+      "${RVM_BIN:-rvm}" all 'do' bash -c "ruby -v; gem install '$name'" 2>&1
+    )
+  fi
+}
+
+update-global-ruby-gem() {
+  local name="$1"
+
   # shellcheck source=/dev/null
   source "${XDG_CONFIG_HOME}/shells/enable-rvm"
 
-  if [[ -f "$HOME/.rvm/gemsets/global.gems" ]]; then
-    install-solargraph-local
-  elif [[ -f "/usr/share/rvm/gemsets/global.gems" ]]; then
-    install-solargraph-global
-  else
-    echo "${yellow}WARN: Cannot find ~/.rvm; aborting just to be safe.${reset}"
-    return 1
-  fi
-}
-
-install-solargraph-local() {
-  local gemset="$HOME/.rvm/gemsets/global.gems"
-
-  if ! grep -q solargraph "$gemset"; then
-    header "Installing solargraph"
-    subheader "Marking it for installation on all Ruby upgrades"
-    echo solargraph >> "$gemset"
-
-    subheader "Installing solargraph in all installed rubies"
-    rvm all 'do' bash -c 'ruby -v; gem install solargraph'
-
-    echo "${green}Done!${reset}"
-  fi
-}
-
-install-solargraph-global() {
-  local gemset="/usr/share/rvm/gemsets/global.gems"
-
-  if ! grep -q solargraph "$gemset"; then
-    header "Installing solargraph"
-    subheader "Marking it for installation on all Ruby upgrades"
-    echo solargraph | sudo tee -a "$gemset" > /dev/null
-
-    subheader "Installing solargraph in all installed rubies"
-    rvm all 'do' bash -c 'ruby -v; gem install solargraph'
-
-    echo "${green}Done!${reset}"
-  fi
-}
-
-update-solargraph() {
-  if [[ -s /usr/share/rvm/scripts/rvm ]]; then
-    source /usr/share/rvm/scripts/rvm
-  else
-    echo "ERROR: RVM isn't installed?" >&2
-    return 1
-  fi
-
-  if hash solargraph 2>/dev/null; then
-    rvm all 'do' bash -c 'ruby -v; gem update solargraph'
-  fi
-}
-
-install-ripper-tags() {
-  # shellcheck source=/dev/null
-  source "${XDG_CONFIG_HOME}/shells/enable-rvm"
-
-  if [[ -f "$HOME/.rvm/gemsets/global.gems" ]]; then
-    install-ripper-tags-local
-  elif [[ -f "/usr/share/rvm/gemsets/global.gems" ]]; then
-    install-ripper-tags-global
-  else
-    echo "${yellow}WARN: Cannot find ~/.rvm; aborting just to be safe.${reset}"
-    return 1
-  fi
-}
-
-install-ripper-tags-local() {
-  local gemset="$HOME/.rvm/gemsets/global.gems"
-
-  if ! grep -q ripper-tags "$gemset"; then
-    header "Installing ripper-tags"
-    subheader "Marking it for installation on all Ruby upgrades"
-    echo ripper-tags >> "$gemset"
-
-    subheader "Installing ripper-tags in all installed rubies"
-    rvm all 'do' bash -c 'ruby -v; gem install ripper-tags'
-
-    echo "${green}Done!${reset}"
-  fi
-}
-
-install-ripper-tags-global() {
-  local gemset="/usr/share/rvm/gemsets/global.gems"
-
-  if ! grep -q ripper-tags "$gemset"; then
-    header "Installing ripper-tags"
-    subheader "Marking it for installation on all Ruby upgrades"
-    echo ripper-tags | sudo tee -a "$gemset" > /dev/null
-
-    subheader "Installing ripper-tags in all installed rubies"
-    rvm all 'do' bash -c 'ruby -v; gem install ripper-tags'
-
-    echo "${green}Done!${reset}"
-  fi
-}
-
-update-ripper-tags() {
-  if [[ -s /usr/share/rvm/scripts/rvm ]]; then
-    source /usr/share/rvm/scripts/rvm
-  else
-    echo "ERROR: RVM isn't installed?" >&2
-    return 1
-  fi
-
-  if hash ripper-tags 2>/dev/null; then
-    rvm all 'do' bash -c 'ruby -v; gem update ripper-tags'
-  fi
+  run-command-quietly "Updating $name in all Ruby installs" < <(
+    "${RVM_BIN?}" all 'do' bash -c "ruby -v; gem update '$name'" 2>&1
+  )
 }
 
 create-user-dirs() {
@@ -172,7 +126,7 @@ create-user-dirs() {
     if [[ ! -d "${!var}" ]]; then
       echo "${!var} does not exist. Create it?"
       echo "Create ${!var}? [Yn] "
-      read -r answer
+      read -r answer </dev/tty
       if [[ -z $answer || $answer = "y" || $answer = "Y" ]]; then
         mkdir -vp "${!var}"
       fi

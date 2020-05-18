@@ -12,9 +12,6 @@ if [[ ! -s "${XDG_CONFIG_HOME}/kitty/theme.conf" ]]; then
   ~/.local/bin/_theme_set dark
 fi
 
-# Create directory for vdirsyncer settings
-mkdir -p ~/.local/share/vdirsyncer
-
 # Install Vim plugs
 if [[ ! -f "${XDG_DATA_HOME}/nvim/site/autoload/plug.vim" ]]; then
   echo "Downloading Vim plug"
