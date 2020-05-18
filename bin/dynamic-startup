@@ -1,7 +1,30 @@
 #!/usr/bin/env bash
 # Dynamic startup programs that I cannot represent well in i3 config.
 
+#
+# Compositor and graphics
+#
+autorandr --change --default horizontal
+xrandr --dpi 96
+wm-start compton --config ~/.config/compton/compton.conf
+wm-start flashfocus
+wm-start systemctl --user start redshift
+
+#
+# Keyboard, screens, host-specific, etc.
+#
 ~/.local/bin/fix-keyboard
+xset s 660 # lock after 11 minutes
+# Lock screen on suspend, after screensaver, etc.
+wm-start xss-lock --transfer-sleep-lock -- lock-screen
+
+#
+# Daemons
+#
+wm-start parcellite --no-icon # Clipboard manager
+wm-start syncthing-gtk --minimized
+wm-start udiskie --no-automount --smart-tray # Device mounter
+wm-start unclutter # Hide mouse cursor when not in use
 
 function setup_touchpad() {
     touchpad="$1"
@@ -16,11 +39,15 @@ function setup_touchpad() {
     xinput set-prop "${touchpad}" "libinput Disable While Typing Enabled" 1
 }
 
+# Apps
+wm-start firefox-developer-edition
+wm-start keybase-gui
+wm-start spotify
+wm-start telegram-desktop
+wm-start workrave
+
 case "$(hostname)" in
   bilquis)
-    xrandr --dpi 96
-    [[ "$(autorandr --detected)" == "bilquis-work" ]] && xrandr --output DP-0 --off
-    xrandr --dpi 96
     setup_touchpad "SynPS/2 Synaptics TouchPad"
     # Start Slack
     wm-start slack
@@ -28,6 +55,7 @@ case "$(hostname)" in
 
   krista)
     setup_touchpad "SynPS/2 Synaptics TouchPad"
+    wm-start toggldesktop
     ;;
 
   morbidus)
@@ -41,5 +69,4 @@ case "$(hostname)" in
     ;;
 esac
 
-autorandr --change --default horizontal
-xrandr --dpi 96
+wm-start startup-reminder

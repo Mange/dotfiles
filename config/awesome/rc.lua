@@ -285,3 +285,7 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 local config_dir = awful.util.getdir("config")
 dofile(config_dir .. "/titlebars.lua")
 -- }}}
+
+-- {{{ Startup apps
+awesome.spawn("dynamic-startup", false)
+-- }}}

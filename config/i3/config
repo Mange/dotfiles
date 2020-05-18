@@ -77,33 +77,12 @@ client.unfocused         $dark3          $dark3          $light1 $faded_blue   $
 client.urgent            $bright_red     $bright_red     $light1 $bright_red   $bright_red
 # }}}
 
-# {{{ Early startup applications
-
-# Lock screen on suspend, after screensaver, etc.
-exec --no-startup-id xset s 660 # lock after 11 minutes
-exec --no-startup-id xss-lock --transfer-sleep-lock -- lock-screen
-
-# To deal with apps requesting privilege elevation
-exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-
-# Compositor
-exec --no-startup-id compton --config ~/.config/compton/compton.conf
-exec --no-startup-id flashfocus
-exec --no-startup-id systemctl --user start redshift
-
-# Keyboard, screens, host-specific, etc.
-exec --no-startup-id ~/.local/bin/dynamic-startup
-
+# {{{ Startup applications
 # Wallpaper, bars, etc.
 exec_always --no-startup-id ~/.local/bin/set-wallpaper
 exec_always --no-startup-id ~/.config/polybar/start.sh
 
-# Daemons
-exec --no-startup-id parcellite --no-icon # Clipboard manager
-exec --no-startup-id syncthing-gtk --minimized
-exec --no-startup-id dunst # Notification server
-exec --no-startup-id udiskie --no-automount --smart-tray # Device mounter
-exec --no-startup-id unclutter # Hide mouse cursor when not in use
+exec --no-startup-id ~/.local/bin/dynamic-startup
 # }}}
 
 # {{{ Shortcuts
@@ -495,17 +474,5 @@ for_window [title="(?i)youtube pip"] floating enable, sticky enable
 for_window [title="i3 cheatsheet"] \
   floating enable, \
   move position center
-
-# }}}
-
-# {{{ Late startup programs
-
-exec workrave
-exec startup-reminder
-exec telegram-desktop
-exec $browser
-exec spotify
-exec keybase-gui
-exec toggldesktop
 
 # }}}

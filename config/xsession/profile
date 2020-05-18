@@ -1,11 +1,13 @@
-#!/bin/bash
-shopt -s nullglob
+#!/bin/sh
+# Must be in POSIX sh mode, not in Bash, since it is sources inside a /bin/sh
+# process.
+#
 
 # shellcheck source=/dev/null
-source "${XDG_CONFIG_HOME:-${HOME}/.config}/shells/common"
+. "${XDG_CONFIG_HOME:-${HOME}/.config}/shells/common"
 
 # shellcheck source=/dev/null
-source "${XDG_CONFIG_HOME}/shells/enable-rvm"
+. "${XDG_CONFIG_HOME}/shells/enable-rvm"
 
 # Tell KDE apps to load theme using qt5ct
 export QT_QPA_PLATFORMTHEME=qt5ct
@@ -14,10 +16,13 @@ eval "$(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)"
 export SSH_AUTH_SOCK
 export GNOME_KEYRING_CONTROL
 
+# To deal with apps requesting privilege elevation
+wm-start /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+
 # Disable HiDPI
 export QT_AUTO_SCREEN_SCALE_FACTOR=1
 export GDK_SCALE=1
-xrdb -merge <(echo Xft.dpi: 96)
+echo Xft.dpi: 96 | xrdb -merge
 xrandr --dpi 96
 
 # Try to fix the screen setup before starting i3
@@ -29,20 +34,3 @@ xrandr --dpi 96
 # some apps.
 # If autorandr fails, fall back on running normal xrandr --auto.
 autorandr --change --default horizontal || xrandr --auto
-
-# Awesome WM's early autostart stuff
-if [[ "$DESKTOP_SESSION" == "awesome" ]]; then
-  # Compositor and graphics
-  wm-start compton --config ~/.config/compton/compton.conf
-  wm-start flashfocus
-  wm-start systemctl --user start redshift
-
-  # Keyboard, screens, host-specific, etc.
-  ~/.local/bin/dynamic-startup
-
-  # Daemons
-  wm-start parcellite --no-icon # Clipboard manager
-  wm-start syncthing-gtk --minimized
-  wm-start udiskie --no-automount --smart-tray # Device mounter
-  wm-start unclutter # Hide mouse cursor when not in use
-fi

@@ -1,6 +1,10 @@
-#!/bin/bash
-# vim: ft=sh
+#!/bin/sh
+# Must be in POSIX sh mode, not in Bash, since it is sources inside a /bin/sh
+# process.
+#
 # This file is loaded by some software. Specifically, lightdm is supposed to
 # read it with this hardcoded path.
 # shellcheck source=/home/mange/.config/xsession/profile
-source "${XDG_CONFIG_HOME:-${HOME}/.config}/xsession/profile"
+
+echo "xprofile ($(date))" >> ~/start.log
+. "${XDG_CONFIG_HOME:-${HOME}/.config}/xsession/profile"
