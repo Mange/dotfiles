@@ -3,11 +3,11 @@
 pcall(require, "luarocks.loader")
 
 -- Standard awesome library
-local gears = require("gears")
-local awful = require("awful")
-local wibox = require("wibox") -- Widget and layout library
-local beautiful = require("beautiful") -- Theme handling library
-local naughty = require("naughty") -- Notification library
+gears = require("gears")
+awful = require("awful")
+wibox = require("wibox") -- Widget and layout library
+beautiful = require("beautiful") -- Theme handling library
+naughty = require("naughty") -- Notification library
 
 require("awful.autofocus")
 
@@ -72,7 +72,7 @@ beautiful.useless_gap = 8
 beautiful.gap_single_client = false
 
 -- Colors
-local gruvbox = {
+gruvbox = {
   dark0_hard = "#1d2021",
   dark0 = "#282828",
   dark0_soft = "#32302f",
@@ -134,6 +134,19 @@ beautiful.border_width  = 1
 beautiful.border_normal = gruvbox.dark3
 beautiful.border_focus  = gruvbox.neutral_purple
 beautiful.border_marked = gruvbox.faded_yellow
+
+beautiful.wallpaper = gears.filesystem.get_xdg_data_home() .. "wallpapers/current.jpg"
+
+function reload_wallpaper(s)
+  utils.set_wallpaper(s, beautiful.wallpaper)
+end
+
+function change_wallpaper(wallpaper) -- luacheck: ignore 131
+  beautiful.wallpaper = wallpaper
+  for s = 1, screen.count() do
+    reload_wallpaper(s)
+  end
+end
 -- }}}
 
 -- {{{ Wibar
@@ -180,30 +193,16 @@ local tasklist_buttons = gears.table.join(
                                               awful.client.focus.byidx(-1)
                                           end))
 
-local function set_wallpaper(s)
-    -- Wallpaper
-    if beautiful.wallpaper then
-        local wallpaper = beautiful.wallpaper
-        -- If wallpaper is a function, call it with the screen
-        if type(wallpaper) == "function" then
-            wallpaper = wallpaper(s)
-        end
-        gears.wallpaper.maximized(wallpaper, s, true)
-    end
-end
-
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
-screen.connect_signal("property::geometry", set_wallpaper)
+screen.connect_signal("property::geometry", reload_wallpaper)
 
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
-    set_wallpaper(s)
+    reload_wallpaper(s)
 
     -- Each screen has its own tag table.
     awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
 
-    -- Create a promptbox for each screen
-    s.mypromptbox = awful.widget.prompt()
     -- Create an imagebox widget which will contain an icon indicating which layout we're using.
     -- We need one layoutbox per screen.
     s.mylayoutbox = awful.widget.layoutbox(s)
@@ -235,7 +234,6 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
             s.mytaglist,
-            s.mypromptbox,
         },
         s.mytasklist, -- Middle widget
         { -- Right widgets

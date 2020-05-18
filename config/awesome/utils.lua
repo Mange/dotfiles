@@ -1,4 +1,5 @@
 local awful = require("awful")
+local gears = require("gears")
 
 -- xproperties are persisted on Awesome restarts, which means we can put a
 -- value here on startup and then all restarts will be able to read it out.
@@ -29,6 +30,16 @@ function utils.on_restart(func)
   if restart_detected then
     func()
   end
+end
+
+function utils.set_wallpaper(s, wallpaper)
+    if wallpaper then
+        -- If wallpaper is a function, call it with the screen
+        if type(wallpaper) == "function" then
+            wallpaper = wallpaper(s)
+        end
+        gears.wallpaper.maximized(wallpaper, s, true)
+    end
 end
 
 return utils
