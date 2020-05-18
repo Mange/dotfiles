@@ -6,8 +6,12 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
+local utils = require("utils")
+
 -- Settings
 local modkey = "Mod4" -- Super
+-- Terminal cmdline; note that this is repeated in this file some times because
+-- of non-standard CLI arguments, etc.
 local terminal = "kitty"
 
 local keys = {}
@@ -56,8 +60,37 @@ local function spawn(cmdline)
   end
 end
 
+local function next_layout()
+  awful.layout.inc(1)
+end
+
 local function client_close(c)
   c:kill()
+end
+
+local function client_toggle_fullscreen(c)
+  c.fullscreen = not c.fullscreen
+  c:raise()
+end
+
+local function client_toggle_sticky(c)
+  c.ontop = not c.ontop
+end
+
+local function client_toggle_floating(_)
+  awful.client.floating.toggle()
+end
+
+local function run_or_raise(cmd, matcher)
+  return function()
+    utils.run_or_raise(cmd, matcher)
+  end
+end
+
+local function dropdown_toggle(cmd, rule)
+  return function()
+    dropdown.toggle(cmd, rule)
+  end
 end
 
 keys.global = gears.table.join(
@@ -75,17 +108,70 @@ keys.global = gears.table.join(
     awful.key({modkey}, "k", focus_idx(-1), {description = "Focus previous", group = "Client"}),
     awful.key({modkey, "Shift"}, "j", move_focused_idx(1), {description = "Move next", group = "Client"}),
     awful.key({modkey, "Shift"}, "k", move_focused_idx(-1), {description = "Move previous", group = "Client"}),
+    awful.key({modkey}, "u", awful.client.urgent.jumpto, {description = "Jump to urgent", group = "Client"}),
 
     -- Group: Screen
     awful.key({modkey}, "Escape", focus_screen(1), {description = "Next screen", group = "Screen"}),
     awful.key({modkey, "Control"}, "l", focus_screen(1), {description = "Next screen", group = "Screen"}),
     awful.key({modkey, "Control"}, "h", focus_screen(-1), {description = "Previous screen", group = "Screen"}),
 
-    -- Group: Tag
+    -- Group: Layout
+    awful.key({modkey}, "q", next_layout, {description = "Next layout", group = "Layout"}),
 
     -- Group: Apps
     awful.key({modkey}, "Return", spawn({"samedir", terminal}), {description = "Terminal in same dir", group = "Apps"}),
     awful.key({modkey, "Shift"}, "Return", spawn(terminal), {description = "Terminal", group = "Apps"}),
+    awful.key(
+      {modkey},
+      "space",
+      spawn({
+          "rofi",
+          "-show", "combi",
+          "-modi", "combi,run,window,emoji",
+          "-combi-modi", "drun,window,emoji"
+      }),
+      {description = "Rofi", group = "Apps"}
+    ),
+    awful.key(
+      {modkey, "Shift"},
+      "space",
+      spawn({
+          "kitty",
+          "--class", "dropdown_tydra",
+          "zsh", "-ic", "tydra ~/.config/tydra/main.yml"
+      }),
+      {description = "Tydra", group = "Apps"}
+    ),
+
+    awful.key(
+      {modkey},
+      "w",
+      run_or_raise(
+        {"firefox-developer-edition"},
+        {class = "firefoxdeveloperedition"}
+      ),
+      {description = "Focus browser", group = "Apps"}
+    ),
+
+    awful.key(
+      {modkey},
+      "e",
+      run_or_raise(
+        {"samedir", "kitty", "nvim"},
+        {class = "kitty", name = "NVIM$"}
+      ),
+      {description = "Focus editor", group = "Apps"}
+    ),
+
+    awful.key(
+      {modkey},
+      "g",
+      dropdown_toggle(
+        {"kitty", "--class", "dropdown_kitty"},
+        {class = "dropdown_kitty"}
+      ),
+      {description = "Terminal dropdown", group = "Apps"}
+    ),
 
     --
     -- Vanilla; to be moved and sorted
@@ -93,8 +179,6 @@ keys.global = gears.table.join(
 
 
     -- Layout manipulation
-    awful.key({ modkey,           }, "u", awful.client.urgent.jumpto,
-              {description = "jump to urgent client", group = "client"}),
     awful.key({ modkey,           }, "Tab",
         function ()
             awful.client.focus.history.previous()
@@ -118,22 +202,6 @@ keys.global = gears.table.join(
               {description = "increase the number of columns", group = "layout"}),
     awful.key({ modkey, "Control" }, "l",     function () awful.tag.incncol(-1, nil, true)    end,
               {description = "decrease the number of columns", group = "layout"}),
-    awful.key({ modkey,           }, "space", function () awful.layout.inc( 1)                end,
-              {description = "select next", group = "layout"}),
-    awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(-1)                end,
-              {description = "select previous", group = "layout"}),
-
-    awful.key({ modkey, "Control" }, "n",
-              function ()
-                  local c = awful.client.restore()
-                  -- Focus restored client
-                  if c then
-                    c:emit_signal(
-                        "request::activate", "key.unminimize", {raise = true}
-                    )
-                  end
-              end,
-              {description = "restore minimized", group = "client"}),
 
     -- Prompt
     awful.key({ modkey },            "r",     function () awful.screen.focused().mypromptbox:run() end,
@@ -203,50 +271,18 @@ end
 
 keys.clientkeys = gears.table.join(
     -- Basics
-    awful.key({keys.modkey, "Shift"}, "q", client_close, {description = "Kill client", group = "Client"}),
+    awful.key({modkey, "Shift"}, "q", client_close, {description = "Kill client", group = "Client"}),
+    awful.key({modkey}, "f", client_toggle_fullscreen, {description = "Fullscreen toggle", group = "Client"}),
+    awful.key({modkey, "Shift"}, "f", client_toggle_floating, {description = "Floating toggle", group = "Client"}),
+    awful.key({modkey, "Shift"}, "s", client_toggle_sticky, {description = "Sticky toggle", group = "Client"}),
 
     --
     -- Vanilla; to be moved and sorted
     --
-    awful.key({ keys.modkey,           }, "f",
-        function (c)
-            c.fullscreen = not c.fullscreen
-            c:raise()
-        end,
-        {description = "toggle fullscreen", group = "client"}),
-    awful.key({ keys.modkey, "Control" }, "space",  awful.client.floating.toggle                     ,
-              {description = "toggle floating", group = "client"}),
     awful.key({ keys.modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end,
               {description = "move to master", group = "client"}),
     awful.key({ keys.modkey,           }, "o",      function (c) c:move_to_screen()               end,
-              {description = "move to screen", group = "client"}),
-    awful.key({ keys.modkey,           }, "t",      function (c) c.ontop = not c.ontop            end,
-              {description = "toggle keep on top", group = "client"}),
-    awful.key({ keys.modkey,           }, "n",
-        function (c)
-            -- The client currently has the input focus, so it cannot be
-            -- minimized, since minimized clients can't have the focus.
-            c.minimized = true
-        end ,
-        {description = "minimize", group = "client"}),
-    awful.key({ keys.modkey,           }, "m",
-        function (c)
-            c.maximized = not c.maximized
-            c:raise()
-        end ,
-        {description = "(un)maximize", group = "client"}),
-    awful.key({ keys.modkey, "Control" }, "m",
-        function (c)
-            c.maximized_vertical = not c.maximized_vertical
-            c:raise()
-        end ,
-        {description = "(un)maximize vertically", group = "client"}),
-    awful.key({ keys.modkey, "Shift"   }, "m",
-        function (c)
-            c.maximized_horizontal = not c.maximized_horizontal
-            c:raise()
-        end ,
-        {description = "(un)maximize horizontally", group = "client"})
+              {description = "move to screen", group = "client"})
 )
 
 return keys

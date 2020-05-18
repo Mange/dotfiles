@@ -37,6 +37,7 @@ end
 -- }}}
 
 keys = require("keys")
+dropdown = require("dropdown")
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
@@ -258,6 +259,7 @@ awful.rules.rules = {
     -- { rule = { class = "Firefox" },
     --   properties = { screen = 1, tag = "2" } },
 }
+dropdown.add_rules(awful.rules.rules)
 -- }}}
 
 -- {{{ Signals
