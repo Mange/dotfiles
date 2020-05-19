@@ -38,7 +38,8 @@ end
 
 utils = require("utils")
 keys = require("keys")
-dropdown = require("dropdown")
+local dropdown = require("dropdown")
+local sharedtags = require("sharedtags")
 
 -- {{{ Variable definitions
 -- Table of layouts to cover with awful.layout.inc, order matters.
@@ -149,6 +150,23 @@ function change_wallpaper(wallpaper) -- luacheck: ignore 131
 end
 -- }}}
 
+-- {{{ Tags
+tags = sharedtags({
+    {name = "System", layout = awful.layout.suit.tile},
+    {name = "Code", layout = awful.layout.suit.tile},
+    {name = "Browse", layout = awful.layout.suit.tile},
+    {name = "4", layout = awful.layout.suit.tile},
+    {name = "5", layout = awful.layout.suit.tile},
+    {name = "6", layout = awful.layout.suit.tile},
+    {name = "7", layout = awful.layout.suit.tile},
+    {name = "Game", layout = awful.layout.suit.max},
+    {name = "Media", layout = awful.layout.suit.fair.horizontal, screen = 2},
+    {name = "Chat", layout = awful.layout.suit.max, screen = 2},
+})
+
+keys.tags = tags
+-- }}}
+
 -- {{{ Wibar
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock()
@@ -199,9 +217,6 @@ screen.connect_signal("property::geometry", reload_wallpaper)
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
     reload_wallpaper(s)
-
-    -- Each screen has its own tag table.
-    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
 
     -- Create an imagebox widget which will contain an icon indicating which layout we're using.
     -- We need one layoutbox per screen.

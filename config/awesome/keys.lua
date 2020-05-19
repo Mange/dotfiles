@@ -2,6 +2,9 @@ local gears = require("gears")
 local awful = require("awful")
 local hotkeys_popup = require("awful.hotkeys_popup")
 
+local dropdown = require("dropdown")
+local sharedtags = require("sharedtags")
+
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
@@ -24,6 +27,9 @@ keys.scroll_down = 5
 
 -- Export some variables
 keys.modkey = modkey
+
+-- Variables to import
+keys.tags = {} -- Assign to table of tags
 
 -- Binding actions
 -- local function focus(direction)
@@ -81,6 +87,10 @@ local function client_toggle_floating(_)
   awful.client.floating.toggle()
 end
 
+local function client_move_other_screen(c)
+  c:move_to_screen()
+end
+
 local function run_or_raise(cmd, matcher)
   return function()
     utils.run_or_raise(cmd, matcher)
@@ -90,6 +100,50 @@ end
 local function dropdown_toggle(cmd, rule)
   return function()
     dropdown.toggle(cmd, rule)
+  end
+end
+
+local function goto_tag(index)
+  return function()
+    local tag = keys.tags[index]
+
+    if not tag then
+      tag = sharedtags.add(index, {name = tostring(index), layout = awful.layout.layouts[1]})
+    end
+
+    sharedtags.viewonly(tag, tag.screen or awful.screen.focused())
+  end
+end
+
+local function toggle_tag(index)
+  return function()
+    local tag = keys.tags[index]
+
+    if tag then
+      sharedtags.viewtoggle(tag, awful.screen.focused())
+    end
+  end
+end
+
+local function move_to_tag(index)
+  return function()
+    local tag = keys.tags[index]
+
+    if tag and client.focus then
+      client.focus:move_to_tag(tag)
+    end
+  end
+end
+
+local function tag_move_other_screen()
+  local focused_screen = awful.screen.focused()
+
+  local tag = focused_screen.selected_tag
+  local next_screen_idx = (focused_screen.index + 1) % (screen.count() + 1)
+  local next_screen = screen[next_screen_idx]
+
+  if tag then
+    sharedtags.movetag(tag, next_screen)
   end
 end
 
@@ -173,6 +227,9 @@ keys.global = gears.table.join(
       {description = "Terminal dropdown", group = "Apps"}
     ),
 
+    -- Group: Tag
+    awful.key({modkey, "Shift"}, "o", tag_move_other_screen, {description = "Move tag to other screen", group = "Tag"}),
+
     --
     -- Vanilla; to be moved and sorted
     --
@@ -222,67 +279,57 @@ keys.global = gears.table.join(
 -- Bind all key numbers to tags.
 -- Be careful: we use keycodes to make it work on any keyboard layout.
 -- This should map on the top row of your keyboard, usually 1 to 9.
-for i = 1, 9 do
+for i = 1, 10 do
+    local key_num = i % 10 -- Turn 10 into 0
+
     keys.global = gears.table.join(keys.global,
         -- View tag only.
-        awful.key({ keys.modkey }, "#" .. i + 9,
-                  function ()
-                        local screen = awful.screen.focused()
-                        local tag = screen.tags[i]
-                        if tag then
-                           tag:view_only()
-                        end
-                  end,
-                  {description = "view tag #"..i, group = "tag"}),
+        awful.key(
+          {keys.modkey}, tostring(key_num),
+          goto_tag(i),
+          {description = "Go to tag "..i, group = "Tag"}
+        ),
+
         -- Toggle tag display.
-        awful.key({ keys.modkey, "Control" }, "#" .. i + 9,
-                  function ()
-                      local screen = awful.screen.focused()
-                      local tag = screen.tags[i]
-                      if tag then
-                         awful.tag.viewtoggle(tag)
-                      end
-                  end,
-                  {description = "toggle tag #" .. i, group = "tag"}),
+        awful.key(
+          {keys.modkey, "Control"}, tostring(key_num),
+          toggle_tag(i),
+          {description = "Toggle tag "..i, group = "Tag"}
+        ),
+
         -- Move client to tag.
-        awful.key({ keys.modkey, "Shift" }, "#" .. i + 9,
-                  function ()
-                      if client.focus then
-                          local tag = client.focus.screen.tags[i]
-                          if tag then
-                              client.focus:move_to_tag(tag)
-                          end
-                     end
-                  end,
-                  {description = "move focused client to tag #"..i, group = "tag"}),
+        awful.key(
+          {keys.modkey, "Shift"}, tostring(key_num),
+          move_to_tag(i),
+          {description = "Move client to tag "..i, group = "Tag"}
+        )
+
         -- Toggle tag on focused client.
-        awful.key({ keys.modkey, "Control", "Shift" }, "#" .. i + 9,
-                  function ()
-                      if client.focus then
-                          local tag = client.focus.screen.tags[i]
-                          if tag then
-                              client.focus:toggle_tag(tag)
-                          end
-                      end
-                  end,
-                  {description = "toggle focused client on tag #" .. i, group = "tag"})
+        -- awful.key(
+        --   {keys.modkey, "Control", "Shift" }, tostring(key_num),
+        --   toggle_client_tag(i),
+        --   {description = "Toggle client tag " .. i, group = "Tag"}
+        -- )
     )
 end
 
 keys.clientkeys = gears.table.join(
     -- Basics
     awful.key({modkey, "Shift"}, "q", client_close, {description = "Kill client", group = "Client"}),
+
+    -- Toggles
     awful.key({modkey}, "f", client_toggle_fullscreen, {description = "Fullscreen toggle", group = "Client"}),
     awful.key({modkey, "Shift"}, "f", client_toggle_floating, {description = "Floating toggle", group = "Client"}),
     awful.key({modkey, "Shift"}, "s", client_toggle_sticky, {description = "Sticky toggle", group = "Client"}),
+
+    -- Screen
+    awful.key({modkey}, "o", client_move_other_screen, {description = "Move client to other screen", group = "Client"}),
 
     --
     -- Vanilla; to be moved and sorted
     --
     awful.key({ keys.modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end,
-              {description = "move to master", group = "client"}),
-    awful.key({ keys.modkey,           }, "o",      function (c) c:move_to_screen()               end,
-              {description = "move to screen", group = "client"})
+              {description = "move to master", group = "client"})
 )
 
 return keys
