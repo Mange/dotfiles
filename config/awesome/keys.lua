@@ -97,6 +97,35 @@ local function run_or_raise(cmd, matcher)
   end
 end
 
+-- Tag matching client with the currently focused tag, making it appear on the
+-- focused screen, then focus it. If already focused, then remove the tag from
+-- the window.
+local function focus_tag_client(matcher)
+  return function()
+    local c = utils.find_client(matcher)
+    local t = awful.screen.focused().selected_tag
+
+    if not t or not c then
+      return
+    end
+
+    if utils.client_has_tag(c, t) then
+      if client.focus == c then
+        -- If tagged and has focus already, then remove the tag
+        c:toggle_tag(t)
+        awful.client.focus.history.previous()
+      else
+        -- Tagged, but not focused; behave like normal jump_to
+        c:jump_to()
+      end
+    else
+      -- Not already tagged; add the tag and jump to it
+      c:toggle_tag(t)
+      c:jump_to()
+    end
+  end
+end
+
 local function dropdown_toggle(cmd, rule)
   return function()
     dropdown.toggle(cmd, rule)
@@ -121,6 +150,16 @@ local function toggle_tag(index)
 
     if tag then
       sharedtags.viewtoggle(tag, awful.screen.focused())
+    end
+  end
+end
+
+local function toggle_client_tag(index)
+  return function()
+    local tag = keys.tags[index]
+
+    if tag and client.focus then
+      client.focus:toggle_tag(tag)
     end
   end
 end
@@ -208,6 +247,15 @@ keys.global = gears.table.join(
     ),
 
     awful.key(
+      {modkey, "Shift"},
+      "w",
+      focus_tag_client(
+        {class = "firefoxdeveloperedition"}
+      ),
+      {description = "Focus-tag browser", group = "Apps"}
+    ),
+
+    awful.key(
       {modkey},
       "e",
       run_or_raise(
@@ -215,6 +263,15 @@ keys.global = gears.table.join(
         {class = "kitty", name = "NVIM$"}
       ),
       {description = "Focus editor", group = "Apps"}
+    ),
+
+    awful.key(
+      {modkey, "Shift"},
+      "e",
+      focus_tag_client(
+        {class = "kitty", name = "NVIM$"}
+      ),
+      {description = "Focus-tag editor", group = "Apps"}
     ),
 
     awful.key(
@@ -302,14 +359,14 @@ for i = 1, 10 do
           {keys.modkey, "Shift"}, tostring(key_num),
           move_to_tag(i),
           {description = "Move client to tag "..i, group = "Tag"}
-        )
+        ),
 
         -- Toggle tag on focused client.
-        -- awful.key(
-        --   {keys.modkey, "Control", "Shift" }, tostring(key_num),
-        --   toggle_client_tag(i),
-        --   {description = "Toggle client tag " .. i, group = "Tag"}
-        -- )
+        awful.key(
+          {keys.modkey, "Control", "Shift"}, tostring(key_num),
+          toggle_client_tag(i),
+          {description = "Toggle client tag "..i, group = "Tag"}
+        )
     )
 end
 
