@@ -5,10 +5,6 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 local dropdown = require("dropdown")
 local sharedtags = require("sharedtags")
 
--- Enable hotkeys help widget for VIM and other apps
--- when client with a matching name is opened:
-require("awful.hotkeys_popup.keys")
-
 local utils = require("utils")
 local media_mode = require("media_mode")
 
