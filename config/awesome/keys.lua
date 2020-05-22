@@ -10,6 +10,7 @@ local sharedtags = require("sharedtags")
 require("awful.hotkeys_popup.keys")
 
 local utils = require("utils")
+local media_mode = require("media_mode")
 
 -- Settings
 local modkey = "Mod4" -- Super
@@ -286,6 +287,9 @@ keys.global = gears.table.join(
 
     -- Group: Tag
     awful.key({modkey, "Shift"}, "o", tag_move_other_screen, {description = "Move tag to other screen", group = "Tag"}),
+
+    -- Group: Modes
+    awful.key({modkey}, "m", media_mode, {description = "Enter media mode", group = "Modes"}),
 
     --
     -- Vanilla; to be moved and sorted
