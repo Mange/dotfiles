@@ -40,6 +40,7 @@ utils = require("utils")
 keys = require("keys")
 local dropdown = require("dropdown")
 local sharedtags = require("sharedtags")
+local taglist = require("taglist")
 
 -- {{{ Variable definitions
 -- Table of layouts to cover with awful.layout.inc, order matters.
@@ -66,7 +67,7 @@ awful.layout.layouts = {
 -- {{{ Theme
 beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 
-beautiful.font = "Fira Sans Regular 8"
+beautiful.font = "Fira Sans Regular 11"
 
 -- Setup gaps
 beautiful.useless_gap = 8
@@ -171,24 +172,6 @@ keys.tags = tags
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock()
 
--- Create a wibox for each screen and add it
-local taglist_buttons = gears.table.join(
-                    awful.button({ }, keys.left_click, function(t) t:view_only() end),
-                    awful.button({ keys.modkey }, keys.left_click, function(t)
-                                              if client.focus then
-                                                  client.focus:move_to_tag(t)
-                                              end
-                                          end),
-                    awful.button({ }, keys.right_click, awful.tag.viewtoggle),
-                    awful.button({ keys.modkey }, keys.right_click, function(t)
-                                              if client.focus then
-                                                  client.focus:toggle_tag(t)
-                                              end
-                                          end),
-                    awful.button({ }, keys.scroll_up, function(t) awful.tag.viewnext(t.screen) end),
-                    awful.button({ }, keys.scroll_down, function(t) awful.tag.viewprev(t.screen) end)
-                )
-
 local tasklist_buttons = gears.table.join(
                      awful.button({ }, keys.left_click, function (c)
                                               if c == client.focus then
@@ -227,11 +210,7 @@ awful.screen.connect_for_each_screen(function(s)
                            awful.button({ }, keys.scroll_up, function () awful.layout.inc( 1) end),
                            awful.button({ }, keys.scroll_down, function () awful.layout.inc(-1) end)))
     -- Create a taglist widget
-    s.mytaglist = awful.widget.taglist {
-        screen  = s,
-        filter  = awful.widget.taglist.filter.all,
-        buttons = taglist_buttons
-    }
+    s.mytaglist = taglist(s)
 
     -- Create a tasklist widget
     s.mytasklist = awful.widget.tasklist {
