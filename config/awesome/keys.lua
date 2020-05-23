@@ -285,7 +285,7 @@ keys.global = gears.table.join(
     awful.key({modkey, "Shift"}, "o", tag_move_other_screen, {description = "Move tag to other screen", group = "Tag"}),
 
     -- Group: Modes
-    awful.key({modkey}, "m", media_mode, {description = "Enter media mode", group = "Modes"}),
+    awful.key({modkey}, "m", media_mode.enter, {description = "Enter media mode", group = "Modes"}),
 
     --
     -- Vanilla; to be moved and sorted
