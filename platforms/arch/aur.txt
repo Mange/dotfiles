@@ -27,8 +27,8 @@ spotifyd-full     # Headless FLOSS version of Spotify
 spotify-tui       # TUI frontent for Spotify Connect / spotifyd
 firefox-tridactyl-native # Native plugin for Firefox Tricactyl
 
-# Fork of compton with better blurring
-compton-tryone-git
+# Fork of picom with better blurring and rounded corners
+picom-ibhagwan-git
 flashfocus-git # Flash windows when focus changes
 
 # Vifm stuff

@@ -6,7 +6,7 @@ Quick summary of my stack:
 
 - **OS:** [Arch Linux][arch]
 - **Window manager:** [i3 WM][i3] ([i3-gaps fork][i3-gaps]) +
-  [polybar] (bars) + [compton] (compositor)
+  [polybar] (bars) + [picom] (compositor)
 - **Editor:** [Neovim]
 - **Shell:** [ZSH]
 - **Terminal emulator:** [kitty]
@@ -88,7 +88,7 @@ repository.
 [i3]: https://i3wm.org/
 [i3-gaps]: https://github.com/Airblader/i3
 [polybar]: https://github.com/jaagr/polybar
-[compton]: https://github.com/chjj/compton
+[picom]: https://github.com/yshui/picom
 [Neovim]: https://neovim.io/
 [ZSH]: http://zsh.sourceforge.net/
 [kitty]: https://sw.kovidgoyal.net/kitty/

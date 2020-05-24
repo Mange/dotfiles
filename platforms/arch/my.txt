@@ -108,7 +108,7 @@ transmission-cli # bittorrent info
 #
 acpi # for battery indication, etc. in polybar
 autorandr
-# compton # disabled for AUR compton-tryone-git
+# picom # disabled for AUR picom-ibhagwan-git
 blueman
 brightnessctl
 dunst # libnotify server

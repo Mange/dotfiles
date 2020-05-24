@@ -6,7 +6,7 @@
 #
 autorandr --change --default horizontal
 xrandr --dpi 96
-wm-start compton --config ~/.config/compton/compton.conf
+wm-start picom --config ~/.config/picom/picom.conf
 wm-start flashfocus
 wm-start systemctl --user start redshift
 

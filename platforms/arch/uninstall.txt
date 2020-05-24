@@ -10,3 +10,6 @@ xorg-xbacklight
 khal
 vdirsyncer-git
 vdirsyncer
+
+# Replaced with picom-ibhagwan-git
+compton-tryone-git
