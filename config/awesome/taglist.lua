@@ -2,36 +2,28 @@ local awful = require("awful")
 local gears = require("gears")
 local keys = require("keys")
 
-local function view_only()
-  return function(t) t:view_only() end
+local function view_only(t)
+  t:view_only()
 end
 
-local function move_client_to_tag()
-  return function(t)
-    if client.focus then
-      client.focus:move_to_tag(t)
-    end
+local function move_client_to_tag(t)
+  if client.focus then
+    client.focus:move_to_tag(t)
   end
 end
 
-local function client_toggle_tag()
-  return function(t)
-    if client.focus then
-      client.focus:toggle_tag(t)
-    end
+local function client_toggle_tag(t)
+  if client.focus then
+    client.focus:toggle_tag(t)
   end
 end
 
-local function next_tag()
-  return function(t)
-    awful.tag.viewnext(t.screen)
-  end
+local function next_tag(t)
+  awful.tag.viewnext(t.screen)
 end
 
-local function previous_tag()
-  return function(t)
-    awful.tag.viewprev(t.screen)
-  end
+local function previous_tag(t)
+  awful.tag.viewprev(t.screen)
 end
 
 local taglist_buttons = gears.table.join(
