@@ -1,6 +1,7 @@
 -- Setup and configure titlebars
 local gears = require("gears")
 local awful = require("awful")
+local beautiful = require("beautiful")
 local wibox = require("wibox") -- Widget and layout library
 
 local keys = require("keys")
@@ -10,9 +11,11 @@ local function smart_titlebars(c)
     if c.titlebar == nil then
       c:emit_signal("request::titlebars", "rules", {})
     end
+    c.border_width = 0
     awful.titlebar.show(c, "left")
   else
     awful.titlebar.hide(c, "left")
+    c.border_width = beautiful.border_width
   end
 end
 

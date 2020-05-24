@@ -132,10 +132,13 @@ beautiful.fg_focus      = gruvbox.light0
 beautiful.fg_urgent     = gruvbox.light1
 beautiful.fg_minimize   = gruvbox.light1
 
-beautiful.border_width  = 1
+beautiful.border_width  = 3
 beautiful.border_normal = gruvbox.dark3
 beautiful.border_focus  = gruvbox.neutral_purple
 beautiful.border_marked = gruvbox.faded_yellow
+
+beautiful.titlebar_bg_normal = gruvbox.dark3 .. "70"
+beautiful.titlebar_bg_focus  = gruvbox.neutral_purple .. "70"
 
 beautiful.wallpaper = gears.filesystem.get_xdg_data_home() .. "wallpapers/current.jpg"
 
