@@ -5,7 +5,6 @@ pcall(require, "luarocks.loader")
 -- Standard awesome library
 gears = require("gears")
 awful = require("awful")
-wibox = require("wibox") -- Widget and layout library
 beautiful = require("beautiful") -- Theme handling library
 naughty = require("naughty") -- Notification library
 
@@ -40,7 +39,7 @@ utils = require("utils")
 keys = require("keys")
 local dropdown = require("dropdown")
 local sharedtags = require("sharedtags")
-local taglist = require("taglist")
+local wibar = require("wibar")
 
 -- {{{ Variable definitions
 -- Table of layouts to cover with awful.layout.inc, order matters.
@@ -141,105 +140,68 @@ beautiful.titlebar_bg_normal = gruvbox.dark3 .. "70"
 beautiful.titlebar_bg_focus  = gruvbox.neutral_purple .. "70"
 
 beautiful.wallpaper = gears.filesystem.get_xdg_data_home() .. "wallpapers/current.jpg"
-
-function reload_wallpaper(s)
-  utils.set_wallpaper(s, beautiful.wallpaper)
-end
-
-function change_wallpaper(wallpaper) -- luacheck: ignore 131
-  beautiful.wallpaper = wallpaper
-  for s = 1, screen.count() do
-    reload_wallpaper(s)
-  end
-end
 -- }}}
+--
 
 -- {{{ Tags
 tags = sharedtags({
-    {name = "System", layout = awful.layout.suit.tile},
-    {name = "Code", layout = awful.layout.suit.tile},
-    {name = "Browse", layout = awful.layout.suit.tile},
-    {name = "4", layout = awful.layout.suit.tile},
-    {name = "5", layout = awful.layout.suit.tile},
-    {name = "6", layout = awful.layout.suit.tile},
-    {name = "7", layout = awful.layout.suit.tile},
-    {name = "Game", layout = awful.layout.suit.max},
-    {name = "Media", layout = awful.layout.suit.fair.horizontal, screen = 2},
-    {name = "Chat", layout = awful.layout.suit.max, screen = 2},
+    {
+      name = ": System",
+      layout = awful.layout.suit.tile
+    },
+    {
+      name = ": Code",
+      layout = awful.layout.suit.tile
+    },
+    {
+      name = ": Browse",
+      layout = awful.layout.suit.tile
+    },
+    {
+      name = "4",
+      layout = awful.layout.suit.tile
+    },
+    {
+      name = "5",
+      layout = awful.layout.suit.tile
+    },
+    {
+      name = "6",
+      layout = awful.layout.suit.tile
+    },
+    {
+      name = "7",
+      layout = awful.layout.suit.tile
+    },
+    {
+      name = ": Game",
+      layout = awful.layout.suit.max
+    },
+    {
+      name = ": Media",
+      layout = awful.layout.suit.fair.horizontal,
+      screen = 2
+    },
+    {
+      name = ": Chat",
+      layout = awful.layout.suit.max,
+      screen = 2
+    },
 })
 
 keys.tags = tags
 -- }}}
 
--- {{{ Wibar
--- Create a textclock widget
-mytextclock = wibox.widget.textclock()
-
-local tasklist_buttons = gears.table.join(
-                     awful.button({ }, keys.left_click, function (c)
-                                              if c == client.focus then
-                                                  c.minimized = true
-                                              else
-                                                  c:emit_signal(
-                                                      "request::activate",
-                                                      "tasklist",
-                                                      {raise = true}
-                                                  )
-                                              end
-                                          end),
-                     awful.button({ }, keys.right_click, function()
-                                              awful.menu.client_list({ theme = { width = 250 } })
-                                          end),
-                     awful.button({ }, keys.scroll_up, function ()
-                                              awful.client.focus.byidx(1)
-                                          end),
-                     awful.button({ }, keys.scroll_down, function ()
-                                              awful.client.focus.byidx(-1)
-                                          end))
+-- {{{ Screens
 
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
-screen.connect_signal("property::geometry", reload_wallpaper)
+screen.connect_signal("property::geometry", utils.reload_wallpaper)
 
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
-    reload_wallpaper(s)
+    utils.reload_wallpaper(s)
 
-    -- Create an imagebox widget which will contain an icon indicating which layout we're using.
-    -- We need one layoutbox per screen.
-    s.mylayoutbox = awful.widget.layoutbox(s)
-    s.mylayoutbox:buttons(gears.table.join(
-                           awful.button({ }, keys.left_click, function () awful.layout.inc( 1) end),
-                           awful.button({ }, keys.right_click, function () awful.layout.inc(-1) end),
-                           awful.button({ }, keys.scroll_up, function () awful.layout.inc( 1) end),
-                           awful.button({ }, keys.scroll_down, function () awful.layout.inc(-1) end)))
-    -- Create a taglist widget
-    s.mytaglist = taglist(s)
-
-    -- Create a tasklist widget
-    s.mytasklist = awful.widget.tasklist {
-        screen  = s,
-        filter  = awful.widget.tasklist.filter.currenttags,
-        buttons = tasklist_buttons
-    }
-
-    -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s })
-
-    -- Add widgets to the wibox
-    s.mywibox:setup {
-        layout = wibox.layout.align.horizontal,
-        { -- Left widgets
-            layout = wibox.layout.fixed.horizontal,
-            s.mytaglist,
-        },
-        s.mytasklist, -- Middle widget
-        { -- Right widgets
-            layout = wibox.layout.fixed.horizontal,
-            wibox.widget.systray(),
-            mytextclock,
-            s.mylayoutbox,
-        },
-    }
+    wibar.create_for_screen(s)
 end)
 -- }}}
 
