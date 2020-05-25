@@ -1,5 +1,7 @@
 local awful = require("awful")
 local gears = require("gears")
+local wibox = require("wibox")
+
 local keys = require("keys")
 
 local function view_only(t)
@@ -35,10 +37,29 @@ local taglist_buttons = gears.table.join(
   awful.button({}, keys.scroll_down, previous_tag)
 )
 
+local function on_tag_widget_create(self, t, index, objects) --luacheck: no unused args
+  local icon_text = t.icon_text or t.name
+  self:get_children_by_id("icon_text_role")[1].text = icon_text
+end
+
 return function(s)
     return awful.widget.taglist {
         screen  = s,
         filter  = awful.widget.taglist.filter.all,
-        buttons = taglist_buttons
+        buttons = taglist_buttons,
+        widget_template = {
+          widget = wibox.container.background,
+          id = "background_role",
+          create_callback = on_tag_widget_create,
+          {
+            layout = wibox.container.margin,
+            left = 5,
+            right = 5,
+            {
+              widget = wibox.widget.textbox,
+              id = "icon_text_role"
+            }
+          }
+        },
     }
 end

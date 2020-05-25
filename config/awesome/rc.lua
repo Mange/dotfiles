@@ -146,44 +146,54 @@ beautiful.wallpaper = gears.filesystem.get_xdg_data_home() .. "wallpapers/curren
 -- {{{ Tags
 tags = sharedtags({
     {
-      name = ": System",
+      name = "System",
+      icon_text = "",
       layout = awful.layout.suit.tile
     },
     {
-      name = ": Code",
+      name = "Code",
+      icon_text = "",
       layout = awful.layout.suit.tile
     },
     {
-      name = ": Browse",
+      name = "Browse",
+      icon_text = "",
       layout = awful.layout.suit.tile
     },
     {
       name = "4",
+      icon_text = nil,
       layout = awful.layout.suit.tile
     },
     {
       name = "5",
+      icon_text = nil,
       layout = awful.layout.suit.tile
     },
     {
       name = "6",
+      icon_text = nil,
       layout = awful.layout.suit.tile
     },
     {
       name = "7",
+      icon_text = nil,
       layout = awful.layout.suit.tile
     },
     {
-      name = ": Game",
+      name = "Game",
+      icon_text = "",
       layout = awful.layout.suit.max
     },
     {
-      name = ": Media",
+      name = "Media",
+      icon_text = "",
       layout = awful.layout.suit.fair.horizontal,
       screen = 2
     },
     {
-      name = ": Chat",
+      name = "Chat",
+      icon_text = "",
       layout = awful.layout.suit.max,
       screen = 2
     },
