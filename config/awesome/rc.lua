@@ -120,11 +120,11 @@ gruvbox = {
   faded_orange = "#af3a03"
 }
 
-beautiful.bg_normal     = gruvbox.dark3
+beautiful.bg_normal     = gruvbox.dark2
 beautiful.bg_focus      = gruvbox.neutral_purple
 beautiful.bg_urgent     = gruvbox.bright_red
-beautiful.bg_minimize   = gruvbox.dark3
-beautiful.bg_systray    = beautiful.bg_normal
+beautiful.bg_minimize   = gruvbox.dark2
+beautiful.bg_systray    = gruvbox.dark3 -- Looks horrible
 
 beautiful.fg_normal     = gruvbox.light1
 beautiful.fg_focus      = gruvbox.light0
@@ -138,6 +138,17 @@ beautiful.border_marked = gruvbox.faded_yellow
 
 beautiful.titlebar_bg_normal = gruvbox.dark3 .. "70"
 beautiful.titlebar_bg_focus  = gruvbox.neutral_purple .. "70"
+
+beautiful.wibar_border_width = 0
+beautiful.wibar_bg = gruvbox.dark0 .. "55"
+beautiful.wibar_fg = gruvbox.light1
+
+beautiful.taglist_bg_focus = gruvbox.faded_purple .. "cc"
+beautiful.taglist_bg_urgent = gruvbox.faded_orange .. "55"
+
+beautiful.tasklist_bg_normal = "transparent"
+beautiful.tasklist_bg_focus = gruvbox.faded_purple .. "cc"
+beautiful.tasklist_bg_urgent = gruvbox.faded_orange .. "55"
 
 beautiful.wallpaper = gears.filesystem.get_xdg_data_home() .. "wallpapers/current.jpg"
 -- }}}
