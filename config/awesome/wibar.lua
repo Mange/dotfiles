@@ -61,7 +61,11 @@ function wibar.create_for_screen(s)
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
             s.mytaglist,
-            s.mylayoutbox,
+            {
+              layout = wibox.container.margin,
+              margins = 5,
+              s.mylayoutbox,
+            },
             s.mytasklist,
         },
         { -- Middle widgets

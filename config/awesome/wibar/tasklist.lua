@@ -39,7 +39,7 @@ return function(s)
                 id = "clienticon",
                 widget = awful.widget.clienticon
               },
-              margins = 1,
+              margins = 5,
               widget = wibox.container.margin
             },
             id = "background_role",
