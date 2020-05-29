@@ -13,7 +13,7 @@ local function pactl(command, sink, param)
   end
 end
 
-local media_mode = which_keys.new(
+local media_mode = which_keys.new_mode(
   "Media mode",
   {
     keybindings = {

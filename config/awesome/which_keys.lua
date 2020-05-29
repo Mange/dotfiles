@@ -3,7 +3,7 @@
 -- This is trying to replicate Emacs' Hydra/ShowKey / Vim's which-key.
 --
 -- Used like this:
--- local media_mode = which_keys.new(
+-- local media_mode = which_keys.new_mode(
 --   "My mode",
 --   {
 --    keybindings = {
@@ -15,10 +15,22 @@
 -- )
 -- media_mode.enter()
 --
+-- local media_chord = which_keys.new_chord(
+--   "Media",
+--   {
+--    keybindings = {
+--      {{}, "k", playerctl("play-pause"), {description = "Play/pause", group = "Player"}}
+--    },
+--    timeout = 5,
+--  }
+-- )
+-- media_chord.enter()
+--
 
 local awful = require("awful")
 local wibox = require("wibox")
 local gears = require("gears")
+local naughty = require("naughty")
 
 local style = {
   font_header = "Fira Sans Regular 18",
@@ -158,26 +170,17 @@ local function generate_popup(title, keybindings)
   }
 end
 
--- Create a new which_key mode/layer with a given title. The keygrabber_args
--- will be passed to awful.keygrabber.
-function which_keys.new(title, keygrabber_args)
-  local instance
-  instance = {
-    grabber = awful.keygrabber(
-      gears.table.join(
-        keygrabber_args,
-        {
-          stop_callback = function() instance.hide_popup() end,
-        }
-      )
-    ),
-    popup = generate_popup(title, keygrabber_args.keybindings)
-  }
-
+local function new(instance)
   -- Enter this mode.
   function instance.enter()
     instance.show_popup()
-    instance.grabber()
+    instance.grabber:start()
+  end
+
+  -- Stop this chord.
+  function instance.stop()
+    instance.hide_popup()
+    instance.grabber:stop()
   end
 
   -- Show the popup without actually entering the mode.
@@ -191,6 +194,69 @@ function which_keys.new(title, keygrabber_args)
   end
 
   return instance
+end
+
+-- Create a new which_key mode/layer with a given title. The keygrabber_args
+-- will be passed to awful.keygrabber.
+-- A mode will be active until Escape is pressed.
+function which_keys.new_mode(title, keygrabber_args)
+  local instance
+  instance = {
+    grabber = awful.keygrabber(
+      gears.table.join(
+        keygrabber_args,
+        {
+          stop_callback = function() instance.hide_popup() end,
+        }
+      )
+    ),
+    popup = generate_popup(title, keygrabber_args.keybindings)
+  }
+
+  return new(instance)
+end
+
+-- Create a new which_key chord with a given title. The keygrabber_args
+-- will be passed to awful.keygrabber.
+-- A chord will exit on the first keypress.
+function which_keys.new_chord(title, keygrabber_args)
+  local instance = {}
+  local keybindings = {}
+
+  for i, binding in ipairs(keygrabber_args.keybindings) do
+    local decorated_binding = {}
+    -- TODO: Modify the action function to call the original function, then stop the key grabber.
+    for j, elem in ipairs(binding) do
+      if type(elem) == "function" then
+        decorated_binding[j] = function(...)
+          instance.stop()
+          return elem(...)
+        end
+      else
+        decorated_binding[j] = elem
+      end
+    end
+
+    keybindings[i] = decorated_binding
+  end
+
+  instance.grabber = awful.keygrabber(
+    gears.table.join(
+      keygrabber_args,
+      {
+        keybindings = keybindings,
+        stop_callback = function() instance.hide_popup() end,
+        mask_modkeys = true,
+        -- Does not work. :(
+        -- allowed_keys = {},
+        stop_event = "release",
+        stop_key = {"escape"},
+      }
+    )
+  )
+  instance.popup = generate_popup(title, keygrabber_args.keybindings)
+
+  return new(instance)
 end
 
 return which_keys
