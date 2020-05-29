@@ -33,3 +33,6 @@ xorg
 jq
 pacutils
 parallel
+
+# Reference when things go wrong, etc.
+man-pages
