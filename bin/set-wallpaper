@@ -9,7 +9,7 @@ fi
 
 # Awesome has its own wallpaper manager
 if [ "$DESKTOP_SESSION" = "awesome" ]; then
-  awesome-client 'change_wallpaper("'"$wallpaper"'")'
+  awesome-client 'utils.change_wallpaper("'"$wallpaper"'")'
   exit 0
 fi
 
