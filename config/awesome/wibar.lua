@@ -7,8 +7,17 @@ local dpi = xresources.apply_dpi
 local keys = require("keys")
 local taglist = require("wibar/taglist")
 local tasklist = require("wibar/tasklist")
+local polybar_wrapper = require("wibar/polybar_wrapper")
 
 local wibar = {}
+
+local function spawn(cmd)
+  return function()
+    awful.spawn(cmd)
+  end
+end
+
+local polybar_dir = "/home/mange/.config/polybar/"
 
 --
 -- Bar plan:
@@ -30,7 +39,7 @@ local wibar = {}
 --
 
 -- Create a textclock widget
-local time_widget = wibox.widget.textclock("%H:%M   %a %d %b (v%V)", 30)
+local time_widget = wibox.widget.textclock("  %a %d %b (v%V)", 30)
 
 function wibar.create_for_screen(s)
   -- Create an imagebox widget which will contain an icon indicating which layout we're using.
@@ -67,13 +76,42 @@ function wibar.create_for_screen(s)
               s.mylayoutbox,
             },
             s.mytasklist,
+            polybar_wrapper({
+              command = {"/home/mange/.config/polybar/media"},
+              interval = 5,
+              left_click = spawn({"playerctl", "play-pause"}),
+              right_click = spawn({"run-or-raise", 'class = "Spotify"', "spotify"}),
+            }),
         },
         { -- Middle widgets
           layout = wibox.layout.fixed.horizontal,
+          polybar_wrapper({
+            command = {polybar_dir .. "clock"},
+            interval = 30,
+          }),
           time_widget,
         },
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
+            polybar_wrapper({
+              command = {polybar_dir .. "toggl", "watch", "10"},
+              interval = 0,
+              left_click = spawn({polybar_dir .. "toggl", "notify"}),
+              right_click = spawn({polybar_dir .. "toggl", "start-stop"}),
+              middle_click = spawn({"toggle-dropdown", "Toggle Desktop", "toggldesktop"}),
+            }),
+            polybar_wrapper({
+              command = {polybar_dir .. "task-counters"},
+              interval = 60,
+              left_click = spawn({"kitty", "vit"}),
+              right_click = spawn({"kitty", "vit"}),
+            }),
+            polybar_wrapper({
+              command = {polybar_dir .. "mailboxes"},
+              interval = 30,
+              left_click = spawn({"kitty", "neomutt"}),
+              right_click = spawn({"systemctl", "--user", "start", "mailboxes.service"}),
+            }),
             wibox.widget.systray(),
         },
       }
