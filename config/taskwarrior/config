@@ -46,7 +46,7 @@ urgency.user.tag.experiment.coefficient=-2.0
 #
 # Contexts
 #
-context.home=project.not:Hemnet
+context.home=project.not:Hemnet project.not:Devbox project.not:Apoex
 context.work=project.not:Home
 
 #
