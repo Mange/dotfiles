@@ -6,13 +6,13 @@ let personal_wiki.template_path = '~/Documents/Wiki/templates/personal/'
 let personal_wiki.html_template = '~/Documents/Wiki/html/personal/'
 let personal_wiki.auto_tags = 1
 
-let hemnet_wiki = {}
-let hemnet_wiki.path = '~/Documents/Wiki/Hemnet/'
-let hemnet_wiki.template_path = '~/Documents/Wiki/templates/hemnet/'
-let hemnet_wiki.html_template = '~/Documents/Wiki/html/hemnet/'
-let hemnet_wiki.auto_tags = 1
+let work_wiki = {}
+let work_wiki.path = '~/Documents/Wiki/Work/'
+let work_wiki.template_path = '~/Documents/Wiki/templates/work/'
+let work_wiki.html_template = '~/Documents/Wiki/html/work/'
+let work_wiki.auto_tags = 1
 
-let g:vimwiki_list = [personal_wiki, hemnet_wiki]
+let g:vimwiki_list = [personal_wiki, work_wiki]
 
 " Not supported by taskwiki
 " https://github.com/tbabej/taskwiki/issues/119
