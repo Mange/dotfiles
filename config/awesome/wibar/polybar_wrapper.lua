@@ -9,7 +9,7 @@ return function(opts)
 
   local widget = wibox.widget {
     widget = wibox.widget.textbox,
-    text = "…",
+    text = "↻",
   }
 
   local function compose_update(func)
@@ -47,7 +47,10 @@ return function(opts)
   widget:buttons(buttons)
 
   local set_widget_text = function(line)
-    widget.text = line
+    widget.markup = string.gsub(
+      string.gsub(line, "%%{F(#[^}]*)}", "<span foreground=\"%1\">"),
+      "%%{F%-}", "</span>"
+    )
   end
 
   local function widget_loop()
