@@ -31,7 +31,7 @@ path=/home/mange/Mail
 [user]
 name=Magnus Bergmark
 primary_email=magnus.bergmark@gmail.com
-other_email=magnus.bergmark@hemnet.se;magnus@devbox.com
+other_email=magnus.bergmark@devbox.com;magnus@devbox.com;magnus.bergmark@apoex.se
 
 # Configuration for "notmuch new"
 #
