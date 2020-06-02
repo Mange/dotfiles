@@ -10,3 +10,6 @@ system76-driver
 system76-power
 
 toggldesktop-bin
+
+# Apoex
+google-cloud-sdk
