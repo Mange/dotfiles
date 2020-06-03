@@ -192,6 +192,12 @@ local binds = {
     {{"Shift"}, "/", hotkeys_popup.show_help, {description="Show keybinds", group="Awesome"}},
     {{}, "z", quit_menu, {description = "Quit", group = "Awesome"}},
     {{"Control"}, "z", awesome.restart, {description = "Restart Awesome", group = "Awesome"}},
+    {{"Shift"}, "Escape", spawn("lock-screen"), {description = "Lock screen", group = "Awesome"}},
+    {
+      {}, "x",
+      spawn({"autorandr", "--change", "--default", "horizontal"}),
+      {description = "Reflow screens", group = "Awesome"}
+    },
 
     -- Group: Client
     -- {{}, "h", focus("left"), {description = "Focus ←", group = "Client"}},
@@ -215,6 +221,9 @@ local binds = {
     -- Group: Apps
     {{}, "Return", spawn({"samedir", terminal}), {description = "Terminal in same dir", group = "Apps"}},
     {{"Shift"}, "Return", spawn(terminal), {description = "Terminal", group = "Apps"}},
+    {{}, "-", spawn({"screenshot", "full"}), {description = "Screenshot (fullscreen)", group = "Apps"}},
+    {{"Shift"}, "-", spawn({"screenshot", "area"}), {description = "Screenshot (area)", group = "Apps"}},
+    {{}, "p", spawn({"bwmenu", "--clear", "20"}), {description = "Passwords", group = "Apps"}},
 
     {{},
       "w",
@@ -257,6 +266,24 @@ local binds = {
         {class = "dropdown_kitty"}
         ),
       {description = "Terminal dropdown", group = "Apps"}
+    },
+
+    {{"Shift"},
+      "g",
+      dropdown_toggle(
+        {"kitty", "--class", "dropdown_calc", "qalc"},
+        {class = "dropdown_calc"}
+        ),
+      {description = "Calculator dropdown", group = "Apps"}
+    },
+
+    {{},
+      "t",
+      dropdown_toggle(
+        {"kitty", "--class", "dropdown_vit", "vit"},
+        {class = "dropdown_vit"}
+        ),
+      {description = "Tasks dropdown", group = "Apps"}
     },
 
     -- Group: Tag
