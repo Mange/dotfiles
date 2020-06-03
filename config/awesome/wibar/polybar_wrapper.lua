@@ -6,10 +6,14 @@ local keys = require("keys")
 
 return function(opts)
   local interval = opts.interval or 10
+  local tail = opts.interval == 0
 
   local widget = wibox.widget {
     widget = wibox.widget.textbox,
-    text = "↻",
+    -- Start with empty text for commands that do early exit without printing
+    -- anything, e.g. "Not applicable on this machine", or "Nothing to show
+    -- right now"
+    text = ""
   }
 
   local function compose_update(func)
@@ -60,11 +64,22 @@ return function(opts)
         stdout = set_widget_text,
         stderr = set_widget_text,
         exit = function(reason, code)
-          if reason == "exit" and code ~= 0 then
-            -- Try again with extra delay
-            gears.timer.start_new((interval + 1) * 2, widget_loop)
+          if tail then
+            if reason == "exit" and code ~= 0 then
+              -- Script is not supposed to exit, and it failed. Let's give it
+              -- some time and then try again.
+              gears.timer.start_new(30, widget_loop)
+            end
+            -- Do nothing if exiting successfully. We assume this means the
+            -- script is not applicable for this machine.
           else
-            gears.timer.start_new(interval, widget_loop)
+            -- Script is now done. Wait for a delay and try again.
+            if reason == "exit" and code ~= 0 then
+              -- Try again with extra delay
+              gears.timer.start_new(interval * 2, widget_loop)
+            else
+              gears.timer.start_new(interval, widget_loop)
+            end
           end
         end
       }

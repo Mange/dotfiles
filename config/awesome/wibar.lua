@@ -30,7 +30,7 @@ local polybar_dir = "/home/mange/.config/polybar/"
 --
 --  [media]?
 --  [volume]
---  [togglr]
+--  [toggl]
 --  [tasks]
 --  [battery]
 --  [network]
