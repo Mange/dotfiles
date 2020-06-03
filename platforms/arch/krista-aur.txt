@@ -13,3 +13,5 @@ toggldesktop-bin
 
 # Apoex
 google-cloud-sdk
+google-chrome
+chromedriver
