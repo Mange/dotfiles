@@ -37,6 +37,7 @@ end
 
 utils = require("utils")
 keys = require("keys")
+actions = require("actions")
 local dropdown = require("dropdown")
 local sharedtags = require("sharedtags")
 local wibar = require("wibar")
@@ -210,7 +211,7 @@ tags = sharedtags({
     },
 })
 
-keys.tags = tags
+actions.tags = tags
 -- }}}
 
 -- {{{ Screens
