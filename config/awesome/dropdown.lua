@@ -2,6 +2,15 @@ local awful = require("awful")
 
 local dropdown = {}
 
+local function dropdown_placement(c)
+  local f =
+    awful.placement.scale +
+    awful.placement.no_offscreen +
+    awful.placement.centered
+
+  f(c, {to_percent = 0.5})
+end
+
 function dropdown.add_rules(rules)
   table.insert(
     rules,
@@ -9,7 +18,7 @@ function dropdown.add_rules(rules)
       rule_any = {class = {"dropdown_"}},
       properties = {
         floating = true,
-        placement = awful.placement.no_offscreen + awful.placement.centered,
+        placement = dropdown_placement,
       }
     }
   )
@@ -20,7 +29,6 @@ local function raise(c)
   local s = awful.screen.focused()
   c:move_to_screen(s)
   c:tags(s.selected_tags)
-  -- TODO: Execute placement to place next to previously focused client, or just center at 50%x50%?
   c:jump_to()
 end
 
