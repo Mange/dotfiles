@@ -250,7 +250,7 @@ function which_keys.new_chord(title, keygrabber_args)
         -- Does not work. :(
         -- allowed_keys = {},
         stop_event = "release",
-        stop_key = {"escape"},
+        stop_key = {"Escape"},
       }
     )
   )
