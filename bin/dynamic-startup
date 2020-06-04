@@ -49,13 +49,14 @@ wm-start workrave
 case "$(hostname)" in
   bilquis)
     setup_touchpad "SynPS/2 Synaptics TouchPad"
-    # Start Slack
-    wm-start slack
+    wm-start discord-canary
     ;;
 
   krista)
     setup_touchpad "SynPS/2 Synaptics TouchPad"
     wm-start toggldesktop
+    wm-start slack
+    wm-start discord-canary
     ;;
 
   morbidus)
