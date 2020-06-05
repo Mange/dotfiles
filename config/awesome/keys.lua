@@ -58,6 +58,11 @@ keys.global = gears.table.join(
       {description = "Chord", group = "Awesome"}
     ),
 
+    awful.key({modkey}, "i", actions.dismiss_notification(), {description = "Dismiss notification", group = "Awesome"}),
+
+
+    awful.key({modkey, "Shift"}, "i", actions.dismiss_all_notifications(), {description = "Dismiss all notifications", group = "Awesome"}),
+
     -- Group: Client
     -- awful.key({modkey}, "h", focus("left"), {description = "Focus ←", group = "Client"}),
     -- awful.key({modkey}, "j", focus("down"), {description = "Focus ↓", group = "Client"}),

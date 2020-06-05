@@ -7,6 +7,8 @@ gears = require("gears")
 awful = require("awful")
 beautiful = require("beautiful") -- Theme handling library
 naughty = require("naughty") -- Notification library
+local xresources = require("beautiful.xresources")
+local dpi = xresources.apply_dpi
 
 require("awful.autofocus")
 
@@ -153,7 +155,6 @@ beautiful.tasklist_bg_urgent = gruvbox.faded_orange .. "55"
 
 beautiful.wallpaper = gears.filesystem.get_xdg_data_home() .. "wallpapers/current.jpg"
 -- }}}
---
 
 -- {{{ Tags
 tags = sharedtags({
@@ -252,6 +253,34 @@ clientbuttons = gears.table.join(
 
 -- Set keys
 root.keys(keys.global)
+-- }}}
+
+-- {{{ Notifications
+naughty.config.defaults.timeout = 10
+beautiful.notification_icon_size = dpi(96)
+beautiful.notification_bg = gruvbox.dark0.."99"
+
+naughty.config.notify_callback = function(args)
+  -- Google Calendar notifications from Firefox looks like this:
+  --    title = "<Meeting title>"
+  --    text = "09:00 - 09:30"
+  --    appname = "Firefox Developer Edition"
+  -- Try to match this
+  if
+    args.appname == "Firefox Developer Edition" and
+    string.find(args.text, "^%d%d:%d%d")
+  then
+    -- Never time out!
+    args.timeout = 0
+  end
+
+  -- Spotify notifications are not important and should disappear quickly.
+  if args.appname == "Spotify" then
+    args.timeout = 2
+  end
+
+  return args
+end
 -- }}}
 
 -- {{{ Rules

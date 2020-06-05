@@ -1,4 +1,6 @@
 local awful = require("awful")
+local naughty = require("naughty")
+
 local dropdown = require("dropdown")
 local sharedtags = require("sharedtags")
 local utils = require("utils")
@@ -183,6 +185,30 @@ end
 
 function actions.screenshot(type)
   return actions.spawn({"screenshot", type})
+end
+
+function actions.dismiss_notification()
+  -- Dismiss the first nofification that we are able to find
+  local reason = naughty.notificationClosedReason.dismissedByUser
+  return function()
+    local s = awful.screen.focused()
+    local notifications = naughty.notifications[s]
+    if notifications then
+      for pos in pairs(notifications) do
+        if notifications[pos][1] then
+          naughty.destroy(notifications[pos][1], reason)
+          return
+        end
+      end
+    end
+  end
+end
+
+function actions.dismiss_all_notifications()
+  local reason = naughty.notificationClosedReason.dismissedByUser
+  return function()
+    naughty.destroy_all_notifications(nil, reason)
+  end
 end
 
 return actions
