@@ -26,29 +26,17 @@ keys.modkey = modkey
 keys.awesome_chord = which_keys.new_chord(
   "Awesome",
   {
-    keybindings = gears.table.join(
-      {
-        {{},
-          " ",
-          actions.spawn({
-              "rofi",
-              "-show", "combi",
-              "-modi", "combi,run,window,emoji",
-              "-combi-modi", "drun,window,emoji"
-            }),
-          {description = "Rofi", group = "Apps"}
-        },
-        {{"Shift"},
-          " ",
-          actions.spawn({
-              "kitty",
-              "--class", "dropdown_tydra",
-              "zsh", "-ic", "tydra ~/.config/tydra/main.yml"
-            }),
-          {description = "Tydra", group = "Apps"}
-        }
-      }
-    ),
+    keybindings = {
+      which_keys.key("space", "rofi", actions.rofi()),
+      which_keys.key("Shift+space", "tydra", actions.tydra()),
+      which_keys.key("e", "emoji-selector", actions.emoji_selector()),
+      which_keys.key("p", "passwords", actions.passwords_menu()),
+
+      which_keys.key_nested("s", "screenshot", {
+          which_keys.key("s", "specific-area", actions.screenshot("area")),
+          which_keys.key("a", "all-screen", actions.screenshot("full")),
+      })
+    },
     timeout = 5
   }
 )
@@ -90,22 +78,13 @@ keys.global = gears.table.join(
     awful.key({modkey}, "q", actions.next_layout(), {description = "Next layout", group = "Layout"}),
 
     -- Group: Apps
-    awful.key({modkey, "Shift"},
-      "space",
-      actions.spawn({
-          "rofi",
-          "-show", "combi",
-          "-modi", "combi,run,window,emoji",
-          "-combi-modi", "drun,window,emoji"
-        }),
-      {description = "Rofi", group = "Apps"}
-    ),
+    awful.key({modkey, "Shift"}, "space", actions.rofi(), {description = "Rofi", group = "Apps"}),
 
     awful.key({modkey}, "Return", actions.spawn({"samedir", terminal}), {description = "Terminal in same dir", group = "Apps"}),
     awful.key({modkey, "Shift"}, "Return", actions.spawn(terminal), {description = "Terminal", group = "Apps"}),
-    awful.key({modkey}, "-", actions.spawn({"screenshot", "full"}), {description = "Screenshot (fullscreen)", group = "Apps"}),
-    awful.key({modkey, "Shift"}, "-", actions.spawn({"screenshot", "area"}), {description = "Screenshot (area)", group = "Apps"}),
-    awful.key({modkey}, "p", actions.spawn({"bwmenu", "--clear", "20"}), {description = "Passwords", group = "Apps"}),
+    awful.key({modkey}, "-", actions.screenshot("full"), {description = "Screenshot (fullscreen)", group = "Apps"}),
+    awful.key({modkey, "Shift"}, "-", actions.screenshot("area"), {description = "Screenshot (area)", group = "Apps"}),
+    awful.key({modkey}, "p", actions.passwords_menu(), {description = "Passwords", group = "Apps"}),
 
     awful.key(
       {modkey}, "w",

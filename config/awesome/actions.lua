@@ -156,4 +156,33 @@ function actions.tag_move_other_screen()
   end
 end
 
+function actions.emoji_selector()
+  return actions.spawn({"rofi", "-modi", "emoji", "-show", "emoji"})
+end
+
+function actions.rofi()
+  return actions.spawn({
+      "rofi",
+      "-show", "combi",
+      "-modi", "combi,run,window,emoji",
+      "-combi-modi", "drun,window,emoji"
+    })
+end
+
+function actions.passwords_menu()
+  return actions.spawn({"bwmenu", "--clear", "20"})
+end
+
+function actions.tydra()
+  return actions.spawn({
+      "kitty",
+      "--class", "dropdown_tydra",
+      "zsh", "-ic", "tydra ~/.config/tydra/main.yml"
+    })
+end
+
+function actions.screenshot(type)
+  return actions.spawn({"screenshot", type})
+end
+
 return actions

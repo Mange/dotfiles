@@ -42,11 +42,24 @@ local style = {
   color_default = "#83a598",
   color_arrow = "#79740e",
   color_key = "#79740e",
+  color_nested = "#cc241d",
   color_group = "#d3869b",
   color_bg = "#28282877"
 }
 
-local which_keys = {}
+local aliases = {
+  [" "] = "Space"
+}
+
+local aliases_to_keys = {
+  Space = " ",
+  space = " "
+}
+
+local which_keys = {
+  color_normal = style.color_key,
+  color_nested = style.color_nested,
+}
 
 -- Generate pango markup to change foreground color for the given text.
 local function fg(color, text)
@@ -100,8 +113,24 @@ local function generate_keybind_widget(keybind)
   local desc = keybind[#keybind]
   local color = desc.which_key_color or style.color_default
 
+  -- Support hiding keys from description
+  if desc.which_key_hidden then
+    return nil
+  end
+
+  -- Fix some aliases
+  if aliases[key] ~= nil then
+    key = aliases[key]
+  end
+
+  -- Add modifiers to key combo, if set
   if modifiers and modifiers ~= "none" and #modifiers > 0 then
     key = table.concat(modifiers, "+") .. "+" .. key
+  end
+
+  -- Support overriding the apparent shortcut key
+  if desc.which_key_key ~= nil then
+    key = desc.which_key_key
   end
 
   local text = (
@@ -129,7 +158,10 @@ local function generate_popup(title, keybindings)
     end
 
     for _, bind in ipairs(group_bindings) do
-      group_grid:add(generate_keybind_widget(bind))
+      local w = generate_keybind_widget(bind)
+      if w ~= nil then
+        group_grid:add(w)
+      end
     end
 
     grid:add(
@@ -245,6 +277,7 @@ function which_keys.new_chord(title, keygrabber_args)
       keygrabber_args,
       {
         keybindings = keybindings,
+        timeout_callback = function() instance.hide_popup() end,
         stop_callback = function() instance.hide_popup() end,
         mask_modkeys = true,
         -- Does not work. :(
@@ -257,6 +290,37 @@ function which_keys.new_chord(title, keygrabber_args)
   instance.popup = generate_popup(title, keygrabber_args.keybindings)
 
   return new(instance)
+end
+
+local function split_combo(combo)
+  local elems = gears.string.split(combo, "+")
+  local key = table.remove(elems)
+
+  if aliases_to_keys[key] then
+    key = aliases_to_keys[key]
+  end
+
+  return elems, key
+end
+
+function which_keys.key(combo, name, action)
+  local modifiers, key = split_combo(combo)
+
+  return {modifiers, key, action, {description = name}}
+end
+
+function which_keys.key_nested(combo, name, keys)
+  local modifiers, key = split_combo(combo)
+  local chord = which_keys.new_chord(name, {keybindings = keys})
+
+  return {
+    modifiers, key,
+    chord.enter,
+    {
+      description = "+" .. name,
+      which_key_color = which_keys.color_nested
+    }
+  }
 end
 
 return which_keys
