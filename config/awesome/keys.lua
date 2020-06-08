@@ -35,6 +35,7 @@ keys.awesome_chord = which_keys.new_chord(
       which_keys.key_nested("s", "screenshot", {
           which_keys.key("s", "specific-area", actions.screenshot("area")),
           which_keys.key("a", "all-screen", actions.screenshot("full")),
+          which_keys.key("w", "window", actions.screenshot("current-window")),
       })
     },
     timeout = 5

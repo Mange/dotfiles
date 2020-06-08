@@ -7,6 +7,9 @@ case $1 in
   area)
     maim --select --shader=boxzoom "$filename"
     ;;
+  current-window | current_window | current)
+    maim --window="$(xdotool getactivewindow)" "$filename"
+    ;;
   full | "")
     maim "$filename"
     ;;
