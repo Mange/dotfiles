@@ -9,6 +9,7 @@ local actions = require("actions")
 local taglist = require("wibar/taglist")
 local tasklist = require("wibar/tasklist")
 local polybar_wrapper = require("wibar/polybar_wrapper")
+local battery_widget = require("wibar/battery_widget")
 
 local wibar = {}
 
@@ -110,6 +111,7 @@ function wibar.create_for_screen(s)
               left_click = actions.spawn({"kitty", "neomutt"}),
               right_click = actions.spawn({"systemctl", "--user", "start", "mailboxes.service"}),
             }),
+            battery_widget.new(),
             wibox.widget.systray(),
         },
       }
