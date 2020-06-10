@@ -211,4 +211,15 @@ function actions.dismiss_all_notifications()
   end
 end
 
+function actions.log_out(...)
+  return actions.spawn({"wmquit", ...})
+end
+
+function actions.edit_file(path)
+  return actions.spawn({
+    "kitty",
+    "nvim", path, "+cd %:p:h"
+  })
+end
+
 return actions

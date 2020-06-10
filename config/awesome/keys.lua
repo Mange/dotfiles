@@ -30,7 +30,23 @@ keys.awesome_chord = which_keys.new_chord(
       which_keys.key("space", "rofi", actions.rofi()),
       which_keys.key("Shift+space", "tydra", actions.tydra()),
       which_keys.key("e", "emoji-selector", actions.emoji_selector()),
-      which_keys.key("p", "passwords", actions.passwords_menu()),
+      which_keys.key("P", "passwords", actions.passwords_menu()),
+
+      which_keys.key_nested("a", "awesome", {
+          which_keys.key("r", "restart", awesome.restart),
+          which_keys.key("q", "quit/logout", actions.log_out()),
+          which_keys.key("e", "edit-config", actions.edit_file(gears.filesystem.get_configuration_dir() .. "rc.lua")),
+          which_keys.key("k", "edit-keys", actions.edit_file(gears.filesystem.get_configuration_dir() .. "keys.lua")),
+          -- TODO -- which_keys.key("a", "toggle-aesthetics-mode", function() end),
+      }),
+
+      which_keys.key_nested("p", "power", {
+          which_keys.key("s", "suspend", actions.spawn({"sh", "-c", "'udiskie-umount --all && systemctl suspend'"})),
+          which_keys.key("h", "hibernate", actions.spawn({"sh", "-c", "'udiskie-umount --all && systemctl hibernate'"})),
+          which_keys.key("R", "reboot", actions.log_out("reboot", "--force")),
+          which_keys.key("Q", "power-off", actions.log_out("poweroff", "--force")),
+          which_keys.key("l", "log-out", actions.log_out("logout", "--force")),
+      }),
 
       which_keys.key_nested("s", "screenshot", {
           which_keys.key("s", "specific-area", actions.screenshot("area")),
@@ -45,7 +61,7 @@ keys.awesome_chord = which_keys.new_chord(
 keys.global = gears.table.join(
     -- Group: Awesome
     awful.key({modkey, "Shift"}, "/", hotkeys_popup.show_help, {description="Show keybinds", group="Awesome"}),
-    awful.key({modkey}, "z", actions.spawn({"wmquit"}), {description = "Quit", group = "Awesome"}),
+    awful.key({modkey}, "z", actions.log_out(), {description = "Quit", group = "Awesome"}),
     awful.key({modkey, "Control"}, "z", awesome.restart, {description = "Restart Awesome", group = "Awesome"}),
     awful.key({modkey, "Shift"}, "Escape", actions.spawn("lock-screen"), {description = "Lock screen", group = "Awesome"}),
     awful.key(
