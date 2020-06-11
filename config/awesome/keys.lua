@@ -41,8 +41,8 @@ keys.awesome_chord = which_keys.new_chord(
       }),
 
       which_keys.key_nested("p", "power", {
-          which_keys.key("s", "suspend", actions.spawn({"sh", "-c", "'udiskie-umount --all && systemctl suspend'"})),
-          which_keys.key("h", "hibernate", actions.spawn({"sh", "-c", "'udiskie-umount --all && systemctl hibernate'"})),
+          which_keys.key("s", "suspend", actions.spawn({"sh", "-c", "udiskie-umount --all && systemctl suspend"})),
+          which_keys.key("h", "hibernate", actions.spawn({"sh", "-c", "udiskie-umount --all && systemctl hibernate"})),
           which_keys.key("R", "reboot", actions.log_out("reboot", "--force")),
           which_keys.key("Q", "power-off", actions.log_out("poweroff", "--force")),
           which_keys.key("l", "log-out", actions.log_out("logout", "--force")),
