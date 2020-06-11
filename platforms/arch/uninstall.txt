@@ -13,3 +13,6 @@ vdirsyncer
 
 # Replaced with picom-ibhagwan-git
 compton-tryone-git
+
+# Replaced with toggldesktop-git
+toggldesktop-bin
