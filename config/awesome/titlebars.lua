@@ -7,7 +7,12 @@ local wibox = require("wibox") -- Widget and layout library
 local keys = require("keys")
 
 local function smart_titlebars(c)
-  if c.floating or (c.first_tag and c.first_tag.layout.name == "floating") then
+  local is_floating = c.floating or (c.first_tag and c.first_tag.layout.name == "floating")
+  local deserves_titlebars = (
+    c.type == "normal" or c.type == "dialog"
+  )
+
+  if is_floating and deserves_titlebars then
     if c.titlebar == nil then
       c:emit_signal("request::titlebars", "rules", {})
     end
