@@ -111,6 +111,7 @@ function actions.goto_tag(index)
     end
 
     sharedtags.viewonly(tag, tag.screen or awful.screen.focused())
+    awful.screen.focus(tag.screen)
   end
 end
 
