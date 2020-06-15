@@ -30,7 +30,6 @@
 local awful = require("awful")
 local wibox = require("wibox")
 local gears = require("gears")
-local naughty = require("naughty")
 
 local style = {
   font_header = "Fira Sans Regular 18",
@@ -94,12 +93,16 @@ end
 
 -- Generate textbox widget for a group header.
 local function generate_group_header(group_name)
-  local text = fg(style.color_group, "─── " .. group_name .. " ───")
+  local text = fg(style.color_group, group_name)
 
   return wibox.widget {
-    widget = wibox.widget.textbox,
-    markup = text,
-    font = style.font
+    widget = wibox.container.background,
+    bg = style.color_group .. "22",
+    {
+      widget = wibox.widget.textbox,
+      markup = text,
+      font = style.font
+    }
   }
 end
 
@@ -107,7 +110,7 @@ end
 --
 -- You can set a `which_key_color` inside the keybind's description table and
 -- it will be used here instead of the default color.
-local function generate_keybind_widget(keybind)
+local function generate_keybind_widget(keybind, forced_width)
   local modifiers = keybind[1]
   local key = keybind[2]
   local desc = keybind[#keybind]
@@ -133,66 +136,94 @@ local function generate_keybind_widget(keybind)
     key = desc.which_key_key
   end
 
-  local text = (
-    fg(style.color_key, key) .. fg(style.color_arrow, " → ") .. fg(color, desc.description)
-  )
-  return wibox.widget {
-    widget = wibox.widget.textbox,
-    markup = text,
-    font = style.font
+  local w = wibox.widget {
+    widget = wibox.layout.ratio.horizontal,
+    forced_width = forced_width,
+    inner_fill_strategy = "center",
+    {
+      widget = wibox.widget.textbox,
+      markup = fg(style.color_key, key),
+      align = "right",
+      font = style.font
+    },
+    {
+      widget = wibox.widget.textbox,
+      markup = fg(style.color_arrow, " → "),
+      align = "center",
+      font = style.font
+    },
+    {
+      widget = wibox.widget.textbox,
+      markup = fg(color, desc.description),
+      align = "left",
+      font = style.font
+    },
   }
+  w:ajust_ratio(2, 0.40, 0.1, 0.50)
+
+  return w
 end
 
--- Generate popup widget for this mode.
 local function generate_popup(title, keybindings)
-  local grid = wibox.layout.grid.horizontal()
-
   local grouped_bindings, total_groups = group_binds(keybindings)
-  local render_group_names = (total_groups > 1)
 
+  -- Place all widgets here grouped by the group name.
+  local key_widgets = {}
+  local key_width = 200 -- TODO: Decide this more intelligently
+
+  -- Generate individual key widgets
   for group_name, group_bindings in pairs(grouped_bindings) do
-    local group_grid = wibox.layout.grid.vertical()
-
-    if render_group_names then
-      group_grid:add(generate_group_header(group_name))
-    end
-
     for _, bind in ipairs(group_bindings) do
-      local w = generate_keybind_widget(bind)
+      if key_widgets[group_name] == nil then
+        key_widgets[group_name] = {}
+      end
+
+      local w = generate_keybind_widget(bind, key_width)
       if w ~= nil then
-        group_grid:add(w)
+        table.insert(key_widgets[group_name], w)
       end
     end
+  end
 
-    grid:add(
-      wibox.widget {
-        group_grid,
-        layout = wibox.container.margin,
-        left = style.padding_horizontal,
-        top = style.padding_vertical,
-        right = style.padding_horizontal,
-        bottom = style.padding_vertical
-      }
-    )
+  -- Calculate how many columns should be used
+  -- TODO: This needs to happen on a per-screen basis.
+  local number_of_columns = 6 -- TODO: Calculate using key_width and screen's dimensions
+
+  -- Create widget and add all the groups to it
+  local popup_widget = wibox.layout.flex.vertical()
+  popup_widget.spacing = style.padding_vertical
+  if title ~= nil then
+    popup_widget:add(wibox.widget {
+      widget = wibox.widget.textbox,
+      markup = fg(style.color_header, title),
+      font = style.font_header,
+      align = "center"
+    })
+  end
+
+  for group_name, widgets in pairs(key_widgets) do
+    -- Only render group names when there are more than a single group
+    if total_groups > 1 then
+      popup_widget:add(generate_group_header(group_name))
+    end
+
+    -- Insert grid of all keys
+    local grid = wibox.layout.grid.vertical(number_of_columns)
+    grid.expand = true
+    grid.homogeneous = true
+    grid.spacing = 5
+    for _, w in ipairs(widgets) do
+      grid:add(w)
+    end
+
+    popup_widget:add(grid)
   end
 
   return awful.popup {
     widget = {
-      {
-        {
-          widget = wibox.widget.textbox,
-          markup = fg(style.color_header, title),
-          font = style.font_header,
-          align = "center"
-        },
-        grid,
-        layout = wibox.layout.fixed.vertical,
-      },
-      layout = wibox.container.margin,
-      left = style.margin,
-      top = style.margin,
-      right = style.margin,
-      bottom = style.margin
+      widget = wibox.container.margin,
+      margins = style.margin,
+      popup_widget
     },
     ontop = true,
     placement = awful.placement.no_offscreen + awful.placement.bottom + awful.placement.maximize_horizontally,
