@@ -6,5 +6,4 @@
 # read it with this hardcoded path.
 # shellcheck source=/home/mange/.config/xsession/profile
 
-echo "xprofile ($(date))" >> ~/start.log
 . "${XDG_CONFIG_HOME:-${HOME}/.config}/xsession/profile"
