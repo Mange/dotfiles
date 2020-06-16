@@ -34,9 +34,6 @@ local polybar_dir = "/home/mange/.config/polybar/"
 --  [systray]
 --
 
--- Create a textclock widget
-local time_widget = wibox.widget.textclock(" %a %d %b (v%V)", 30)
-
 function wibar.create_for_screen(s)
   -- Create an imagebox widget which will contain an icon indicating which layout we're using.
   -- We need one layoutbox per screen.
@@ -87,7 +84,6 @@ function wibar.create_for_screen(s)
             command = {polybar_dir .. "clock"},
             interval = 30,
           }),
-          time_widget,
         },
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
