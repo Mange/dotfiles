@@ -7,8 +7,6 @@ gears = require("gears")
 awful = require("awful")
 beautiful = require("beautiful") -- Theme handling library
 naughty = require("naughty") -- Notification library
-local xresources = require("beautiful.xresources")
-local dpi = xresources.apply_dpi
 
 require("awful.autofocus")
 
@@ -212,7 +210,7 @@ root.keys(keys.global)
 
 -- {{{ Notifications
 naughty.config.defaults.timeout = 10
-beautiful.notification_icon_size = dpi(96)
+beautiful.notification_icon_size = utils.dpi(96)
 beautiful.notification_bg = gruvbox.dark0.."99"
 
 naughty.config.notify_callback = function(args)

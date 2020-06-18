@@ -1,6 +1,7 @@
 local awful = require("awful")
 local gears = require("gears")
 local beautiful = require("beautiful")
+local xresources = require("beautiful.xresources")
 
 -- xproperties are persisted on Awesome restarts, which means we can put a
 -- value here on startup and then all restarts will be able to read it out.
@@ -8,7 +9,9 @@ awesome.register_xproperty("awesome_restart_check", "boolean")
 local restart_detected = awesome.get_xproperty("awesome_restart_check") ~= nil
 awesome.set_xproperty("awesome_restart_check", true)
 
-local utils = {}
+local utils = {
+  dpi = xresources.apply_dpi,
+}
 
 function utils.run_or_raise(cmd, matchers)
   local c = utils.find_client(matchers)

@@ -1,9 +1,8 @@
 local wibox = require("wibox") -- Widget and layout library
 local gears = require("gears")
 local awful = require("awful")
-local xresources = require("beautiful.xresources")
-local dpi = xresources.apply_dpi
 
+local utils = require("utils")
 local keys = require("keys")
 local actions = require("actions")
 local taglist = require("wibar/taglist")
@@ -51,12 +50,12 @@ function wibar.create_for_screen(s)
   s.mytasklist = tasklist(s)
 
   -- Create the wibox
-  s.mywibox = awful.wibar({ position = "top", screen = s, height = dpi(32) })
+  s.mywibox = awful.wibar({ position = "top", screen = s, height = utils.dpi(32) })
 
   -- Add widgets to the wibox
   s.mywibox:setup {
       layout = wibox.container.margin,
-      margins = dpi(2),
+      margins = utils.dpi(2),
       {
         layout = wibox.layout.align.horizontal,
         expand = "none",

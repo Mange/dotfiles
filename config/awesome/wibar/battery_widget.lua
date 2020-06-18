@@ -1,10 +1,9 @@
 local wibox = require("wibox")
 local beautiful = require("beautiful")
 local gears = require("gears")
-local xresources = require("beautiful.xresources")
-local dpi = xresources.apply_dpi
 
 local gruvbox = require("colors").gruvbox
+local utils = require("utils")
 
 local battery_widget = {}
 local battery_dir = "/sys/class/power_supply/BAT0"
@@ -79,7 +78,7 @@ function battery_widget.new()
     max_value = 100,
     rounded_edge = true,
     border_width = 0,
-    thickness = dpi(2),
+    thickness = utils.dpi(2),
     paddings = 2,
     start_angle = math.rad(270), -- Start on top
     text_on_bg,
