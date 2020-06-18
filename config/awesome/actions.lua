@@ -3,6 +3,7 @@ local naughty = require("naughty")
 
 local dropdown = require("dropdown")
 local sharedtags = require("sharedtags")
+local focus_client = require("focus_client")
 local utils = require("utils")
 
 local actions = {}
@@ -232,6 +233,12 @@ function actions.edit_file(path)
     "kitty",
     "nvim", path, "+cd %:p:h"
   })
+end
+
+function actions.toggle_focus_tag()
+  return function()
+    focus_client.toggle(client.focus)
+  end
 end
 
 return actions

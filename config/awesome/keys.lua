@@ -31,6 +31,7 @@ keys.awesome_chord = which_keys.new_chord(
       which_keys.key("Shift+space", "tydra", actions.tydra()),
       which_keys.key("e", "emoji-selector", actions.emoji_selector()),
       which_keys.key("P", "passwords", actions.passwords_menu()),
+      which_keys.key("f", "toggle-focus-mode", actions.toggle_focus_tag()),
 
       which_keys.key_nested("a", "awesome", {
           which_keys.key("r", "restart", awesome.restart),
