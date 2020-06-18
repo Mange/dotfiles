@@ -13,7 +13,7 @@
 data.location=~/.local/share/taskwarrior
 
 # Color theme
-include ~/.config/taskwarrior/gruvbox-dark-256.theme
+include ~/.config/taskwarrior/current-theme.theme
 
 # Generic
 weekstart=Monday
