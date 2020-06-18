@@ -2,15 +2,14 @@
 # Run after installing dotfiles to perform extra work.
 
 # Setup theme file
-[[ ! -f "${XDG_RUNTIME_DIR}/current-theme" ]] && echo "dark" > "${XDG_RUNTIME_DIR}/current-theme"
+if [[ ! -f "${XDG_RUNTIME_DIR}/current_theme" ]]; then
+  ~/.local/bin/_theme_set dark
+else
+  ~/.local/bin/_theme_set "$(cat "${XDG_RUNTIME_DIR}/current_theme")"
+fi
 
 # Create directory for ZSH history, etc., if it does not exist already.
 mkdir -p "${XDG_DATA_HOME}/zsh"
-
-# Setup theme if it appears to not be set up already
-if [[ ! -s "${XDG_CONFIG_HOME}/kitty/theme.conf" ]]; then
-  ~/.local/bin/_theme_set dark
-fi
 
 # Install Vim plugs
 if [[ ! -f "${XDG_DATA_HOME}/nvim/site/autoload/plug.vim" ]]; then

@@ -33,6 +33,8 @@ terminal."
 
   if [[ -n $new_style ]]; then
     ~/.local/bin/_theme_set "$new_style"
+    ~/.local/bin/set-wallpaper
+    pgrep -u "$USER" polybar >/dev/null && polybar-msg cmd restart 2>/dev/null
   fi
 
   if [[ -n $should_reload ]]; then
