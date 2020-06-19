@@ -150,11 +150,22 @@ function actions.tag_move_other_screen()
     local focused_screen = awful.screen.focused()
 
     local tag = focused_screen.selected_tag
-    local next_screen_idx = (focused_screen.index + 1) % (screen.count() + 1)
+    -- Lua index on 1, so we want a "-1" to go back to 0-based indexing for
+    -- the modulus math to work properly.
+    -- Then we "+1" to say "Next". "-1+1" is just redundant, so use the current
+    -- 1-based index to mean "next" in a 0-based index.
+    -- Then finally, convert back to 1-based indexing by adding one after the
+    -- modulus math is over.
+    --
+    -- (1 % 2) + 1 = 2
+    -- (2 % 2) + 1 = 1
+    local next_screen_idx = (focused_screen.index % screen.count()) + 1
     local next_screen = screen[next_screen_idx]
 
     if tag then
       sharedtags.movetag(tag, next_screen)
+      sharedtags.viewonly(tag, next_screen)
+      awful.screen.focus(next_screen)
     end
   end
 end
