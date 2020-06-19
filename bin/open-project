@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+set -e
+projectspath=~/Projects
+
+selected_path=$(
+  find "$projectspath" -type d -and -name '.git' -printf '%C@ %P\n' | \
+    sed 's#/.git##' | \
+    finder --numeric-reversed
+)
+
+path="${projectspath}/${selected_path}"
+
+if [[ -d "$path" ]]; then
+  exec with-wd "$path" kitty
+else
+  smart-notification \
+    --urgency=critical \
+    --icon=error \
+    --app-name \
+    "open-project" \
+    "Could not open" "Could not find ${path}"
+fi
