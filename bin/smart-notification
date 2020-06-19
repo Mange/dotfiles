@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# Echo a message on terminals, or send a notification when there is terminal
+# visible.
+
+if [ "$1" = "--help" ]; then
+  exec notify-send --help
+fi
+
+if [ -t 1 ]; then
+  # Inside terminal. Only echo the last argument.
+  for last; do true; done
+  echo "$last"
+else
+  notify-send "$@"
+fi

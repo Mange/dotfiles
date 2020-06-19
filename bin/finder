@@ -1,0 +1,97 @@
+#!/bin/bash
+
+#
+# Use Rofi or fzf for dmenu-like prompts, depending on if it is running on a
+# terminal or not.
+#
+
+function usage() {
+  cat <<USAGE
+Usage: finder [options]
+Pipe in choices to stdin and output will be emitted on stdout.
+
+Options:
+  -n [DELIM], --numeric[=DELIM]
+    First column is numeric. Sort on it and then remove it from the choices.
+    Specify delimiter if you don't use a space as a delimiter between columns.
+    Must be a single character.
+
+  -N [DELIM], --numeric-reversed[=DELIM]
+    First column is numeric. Sort on it in reverse and then remove it from the
+    choices. Specify delimiter if you don't use a space as a delimiter between
+    columns. Must be a single character.
+
+  --help
+    Print this help and exit.
+USAGE
+}
+
+if ! TEMP=$(
+  getopt \
+    -o 'n::N::' \
+    --long 'numeric::,numeric-reversed::,help' \
+    -- "$@"
+); then
+  echo "Failed to parse arguments…" >&2
+  exit 1
+fi
+eval set -- "$TEMP"
+unset TEMP
+
+mode=normal
+
+while true; do
+  case "$1" in
+    '--help')
+      usage
+      exit 0
+      ;;
+    '-n' | '--numeric')
+      mode=numeric
+      numeric_delimiter="${2:- }"
+      shift; shift
+      ;;
+    '-N' | '--numeric-reversed')
+      mode=numeric-reversed
+      numeric_delimiter="${2:- }"
+      shift; shift
+      ;;
+    '--')
+      shift
+      break
+      ;;
+    *)
+      echo "Error: Unknown argument $1" >&2
+      usage
+      exit 1
+      ;;
+  esac
+done
+
+# Any remaining args makes no sense
+if [ $# -gt 0 ]; then
+  echo "Error: Does not expect extra args…" >&2
+  usage
+  exit 1
+fi
+
+if [ -t 1 ]; then
+  finder=("fzf" "--layout=reverse")
+else
+  finder=("rofi" "-dmenu" "-i")
+fi
+
+case "$mode" in
+  normal)
+    exec "${finder[@]}"
+    ;;
+  numeric)
+    sort --numeric | cut -d "$numeric_delimiter" -f 2- | "${finder[@]}"
+    ;;
+  numeric-reversed)
+    sort --numeric --reverse | cut -d "$numeric_delimiter" -f 2- | "${finder[@]}"
+    ;;
+  *)
+    echo "Error: Unexpected logic error" >&2
+    exit 2
+esac
