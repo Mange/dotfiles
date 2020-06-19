@@ -59,7 +59,6 @@ keys.awesome_chord = which_keys.new_chord(
           which_keys.key("w", "window", actions.screenshot("current-window")),
       })
     },
-    timeout = 5
   }
 )
 

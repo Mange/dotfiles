@@ -33,7 +33,7 @@ local gears = require("gears")
 
 local style = {
   font_header = "Fira Sans Regular 18",
-  font = "Fira Sans Regular 14",
+  font = "Fira Code 14",
   padding_horizontal = 10,
   padding_vertical = 5,
   margin = 20,
@@ -161,6 +161,9 @@ local function generate_keybind_widget(keybind, forced_width)
   }
   w:ajust_ratio(2, 0.40, 0.1, 0.50)
 
+  -- To be able to sort the widgets later
+  w.sort_key = string.lower(desc.description)
+
   return w
 end
 
@@ -183,6 +186,9 @@ local function generate_popup(title, keybindings)
         table.insert(key_widgets[group_name], w)
       end
     end
+
+    -- Now sort the widgets in the group
+    table.sort(key_widgets[group_name], function(a, b) return a.sort_key < b.sort_key end)
   end
 
   -- Calculate how many columns should be used
