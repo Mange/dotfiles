@@ -1,5 +1,6 @@
 #!/bin/bash
-# Lock screen, executing some things before and some things after unlocking again.
+# Lock screen, executing some things before and some things after unlocking
+# again. Using i3lock-color.
 
 # The sleep_lock and normal_lock code is based on
 # /usr/share/doc/xss-lock/transfer-sleep-lock-i3lock.sh

@@ -1,3 +1,0 @@
-#!/bin/sh
-
-echo "$(~/.config/polybar/clock-icon) $(date +"%H:%M  %a %d %b (v%V)")"

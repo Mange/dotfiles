@@ -106,7 +106,7 @@ transmission-cli # bittorrent info
 #
 # Desktop env
 #
-acpi # for battery indication, etc. in polybar
+acpi # for battery indication, etc. in wibar
 autorandr
 # picom # disabled for AUR picom-ibhagwan-git
 blueman
@@ -114,7 +114,6 @@ brightnessctl
 dunst # libnotify server
 feh
 gucharmap
-i3-gaps # WM fork
 i3lock-color # Lockscreen (for xss-lock, etc.)
 kitty
 ktouch # I'm practicing touch typing
@@ -129,7 +128,7 @@ sysstat # sysstat installs mpstat(1) for bar-cpu
 telegram-desktop
 udiskie # auto-mounter for devices (and tray icon)
 unclutter # Hide mouse cursor when not in use
-wireless_tools # for Polybar
+wireless_tools # for wibar
 wmctrl # for wmquit, etc.
 workrave
 xcape # Make Super into both Super and Escape

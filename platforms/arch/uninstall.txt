@@ -1,5 +1,9 @@
 # vim:ft=config:nospell
 
+# Replaced by awesome
+i3-gaps
+polybar-git
+
 # Replaced by git-delta
 diff-so-fancy
 

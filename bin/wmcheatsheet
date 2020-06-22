@@ -1,0 +1,10 @@
+#!/usr/bin/bash
+
+image_file="$HOME/Projects/dotfiles/keyboard/wm_overlay.png"
+title="WM cheatsheet"
+
+# Kill the program if already running
+if ! pkill -TERM --full "$title"; then
+  # …or start it if not running.
+  feh --image-bg black --auto-zoom --borderless --title "WM cheatsheet" "$image_file"
+fi

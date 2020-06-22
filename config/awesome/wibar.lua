@@ -12,7 +12,7 @@ local battery_widget = require("wibar/battery_widget")
 
 local wibar = {}
 
-local polybar_dir = "/home/mange/.config/polybar/"
+local polybar_dir = "/home/mange/.config/awesome/polybar_scripts/"
 
 --
 -- Bar plan:
@@ -70,7 +70,7 @@ function wibar.create_for_screen(s)
             },
             s.mytasklist,
             polybar_wrapper({
-              command = {"/home/mange/.config/polybar/media"},
+              command = {"/home/mange/.config/awesome/polybar_scripts/media"},
               interval = 5,
               left_click = actions.spawn({"playerctl", "play-pause"}),
               right_click = actions.spawn({"run-or-raise", 'class = "Spotify"', "spotify"}),

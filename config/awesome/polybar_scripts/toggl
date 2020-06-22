@@ -4,8 +4,8 @@ hash toggl 2>/dev/null || exit 0
 
 root="$(dirname "$0")"
 
-# shellcheck source=../../data/gruvbox/colors.env
-source "${root}/../../data/gruvbox/colors.env"
+# shellcheck source=../../../data/gruvbox/colors.env
+source "${root}/../../../data/gruvbox/colors.env"
 
 function print_status() {
   local max_title=$1

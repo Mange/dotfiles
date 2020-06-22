@@ -1,0 +1,257 @@
+---
+settings:
+  ghost_others: true
+modifiers:
+  kb-logo-windows-8:
+    key_color: "#ff0000"
+    top_center: ''
+    center: ''
+  uArr:
+    key_color: "#857f00"
+  Ctrl:
+    key_color: "#0085ff"
+  "/Esc$/":
+    bottom_right: ''
+    center_left: ''
+    center_left_color: "#ff0000"
+    bottom_left: Lock screen
+    bottom_left_color: "#857f00"
+  1 !:
+    bottom_right: ''
+    center_left: Tag 1
+    center_left_size: 8
+    center_left_color: "#ff0000"
+    bottom_left: Move to
+    bottom_left_color: "#857f00"
+    top_right: Toggle
+    top_right_color: "#0085ff"
+    top_center: ''
+  2 @:
+    bottom_right: ''
+    center_left: Tag 2
+    center_left_size: 8
+    center_left_color: "#ff0000"
+    bottom_left: Move to
+    bottom_left_color: "#857f00"
+    top_right: Toggle
+    top_right_color: "#0085ff"
+    top_center: ''
+  '3 #':
+    bottom_right: ''
+    center_left: Tag 3
+    center_left_size: 8
+    center_left_color: "#ff0000"
+    bottom_left: Move to
+    bottom_left_color: "#857f00"
+    top_right: Toggle
+    top_right_color: "#0085ff"
+    top_center: ''
+  4 $:
+    bottom_right: ''
+    center_left: Tag 4
+    center_left_size: 8
+    center_left_color: "#ff0000"
+    bottom_left: Move to
+    bottom_left_color: "#857f00"
+    top_right: Toggle
+    top_right_color: "#0085ff"
+    top_center: ''
+  5 %:
+    bottom_right: ''
+    center_left: Tag 5
+    center_left_size: 8
+    center_left_color: "#ff0000"
+    bottom_left: Move to
+    bottom_left_color: "#857f00"
+    top_right: Toggle
+    top_right_color: "#0085ff"
+    top_center: ''
+  6 ^:
+    bottom_right: ''
+    center_left: Tag 6
+    center_left_size: 8
+    center_left_color: "#ff0000"
+    bottom_left: Move to
+    bottom_left_color: "#857f00"
+    top_right: Toggle
+    top_right_color: "#0085ff"
+    top_center: ''
+  7 &:
+    bottom_right: ''
+    center_left: Tag 7
+    center_left_size: 8
+    center_left_color: "#ff0000"
+    bottom_left: Move to
+    bottom_left_color: "#857f00"
+    top_right: Toggle
+    top_right_color: "#0085ff"
+    top_center: ''
+  8 *:
+    bottom_right: ''
+    center_left: Tag 8
+    center_left_size: 8
+    center_left_color: "#ff0000"
+    bottom_left: Move to
+    bottom_left_color: "#857f00"
+    top_right: Toggle
+    top_right_color: "#0085ff"
+    top_center: ''
+  9 (:
+    bottom_right: ''
+    center_left: Tag 9
+    center_left_size: 8
+    center_left_color: "#ff0000"
+    bottom_left: Move to
+    bottom_left_color: "#857f00"
+    top_right: Toggle
+    top_right_color: "#0085ff"
+    top_center: ''
+  0 ):
+    bottom_right: ''
+    center_left: Tag 10
+    center_left_size: 8
+    center_left_color: "#ff0000"
+    bottom_left: Move to
+    bottom_left_color: "#857f00"
+    top_right: Toggle
+    top_right_color: "#0085ff"
+    top_center: ''
+  "- _":
+    bottom_right: ''
+    center_left: Screenshot (fullscreen)
+    center_left_color: "#ff0000"
+    bottom_left: Screenshot (area)
+    bottom_left_color: "#857f00"
+  Q:
+    bottom_right: ''
+    center_left: Rotate layout
+    center_left_color: "#ff0000"
+    bottom_left: Kill window
+    bottom_left_color: "#857f00"
+  W:
+    bottom_right: ''
+    center_left: Focus browser
+    center_left_color: "#ff0000"
+    bottom_left: Bring Browser
+    bottom_left_color: "#857f00"
+  E:
+    bottom_right: ''
+    center_left: Focus editor
+    center_left_color: "#ff0000"
+    bottom_left: Bring Editor
+    bottom_left_color: "#857f00"
+  T:
+    bottom_right: ''
+    center_left: Dropdown tasks
+    center_left_color: "#ff0000"
+  U:
+    bottom_right: ''
+    center_left: Focus urgent
+    center_left_color: "#ff0000"
+  I:
+    bottom_right: ''
+    center_left: Notification close
+    center_left_color: "#ff0000"
+    bottom_left: Notification close all
+    bottom_left_color: "#857f00"
+  O:
+    bottom_right: ''
+    center_left: Move window → other screen
+    center_left_color: "#ff0000"
+    bottom_left: Move tag → other screen
+    bottom_left_color: "#857f00"
+  S:
+    bottom_right: ''
+    center_left: ''
+    center_left_color: "#ff0000"
+    center_left_size: 8
+    bottom_left: Toggle sticky
+    bottom_left_color: "#857f00"
+  F:
+    bottom_right: ''
+    center_left: Fullscreen toggle
+    center_left_color: "#ff0000"
+    bottom_left: Floating toggle
+    bottom_left_color: "#857f00"
+  G:
+    bottom_right: ''
+    center_left: Dropdown terminal
+    center_left_color: "#ff0000"
+    bottom_left: Dropdown calculator
+    bottom_left_color: "#857f00"
+  H:
+    bottom_right: ''
+    center_left: ''
+    center_left_color: "#ff0000"
+    bottom_left: ''
+    bottom_left_color: "#857f00"
+    top_right: "Monitor prev"
+    top_right_color: "#0085ff"
+    top_center: ''
+  J:
+    bottom_right: ''
+    center_left: Focus next
+    center_left_color: "#ff0000"
+    bottom_left: Swap next
+    bottom_left_color: "#857f00"
+    top_center: ''
+  K:
+    bottom_right: ''
+    center_left: Focus prev
+    center_left_color: "#ff0000"
+    bottom_left: Swap prev
+    bottom_left_color: "#857f00"
+    top_center: ''
+  L:
+    bottom_right: ''
+    center_left: ''
+    center_left_color: "#ff0000"
+    bottom_left: ''
+    bottom_left_color: "#857f00"
+    top_right: "Monitor next"
+    top_right_color: "#0085ff"
+    top_center: ''
+  kb-Return-2:
+    bottom_right: ''
+    center_left: Terminal in same dir
+    center_left_color: "#ff0000"
+    bottom_left: Terminal
+    bottom_left_color: "#857f00"
+    bottom_left_size: 8
+    top_right: Promote master
+    top_right_color: "#0085ff"
+    top_center: ''
+  Z:
+    bottom_right: ''
+    center_left: Quit
+    center_left_color: "#ff0000"
+    center_left_size: 8
+    top_right: Restart Awesome
+    top_right_color: "#0085ff"
+    top_center: ''
+  X:
+    bottom_right: ''
+    center_left: Reflow screens
+    center_left_color: "#ff0000"
+  V:
+    bottom_right: ''
+    bottom_left: Clipboard manager
+    bottom_left_color: "#857f00"
+  M:
+    bottom_right: ''
+    center_left: Media mode
+    center_left_color: "#ff0000"
+  "/ ?":
+    bottom_right: ''
+    center_left: ''
+    center_left_color: "#ff0000"
+    center_left_size: 8
+    bottom_left: Show cheatsheet
+    bottom_left_color: "#857f00"
+  mdash:
+    bottom_right: ''
+    center_left: Awesome leader
+    center_left_color: "#ff0000"
+    center_left_size: 8
+    bottom_left: Rofi
+    bottom_left_color: "#857f00"

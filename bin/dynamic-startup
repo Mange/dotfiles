@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Dynamic startup programs that I cannot represent well in i3 config.
+# Dynamic startup programs that is easier to control in a script than in WM
+# config.
 
 #
 # Compositor and graphics

@@ -19,7 +19,6 @@ discord-canary    # All-in-one voice and text chat for gamers that's free and se
 git-delta         # Better diff tool for Git
 gron-bin          # transforms JSON into discrete assignments to make it easier to grep.
 http-prompt       # An interactive HTTP command-line client
-polybar-git       # A fast and easy-to-use status bar
 rvm               # RVM: Ruby Version Manager
 slack-desktop     # Slack Desktop (Beta) for Linux
 spotify           # A proprietary music streaming service

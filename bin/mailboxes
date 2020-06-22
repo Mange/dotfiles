@@ -230,7 +230,7 @@ write_status() {
   message="${icon:-} ${unread_important}:${unread_all}"
 
   echo "$message" > "${mail_dir}/${box}/.mailboxes-state"
-  (set +e; polybar-msg hook mailboxes 1 >/dev/null 2>/dev/null)
+  # TODO: Trigger awesome wibar to reload widget
   echo "$unread_important"
 }
 
