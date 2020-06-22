@@ -68,9 +68,6 @@ graceful-shutdown \
 case "$action" in
   logout)
     case "${DESKTOP_SESSION}" in
-      i3)
-        i3-msg exit
-        ;;
       awesome)
         awesome-client "awesome.quit()"
         ;;
