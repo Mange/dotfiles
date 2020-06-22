@@ -16,6 +16,7 @@ local keys = {}
 
 -- Readable names for mouse buttons
 keys.left_click = 1
+keys.middle_click = 2
 keys.right_click = 3
 keys.scroll_up = 4
 keys.scroll_down = 5

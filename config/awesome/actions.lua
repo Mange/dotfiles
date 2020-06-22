@@ -241,4 +241,20 @@ function actions.toggle_focus_tag()
   end
 end
 
+function actions.volume_change(amount)
+  return actions.spawn({"pulsemixer", "--change-volume", amount})
+end
+
+function actions.volume_mute_toggle()
+  return actions.spawn({"pulsemixer", "--toggle-mute"})
+end
+
+function actions.volume_tui()
+  return actions.spawn({"kitty", "pulsemixer"})
+end
+
+function actions.volume_gui()
+  return actions.spawn({"pavucontrol"})
+end
+
 return actions
