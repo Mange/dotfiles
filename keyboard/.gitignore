@@ -1,5 +1,2 @@
 *.json
 !anne-pro-base.json
-
-# Generated
-super_overlay.yml

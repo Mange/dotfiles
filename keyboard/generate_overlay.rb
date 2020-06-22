@@ -187,7 +187,7 @@ class Key # rubocop:disable Metrics/ClassLength
   ].each do |name|
     define_method("#{name}=") do |new_value|
       options["a"] = 0
-      instance_variable_set("@#{name}", new_value)
+      instance_variable_set("@#{name}", fix_spaces(new_value))
     end
   end
 
@@ -449,6 +449,25 @@ class Key # rubocop:disable Metrics/ClassLength
 
   def rstrip_newlines(str)
     str.sub(/\n+\z/, "")
+  end
+
+  # Keyboard layout renderer doesn't render spaces. Replacing spaces with
+  # non-breaking spaces causes them to render correctly again, but does not
+  # seem to be accounted for in some sort of "character width" count, so words
+  # will start to disappear outside of the keys. Place the same number of
+  # non-breaking spaces at the end of the string in order to offset this back
+  # again.
+  #
+  # In addition, for cases with long words we might also want the words to
+  # actually wrap, so also insert a Zero-Width-Space after each non-breaking
+  # space.
+  def fix_spaces(string)
+    return nil if string.nil?
+
+    zero_width_space = "​"
+    total_spaces = string.count(" ")
+
+    "#{string.gsub(' ', " #{zero_width_space}")}#{' ' * total_spaces}"
   end
 end
 
