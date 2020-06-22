@@ -36,14 +36,14 @@ local style = {
   font = "Fira Code 14",
   padding_horizontal = 10,
   padding_vertical = 5,
-  margin = 20,
-  color_header = "#83a598",
+  margin = 5,
+  color_header = "#cc241d",
   color_default = "#83a598",
   color_arrow = "#79740e",
   color_key = "#79740e",
   color_nested = "#cc241d",
   color_group = "#d3869b",
-  color_bg = "#28282877"
+  color_bg = "#282828cc"
 }
 
 local aliases = {
@@ -144,22 +144,25 @@ local function generate_keybind_widget(keybind, forced_width)
       widget = wibox.widget.textbox,
       markup = fg(style.color_key, key),
       align = "right",
+      ellipsize = "start",
       font = style.font
     },
     {
       widget = wibox.widget.textbox,
       markup = fg(style.color_arrow, " → "),
       align = "center",
+      ellipsize = "none",
       font = style.font
     },
     {
       widget = wibox.widget.textbox,
       markup = fg(color, desc.description),
       align = "left",
+      ellipsize = "end",
       font = style.font
     },
   }
-  w:ajust_ratio(2, 0.40, 0.1, 0.50)
+  w:ajust_ratio(2, 0.30, 0.10, 0.60)
 
   -- To be able to sort the widgets later
   w.sort_key = string.lower(desc.description)
@@ -193,7 +196,9 @@ local function generate_popup(title, keybindings)
 
   -- Calculate how many columns should be used
   -- TODO: This needs to happen on a per-screen basis.
-  local number_of_columns = 6 -- TODO: Calculate using key_width and screen's dimensions
+  -- For 1080p it seems like 5 columns is max.
+  -- For 1440p it seems like 6-7 columns is max.
+  local number_of_columns = 5 -- TODO: Calculate using key_width and screen's dimensions
 
   -- Create widget and add all the groups to it
   local popup_widget = wibox.layout.flex.vertical()
@@ -216,8 +221,8 @@ local function generate_popup(title, keybindings)
     -- Insert grid of all keys
     local grid = wibox.layout.grid.vertical(number_of_columns)
     grid.expand = true
-    grid.homogeneous = true
-    grid.spacing = 5
+    grid.homogeneous = false
+    grid.spacing = 0
     for _, w in ipairs(widgets) do
       grid:add(w)
     end
