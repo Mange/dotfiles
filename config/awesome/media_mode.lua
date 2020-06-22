@@ -13,37 +13,43 @@ local function pactl(command, sink, param)
   end
 end
 
+local function pactl_default(command, param)
+  return function()
+    awful.spawn({"pactl", command, "@DEFAULT_SINK@", param}, false)
+  end
+end
+
 local media_mode = which_keys.new_mode(
   "Media mode",
   {
     keybindings = {
       -- Playerctl
-      {{}, "h", playerctl("previous"), {description = "Previous", group = "Player"}},
-      {{}, "j", playerctl("play-pause"), {description = "Play/Pause", group = "Player"}},
-      {{}, "k", playerctl("play-pause"), {description = "Play/Pause", group = "Player"}},
-      {{}, "l", playerctl("next"), {description = "Next", group = "Player"}},
+      which_keys.key("h", "previous", playerctl("previous"), {group = "Player"}),
+      which_keys.key("j", "play-pause", playerctl("play-pause"), {group = "Player"}),
+      which_keys.key("k", "play-pause", playerctl("play-pause"), {group = "Player"}),
+      which_keys.key("l", "next", playerctl("next"), {group = "Player"}),
 
       -- Volume
-      {
-        {"Shift"}, "+",
-        pactl("set-sink-volume", "@DEFAULT_SINK@", "+5%"),
-        {description = "Volume +", group = "Volume"}
-      },
-      {
-        {}, "=",
-        pactl("set-sink-volume", "@DEFAULT_SINK@", "+5%"),
-        {description = "Volume +", group = "Volume"}
-      },
-      {
-        {}, "-",
-        pactl("set-sink-volume", "@DEFAULT_SINK@", "-5%"),
-        {description = "Volume -", group = "Volume"}
-      },
-      {
-        {}, "0",
-        pactl("set-sink-mute", "@DEFAULT_SINK@", "toggle"),
-        {description = "Mute toggle", group = "Volume"}
-      }
+      which_keys.key(
+        {{"Shift"}, "+"},
+        "vol +", pactl_default("set-sink-volume", "+5%"),
+        {group = "Volume", which_key_key = "+"}
+      ),
+      which_keys.key(
+        "=",
+        "vol +", pactl_default("set-sink-volume", "+5%"),
+        {group = "Volume"}
+      ),
+      which_keys.key(
+        "-",
+        "vol -", pactl_default("set-sink-volume", "-5%"),
+        {group = "Volume"}
+      ),
+      which_keys.key(
+        "0",
+        "toggle-mute", pactl_default("set-sink-mute", "toggle"),
+        {group = "Volume"}
+      ),
     },
     stop_key = {"Escape", "Enter", "Space", "q"},
     timeout = 5, -- seconds

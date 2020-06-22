@@ -330,6 +330,10 @@ function which_keys.new_chord(title, keygrabber_args)
 end
 
 local function split_combo(combo)
+  if type(combo) == "table" then
+    return combo[1], combo[2]
+  end
+
   local elems = gears.string.split(combo, "+")
   local key = table.remove(elems)
 
@@ -340,10 +344,17 @@ local function split_combo(combo)
   return elems, key
 end
 
-function which_keys.key(combo, name, action)
+function which_keys.key(combo, name, action, overrides)
   local modifiers, key = split_combo(combo)
+  local desc = {
+    description = name
+  }
 
-  return {modifiers, key, action, {description = name}}
+  if overrides ~= nil then
+    desc = gears.table.join(desc, overrides)
+  end
+
+  return {modifiers, key, action, desc}
 end
 
 function which_keys.key_nested(combo, name, keys)
