@@ -25,7 +25,7 @@ export GDK_SCALE=1
 echo Xft.dpi: 96 | xrdb -merge
 xrandr --dpi 96
 
-# Try to fix the screen setup before starting i3
+# Try to fix the screen setup before starting WM
 # This might help set sane defaults for programs starting up. Generally, I
 # might have a single HiDPI display connected but it might be turned off. That
 # does not mean that I want HiDPI on all other screens; I want it on no
