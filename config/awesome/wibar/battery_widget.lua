@@ -31,6 +31,7 @@ local function setup_service()
     local status = read_battery_data("status", "*l")
     awesome.emit_signal("mange:battery:update", {
       percent = capacity,
+      full = status == "Full",
       charging = status == "Charging",
       discharging = status == "Discharging",
     })
@@ -87,6 +88,7 @@ function battery_widget.new()
   local function update(data)
     widget.value = data.percent
     text.text = data.percent
+    widget.visible = not(data.full)
 
     if data.percent < 10 then
       widget.colors = { gruvbox.bright_red }
