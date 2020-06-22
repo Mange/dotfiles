@@ -114,7 +114,6 @@ brightnessctl
 dunst # libnotify server
 feh
 gucharmap
-i3-gaps # WM fork
 i3lock-color # Lockscreen (for xss-lock, etc.)
 kitty
 ktouch # I'm practicing touch typing
