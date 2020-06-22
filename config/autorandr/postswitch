@@ -1,6 +1,0 @@
-#!/usr/bin/sh
-
-if [ "$DESKTOP_SESSION" = "i3" ]; then
-  set-wallpaper
-  "${XDG_CONFIG_HOME:-$HOME/.config}/polybar/start.sh"
-fi
