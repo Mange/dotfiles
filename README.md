@@ -5,8 +5,7 @@ This is a repo of my settings and computer customization preferences.
 Quick summary of my stack:
 
 - **OS:** [Arch Linux][arch]
-- **Window manager:** [i3 WM][i3] ([i3-gaps fork][i3-gaps]) +
-  [polybar] (bars) + [picom] (compositor)
+- **Window manager:** [Awesome WM][awesome] + [picom] (compositor)
 - **Editor:** [Neovim]
 - **Shell:** [ZSH]
 - **Terminal emulator:** [kitty]
@@ -85,9 +84,7 @@ No warranty or guarantees are provided in case you run any code from this
 repository.
 
 [arch]: https://www.archlinux.org/
-[i3]: https://i3wm.org/
-[i3-gaps]: https://github.com/Airblader/i3
-[polybar]: https://github.com/jaagr/polybar
+[awesome]: https://awesomewm.org/
 [picom]: https://github.com/yshui/picom
 [Neovim]: https://neovim.io/
 [ZSH]: http://zsh.sourceforge.net/
