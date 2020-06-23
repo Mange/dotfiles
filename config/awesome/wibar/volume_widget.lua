@@ -18,7 +18,7 @@ local service
 local function spawn_watcher(instance)
   local cmd = [[
     sh -c '
-      pactl subscribe | grep --line-buffered -E "Event .change. on (sink|server) "
+      LC_ALL=C pactl subscribe | grep --line-buffered -E "Event .change. on (sink|server) "
     '
   ]]
   -- local cmd = {"pactl", "subscribe"}
