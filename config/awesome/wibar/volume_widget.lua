@@ -110,9 +110,10 @@ function volume_widget.new()
     valign = "center"
   }
 
+  -- Mirror text since the arcchart will be mirrored
   local text_on_bg = wibox.widget {
     widget = wibox.container.background,
-    text
+    wibox.container.mirror(text, { horizontal = true })
   }
 
   local widget = wibox.widget {
@@ -145,7 +146,8 @@ function volume_widget.new()
     )
   )
 
-  return widget
+  -- Mirror the widget, so that chart value increases clockwise
+  return wibox.container.mirror(widget, { horizontal = true })
 end
 
 return volume_widget
