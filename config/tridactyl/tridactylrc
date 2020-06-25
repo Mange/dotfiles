@@ -31,9 +31,9 @@ unbind --mode=ex <C-a>
 
 " {{{ Rewrite bad URLs
 " New reddit is bad
-autocmd DocStart www.reddit.com js tri.excmds.urlmodify("-t", "www", "old")
+autocmd DocStart https://www.reddit.com js tri.excmds.urlmodify("-t", "www", "old")
 " Mosquito nets won't make themselves
-autocmd DocStart www.amazon.co.uk js tri.excmds.urlmodify("-t", "www", "smile")
+autocmd DocStart https://www.amazon.co.uk js tri.excmds.urlmodify("-t", "www", "smile")
 " I totally never make this error
 autocmd DocStart hement.se js tri.excmds.urlmodify("-t", "hement", "hemnet")
 " }}}
