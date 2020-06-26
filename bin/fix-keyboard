@@ -7,15 +7,8 @@ programmable_keyboard=no
 case "$(hostname)" in
   morbidus)
     programmable_keyboard=yes
-    # Setup tablet, if plugged in
-    if xinput list --name-only | grep -q "Wacom Intuos S"; then
-      stylus="Wacom Intuos S Pen stylus"
-      pad="Wacom Intuos S Pad pad"
-      # Only draw on main screen
-      xsetwacom set "$stylus" MapToOutput HEAD-0
-      # Button 1: Undo
-      xsetwacom set "$pad" Button 1 "key +ctrl z -ctrl"
-    fi
+    ;;
+  krista)
     ;;
   bilquis)
     ;;
@@ -35,3 +28,6 @@ killall xcape 2>/dev/null; xcape -e 'Super_L=Escape'
 # Faster key repeat rate
 # 300ms until repeating, then 40 keys per second
 xset r rate 300 40
+
+# In case my wacom tablet is plugged in, configure it
+fix-wacom
