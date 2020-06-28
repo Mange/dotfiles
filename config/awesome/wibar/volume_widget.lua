@@ -142,6 +142,8 @@ function volume_widget.new()
       awful.button({}, keys.left_click, actions.volume_mute_toggle()),
       awful.button({}, keys.right_click, actions.volume_tui()),
       awful.button({}, keys.middle_click, actions.volume_gui()),
+      awful.button({}, keys.scroll_up, actions.volume_change("+5")),
+      awful.button({}, keys.scroll_down, actions.volume_change("-5")),
       awful.button({"shift"}, keys.right_click, actions.volume_gui())
     )
   )
