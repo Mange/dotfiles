@@ -21,9 +21,13 @@ filetype plugin indent on
 set modeline
 set modelines=5
 
-" Allow project-specific .vimrc
-set exrc
-set secure " Don't allow certain things in project RCs that are not owned by me
+" Dot not allow insecure .vimrc files in projects, but emulate something
+" better by always looking for a `<cwd>/.git/local.vim` file and sourcing it
+" via `after/project_settings.vim`.
+set noexrc
+" Don't allow certain things in project RCs that are not owned by me, in case
+" I ever enable exrc again at runtime.
+set secure
 
 " Set terminal/window title from current file.
 set title
