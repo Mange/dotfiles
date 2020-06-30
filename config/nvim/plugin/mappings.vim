@@ -258,6 +258,9 @@ let g:which_key_map.p.p = 'select-project'
 nmap <leader>pf :FZF<CR>
 let g:which_key_map.p.f = 'find-file'
 
+nmap <leader>pt :SmartSplit +terminal<CR>
+let g:which_key_map.p.t = 'split-terminal'
+
 " }}}
 
 " {{{ Leader +search
