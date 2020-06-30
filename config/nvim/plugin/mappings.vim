@@ -221,9 +221,9 @@ let g:which_key_map.g['/'] = 'fzf-commits'
 
 let g:which_key_map.g.c = {
       \ 'name' : '+create',
-      \ 'c' : ['Gcommit', 'commit'],
-      \ 'C' : ['Gcommit --all --verbose', 'commit-all'],
-      \ 'a' : ['Gcommit --amend --verbose', 'amend'],
+      \ 'c' : [':Gcommit', 'commit'],
+      \ 'C' : [':Gcommit --all --verbose', 'commit-all'],
+      \ 'a' : [':Gcommit --amend --verbose', 'amend'],
       \ }
 " }}}
 
