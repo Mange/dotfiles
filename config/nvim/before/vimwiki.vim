@@ -1,5 +1,19 @@
 let g:taskwiki_taskrc_location = '~/.config/taskwarrior/config'
 
+let g:vimwiki_key_mappings =
+\ {
+\   'all_maps': 0,
+\   'global': 0,
+\   'headers': 1,
+\   'text_objs': 1,
+\   'table_format': 1,
+\   'table_mappings': 1,
+\   'lists': 1,
+\   'links': 1,
+\   'html': 1,
+\   'mouse': 0,
+\ }
+
 let personal_wiki = {}
 let personal_wiki.path = '~/Documents/Wiki/Personal/'
 let personal_wiki.template_path = '~/Documents/Wiki/templates/personal/'
