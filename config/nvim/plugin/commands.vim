@@ -6,7 +6,7 @@ function! SplitOrFocus(fname)
         exe winnum . "wincmd w"
     else
         " Make new split as usual
-        exe "split " . a:fname
+        call SmartSplit(a:fname)
     endif
 endfunction
 command! -nargs=1 SplitOrFocus :call SplitOrFocus("<args>")
@@ -41,3 +41,14 @@ function! ClistToggle(...)
   endif
 endfunction
 command! -nargs=0 ClistToggle :call ClistToggle()
+
+let g:smartsplit_width = 80
+function! SmartSplit(args) abort
+  if winwidth('.') >= 2 * g:smartsplit_width
+    execute "vsplit " . a:args
+  else
+    execute "split " . a:args
+  endif
+endfunction
+
+command! -nargs=? -complete=file SmartSplit :call SmartSplit("<args>")
