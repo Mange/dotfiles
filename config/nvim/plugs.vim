@@ -53,14 +53,14 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'tommcdo/vim-exchange'
 Plug 'tpope/vim-abolish' " Smart S/re/repl/
 Plug 'tpope/vim-commentary'
-" Plug 'tpope/vim-endwise' " Conflicts with coc: https://github.com/tpope/vim-endwise/issues/22
+Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-speeddating' " CTRL-X/A works on dates
 Plug 'tpope/vim-surround'
 Plug 'vim-scripts/ZoomWin'
 
 """ Language server support, linting, etc.
-Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
+Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': { -> coc#util#install()}}
 Plug 'w0rp/ale'
 Plug 'sheerun/vim-polyglot'
 Plug 'calviken/vim-gdscript3'
