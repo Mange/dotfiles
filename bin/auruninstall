@@ -18,8 +18,16 @@ fi
 
 package_name=$1
 
+cache_dir=$(grep -E '^CacheDir' /etc/pacman.d/custom | tail -n 1 | cut -d '=' -f 2 | sed 's/^\s//; s/\s$//')
+cache_dir="${cache_dir:-/var/cache/pacman/custom}"
+
+if ! [ -d "$cache_dir" ]; then
+  echo "ERROR: Configured CacheDir does not exist: ${cache_dir}"
+  exit 1
+fi
+
 sudo pacman -Rs "$package_name"
 
 # If package could be removed, refresh package caches so it won't show up when
 # listing available packages anymore.
-repo-remove /var/cache/pacman/custom/custom.db.tar "$package_name" && sudo pacman -Sy
+repo-remove "${cache_dir}/custom.db.tar" "$package_name" && sudo pacman -Sy
