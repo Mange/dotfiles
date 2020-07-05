@@ -70,3 +70,6 @@ fortune-mod-vimtips
 
 # Dictionaries
 hunspell-sv
+
+# Private VPN
+tailscale-bin
