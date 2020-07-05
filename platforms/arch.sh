@@ -146,13 +146,8 @@ uninstall-pacman() {
     echo "$red"
 
     run-command-quietly "" < <(
-      echo "$to_uninstall" | $PACMAN -Rs - 2>&1
+      ../bin/auruninstall "$to_uninstall"
     )
-
-    # Remove from aur repo; in case it was there.
-    for pkg in $to_uninstall; do
-      repo-remove -q /var/cache/pacman/custom/custom.db.tar "$pkg"
-    done
 
     set -e
   else
