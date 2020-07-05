@@ -16,15 +16,16 @@ nvm
 bitwarden-cli     # CLI for password manager
 bitwarden-rofi    # Bitwarden in Rofi
 discord-canary    # All-in-one voice and text chat for gamers that's free and secure.
+firefox-tridactyl-native # Native plugin for Firefox Tricactyl
 git-delta         # Better diff tool for Git
 gron-bin          # transforms JSON into discrete assignments to make it easier to grep.
 http-prompt       # An interactive HTTP command-line client
+pastel
 rvm               # RVM: Ruby Version Manager
 slack-desktop     # Slack Desktop (Beta) for Linux
 spotify           # A proprietary music streaming service
-spotifyd-full     # Headless FLOSS version of Spotify
 spotify-tui       # TUI frontent for Spotify Connect / spotifyd
-firefox-tridactyl-native # Native plugin for Firefox Tricactyl
+spotifyd-full     # Headless FLOSS version of Spotify
 
 # Fork of picom with better blurring and rounded corners
 picom-ibhagwan-git

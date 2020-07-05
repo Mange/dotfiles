@@ -61,7 +61,6 @@ hub
 jq
 nmap
 parallel
-pastel
 prettyping
 pulsemixer
 ripgrep
@@ -181,13 +180,19 @@ plasma-meta # Install basics of the KDE environment (themes, daemons, etc.)
 # in here and keep the list up to date)
 
 # Some package groups of useful software. (Mainly trying to avoid kdegames)
-kdebase       # Base software
-kdeadmin      # Administrative software
-kdepim        # PIM software
-kdegraphics   # Graphics/images/colors/video software
-kdesdk        # Development software
-kdeutils      # Utilities
-kdenetwork    # Networked software
+# :read! pacman -Ss 'kde-.*-meta'
+# kde-accessibility-meta # Meta package for KDE accessibility applications
+# kde-applications-meta # Meta package for KDE Applications
+# kde-education-meta # Meta package for KDE education applications
+# kde-games-meta # Meta package for kDE games
+kde-graphics-meta # Meta package for KDE graphics applications
+kde-multimedia-meta # Meta package for KDE multimedia applications
+kde-network-meta # Meta package for KDE network applications
+kde-pim-meta # Meta package for KDE PIM applications
+kde-sdk-meta # Meta package for KDE SDK applications
+kde-system-meta # Meta package for KDE system applications
+kde-utilities-meta # Meta package for KDE utilities applications
+# kde-development-environment-meta # Metapackage to install a full KDE development environment
 
 qt5ct # Helps enabling QT integration into non-kde desktop environments
 oxygen-icons
