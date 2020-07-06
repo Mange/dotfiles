@@ -2,6 +2,32 @@
 # Personal
 ##########################
 
+IMAPAccount me@mange.dev
+  Host mail.mange.dev
+  User me@mange.dev
+  PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/Security/mbsync_mange_dev.gpg"
+  SSLType IMAPS
+  CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+IMAPStore mange-remote
+  Account me@mange.dev
+
+MaildirStore mange-local
+  Path ~/Mail/mange/
+  Inbox ~/Mail/mange/Inbox
+  SubFolders Verbatim
+
+Channel mange
+  Master :mange-remote:
+  Slave :mange-local:
+  Patterns *
+  Create Slave
+  SyncState *
+
+##########################
+# GMail
+##########################
+
 IMAPAccount magnus.bergmark@gmail.com
   Host imap.gmail.com
   User magnus.bergmark@gmail.com
