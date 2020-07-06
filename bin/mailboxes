@@ -6,14 +6,18 @@ source "${HOME}/.config/shells/common"
 mbsync_config="${XDG_CONFIG_HOME:-$HOME/.config}/isync/mbsyncrc"
 mail_dir="$HOME/Mail"
 
-readarray -t mailboxes < \
-  <(
-    find "${mail_dir}/" \
-      -mindepth 1 -maxdepth 1 \
-      -not -name '.*' \
-      -type d \
-      -exec basename "{}" ";"
-  )
+if [[ -f ~/Mail/list ]]; then
+  readarray -t mailboxes < ~/Mail/list
+else
+  readarray -t mailboxes < \
+    <(
+      find "${mail_dir}/" \
+        -mindepth 1 -maxdepth 1 \
+        -not -name '.*' \
+        -type d \
+        -exec basename "{}" ";"
+    )
+fi
 
 print_usage() {
   cat <<USAGE

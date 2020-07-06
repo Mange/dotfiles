@@ -84,6 +84,10 @@ function wibar.create_for_screen(s)
             command = {polybar_dir .. "clock"},
             interval = 30,
           }),
+          polybar_wrapper({
+            command = {polybar_dir .. "workrave"},
+            interval = 0,
+          }),
         },
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
