@@ -5,7 +5,6 @@
 #   - Custom highlighting of message bodies (emails, bold text, backticks, etc.)
 #   - GPG encryption, signing, etc.
 #   - Shortcuts to open/collapse threads
-#   - Shortcuts to archive and move to next email
 #   - Replicate more shortcuts from gmail web interface
 #   - Integrate notmuch
 
@@ -70,11 +69,12 @@ startup-hook 'exec sync-mailbox'
 shutdown-hook 'exec sync-mailbox'
 
 bind index,pager i noop
-macro index,pager i1 '<sync-mailbox><enter-command>source ~/.config/neomutt/accounts/gmail.muttrc<enter><change-folder>!<enter>;<check-stats>' "Switch to gmail"
-macro index,pager i2 '<sync-mailbox><enter-command>source ~/.config/neomutt/accounts/devbox.muttrc<enter><change-folder>!<enter>;<check-stats>' "Switch to devbox"
+macro index,pager i1 '<sync-mailbox><enter-command>source ~/.config/neomutt/accounts/mange.muttrc<enter><change-folder>!<enter>;<check-stats>' "Switch to mange"
+macro index,pager i2 '<sync-mailbox><enter-command>source ~/.config/neomutt/accounts/gmail.muttrc<enter><change-folder>!<enter>;<check-stats>' "Switch to gmail"
+macro index,pager i3 '<sync-mailbox><enter-command>source ~/.config/neomutt/accounts/devbox.muttrc<enter><change-folder>!<enter>;<check-stats>' "Switch to devbox"
 
 # Default to private email
-source ~/.config/neomutt/accounts/gmail.muttrc
+source ~/.config/neomutt/accounts/mange.muttrc
 
 # Viewing email
 macro index,pager \cb "<pipe-message> urlscan<Enter>" "call urlscan to extract URLs out of a message"
