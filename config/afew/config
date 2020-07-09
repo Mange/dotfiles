@@ -7,18 +7,20 @@
 
 [FolderNameFilter]
 maildir_separator = /
-folder_blacklist = archive
+folder_blacklist = archive Archive
 
 [Filter]
 message = 'Removing the "new" tags'
 tags = -new
 
 [MailMover]
-folders = gmail/inbox gmail/important gmail/archive devbox/inbox devbox/important devbox/archive
+folders = mange/Inbox gmail/inbox gmail/important gmail/archive devbox/inbox devbox/important devbox/archive
 max_age = 30
 
 ; Required for mbsync
 rename = True
+
+mange/Inbox = 'NOT tag:inbox':mange/Archive
 
 gmail/inbox = 'NOT tag:inbox':gmail/archive
 gmail/important = 'NOT tag:important':gmail/archive
