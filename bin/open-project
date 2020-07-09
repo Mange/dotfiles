@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 set -e
-projectspath=~/Projects
+projectspath=~/Projects/
 
 selected_path=$(
-  find "$projectspath" -type d -and -name '.git' -printf '%C@ %P\n' | \
+  find "$projectspath" -maxdepth 3 -type d -and -name '.git' -printf '%C@ %P\n' | \
     sed 's#/.git##' | \
     finder --numeric-reversed
 )
