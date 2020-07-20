@@ -159,7 +159,7 @@ pages:
           - shortcut: s
             title: Suspend
             mode: exec
-            command: "udiskie-umount --all && systemctl suspend"
+            command: "udiskie-umount --all && systemctl suspend-then-hibernate"
 
           - shortcut: h
             title: Hibernate
