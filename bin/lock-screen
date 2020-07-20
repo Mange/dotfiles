@@ -101,8 +101,8 @@ if [[ $is_sleep == "no" ]]; then
   [ "$previous_player_status" = "Playing" ] && playerctl play
 fi
 
-# Show reminder, if it was more than 1 hour since last locked
-one_hour_ago=$(date -d "1 hour ago" +%s)
-if [ "$locked_at_timestamp" -lt "$one_hour_ago" ]; then
+# Show reminder, if it was more than 20 minutes since last locked
+twenty_minutes_ago=$(date -d "20 minutes ago" +%s)
+if [ "$locked_at_timestamp" -lt "$twenty_minutes_ago" ]; then
     startup-reminder
 fi
