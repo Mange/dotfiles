@@ -282,12 +282,58 @@ awful.rules.rules = {
           "AlarmWindow",  -- Thunderbird's calendar.
           "ConfigManager",  -- Thunderbird's about:config.
           "pop-up",       -- e.g. Google Chrome's (detached) Developer Tools.
-        }
-      }, properties = { floating = true }},
+        },
+        title = {
+          "youtube pip", -- ytpip
+        },
+      }, properties = { floating = true, size_hints_honor = true }},
 
-    -- Set Firefox to always map on the tag named "2" on screen 1.
-    -- { rule = { class = "Firefox" },
-    --   properties = { screen = 1, tag = "2" } },
+    {
+      rule = {role = "GtkFileChooserDialog"},
+      properties = {
+        placement = utils.placement_centered(0.4),
+      },
+    },
+
+    -- Web clients
+    {
+      rule_any = {
+        class = {"Firefox"},
+      },
+      properties = { tag = tags[3] },
+    },
+
+    -- Media clients
+    {
+      rule_any = {
+        class = {"spotify-tui", "[Ss]potify"},
+      },
+      properties = { tag = tags[9] },
+    },
+
+    -- Game clients
+    {
+      -- Most Steam windows (friends list, "Activate a new product", "An update
+      -- is available", etc.) should be floating…
+      rule_any = {class = {"^[Ss]team$"}, title = {"^[Ss]team$"}},
+      -- …but not the main window
+      exclude_any = {}, -- TODO: Identify the main window
+      properties = { floating = true, size_hints_honor = true },
+    },
+    {
+      rule_any = {
+        class = {"^[Ss]team$", "^Steam Keyboard$"},
+      },
+      properties = { tag = tags[8] },
+    },
+
+    -- Chat clients
+    {
+      rule_any = {
+        class = {"Slack", "TelegramDesktop", "discord"},
+        properties = { tag = tags[10] },
+      },
+    },
 }
 dropdown.add_rules(awful.rules.rules)
 -- }}}
@@ -298,6 +344,19 @@ client.connect_signal("manage", function (c)
     -- Set the windows at the slave,
     -- i.e. put it at the end of others instead of setting it master.
     -- if not awesome.startup then awful.client.setslave(c) end
+
+    -- Some clients, most notably Spotify, will not set a class at startup and
+    -- will instead assign it later. Detect when new clients are missing a
+    -- class and set up an event listener to them to react when a class is
+    -- later assigned. Minimize the client initially to prevent screen flashes
+    -- until it is ready.
+    if c.class == nil then
+      c.minimized = true
+      c:connect_signal("property::class", function()
+        c.minimized = false
+        awful.rules.apply(c)
+      end)
+    end
 
     if awesome.startup
       and not c.size_hints.user_position

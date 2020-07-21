@@ -1,15 +1,8 @@
 local awful = require("awful")
 
+local utils = require("utils")
+
 local dropdown = {}
-
-local function dropdown_placement(c)
-  local f =
-    awful.placement.scale +
-    awful.placement.no_offscreen +
-    awful.placement.centered
-
-  f(c, {to_percent = 0.5})
-end
 
 function dropdown.add_rules(rules)
   table.insert(
@@ -18,7 +11,7 @@ function dropdown.add_rules(rules)
       rule_any = {class = {"dropdown_"}},
       properties = {
         floating = true,
-        placement = dropdown_placement,
+        placement = utils.placement_centered(0.5),
       }
     }
   )

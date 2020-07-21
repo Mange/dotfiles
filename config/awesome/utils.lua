@@ -73,4 +73,15 @@ function utils.client_has_tag(c, t)
   return false
 end
 
+function utils.placement_centered(scale)
+  local f =
+    awful.placement.scale +
+    awful.placement.no_offscreen +
+    awful.placement.centered
+
+  return function(c)
+    f(c, {to_percent = scale})
+  end
+end
+
 return utils
