@@ -196,8 +196,8 @@ function actions.tydra()
     })
 end
 
-function actions.screenshot(type)
-  return actions.spawn({"screenshot", type})
+function actions.screenshot(...)
+  return actions.spawn({"screenshot", ...})
 end
 
 function actions.dismiss_notification()

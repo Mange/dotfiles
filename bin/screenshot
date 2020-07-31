@@ -4,16 +4,29 @@ set -e
 filename="$HOME/Media/Pictures/Screenshot $(date +"%Y-%m-%d %H:%M:%S").png"
 
 case $1 in
+  --help)
+    cat <<USAGE
+Usage: $0 [area|current-window|full] [maim options]
+
+Saves a screenshot to $(dirname "$filename").
+USAGE
+    exit 0
+    ;;
   area)
-    maim --select --shader=boxzoom "$filename"
+    shift
+    maim --select --shader=boxzoom "$@" "$filename"
     ;;
   current-window | current_window | current)
-    maim --window="$(xdotool getactivewindow)" "$filename"
+    shift
+    maim --window="$(xdotool getactivewindow)" "$@" "$filename"
     ;;
   full | "")
-    maim "$filename"
+    shift
+    maim "$@" "$filename"
     ;;
   *)
     echo "Invalid variant"
     exit 1
 esac
+
+notify-send --icon "$filename" "Screenshot taken" "Saved as $filename"
