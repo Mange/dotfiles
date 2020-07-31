@@ -3,7 +3,7 @@
 
 [ListMailsFilter]
 
-[ArchiveSentMailsFilter]
+; [ArchiveSentMailsFilter]
 
 [FolderNameFilter]
 maildir_separator = /

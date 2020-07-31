@@ -135,9 +135,14 @@ index_and_tag_emails() {
   # …and auto-tag them
   verbose afew --tag --new --verbose
 
-  # Emails that are no longer in inbox should get the inbox tag removed
-  verbose notmuch tag -inbox -- "path:${box}/**" AND tag:inbox AND NOT "path:${box}/inbox/**"
-  verbose notmuch tag -Inbox -- "path:${box}/**" AND tag:Inbox AND NOT "path:${box}/Inbox/**"
+  # Emails that are no longer in inbox should get the inbox tag removed.
+  # Since I might be sending email from my own accounts to myself, it could
+  # also be tagged as sent at the same time. Watch out for that.
+  # For example: Sending from Gmail to Mange. The email would then end up in
+  # both `gmail` (under `sent`) and under `mange` (under `Inbox`). It will have
+  # tags `gmail`, `mange`, `Inbox`, and `sent`.
+  verbose notmuch tag -inbox -- "path:${box}/**" AND tag:inbox AND NOT "path:${box}/inbox/**" AND NOT '(tag:sent OR tag:Sent)'
+  verbose notmuch tag -Inbox -- "path:${box}/**" AND tag:Inbox AND NOT "path:${box}/Inbox/**" AND NOT '(tag:sent OR tag:Sent)'
 
   # Move files on disk to match their tags. This enables the changes to be
   # synced to the server.
