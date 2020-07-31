@@ -266,11 +266,12 @@ fortune-mod # adds the fortunes command
 # extra collections of fortunes are installed via aur
 
 # Mail, etc.
+afew # Notmuch tagger
 isync # Email sync via IMAP
+msmtp # For email sending
 neomutt # Email client
 notmuch # Email indexer and search engine
 notmuch-vim # Email client (does not work with rvm, it appears)
-afew # Notmuch tagger
 urlscan # Pick URLs from HTML
 w3m # For HTML email reading
 
