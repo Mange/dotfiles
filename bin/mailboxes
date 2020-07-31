@@ -137,6 +137,7 @@ index_and_tag_emails() {
 
   # Emails that are no longer in inbox should get the inbox tag removed
   verbose notmuch tag -inbox -- "path:${box}/**" AND tag:inbox AND NOT "path:${box}/inbox/**"
+  verbose notmuch tag -Inbox -- "path:${box}/**" AND tag:Inbox AND NOT "path:${box}/Inbox/**"
 
   # Move files on disk to match their tags. This enables the changes to be
   # synced to the server.

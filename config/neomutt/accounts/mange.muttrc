@@ -19,4 +19,4 @@ set postponed = "+Drafts"
 set trash = "+Trash"
 set record = "+Sent"
 
-macro index,pager e "<clear-flag>N<tag-prefix><save-message>+archive\n<next-undeleted><sync-mailbox>" "Archive + mark as read"
+macro index,pager e "<clear-flag>N<tag-prefix><save-message>+Archive\n<next-undeleted><sync-mailbox>" "Archive + mark as read"

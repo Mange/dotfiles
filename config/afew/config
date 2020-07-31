@@ -20,7 +20,7 @@ max_age = 30
 ; Required for mbsync
 rename = True
 
-mange/Inbox = 'NOT tag:inbox':mange/Archive
+mange/Inbox = 'NOT tag:Inbox':mange/Archive
 
 gmail/inbox = 'NOT tag:inbox':gmail/archive
 gmail/important = 'NOT tag:important':gmail/archive
