@@ -1,0 +1,11 @@
+[ActivityManager]
+_k_friendly_name=Aktivitetshanterare
+switch-to-activity-71771591-11a5-4839-8034-083618ef3d2b=none,none,Byt till aktivitet "Förval"
+
+[krunner.desktop]
+RunClipboard=none,none,Kör kommando med klippbordets innehåll
+_k_friendly_name=Kör program
+
+[systemsettings.desktop]
+_k_friendly_name=Systeminställningar
+_launch=none,none,Systeminställningar
