@@ -50,6 +50,10 @@ function actions.client_toggle_fullscreen(c)
   c:raise()
 end
 
+function actions.client_minimize(c)
+  c.minimized = true
+end
+
 function actions.client_toggle_sticky(c)
   c.ontop = not c.ontop
 end
@@ -60,6 +64,19 @@ end
 
 function actions.client_move_other_screen(c)
   c:move_to_screen()
+end
+
+-- Minimized clients cannot be focused, so not possible to bind a key to
+-- unminimize that particular client.
+-- Workaround to target specific window: `select_window` action.
+function actions.unminimize_random()
+  return function()
+    local c = awful.client.restore()
+    if c then
+      client.focus = c
+      c:raise()
+    end
+  end
 end
 
 function actions.run_or_raise(cmd, matcher)
@@ -181,6 +198,14 @@ function actions.rofi()
       "-show", "combi",
       "-modi", "combi,run,window,emoji",
       "-combi-modi", "drun,window,emoji"
+    })
+end
+
+function actions.select_window()
+  return actions.spawn({
+      "rofi",
+      "-show", "window",
+      "-modi", "window,windowcd"
     })
 end
 

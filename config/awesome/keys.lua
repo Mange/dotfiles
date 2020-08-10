@@ -30,6 +30,7 @@ keys.awesome_chord = which_keys.new_chord(
     keybindings = {
       which_keys.key("space", "rofi", actions.rofi()),
       which_keys.key("Shift+space", "tydra", actions.tydra(), {which_key_key = "S-space"}),
+      which_keys.key("w", "window-select", actions.select_window()),
       which_keys.key("e", "emoji-selector", actions.emoji_selector()),
       which_keys.key("P", "passwords", actions.passwords_menu()),
       which_keys.key("f", "toggle-focus-mode", actions.toggle_focus_tag()),
@@ -103,6 +104,7 @@ keys.global = gears.table.join(
     awful.key({modkey, "Shift"}, "j", actions.move_focused_client(1), {description = "Move next", group = "Client"}),
     awful.key({modkey, "Shift"}, "k", actions.move_focused_client(-1), {description = "Move previous", group = "Client"}),
     awful.key({modkey}, "u", awful.client.urgent.jumpto, {description = "Jump to urgent", group = "Client"}),
+    awful.key({modkey, "Shift"}, "n", actions.unminimize_random(), {description = "Unminimize some client", group = "Client"}),
 
     -- Group: Screen
     awful.key({modkey}, "Escape", actions.focus_screen(1), {description = "Next screen", group = "Screen"}),
@@ -247,6 +249,7 @@ end
 keys.clientkeys = gears.table.join(
     -- Basics
     awful.key({modkey, "Shift"}, "q", actions.client_close, {description = "Kill client", group = "Client"}),
+    awful.key({modkey}, "n", actions.client_minimize, {description = "Minimize client", group = "Client"}),
 
     -- Toggles
     awful.key({modkey}, "f", actions.client_toggle_fullscreen, {description = "Fullscreen toggle", group = "Client"}),
