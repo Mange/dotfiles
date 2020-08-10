@@ -36,13 +36,47 @@ normal_wait() {
 
 i3lock_options=(
   "--pass-media-keys"
+  "--pass-screen-keys"
+  "--pass-power-keys"
+  "--pass-volume-keys"
+
+  "--indicator"
   "--clock"
+  "--datestr=Type password to unlock…"
   "--show-failed-attempts"
+  "--veriftext="
+  "--wrongtext="
+
+  "--date-align=1"
+  "--time-align=1"
+  "--timepos=x+43:h-70"
+  "--datepos=x+43:h-45"
+  "--indpos=x+280:h-70"
+  "--radius=20"
+  "--ring-width=3"
+
+  "--color=00000066"
+  "--insidecolor=00000000"
+  "--ringcolor=ffffffff"
+  "--line-uses-inside"
+  "--keyhlcolor=d23c3dff" # #d23c3d
+  "--bshlcolor=d23c3dff"  # #d23c3d
+  "--separatorcolor=00000000"
+  "--insidevercolor=fecf4dff" # #fecf4d
+  "--insidewrongcolor=d23c3dff" # #d23c3d
+  "--ringvercolor=ffffffff"
+  "--ringwrongcolor=ffffffff"
+  #"--textcolor=ffffffff"
   "--timecolor=ffffffff"
   "--datecolor=ffffffff"
-  "--datestr=%A, %d %B %Y"
-  "--composite"
 )
+
+if [[ $1 == "--debug" ]]; then
+  printf "i3lock "
+  printf '"%s" ' "${i3lock_options[@]}"
+  printf "\n"
+  exit 0
+fi
 
 is_sleep=no
 
@@ -51,18 +85,6 @@ is_sleep=no
 # If not, it's a standard lock which is a lot simpler.
 if [ -e "/dev/fd/${XSS_SLEEP_LOCK_FD:--1}" ]; then
   is_sleep=yes
-fi
-
-background_image=
-if hash maim 2>/dev/null; then
-  # Make a blurred screenshot
-  background_image="$(blurred-screenshot)"
-fi
-
-if [ -n "$background_image" ] && [ -f "$background_image" ]; then
-  i3lock_options+=("--image=$background_image")
-else
-  i3lock_options+=("--blur=2")
 fi
 
 #
