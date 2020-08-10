@@ -324,11 +324,38 @@ local function split_combo(combo)
   return elems, key
 end
 
+-- Helper method to generate proper keygrabber keybind parameters from
+-- something a bit more compact.
+--
+-- Examples:
+--  ("a", "foo", func)
+--    -> { {}, "a", func, { description = "foo" } }
+--
+--  ("Ctrl+b", "bar", func, {baz = true})
+--    -> { {"Ctrl"}, "b", func, { description = "bar", baz = true } }
+--
+--  ("C", "car", func)
+--    -> { {"Shift"}, "C", func, { description = "car" } }
+--
+--  ("D", "dar", func, { which_key_sticky = true })
+--    -> { {"Shift"}, "D", func, { description = "@dar", which_key_sticky = true } }
+--
 function which_keys.key(combo, name, action, overrides)
   local modifiers, key = split_combo(combo)
   local desc = {
     description = name
   }
+
+  -- Auto-detect shifted keys. E.g. when a key is "Ctrl-Q", then render that as
+  -- "Ctrl-Q" but register it as {{"Ctrl", "Shift"}, "Q"}.
+  -- Don't register characters that are the same in upper/lowercase, like "-".
+  if string.len(key) == 1 and string.upper(key) == key and string.lower(key) ~= key then
+    desc.which_key_key = desc.which_key_key or combo
+    if not gears.table.hasitem(modifiers, "Shift") then
+      modifiers = gears.table.join(modifiers, {"Shift"})
+    end
+    key = string.upper(key)
+  end
 
   if overrides ~= nil then
     desc = gears.table.join(desc, overrides)
