@@ -3,7 +3,6 @@
 function icon() {
   local info="$1"
   local icon
-  info=$(echo "info ${device_id}" | bluetoothctl)
 
   # Headsets use the icon "audio-card", but I want a headset. Headsets lists a
   # "Headset" profile on them, though.
