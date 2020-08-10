@@ -57,6 +57,28 @@ keys.awesome_chord = which_keys.new_chord(
           which_keys.key("p", "project", actions.spawn("open-project")),
       }),
 
+      which_keys.key_nested("l", "layout", {
+          which_keys.key("[", "previous",       actions.previous_layout(), {which_key_sticky = true}),
+          which_keys.key("]", "next",           actions.next_layout(), {which_key_sticky = true}),
+
+          which_keys.key("f", "floating",       actions.set_layout(awful.layout.suit.floating)),
+          which_keys.key("l", "tile",           actions.set_layout(awful.layout.suit.tile)),
+          which_keys.key("h", "tile-left",      actions.set_layout(awful.layout.suit.tile.left)),
+          which_keys.key("j", "tile-bottom",    actions.set_layout(awful.layout.suit.tile.bottom)),
+          which_keys.key("k", "tile-top",       actions.set_layout(awful.layout.suit.tile.top)),
+          which_keys.key("n", "fair",           actions.set_layout(awful.layout.suit.fair)),
+          which_keys.key("m", "fair-horiz",     actions.set_layout(awful.layout.suit.fair.horizontal)),
+          which_keys.key("u", "spiral",         actions.set_layout(awful.layout.suit.spiral)),
+          which_keys.key("b", "bsp",            actions.set_layout(awful.layout.suit.spiral.dwindle)),
+          which_keys.key("i", "max",            actions.set_layout(awful.layout.suit.max)),
+          which_keys.key("I", "max-fullscreen", actions.set_layout(awful.layout.suit.max.fullscreen)),
+          which_keys.key("o", "magnifier",      actions.set_layout(awful.layout.suit.magnifier)),
+          which_keys.key("w", "corner-nw",      actions.set_layout(awful.layout.suit.corner.nw)),
+          which_keys.key("W", "corner-sw",      actions.set_layout(awful.layout.suit.corner.sw)),
+          which_keys.key("e", "corner-ne",      actions.set_layout(awful.layout.suit.corner.ne)),
+          which_keys.key("E", "corner-se",      actions.set_layout(awful.layout.suit.corner.se)),
+      }),
+
       which_keys.key_nested("s", "screenshot", {
           which_keys.key("s", "specific-area", actions.screenshot("area")),
           which_keys.key("a", "all-screen", actions.screenshot("full")),

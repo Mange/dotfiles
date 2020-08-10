@@ -41,6 +41,18 @@ function actions.next_layout()
   end
 end
 
+function actions.previous_layout()
+  return function()
+    awful.layout.inc(-1)
+  end
+end
+
+function actions.set_layout(layout)
+  return function()
+    awful.layout.set(layout)
+  end
+end
+
 function actions.client_close(c)
   c:kill()
 end
