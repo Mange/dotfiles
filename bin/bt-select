@@ -95,6 +95,7 @@ if [[ -n $selected_index ]]; then
       "Disconnecting" \
       "Disconnecting from ${selected_name}"
   else
+    echo "power on" | bluetoothctl
     echo "connect $selected_id" | bluetoothctl
     notify-send \
       --app-name=bt-select \
