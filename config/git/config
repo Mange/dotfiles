@@ -8,8 +8,8 @@
 # That's me!
 [user]
   name = Magnus Bergmark
-  email = magnus.bergmark@gmail.com
-  signingkey = 4D8E0309
+  email = me@mange.dev
+  signingkey = 2EA6F4AA110A1BF2227519A90443C69F6F022CDE
 [github]
   user = Mange
 
