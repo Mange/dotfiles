@@ -3,18 +3,6 @@
 -- This is trying to replicate Emacs' Hydra/ShowKey / Vim's which-key.
 --
 -- Used like this:
--- local media_mode = which_keys.new_mode(
---   "My mode",
---   {
---    keybindings = {
---      {{}, "k", playerctl("play-pause"), {description = "Play/pause", group = "Player"}}
---    },
---    stop_key = ["Escape"],
---    timeout = 5,
---  }
--- )
--- media_mode.enter()
---
 -- local media_chord = which_keys.new_chord(
 --   "Media",
 --   {
@@ -270,40 +258,27 @@ local function new(instance)
   return instance
 end
 
--- Create a new which_key mode/layer with a given title. The keygrabber_args
--- will be passed to awful.keygrabber.
--- A mode will be active until Escape is pressed.
-function which_keys.new_mode(title, keygrabber_args)
-  local instance
-  instance = {
-    grabber = awful.keygrabber(
-      gears.table.join(
-        keygrabber_args,
-        {
-          stop_callback = function() instance.hide_popup() end,
-        }
-      )
-    ),
-    popup = generate_popup(title, keygrabber_args.keybindings)
-  }
-
-  return new(instance)
-end
-
 -- Create a new which_key chord with a given title. The keygrabber_args
 -- will be passed to awful.keygrabber.
--- A chord will exit on the first keypress.
+-- A chord will exit when a non-sticky key is pressed.
 function which_keys.new_chord(title, keygrabber_args)
   local instance = {}
   local keybindings = {}
 
   for i, binding in ipairs(keygrabber_args.keybindings) do
+    local is_sticky = false
+    local desc = binding[#binding]
+    if type(desc) == "table" then
+      is_sticky = desc.which_key_sticky or false
+    end
+
     local decorated_binding = {}
-    -- TODO: Modify the action function to call the original function, then stop the key grabber.
     for j, elem in ipairs(binding) do
       if type(elem) == "function" then
         decorated_binding[j] = function(...)
-          instance.stop()
+          if not is_sticky then
+            instance.stop()
+          end
           return elem(...)
         end
       else
@@ -357,6 +332,11 @@ function which_keys.key(combo, name, action, overrides)
 
   if overrides ~= nil then
     desc = gears.table.join(desc, overrides)
+
+    -- Sticky keys should have a "@" in front of their descriptions.
+    if overrides.which_key_sticky then
+      desc.description = "@" .. desc.description
+    end
   end
 
   return {modifiers, key, action, desc}
@@ -367,7 +347,8 @@ function which_keys.key_nested(combo, name, keys)
   local chord = which_keys.new_chord(name, {keybindings = keys})
 
   return {
-    modifiers, key,
+    modifiers,
+    key,
     chord.enter,
     {
       description = "+" .. name,
