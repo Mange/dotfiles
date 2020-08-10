@@ -371,11 +371,6 @@ client.connect_signal("focus", function(c) c.border_color = beautiful.border_foc
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
 
--- {{{ Components
-local config_dir = awful.util.getdir("config")
-dofile(config_dir .. "/titlebars.lua")
--- }}}
-
 -- {{{ Startup apps
 utils.on_first_start(function()
   awful.spawn.once("dynamic-startup")
