@@ -44,12 +44,14 @@ local function setup_service()
       {"pulsemixer", "--get-volume", "--get-mute"},
       function(stdout)
         local volume_left, volume_right, is_mute = string.match(stdout, "(%d)%s+(%d+)%s+(%d+)")
-
-        awesome.emit_signal("mange:volume:update", {
-          volume_left = tonumber(volume_left),
-          volume_right = tonumber(volume_right),
-          is_mute = (is_mute == "1"),
-        })
+        -- If command fails, don't emit signal.
+        if volume_left ~= nil then
+          awesome.emit_signal("mange:volume:update", {
+            volume_left = tonumber(volume_left),
+            volume_right = tonumber(volume_right),
+            is_mute = (is_mute == "1"),
+          })
+        end
       end
     )
   end
