@@ -332,8 +332,8 @@ awful.rules.rules = {
     {
       rule_any = {
         class = {"Slack", "TelegramDesktop", "discord"},
-        properties = { tag = tags[10] },
       },
+      properties = { tag = tags[10] },
     },
 }
 dropdown.add_rules(awful.rules.rules)
