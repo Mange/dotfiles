@@ -3,6 +3,7 @@
   "diagnostic.enable": false,
   "diagnostic.displayByAle": true,
   "suggest.enablePreview": true,
+  "suggest.minTriggerInputLength": 6,
   "solargraph.hover": true,
   "solargraph.symbols": true,
   "solargraph.useBundler": false,

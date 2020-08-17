@@ -12,10 +12,10 @@ set signcolumn=yes
 "
 " Disable ultisnips from taking tab away from us
 let g:UltiSnipsExpandTrigger = "<nop>"
-let g:UltiSnipsJumpForwardTrigger = '<TAB>'
-let g:UltiSnipsJumpBackwardTrigger = '<S-TAB>'
-let g:coc_snippet_next = '<TAB>'
-let g:coc_snippet_prev = '<S-TAB>'
+let g:UltiSnipsJumpForwardTrigger = '<C-j>'
+let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
+let g:coc_snippet_next = '<C-j>'
+let g:coc_snippet_prev = '<C-k>'
 
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
