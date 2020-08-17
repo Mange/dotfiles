@@ -109,6 +109,7 @@ keys.global = gears.table.join(
     awful.key({modkey}, "z", actions.log_out(), {description = "Quit", group = "Awesome"}),
     awful.key({modkey, "Control"}, "z", awesome.restart, {description = "Restart Awesome", group = "Awesome"}),
     awful.key({modkey, "Shift"}, "Escape", actions.spawn("lock-screen"), {description = "Lock screen", group = "Awesome"}),
+    awful.key({"Ctrl", "Shift"}, "Escape", actions.spawn("fix-keyboard"), {description = "Fix keyboard", group = "Awesome"}),
     awful.key(
       {modkey}, "x",
       actions.spawn({"autorandr", "--change", "--default", "horizontal"}),
