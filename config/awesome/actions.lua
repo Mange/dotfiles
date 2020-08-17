@@ -294,4 +294,12 @@ function actions.volume_gui()
   return actions.spawn({"pavucontrol"})
 end
 
+function actions.playerctl(...)
+  return actions.spawn({"playerctl", ...})
+end
+
+function actions.brightness_change(amount)
+  return actions.spawn({"brightnessctl", "set", amount})
+end
+
 return actions

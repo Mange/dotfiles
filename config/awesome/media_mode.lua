@@ -1,22 +1,15 @@
-local awful = require("awful")
 local which_keys = require("which_keys")
 local actions = require("actions")
-
-local function playerctl(command)
-  return function()
-    awful.spawn({"playerctl", command}, false)
-  end
-end
 
 local media_mode = which_keys.new_chord(
   "media",
   {
     keybindings = {
       -- Playerctl
-      which_keys.key("h", "previous", playerctl("previous"), {group = "Player", which_key_sticky = true}),
-      which_keys.key("j", "play-pause", playerctl("play-pause"), {group = "Player"}),
-      which_keys.key("k", "play-pause", playerctl("play-pause"), {group = "Player"}),
-      which_keys.key("l", "next", playerctl("next"), {group = "Player", which_key_sticky = true}),
+      which_keys.key("h", "previous",   actions.playerctl("previous"),   {group = "Player", which_key_sticky = true}),
+      which_keys.key("j", "play-pause", actions.playerctl("play-pause"), {group = "Player"}),
+      which_keys.key("k", "play-pause", actions.playerctl("play-pause"), {group = "Player"}),
+      which_keys.key("l", "next",       actions.playerctl("next"),       {group = "Player", which_key_sticky = true}),
 
       -- Volume
       which_keys.key(

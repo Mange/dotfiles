@@ -96,6 +96,14 @@ keys.awesome_chord = which_keys.new_chord(
 )
 
 keys.global = gears.table.join(
+    -- Group: Hidden
+    awful.key({}, "XF86MonBrightnessUp",   actions.brightness_change("+5%")),
+    awful.key({}, "XF86MonBrightnessDown", actions.brightness_change("5%-")),
+    awful.key({}, "XF86AudioRaiseVolume",  actions.volume_change("+5")),
+    awful.key({}, "XF86AudioLowerVolume",  actions.volume_change("-5")),
+    awful.key({}, "XF86AudioMute",         actions.volume_mute_toggle()),
+    awful.key({}, "XF86AudioPlay",         actions.playerctl("play-pause")),
+
     -- Group: Awesome
     awful.key({modkey, "Shift"}, "/", hotkeys_popup.show_help, {description="Show keybinds", group="Awesome"}),
     awful.key({modkey}, "z", actions.log_out(), {description = "Quit", group = "Awesome"}),
