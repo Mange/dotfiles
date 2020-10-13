@@ -247,6 +247,7 @@ local function new(instance)
 
   -- Show the popup without actually entering the mode.
   function instance.show_popup()
+    instance.popup.screen = awful.screen.focused()
     instance.popup.visible = true
   end
 
