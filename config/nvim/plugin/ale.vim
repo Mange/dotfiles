@@ -30,6 +30,8 @@ let g:ale_pattern_options = {
 \   '.*\.rasi$': {'ale_enabled': 0},
 \}
 
+let g:ale_rust_cargo_use_clippy = 1
+
 " Use `[e` and `]e` for navigate linter errors
 nmap <silent> [e <Plug>(ale_previous_wrap)
 nmap <silent> ]e <Plug>(ale_next_wrap)
