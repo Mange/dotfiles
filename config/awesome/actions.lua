@@ -250,8 +250,8 @@ function actions.tydra()
     })
 end
 
-function actions.screenshot(...)
-  return actions.spawn({"screenshot", ...})
+function actions.flameshot(...)
+  return actions.spawn({"flameshot", ...})
 end
 
 function actions.dismiss_notification()

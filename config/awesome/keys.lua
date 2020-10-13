@@ -91,15 +91,14 @@ keys.awesome_chord = which_keys.new_chord(
       }),
 
       which_keys.key_nested("s", "screenshot", {
-          which_keys.key("s", "specific-area", actions.screenshot("area")),
-          which_keys.key("a", "all-screen", actions.screenshot("full")),
-          which_keys.key("w", "window", actions.screenshot("current-window")),
+          which_keys.key("s", "specific-area", actions.flameshot("gui")),
+          which_keys.key("a", "all-screen", actions.flameshot("screen")),
+          which_keys.key("d", "all-desktop", actions.flameshot("desktop")),
 
           which_keys.key_nested("d", "delayed", {
-              which_keys.key("d", "specific-area", actions.screenshot("area", "--delay=5")),
-              which_keys.key("s", "specific-area", actions.screenshot("area", "--delay=5")),
-              which_keys.key("a", "all-screen", actions.screenshot("full", "--delay=5")),
-              which_keys.key("w", "window", actions.screenshot("current-window", "--delay=5")),
+              which_keys.key("s", "specific-area", actions.flameshot("gui", "--delay", "5000")),
+              which_keys.key("a", "all-screen", actions.flameshot("screen", "--delay", "5000")),
+              which_keys.key("d", "all-desktop", actions.flameshot("desktop", "--delay", "5000")),
           })
       })
     },
@@ -162,8 +161,6 @@ keys.global = gears.table.join(
 
     awful.key({modkey}, "Return", actions.spawn({"samedir", terminal}), {description = "Terminal in same dir", group = "Apps"}),
     awful.key({modkey, "Shift"}, "Return", actions.spawn(terminal), {description = "Terminal", group = "Apps"}),
-    awful.key({modkey}, "-", actions.screenshot("full"), {description = "Screenshot (fullscreen)", group = "Apps"}),
-    awful.key({modkey, "Shift"}, "-", actions.screenshot("area"), {description = "Screenshot (area)", group = "Apps"}),
     awful.key({modkey}, "p", actions.passwords_menu(), {description = "Passwords", group = "Apps"}),
 
     awful.key(

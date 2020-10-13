@@ -116,12 +116,6 @@ modifiers:
     top_right: Toggle
     top_right_color: "#0085ff"
     top_center: ''
-  "- _":
-    bottom_right: ''
-    center_left: Screenshot (fullscreen)
-    center_left_color: "#ff0000"
-    bottom_left: Screenshot (area)
-    bottom_left_color: "#857f00"
   Q:
     bottom_right: ''
     center_left: Rotate layout

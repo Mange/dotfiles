@@ -26,6 +26,7 @@ wm-start parcellite --no-icon # Clipboard manager
 wm-start syncthing-gtk --minimized
 wm-start udiskie --no-automount --smart-tray # Device mounter
 wm-start unclutter # Hide mouse cursor when not in use
+wm-start flameshot
 
 function setup_touchpad() {
     touchpad="$1"
