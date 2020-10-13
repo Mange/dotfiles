@@ -9,67 +9,6 @@ local keys = require("keys")
 
 local volume_widget = {}
 
-local service
-
--- Spawn a watcher of pulseaudio daemon to refresh the widget every time
--- something changed on the server or on a sink. Server changes include
--- changing default sink, for example. Sink changes are usually volume or mute
--- status.
-local function spawn_watcher(instance)
-  local cmd = [[
-    sh -c '
-      LC_ALL=C pactl subscribe | grep --line-buffered -E "Event .change. on (sink|server) "
-    '
-  ]]
-  -- local cmd = {"pactl", "subscribe"}
-  return awful.spawn.with_line_callback(cmd, {
-      stdout = function(_)
-        instance.refresh()
-      end,
-      stderr = function(_)
-        instance.refresh()
-      end,
-    })
-end
-
-local function setup_service()
-  if service then
-    return service
-  end
-
-  service = {}
-
-  service.refresh = function()
-    awful.spawn.easy_async(
-      {"pulsemixer", "--get-volume", "--get-mute"},
-      function(stdout)
-        local volume_left, volume_right, is_mute = string.match(stdout, "(%d)%s+(%d+)%s+(%d+)")
-        -- If command fails, don't emit signal.
-        if volume_left ~= nil then
-          awesome.emit_signal("mange:volume:update", {
-            volume_left = tonumber(volume_left),
-            volume_right = tonumber(volume_right),
-            is_mute = (is_mute == "1"),
-          })
-        end
-      end
-    )
-  end
-
-  -- Have an independent timer that refreshes every 30 seconds, in case the
-  -- watcher malfunctions for some reason.
-  service.timer = gears.timer {
-    timeout = 30,
-    call_now = true,
-    autostart = true,
-    callback = service.refresh
-  }
-
-  service.watcher_pid = spawn_watcher(service)
-
-  return service
-end
-
 local function get_icon(volume, is_mute)
   if is_mute then
     return "ﱝ"
@@ -137,7 +76,6 @@ function volume_widget.new()
   end
 
   awesome.connect_signal("mange:volume:update", function(data) update(data) end)
-  setup_service()
 
   widget:buttons(
     gears.table.join(
