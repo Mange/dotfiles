@@ -57,6 +57,17 @@ keys.awesome_chord = which_keys.new_chord(
           which_keys.key("p", "project", actions.spawn("open-project")),
       }),
 
+      which_keys.key_nested("c", "client", {
+          which_keys.key("r", "restore", actions.on_focused_client(actions.client_restore)),
+          which_keys.key("n", "minimize", actions.on_focused_client(actions.client_minimize)),
+          which_keys.key("s", "sticky-toggle", actions.on_focused_client(actions.client_toggle_sticky)),
+          which_keys.key("f", "fullscreen-toggle", actions.on_focused_client(actions.client_toggle_fullscreen)),
+          which_keys.key("q", "close", actions.on_focused_client(actions.client_close)),
+          which_keys.key("o", "move-other-screen", actions.on_focused_client(actions.client_move_other_screen)),
+
+          -- TODO: Keys to move to tags 1-9
+      }),
+
       which_keys.key_nested("l", "layout", {
           which_keys.key("[", "previous",       actions.previous_layout(), {which_key_sticky = true}),
           which_keys.key("]", "next",           actions.next_layout(), {which_key_sticky = true}),

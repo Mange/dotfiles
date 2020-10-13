@@ -53,6 +53,14 @@ function actions.set_layout(layout)
   end
 end
 
+function actions.on_focused_client(action)
+  return function()
+    if client.focus then
+      action(client.focus)
+    end
+  end
+end
+
 function actions.client_close(c)
   c:kill()
 end
@@ -64,6 +72,15 @@ end
 
 function actions.client_minimize(c)
   c.minimized = true
+end
+
+function actions.client_restore(c)
+  c.maximized = false
+  c.maximized_vertical = false
+  c.maximized_horizontal = false
+  c.minimized = false
+  c.ontop = false
+  c.fullscreen = false
 end
 
 function actions.client_toggle_sticky(c)
