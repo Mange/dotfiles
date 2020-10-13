@@ -37,6 +37,7 @@ OPTIONS:
       pip      (Install software based on python pip)
       npm      (Install software based on Node.js NPM)
       rust     (Rust setup)
+      ruby     (Ruby setup)
 USAGE
 }
 ONLY_SECTION="all"
@@ -68,7 +69,7 @@ while true; do
 done
 
 case "$ONLY_SECTION" in
-  all | pacman | rust | projects | neovim | aur | updates | fast | pip | npm )
+  all | pacman | rust | projects | neovim | aur | updates | fast | pip | npm | ruby )
     # Valid; do nothing
     ;;
   *)
@@ -469,10 +470,13 @@ if run-section "pacman"; then
       install-pacman "${bundle_file}" || handle-failure
     fi
   done
+fi
 
+if run-section "ruby"; then
   header "Ruby setup and packages"
   install-ruby-via-rvm || handle-failure "Installing Ruby"
   install-global-ruby-gem "ripper-tags"
+  install-global-ruby-gem "standard"
   install-global-ruby-gem "solargraph"
 fi
 
@@ -640,9 +644,12 @@ if run-section "updates"; then
   if confirm "Really install all updates now?" "n"; then
     $PACMAN -Su
   fi
+fi
 
+if run-section "updates" || run-section "ruby"; then
   subheader "Installing RVM/Ruby updates"
   update-global-ruby-gem "ripper-tags"
+  update-global-ruby-gem "standard"
   update-global-ruby-gem "solargraph"
 fi
 

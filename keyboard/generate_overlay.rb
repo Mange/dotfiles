@@ -27,7 +27,7 @@ DEFAULT_OPTIONS = {
   "c" => "#cccccc",
   "fa" => [nil] * 12,
   "f" => 3,
-  "g" => false,
+  "g" => false
 }.freeze
 
 class Keyboard
@@ -49,9 +49,9 @@ class Keyboard
 
   def render
     current_global_state = DEFAULT_OPTIONS.dup
-    rendered_rows = rows.map do |row|
+    rendered_rows = rows.map { |row|
       row.render(current_global_state: current_global_state)
-    end
+    }
     JSON.pretty_generate([settings, *rendered_rows])
   end
 end
@@ -79,7 +79,7 @@ class Row
       if entry.is_a?(String)
         result << Key.new(
           global_options.merge(buffer || {}),
-          entry,
+          entry
         )
         buffer = nil
         global_options = result.last.global_options
@@ -156,7 +156,7 @@ class Key # rubocop:disable Metrics/ClassLength
     :top_center_size,
     :center_size,
     :bottom_center_size,
-    :front_center_size,
+    :front_center_size
   )
   # rubocop:enable Layout/EmptyLinesAroundArguments
 
@@ -281,7 +281,7 @@ class Key # rubocop:disable Metrics/ClassLength
       top_center_size,
       center_size,
       bottom_center_size,
-      front_center_size,
+      front_center_size
     ]
   end
 
@@ -312,7 +312,7 @@ class Key # rubocop:disable Metrics/ClassLength
       @top_center,
       @center,
       @bottom_center,
-      @front_center,
+      @front_center
     ].join("\n")
   end
 
@@ -340,6 +340,7 @@ class Key # rubocop:disable Metrics/ClassLength
   end
 
   private
+
   def parse_text(text, alignment)
     parts = text.split("\n")
 
@@ -426,7 +427,7 @@ class Key # rubocop:disable Metrics/ClassLength
       @top_center_color,
       @center_color,
       @bottom_center_color,
-      @front_center_color,
+      @front_center_color
     ].join("\n")
 
     options["t"] =
@@ -467,7 +468,7 @@ class Key # rubocop:disable Metrics/ClassLength
     zero_width_space = "​"
     total_spaces = string.count(" ")
 
-    "#{string.gsub(' ', " #{zero_width_space}")}#{' ' * total_spaces}"
+    "#{string.gsub(" ", " #{zero_width_space}")}#{" " * total_spaces}"
   end
 end
 
@@ -476,9 +477,9 @@ class Overlay
 
   def initialize(data)
     @settings = data.fetch("settings", {})
-    @modifiers = data.fetch("modifiers", {}).map do |text, changes|
+    @modifiers = data.fetch("modifiers", {}).map { |text, changes|
       Modifier.new(text, changes)
-    end
+    }
   end
 
   def apply(keyboard)
@@ -525,6 +526,7 @@ class Modifier
   end
 
   private
+
   def build_matcher
     # "/foo/" is a regexp /foo/
     match = %r{^/([^/]+)/$}.match(text)
@@ -550,8 +552,8 @@ def run_tests
         [
           {},
           %w[A B C],
-          %w[D E],
-        ],
+          %w[D E]
+        ]
       )
 
       keyboard.rows.size.must_equal 2
@@ -563,8 +565,8 @@ def run_tests
       keyboard = Keyboard.new(
         [
           {},
-          %w[A B],
-        ],
+          %w[A B]
+        ]
       )
 
       keyboard.rows.first.keys[0].options.must_equal(
@@ -572,7 +574,7 @@ def run_tests
         "a" => 0,
         "f" => 3,
         "fa" => [nil] * 12,
-        "g" => false,
+        "g" => false
       )
 
       keyboard.rows.first.keys[1].options.must_equal(
@@ -580,14 +582,14 @@ def run_tests
         "a" => 0,
         "f" => 3,
         "fa" => [nil] * 12,
-        "g" => false,
+        "g" => false
       )
     end
 
     it "keeps track of global options" do
       rows_data = [
         [{"a" => 2, "t" => "#ff0000", "x" => 4}, "A", "B"],
-        [{"a" => 3, "y" => 2}, "C", {"t" => "#00ff00"}, "D"],
+        [{"a" => 3, "y" => 2}, "C", {"t" => "#00ff00"}, "D"]
       ]
       keyboard = Keyboard.new([{}, *rows_data])
 
@@ -713,15 +715,15 @@ def run_tests
           {"c" => "#000000"}, "A",
           {"c" => "#ffff00"}, "B",
           {"c" => "#000000"}, "C",
-          "D",
-        ],
+          "D"
+        ]
       ]))
     end
 
     it "adds colored text on keys" do
       keyboard = Keyboard.new([{}, [{"t" => "#000000"}, "A"]])
       overlay = Overlay.new(
-        "modifiers" => {"A" => {"bottom_left_color" => "#ffff00", "bottom_left" => "Hello"}},
+        "modifiers" => {"A" => {"bottom_left_color" => "#ffff00", "bottom_left" => "Hello"}}
       )
 
       overlay.apply(keyboard)
@@ -735,8 +737,8 @@ def run_tests
       rendered.must_equal(JSON.pretty_generate([
         {},
         [
-          {"t" => "#000000\n#ffff00"}, "A\nHello",
-        ],
+          {"t" => "#000000\n#ffff00"}, "A\nHello"
+        ]
       ]))
     end
 
@@ -748,39 +750,39 @@ def run_tests
           "A",
           "B\nHello\nWorld",
           "C",
-          "D",
-        ],
+          "D"
+        ]
       ])
       overlay = Overlay.new(
         "modifiers" => {
           "B" => {
             "default_size" => 3,
             "upper_left_size" => 4,
-            "top_right_size" => 2,
-          },
-        },
+            "top_right_size" => 2
+          }
+        }
       )
 
       overlay.apply(keyboard)
 
       keyboard.rows.first.keys[0].option("f").must_equal 4
       keyboard.rows.first.keys[0].option("fa").must_equal(
-        [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]
       )
 
       keyboard.rows.first.keys[1].option("f").must_equal 3
       keyboard.rows.first.keys[1].option("fa").must_equal(
-        [4, nil, 2, nil, nil, nil, nil, nil, nil, nil, nil, nil],
+        [4, nil, 2, nil, nil, nil, nil, nil, nil, nil, nil, nil]
       )
 
       keyboard.rows.first.keys[2].option("f").must_equal 4
       keyboard.rows.first.keys[2].option("fa").must_equal(
-        [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]
       )
 
       keyboard.rows.first.keys[3].option("f").must_equal 4
       keyboard.rows.first.keys[3].option("fa").must_equal(
-        [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil]
       )
 
       rendered = JSON.parse(keyboard.render)
@@ -790,8 +792,8 @@ def run_tests
           {"f" => 4}, "A",
           {"f" => 3, "fa" => [4, 3, 2]}, "B\nHello\nWorld",
           {"f" => 4, "fa" => [4]}, "C",
-          "D",
-        ],
+          "D"
+        ]
       ])
     end
 
@@ -801,8 +803,8 @@ def run_tests
         "settings" => {"ghost_others" => true},
         "modifiers" => {
           "B" => {},
-          "C" => {"upper_left" => "C (still here)"},
-        },
+          "C" => {"upper_left" => "C (still here)"}
+        }
       )
 
       overlay.apply(keyboard)
@@ -819,8 +821,8 @@ def run_tests
           {"g" => true}, "A",
           {"g" => false}, "B",
           "C (still here)",
-          {"g" => true}, "D",
-        ],
+          {"g" => true}, "D"
+        ]
       ])
     end
   end

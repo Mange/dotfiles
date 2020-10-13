@@ -10,6 +10,9 @@ let g:ale_virtualtext_prefix = " ❯ "
 let g:ale_virtualtext_cursor = 0
 
 let g:ale_linters = {
+\   'ruby': [
+\       'standardrb',
+\   ],
 \   'c': [
 \       'clang',
 \       'clangtidy',
@@ -18,7 +21,7 @@ let g:ale_linters = {
 
 let g:ale_fixers = {
 \   'ruby': [
-\       'rubocop',
+\       'standardrb',
 \   ],
 \   'c': [
 \       'clangtidy',
