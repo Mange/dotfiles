@@ -261,6 +261,9 @@ let g:which_key_map.p.f = 'find-file'
 nmap <leader>pt :SmartSplit +terminal<CR>
 let g:which_key_map.p.t = 'split-terminal'
 
+nmap <leader>pi :SplitOrFocus .git/local.vim<CR>
+let g:which_key_map.p.i = 'edit-project-vimrc'
+
 " }}}
 
 " {{{ Leader +search
