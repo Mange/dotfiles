@@ -1,6 +1,8 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
+require "json"
+
 begin
   require "dbus"
 rescue LoadError
@@ -24,11 +26,12 @@ class Timer
       idle: idle,
       elapsed: elapsed,
       overdue: overdue,
-      remaining: remaining,
+      remaining: remaining
     )
   end
 
   private
+
   attr_reader :core, :config, :name
 
   def idle
@@ -53,10 +56,10 @@ TimerState = Struct.new(
   :elapsed,
   :overdue,
   :remaining,
-  keyword_init: true,
-) do
-  def phase(delta)
-    if idle.positive?
+  keyword_init: true
+) {
+  def state(delta)
+    if idle + delta >= 10.0
       :idle
     elsif (remaining - delta).positive?
       :active
@@ -64,7 +67,7 @@ TimerState = Struct.new(
       :overdue
     end
   end
-end
+}
 
 def format_time(seconds)
   # (More than an hour will be shown as > 60 for space reasons, e.g. "80:00"
@@ -93,31 +96,29 @@ class Renderer
 
   def render
     @render_mutex.synchronize do
-      print "  "
-      if @mode != "normal"
-        puts "%{F#d5c4a1}paused%{F-}"
-      else
-        render_timer_state(@micro_state)
-        print " / "
-        render_timer_state(@rest_state)
-        puts ""
-      end
+      puts state_image.to_json
       STDOUT.flush
     end
   end
 
   private
+
+  def state_image
+    {
+      mode: @mode,
+      micro: render_timer_state(@micro_state),
+      rest: render_timer_state(@rest_state)
+    }
+  end
+
   def render_timer_state(state)
     dt = delta
-    case state.phase(dt)
-    when :idle
-      print "%{F#b8bb26}idle"
-    when :active
-      print "%{F#fabd2f}", format_time(state.remaining - dt)
-    when :overdue
-      print "%{F#fb4934}", format_time(state.overdue + dt)
-    end
-    print "%{F-}"
+    {
+      state: state.state(dt),
+      remaining: (state.remaining - dt).round,
+      elapsed: (state.elapsed + dt).round,
+      overdue: (state.overdue + dt).round
+    }
   end
 
   def delta
@@ -167,6 +168,7 @@ class Program
   end
 
   private
+
   def operation_mode
     @core_interface.GetOperationMode().first
   end

@@ -10,6 +10,7 @@ local tasklist = require("wibar/tasklist")
 local polybar_wrapper = require("wibar/polybar_wrapper")
 local battery_widget = require("wibar/battery_widget")
 local volume_widget = require("wibar/volume_widget")
+local workrave_widget = require("wibar/workrave_widget")
 
 local wibar = {}
 
@@ -84,10 +85,7 @@ function wibar.create_for_screen(s)
             command = {polybar_dir .. "clock"},
             interval = 30,
           }),
-          polybar_wrapper({
-            command = {polybar_dir .. "workrave"},
-            interval = 0,
-          }),
+          workrave_widget.new(),
         },
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
