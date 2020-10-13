@@ -2,12 +2,17 @@
 # vim:ft=zsh:
 
 if (( CURRENT == 2 )); then
-  compadd rspec spec cap rails rake
+  compadd guard rspec rails rubocop rake standardrb
 fi
 
 if (( CURRENT > 2 )); then
   complcommand=_$words[2]
   if whence $complcommand >/dev/null 2>/dev/null; then
     $complcommand $words[3,-1]
+  fi
+
+  # Stupid hack for now. Run rubocop's completions for standardrb
+  if [[ $complcommand == "_standardrb" ]]; then
+    _rubocop $words[3,-1]
   fi
 fi

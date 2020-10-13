@@ -385,7 +385,7 @@ binstub-exec() {
 
 alias bundle="binstub-exec bundle"
 
-for gem in guard rspec rails rubocop rake; do
+for gem in guard rspec rails rubocop rake standardrb; do
   alias $gem="bundle-exec $gem"
 done
 
