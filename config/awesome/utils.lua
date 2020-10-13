@@ -9,6 +9,9 @@ awesome.register_xproperty("awesome_restart_check", "boolean")
 local restart_detected = awesome.get_xproperty("awesome_restart_check") ~= nil
 awesome.set_xproperty("awesome_restart_check", true)
 
+-- Check if running inside awmtt (using the test.sh script)
+local awmtt_detected = (os.getenv("IN_AWMTT") == "yes")
+
 local utils = {
   dpi = xresources.apply_dpi,
 }
@@ -31,13 +34,7 @@ function utils.find_client(matchers)
 end
 
 function utils.on_first_start(func)
-  if not restart_detected then
-    func()
-  end
-end
-
-function utils.on_restart(func)
-  if restart_detected then
+  if not restart_detected and not awmtt_detected then
     func()
   end
 end
