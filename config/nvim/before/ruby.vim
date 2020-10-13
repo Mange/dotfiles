@@ -1,3 +1,5 @@
+let g:ruby_indent_assignment_style = "variable"
+
 " Courtesy of vim-ruby-herefoc-syntax
 let g:ruby_heredoc_syntax_filetypes = {
       \ "markdown" : {
