@@ -30,9 +30,12 @@ inoremap <C-c><C-c> <Esc>:wq<CR>
 
 " {{{ Command mode
 
-" $$ expands to current buffer's path in command mode
+" Full path
 cnoremap %% <C-R>=expand('%')<cr>
+" Dirname
 cnoremap $$ <C-R>=expand('%:h').'/'<cr>
+" Basename
+cnoremap ^^ <C-R>=expand('%:t')<cr>
 
 " }}}
 
