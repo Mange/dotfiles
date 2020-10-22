@@ -7,7 +7,7 @@
 #
 autorandr --change --default horizontal
 xrandr --dpi 96
-wm-start picom --config ~/.config/picom/picom.conf
+wm-start picom --config ~/.config/picom/picom.conf --experimental-backends
 wm-start flashfocus
 wm-start systemctl --user start redshift
 
