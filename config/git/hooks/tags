@@ -2,6 +2,20 @@
 # vim:ft=sh:
 set -e
 
+# Prevent more than one instance from running at the same time, which is likely
+# to happen in the case of rebases, etc. where a lot of commits are being made
+# in a very short amount of time.
+#
+# Oldest invocation will win, which is not optimal, but it will sort itself out
+# on the next time it runs.
+[ -f .git/tags.lock ] && exit 0
+
+unlock() {
+  rm -f .git/tags.lock
+}
+trap 'unlock' EXIT
+touch .git/tags.lock
+
 # Generate Rust tags if project is a Rust crate and tooling is in place.
 # Generate Ruby tags if project is a Ruby app/lib and tooling is in place.
 if [ -f Cargo.toml ] && hash rusty-tags 2>/dev/null; then
@@ -12,7 +26,7 @@ if [ -f Cargo.toml ] && hash rusty-tags 2>/dev/null; then
   fi
   rusty-tags --quiet vi
 elif [ -f Gemfile ] && hash ripper-tags 2>/dev/null; then
-  trap 'rm -f .git/tags.$$' EXIT
+  trap 'unlock; rm -f .git/tags.$$' EXIT
   ripper-tags \
     -R --tag-relative \
     -f .git/tags.$$ \
@@ -20,7 +34,7 @@ elif [ -f Gemfile ] && hash ripper-tags 2>/dev/null; then
   mv .git/tags.$$ .git/tags
 else
   # Generate normal ctags instead
-  trap 'rm -f .git/tags.$$' EXIT
+  trap 'unlock; rm -f .git/tags.$$' EXIT
   ctags --tag-relative \
     -Rf.git/tags.$$ \
     --exclude=.git \
