@@ -147,7 +147,7 @@ uninstall-pacman() {
     echo "$red"
 
     run-command-quietly "" < <(
-      ../bin/auruninstall "$to_uninstall"
+      paru -Rs "$to_uninstall"
     )
 
     set -e
@@ -161,29 +161,21 @@ compile-install-aur() {
   local installed=0
   local errors=0
 
-  # NOTE: This `while` has its stdin set at the end of the loop body so it does
-  # not run in a subshell, so it can modify $errors and $installed.
-  while read -r package; do
+  mapfile -t packages < <(sed -E 's/#.*$//; s/ +$//; /^$/d' "$filename")
+
+  for package in "${packages[@]}"; do
     # Skip if already installed
-    if pacman -Q --quiet "$package" 2>/dev/null >/dev/null; then
+    if paru -Q --quiet "$package" 2>/dev/null >/dev/null; then
       continue
     fi
 
-    if run-command-quietly "Compiling package $package" < <(
-      aur sync --no-view --no-confirm "$package" 2>&1
-    ); then
-      if run-command-quietly "Installing package $package" < <(
-        $PACMAN -S --quiet --needed "$package" 2>&1
-      ); then
-        installed=$((installed + 1))
-      else
-        errors=$((errors + 1))
-      fi
+    subheader "Compiling package $package"
+    if paru -Sa --quiet "$package"; then
+      installed=$((installed + 1))
     else
       errors=$((errors + 1))
     fi
-
-  done < <(sed 's/#.*$//' "$filename" | sed '/^$/d')
+  done
 
   if [[ $errors -eq 0 ]]; then
     echo "${green}Everything compiled/installed ✔${reset}"
@@ -235,56 +227,25 @@ install-npm-software() {
     done
 }
 
-compile-aurutils() {
-    header "Installing aurutils"
+compile-paru() {
+    header "Installing paru"
 
     subheader "Download and install from source"
-    if [[ ! -d /opt/aurutils ]]; then
-      sudo mkdir -p "/opt"
-      sudo git clone https://aur.archlinux.org/aurutils.git /opt/aurutils
+    if [[ ! -d ~/.cache/paru-install ]]; then
+      mkdir -p ~/.cache
+      git clone https://aur.archlinux.org/paru.git ~/.cache/paru-install
     fi
-
-    sudo chown -R "$USER:$USER" /opt/aurutils
-    sudo chmod -R u+wX /opt/aurutils
-    gpg --recv-keys 6bc26a17b9b7018a
 
     # Install dependencies
-    sudo pacman -S --needed expac diffstat
+    sudo pacman -S --needed base-devel
 
-    (cd /opt/aurutils; makepkg -i)
+    (cd ~/.cache/paru-install; makepkg -si)
 
-    subheader "Setting up local repository"
-    if [[ ! -f /etc/pacman.d/custom ]]; then
-      echo "Generating /etc/pacman.d/custom"
-      cat <<EOF | sudo tee /etc/pacman.d/custom > /dev/null
-[options]
-CacheDir = /var/cache/pacman/pkg
-CacheDir = /var/cache/pacman/custom
-CleanMethod = KeepCurrent
-
-[custom]
-SigLevel = Optional TrustAll
-Server = file:///var/cache/pacman/custom
-EOF
-    fi
-
-    if ! grep -q "/etc/pacman.d/custom" /etc/pacman.conf; then
-      echo "Adding include statement to /etc/pacman.conf"
-      echo -e '\n\nInclude = /etc/pacman.d/custom' | sudo tee --append /etc/pacman.conf > /dev/null
-    fi
-
-    if [[ ! -d /var/cache/pacman/custom ]]; then
-      echo "Generating repo at specified location"
-      sudo install -d /var/cache/pacman/custom -o "$USER"
-      repo-add /var/cache/pacman/custom/custom.db.tar
-      $PACMAN -Syu
-    fi
-
-    subheader "Installing aurutils using aurutils (whoa!)"
-    aur sync --no-view --no-confirm aurutils
+    subheader "Installing paru using paru (whoa!)"
+    paru paru
 
     subheader "Cleaning up source"
-    sudo rm -rf /opt/aurutils
+    rm -rf ~/.cache/paru-install
 }
 
 copy-replace-with-diff() {
@@ -481,12 +442,12 @@ if run-section "ruby"; then
 fi
 
 if run-section "aur"; then
-  if ! hash aur 2>/dev/null; then
+  if ! hash paru 2>/dev/null; then
     init-sudo
-    compile-aurutils || handle-failure
+    compile-paru || handle-failure
   fi
 
-  if hash aur 2>/dev/null; then
+  if hash paru 2>/dev/null; then
     init-sudo
     header "Compile and install AUR software"
     compile-install-aur arch/aur.txt || handle-failure
@@ -637,7 +598,7 @@ if run-section "updates"; then
   header "Installing updates"
   subheader "Installing AUR updates"
   if confirm "Really install all AUR updates now?" "n"; then
-    aur sync --no-view --no-confirm -u || handle-failure
+    paru -Sua || handle-failure
   fi
 
   subheader "Installing package updates"
