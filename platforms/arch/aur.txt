@@ -46,7 +46,6 @@ docker-credential-secretservice
 # Dev tools
 # pgcli # Install via pip instead; it keeps breaking on AUR
 jiq # interactive jq
-github-cli
 
 # Fonts (also see my.txt)
 font-victor-mono
