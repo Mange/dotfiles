@@ -14,11 +14,9 @@ colordiff
 ctags
 github-cli
 highlight
-lesspipe
 pandoc
 python-pygments  # some tools use this to highlight code
 shellcheck
-source-highlight # and lesspipe uses this to highlight code
 
 # Yubikey
 yubikey-manager

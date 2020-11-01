@@ -275,15 +275,6 @@ export LESS_TERMCAP_us=$'\E[01;32m'
 # --Raw-control-chars :: Support ANSI color control chars
 # --ignore-case       :: Smart case search (Ignore-case is normal case insensitive search)
 export LESS="--Raw-control-chars --quit-if-one-screen --ignore-case"
-
-# Use lesspipe if installed
-if whence 'lesspipe.sh' > /dev/null; then
-  eval `lesspipe.sh`
-fi
-
-if [[ -f "/usr/share/source-highlight/src-hilite-lesspipe.sh" ]]; then
-  export LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh %s"
-fi
 # }}}
 # {{{ Copy/Paste
 if command-exist pbcopy; then
