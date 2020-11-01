@@ -21,6 +21,7 @@ git-delta         # Better diff tool for Git
 gron-bin          # transforms JSON into discrete assignments to make it easier to grep.
 http-prompt       # An interactive HTTP command-line client
 pastel
+procs-bin         # Modern replacement for ps(1)
 rvm               # RVM: Ruby Version Manager
 slack-desktop     # Slack Desktop (Beta) for Linux
 spotify           # A proprietary music streaming service
