@@ -53,21 +53,6 @@ font-victor-mono
 ttf-ancient-fonts # Just because it is cool
 ttf-monaco
 
-# Fortunes :)
-fortune-mod-archer
-fortune-mod-asoiaf
-fortune-mod-breakingbad
-fortune-mod-futurama
-fortune-mod-g-git
-fortune-mod-hackers # From the movie
-fortune-mod-limericks
-fortune-mod-portal-game
-fortune-mod-protolol-git
-fortune-mod-question-answer-jokes
-fortune-mod-rickandmorty
-fortune-mod-southpark
-fortune-mod-vimtips
-
 # Dictionaries
 hunspell-sv
 
