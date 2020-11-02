@@ -70,6 +70,9 @@ let g:which_key_map.w = { 'name' : '+window' }
 nmap <leader><space> :Switch<cr>
 let g:which_key_map[' '] = 'switch'
 
+nmap <leader>: :Commands<cr>
+let g:which_key_map[':'] = 'commands'
+
 " Quick list shortcuts
 nmap <leader><tab> :cn<CR>
 let g:which_key_map['\<tab>'] = 'quickfix-next'
@@ -234,6 +237,9 @@ let g:which_key_map.g.c = {
 " TODO: normal help, filetype help?, fugitive help?, doctor?
 nmap <leader>hh :Helptags<cr>
 let g:which_key_map.h.h = 'fzf-helptags'
+
+nmap <leader>h? :Maps<cr>
+let g:which_key_map.h['?'] = 'fzf-mappings'
 " }}}
 
 " {{{ Leader +notes
@@ -260,6 +266,9 @@ let g:which_key_map.p.p = 'select-project'
 
 nmap <leader>pf :FZF<CR>
 let g:which_key_map.p.f = 'find-file'
+
+nmap <leader>pm :GFiles?<CR>
+let g:which_key_map.p.m = 'find-modified'
 
 nmap <leader>pt :SmartSplit +terminal<CR>
 let g:which_key_map.p.t = 'split-terminal'
