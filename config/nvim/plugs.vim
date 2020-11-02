@@ -12,7 +12,7 @@ Plug 'rking/ag.vim', {'on': ['Ag', 'AgFromSearch']}
 Plug 'tpope/vim-eunuch' " Adds things like :Move, :Rename, :SudoWrite, etc.
 Plug 'tpope/vim-vinegar' " Improves netrw, adds '-' binding to open current dir in netrw, etc.
 Plug 'liuchengxu/vim-which-key'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'AndrewRadev/switch.vim'
 Plug 'Shougo/context_filetype.vim' " Tries to add support for languages-inside-languages (fenced code blocks, etc.)
