@@ -1,3 +1,7 @@
+if g:mange_full_nvim == 0
+  finish
+endif
+
 " Smaller updatetime for CursorHold & CursorHoldI
 set updatetime=300
 
