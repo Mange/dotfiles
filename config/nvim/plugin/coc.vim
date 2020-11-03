@@ -11,6 +11,10 @@ set shortmess+=c
 " Always show signcolumns
 set signcolumn=yes
 
+let g:coc_filetype_map = {
+  \ "eruby.html": "html",
+  \ }
+
 "
 " Snippets
 "
