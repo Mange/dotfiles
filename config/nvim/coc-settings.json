@@ -8,10 +8,11 @@
   "solargraph.symbols": true,
   "solargraph.useBundler": false,
   "coc.preferences.extensionUpdateCheck": "daily",
-  "languageserver": {
-    "lua": {
-      "command": "lua-lsp",
-      "filetypes": ["lua"]
-    }
-  }
+  "html.filetypes": [
+    "html",
+    "handlebars",
+    "htmldjango",
+    "blade",
+    "eruby"
+  ]
 }

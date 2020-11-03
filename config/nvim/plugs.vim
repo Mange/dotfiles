@@ -69,6 +69,21 @@ if has("nvim-0.4.0")
   Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': { -> coc#util#install()}}
   Plug 'w0rp/ale'
   Plug 'calviken/vim-gdscript3'
+
+  let g:coc_global_extensions = [
+        \ 'coc-css',
+        \ 'coc-docker',
+        \ 'coc-emoji',
+        \ 'coc-gitignore',
+        \ 'coc-highlight',
+        \ 'coc-html',
+        \ 'coc-json',
+        \ 'coc-lua',
+        \ 'coc-solargraph',
+        \ 'coc-tsserver',
+        \ 'coc-ultisnips',
+        \ 'coc-vimlsp',
+        \ ]
 else
   let g:mange_full_nvim=0
 endif
