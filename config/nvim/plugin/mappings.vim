@@ -123,9 +123,9 @@ let g:which_key_map.b.l = 'goto-last'
 nmap <leader>ca <Plug>(coc-codelens-action)
 let g:which_key_map.c.a = 'codelens-action'
 
-vmap <leader>cA  <Plug>(coc-codeaction-selected)
-nmap <leader>cA  <Plug>(coc-codeaction)
-let g:which_key_map.c.A = 'code-action'
+vmap <leader>cc  <Plug>(coc-codeaction-selected)
+nmap <leader>cc  <Plug>(coc-codeaction)
+let g:which_key_map.c.c = 'code-action'
 
 nmap <leader>cr <Plug>(coc-rename)
 let g:which_key_map.c.r = 'rename'
