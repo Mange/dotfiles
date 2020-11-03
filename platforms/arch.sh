@@ -488,7 +488,7 @@ if run-section "neovim"; then
 
     run-command-quietly "Python 2 plugin" < <(
       if hash pip2 2>/dev/null; then
-        sudo pip2 install --user --upgrade --upgrade-strategy eager -q neovim 2>&1
+        pip2 install --user --upgrade --upgrade-strategy eager -q neovim 2>&1
       else
         echo "pip2 not installed!"
         exit 1
@@ -497,7 +497,7 @@ if run-section "neovim"; then
 
     run-command-quietly "Python 3 plugin" < <(
       if hash pip3 2>/dev/null; then
-        sudo pip3 install --user --upgrade --upgrade-strategy eager -q neovim 2>&1
+        pip3 install --user --upgrade --upgrade-strategy eager -q neovim 2>&1
       else
       echo "pip3 not installed!"
       exit 1
