@@ -140,7 +140,7 @@ uninstall-pacman() {
   installed_packages=$(set +e; printf "%s\n" "${unwanted_packages[@]}" | pacman -Q - 2>/dev/null | awk '{ print $1 }' | sort)
   to_uninstall="$(comm -12 <(printf "%s\n" "${unwanted_packages[@]}" | sort) <(echo "$installed_packages"))"
 
-  if [[ -n "$to_uninstall" ]]; then
+  if [[ -n "$to_uninstall" ]] && hash -q paru 2>/dev/null; then
     subheader "Uninstalling software:"
     echo "$to_uninstall" | column
     set +e
