@@ -1,8 +1,11 @@
 #!/bin/sh
 
-tmp="$(mktemp)"
-
-xwininfo -root -tree > "$tmp"
-kitty --detach --hold bat "$tmp"
-sleep 3
-rm "$tmp"
+if [ -t 1 ]; then
+  xwininfo -root -tree | bat
+else
+  tmp="$(mktemp)"
+  xwininfo -root -tree > "$tmp"
+  kitty --detach --hold bat "$tmp"
+  sleep 3
+  rm "$tmp"
+fi
