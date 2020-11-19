@@ -30,6 +30,7 @@ Plug 'tpope/vim-surround'
 Plug 'vim-scripts/ZoomWin'
 
 Plug 'sheerun/vim-polyglot'
+Plug 'kevinoid/vim-jsonc' " JSON + comments (coc-settings.json, etc)
 
 """ Ruby
 Plug 'joker1007/vim-ruby-heredoc-syntax', {'for': 'ruby'}
