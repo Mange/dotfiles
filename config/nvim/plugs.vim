@@ -59,7 +59,7 @@ if has("nvim-0.4.0")
 
   Plug 'vimwiki/vimwiki'
   Plug 'blindFS/vim-taskwarrior'
-  Plug 'tbabej/taskwiki', { 'do': 'sudo pip3 install --user --upgrade -r requirements.txt' }
+  Plug 'tbabej/taskwiki', { 'do': 'pip3 install --user --upgrade -r requirements.txt' }
 
   Plug 'SirVer/ultisnips'
   Plug 'junegunn/vim-easy-align'
