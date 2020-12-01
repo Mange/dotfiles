@@ -6,7 +6,7 @@
 directory: ~/Media/Music
 library: ~/Media/Music/beets.db
 
-plugins: embedart fetchart lastgenre lyrics mbsync smartplaylist thumbnails fuzzy missing random
+plugins: inline embedart fetchart lastgenre mbsync smartplaylist thumbnails fuzzy missing random duplicates
 
 import:
   move: yes # Move files instead of copying them
@@ -38,20 +38,26 @@ match:
     missing_tracks: 0.1
 
 paths:
-  default: "Artists/$albumartist/[$year] $album%aunique{albumartist album,albumtype label catalognum albumdisambig}/$track. $title"
-  albumtype:soundtrack: "Soundtracks/$album [$year]/$track. $title"
-  singleton: "Artists/$artist/$title"
-  comp: "Compilations/[$year] $album%aunique{albumartist album,albumtype label catalognum albumdisambig}/$track. $title"
+  default: "Artists/$albumartist/$album%aunique{}/%if{$multidisc,Disc $disc/}$track. $title"
+  albumtype:soundtrack: "Soundtracks/$album [$year]/%if{$multidisc,Disc $disc/}$track. $title"
+  # Fix for Jellyfin/Kodi/etc. not liking tracks straight under the artist directory.
+  # singleton: "Artists/$artist/$title"
+  singleton: "Artists/$albumartist/$album%aunique{}/%if{$multidisc,Disc $disc/}$track. $title"
+  comp: "Compilations/$album%aunique{}/%if{$multidisc,Disc $disc/}$track. $title"
+item_fields:
+  multidisc: 1 if disctotal > 1 else 0
 
 lastgenre:
+  count: 3
+  canonical: yes
   # I like very specific genres ("Viking Metal" over "Rock", "Witch House" over
   # "Industrial", and so on)
   prefer_specific: yes
 
 smartplaylist:
   # Enable when (if?) MPD is enabled later
-  # relative_to: ~/Media/Music
-  playlist_dir: ~/Media/Playlists
+  relative_to: ~/Media/Music/Playlists
+  playlist_dir: ~/Media/Music/Playlists
   playlists:
-    - name: "Witch House"
+    - name: "Witch House.m3u"
       query: 'genre:"Witch House"'
