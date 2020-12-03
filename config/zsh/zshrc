@@ -263,7 +263,7 @@ setopt hist_verify
 setopt hist_ignore_space
 
 # }}}
-# {{{ Pager
+# {{{ Pager and man
 # Pager settings (less, man, etc.)
 
 # This makes man pages look cooler
@@ -279,6 +279,11 @@ export LESS_TERMCAP_us=$'\E[01;32m'
 # --Raw-control-chars :: Support ANSI color control chars
 # --ignore-case       :: Smart case search (Ignore-case is normal case insensitive search)
 export LESS="--Raw-control-chars --quit-if-one-screen --ignore-case"
+
+# Neovim makes a better manpager than less.
+if command-exist nvim; then
+  export MANPAGER='nvim +Man!'
+fi
 # }}}
 # {{{ Copy/Paste
 if command-exist pbcopy; then
