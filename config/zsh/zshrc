@@ -242,7 +242,11 @@ cd () {
 }
 
 # Display contents of current directory when changing directories
-function chpwd { exa --group-directories-first || ls }
+if command-exist exa; then
+  function chpwd { exa --group-directories-first }
+else
+  function chpwd { ls --group-directories-first }
+fi
 # }}}
 # {{{ History
 export HISTSIZE=5000
@@ -605,7 +609,12 @@ if command-exist fzf && [[ -f ~/.config/zsh/fzf-tab/fzf-tab.plugin.zsh ]]; then
   # get ctxt for current completion
   local -A ctxt=(\"\${(@ps:\2:)CTXT}\")
   "
-  zstyle ':fzf-tab:complete:cd*' extra-opts --preview=$extract"exa -1 --color=always \${~ctxt[hpre]}\$in"
+
+  if command-exist exa; then
+    zstyle ':fzf-tab:complete:cd*' extra-opts --preview=$extract"exa -1 --color=always \${~ctxt[hpre]}\$in"
+  else
+    zstyle ':fzf-tab:complete:cd*' extra-opts --preview=$extract"ls -1 --color=always \${~ctxt[hpre]}\$in"
+  fi
 fi
 # }}}
 
