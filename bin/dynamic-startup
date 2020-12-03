@@ -43,7 +43,7 @@ function setup_touchpad() {
 
 # Apps
 wm-start firefox-developer-edition
-wm-start keybase-gui
+# wm-start keybase-gui
 wm-start spotify
 wm-start telegram-desktop
 wm-start workrave
@@ -51,7 +51,7 @@ wm-start workrave
 case "$(hostname)" in
   bilquis)
     setup_touchpad "SynPS/2 Synaptics TouchPad"
-    wm-start discord-canary
+    wm-start discord
     ;;
 
   krista)
@@ -61,11 +61,12 @@ case "$(hostname)" in
     ;;
 
   morbidus)
-    # Start Discord
-    wm-start discord-canary
+    # Start Discord and Slack (working from home)
+    wm-start discord
+    wm-start slack
 
     # Start steam
-    wm-start gtk-launch steam
+    # wm-start gtk-launch steam
     ;;
   *)
     ;;
