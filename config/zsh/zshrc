@@ -141,16 +141,19 @@ fi
 # }}}
 # {{{ EDITOR
 try-editor() {
-  if command-exist $1; then
-    EDITOR="$@"
-  fi
+  while [[ "$#" -gt 0 ]]; do
+    local full_command="$1"
+    local base="${full_command%% *}"
+
+    if command-exist $base; then
+      EDITOR=$full_command
+      return
+    fi
+    shift
+  done
 }
 
-try-editor nano
-try-editor vi
-try-editor vim
-try-editor nvim
-
+try-editor nvim vim vi emacs nano
 export VISUAL=$EDITOR
 
 unset -f try-editor
