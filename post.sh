@@ -33,7 +33,8 @@ else
 fi
 
 # Clean up left-overs, if found
-rm -f ~/.fzf.{bash,zsh}
+[ -d ~/.fzf ] && rm -rf ~/.fzf
+rm -f ~/.fzf.*
 
 # Migrate some XDG stuff
 migrate_xdg() {

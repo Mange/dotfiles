@@ -15,7 +15,6 @@ if [[ -n $BASH_VERSION || -n $ZSH_VERSION ]]; then
 
     path=(
       "$HOME/.local/bin"
-      "$HOME/.fzf/bin"
 
       .git/safe/../../bin
 
