@@ -95,11 +95,6 @@ if [ -d /usr/share/fzf/key-bindings.zsh ]; then
   bindkey "^P" fzf-file-widget
 fi
 
-# Use highlight to preview FZF files under CTRL+T
-if command-exist highlight; then
-  export FZF_CTRL_T_OPTS="--preview '(bat --style=numbers --color=always {} || cat {} || tree -C {}) 2> /dev/null | head -200'"
-fi
-
 # Use ripgrep to populate fzf
 if command-exist rg; then
   export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
@@ -266,7 +261,7 @@ setopt hist_verify
 setopt hist_ignore_space
 
 # }}}
-# {{{ Pager and man
+# {{{ Pager, man, and bat
 # Pager settings (less, man, etc.)
 
 # This makes man pages look cooler
@@ -287,6 +282,13 @@ export LESS="--Raw-control-chars --quit-if-one-screen --ignore-case"
 if command-exist nvim; then
   export MANPAGER='nvim +Man!'
 fi
+
+# Use highlight to preview FZF files under CTRL+T
+if command-exist bat; then
+  export FZF_CTRL_T_OPTS="--preview '(bat --style=numbers --color=always {} || cat {} || tree -C {}) 2> /dev/null | head -200'"
+fi
+
+export BAT_THEME=gruvbox
 # }}}
 # {{{ Copy/Paste
 if command-exist pbcopy; then

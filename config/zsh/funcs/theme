@@ -44,6 +44,15 @@ terminal."
       new_style="$(cat "${XDG_RUNTIME_DIR}/current_theme")"
     fi
 
+    case "$new_style" in
+      dark)
+        export BAT_THEME="gruvbox"
+        ;;
+      light)
+        export BAT_THEME="gruvbox-light"
+        ;;
+    esac
+
     # Set the shell variable so other programs can pick it up
     if [[ -n $new_style ]]; then
       export KITTY_THEME="$new_style"
