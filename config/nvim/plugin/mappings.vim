@@ -137,6 +137,14 @@ let g:which_key_map.c['='] = 'lsp-format-selected'
 nmap <leader>cf  <Plug>(coc-fix-current)
 let g:which_key_map.c.f = 'fix-current'
 
+let g:which_key_map.c.g = {
+      \ 'name' : '+goto',
+      \ 'd' : ['<Plug>(coc-definition)', 'definition'],
+      \ 't' : ['<Plug>(coc-type-definition)', 'type-definition'],
+      \ 'i' : ['<Plug>(coc-implementation)', 'implementation'],
+      \ 'r' : ['<Plug>(coc-references)', 'references'],
+      \ }
+
 nnoremap <silent> <leader>cd  :<C-u>CocList diagnostics<cr>
 let g:which_key_map.c.d = 'diagnostics'
 nnoremap <silent> <leader>ce  :<C-u>CocList extensions<cr>
