@@ -175,11 +175,11 @@ modifiers:
     bottom_left_color: "#857f00"
   H:
     bottom_right: ''
-    center_left: ''
+    center_left: 'Monitor prev'
     center_left_color: "#ff0000"
     bottom_left: ''
     bottom_left_color: "#857f00"
-    top_right: "Monitor prev"
+    top_right: ''
     top_right_color: "#0085ff"
     top_center: ''
   J:
@@ -198,11 +198,11 @@ modifiers:
     top_center: ''
   L:
     bottom_right: ''
-    center_left: ''
+    center_left: "Monitor next"
     center_left_color: "#ff0000"
     bottom_left: ''
     bottom_left_color: "#857f00"
-    top_right: "Monitor next"
+    top_right: ''
     top_right_color: "#0085ff"
     top_center: ''
   kb-Return-2:
