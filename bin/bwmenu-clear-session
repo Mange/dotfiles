@@ -1,0 +1,2 @@
+#!/bin/sh
+keyctl purge user bw_session
