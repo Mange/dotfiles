@@ -114,7 +114,6 @@ dunst # libnotify server
 feh
 flameshot # Screenshot app
 gucharmap
-i3lock-color # Lockscreen (for xss-lock, etc.)
 kitty
 ktouch # I'm practicing touch typing
 lxappearance

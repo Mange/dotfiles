@@ -20,13 +20,14 @@ firefox-tridactyl-native # Native plugin for Firefox Tricactyl
 git-delta         # Better diff tool for Git
 gron-bin          # transforms JSON into discrete assignments to make it easier to grep.
 http-prompt       # An interactive HTTP command-line client
+i3lock-color      # Lockscreen (for xss-lock, etc.)
 pastel
 procs-bin         # Modern replacement for ps(1)
 rvm               # RVM: Ruby Version Manager
 slack-desktop     # Slack Desktop (Beta) for Linux
 spotify           # A proprietary music streaming service
 spotify-tui       # TUI frontent for Spotify Connect / spotifyd
-spotifyd-full     # Headless FLOSS version of Spotify
+spotifyd-full-git # Headless FLOSS version of Spotify
 
 # Fork of picom with better blurring and rounded corners
 picom-ibhagwan-git
