@@ -526,11 +526,6 @@ if run-section "neovim"; then
   fi
 fi
 
-if run-section "all"; then
-  init-sudo
-  install-fzf || handle-failure
-fi
-
 if run-section "fast"; then
   if hash gsettings 2>/dev/null; then
     gsettings set org.gnome.desktop.background show-desktop-icons false
