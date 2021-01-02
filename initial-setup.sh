@@ -6,9 +6,7 @@ dotfiles_root="$(readlink --canonicalize "$(dirname "$0")")"
 # shellcheck source=/dev/null
 source "${dotfiles_root}/config/shells/xdg_zealotry"
 
-mkdir -p "${XDG_CONFIG_HOME}"
-mkdir -p "${XDG_DATA_HOME}"
-mkdir -p "${XDG_CACHE_HOME}"
+mkdir -p "${XDG_CONFIG_HOME}" "${XDG_DATA_HOME}" "${XDG_CACHE_HOME}"
 
 echo ":: Compiling CLI"
 (cd "${dotfiles_root}/dotfiles-cli" && cargo build --release)

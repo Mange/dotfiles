@@ -7,6 +7,11 @@ if [[ "$(id -u)" -eq 0 ]]; then
 fi
 
 cd "$(dirname "$0")"
+
+set -a
+. ../config/environment.d/10-xdg-zealotry.conf
+set +a
+
 . ./support/functions.bash
 
 . ./shared/generic.sh
@@ -238,6 +243,10 @@ compile-paru() {
 
     # Install dependencies
     sudo pacman -S --needed base-devel
+    if ! hash rustup 2>/dev/null; then
+      sudo pacman -S rustup
+      rustup install stable
+    fi
 
     (cd ~/.cache/paru-install; makepkg -si)
 
@@ -433,14 +442,6 @@ if run-section "pacman"; then
   done
 fi
 
-if run-section "ruby"; then
-  header "Ruby setup and packages"
-  install-ruby-via-rvm || handle-failure "Installing Ruby"
-  install-global-ruby-gem "ripper-tags"
-  install-global-ruby-gem "standard"
-  install-global-ruby-gem "solargraph"
-fi
-
 if run-section "aur"; then
   if ! hash paru 2>/dev/null; then
     init-sudo
@@ -459,6 +460,14 @@ if run-section "aur"; then
   fi
 fi
 
+if run-section "ruby"; then
+  header "Ruby setup and packages"
+  install-ruby-via-rvm || handle-failure "Installing Ruby"
+  install-global-ruby-gem "ripper-tags"
+  install-global-ruby-gem "standard"
+  install-global-ruby-gem "solargraph"
+fi
+
 if run-section "pip"; then
   init-sudo
   install-pip-software || handle-failure "Installing Python PIP software"
@@ -474,7 +483,6 @@ if run-section "fast"; then
 fi
 
 if run-section "rust"; then
-  install-or-update-rustup || handle-failure
   install-rustup-components || handle-failure
   install-crates rust/crates.txt "Rust software" || handle-failure
   install-nightly-crates rust/nightly-crates.txt "Nightly Rust software" || handle-failure

@@ -5,18 +5,6 @@ if [[ -z "$CARGO_HOME" ]]; then
   CARGO_HOME="$HOME/.cargo"
 fi
 
-install-or-update-rustup() {
-  if [[ ! -f "$CARGO_HOME/env" ]]; then
-    header "Installing rustup"
-    export CARGO_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/cargo"
-    export RUSTUP_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/rustup"
-    curl https://sh.rustup.rs -sSf | sh
-  else
-    header "Updating Rust"
-    run-rust-cmd-quietly rustup update
-  fi
-}
-
 install-rustup-components() {
   header "Installing Nightly Rust"
   run-rust-cmd-quietly rustup install nightly

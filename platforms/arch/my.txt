@@ -5,6 +5,7 @@
 # neovim # Using neovim-git via AUR right now
 python # For neovim plugins
 nodejs # For neovim plugins
+yarn   # For neovim plugins (like CoC)
 npm # To install neovim package for nodejs
 python-pip # To install neovim package for Python
 python2-pip # To install neovim package for Python 2
