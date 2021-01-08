@@ -592,38 +592,18 @@ fi
 if command-exist fzf && [[ -f ~/.config/zsh/fzf-tab/fzf-tab.plugin.zsh ]]; then
   source ~/.config/zsh/fzf-tab/fzf-tab.plugin.zsh
 
-  FZF_TAB_COMMAND=(
-      fzf
-      --ansi   # Enable ANSI color support, necessary for showing groups
-      --expect='$continuous_trigger' # For continuous completion
-      '--color=hl:$(( $#headers == 0 ? 108 : 255 ))'
-      --nth=2,3 --delimiter='\x00'  # Don't search prefix
-      --layout=reverse --height='${FZF_TMUX_HEIGHT:=75%}'
-      --tiebreak=begin -m --bind=tab:down,ctrl-j:accept,change:top,ctrl-space:toggle --cycle
-      '--query=$query'   # $query will be expanded to query string at runtime.
-      '--header-lines=$#headers' # $#headers will be expanded to lines of headers at runtime
-  )
-  zstyle ':fzf-tab:*' command $FZF_TAB_COMMAND
-
-  # disable sort when completing options of any command
-  zstyle ':completion:complete:*:options' sort false
+  zstyle ":completion:*:git-checkout:*" sort false
+  zstyle ':completion:*:descriptions' format '[%d]'
+  zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
   # give a preview when completing `kill`
   zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm,cmd -w -w"
   zstyle ':fzf-tab:complete:kill:argument-rest' extra-opts '--preview=echo $(<{f})' --preview-window=down:3:wrap
 
-  # (experimental) give a preview of directory when completing cd
-  local extract="
-  # trim input
-  in=\${\${\"\$(<{f})\"%\$'\0'*}#*\$'\0'}
-  # get ctxt for current completion
-  local -A ctxt=(\"\${(@ps:\2:)CTXT}\")
-  "
-
   if command-exist exa; then
-    zstyle ':fzf-tab:complete:cd*' extra-opts --preview=$extract"exa -1 --color=always \${~ctxt[hpre]}\$in"
+    zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
   else
-    zstyle ':fzf-tab:complete:cd*' extra-opts --preview=$extract"ls -1 --color=always \${~ctxt[hpre]}\$in"
+    zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls -1 --color=always $realpath'
   fi
 fi
 # }}}
