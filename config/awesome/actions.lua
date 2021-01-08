@@ -23,6 +23,12 @@ function actions.focus_screen(offset)
   end
 end
 
+function actions.focus_screen_dir(direction)
+  return function()
+    awful.screen.focus_bydirection(direction)
+  end
+end
+
 function actions.move_focused_client(offset)
   return function ()
     awful.client.swap.byidx(offset)

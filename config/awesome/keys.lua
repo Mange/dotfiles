@@ -150,8 +150,8 @@ keys.global = gears.table.join(
 
     -- Group: Screen
     awful.key({modkey}, "Escape", actions.focus_screen(1), {description = "Next screen", group = "Screen"}),
-    awful.key({modkey}, "l", actions.focus_screen(1), {description = "Next screen", group = "Screen"}),
-    awful.key({modkey}, "h", actions.focus_screen(-1), {description = "Previous screen", group = "Screen"}),
+    awful.key({modkey}, "h", actions.focus_screen_dir("left"), {description = "← Screen", group = "Screen"}),
+    awful.key({modkey}, "l", actions.focus_screen_dir("right"), {description = "Screen →", group = "Screen"}),
 
     -- Group: Layout
     awful.key({modkey}, "q", actions.next_layout(), {description = "Next layout", group = "Layout"}),
