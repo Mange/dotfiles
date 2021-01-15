@@ -5,6 +5,10 @@
   hooksPath = ~/.config/git/hooks
 	pager = delta-wrapper
 
+[init]
+  # Newspeak is double-plus ungood
+	defaultBranch = master
+
 # That's me!
 [user]
   name = Magnus Bergmark
