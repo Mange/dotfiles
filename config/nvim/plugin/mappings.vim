@@ -80,6 +80,17 @@ nmap <leader><s-tab> :cp<CR>
 let g:which_key_map['\<s-tab>'] = 'quickfix-previous'
 " }}}
 
+" {{{ Leader (visual)
+" ">" → +into
+" "<" → +from
+" Can't add descriptions for these because vim-which-key does not support it.
+
+" Base64 (key "6")
+vmap <leader>>6  :<C-u>call base64#v("encode")<CR>
+vmap <leader><6  :<C-u>call base64#v("decode")<CR>
+
+" }}}
+
 " {{{ Leader +buffer
 " TODO: only, save all, bookmarks?
 
