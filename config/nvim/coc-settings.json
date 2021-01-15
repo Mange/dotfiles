@@ -31,5 +31,10 @@
     "javascriptreact": "(?:\\bclass(?:Name)?\\s*=\\s*[\\\"\\']([_a-zA-Z0-9\\s\\-\\:\\/]+)[\\\"\\'])|(?:\\btw\\s*`([_a-zA-Z0-9\\s\\-\\:\\/]*)`)",
     "typescript": "(?:\\bclass(?:Name)?\\s*=\\s*[\\\"\\']([_a-zA-Z0-9\\s\\-\\:\\/]+)[\\\"\\'])|(?:\\btw\\s*`([_a-zA-Z0-9\\s\\-\\:\\/]*)`)",
     "typescriptreact": "(?:\\bclass(?:Name)?\\s*=\\s*[\\\"\\']([_a-zA-Z0-9\\s\\-\\:\\/]+)[\\\"\\'])|(?:\\btw\\s*`([_a-zA-Z0-9\\s\\-\\:\\/]*)`)"
-  }
+  },
+  "yaml.schemas": {
+    "kubernetes": ["kube/**/*.yml", "kubernetes/**/*.yml",
+      "helm/*/templates/*.yml", "kube*.yaml"]
+  },
+  "yaml.schemaStore.enable": true
 }
