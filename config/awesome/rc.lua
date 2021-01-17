@@ -42,6 +42,18 @@ actions = require("actions")
 local dropdown = require("dropdown")
 local sharedtags = require("sharedtags")
 local wibar = require("wibar")
+local screen_layout = require("screen_layout")
+
+-- Global variable
+current_screen_layout = screen_layout.get_layout()
+
+-- A `require` that reloads the module if it was already loaded.
+-- Useful in REPL to be able to test changes to your module without restarting
+-- Awesome.
+function reload(name)
+    package.loaded[name] = nil
+    return require(name)
+end
 
 -- {{{ Variable definitions
 -- Table of layouts to cover with awful.layout.inc, order matters.
@@ -110,77 +122,91 @@ beautiful.tasklist_bg_urgent = gruvbox.faded_orange .. "55"
 beautiful.wallpaper = gears.filesystem.get_xdg_data_home() .. "wallpapers/current.jpg"
 -- }}}
 
--- {{{ Tags
-tags = sharedtags({
-    {
-      name = "System",
-      icon_text = "",
-      layout = awful.layout.suit.tile
-    },
-    {
-      name = "Code",
-      icon_text = "",
-      layout = awful.layout.suit.tile
-    },
-    {
-      name = "Browse",
-      icon_text = "",
-      layout = awful.layout.suit.tile
-    },
-    {
-      name = "4",
-      icon_text = nil,
-      layout = awful.layout.suit.tile
-    },
-    {
-      name = "5",
-      icon_text = nil,
-      layout = awful.layout.suit.tile
-    },
-    {
-      name = "6",
-      icon_text = nil,
-      layout = awful.layout.suit.tile
-    },
-    {
-      name = "7",
-      icon_text = nil,
-      layout = awful.layout.suit.tile
-    },
-    {
-      name = "Game",
-      icon_text = "",
-      layout = awful.layout.suit.max
-    },
-    {
-      name = "Media",
-      icon_text = "",
-      layout = awful.layout.suit.fair.horizontal,
-      screen = 2
-    },
-    {
-      name = "Chat",
-      icon_text = "",
-      layout = awful.layout.suit.max,
-      screen = 2
-    },
-})
-
-actions.tags = tags
--- }}}
-
 -- {{{ Screens
 
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal("property::geometry", utils.reload_wallpaper)
 
 awful.screen.connect_for_each_screen(function(s)
-    -- Wallpaper
-    utils.reload_wallpaper(s)
+    current_screen_layout = screen_layout.get_layout()
+    screen_layout.apply_wallpaper_overrides(current_screen_layout)
 
+    utils.reload_wallpapers()
     wibar.create_for_screen(s)
 end)
 -- }}}
+
+-- {{{ Tags
+tags = sharedtags({
+    {
+      name = "System",
+      icon_text = "",
+      layout = awful.layout.suit.tile,
+      screen = current_screen_layout.main.index,
+    },
+    {
+      name = "Code",
+      icon_text = "",
+      layout = awful.layout.suit.tile,
+      screen = current_screen_layout.main.index,
+    },
+    {
+      name = "Browse",
+      icon_text = "",
+      layout = awful.layout.suit.tile,
+      screen = current_screen_layout.reference.index,
+    },
+    {
+      name = "Aside",
+      icon_text = "",
+      layout = awful.layout.suit.tile,
+      screen = current_screen_layout.comms.index,
+    },
+    {
+      name = "5",
+      icon_text = nil,
+      layout = awful.layout.suit.tile,
+      screen = current_screen_layout.main.index,
+    },
+    {
+      name = "6",
+      icon_text = nil,
+      layout = awful.layout.suit.tile,
+      screen = current_screen_layout.main.index,
+    },
+    {
+      name = "7",
+      icon_text = nil,
+      layout = awful.layout.suit.tile,
+      screen = current_screen_layout.main.index,
+    },
+    {
+      name = "Game",
+      icon_text = "",
+      layout = awful.layout.suit.max,
+      screen = current_screen_layout.main.index,
+    },
+    {
+      name = "Media",
+      icon_text = "",
+      layout = awful.layout.suit.fair.horizontal,
+      screen = current_screen_layout.comms.index,
+    },
+    {
+      name = "Chat",
+      icon_text = "",
+      layout = awful.layout.suit.max,
+      screen = current_screen_layout.comms.index,
+    },
+})
+
+actions.tags = tags
+
+awful.tag.attached_connect_signal(nil, "property::screen", function(t)
+    screen_layout.tag_layout_rotation(t)
+end)
+-- }}}
+
 
 -- {{{ Mouse bindings
 root.buttons(gears.table.join(

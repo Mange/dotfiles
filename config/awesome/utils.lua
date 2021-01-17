@@ -39,23 +39,16 @@ function utils.on_first_start(func)
   end
 end
 
-function utils.set_wallpaper(s, wallpaper)
-    if wallpaper then
-        -- If wallpaper is a function, call it with the screen
-        if type(wallpaper) == "function" then
-            wallpaper = wallpaper(s)
-        end
-        gears.wallpaper.maximized(wallpaper, s, true)
-    end
+function utils.wallpaper_path(name)
+  return gears.filesystem.get_xdg_data_home() .. "wallpapers/" .. name
 end
 
 function utils.reload_wallpaper(s)
-  utils.set_wallpaper(s, beautiful.wallpaper)
+  gears.wallpaper.maximized(s.wallpaper_override or beautiful.wallpaper, s, false)
 end
 
-function utils.change_wallpaper(wallpaper) -- luacheck: ignore 131
-  beautiful.wallpaper = wallpaper
-  for s = 1, screen.count() do
+function utils.reload_wallpapers()
+  for s in screen do
     utils.reload_wallpaper(s)
   end
 end

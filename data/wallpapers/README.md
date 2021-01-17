@@ -24,7 +24,15 @@ by **John Towner**
 
 Source: https://alpha.wallhaven.cc/wallpaper/618670
 
-## `wallhaven-760322.jpg
+## `wallhaven-760322.jpg`
 by **hellonomad.com**
 
 Source: https://alpha.wallhaven.cc/wallpaper/760322
+
+## `wallhaven-r21q37.jpg`
+
+Source: https://wallhaven.cc/w/r21q37
+
+## `wallhaven-eyq6zr.jpg`
+
+Source: https://wallhaven.cc/w/eyq6zr
