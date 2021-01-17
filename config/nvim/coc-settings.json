@@ -36,5 +36,17 @@
     "kubernetes": ["kube/**/*.yml", "kubernetes/**/*.yml",
       "helm/*/templates/*.yml", "kube*.yaml"]
   },
-  "yaml.schemaStore.enable": true
+  "yaml.schemaStore.enable": true,
+  "languageserver": {
+    "terraform": {
+      "command": "terraform-ls",
+      "args": ["serve"],
+      "filetypes": [
+        "terraform",
+        "tf"
+      ],
+      "initializationOptions": {},
+      "settings": {}
+    }
+  }
 }
