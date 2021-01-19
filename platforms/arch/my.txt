@@ -116,7 +116,9 @@ feh
 flameshot # Screenshot app
 gucharmap
 kitty
-ktouch # I'm practicing touch typing
+
+# ktouch # I'm practicing touch typing; replaced with keybr.com as I don't want kglobalaccel to infect my systems
+
 lxappearance
 lxrandr
 network-manager-applet
@@ -170,78 +172,6 @@ zathura
 zathura-cb # Adds comic book support to zathura
 zathura-djvu # DjVu support for Zathura
 zathura-pdf-mupdf # EPUB, PDF and XPS support based on MuPDF
-
-#
-# KDE software
-#
-plasma-meta # Install basics of the KDE environment (themes, daemons, etc.)
-# (it also installs wallpapers and actual shell, but disk space is not
-# really a problem; it's nice not having to repeat all of that software
-# in here and keep the list up to date)
-
-# Some package groups of useful software. (Mainly trying to avoid kdegames)
-# :read! pacman -Ss 'kde-.*-meta'
-# kde-accessibility-meta # Meta package for KDE accessibility applications
-# kde-applications-meta # Meta package for KDE Applications
-# kde-education-meta # Meta package for KDE education applications
-# kde-games-meta # Meta package for kDE games
-kde-graphics-meta # Meta package for KDE graphics applications
-kde-multimedia-meta # Meta package for KDE multimedia applications
-kde-network-meta # Meta package for KDE network applications
-kde-pim-meta # Meta package for KDE PIM applications
-kde-sdk-meta # Meta package for KDE SDK applications
-kde-system-meta # Meta package for KDE system applications
-kde-utilities-meta # Meta package for KDE utilities applications
-# kde-development-environment-meta # Metapackage to install a full KDE development environment
-
-qt5ct # Helps enabling QT integration into non-kde desktop environments
-oxygen-icons
-
-filelight # Disk space visualizer
-unarchiver # RAR support for Ark
-
-# Optional deps for KDE software
-qt5-webengine            # HTML thumbnailer
-qt5-imageformats         # thumbnails for additional image formats
-kimageformats            # thumbnails for additional image formats
-taglib                   # audio file thumbnails
-khtml                    # man kioslave
-kde-cli-tools            # for editing file type options
-ffmpegthumbs             # video thumbnails
-kdegraphics-thumbnailers # PDF and PS thumbnails
-
-#
-# GNOME software
-#
-gnome-calculator
-gnome-calendar
-gnome-characters
-gnome-color-manager
-gnome-contacts
-gnome-font-viewer
-gnome-icon-theme
-gnome-icon-theme-extras
-gnome-keyring
-gnome-online-accounts
-gnome-photos
-gnome-session
-gnome-settings-daemon
-gnome-system-log
-gnome-system-monitor
-gnome-themes-standard
-gnome-tweak-tool
-gnome-user-share
-gnome-weather
-gvfs-goa
-gvfs-google
-gvfs-gphoto2
-gvfs-mtp
-gvfs-nfs
-gvfs-smb
-polkit-gnome
-seahorse
-shotwell
-system-config-printer
 
 # Media
 vlc

@@ -1,13 +1,15 @@
-# vim:ft=text:nospell
+# vim:ft=config:nospell
 # morbidus-specific
 nvidia
 nvidia-utils
 nvidia-settings
 
+# Photo manager
+shotwell
+
 # drawing
 libwacom
 xf86-input-wacom
-kcm-wacomtablet
 krita
 
 # beets
@@ -23,3 +25,6 @@ python-pyacoustid     # Chromaprint/Acoustid plugin<Paste>
 python-pylast         # LastGenre plugin
 python-requests       # Chromaprint/Acoustid, BPD, FetchArt plugins
 python-xdg 			      # Thumbnails plugin
+
+# I like to download Linux ISOs, okay?
+transmission-remote-gtk
