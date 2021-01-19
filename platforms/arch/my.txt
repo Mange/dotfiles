@@ -1,6 +1,9 @@
 # vim:ft=config:nospell
 # My stuff
 
+# To get GPG etc. unlocked globally
+gnome-keyring
+
 # Neovim
 # neovim # Using neovim-git via AUR right now
 python # For neovim plugins
