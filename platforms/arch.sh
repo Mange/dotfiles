@@ -2,8 +2,8 @@
 set -e
 
 if [[ "$(id -u)" -eq 0 ]]; then
-	echo "Must not be run as root!" >&2
-	exit 127
+  echo "Must not be run as root!" >&2
+  exit 127
 fi
 
 cd "$(dirname "$0")"
@@ -371,6 +371,33 @@ configure-polkit() {
   sudo-copy-replace-with-diff "$dotfile_config" "$config" || handle-failure
 }
 
+configure-pacman() {
+  header "Configuring Pacman"
+
+  local config=/etc/pacman.conf
+
+  # Enable color, if not enabled
+  if ! grep -Eq "^Color" "$config"; then
+    run-command-quietly "Enabling Color in Pacman" < <(
+      sudo sed -i "s/^#Color/Color/" "$config" 2>&1
+    )
+  fi
+
+  if ! grep -Eq '^IgnorePkg' "$config"; then
+    run-command-quietly "Enabling IgnorePkg" < <(
+      sudo sed -i "s/^#IgnorePkg/IgnorePkg/" "$config" 2>&1
+    )
+  fi
+
+  # Forbid kglobalaccel from being installed
+  pkg="kglobalaccel"
+  if ! grep -Eq "IgnorePkg\\s*=.*\\b${pkg}\\b" "$config"; then
+    run-command-quietly "Forbidding $pkg" < <(
+      sudo sed -Ei "/^IgnorePkg\\b/ s/\$/ ${pkg}/" "$config" 2>&1
+    )
+  fi
+}
+
 setup-nerd-fonts() {
   local package_config=/etc/fonts/conf.avail/10-nerd-font-symbols.conf
   local user_config=${XDG_CONFIG_HOME:-~/.config}/fontconfig/conf.d/10-nerd-font-symbols.conf
@@ -551,6 +578,7 @@ if run-section "fast"; then
 
   configure-lightdm
   configure-polkit
+  configure-pacman
 
   header "Configuring Systemd"
   enable-systemd-unit "NetworkManager"
