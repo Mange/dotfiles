@@ -1,5 +1,13 @@
 # vim: ft=sh
 
+# Load everything from ~/.config/environment.d/ (which normally is only read by
+# systemd --user units)
+if [ -f /usr/lib/systemd/user-environment-generators/30-systemd-environment-d-generator ]; then
+  set -a
+  eval "$(/usr/lib/systemd/user-environment-generators/30-systemd-environment-d-generator)"
+  set +a
+fi
+
 # shellcheck source=/dev/null
 source "${XDG_CONFIG_HOME:-${HOME}/.config}/shells/paths"
 
@@ -7,7 +15,7 @@ source "${XDG_CONFIG_HOME:-${HOME}/.config}/shells/paths"
 source "${XDG_CONFIG_HOME:-${HOME}/.config}/shells/xdg_zealotry"
 
 # Have current hostname in ENV for easy reference in config files, etc.
-# Dont use either $HOST or $HOSTNAME as those are set automatically by zsh /
+# Don't use either $HOST or $HOSTNAME as those are set automatically by zsh /
 # bash.
 MY_HOST="$(hostname)"
 export MY_HOST

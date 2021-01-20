@@ -1,13 +1,4 @@
 # vim: ft=sh
 
-if [[ $_mange_xdg_zealotry != "yes" ]]; then
-  _mange_xdg_zealotry="yes"
-
-  set -a
-  # shellcheck source=../environment.d/10-xdg-zealotry.conf
-  . "$HOME/.config/environment.d/10-xdg-zealotry.conf"
-  set +a
-
-  alias tmux='tmux -f "${XDG_CONFIG_HOME}/tmux/tmux.conf"'
-  alias tmate='tmate -f "${XDG_CONFIG_HOME}/tmux/tmux.conf"'
-fi
+alias tmux='tmux -f "${XDG_CONFIG_HOME}/tmux/tmux.conf"'
+alias tmate='tmate -f "${XDG_CONFIG_HOME}/tmux/tmux.conf"'
