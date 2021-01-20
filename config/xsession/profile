@@ -9,9 +9,6 @@
 # shellcheck source=/dev/null
 . "${XDG_CONFIG_HOME}/shells/enable-rvm"
 
-# Tell KDE apps to load theme using qt5ct
-export QT_QPA_PLATFORMTHEME=qt5ct
-
 eval "$(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)"
 export SSH_AUTH_SOCK
 export GNOME_KEYRING_CONTROL
