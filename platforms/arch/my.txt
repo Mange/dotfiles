@@ -109,38 +109,40 @@ transmission-cli # bittorrent info
 #
 # Desktop env
 #
-acpi # for battery indication, etc. in wibar
-autorandr
-# picom # disabled for AUR picom-ibhagwan-git
-blueman
-brightnessctl
-dunst # libnotify server
-feh
-flameshot # Screenshot app
-gucharmap
-kitty
 
 # ktouch # I'm practicing touch typing; replaced with keybr.com as I don't want kglobalaccel to infect my systems
+# picom # disabled for AUR picom-ibhagwan-git
 
-lxappearance
-lxrandr
+acpi # for battery indication, etc. in wibar
+autorandr # xrandr config for screen combinations
+blueman # bluetooth support
+brightnessctl # control brightness from cli
+dunst # libnotify server
+feh # image viewer and background setter
+flameshot # Screenshot app
+gucharmap # character lookup gui, good for icon fonts
+kitty # terminal emulator
+lxappearance # dunno lol
+lxrandr # gui for xrandr
 network-manager-applet
 parcellite # Clipboard manager
-pavucontrol
-rofi
+pavucontrol # pulse audio settings gui
+rofi # graphical selector and app launcher
 sysstat # sysstat installs mpstat(1) for bar-cpu
-telegram-desktop
+telegram-desktop # chat
 udiskie # auto-mounter for devices (and tray icon)
 unclutter # Hide mouse cursor when not in use
 wireless_tools # for wibar
 wmctrl # for wmquit, etc.
-workrave
+workrave # anti-rsi + workbreak timer
 xcape # Make Super into both Super and Escape
-xsel
+xsel # used by a lot of cli tools to copy/paste
 xss-lock # Screenlocker
 zenity # GUI prompts from scripts (ytpip, etc.)
 
-# Awesome WM experiment
+adapta-gtk-theme # gtk theme
+
+# Awesome WM
 awesome
 luarocks
 # TODO:
