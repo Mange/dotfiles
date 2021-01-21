@@ -584,6 +584,7 @@ if run-section "fast"; then
   enable-systemd-unit "NetworkManager"
   enable-systemd-unit "lightdm"
   enable-systemd-unit "bluetooth"
+  enable-systemd-unit "sshd"
   enable-systemd-unit "pcscd" # smartcard daemon, for Yubikey, etc.
 
   if hash docker 2>/dev/null; then
