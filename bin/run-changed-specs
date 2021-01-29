@@ -1,16 +1,38 @@
 #!/usr/bin/env zsh
+# Run RSpec on all rspec specs that has changed. See changed-specs.
+#
+# Usage:
+#   run-changed-specs [type] [--] [rspec opts…]
+#
+# Known types:
+#   current (default) - Uncommitted changes.
+#   branch - Changed between master and current tree.
+#
+# Any unknown type specified will be passed on to rspec as an option.
 
 if [[ -f bin/rspec ]]; then
-  command="bin/rspec"
+  rspec="bin/rspec"
 else
-  command="rspec"
+  rspec="rspec"
 fi
-# List changes to spec files, ignoring deleted files and print last column.
-# Last column should be the existing filename. If (M)odified, it'll just be
-# two columns, but if renamed, git status will output "old -> new".
-local changed="$(git status --porcelain | grep '_spec\.rb' | grep -vE '\bD\b' | awk '{ print $NF }')"
-if [[ -n $changed ]]; then
-  xargs --arg-file=<(echo $changed) $command $@
-else
-  echo "No changed spec files could be found." > /dev/stderr
-fi
+
+command=(changed-specs)
+
+case "$1"; in
+  "" | current)
+    command+=(current)
+    [[ "$#" -gt 0 ]] && shift
+    ;;
+  branch)
+    command+=(branch)
+    shift
+    ;;
+  "--")
+    shift
+    ;;
+esac
+
+# Use arg-file to not muck up stdin; which would break "docker exec" wrappers
+# as well as interactive debugging sessions.
+# If no files matched, then do nothing.
+xargs --arg-file=<("${command[@]}") --no-run-if-empty -- "$rspec" "$@"

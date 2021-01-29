@@ -1,0 +1,97 @@
+#!/usr/bin/env zsh
+# List all RSpec files changed in the current repo.
+#
+# Usage:
+#   changed-specs [type]
+#
+# Known types:
+#   current (default) - Uncommitted changes.
+#   branch - Changed between master and current tree.
+set -e
+
+gitroot="$(git rev-parse --show-toplevel)"
+wd="$(pwd)"
+diff_command=(
+  git
+  diff
+  --name-only
+  --diff-filter=d
+)
+
+case "$1"; in
+  "" | current)
+    # Do nothing
+    ;;
+  branch)
+    diff_command+=("origin/master..")
+    ;;
+  *)
+    echo "Invalid argument \"$1\"." >&2
+    exit 1
+    ;;
+esac
+
+"${diff_command[@]}" | \
+  grep '_spec.rb$' | \
+  while read -r file; do
+    # Get the relative path from pwd
+    full="${gitroot}/${file}"
+    realpath --relative-to="$wd" "$full"
+  done
+
+# Older implementation using git status. Saving it around in case it ever
+# becomes useful again; right now `git diff` seems to cover all cases I am able
+# to find.
+#
+# git status --porcelain=v2 -z | \
+#   awk -f /dev/fd/3 3<<AWK |
+#   # Process the status output to list only the filenames of current changed
+#   # files, from the git root.
+#   BEGIN {
+#     RS = "\0"
+#     state = "normal"
+#   }
+#
+#   # When a file is renamed, then the new file name will be emitted on its own
+#   # record. Skip that name.
+#   state == "renamed" {
+#     state = "normal"
+#     next
+#   }
+#
+#   # Normal file; filename is last part
+#   # TODO: Files with spaces in them won't work here. Instead, print all
+#   # records from offset until the end.
+#   \$1 == "1" {
+#     print \$NF
+#     next
+#   }
+#
+#   # Renamed file; new filename is last part
+#   # TODO: Files with spaces in them won't work here. Instead, print all
+#   # records from offset until the end.
+#   \$1 == "2" {
+#     print \$NF
+#     state = "renamed"
+#     next
+#   }
+#
+#   # Unmerged file; filename is last part
+#   # TODO: Files with spaces in them won't work here. Instead, print all
+#   # records from offset until the end.
+#   \$1 == "u" {
+#     print \$NF
+#     next
+#   }
+#
+#   # Untracked file; new filename is last part
+#   # TODO: Files with spaces in them won't work here. Instead, print all
+#   # records from offset until the end.
+#   \$1 == "?" {
+#     print \$NF
+#     next
+#   }
+#
+#   # Other kind of record? Well, let's skip it.
+#   { next }
+# AWK

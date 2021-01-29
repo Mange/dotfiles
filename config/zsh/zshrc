@@ -186,7 +186,6 @@ zstyle ':complete:sudo:' environ HOME="/root"
 
 # Commands that should be completed like other commands
 compdef run-changed-specs=rspec
-compdef run-branch-specs=rspec
 
 # Show completion group names
 zstyle ':completion:*:descriptions' format "%d"
