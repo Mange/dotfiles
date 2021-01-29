@@ -33,8 +33,18 @@
     "typescriptreact": "(?:\\bclass(?:Name)?\\s*=\\s*[\\\"\\']([_a-zA-Z0-9\\s\\-\\:\\/]+)[\\\"\\'])|(?:\\btw\\s*`([_a-zA-Z0-9\\s\\-\\:\\/]*)`)"
   },
   "yaml.schemas": {
-    "kubernetes": ["kube/**/*.yml", "kubernetes/**/*.yml",
-      "helm/*/templates/*.yml", "kube*.yaml"]
+    "kubernetes": [
+      "helm/*/templates/*.yaml",
+      "helm/*/templates/*.yml",
+      "k8s/**/*.yaml",
+      "k8s/**/*.yml",
+      "kube*.yaml",
+      "kube*.yml",
+      "kube/**/*.yaml",
+      "kube/**/*.yml",
+      "kubernetes/**/*.yaml",
+      "kubernetes/**/*.yml"
+    ]
   },
   "yaml.schemaStore.enable": true,
   "languageserver": {
