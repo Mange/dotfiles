@@ -19,11 +19,8 @@ diff_command=(
 )
 
 case "$1"; in
-  "" | current)
+  "" | current | branch | staged)
     # Do nothing
-    ;;
-  branch)
-    diff_command+=("origin/master..")
     ;;
   *)
     echo "Invalid argument \"$1\"." >&2
@@ -31,13 +28,33 @@ case "$1"; in
     ;;
 esac
 
-"${diff_command[@]}" | \
+get_files() {
+  local variant
+
+  case "$1"; in
+    branch)
+      variant="origin/master.."
+      ;;
+    staged)
+      variant="--staged"
+      ;;
+  esac
+
+  if [[ -n "$variant" ]]; then
+    "${diff_command[@]}" "$variant"
+  else
+    "${diff_command[@]}"
+  fi
+}
+
+cat <(get_files "$1") <(get_files staged) | \
   grep '_spec.rb$' | \
   while read -r file; do
     # Get the relative path from pwd
     full="${gitroot}/${file}"
     realpath --relative-to="$wd" "$full"
-  done
+  done | \
+  sort -u
 
 # Older implementation using git status. Saving it around in case it ever
 # becomes useful again; right now `git diff` seems to cover all cases I am able
