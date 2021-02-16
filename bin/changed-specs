@@ -11,11 +11,15 @@ set -e
 
 gitroot="$(git rev-parse --show-toplevel)"
 wd="$(pwd)"
+
 diff_command=(
   git
   diff
   --name-only
   --diff-filter=d
+)
+untracked_files_command=(
+  git ls-files --others --exclude-standard
 )
 
 case "$1"; in
@@ -28,87 +32,38 @@ case "$1"; in
     ;;
 esac
 
-get_files() {
-  local variant
-
+diff_files() {
   case "$1"; in
     branch)
-      variant="origin/master.."
+      "${diff_command[@]}" origin/master..
       ;;
     staged)
-      variant="--staged"
+      "${diff_command[@]}" --staged
+      ;;
+    *)
+      "${diff_command[@]}"
       ;;
   esac
-
-  if [[ -n "$variant" ]]; then
-    "${diff_command[@]}" "$variant"
-  else
-    "${diff_command[@]}"
-  fi
 }
 
-cat <(get_files "$1") <(get_files staged) | \
-  grep '_spec.rb$' | \
+find_specs() {
+  grep '_spec.rb$'
+}
+
+abs_to_relative() {
   while read -r file; do
     # Get the relative path from pwd
     full="${gitroot}/${file}"
     realpath --relative-to="$wd" "$full"
-  done | \
-  sort -u
+  done
+}
 
-# Older implementation using git status. Saving it around in case it ever
-# becomes useful again; right now `git diff` seems to cover all cases I am able
-# to find.
-#
-# git status --porcelain=v2 -z | \
-#   awk -f /dev/fd/3 3<<AWK |
-#   # Process the status output to list only the filenames of current changed
-#   # files, from the git root.
-#   BEGIN {
-#     RS = "\0"
-#     state = "normal"
-#   }
-#
-#   # When a file is renamed, then the new file name will be emitted on its own
-#   # record. Skip that name.
-#   state == "renamed" {
-#     state = "normal"
-#     next
-#   }
-#
-#   # Normal file; filename is last part
-#   # TODO: Files with spaces in them won't work here. Instead, print all
-#   # records from offset until the end.
-#   \$1 == "1" {
-#     print \$NF
-#     next
-#   }
-#
-#   # Renamed file; new filename is last part
-#   # TODO: Files with spaces in them won't work here. Instead, print all
-#   # records from offset until the end.
-#   \$1 == "2" {
-#     print \$NF
-#     state = "renamed"
-#     next
-#   }
-#
-#   # Unmerged file; filename is last part
-#   # TODO: Files with spaces in them won't work here. Instead, print all
-#   # records from offset until the end.
-#   \$1 == "u" {
-#     print \$NF
-#     next
-#   }
-#
-#   # Untracked file; new filename is last part
-#   # TODO: Files with spaces in them won't work here. Instead, print all
-#   # records from offset until the end.
-#   \$1 == "?" {
-#     print \$NF
-#     next
-#   }
-#
-#   # Other kind of record? Well, let's skip it.
-#   { next }
-# AWK
+(
+  diff_files "$1" | find_specs | abs_to_relative
+
+  # Always include staged files, no matter what other variant is selected
+  diff_files staged | find_specs | abs_to_relative
+
+  # Always include untracked files, no matter what other variant is selected
+  "${untracked_files_command[@]}" | find_specs
+) | sort -u
