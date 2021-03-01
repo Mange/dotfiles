@@ -28,6 +28,7 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-speeddating' " CTRL-X/A works on dates
 Plug 'tpope/vim-surround'
 Plug 'vim-scripts/ZoomWin'
+Plug 'nicwest/vim-workman' " Workman layout helpers
 
 Plug 'sheerun/vim-polyglot'
 Plug 'kevinoid/vim-jsonc' " JSON + comments (coc-settings.json, etc)

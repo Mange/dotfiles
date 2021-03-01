@@ -74,4 +74,15 @@ function utils.placement_centered(scale)
   end
 end
 
+function utils.placement_downright(scale)
+  local f =
+    awful.placement.scale +
+    awful.placement.no_offscreen +
+    awful.placement.bottom_right
+
+  return function(c)
+    f(c, {to_percent = scale})
+  end
+end
+
 return utils

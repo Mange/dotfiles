@@ -1,5 +1,8 @@
 # vim:ft=config:nospell
 
+# Workman keyboard layout
+workman-git
+
 # Text editors
 neovim-git
 neovim-gtk-git

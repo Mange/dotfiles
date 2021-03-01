@@ -322,6 +322,21 @@ awful.rules.rules = {
       },
     },
 
+    -- Keyboard viewer
+    {
+        rule_any = {
+            class = {"gkbd-keyboard-display", "Gkbd-keyboard-display"},
+        },
+        properties = {
+            placement = utils.placement_downright(0.5),
+            floating = true,
+            size_hints_honor = false,
+            sticky = true,
+            above = true,
+            opacity = 0.7
+        }
+    },
+
     -- Web clients
     {
       rule_any = {
