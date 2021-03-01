@@ -43,6 +43,7 @@ set wildmode=list:longest,full
 
 " Looks
 set listchars=tab:→\ ,eol:¬,nbsp:•
+set list
 
 " Tags
 set tags^=./.git/tags; " Load tags written by my Git hooks
