@@ -1,6 +1,7 @@
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
 
+set foldlevel=99
 set history=100
 set undolevels=1000
 set ruler        " show the cursor position all the time
