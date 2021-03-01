@@ -7,7 +7,11 @@ let g:ruby_heredoc_syntax_filetypes = {
       \},
   \}
 
-" Original defaults. Remove "coffee"
+" Original defaults.
+" Changes:
+"   * Remove "coffee"
+"   * Add "json"
+"
 " let g:ruby_heredoc_syntax_defaults = {
 "       \ "javascript" : {
 "       \   "start" : "JS",
@@ -25,6 +29,9 @@ let g:ruby_heredoc_syntax_filetypes = {
 let g:ruby_heredoc_syntax_defaults = {
       \ "javascript" : {
       \   "start" : "JS",
+      \},
+      \ "json" : {
+      \   "start" : "JSON",
       \},
       \ "sql" : {
       \   "start" : "SQL",
