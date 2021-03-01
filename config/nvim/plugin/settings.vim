@@ -7,16 +7,16 @@ set undolevels=1000
 set ruler        " show the cursor position all the time
 set showcmd      " display incomplete commands
 set laststatus=2 " Always show status for last window
-set incsearch
 set number       " line numbers
 set nobackup
 set autoread
+
+" Search settings
+set incsearch
 set ignorecase
 set smartcase
-
-set hlsearch   " Toggle with sh
-set wrap       " Toggle with sw
-" See map_toggle.vim for more toggle mappings
+set hlsearch
+set wrap
 
 set shortmess=imrx
 
