@@ -201,6 +201,7 @@ docker
 docker-compose
 
 # Mail, etc.
+thunderbird
 afew # Notmuch tagger
 isync # Email sync via IMAP
 msmtp # For email sending

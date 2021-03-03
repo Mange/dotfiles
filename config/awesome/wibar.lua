@@ -103,12 +103,6 @@ function wibar.create_for_screen(s)
               left_click = actions.spawn({"kitty", "vit"}),
               right_click = actions.spawn({"kitty", "vit"}),
             }),
-            polybar_wrapper({
-              command = {polybar_dir .. "mailboxes"},
-              interval = 30,
-              left_click = actions.spawn({"kitty", "neomutt"}),
-              right_click = actions.spawn({"systemctl", "--user", "start", "mailboxes.service"}),
-            }),
             volume_widget.new(),
             battery_widget.new(),
             wibox.widget.systray(),

@@ -163,8 +163,8 @@ tags = sharedtags({
       screen = current_screen_layout.comms.index,
     },
     {
-      name = "5",
-      icon_text = nil,
+      name = "Mail",
+      icon_text = "",
       layout = awful.layout.suit.tile,
       screen = current_screen_layout.main.index,
     },
@@ -343,6 +343,20 @@ awful.rules.rules = {
         class = {"Firefox"},
       },
       properties = { tag = tags[3] },
+    },
+
+    -- Mail clients
+    {
+      rule_any = {
+        class = {"Thunderbird"},
+      },
+      properties = { tag = tags[5] },
+    },
+    {
+      rule_any = {
+        role = {"AlarmWindow"},
+      },
+      properties = { sticky = true },
     },
 
     -- Media clients
