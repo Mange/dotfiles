@@ -1,1 +1,8 @@
+# vim:ft=config:nospell
+# morbidus-specific AUR stuff
+
 deezloader-remix-bin
+
+# Moonlander keyboard
+zsa-wally # Keyboard flashing
+zsa-wally-cli # …but I'm a nerd
