@@ -17,6 +17,8 @@ let g:ale_linters = {
 \       'clang',
 \       'clangtidy',
 \   ],
+\   'typescript': [],
+\   'typescriptreact': [],
 \}
 
 let g:ale_fixers = {
@@ -27,6 +29,8 @@ let g:ale_fixers = {
 \       'clangtidy',
 \       'clang-format',
 \   ],
+\   'typescript': [],
+\   'typescriptreact': [],
 \}
 
 let g:ale_pattern_options = {

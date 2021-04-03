@@ -1,7 +1,7 @@
 {
   "codeLens.enable": true,
-  "diagnostic.enable": false,
-  "diagnostic.displayByAle": true,
+  "diagnostic.enable": true,
+  "diagnostic.displayByAle": false,
   "suggest.enablePreview": true,
   "suggest.minTriggerInputLength": 6,
   "solargraph.hover": true,
@@ -15,6 +15,10 @@
     "blade",
     "eruby"
   ],
+  "coc.preferences.formatOnSaveFiletypes": ["css", "markdown", "javascript", "typescript", "typescriptreact", "javascriptreact"],
+  "prettier.disableSuccessMessage": true,
+  "prettier.statusItemText": "",
+  "css.lint.unknownAtRules": "ignore",
   "tailwindCSS.headwind.classRegex": {
     "reason": "(?:\\bclassName\\s*=\\s*[\\\"\\']([_a-zA-Z0-9\\s\\-\\:\\/]+)[\\\"\\'])|(?:\\btw\\s*`([_a-zA-Z0-9\\s\\-\\:\\/]*)`)",
     "elm": "\\bclass\\s*\\\"([_a-zA-Z0-9\\s\\-\\:\\/]+)\\\"",
