@@ -500,13 +500,12 @@ function mange-prompt-preexec() {
 
 # - Show time taken for long-running commands
 # - Set terminal title
+_mange_last_cmd_duration=
 function mange-prompt-precmd() {
+  local ret="$?"
   local stop=$EPOCHSECONDS
   local start=${cmd_timestamp:-$stop}
-  local elapsed=$((stop-start))
-  if ((elapsed >= 10)); then
-    echo -e "${bg[cyan]}${fg[black]}🕓 $(seconds-to-human $elapsed)${reset_color}${fg[cyan]}${reset_color}"
-  fi
+  _mange_last_cmd_duration=$((stop-start))
   unset cmd_timestamp
 
   # Set terminal title, using prompt format.
@@ -528,6 +527,12 @@ _prompt_command_mode_character="%1{»%}"
 # Show mode information by the last character in the prompt
 function prompt_end_character {
   zle_mode_output "$_prompt_insert_mode_character " "%F{196}${_prompt_command_mode_character}%f "
+}
+
+function prompt_slow_command_duration {
+  if [[ -n "$_mange_last_cmd_duration" ]] && ((_mange_last_cmd_duration >= 10)); then
+    echo -e " ${fg[cyan]}$(seconds-to-human $_mange_last_cmd_duration)${reset_color} "
+  fi
 }
 
 #
@@ -556,10 +561,11 @@ function {
   local dir="%B%F{blue}%4~%b"
   local last_status="%(?..%F{red}🗲%? )"
   local current_jobs="%(1j.%F{magenta}🗗%B%j%b .)"
+  local slow_command_duration='$(prompt_slow_command_duration)'
   local end='$(prompt_end_character)%f%k%b'
 
   export RPROMPT='$(vi_mode_prompt_info)$vcs_info_msg_0_'
-  export PROMPT="${user}${host}${last_status}${current_jobs}${dir} ${end}"
+  export PROMPT="${user}${host}${dir}${last_status}${slow_command_duration}${current_jobs} ${end}"
 }
 # }}}
 # {{{ Misc
