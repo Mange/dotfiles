@@ -3,6 +3,9 @@
 # Workman keyboard layout
 workman-git
 
+# Wezterm
+wezterm-bin
+
 # Text editors
 neovim-git
 neovim-gtk-git
