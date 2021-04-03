@@ -16,7 +16,7 @@ krita
 beets
 bs1770gain # ReplayGain plugin
 gst-plugins-good      # Chromaprint/Acoustid, BPD, ReplayGain plugins
-gst-libav 			      # Chromaprint/Acoustid, BPD, ReplayGain plugins
+gst-libav             # Chromaprint/Acoustid, BPD, ReplayGain plugins
 gst-python            # Chromaprint/Acoustid, BPD, ReplayGain plugins
 python-beautifulsoup4 # Lyrics plugin
 python-gobject        # ReplayGain plugin
@@ -24,7 +24,7 @@ python-mpd2           # MPDStats plugin
 python-pyacoustid     # Chromaprint/Acoustid plugin<Paste>
 python-pylast         # LastGenre plugin
 python-requests       # Chromaprint/Acoustid, BPD, FetchArt plugins
-python-xdg 			      # Thumbnails plugin
+python-xdg             # Thumbnails plugin
 
 # I like to download Linux ISOs, okay?
 transmission-remote-gtk
