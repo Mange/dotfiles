@@ -1,3 +1,7 @@
+!
+! Based on QWERTY
+!
+
 ! åäö on ordinary Swedish layout, but on modifier
 keycode 34 = bracketleft braceleft aring Aring
 keycode 47 = semicolon colon odiaeresis Odiaeresis
@@ -18,7 +22,7 @@ keycode 60 = period greater U2026 U2026
 
 ! Right alt should be Mode_Switch for special keys above.
 ! keysym Alt_R = Mode_switch
-keycode 108 = Mode_switch
+keycode 108 = Mode_switch Mode_switch Mode_switch Mode_switch
 
 ! Right Super should be Compose
 ! keysym Super_R
