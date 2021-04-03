@@ -240,10 +240,26 @@ cd () {
 
 # Display contents of current directory when changing directories
 if command-exist exa; then
-  function chpwd { exa --group-directories-first }
+  showdir() { exa --group-directories-first }
 else
-  function chpwd { ls --group-directories-first }
+  showdir() { ls --group-directories-first }
 fi
+
+# Tell terminal what the current directory is
+update_osc7() {
+  if command-exist wezterm; then
+    wezterm set-working-directory 2>/dev/null && return 0
+  fi
+
+  # In case wezterm is not installed, or if it failed do a naive manual try
+  printf "\033]7;file://%s%s\033\\" "${HOSTNAME}" "${PWD}"
+}
+
+# Callback for when working directory changes
+chpwd() {
+  showdir
+  update_osc7
+}
 # }}}
 # {{{ History
 export HISTSIZE=5000
