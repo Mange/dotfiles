@@ -4,15 +4,20 @@ no_media_icon=ﱙ
 playing_icon=喇
 paused_icon=
 
-if player_status=$(playerctl status 2>/dev/null); then
+playerctl=(
+  playerctl
+  -i chromium
+)
+
+if player_status=$("${playerctl[@]}" status 2>/dev/null); then
   if [[ $player_status == "Paused" || $player_status == "Stopped" ]]; then
     playback_icon="${paused_icon}"
   else
     playback_icon="${playing_icon}"
   fi
 
-  artist="$(playerctl metadata artist 2>/dev/null)"
-  title="$(playerctl metadata title 2>/dev/null)"
+  artist="$("${playerctl[@]}" metadata artist 2>/dev/null)"
+  title="$("${playerctl[@]}" metadata title 2>/dev/null)"
 
   if [[ ${#artist} -gt 25 ]]; then
     artist="${artist:0:24}…"
