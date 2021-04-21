@@ -547,7 +547,7 @@ function prompt_end_character {
 
 function prompt_slow_command_duration {
   if [[ -n "$_mange_last_cmd_duration" ]] && ((_mange_last_cmd_duration >= 10)); then
-    echo -e " ${fg[cyan]}$(seconds-to-human $_mange_last_cmd_duration)${reset_color} "
+    echo -n " %F{cyan}%1{%}$(seconds-to-human $_mange_last_cmd_duration)"
   fi
 }
 
