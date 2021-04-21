@@ -22,7 +22,10 @@
   "tailwindCSS.headwind.classRegex": {
     "reason": "(?:\\bclassName\\s*=\\s*[\\\"\\']([_a-zA-Z0-9\\s\\-\\:\\/]+)[\\\"\\'])|(?:\\btw\\s*`([_a-zA-Z0-9\\s\\-\\:\\/]*)`)",
     "elm": "\\bclass\\s*\\\"([_a-zA-Z0-9\\s\\-\\:\\/]+)\\\"",
-    "html": "\\bclass\\s*=\\s*[\\\"\\']([_a-zA-Z0-9\\s\\-\\:\\/]+)[\\\"\\']",
+    // Support class="……", some_classes = "…", and classes: "…" for ERB
+    "html": "(?:\\bclass\\s*=\\s*|class(?:es)?(?:\\s*=\\s|:\\s+))[\\\"\\']([_a-zA-Z0-9\\s\\-\\:\\/]+)[\\\"\\']",
+    "ruby": "(?:\\bclass\\s*=\\s*|class(?:es)?(?:\\s*=\\s|:\\s+))[\\\"\\']([_a-zA-Z0-9\\s\\-\\:\\/]+)[\\\"\\']",
+
     "css": "\\B@apply\\s+([_a-zA-Z0-9\\s\\-\\:\\/]+);",
     // Preact supports plain class="" attributes and not just React's
     // className="".
