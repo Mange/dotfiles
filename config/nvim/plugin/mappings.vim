@@ -346,6 +346,9 @@ let g:which_key_map.t.w = 'wrap'
 nmap <leader>ts :set spell! \| set spell?<cr>
 let g:which_key_map.t.s = 'spell'
 
+nmap <leader>td :call CocAction("diagnosticToggle")<cr>
+let g:which_key_map.t.d = 'diagnostics'
+
 nmap <leader>tc :set cursorline! \| set cursorline?<cr>
 let g:which_key_map.t.c = 'cursorline'
 
