@@ -93,7 +93,7 @@ keys.awesome_chord = which_keys.new_chord(
       which_keys.key_nested("s", "screenshot", {
           which_keys.key("s", "specific-area", actions.flameshot("gui")),
           which_keys.key("a", "all-screen", actions.flameshot("screen")),
-          which_keys.key("d", "all-desktop", actions.flameshot("desktop")),
+          which_keys.key("f", "full-screen", actions.flameshot("desktop")),
 
           which_keys.key_nested("d", "delayed", {
               which_keys.key("s", "specific-area", actions.flameshot("gui", "--delay", "5000")),
