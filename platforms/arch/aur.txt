@@ -6,6 +6,10 @@ workman-git
 # Wezterm
 wezterm-bin
 
+# Awesome WM
+awesome-git
+awmtt # Awesome WM testing utility
+
 # Text editors
 neovim-git
 neovim-gtk-git

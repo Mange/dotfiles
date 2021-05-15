@@ -144,8 +144,9 @@ zenity # GUI prompts from scripts (ytpip, etc.)
 adapta-gtk-theme # gtk theme
 
 # Awesome WM
-awesome
+# awesome # Replaced with awesome-git from AUR
 luarocks
+rlwrap # readline support for awesome-client
 # TODO:
 # luarocks install --server=http://luarocks.org/dev lua-lsp
 # luarocks install luacheck
