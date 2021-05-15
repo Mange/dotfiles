@@ -5,11 +5,9 @@ local dropdown = require("dropdown")
 local sharedtags = require("sharedtags")
 local focus_client = require("focus_client")
 local utils = require("utils")
+local tags = require("configuration.tags").tags
 
 local actions = {}
-
--- Variables to import
-actions.tags = {} -- Assign to table of tags
 
 function actions.focus_by_index(offset)
   return function()
@@ -157,7 +155,7 @@ end
 
 function actions.goto_tag(index)
   return function()
-    local tag = actions.tags[index]
+    local tag = tags[index]
 
     if not tag then
       tag = sharedtags.add(index, {name = tostring(index), layout = awful.layout.layouts[1]})
@@ -170,7 +168,7 @@ end
 
 function actions.toggle_tag(index)
   return function()
-    local tag = actions.tags[index]
+    local tag = tags[index]
 
     if tag then
       sharedtags.viewtoggle(tag, awful.screen.focused())
@@ -180,7 +178,7 @@ end
 
 function actions.toggle_client_tag(index)
   return function()
-    local tag = actions.tags[index]
+    local tag = tags[index]
 
     if tag and client.focus then
       client.focus:toggle_tag(tag)
@@ -190,7 +188,7 @@ end
 
 function actions.move_to_tag(index)
   return function()
-    local tag = actions.tags[index]
+    local tag = tags[index]
 
     if tag and client.focus then
       client.focus:move_to_tag(tag)

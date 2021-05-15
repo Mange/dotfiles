@@ -76,7 +76,9 @@ function right(screens)
   return most_right
 end
 
-local screen_layout = {}
+local screen_layout = {
+  current = nil,
+}
 
 function screen_layout.get_layout()
   local count = screen.count()
@@ -160,5 +162,12 @@ function screen_layout.tag_layout_rotation(t)
     end
   end
 end
+
+function screen_layout.refresh()
+  screen_layout.current = screen_layout.get_layout()
+  screen_layout.apply_wallpaper_overrides(screen_layout.current)
+end
+
+screen_layout.refresh()
 
 return screen_layout

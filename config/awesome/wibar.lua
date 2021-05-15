@@ -5,35 +5,43 @@ local awful = require("awful")
 local utils = require("utils")
 local keys = require("keys")
 local actions = require("actions")
+local dpi = require('utils').dpi
+
+--
+-- OLD WIDGETS
+--
 local taglist = require("wibar/taglist")
-local tasklist = require("wibar/tasklist")
 local polybar_wrapper = require("wibar/polybar_wrapper")
 local battery_widget = require("wibar/battery_widget")
 local volume_widget = require("wibar/volume_widget")
-local workrave_widget = require("wibar/workrave_widget")
+-- local workrave_widget = require("wibar/workrave_widget")
+
+--
+-- NEW WIDGETS
+--
+local tasklist = require("widgets.tasklist")
+
+local function build_widget(widget)
+  return wibox.widget {
+    widget = wibox.container.margin,
+    top = dpi(9),
+    bottom = dpi(9),
+    {
+      widget = wibox.container.margin,
+      border_width = dpi(1),
+      border_color = beautiful.groups.title_bg,
+      bg = beautiful.transparent,
+      shape = function(cr, w, h)
+        gears.shape.rounded_rect(cr, w, h, dpi(12))
+      end,
+      widget,
+    }
+  }
+end
 
 local wibar = {}
 
 local polybar_dir = "/home/mange/.config/awesome/polybar_scripts/"
-
---
--- Bar plan:
---  [tags]
---  [layout indicator]
---  [client icons]
---
---  [clock]
---  [date]
---
---  [media]?
---  [volume]
---  [toggl]
---  [tasks]
---  [battery]
---  [network]
---  [workwave]
---  [systray]
---
 
 function wibar.create_for_screen(s)
   -- Create an imagebox widget which will contain an icon indicating which layout we're using.
@@ -47,9 +55,6 @@ function wibar.create_for_screen(s)
 
   -- Create a taglist widget
   s.mytaglist = taglist(s)
-
-  -- Create a tasklist widget
-  s.mytasklist = tasklist(s)
 
   -- Create the wibox
   s.mywibox = awful.wibar({ position = "top", screen = s, height = utils.dpi(32) })
@@ -70,7 +75,7 @@ function wibar.create_for_screen(s)
               margins = 5,
               s.mylayoutbox,
             },
-            s.mytasklist,
+            build_widget(tasklist(s)),
             polybar_wrapper({
               command = {"/home/mange/.config/awesome/polybar_scripts/media"},
               interval = 5,
@@ -85,7 +90,7 @@ function wibar.create_for_screen(s)
             command = {polybar_dir .. "clock"},
             interval = 30,
           }),
-          workrave_widget.new(),
+          -- workrave_widget.new(),
         },
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,

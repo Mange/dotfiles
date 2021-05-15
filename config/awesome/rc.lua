@@ -40,12 +40,6 @@ utils = require("utils")
 keys = require("keys")
 actions = require("actions")
 local dropdown = require("dropdown")
-local sharedtags = require("sharedtags")
-local wibar = require("wibar")
-local screen_layout = require("screen_layout")
-
--- Global variable
-current_screen_layout = screen_layout.get_layout()
 
 -- A `require` that reloads the module if it was already loaded.
 -- Useful in REPL to be able to test changes to your module without restarting
@@ -55,158 +49,13 @@ function reload(name)
     return require(name)
 end
 
--- {{{ Variable definitions
--- Table of layouts to cover with awful.layout.inc, order matters.
-awful.layout.layouts = {
-    -- awful.layout.suit.floating,     -- All windows are floating
-    awful.layout.suit.tile,            -- Master + Stack, with Master on Left
-    awful.layout.suit.tile.left,       -- Master + Stack, with Master on Right
-    -- awful.layout.suit.tile.bottom,  -- Master + Stack, with Master on Bottom
-    awful.layout.suit.tile.top,        -- Master + Stack, with Master on Top
-    awful.layout.suit.fair,            -- Grid (Vertical)
-    awful.layout.suit.fair.horizontal, -- Grid (Horizontal)
-    -- awful.layout.suit.spiral,       -- Fibonacci
-    awful.layout.suit.spiral.dwindle,  -- BSP
-    awful.layout.suit.max,             -- "Tabbed"
-    -- awful.layout.suit.max.fullscreen,
-    awful.layout.suit.magnifier,       -- Master floating center
-    -- awful.layout.suit.corner.nw,    -- Master + two stacks below and to the side
-    -- awful.layout.suit.corner.ne,
-    -- awful.layout.suit.corner.sw,
-    -- awful.layout.suit.corner.se,
-}
--- }}}
-
 -- {{{ Theme
-beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
-
-beautiful.font = "Fira Sans Regular 11"
-
--- Setup gaps
-beautiful.useless_gap = 8
-beautiful.gap_single_client = false
-
--- Colors
-local gruvbox = require("colors").gruvbox
-
-beautiful.bg_normal     = gruvbox.dark2
-beautiful.bg_focus      = gruvbox.neutral_purple
-beautiful.bg_urgent     = gruvbox.bright_red
-beautiful.bg_minimize   = gruvbox.dark2
-beautiful.bg_systray    = gruvbox.dark3 -- Looks horrible
-
-beautiful.fg_normal     = gruvbox.light1
-beautiful.fg_focus      = gruvbox.light0
-beautiful.fg_urgent     = gruvbox.light1
-beautiful.fg_minimize   = gruvbox.light1
-
-beautiful.border_width  = 3
-beautiful.border_normal = gruvbox.dark3
-beautiful.border_focus  = gruvbox.neutral_purple
-beautiful.border_marked = gruvbox.faded_yellow
-
-beautiful.titlebar_bg_normal = gruvbox.dark3 .. "70"
-beautiful.titlebar_bg_focus  = gruvbox.neutral_purple .. "70"
-
-beautiful.wibar_border_width = 0
-beautiful.wibar_bg = gruvbox.dark0 .. "55"
-beautiful.wibar_fg = gruvbox.light1
-
-beautiful.taglist_bg_focus = gruvbox.faded_purple .. "cc"
-beautiful.taglist_bg_urgent = gruvbox.faded_orange .. "55"
-
-beautiful.tasklist_bg_normal = "transparent"
-beautiful.tasklist_bg_focus = gruvbox.faded_purple .. "cc"
-beautiful.tasklist_bg_urgent = gruvbox.faded_orange .. "55"
-
-beautiful.wallpaper = gears.filesystem.get_xdg_data_home() .. "wallpapers/current.jpg"
+beautiful.init(require("theme"))
 -- }}}
 
--- {{{ Screens
-
--- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
-screen.connect_signal("property::geometry", utils.reload_wallpaper)
-
-awful.screen.connect_for_each_screen(function(s)
-    current_screen_layout = screen_layout.get_layout()
-    screen_layout.apply_wallpaper_overrides(current_screen_layout)
-
-    utils.reload_wallpapers()
-    wibar.create_for_screen(s)
-end)
--- }}}
-
--- {{{ Tags
-tags = sharedtags({
-    {
-      name = "System",
-      icon_text = "",
-      layout = awful.layout.suit.tile,
-      screen = current_screen_layout.main.index,
-    },
-    {
-      name = "Code",
-      icon_text = "",
-      layout = awful.layout.suit.tile,
-      screen = current_screen_layout.main.index,
-    },
-    {
-      name = "Browse",
-      icon_text = "",
-      layout = awful.layout.suit.tile,
-      screen = current_screen_layout.reference.index,
-    },
-    {
-      name = "Aside",
-      icon_text = "",
-      layout = awful.layout.suit.tile,
-      screen = current_screen_layout.comms.index,
-    },
-    {
-      name = "Mail",
-      icon_text = "",
-      layout = awful.layout.suit.tile,
-      screen = current_screen_layout.main.index,
-    },
-    {
-      name = "6",
-      icon_text = nil,
-      layout = awful.layout.suit.tile,
-      screen = current_screen_layout.main.index,
-    },
-    {
-      name = "7",
-      icon_text = nil,
-      layout = awful.layout.suit.tile,
-      screen = current_screen_layout.main.index,
-    },
-    {
-      name = "Game",
-      icon_text = "",
-      layout = awful.layout.suit.max,
-      screen = current_screen_layout.main.index,
-    },
-    {
-      name = "Media",
-      icon_text = "",
-      layout = awful.layout.suit.fair.horizontal,
-      screen = current_screen_layout.comms.index,
-    },
-    {
-      name = "Chat",
-      icon_text = "",
-      layout = awful.layout.suit.max,
-      screen = current_screen_layout.comms.index,
-    },
-})
-
-actions.tags = tags
-
-awful.tag.attached_connect_signal(nil, "property::screen", function(t)
-    screen_layout.tag_layout_rotation(t)
-end)
--- }}}
-
+require("configuration.screens")
+require("layout")
+local tags = require("configuration.tags").tags
 
 -- {{{ Mouse bindings
 root.buttons(gears.table.join(
@@ -237,8 +86,6 @@ root.keys(keys.global)
 
 -- {{{ Notifications
 naughty.config.defaults.timeout = 10
-beautiful.notification_icon_size = utils.dpi(96)
-beautiful.notification_bg = gruvbox.dark0.."99"
 
 naughty.config.notify_callback = function(args)
   -- Google Calendar notifications from Firefox looks like this:
