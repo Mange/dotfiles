@@ -49,6 +49,16 @@ function reload(name)
     return require(name)
 end
 
+-- {{{ Picom
+utils.on_first_start(function()
+  awful.spawn.once({
+    "picom",
+    "--config", os.getenv("HOME") .. "/.config/picom/picom.conf",
+    "--experimental-backends"
+  })
+end)
+-- }}}
+
 -- {{{ Theme
 beautiful.init(require("theme"))
 -- }}}
