@@ -9,6 +9,9 @@ awful = require("awful")
 beautiful = require("beautiful") -- Theme handling library
 naughty = require("naughty") -- Notification library
 
+-- Make AwesomeWM / Lua use the configured locale
+os.setlocale(os.getenv("LANG"))
+
 require("awful.autofocus")
 
 -- {{{ Error handling

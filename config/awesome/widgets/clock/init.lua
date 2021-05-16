@@ -32,34 +32,9 @@ local create_clock = function(s)
     margin_leftright = dpi(8),
     margin_topbottom = dpi(8),
     timer_function = function()
-      local ordinal = nil
-
-      local day = os.date("%d")
-      local month = os.date("%B")
-
-      local first_digit = string.sub(day, 0, 1)
-      local last_digit = string.sub(day, -1)
-
-      if first_digit == "0" then
-        day = last_digit
-      end
-
-      if last_digit == "1" and day ~= "11" then
-        ordinal = "st"
-      elseif last_digit == "2" and day ~= "12" then
-        ordinal = "nd"
-      elseif last_digit == "3" and day ~= "13" then
-        ordinal = "rd"
-      else
-        ordinal = "th"
-      end
-
-      local date_str = "Today is the " ..
-      "<b>" .. day .. ordinal ..
-      " of " .. month .. "</b>.\n" ..
-      "And it\"s fucking " .. os.date("%A")
-
-      return date_str
+      return os.date(
+        "Idag är det <b>%A</b> den <b>%d %B</b> (v<b>%V</b>)"
+      )
     end,
   }
 
@@ -75,6 +50,7 @@ local create_clock = function(s)
 
   s.month_calendar = awful.widget.calendar_popup.month({
     start_sunday      = false,
+    week_numbers      = true,
     spacing           = dpi(5),
     font              = beautiful.font_size(10),
     long_weekdays     = true,
@@ -86,11 +62,15 @@ local create_clock = function(s)
       padding         = dpi(20),
       shape           = function(cr, width, height)
         gears.shape.partially_rounded_rect(
-          cr, width, height, false, false, true, true, beautiful.groups.radius
+          cr, width, height, true, true, true, true, beautiful.groups.radius
         )
       end
     },
     style_header      = {
+      border_width    = 0,
+      bg_color        = beautiful.transparent
+    },
+    style_weeknumber  = {
       border_width    = 0,
       bg_color        = beautiful.transparent
     },
