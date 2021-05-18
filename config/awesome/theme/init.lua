@@ -21,7 +21,6 @@ theme.bg_normal     = gruvbox.dark2
 theme.bg_focus      = gruvbox.neutral_purple
 theme.bg_urgent     = gruvbox.bright_red
 theme.bg_minimize   = gruvbox.dark2
-theme.bg_systray    = gruvbox.dark3 -- Looks horrible
 
 theme.fg_focus      = gruvbox.light0
 theme.fg_urgent     = gruvbox.light1
@@ -94,5 +93,8 @@ theme.transparent = transparent
 theme.background = opacity(black, "66")
 theme.fg_normal = opacity(white, "de")
 theme.accent = gruvbox.faded_blue
+
+theme.bg_systray = theme.background -- Looks horrible
+theme.systray_icon_spacing = dpi(16)
 
 return theme
