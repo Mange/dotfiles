@@ -97,4 +97,6 @@ theme.accent = gruvbox.faded_blue
 theme.bg_systray = theme.background -- Looks horrible
 theme.systray_icon_spacing = dpi(16)
 
+theme.icon_theme = "Tela"
+
 return theme
