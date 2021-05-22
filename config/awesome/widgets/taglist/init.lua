@@ -2,7 +2,6 @@ local awful = require('awful')
 local wibox = require('wibox')
 local dpi = require('beautiful').xresources.apply_dpi
 local clickable_container = require('widgets.clickable-container')
-local icons = require('theme.icons')
 
 --- Common method to create buttons.
 -- @tab buttons
@@ -83,26 +82,35 @@ local function list_update(w, buttons, label, data, objects)
     end
 
     local text, bg, bg_image, icon, args = label(o, tb)
+
+    -- Custom icon text
+    text = o.icon_text or o.short_name or text
+
     args = args or {}
 
-    -- The text might be invalid, so use pcall.
-    if text == nil or text == '' then
-      tbm:set_margins(0)
-    else
-      if not tb:set_markup_silently(text) then
-        tb:set_markup('<i>&lt;Invalid text&gt;</i>')
-      end
-    end
     bgb:set_bg(bg)
+
     if type(bg_image) == 'function' then
       -- TODO: Why does this pass nil as an argument?
       bg_image = bg_image(tb, o, nil, objects, i)
     end
+
     bgb:set_bgimage(bg_image)
+
     if icon then
       ib.image = icon
+      tbm:set_margins(0) -- Hide text when showing icon
     else
-      ibm:set_margins(0)
+      -- The text might be invalid, so use pcall.
+      if text == nil or text == '' then
+        tbm:set_margins(0)
+        ibm:set_margins(10) -- No icon and no text, just show empty space
+      else
+        ibm:set_margins(0) -- Hide icon when showing text
+        if not tb:set_markup_silently(text) then
+          tb:set_markup('<i>&lt;Invalid text&gt;</i>')
+        end
+      end
     end
 
     bgb.shape = args.shape
