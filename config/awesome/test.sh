@@ -11,7 +11,7 @@ export IN_AWMTT=yes
 
 case "$1" in
   --help)
-    echo "Usage: $0 <start | restart | stop>"
+    echo "Usage: $0 <start | restart | stop | dev>"
     exit 0
     ;;
   start)
@@ -21,6 +21,11 @@ case "$1" in
     awmtt restart
     ;;
   stop)
+    awmtt stop
+    ;;
+  dev)
+    awmtt start
+    watchexec -ce lua -- awmtt restart
     awmtt stop
     ;;
   *)
