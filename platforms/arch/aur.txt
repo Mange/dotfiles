@@ -9,6 +9,7 @@ wezterm-bin
 # Awesome WM
 awesome-git
 awmtt # Awesome WM testing utility
+mugshot # Customize name and avatar, used in AwesomeWM themes
 
 # Text editors
 neovim-git
