@@ -1,6 +1,3 @@
--- OLD WIDGETS
-local taglist = require("wibar/taglist")
-
 -- local awful = require('awful')
 local beautiful = require('beautiful')
 local wibox = require('wibox')
@@ -8,8 +5,8 @@ local gears = require('gears')
 -- local icons = require('theme.icons')
 local dpi = require("utils").dpi
 -- local clickable_container = require('widgets.clickable-container')
-local task_list = require('widgets.tasklist')
--- local taglist = require('widgets.tag-list')
+local tasklist = require('widgets.tasklist')
+local taglist = require('widgets.taglist')
 
 local top_panel = function(s)
   local panel = wibox {
@@ -97,7 +94,7 @@ local top_panel = function(s)
         -- s.control_center_toggle,
         -- s.global_search,
         build_widget(taglist(s)),
-        build_widget(task_list(s)),
+        build_widget(tasklist(s)),
         -- add_button
       },
       nil,
