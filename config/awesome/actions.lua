@@ -299,6 +299,15 @@ function actions.toggle_focus_tag()
   end
 end
 
+function actions.toggle_calendar_popup()
+  return function()
+    local popup = awful.screen.focused().month_calendar
+    if popup then
+      popup:toggle()
+    end
+  end
+end
+
 function actions.volume_change(amount)
   return actions.spawn({"pulsemixer", "--change-volume", amount})
 end

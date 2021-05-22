@@ -98,7 +98,6 @@ local create_clock = function(s)
     s.clock_widget,
     'tr',
     {
-      on_pressed = true,
       on_hover = false
     }
   )

@@ -44,6 +44,10 @@ keys.awesome_chord = which_keys.new_chord(
           -- TODO -- which_keys.key("a", "toggle-aesthetics-mode", function() end),
       }),
 
+      which_keys.key_nested("t", "toggle", {
+          which_keys.key("c", "calendar-popup", actions.toggle_calendar_popup()),
+      }),
+
       which_keys.key_nested("p", "power", {
           which_keys.key("s", "suspend", actions.spawn({"sh", "-c", "udiskie-umount --all && systemctl suspend-then-hibernate"})),
           which_keys.key("h", "hibernate", actions.spawn({"sh", "-c", "udiskie-umount --all && systemctl hibernate"})),
