@@ -44,6 +44,9 @@ keys = require("keys")
 actions = require("actions")
 local dropdown = require("dropdown")
 
+-- Patch some things in AwesomeWM to make it easier to build things.
+require("module.patches")
+
 -- A `require` that reloads the module if it was already loaded.
 -- Useful in REPL to be able to test changes to your module without restarting
 -- Awesome.
@@ -296,3 +299,5 @@ utils.on_first_start(function()
   awful.spawn.once("dynamic-startup")
 end)
 -- }}}
+
+require("module.tag-toast")

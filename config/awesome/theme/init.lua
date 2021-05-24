@@ -28,7 +28,7 @@ local transparent = opacity(black, "00")
 
 ---@param size integer
 theme.font_size = function(size)
-  theme.font = "Fira Sans Regular " .. size
+  return "Fira Sans Regular " .. size
 end
 
 theme.font = theme.font_size(11)
@@ -147,6 +147,18 @@ theme.notification_border_color = transparent
 theme.notification_spacing = dpi(5)
 theme.notification_icon_resize_strategy = "center"
 theme.notification_icon_size = dpi(32)
+
+theme.toast = {
+  font = theme.font_size(33),
+  position = "middle",
+  bg = opacity(theme.background, "22"),
+  margin = dpi(5),
+  border_width = dpi(0),
+  border_color = transparent,
+  spacing = dpi(5),
+  icon_resize_strategy = "center",
+  icon_size = dpi(48),
+}
 
 -- Client Snap Theme
 theme.snap_bg = theme.background
