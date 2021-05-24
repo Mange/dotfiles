@@ -13,7 +13,10 @@ screen.connect_signal(
 function update_panel_visibility()
   for s in screen do
     if s.selected_tag then
-      local is_fullscreen = s.selected_tag.fullscreen_mode
+      local is_fullscreen = (
+        s.selected_tag.fullscreen_mode or
+        s.selected_tag.layout == awful.layout.suit.max.fullscreen
+      )
 
       s.top_panel.visible = not is_fullscreen
     end
@@ -21,6 +24,7 @@ function update_panel_visibility()
 end
 
 tag.connect_signal("property::selected", function(_) update_panel_visibility() end)
+tag.connect_signal("property::layout", function(_) update_panel_visibility() end)
 client.connect_signal(
   "property::fullscreen",
   function(c)
