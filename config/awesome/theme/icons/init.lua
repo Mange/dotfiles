@@ -1,8 +1,8 @@
 -- Icons directory
 local dir = os.getenv('HOME') .. '/.config/awesome/theme/icons/'
 
-
 return {
+  dir = dir,
 
   -- Action Bar
   system       = dir .. 'tag-list/' .. 'archlinux.svg',
@@ -42,5 +42,4 @@ return {
   batt_discharging = dir .. 'battery-discharge.svg',
   toggled_on       = dir .. 'toggled-on.svg',
   toggled_off      = dir .. 'toggled-off.svg'
-
 }

@@ -1,6 +1,7 @@
 local gears = require("gears")
 local gruvbox = require("../colors").gruvbox
 local dpi = require("utils").dpi
+local icons = require("theme.icons")
 
 local default_theme = assert(
   loadfile(gears.filesystem.get_themes_dir() .. "default/theme.lua")
@@ -9,50 +10,6 @@ local default_theme = assert(
 local theme = {}
 
 gears.table.crush(theme, default_theme)
-
---
--- OLD CONFIG
---
--- Setup gaps
-theme.useless_gap = 8
-theme.gap_single_client = false
-
-theme.bg_normal     = gruvbox.dark2
-theme.bg_focus      = gruvbox.neutral_purple
-theme.bg_urgent     = gruvbox.bright_red
-theme.bg_minimize   = gruvbox.dark2
-
-theme.fg_focus      = gruvbox.light0
-theme.fg_urgent     = gruvbox.light1
-theme.fg_minimize   = gruvbox.light1
-
-theme.border_width  = 3
-theme.border_normal = gruvbox.dark3
-theme.border_focus  = gruvbox.neutral_purple
-theme.border_marked = gruvbox.faded_yellow
-
-theme.titlebar_bg_normal = gruvbox.dark3 .. "70"
-theme.titlebar_bg_focus  = gruvbox.neutral_purple .. "70"
-
-theme.wibar_border_width = 0
-theme.wibar_bg = gruvbox.dark0 .. "55"
-theme.wibar_fg = gruvbox.light1
-
-theme.taglist_bg_focus = gruvbox.faded_purple .. "cc"
-theme.taglist_bg_urgent = gruvbox.faded_orange .. "55"
-
-theme.tasklist_bg_normal = "transparent"
-theme.tasklist_bg_focus = gruvbox.faded_purple .. "cc"
-theme.tasklist_bg_urgent = gruvbox.faded_orange .. "55"
-
-theme.wallpaper = gears.filesystem.get_xdg_data_home() .. "wallpapers/current.jpg"
-
-theme.notification_icon_size = utils.dpi(96)
-theme.notification_bg = gruvbox.dark0.."99"
-
---
--- NEW CONFIG (WIP)
---
 
 ---@param base string
 ---@param opacity string
@@ -77,26 +34,136 @@ end
 theme.font = theme.font_size(11)
 theme.font_bold = "Fira Sans Extra Bold 11"
 
+-- Icons
+theme.icons = icons.dir
+theme.awesome_icon = theme.icons .. "awesome.svg"
+theme.icon_theme = "Tela"
+
+-- Base
+theme.transparent = transparent
+theme.background = opacity(black, "66")
+theme.accent = gruvbox.faded_blue
+
+-- Foreground
+theme.fg_normal = opacity(white, "de")
+theme.fg_focus = "#e4e4e4"
+theme.fg_urgent = "#cc9393"
+
+-- Background
+theme.bg_normal = theme.background
+theme.bg_focus = "#5a5a5a"
+theme.bg_urgent = "#3f3f3f"
+
+-- Borders
+theme.border_focus = opacity("#563238", "ff")
+theme.border_normal = opacity("#29353b", "00")
+theme.border_marked = "#cc9393"
+theme.border_width = dpi(2)
+theme.border_radius = dpi(9)
+
+-- Decorations
+theme.useless_gap = 8
+theme.gap_single_client = false
+theme.client_shape_rectangle = gears.shape.rectangle
+theme.client_shape_rounded = function(cr, width, height)
+  gears.shape.rounded_rect(cr, width, height, dpi(9))
+end
+
+-- Groups
 theme.groups = {
   bg = opacity(white, "10"),
   title_bg = opacity(white, "15"),
   radius = dpi(9),
 }
 
+-- Events
 theme.events = {
   leave = transparent,
+  enter = opacity(white, "10"),
   press = opacity(white, "15"),
   release = opacity(white, "10")
 }
 
-theme.transparent = transparent
-theme.background = opacity(black, "66")
-theme.fg_normal = opacity(white, "de")
-theme.accent = gruvbox.faded_blue
+-- Menu
+theme.menu_font = theme.font_size(11)
+theme.menu_submenu = '' -- ➤
 
+theme.menu_height = dpi(34)
+theme.menu_width = dpi(200)
+theme.menu_border_width = dpi(20)
+theme.menu_bg_focus = opacity(theme.accent, 'cc')
+
+theme.menu_bg_normal = opacity(theme.background, "33")
+theme.menu_fg_normal = white
+theme.menu_fg_focus = white
+theme.menu_border_color = opacity(theme.background, "5c")
+
+-- Tooltips
+theme.tooltip_bg = theme.background
+theme.tooltip_border_color = transparent
+theme.tooltip_border_width = dpi(0)
+theme.tooltip_gaps = dpi(5)
+theme.tooltip_shape = function(cr, w, h)
+  gears.shape.rounded_rect(cr, w, h, dpi(6))
+end
+
+-- Separators
+theme.separator_color = opacity("#f2f2f2", "44")
+
+-- Layoutbox icons
+theme.layout_max = theme.icons .. 'layouts/max.svg'
+theme.layout_tile = theme.icons .. 'layouts/tile.svg'
+theme.layout_dwindle = theme.icons .. 'layouts/dwindle.svg'
+theme.layout_floating = theme.icons .. 'layouts/floating.svg'
+
+-- Taglist
+theme.taglist_bg_empty = opacity(theme.background, '00')
+theme.taglist_bg_occupied = opacity(white, "1a")
+theme.taglist_bg_urgent = opacity("#E91E63", 99)
+theme.taglist_bg_focus = theme.background
+theme.taglist_spacing = dpi(0)
+
+-- Tasklist
+theme.tasklist_font = theme.font_size(10)
+
+theme.tasklist_fg_normal = "#aaaaaa"
+theme.tasklist_bg_normal = opacity(theme.background, "99")
+
+theme.tasklist_fg_focus = "#dddddd"
+theme.tasklist_bg_focus = theme.background
+
+theme.tasklist_fg_urgent = white
+theme.tasklist_bg_urgent = opacity("#E91E63", "99")
+
+theme.tasklist_fg_minimize = "#888888"
+theme.tasklist_bg_minimize = opacity(theme.background, "22")
+
+-- Notification
+theme.notification_position = "top_right"
+theme.notification_bg = transparent
+theme.notification_margin = dpi(5)
+theme.notification_border_width = dpi(0)
+theme.notification_border_color = transparent
+theme.notification_spacing = dpi(5)
+theme.notification_icon_resize_strategy = "center"
+theme.notification_icon_size = dpi(32)
+
+-- Client Snap Theme
+theme.snap_bg = theme.background
+theme.snap_shape = gears.shape.rectangle
+theme.snap_border_width = dpi(15)
+
+-- Hotkey popup
+theme.hotkeys_font = theme.font_bold
+theme.hotkeys_description_font = theme.font
+theme.hotkeys_bg = theme.background
+theme.hotkeys_group_margin = dpi(20)
+
+-- Systray
 theme.bg_systray = theme.background -- Looks horrible
 theme.systray_icon_spacing = dpi(16)
 
-theme.icon_theme = "Tela"
+-- Wallpaper
+theme.wallpaper = gears.filesystem.get_xdg_data_home() .. "wallpapers/current.jpg"
 
 return theme
