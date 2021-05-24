@@ -79,7 +79,7 @@ local top_panel = function(s)
   -- s.bluetooth         = build_widget(require('widget.bluetooth')())
   -- s.network           = build_widget(require('widget.network')())
   local clock       = build_widget(require('widgets.clock')(s))
-  -- local layout_box     = build_widget(require('widget.layoutbox')(s))
+  local layout_box     = build_widget(require('widgets.layoutbox')(s))
   -- s.battery           = build_widget(require('widget.battery')())
   -- s.info_center_toggle  = build_widget(require('widget.info-center-toggle')())
 
@@ -113,7 +113,7 @@ local top_panel = function(s)
         -- s.bluetooth,
         -- s.battery,
         clock,
-        -- layout_box,
+        layout_box,
         -- s.info_center_toggle
       }
     },
