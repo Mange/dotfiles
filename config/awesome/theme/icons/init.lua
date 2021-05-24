@@ -5,14 +5,18 @@ local dir = os.getenv('HOME') .. '/.config/awesome/theme/icons/'
 return {
 
   -- Action Bar
+  system       = dir .. 'tag-list/' .. 'archlinux.svg',
   web_browser  = dir .. 'tag-list/' .. 'web-browser.svg',
-  text_editor  = dir .. 'tag-list/' .. 'text-editor.svg',
+  text_editor  = dir .. 'tag-list/' .. 'neovim.svg',
   social       = dir .. 'tag-list/' .. 'social.svg',
   file_manager = dir .. 'tag-list/' .. 'file-manager.svg',
   multimedia   = dir .. 'tag-list/' .. 'multimedia.svg',
+  mail         = dir .. 'tag-list/' .. 'gmail.svg',
   games        = dir .. 'tag-list/' .. 'games.svg',
   development  = dir .. 'tag-list/' .. 'development.svg',
   sandbox      = dir .. 'tag-list/' .. 'sandbox.svg',
+  gear         = dir .. 'tag-list/' .. 'applications-system.svg',
+  extensions   = dir .. 'tag-list/' .. 'extensions.svg',
   terminal     = dir .. 'tag-list/' .. 'terminal.svg',
   graphics     = dir .. 'tag-list/' .. 'graphics.svg',
   menu         = dir .. 'tag-list/' .. 'menu.svg',
