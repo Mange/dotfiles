@@ -46,6 +46,7 @@ keys.awesome_chord = which_keys.new_chord(
 
       which_keys.key_nested("t", "toggle", {
           which_keys.key("c", "calendar-popup", actions.toggle_calendar_popup()),
+          which_keys.key("s", "systray", actions.toggle_systray()),
       }),
 
       which_keys.key_nested("p", "power", {

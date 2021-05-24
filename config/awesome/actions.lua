@@ -308,6 +308,12 @@ function actions.toggle_calendar_popup()
   end
 end
 
+function actions.toggle_systray()
+  return function()
+    awesome.emit_signal("widget::systray:toggle")
+  end
+end
+
 function actions.volume_change(amount)
   return actions.spawn({"pulsemixer", "--change-volume", amount})
 end

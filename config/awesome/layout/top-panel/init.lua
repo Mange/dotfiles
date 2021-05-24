@@ -73,7 +73,7 @@ local top_panel = function(s)
   -- s.control_center_toggle = build_widget(require('widget.control-center-toggle')())
   -- s.global_search      = build_widget(require('widget.global-search')())
   -- s.info_center_toggle   = build_widget(require('widget.info-center-toggle')())
-  -- s.tray_toggler      = build_widget(require('widget.tray-toggle'))
+  s.tray_toggler      = build_widget(require('widgets.tray-toggle'))
   -- s.updater         = build_widget(require('widget.package-updater')())
   -- s.screen_rec       = build_widget(require('widget.screen-recorder')())
   -- s.bluetooth         = build_widget(require('widget.bluetooth')())
@@ -106,7 +106,7 @@ local top_panel = function(s)
           margins = dpi(5),
           widget = wibox.container.margin
         },
-        -- s.tray_toggler,
+        s.tray_toggler,
         -- s.updater,
         -- s.screen_rec,
         -- s.network,
