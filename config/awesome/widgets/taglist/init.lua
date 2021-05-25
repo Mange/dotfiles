@@ -2,6 +2,7 @@ local awful = require('awful')
 local wibox = require('wibox')
 local dpi = require('beautiful').xresources.apply_dpi
 local clickable_container = require('widgets.clickable-container')
+local keys = require("keys")
 
 --- Common method to create buttons.
 -- @tab buttons
@@ -128,25 +129,25 @@ local taglist = function(s)
     buttons = awful.util.table.join(
       awful.button(
         {},
-        1,
+        keys.left_click,
         function(t)
           t:view_only()
         end
       ),
       awful.button(
-        {modkey},
-        1,
+        {keys.modkey},
+        keys.left_click,
         function(t)
-          if _G.client.focus then
-            _G.client.focus:move_to_tag(t)
+          if client.focus then
+            client.focus:move_to_tag(t)
             t:view_only()
           end
         end
       ),
-      awful.button({}, 3, awful.tag.viewtoggle),
+      awful.button({}, keys.right_click, awful.tag.viewtoggle),
       awful.button(
-        {modkey},
-        3,
+        {keys.modkey},
+        keys.right_click,
         function(t)
           if _G.client.focus then
             _G.client.focus:toggle_tag(t)
@@ -155,14 +156,14 @@ local taglist = function(s)
       ),
       awful.button(
         {},
-        4,
+        keys.scroll_up,
         function(t)
           awful.tag.viewprev(t.screen)
         end
       ),
       awful.button(
         {},
-        5,
+        keys.scroll_down,
         function(t)
           awful.tag.viewnext(t.screen)
         end
