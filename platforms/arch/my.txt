@@ -190,8 +190,8 @@ youtube-dl
 # Misc
 #
 
-# I want to be able to connect to all my machines
-openssh
+openssh # I want to be able to connect to all my machines
+tailscale # Private VPN
 
 # Syncthing
 syncthing

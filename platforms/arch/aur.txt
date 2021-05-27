@@ -68,8 +68,5 @@ ttf-monaco
 # Dictionaries
 hunspell-sv
 
-# Private VPN
-tailscale-bin
-
 # Boot screen theme
 grub-theme-tela-color-1080p-git
