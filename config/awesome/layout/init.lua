@@ -1,9 +1,11 @@
 local top_panel = require("layout.top-panel")
+local control_center = require("layout.control-center")
 
 screen.connect_signal(
   "request::desktop_decoration",
   function(s)
     s.top_panel = top_panel(s)
+    s.control_center = control_center(s)
   end
 )
 

@@ -33,7 +33,6 @@ keys.awesome_chord = which_keys.new_chord(
       which_keys.key("w", "window-select", actions.select_window()),
       which_keys.key("e", "emoji-selector", actions.emoji_selector()),
       which_keys.key("P", "passwords", actions.passwords_menu()),
-      which_keys.key("f", "toggle-focus-mode", actions.toggle_focus_tag()),
       which_keys.key("m", "+media", media_mode.enter, {which_key_color = which_keys.color_nested}),
 
       which_keys.key_nested("a", "awesome", {
@@ -45,8 +44,10 @@ keys.awesome_chord = which_keys.new_chord(
       }),
 
       which_keys.key_nested("t", "toggle", {
-          which_keys.key("c", "calendar-popup", actions.toggle_calendar_popup()),
+          which_keys.key("d", "calendar-popup", actions.toggle_calendar_popup()),
+          which_keys.key("c", "control-center", actions.toggle_control_center()),
           which_keys.key("s", "systray", actions.toggle_systray()),
+          which_keys.key("f", "toggle-focus-mode", actions.toggle_focus_tag()),
       }),
 
       which_keys.key_nested("p", "power", {

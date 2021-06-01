@@ -308,6 +308,15 @@ function actions.toggle_calendar_popup()
   end
 end
 
+function actions.toggle_control_center()
+  return function()
+    local center = awful.screen.focused().control_center
+    if center then
+      center:toggle()
+    end
+  end
+end
+
 function actions.toggle_systray()
   return function()
     awesome.emit_signal("widget::systray:toggle")

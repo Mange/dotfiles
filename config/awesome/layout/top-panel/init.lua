@@ -70,7 +70,7 @@ local top_panel = function(s)
 
   -- local add_button     = build_widget(require('widget.open-default-app')(s))
   -- s.search_apps      = build_widget(require('widget.search-apps')())
-  -- s.control_center_toggle = build_widget(require('widget.control-center-toggle')())
+  s.control_center_toggle = build_widget(require('widgets.control-center-toggle')(s))
   -- s.global_search      = build_widget(require('widget.global-search')())
   -- s.info_center_toggle   = build_widget(require('widget.info-center-toggle')())
   s.tray_toggler      = build_widget(require('widgets.tray-toggle'))
@@ -91,7 +91,7 @@ local top_panel = function(s)
         layout = wibox.layout.fixed.horizontal,
         spacing = dpi(5),
         -- s.search_apps,
-        -- s.control_center_toggle,
+        s.control_center_toggle,
         -- s.global_search,
         build_widget(taglist(s)),
         build_widget(tasklist(s)),
