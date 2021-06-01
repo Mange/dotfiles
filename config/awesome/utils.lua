@@ -16,6 +16,14 @@ local utils = {
   dpi = xresources.apply_dpi,
 }
 
+function utils.strip(str)
+  if str ~= nil then
+    return (string.gsub(str, "^%s*(.-)%s*$", "%1"))
+  else
+    return ""
+  end
+end
+
 function utils.run_or_raise(cmd, matchers)
   local c = utils.find_client(matchers)
   if c then

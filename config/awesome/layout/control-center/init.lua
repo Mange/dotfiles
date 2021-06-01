@@ -27,14 +27,24 @@ local format_item = function(widget)
   }
 end
 
-local placeholder = function()
+local placeholder = function(s)
   return format_item({
     widget = wibox.widget.textbox,
     align = "center",
     valign = "center",
-    markup = "HELLO WORLD",
+    markup = s,
   })
 end
+
+local last_row = wibox.widget {
+  layout = wibox.layout.align.horizontal,
+  forced_height = dpi(48),
+  format_item({
+    layout = wibox.layout.fixed.horizontal,
+    spacing = dpi(10),
+    require("widgets.user-profile")(),
+  })
+}
 
 local control_center = function(s)
   local width = dpi(400)
@@ -71,17 +81,17 @@ local control_center = function(s)
               visible = true,
               layout = wibox.layout.fixed.vertical,
               spacing = dpi(10),
-              placeholder(),
+              placeholder("MAIN"),
             },
             {
               id = "monitor_control",
-              visible = true,
+              visible = false,
               layout = wibox.layout.fixed.vertical,
               spacing = dpi(10),
-              placeholder(),
+              placeholder("MONITOR"),
             },
           },
-          placeholder(),
+          last_row,
         },
       },
     },

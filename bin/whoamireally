@@ -1,0 +1,12 @@
+#!/bin/sh
+
+name="$(
+  getent passwd "$USER" |
+    cut -d ":" -f 5
+)"
+
+if [ -n "$name" ]; then
+  echo "$name"
+else
+  echo "$USER"
+fi
