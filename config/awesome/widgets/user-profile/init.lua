@@ -15,9 +15,7 @@ local create_profile = function()
       image = profile.profile_image,
       resize = true,
       forced_height = dpi(28),
-      clip_shape = function(cr, width, height)
-        gears.shape.rounded_rect(cr, width, height, beautiful.groups.radius)
-      end
+      clip_shape = beautiful.groups.shape,
     },
     layout = wibox.layout.align.horizontal
   }

@@ -27,9 +27,7 @@ local icon_widget = wibox.widget {
 local action_level = wibox.widget {
   widget = wibox.container.background,
   bg = beautiful.groups.bg,
-  shape = function(cr, width, height)
-    gears.shape.rounded_rect(cr, width, height, beautiful.groups.radius)
-  end,
+  shape = beautiful.groups.shape,
   {
     widget = clickable_container,
     {

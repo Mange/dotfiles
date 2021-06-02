@@ -79,6 +79,9 @@ theme.groups = {
   bg = opacity(white, "10"),
   title_bg = opacity(white, "15"),
   radius = dpi(9),
+  shape = function(cr, width, height)
+    gears.shape.rounded_rect(cr, width, height, beautiful.groups.radius)
+  end,
 }
 
 -- Events

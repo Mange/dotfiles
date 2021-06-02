@@ -20,9 +20,7 @@ local format_item = function(widget)
     border_width = dpi(1),
     border_color = beautiful.groups.title_bg,
     bg = beautiful.groups.bg,
-    shape = function(cr, width, height)
-      gears.shape.rounded_rect(cr, width, height, beautiful.groups.radius)
-    end,
+    shape = beautiful.groups.shape,
     widget = wibox.container.background
   }
 end
@@ -74,9 +72,7 @@ local control_center = function(s)
       border_width = dpi(1),
       border_color = beautiful.groups.title_bg,
       bg = beautiful.background,
-      shape = function(cr, w, h)
-        gears.shape.rounded_rect(cr, w, h, beautiful.groups.radius)
-      end,
+      shape = beautiful.groups.shape,
       widget = wibox.container.background,
       {
         widget = wibox.container.margin,
