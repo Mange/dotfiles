@@ -18,10 +18,10 @@ local format_item = function(widget)
     },
     forced_height = dpi(88),
     border_width = dpi(1),
-    border_color = beautiful.groups_title_bg,
-    bg = beautiful.groups_bg,
+    border_color = beautiful.groups.title_bg,
+    bg = beautiful.groups.bg,
     shape = function(cr, width, height)
-      gears.shape.rounded_rect(cr, width, height, beautiful.groups_radius)
+      gears.shape.rounded_rect(cr, width, height, beautiful.groups.radius)
     end,
     widget = wibox.container.background
   }
@@ -49,11 +49,11 @@ local control_sliders = wibox.widget {
 local last_row = wibox.widget {
   layout = wibox.layout.align.horizontal,
   forced_height = dpi(48),
-  format_item({
-    layout = wibox.layout.fixed.horizontal,
+  {
+    layout = wibox.container.margin,
     spacing = dpi(10),
-    require("widgets.user-profile")(),
-  })
+    format_item(require("widgets.user-profile")()),
+  },
 }
 
 local control_center = function(s)
@@ -72,10 +72,10 @@ local control_center = function(s)
     widget = {
       id = "control_center",
       border_width = dpi(1),
-      border_color = beautiful.groups_title_bg,
+      border_color = beautiful.groups.title_bg,
       bg = beautiful.background,
       shape = function(cr, w, h)
-        gears.shape.rounded_rect(cr, w, h, beautiful.groups_radius)
+        gears.shape.rounded_rect(cr, w, h, beautiful.groups.radius)
       end,
       widget = wibox.container.background,
       {
