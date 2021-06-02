@@ -47,9 +47,16 @@ local control_sliders = wibox.widget {
 local last_row = wibox.widget {
   layout = wibox.layout.align.horizontal,
   forced_height = dpi(48),
+  format_item(
+    {
+      layout = wibox.layout.fixed.horizontal,
+      spacing = dpi(10),
+      require("widgets.end-session")(),
+    }
+  ),
   {
     layout = wibox.container.margin,
-    spacing = dpi(10),
+    left = dpi(10),
     format_item(require("widgets.user-profile")()),
   },
 }

@@ -9,6 +9,30 @@ local tags = require("configuration.tags").tags
 
 local actions = {}
 
+local function ensure_all_functions(...)
+  local funcs = {}
+
+  for i, fn in ipairs({...}) do
+    if type(fn) ~= "function" then
+      error("Argument " .. i .. " is not a function, is " .. tostring(fn))
+    end
+    funcs[#funcs+1] = fn
+  end
+
+  return funcs
+end
+
+function actions.compose(...)
+  local funcs = ensure_all_functions(...)
+  return function(...)
+    local result = {...}
+    for _, fn in ipairs(funcs) do
+      result = {fn(table.unpack(result))}
+    end
+    return result
+  end
+end
+
 function actions.focus_by_index(offset)
   return function()
     awful.client.focus.byidx(offset)
@@ -313,6 +337,15 @@ function actions.toggle_control_center()
     local center = awful.screen.focused().control_center
     if center then
       center:toggle()
+    end
+  end
+end
+
+function actions.close_control_center()
+  return function()
+    local center = awful.screen.focused().control_center
+    if center then
+      center:close()
     end
   end
 end
