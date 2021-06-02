@@ -13,7 +13,6 @@ local dpi = require('utils').dpi
 local taglist = require("wibar/taglist")
 local polybar_wrapper = require("wibar/polybar_wrapper")
 local battery_widget = require("wibar/battery_widget")
-local volume_widget = require("wibar/volume_widget")
 -- local workrave_widget = require("wibar/workrave_widget")
 
 --
@@ -108,7 +107,6 @@ function wibar.create_for_screen(s)
               left_click = actions.spawn({"kitty", "vit"}),
               right_click = actions.spawn({"kitty", "vit"}),
             }),
-            volume_widget.new(),
             battery_widget.new(),
             wibox.widget.systray(),
         },

@@ -36,6 +36,16 @@ local placeholder = function(s)
   })
 end
 
+local control_sliders = wibox.widget {
+  layout = wibox.layout.fixed.vertical,
+  spacing = dpi(10),
+  format_item({
+    widget = wibox.container.margin,
+    margins = dpi(10),
+    require("widgets.volume-slider"),
+  }),
+}
+
 local last_row = wibox.widget {
   layout = wibox.layout.align.horizontal,
   forced_height = dpi(48),
@@ -51,7 +61,7 @@ local control_center = function(s)
   local panel = awful.popup {
     screen = s,
     type = "dock",
-    visible = true, -- TODO: Default to false
+    visible = utils.is_test(),
     ontop = true,
     width = width,
     maximum_width = width,
@@ -81,7 +91,7 @@ local control_center = function(s)
               visible = true,
               layout = wibox.layout.fixed.vertical,
               spacing = dpi(10),
-              placeholder("MAIN"),
+              control_sliders,
             },
             {
               id = "monitor_control",

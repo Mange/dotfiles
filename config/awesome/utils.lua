@@ -24,6 +24,16 @@ function utils.strip(str)
   end
 end
 
+function utils.clamp(min, current, max)
+  if current < min then
+    return min
+  elseif current > max then
+    return max
+  else
+    return current
+  end
+end
+
 function utils.run_or_raise(cmd, matchers)
   local c = utils.find_client(matchers)
   if c then
@@ -45,6 +55,10 @@ function utils.on_first_start(func)
   if not restart_detected and not awmtt_detected then
     func()
   end
+end
+
+function utils.is_test()
+  return awmtt_detected
 end
 
 function utils.wallpaper_path(name)

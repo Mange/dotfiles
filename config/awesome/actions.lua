@@ -323,6 +323,14 @@ function actions.toggle_systray()
   end
 end
 
+function actions.volume_set(percent)
+  return actions.spawn({"pulsemixer", "--set-volume", tostring(percent)})
+end
+
+function actions.volume_set_now(percent)
+  actions.volume_set(percent)()
+end
+
 function actions.volume_change(amount)
   return actions.spawn({"pulsemixer", "--change-volume", amount})
 end
