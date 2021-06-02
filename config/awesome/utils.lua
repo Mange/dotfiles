@@ -43,6 +43,18 @@ function utils.run_or_raise(cmd, matchers)
   end
 end
 
+function utils.kill_on_exit(pid)
+  if type(pid) == "number" then
+    awesome.connect_signal(
+      "exit",
+      function()
+          -- Negative pid means "Send signal to all processes in this group"
+          awesome.kill(-pid, awesome.unix_signal["SIGTERM"])
+        end
+    )
+  end
+end
+
 function utils.find_client(matchers)
   for _, c in ipairs(client.get()) do
     if c and awful.rules.match(c, matchers) then

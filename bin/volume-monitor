@@ -1,0 +1,11 @@
+#!/bin/sh
+
+volume-current
+
+# Will emit an event every time something happens with Pulseaudio. When
+# something happens, let's query the volume and mute status.
+LC_ALL=C pactl subscribe |
+  grep --line-buffered -E "Event .change. on (sink|server) " |
+  while read -r _; do
+    volume-current
+  done

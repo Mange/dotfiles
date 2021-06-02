@@ -1,0 +1,4 @@
+#!/bin/sh
+
+pulsemixer --get-volume --get-mute | tr '\n' ' '
+echo ""
