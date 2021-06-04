@@ -1,0 +1,20 @@
+configuration {
+	terminal: "kitty";
+	dpi: 1;
+
+	theme: "~/.config/rofi/default.rasi";
+
+	display-window: "Goto";
+	display-run: "Run";
+	display-ssh: "SSH";
+	display-drun: "Run";
+	display-combi: "Rofi";
+	display-emoji: "Emoji";
+
+	kb-clear-line: "Control+l";
+	kb-remove-word-back: "Control+w";
+	kb-mode-next: "Tab";
+	kb-mode-previous: "Shift+Tab,ISO_Left_Tab";
+	kb-row-up: "Up";
+	kb-row-tab: "";
+}
