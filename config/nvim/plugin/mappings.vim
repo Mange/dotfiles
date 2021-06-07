@@ -349,7 +349,7 @@ let g:which_key_map.t.s = 'spell'
 nmap <leader>td :call CocAction("diagnosticToggle")<cr>
 let g:which_key_map.t.d = 'diagnostics'
 
-nmap <leader>tc :set cursorline! \| set cursorline?<cr>
+nmap <leader>tc :CursorLineToggle<cr>
 let g:which_key_map.t.c = 'cursorline'
 
 nmap <leader>tC :set cursorcolumn! \| set cursorcolumn?<cr>

@@ -52,3 +52,23 @@ function! SmartSplit(args) abort
 endfunction
 
 command! -nargs=? -complete=file SmartSplit :call SmartSplit("<args>")
+
+let g:cursorline_enabled = 1
+function! CursorLineToggle() abort
+  if g:cursorline_enabled == 1
+    let g:cursorline_enabled = 0
+    setlocal nocursorline
+  else
+    let g:cursorline_enabled = 1
+    setlocal cursorline
+  endif
+endfunction
+command! -nargs=0 CursorLineToggle :call CursorLineToggle()
+
+function! CursorLineApply() abort
+  if g:cursorline_enabled == 1
+    setlocal cursorline
+  else
+    setlocal nocursorline
+  endif
+endfunction
