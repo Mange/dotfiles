@@ -42,33 +42,33 @@ i3lock_options=(
 
   "--indicator"
   "--clock"
-  "--datestr=Type password to unlock…"
+  "--date-str=Type password to unlock…"
   "--show-failed-attempts"
-  "--veriftext="
-  "--wrongtext="
+  "--verif-text="
+  "--wrong-text="
 
   "--date-align=1"
   "--time-align=1"
-  "--timepos=x+43:h-70"
-  "--datepos=x+43:h-45"
-  "--indpos=x+280:h-70"
+  "--time-pos=x+43:h-70"
+  "--date-pos=x+43:h-45"
+  "--ind-pos=x+280:h-70"
   "--radius=20"
   "--ring-width=3"
 
   "--color=00000066"
-  "--insidecolor=00000000"
-  "--ringcolor=ffffffff"
+  "--inside-color=00000000"
+  "--ring-color=ffffffff"
   "--line-uses-inside"
-  "--keyhlcolor=d23c3dff" # #d23c3d
-  "--bshlcolor=d23c3dff"  # #d23c3d
-  "--separatorcolor=00000000"
-  "--insidevercolor=fecf4dff" # #fecf4d
-  "--insidewrongcolor=d23c3dff" # #d23c3d
-  "--ringvercolor=ffffffff"
-  "--ringwrongcolor=ffffffff"
-  #"--textcolor=ffffffff"
-  "--timecolor=ffffffff"
-  "--datecolor=ffffffff"
+  "--keyhl-color=d23c3dff" # #d23c3d
+  "--bshl-color=d23c3dff"  # #d23c3d
+  "--separator-color=00000000"
+  "--insidever-color=fecf4dff" # #fecf4d
+  "--insidewrong-color=d23c3dff" # #d23c3d
+  "--ringver-color=ffffffff"
+  "--ringwrong-color=ffffffff"
+  #"--text-color=ffffffff"
+  "--time-color=ffffffff"
+  "--date-color=ffffffff"
 )
 
 if [[ $1 == "--debug" ]]; then
