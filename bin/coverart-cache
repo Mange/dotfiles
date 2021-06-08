@@ -47,4 +47,14 @@ echo "$destination"
 # Always touch the file to make cache LRU
 touch "$destination"
 
-# TODO: Garbage collect
+# Garbage collect files
+# Keep:
+#   * The last 100 most recently used images (note that images are always
+#     touched when used).
+(
+  find "$repo/" -type f -printf '%T+\t%p\n' |
+    sort -n |
+    cut -d $'\t' -f 2 |
+    head -n -100 |
+    xargs rm
+)
