@@ -147,10 +147,7 @@ adapta-gtk-theme # gtk theme
 # awesome # Replaced with awesome-git from AUR
 luarocks
 rlwrap # readline support for awesome-client
-# TODO:
-# luarocks install --server=http://luarocks.org/dev lua-lsp
-# luarocks install luacheck
-# luarocks install lcf # formatter
+inotify-tools # Used by some daemons in my AwesomeWM config
 
 # Keybase
 keybase

@@ -51,6 +51,11 @@ migrate_xdg ~/.cargo "$CARGO_HOME"
 migrate_xdg ~/.rustup "$RUSTUP_HOME"
 migrate_xdg ~/.gnupg "$GNUPGHOME"
 
+# Seed Picom blur config
+if [[ ! -f "${XDG_CONFIG_HOME}/picom/blur.cfg" ]]; then
+  echo "strength = 8.0" > "${XDG_CONFIG_HOME}/picom/blur.cfg"
+fi
+
 if [[ "$SHELL" != *zsh ]]; then
   echo "Warning: You seem to be using a shell different from zsh (${SHELL})" > /dev/stderr
   echo "Fix this by running:" > /dev/stderr

@@ -42,6 +42,11 @@ local control_sliders = wibox.widget {
     margins = dpi(10),
     require("widgets.volume-slider"),
   }),
+  format_item({
+    widget = wibox.container.margin,
+    margins = dpi(10),
+    require("widgets.blur-slider"),
+  }),
 }
 
 local media_info = wibox.widget {
