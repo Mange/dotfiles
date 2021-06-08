@@ -44,6 +44,17 @@ local control_sliders = wibox.widget {
   }),
 }
 
+local media_info = wibox.widget {
+  layout = wibox.layout.fixed.vertical,
+  format_item(
+    {
+      margins = dpi(10),
+      widget = wibox.container.margin,
+      require('widgets.media-info'),
+    }
+  )
+}
+
 local last_row = wibox.widget {
   layout = wibox.layout.align.horizontal,
   forced_height = dpi(48),
@@ -95,6 +106,7 @@ local control_center = function(s)
               layout = wibox.layout.fixed.vertical,
               spacing = dpi(10),
               control_sliders,
+              media_info,
             },
             {
               id = "monitor_control",

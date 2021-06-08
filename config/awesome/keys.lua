@@ -311,4 +311,8 @@ keys.clientkeys = gears.table.join(
     awful.key({modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end, {description = "move to master", group = "client"})
 )
 
+keys.mouse_click = function(modifier, button, action)
+  return gears.table.join(awful.button(modifier, button, nil, action))
+end
+
 return keys
