@@ -37,7 +37,7 @@ try-source-plugin() {
 # Why wouldn't I?
 umask 002
 # }}}
-# {{{ ZLE and fzf
+# {{{ ZLE, vi mode, and fzf
 # Default:        *?_-.[]~=/&;!#$%^(){}<>
 export WORDCHARS='*?[]~&;!#$%^(){}'
 
@@ -105,15 +105,20 @@ fi
 function zle_mode_output {
   # Keymap could be empty sometimes; assume insert mode
   case $KEYMAP in
-    ("vicmd") echo $2;;
-    (*) echo $1
+    ("vicmd") echo -n $2;;
+    (*) echo -n $1
   esac
 }
 
-# Reset prompt on mode change
-function zle-keymap-select {
+# Apply correct cursor style and reset prompt when switching vi modes.
+function zle-keymap-select zle-line-init
+{
+  # Switch between blinking line (│) and block (█) depending on mode
+  zle_mode_output $'\x1b[\x35 q' $'\x1b[\x32 q'
   zle reset-prompt
+  zle -R
 }
+zle -N zle-line-init
 zle -N zle-keymap-select
 
 # }}}
@@ -531,11 +536,6 @@ function mange-prompt-precmd() {
 add-zsh-hook preexec mange-prompt-preexec
 add-zsh-hook precmd mange-prompt-precmd
 
-# Show verbose mode information
-function vi_mode_prompt_info {
-  zle_mode_output "" "%K{196}%F{000} CMD %f%k"
-}
-
 # Treat these characters as having width 1
 _prompt_insert_mode_character="%1{›%}"
 _prompt_command_mode_character="%1{»%}"
@@ -580,7 +580,7 @@ function {
   local slow_command_duration='$(prompt_slow_command_duration)'
   local end='$(prompt_end_character)%f%k%b'
 
-  export RPROMPT='$(vi_mode_prompt_info)$vcs_info_msg_0_'
+  export RPROMPT='$vcs_info_msg_0_'
   export PROMPT="${user}${host}${dir}${last_status}${slow_command_duration}${current_jobs} ${end}"
 }
 # }}}
