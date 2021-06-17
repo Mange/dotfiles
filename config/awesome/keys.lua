@@ -118,7 +118,7 @@ keys.global = gears.table.join(
     awful.key({}, "XF86AudioRaiseVolume",  actions.volume_change("+5")),
     awful.key({}, "XF86AudioLowerVolume",  actions.volume_change("-5")),
     awful.key({}, "XF86AudioMute",         actions.volume_mute_toggle()),
-    awful.key({}, "XF86AudioPlay",         actions.playerctl("play-pause")),
+    awful.key({}, "XF86AudioPlay",         actions.playerctl_play_pause()),
 
     -- Group: Awesome
     awful.key({modkey, "Shift"}, "/", hotkeys_popup.show_help, {description="Show keybinds", group="Awesome"}),

@@ -6,10 +6,10 @@ local media_mode = which_keys.new_chord(
   {
     keybindings = {
       -- Playerctl
-      which_keys.key("h", "previous",   actions.playerctl("previous"),   {group = "Player", which_key_sticky = true}),
-      which_keys.key("j", "play-pause", actions.playerctl("play-pause"), {group = "Player"}),
-      which_keys.key("k", "play-pause", actions.playerctl("play-pause"), {group = "Player"}),
-      which_keys.key("l", "next",       actions.playerctl("next"),       {group = "Player", which_key_sticky = true}),
+      which_keys.key("h", "previous",   actions.playerctl_previous(),   {group = "Player", which_key_sticky = true}),
+      which_keys.key("j", "play-pause", actions.playerctl_play_pause(), {group = "Player"}),
+      which_keys.key("k", "play-pause", actions.playerctl_play_pause(), {group = "Player"}),
+      which_keys.key("l", "next",       actions.playerctl_next(),       {group = "Player", which_key_sticky = true}),
 
       -- Volume
       which_keys.key(

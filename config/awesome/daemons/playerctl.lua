@@ -143,6 +143,31 @@ function playerctl:on_update(func)
   awesome.connect_signal("mange:playerctl:update", func)
 end
 
+local function spawn_playerctl(command)
+  local cmdline = {"playerctl"}
+  local player = playerctl.current_player
+
+  if player then
+    table.insert(cmdline, "-p")
+    table.insert(cmdline, player)
+  end
+
+  table.insert(cmdline, command)
+  spawn(cmdline)
+end
+
+function playerctl:play_pause()
+  spawn_playerctl("play-pause")
+end
+
+function playerctl:previous()
+  spawn_playerctl("previous")
+end
+
+function playerctl:next()
+  spawn_playerctl("next")
+end
+
 utils.kill_on_exit(spawn_status_watcher())
 utils.kill_on_exit(spawn_metadata_watcher())
 

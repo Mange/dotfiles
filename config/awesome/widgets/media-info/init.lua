@@ -79,15 +79,15 @@ playerctl:on_update(
 )
 
 media_buttons.prev_button:buttons(
-  keys.mouse_click({}, keys.left_click, actions.playerctl("previous"))
+  keys.mouse_click({}, keys.left_click, actions.playerctl_previous())
 )
 
 media_buttons.play_button:buttons(
-  keys.mouse_click({}, keys.left_click, actions.playerctl("play-pause"))
+  keys.mouse_click({}, keys.left_click, actions.playerctl_play_pause())
 )
 
 media_buttons.next_button:buttons(
-  keys.mouse_click({}, keys.left_click, actions.playerctl("next"))
+  keys.mouse_click({}, keys.left_click, actions.playerctl_next())
 )
 
 return media_info

@@ -7,6 +7,8 @@ local focus_client = require("focus_client")
 local utils = require("utils")
 local tags = require("configuration.tags").tags
 
+local playerctl = require("daemons.playerctl")
+
 local actions = {}
 
 local function ensure_all_functions(...)
@@ -380,8 +382,22 @@ function actions.volume_gui()
   return actions.spawn({"pavucontrol"})
 end
 
-function actions.playerctl(...)
-  return actions.spawn({"playerctl", ...})
+function actions.playerctl_play_pause()
+  return function()
+    playerctl:play_pause()
+  end
+end
+
+function actions.playerctl_previous()
+  return function()
+    playerctl:previous()
+  end
+end
+
+function actions.playerctl_next()
+  return function()
+    playerctl:next()
+  end
 end
 
 function actions.brightness_change(amount)
