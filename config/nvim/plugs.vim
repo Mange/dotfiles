@@ -68,10 +68,13 @@ if has("nvim-0.4.0")
   Plug 'kien/rainbow_parentheses.vim'
   Plug 'meain/vim-package-info', { 'do': 'npm install' }
 
+  """ Misc languages and syntax packages
+  Plug 'towolf/vim-helm'
+  Plug 'calviken/vim-gdscript3'
+
   """ Language server support, linting, etc.
   Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': { -> coc#util#install()}}
   Plug 'w0rp/ale'
-  Plug 'calviken/vim-gdscript3'
 
   let g:coc_global_extensions = [
         \ 'coc-css',
