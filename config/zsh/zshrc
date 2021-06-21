@@ -467,22 +467,21 @@ function() {
     zstyle ':vcs_info:*:prompt:*' use-prompt-escapes true
     zstyle ':vcs_info:*:prompt:*' check-for-changes true
 
-    zstyle ':vcs_info:*:prompt:*' unstagedstr "%1{★%}"
-    zstyle ':vcs_info:*:prompt:*' stagedstr "%1{❖%}"
+    # Leave icon color to make branch name appear in that color if that icon is
+    # last before the name.
+    zstyle ':vcs_info:*:prompt:*' stagedstr "%F{#fabd2f} "
+    zstyle ':vcs_info:*:prompt:*' unstagedstr "%F{#d65d0e} "
 
-    local branch_format="%F{214}%b" # %b = branch
+    local path="%K{#504945} %B%F{cyan}%r%%b%F{cyan}%F{blue}%S %k%f"
+    local action="%K{#b57614}%B%F{15} %a %%b%f%F{#b57614}%K{#665c54}"
+    local icons_and_branch="%K{#665c54} %F{10}%B%b%%b %k"
 
-    if is-at-least 4.3.11; then
-      local changes_format="%F{022}%c%F{088}%u"
-    else
-      # Old version cannot show changes
-      local changes_format=""
-    fi
-
-    zstyle ':vcs_info:*:prompt:*' formats       "${changes_format}${branch_format}%f" ""
-    zstyle ':vcs_info:*:prompt:*' actionformats "${changes_format}${branch_format}%f [%F{cyan}%a%f]" ""
-
-    zstyle ':vcs_info:*:prompt:*' nvcsformats   "" ""
+    # Format when there is no VCS info; e.g. display plain directory info
+    zstyle ':vcs_info:*:prompt:*' nvcsformats \
+      "%K{#504945}%F{blue}%B %4~ %b%f%k" \
+      ""
+    zstyle ':vcs_info:*:prompt:*' formats       "${path}" "${icons_and_branch}"
+    zstyle ':vcs_info:*:prompt:*' actionformats "${path}" "${action}${icons_and_branch}"
 
     # Generate VCS info just before rendering prompt
     function mange-prompt-precmd-vcs {
@@ -490,7 +489,8 @@ function() {
     }
     add-zsh-hook precmd mange-prompt-precmd-vcs
   else
-    export vcs_info_msg_0_="zsh too old"
+    export vcs_info_msg_0_="%K{#504945}%F{blue}%B %4~ %b%f%k"
+    export vcs_info_msg_1_=""
   fi
 }
 
@@ -536,18 +536,21 @@ function mange-prompt-precmd() {
 add-zsh-hook preexec mange-prompt-preexec
 add-zsh-hook precmd mange-prompt-precmd
 
-# Treat these characters as having width 1
-_prompt_insert_mode_character="%1{›%}"
-_prompt_command_mode_character="%1{»%}"
+_prompt_insert_mode_character=""
+_prompt_command_mode_character="»"
 
 # Show mode information by the last character in the prompt
 function prompt_end_character {
-  zle_mode_output "$_prompt_insert_mode_character " "%F{196}${_prompt_command_mode_character}%f "
+  zle_mode_output "%F{#504945}%f " "%F{#504945}%f "
+}
+function prompt_start_character {
+  local color="${1:-#504950}"
+  zle_mode_output " %F{$color}%f" " %F{$color}%f"
 }
 
 function prompt_slow_command_duration {
   if [[ -n "$_mange_last_cmd_duration" ]] && ((_mange_last_cmd_duration >= 10)); then
-    echo -n " %F{cyan}%1{%}$(seconds-to-human $_mange_last_cmd_duration)"
+    echo -n "%F{15}%K{#3c3836}  $(seconds-to-human $_mange_last_cmd_duration) %k%f"
   fi
 }
 
@@ -555,33 +558,43 @@ function prompt_slow_command_duration {
 # Actually set up the PROMPT and RPROMPT variables
 #
 function {
-  if [[ -n $SSH_CLIENT ]]; then
-    if is256color; then
-      local host="%F{241}@%F{60}%4m "
-    else
-      local host="%f@%F{blue}%4m "
-    fi
-  else
-    local host=""
-  fi
+  # NOTE: Eval os-icon once on load
+  # NOTE: os_icon + user + hostname share the same background and must be
+  # rendered in that order to make sense and to reset formatting rules.
+  local os_icon="%F{15}%F{blue}%K{15}$(os-icon)"
 
   # Don't show user at all if it's expected username
-  if [[ $USER == "mange" ]]; then
-    local user=""
-  else
+  local user
+  if [[ $USER != "mange" ]]; then
     # Color user differently if we have a privileged user ("!")
-    # %(nx.true.false)
-    local user="%(!.%F{196}.%F{072})%n"
+    user="%B%(!.%F{red}%n.%F{#076678}%n)%b"
   fi
 
-  local dir="%B%F{blue}%4~%b"
-  local last_status="%(?..%F{red}🗲%? )"
-  local current_jobs="%(1j.%F{magenta}🗗%B%j%b .)"
-  local slow_command_duration='$(prompt_slow_command_duration)'
-  local end='$(prompt_end_character)%f%k%b'
+  local host
+  if [[ -n $SSH_CLIENT ]]; then
+    host="%B%F{blue}%m%f%b"
+    if [[ -n "$user" ]]; then
+      host="@${host}"
+    fi
+  fi
 
-  export RPROMPT='$vcs_info_msg_0_'
-  export PROMPT="${user}${host}${dir}${last_status}${slow_command_duration}${current_jobs} ${end}"
+  if [[ -n "$user" ]] || [[ -n "$host" ]]; then
+    local machine="${os_icon}${user}${host} "
+  else
+    local machine="${os_icon}"
+  fi
+
+  local md_sep="%F{15}%K{#504945}"
+  local dir='$vcs_info_msg_0_'
+  local last_status='%(?.$(prompt_start_character "#504945")%K{#504945}%F{green} ✔.$(prompt_start_character "#ad3a03")%K{#ad3a03}%F{10} ✘) %f%k%b'
+  local current_jobs="%(1j.%K{#d3869b}%F{black} 🗗 %B%j%b %k%f.)"
+  local slow_command_duration='$(prompt_slow_command_duration)'
+  local left_end='$(prompt_end_character)%f%k%b'
+  local time="%F{15}%K{#32302f} %D{%H:%M}%k%F{#32302f}%f"
+  local newline=$'\n'
+
+  export PROMPT="${newline}${machine}${md_sep}${dir}${left_end}"
+  export RPROMPT="${last_status}${slow_command_duration}${current_jobs}\$vcs_info_msg_1_${time}"
 }
 # }}}
 # {{{ Misc

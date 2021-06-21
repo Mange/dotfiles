@@ -1,0 +1,52 @@
+#!/bin/sh
+# Only look for the OSes that I'm somewhat likely to be using.
+
+determine_dist() {
+  dist=linux
+  if [ -f /etc/os-release ]; then
+    dist=$(awk -F '=' '/^ID=/ { print $2 }' /etc/os-release)
+  fi
+
+  case "$dist" in
+    arch*)
+      echo " "
+      ;;
+    *debian*)
+      echo ""
+      ;;
+    *ubuntu*)
+      echo ""
+      ;;
+    *raspbian*)
+      echo ""
+      ;;
+    *coreos*)
+      echo ""
+      ;;
+    *gentoo*)
+      echo ""
+      ;;
+    *centos*)
+      echo ""
+      ;;
+    *alpine*)
+      echo ""
+      ;;
+    *nixos*)
+      echo ""
+      ;;
+    *)
+      echo ""
+      ;;
+  esac
+}
+
+# Assume Linux if OSTYPE is missing.
+# shellcheck disable=3028
+case "${OSTYPE:-linux}" in
+  linux*)
+    determine_dist
+    ;;
+  *)
+    "🖳 "
+esac
