@@ -28,7 +28,6 @@ keys.awesome_chord = which_keys.new_chord(
   "Awesome",
   {
     keybindings = {
-      which_keys.key("space", "rofi", actions.rofi()),
       which_keys.key("w", "window-select", actions.select_window()),
       which_keys.key("e", "emoji-selector", actions.emoji_selector()),
       which_keys.key("P", "passwords", actions.passwords_menu()),
@@ -162,7 +161,7 @@ keys.global = gears.table.join(
     awful.key({modkey}, "q", actions.next_layout(), {description = "Next layout", group = "Layout"}),
 
     -- Group: Apps
-    awful.key({modkey, "Shift"}, "space", actions.rofi(), {description = "Rofi", group = "Apps"}),
+    awful.key({modkey}, "d", actions.rofi(), {description = "Rofi", group = "Apps"}),
 
     awful.key({modkey}, "Return", actions.spawn({"samedir", terminal}), {description = "Terminal in same dir", group = "Apps"}),
     awful.key({modkey, "Shift"}, "Return", actions.spawn(terminal), {description = "Terminal", group = "Apps"}),

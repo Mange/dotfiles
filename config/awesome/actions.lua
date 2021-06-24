@@ -255,8 +255,8 @@ function actions.rofi()
   return actions.spawn({
       "rofi",
       "-show", "combi",
-      "-modi", "combi,run,window,emoji",
-      "-combi-modi", "drun,window,emoji"
+      "-modi", "combi,run,window",
+      "-combi-modi", "drun,window"
     })
 end
 
