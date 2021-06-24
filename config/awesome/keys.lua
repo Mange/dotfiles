@@ -313,4 +313,8 @@ keys.mouse_click = function(modifier, button, action)
   return gears.table.join(awful.button(modifier, button, nil, action))
 end
 
+if utils.is_test() then
+  keys.awesome_chord.show_popup()
+end
+
 return keys

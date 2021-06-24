@@ -39,6 +39,10 @@ do
 end
 -- }}}
 
+-- {{{ Theme
+beautiful.init(require("theme"))
+-- }}}
+--
 utils = require("utils")
 keys = require("keys")
 actions = require("actions")
@@ -63,10 +67,6 @@ utils.on_first_start(function()
     "--experimental-backends"
   })
 end)
--- }}}
-
--- {{{ Theme
-beautiful.init(require("theme"))
 -- }}}
 
 require("configuration.screens")

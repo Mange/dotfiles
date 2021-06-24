@@ -168,6 +168,15 @@ theme.toast = {
   icon_size = dpi(48),
 }
 
+theme.which_key = {
+  bg = theme.background,
+  title_fg = "#E91E63",
+  key_bg = "#E91E63",
+  key_fg = white,
+  action_bg = white,
+  action_fg = black,
+}
+
 -- Client Snap Theme
 theme.snap_bg = theme.background
 theme.snap_shape = gears.shape.rectangle

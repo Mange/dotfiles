@@ -13,29 +13,33 @@
 --  }
 -- )
 -- media_chord.enter()
+
+-- TODO:
+--   * Remove "Shift" from key label if key is a letter
+--     * If "Shift" is there, `upper()` the key, else `lower()` the key
+--   * Allow clicking on entries to trigger them
+--   * Add close button on top right for mouse usage
+--   * Apply colors for the different categories again
+--   * Add suport for custom widget between title and columns
+--     * Media mode should show media information widget, for example.
 --
 
 local awful = require("awful")
 local wibox = require("wibox")
 local gears = require("gears")
+local beautiful = require("beautiful")
+local dpi = require("utils").dpi
 
 local style = {
-  font_header = "Fira Sans Regular 18",
-  font = "Fira Code 14",
-  padding_horizontal = 10,
-  padding_vertical = 5,
-  margin = 5,
-  color_header = "#cc241d",
+  font_header = beautiful.font_bold_size(18),
+  font = beautiful.font_size(14),
   color_default = "#83a598",
-  color_arrow = "#79740e",
   color_key = "#79740e",
   color_nested = "#cc241d",
-  color_group = "#d3869b",
-  color_bg = "#282828cc"
 }
 
 local aliases = {
-  [" "] = "Space"
+  [" "] = "SPC"
 }
 
 local aliases_to_keys = {
@@ -43,8 +47,109 @@ local aliases_to_keys = {
   space = " "
 }
 
+---@class Bind
+---@field key_label string -- Label of full keycombo, ex. "Ctrl+a".
+---@field action_label string -- Label of the action to take, ex. "+clients".
+---@field action function() -- Action to trigger.
+---@field color string -- Color of this bind.
+---@field is_hidden boolean -- If this bind should be excluded from showing up in popups.
+---@field sort_key string -- Key to use when sorting by.
+
+---@class Chord
+---@field binds Bind[]
+---@field title string
+---@field enter function()
+---@field stop function()
+---@field show_popup function()
+---@field hide_popup function()
+
+---@alias Widget table
+
+---@alias modifier
+---| '"Shift"' # Shift
+---| '"Control"' # Ctrl
+---| '"Mod1"' # Alt
+---| '"Mod4"' # Super
+
+---@class KeybindDetails
+---@field description string|nil -- Action label.
+---@field which_key_key string|nil -- Override the key label.
+---@field which_key_color string|nil -- Override the default color.
+---@field which_key_hidden boolean|nil -- Set hidden to true or false.
+---@field which_key_sticky boolean|nil -- Set action to be sticky or not. Sticky actions will not exit the chord after being triggered..
+
+---@class Keybind
+---@field 1 table<number,modifier> | '"none"' -- Modifiers for this keybind.
+---@field 2 string -- The actual key, ex. '"a"'.
+---@field 3 function() -- Function to trigger on this keybind.
+---@field 4 KeybindDetails? -- Extra details about the keybind.
+
+---@param keybind Keybind
+---@return Bind
+local function new_bind(keybind)
+  local modifiers = keybind[1]
+  local key = keybind[2]
+  local action = keybind[3]
+  local details = keybind[4]
+
+  if details.which_key_key ~= nil then
+    key = details.which_key_key
+  elseif aliases[key] ~= nil then
+    key = aliases[key]
+  end
+
+  if modifiers and modifiers ~= "none" and #modifiers > 0 then
+    -- {{"shift", "ctrl"}, "a"} -> "shift+ctrl+a"
+    key = table.concat(modifiers, "+") .. "+" .. key
+  end
+
+  local action_label = details.description or "no-description"
+
+  local bind = {
+    key_label = key,
+    action_label = action_label,
+    color = details.which_key_color or style.color_default,
+    is_hidden = details.which_key_hidden or false,
+    sort_key = string.lower(action_label),
+    action = action,
+  }
+  return bind
+end
+
+---@param binds Bind[]
+---@param num_columns number
+---@return Bind[][]
+-- Place Binds into num_columns columns, in this fashion:
+-- [
+--  [1, 4, 7],
+--  [2, 5, 8],
+--  [3, 6]
+-- ]
+local function group_binds_into_columns(binds, num_columns)
+  local columns = {}
+  for i = 1, num_columns do
+    columns[i] = {}
+  end
+
+  local column_index = 1
+  local current_column = columns[column_index]
+
+  for _, bind in ipairs(binds) do
+    if not bind.is_hidden then
+      current_column[#current_column+1] = bind
+
+      column_index = column_index + 1
+      if column_index > num_columns then
+        column_index = 1
+      end
+      current_column = columns[column_index]
+    end
+  end
+
+  return columns
+end
+
 local which_keys = {
-  color_normal = style.color_key,
   color_nested = style.color_nested,
 }
 
@@ -53,185 +158,147 @@ local function fg(color, text)
   return "<span foreground=\"" .. tostring(color) .. "\">" .. tostring(text) .. "</span>"
 end
 
--- Group the passed table of binds into a
---
---    {"Group name" -> {binding1, binding2, …}}
---
--- table.
-local function group_binds(keybindings)
-  local total = 0
-  local groups = {}
-
-  for _, binding in ipairs(keybindings) do
-    local desc = binding[#binding]
-    local group_name = desc.group or "Misc"
-    local group = groups[group_name]
-
-    if group == nil then
-      group = {}
-      groups[group_name] = group
-      total = total + 1
-    end
-
-    table.insert(group, binding)
-  end
-
-  return groups, total
+---@param margins number
+---@param widget Widget
+---@return Widget
+local function margin(margins, widget)
+  return {
+    widget = wibox.container.margin,
+    margins = margins,
+    widget
+  }
 end
 
--- Generate textbox widget for a group header.
-local function generate_group_header(group_name)
-  local text = fg(style.color_group, group_name)
+---@vararg Widget
+---@return Widget
+local function vertical(...)
+  return {
+    widget = wibox.layout.fixed.vertical,
+    ...
+  }
+end
 
-  return wibox.widget {
-    widget = wibox.container.background,
-    bg = style.color_group .. "22",
+---@param title string
+---@return Widget
+local function title_widget(title)
+  return {
+    widget = wibox.widget.textbox,
+    markup = fg(beautiful.which_key.title_fg, string.upper(title)),
+    font = style.font_header,
+    align = "center"
+  }
+end
+
+---@param bind Bind
+---@return Widget
+local function entry_widget(bind)
+  return {
+    widget = wibox.container.margin,
+    top = dpi(5),
+    bottom = dpi(5),
     {
-      widget = wibox.widget.textbox,
-      markup = text,
-      font = style.font
+      widget = wibox.layout.fixed.horizontal,
+      {
+        -- Key
+        widget = wibox.container.background,
+        bg = beautiful.which_key.key_bg,
+        fg = beautiful.which_key.key_fg,
+        {
+          widget = wibox.container.margin,
+          left = dpi(5),
+          right = dpi(5),
+          {
+            widget = wibox.widget.textbox,
+            text = bind.key_label,
+            align = "center",
+            ellipsize = "start",
+            font = style.font
+          }
+        }
+      },
+      -- Action
+      {
+        widget = wibox.container.background,
+        bg = beautiful.which_key.action_bg,
+        fg = beautiful.which_key.action_fg,
+        {
+          widget = wibox.container.margin,
+          left = dpi(5),
+          right = dpi(5),
+          {
+            widget = wibox.widget.textbox,
+            text = bind.action_label,
+            align = "left",
+            ellipsize = "end",
+            font = style.font
+          }
+        }
+      }
     }
   }
 end
 
--- Generate textbox widget for a specific keybinding.
---
--- You can set a `which_key_color` inside the keybind's description table and
--- it will be used here instead of the default color.
-local function generate_keybind_widget(keybind, forced_width)
-  local modifiers = keybind[1]
-  local key = keybind[2]
-  local desc = keybind[#keybind]
-  local color = desc.which_key_color or style.color_default
-
-  -- Support hiding keys from description
-  if desc.which_key_hidden then
-    return nil
+---@param column Bind[]
+---@return Widget
+local function column_widget(column)
+  local entries = {}
+  for i, bind in ipairs(column) do
+    entries[i] = entry_widget(bind)
   end
 
-  -- Fix some aliases
-  if aliases[key] ~= nil then
-    key = aliases[key]
-  end
-
-  -- Add modifiers to key combo, if set
-  if modifiers and modifiers ~= "none" and #modifiers > 0 then
-    key = table.concat(modifiers, "+") .. "+" .. key
-  end
-
-  -- Support overriding the apparent shortcut key
-  if desc.which_key_key ~= nil then
-    key = desc.which_key_key
-  end
-
-  local w = wibox.widget {
-    widget = wibox.layout.ratio.horizontal,
-    forced_width = forced_width,
-    inner_fill_strategy = "center",
-    {
-      widget = wibox.widget.textbox,
-      markup = fg(style.color_key, key),
-      align = "right",
-      ellipsize = "start",
-      font = style.font
-    },
-    {
-      widget = wibox.widget.textbox,
-      markup = fg(style.color_arrow, " → "),
-      align = "center",
-      ellipsize = "none",
-      font = style.font
-    },
-    {
-      widget = wibox.widget.textbox,
-      markup = fg(color, desc.description),
-      align = "left",
-      ellipsize = "end",
-      font = style.font
-    },
-  }
-  w:ajust_ratio(2, 0.30, 0.10, 0.60)
-
-  -- To be able to sort the widgets later
-  w.sort_key = string.lower(desc.description)
-
-  return w
+  return vertical(table.unpack(entries))
 end
 
-local function generate_popup(title, keybindings)
-  local grouped_bindings, total_groups = group_binds(keybindings)
-
-  -- Place all widgets here grouped by the group name.
-  local key_widgets = {}
-  local key_width = 200 -- TODO: Decide this more intelligently
-
-  -- Generate individual key widgets
-  for group_name, group_bindings in pairs(grouped_bindings) do
-    for _, bind in ipairs(group_bindings) do
-      if key_widgets[group_name] == nil then
-        key_widgets[group_name] = {}
-      end
-
-      local w = generate_keybind_widget(bind, key_width)
-      if w ~= nil then
-        table.insert(key_widgets[group_name], w)
-      end
-    end
-
-    -- Now sort the widgets in the group
-    table.sort(key_widgets[group_name], function(a, b) return a.sort_key < b.sort_key end)
+---@param columns Bind[][]
+---@return Widget
+local function columns_widget(columns)
+  local widgets = {}
+  for i, column in ipairs(columns) do
+    widgets[i] = column_widget(column)
   end
 
-  -- Calculate how many columns should be used
-  -- TODO: This needs to happen on a per-screen basis.
-  -- For 1080p it seems like 5 columns is max.
-  -- For 1440p it seems like 6-7 columns is max.
-  local number_of_columns = 5 -- TODO: Calculate using key_width and screen's dimensions
+  return margin(dpi(10), {
+    widget = wibox.layout.flex.horizontal,
+    table.unpack(widgets)
+  })
+end
 
-  -- Create widget and add all the groups to it
-  local popup_widget = wibox.layout.flex.vertical()
-  popup_widget.spacing = style.padding_vertical
-  if title ~= nil then
-    popup_widget:add(wibox.widget {
-      widget = wibox.widget.textbox,
-      markup = fg(style.color_header, title),
-      font = style.font_header,
-      align = "center"
-    })
+local function calculate_columns(width)
+  local min_width = 400
+  local num_cols = 1
+  while (width / num_cols) > min_width do
+    num_cols = num_cols + 1
   end
 
-  for group_name, widgets in pairs(key_widgets) do
-    -- Only render group names when there are more than a single group
-    if total_groups > 1 then
-      popup_widget:add(generate_group_header(group_name))
-    end
+  return num_cols, math.floor(width / num_cols)
+end
 
-    -- Insert grid of all keys
-    local grid = wibox.layout.grid.vertical(number_of_columns)
-    grid.expand = true
-    grid.homogeneous = false
-    grid.spacing = 0
-    for _, w in ipairs(widgets) do
-      grid:add(w)
-    end
+---@param s awesome.screen
+---@param instance Chord
+local function generate_popup2(instance, s)
+  local num_columns, column_width = calculate_columns(s.workarea.width)
 
-    popup_widget:add(grid)
-  end
+  -- Place binds in columns
+  local columns = group_binds_into_columns(instance.binds, num_columns)
 
+  -- TODO: Add support for a custom widget between title and columns (injected
+  -- in options)
+
+  -- Generate popup widget tree from columns and their binds
   return awful.popup {
-    widget = {
-      widget = wibox.container.margin,
-      margins = style.margin,
-      popup_widget
-    },
+    screen = s,
     ontop = true,
     placement = awful.placement.no_offscreen + awful.placement.bottom + awful.placement.maximize_horizontally,
-    visible = false,
-    spacing = 20,
-    bg = style.color_bg,
+    visible = true,
+    bg = beautiful.which_key.bg,
+    widget = vertical(
+      margin(dpi(10), title_widget(instance.title)),
+      columns_widget(columns)
+    ),
   }
 end
 
+---@return Chord
 local function new(instance)
   -- Enter this mode.
   function instance.enter()
@@ -247,13 +314,16 @@ local function new(instance)
 
   -- Show the popup without actually entering the mode.
   function instance.show_popup()
-    instance.popup.screen = awful.screen.focused()
-    instance.popup.visible = true
+    instance.hide_popup()
+    local s = awful.screen.focused()
+    instance.popup2 = generate_popup2(instance, s)
   end
 
-  -- Hide the popup if visible.
   function instance.hide_popup()
-    instance.popup.visible = false
+    if instance.popup2 ~= nil then
+      instance.popup2.visible = false
+      instance.popup2 = nil
+    end
   end
 
   return instance
@@ -262,9 +332,11 @@ end
 -- Create a new which_key chord with a given title. The keygrabber_args
 -- will be passed to awful.keygrabber.
 -- A chord will exit when a non-sticky key is pressed.
+---@return Chord
 function which_keys.new_chord(title, keygrabber_args)
   local instance = {}
   local keybindings = {}
+  local binds = {}
 
   for i, binding in ipairs(keygrabber_args.keybindings) do
     local is_sticky = false
@@ -288,6 +360,7 @@ function which_keys.new_chord(title, keygrabber_args)
     end
 
     keybindings[i] = decorated_binding
+    binds[i] = new_bind(decorated_binding)
   end
 
   instance.grabber = awful.keygrabber(
@@ -305,7 +378,8 @@ function which_keys.new_chord(title, keygrabber_args)
       }
     )
   )
-  instance.popup = generate_popup(title, keygrabber_args.keybindings)
+  instance.title = title
+  instance.binds = binds
 
   return new(instance)
 end
