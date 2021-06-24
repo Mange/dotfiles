@@ -29,7 +29,6 @@ keys.awesome_chord = which_keys.new_chord(
   {
     keybindings = {
       which_keys.key("space", "rofi", actions.rofi()),
-      which_keys.key("Shift+space", "tydra", actions.tydra(), {which_key_key = "S-space"}),
       which_keys.key("w", "window-select", actions.select_window()),
       which_keys.key("e", "emoji-selector", actions.emoji_selector()),
       which_keys.key("P", "passwords", actions.passwords_menu()),

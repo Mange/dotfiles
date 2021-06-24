@@ -272,14 +272,6 @@ function actions.passwords_menu()
   return actions.spawn({"bwmenu", "--clear", "20"})
 end
 
-function actions.tydra()
-  return actions.spawn({
-      "kitty",
-      "--class", "dropdown_tydra",
-      "zsh", "-ic", "tydra ~/.config/tydra/main.yml"
-    })
-end
-
 function actions.flameshot(...)
   return actions.spawn({"flameshot", ...})
 end
