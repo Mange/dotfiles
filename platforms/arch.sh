@@ -512,7 +512,6 @@ fi
 if run-section "rust"; then
   install-rustup-components || handle-failure
   install-crates rust/crates.txt "Rust software" || handle-failure
-  install-nightly-crates rust/nightly-crates.txt "Nightly Rust software" || handle-failure
   cargo-update || handle-failure
 fi
 

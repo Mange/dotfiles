@@ -6,21 +6,12 @@ if [[ -z "$CARGO_HOME" ]]; then
 fi
 
 install-rustup-components() {
-  header "Installing Nightly Rust"
-  run-rust-cmd-quietly rustup install nightly
 
   header "Adding Rust editor components"
   run-rust-cmd-quietly rustup component add rust-src
   run-rust-cmd-quietly rustup component add clippy
-  run-rust-cmd-quietly rustup component add rls
   run-rust-cmd-quietly rustup component add rust-analysis
   run-rust-cmd-quietly rustup component add rustfmt
-
-  run-rust-cmd-quietly rustup component add rust-src --toolchain=nightly
-  run-rust-cmd-quietly rustup component add clippy --toolchain=nightly
-  run-rust-cmd-quietly rustup component add rls --toolchain=nightly
-  run-rust-cmd-quietly rustup component add rust-analysis --toolchain=nightly
-  run-rust-cmd-quietly rustup component add rustfmt --toolchain=nightly
 }
 
 run-rust-cmd-quietly() {
@@ -79,27 +70,6 @@ install-crates-base() {
 
 install-crates() {
   install-crates-base "$1" "$2"
-}
-
-install-nightly-crates() {
-  install-crates-base "$1" "$2" +nightly
-  local filename="$1"
-
-  sed "s/#.*\$//" "${filename}" | while read -r crate; do
-    [[ -z $crate ]] && continue
-
-    echo -n "${cyan}╸ cargo install-update-config --toolchain nightly ${crate}${red}"
-    set +e
-    output="$(run-rust-cmd cargo install-update-config --toolchain nightly "${crate}" 2>&1)"
-    if [[ $? == 0 ]]; then
-      echo -n "${green} ✔ ${reset}"
-    else
-      echo "${red} ✘"
-      echo "${output} ${reset}"
-    fi
-    echo "${reset}"
-    set -e
-  done
 }
 
 cargo-update() {
