@@ -1,4 +1,5 @@
 require("daemons.battery")
+require("daemons.brightness")
 require("daemons.picom")
 require("daemons.playerctl")
 require("daemons.profile")

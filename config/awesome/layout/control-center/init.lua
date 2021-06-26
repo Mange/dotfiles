@@ -2,6 +2,7 @@ local beautiful = require('beautiful')
 local wibox = require('wibox')
 
 local dpi = require("utils").dpi
+local brightness = require("daemons.brightness")
 
 local format_item = function(widget)
   return wibox.widget {
@@ -34,6 +35,17 @@ local placeholder = function(s)
   })
 end
 
+local brightness_slider = format_item({
+  widget = wibox.container.margin,
+  margins = dpi(10),
+  id = "brightness_slider",
+  require("widgets.brightness-slider"),
+})
+brightness_slider.visible = brightness.is_controllable
+brightness:on_update(function(data)
+  brightness_slider.visible = data.is_controllable
+end)
+
 local control_sliders = wibox.widget {
   layout = wibox.layout.fixed.vertical,
   spacing = dpi(10),
@@ -42,6 +54,7 @@ local control_sliders = wibox.widget {
     margins = dpi(10),
     require("widgets.volume-slider"),
   }),
+  brightness_slider,
   format_item({
     widget = wibox.container.margin,
     margins = dpi(10),
@@ -79,6 +92,7 @@ local last_row = wibox.widget {
 
 local control_center = function(s)
   local width = dpi(400)
+
   local panel = awful.popup {
     screen = s,
     type = "dock",

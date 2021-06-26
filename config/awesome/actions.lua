@@ -8,6 +8,7 @@ local utils = require("utils")
 local tags = require("configuration.tags").tags
 
 local playerctl = require("daemons.playerctl")
+local brightness = require("daemons.brightness")
 
 local actions = {}
 
@@ -59,6 +60,7 @@ function actions.move_focused_client(offset)
   end
 end
 
+---@param cmdline string[] | string
 function actions.spawn(cmdline)
   return function ()
     awful.spawn(cmdline)
@@ -393,7 +395,9 @@ function actions.playerctl_next()
 end
 
 function actions.brightness_change(amount)
-  return actions.spawn({"brightnessctl", "set", amount})
+  return function()
+    brightness:set(amount)
+  end
 end
 
 return actions
