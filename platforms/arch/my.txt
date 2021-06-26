@@ -22,6 +22,7 @@ highlight
 pandoc
 python-pygments  # some tools use this to highlight code
 shellcheck
+watchexec
 
 # Yubikey
 yubikey-manager

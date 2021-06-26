@@ -1,9 +1,6 @@
 # For "cargo install-update"
 cargo-update
 
-# Generic development tools
-watchexec
-
 # Rust development
 rusty-tags
 cargo-edit
