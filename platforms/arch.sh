@@ -552,9 +552,7 @@ if run-section "neovim"; then
 
     run-command-quietly "NodeJS plugin" < <(
       if hash npm 2>/dev/null; then
-        # Install both on hardcoded system path and in current nvm environment.
         sudo npm install -g neovim 2>&1
-        [[ -f /usr/bin/npm ]] && sudo /usr/bin/npm install -g neovim 2>&1
       else
         echo "npm not installed"
         exit 1

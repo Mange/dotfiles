@@ -16,16 +16,7 @@ tela-icon-theme
 neovim-git
 neovim-gtk-git
 
-# I fucking hate Node
-# I don't want it, but I need it for other software and it refuses to
-# follow XDG. One can force it to do so, but then nvm does not work and
-# I need nvm on one of my machines as a dependency. So now it needs to
-# infect all my systems.
-# Fuck Node and all the shit that spawned from it. A fucking mistake
-# on the face of the earth is what it is.
-nvm
-
-bitwarden-cli     # CLI for password manager
+bitwarden-cli-bin # CLI for password manager
 bitwarden-rofi    # Bitwarden in Rofi
 firefox-tridactyl-native # Native plugin for Firefox Tricactyl
 git-delta         # Better diff tool for Git
