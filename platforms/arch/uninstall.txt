@@ -22,4 +22,5 @@ compton-tryone-git
 toggldesktop-bin
 
 # Moved from AUR to pacman
+procs-bin
 tailscale-bin
