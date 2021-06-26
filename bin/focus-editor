@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-# Focus editor or start an editor in the same CWD.
-
-run-or-raise \
-  'class = "kitty" && name ~ "NVIM$"' \
-  samedir kitty nvim
