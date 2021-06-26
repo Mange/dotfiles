@@ -28,7 +28,7 @@ theme <light|dark|apply|load>
       current_style=light
       apply=1
       ;;
-    reload)
+    apply)
       apply=1
       ;;
     load)
