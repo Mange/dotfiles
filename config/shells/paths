@@ -16,8 +16,6 @@ if [[ -n $BASH_VERSION || -n $ZSH_VERSION ]]; then
     path=(
       "$HOME/.local/bin"
 
-      .git/safe/../../bin
-
       "${CARGO_HOME:-$HOME/.cargo}/bin"
       "$HOME/.rvm/bin"
       "$XDG_DATA_HOME/npm/packages/bin"
