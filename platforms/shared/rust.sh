@@ -6,6 +6,8 @@ if [[ -z "$CARGO_HOME" ]]; then
 fi
 
 install-rustup-components() {
+  header "Updating Rust"
+  run-rust-cmd-quietly rustup update
 
   header "Adding Rust editor components"
   run-rust-cmd-quietly rustup component add rust-src

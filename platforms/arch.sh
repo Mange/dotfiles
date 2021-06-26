@@ -469,6 +469,15 @@ if run-section "pacman"; then
   done
 fi
 
+# Rust is sometimes used to build things in AUR, install before AUR stuff.
+if run-section "rust" || run-section "updates"; then
+  install-rustup-components || handle-failure
+fi
+if run-section "rust"; then
+  install-crates rust/crates.txt "Rust software" || handle-failure
+  cargo-update || handle-failure
+fi
+
 if run-section "aur"; then
   if ! hash paru 2>/dev/null; then
     init-sudo
@@ -507,12 +516,6 @@ fi
 
 if run-section "fast"; then
   setup-nerd-fonts || handle-failure "Installing Nerd Font overrides"
-fi
-
-if run-section "rust"; then
-  install-rustup-components || handle-failure
-  install-crates rust/crates.txt "Rust software" || handle-failure
-  cargo-update || handle-failure
 fi
 
 if run-section "neovim"; then
