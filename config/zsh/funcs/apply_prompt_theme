@@ -1,0 +1,103 @@
+# vim: ft=sh
+# Shell function to build up my current prompt settings.
+
+function apply_prompt_theme {
+  local theme="${1:-$MANGE_THEME}"
+
+  # Set up colors
+  # shellcheck source=/home/mange/.local/share/gruvbox/colors.env
+  source "${XDG_DATA_HOME:-$HOME/.local/share}/gruvbox/colors.env"
+
+  if [[ "$theme" == "light" ]]; then
+    bg0_hard=$light0_hard
+    bg0=$light0
+    bg0_soft=$light0_soft
+    bg1=$light1
+    bg2=$light2
+    bg3=$light3
+    bg4=$light4
+  else
+    bg0_hard=$dark0_hard
+    bg0=$dark0
+    bg0_soft=$dark0_soft
+    bg1=$dark1
+    bg2=$dark2
+    bg3=$dark3
+    bg4=$dark4
+  fi
+
+  # Leave icon color to make branch name appear in that color if that icon is
+  # last before the name.
+  zstyle ':vcs_info:*:prompt:*' stagedstr "%F{$bright_yellow} "
+  zstyle ':vcs_info:*:prompt:*' unstagedstr "%F{$neutral_orange} "
+
+  local dir="%K{$bg2} %B%F{cyan}%r%%b%F{cyan}%F{blue}%S %k%f"
+  local action="%K{$faded_yellow}%B%F{15} %a %%b%f%F{$faded_yellow}%K{$bg3}"
+  local icons_and_branch="%K{$bg3} %F{10}%B%b%%b %k"
+
+  # Format when there is no VCS info; e.g. display plain directory info
+  zstyle ':vcs_info:*:prompt:*' nvcsformats \
+    "%K{$bg2}%F{blue}%B %4~ %b%f%k" \
+    ""
+  zstyle ':vcs_info:*:prompt:*' formats       "${dir}" "${icons_and_branch}"
+  zstyle ':vcs_info:*:prompt:*' actionformats "${dir}" "${action}${icons_and_branch}"
+
+  #
+  # Actually set up the PROMPT and RPROMPT variables
+  #
+  # NOTE: Eval os-icon once on load
+  # NOTE: os_icon + user + hostname share the same background and must be
+  # rendered in that order to make sense and to reset formatting rules.
+  local os_icon="%F{15}%F{blue}%K{15}$(os-icon)"
+
+  # Don't show user at all if it's expected username
+  local user
+  if [[ $USER != "mange" ]]; then
+    # Color user differently if we have a privileged user ("!")
+    user="%B%(!.%F{red}%n.%F{$faded_blue}%n)%b"
+  fi
+
+  local host
+  if [[ -n $SSH_CLIENT ]]; then
+    host="%B%F{blue}%m%f%b"
+    if [[ -n "$user" ]]; then
+      host="@${host}"
+    fi
+  fi
+
+  if [[ -n "$user" ]] || [[ -n "$host" ]]; then
+    local machine="${os_icon}${user}${host} "
+  else
+    local machine="${os_icon}"
+  fi
+
+  local md_sep="%F{15}%K{$bg2}"
+  local dir='$vcs_info_msg_0_'
+  local last_status='%(?.$(prompt_start_character "'$bg2'")%K{'$bg2'}%F{green} ✔.$(prompt_start_character "'$faded_orange'")%K{'$faded_orange'}%F{10} ✘) %f%k%b'
+  local current_jobs="%(1j.%K{$bright_purple}%F{black} 🗗 %B%j%b %k%f.)"
+  local slow_command_duration='$(prompt_slow_command_duration)'
+  local left_end='$(prompt_end_character "'$bg2'")%f%k%b'
+  local time="%F{15}%K{$bg0_soft} %D{%H:%M}%k%F{$bg0_soft}%f"
+  local newline=$'\n'
+
+  export PROMPT="${newline}${machine}${md_sep}${dir}${left_end}"
+  export RPROMPT="${last_status}${slow_command_duration}${current_jobs}\$vcs_info_msg_1_${time}"
+}
+
+# Show mode information by the last character in the prompt
+function prompt_end_character {
+  local color="${1}"
+  zle_mode_output "%F{$color}%f " "%F{$color}%f "
+}
+function prompt_start_character {
+  local color="${1}"
+  zle_mode_output " %F{$color}%f" " %F{$color}%f"
+}
+
+function prompt_slow_command_duration {
+  if [[ -n "$_mange_last_cmd_duration" ]] && ((_mange_last_cmd_duration >= 10)); then
+    echo -n "%F{15}%K{$bg1}  $(seconds-to-human $_mange_last_cmd_duration) %k%f"
+  fi
+}
+
+apply_prompt_theme "$@"

@@ -14,3 +14,5 @@ function seconds-to-human() {
 	(( minutes > 0 )) && echo -n "${minutes}m "
 	echo "${seconds}s"
 }
+
+seconds-to-human "$@"

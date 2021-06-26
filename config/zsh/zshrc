@@ -32,6 +32,17 @@ try-source-plugin() {
   fi
 }
 # }}}
+# {{{ Autoload functions
+
+autoload zmv
+
+fpath=("${XDG_CONFIG_HOME}/zsh/funcs" $fpath)
+
+autoload seconds-to-human
+autoload apply_prompt_theme
+autoload theme
+
+# }}}
 # {{{ umask
 # I want my primary group to write to my files
 # Why wouldn't I?
@@ -417,27 +428,9 @@ done
 alias wer="watchexec -ce rb,yml,erb --no-shell --"
 
 # }}}
-# {{{ Autoload functions
-
-autoload zmv
-
-fpath=("${XDG_CONFIG_HOME}/zsh/funcs" $fpath)
-
-autoload seconds-to-human
-autoload theme
-
-# }}}
 # {{{ Color shortcuts and magic
 autoload colors
 colors
-
-function is256color() {
-  if [[ $(tput colors) -ge 256 ]]; then
-    true
-  else
-    false
-  fi
-}
 
 function colortest() {
   msgcat --color=test
@@ -457,42 +450,19 @@ setopt prompt_subst
 #
 # Setup VCS info for the prompt
 #
-function() {
-  if is-at-least 4.3.0; then
-    autoload -Uz vcs_info
+autoload -Uz vcs_info
 
-    # Speed it up by removing systems I'm not using
-    zstyle ':vcs_info:*' enable git
+# Speed it up by removing systems I'm not using
+zstyle ':vcs_info:*' enable git
 
-    zstyle ':vcs_info:*:prompt:*' use-prompt-escapes true
-    zstyle ':vcs_info:*:prompt:*' check-for-changes true
+zstyle ':vcs_info:*:prompt:*' use-prompt-escapes true
+zstyle ':vcs_info:*:prompt:*' check-for-changes true
 
-    # Leave icon color to make branch name appear in that color if that icon is
-    # last before the name.
-    zstyle ':vcs_info:*:prompt:*' stagedstr "%F{#fabd2f} "
-    zstyle ':vcs_info:*:prompt:*' unstagedstr "%F{#d65d0e} "
-
-    local path="%K{#504945} %B%F{cyan}%r%%b%F{cyan}%F{blue}%S %k%f"
-    local action="%K{#b57614}%B%F{15} %a %%b%f%F{#b57614}%K{#665c54}"
-    local icons_and_branch="%K{#665c54} %F{10}%B%b%%b %k"
-
-    # Format when there is no VCS info; e.g. display plain directory info
-    zstyle ':vcs_info:*:prompt:*' nvcsformats \
-      "%K{#504945}%F{blue}%B %4~ %b%f%k" \
-      ""
-    zstyle ':vcs_info:*:prompt:*' formats       "${path}" "${icons_and_branch}"
-    zstyle ':vcs_info:*:prompt:*' actionformats "${path}" "${action}${icons_and_branch}"
-
-    # Generate VCS info just before rendering prompt
-    function mange-prompt-precmd-vcs {
-      vcs_info 'prompt'
-    }
-    add-zsh-hook precmd mange-prompt-precmd-vcs
-  else
-    export vcs_info_msg_0_="%K{#504945}%F{blue}%B %4~ %b%f%k"
-    export vcs_info_msg_1_=""
-  fi
+# Generate VCS info just before rendering prompt
+function mange-prompt-precmd-vcs {
+  vcs_info 'prompt'
 }
+add-zsh-hook precmd mange-prompt-precmd-vcs
 
 # Convenience functions to disable/enable check-for-changes in certain sessions
 function disable-check-for-changes() {
@@ -536,66 +506,8 @@ function mange-prompt-precmd() {
 add-zsh-hook preexec mange-prompt-preexec
 add-zsh-hook precmd mange-prompt-precmd
 
-_prompt_insert_mode_character=""
-_prompt_command_mode_character="»"
+# Actual prompt is set up using the "theme" function
 
-# Show mode information by the last character in the prompt
-function prompt_end_character {
-  zle_mode_output "%F{#504945}%f " "%F{#504945}%f "
-}
-function prompt_start_character {
-  local color="${1:-#504950}"
-  zle_mode_output " %F{$color}%f" " %F{$color}%f"
-}
-
-function prompt_slow_command_duration {
-  if [[ -n "$_mange_last_cmd_duration" ]] && ((_mange_last_cmd_duration >= 10)); then
-    echo -n "%F{15}%K{#3c3836}  $(seconds-to-human $_mange_last_cmd_duration) %k%f"
-  fi
-}
-
-#
-# Actually set up the PROMPT and RPROMPT variables
-#
-function {
-  # NOTE: Eval os-icon once on load
-  # NOTE: os_icon + user + hostname share the same background and must be
-  # rendered in that order to make sense and to reset formatting rules.
-  local os_icon="%F{15}%F{blue}%K{15}$(os-icon)"
-
-  # Don't show user at all if it's expected username
-  local user
-  if [[ $USER != "mange" ]]; then
-    # Color user differently if we have a privileged user ("!")
-    user="%B%(!.%F{red}%n.%F{#076678}%n)%b"
-  fi
-
-  local host
-  if [[ -n $SSH_CLIENT ]]; then
-    host="%B%F{blue}%m%f%b"
-    if [[ -n "$user" ]]; then
-      host="@${host}"
-    fi
-  fi
-
-  if [[ -n "$user" ]] || [[ -n "$host" ]]; then
-    local machine="${os_icon}${user}${host} "
-  else
-    local machine="${os_icon}"
-  fi
-
-  local md_sep="%F{15}%K{#504945}"
-  local dir='$vcs_info_msg_0_'
-  local last_status='%(?.$(prompt_start_character "#504945")%K{#504945}%F{green} ✔.$(prompt_start_character "#ad3a03")%K{#ad3a03}%F{10} ✘) %f%k%b'
-  local current_jobs="%(1j.%K{#d3869b}%F{black} 🗗 %B%j%b %k%f.)"
-  local slow_command_duration='$(prompt_slow_command_duration)'
-  local left_end='$(prompt_end_character)%f%k%b'
-  local time="%F{15}%K{#32302f} %D{%H:%M}%k%F{#32302f}%f"
-  local newline=$'\n'
-
-  export PROMPT="${newline}${machine}${md_sep}${dir}${left_end}"
-  export RPROMPT="${last_status}${slow_command_duration}${current_jobs}\$vcs_info_msg_1_${time}"
-}
 # }}}
 # {{{ Misc
 # Disable flow control to allow ctrl-s and ctrl-q in terminal
@@ -603,6 +515,9 @@ stty -ixon -ixoff
 
 # Autocompletion for Travis gem
 [ -f $HOME/.travis/travis.sh ] && source $HOME/.travis/travis.sh
+# }}}
+# {{{ Theme and prompt design
+theme load
 # }}}
 
 # Chain with true to avoid $? being false

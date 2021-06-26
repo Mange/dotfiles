@@ -1,26 +1,37 @@
 # vim: ft=sh
 # Shell function in order to be able to affect outside environment variables.
 
+autoload apply_prompt_theme
+
 function theme() {
   local usage="
-theme <light|dark|reload>
+theme <light|dark|apply|load>
 
-Toggle between light and dark theme in most apps, or reload colors in current
-terminal."
-  local new_style
-  local should_reload
+  light:
+    Set and apply theme \"light\".
+  dark:
+    Set and apply theme \"dark\".
+  apply:
+    Apply whichever theme is currently set. Should happen once at login.
+  load:
+    Load current theme into the current shell process.
+"
+  local current_style
+  local apply
 
   case "$1" in
     dark)
-      new_style=dark
-      should_reload=1
+      current_style=dark
+      apply=1
       ;;
     light)
-      new_style=light
-      should_reload=1
+      current_style=light
+      apply=1
       ;;
     reload)
-      should_reload=1
+      apply=1
+      ;;
+    load)
       ;;
     --help)
       echo "$usage"
@@ -31,31 +42,34 @@ terminal."
       return 1
   esac
 
-  if [[ -n $new_style ]]; then
-    ~/.local/bin/_theme_set "$new_style"
-    ~/.local/bin/set-wallpaper
+  # Load the current style from disk
+  if [[ -z $current_style ]]; then
+    current_style="$(cat "${XDG_RUNTIME_DIR}/current_theme")"
   fi
 
-  if [[ -n $should_reload ]]; then
+  # Apply default if no style was selected or stored on disk
+  if [[ -z "$current_style" ]]; then
+    current_style=dark
+  fi
+
+  export MANGE_THEME="$current_style"
+  export KITTY_THEME="$current_style"
+  case "$current_style" in
+    dark)
+      export BAT_THEME="gruvbox"
+      ;;
+    light)
+      export BAT_THEME="gruvbox-light"
+      ;;
+  esac
+
+  apply_prompt_theme "$current_style"
+
+  if [[ -n $apply ]]; then
+    ~/.local/bin/_theme_set "$current_style"
+    ~/.local/bin/set-wallpaper
     ~/.local/bin/_theme_reload_window
-
-    # Load the current style from disk
-    if [[ -z $new_style ]]; then
-      new_style="$(cat "${XDG_RUNTIME_DIR}/current_theme")"
-    fi
-
-    case "$new_style" in
-      dark)
-        export BAT_THEME="gruvbox"
-        ;;
-      light)
-        export BAT_THEME="gruvbox-light"
-        ;;
-    esac
-
-    # Set the shell variable so other programs can pick it up
-    if [[ -n $new_style ]]; then
-      export KITTY_THEME="$new_style"
-    fi
   fi
 }
+
+theme "$@"
