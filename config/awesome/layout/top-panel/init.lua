@@ -80,7 +80,7 @@ local top_panel = function(s)
   -- s.network           = build_widget(require('widget.network')())
   local clock       = build_widget(require('widgets.clock')(s))
   local layout_box     = build_widget(require('widgets.layoutbox')(s))
-  -- s.battery           = build_widget(require('widget.battery')())
+  s.battery           = build_widget(require('widgets.battery')())
   -- s.info_center_toggle  = build_widget(require('widget.info-center-toggle')())
 
   panel : setup {
@@ -111,7 +111,7 @@ local top_panel = function(s)
         -- s.screen_rec,
         -- s.network,
         -- s.bluetooth,
-        -- s.battery,
+        s.battery,
         clock,
         layout_box,
         -- s.info_center_toggle
