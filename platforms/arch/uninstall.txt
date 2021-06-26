@@ -20,3 +20,6 @@ compton-tryone-git
 
 # Replaced with toggldesktop-git
 toggldesktop-bin
+
+# Moved from AUR to pacman
+tailscale-bin
