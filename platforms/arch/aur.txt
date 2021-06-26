@@ -57,6 +57,3 @@ ttf-monaco
 
 # Dictionaries
 hunspell-sv
-
-# Boot screen theme
-grub-theme-tela-color-1080p-git

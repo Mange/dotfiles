@@ -6,3 +6,6 @@ deezloader-remix-bin
 # Moonlander keyboard
 zsa-wally # Keyboard flashing
 zsa-wally-cli # …but I'm a nerd
+
+# Boot screen theme
+grub-theme-tela-color-1080p-git
