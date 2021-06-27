@@ -44,7 +44,7 @@ theme <light|dark|apply|load>
 
   # Load the current style from disk
   if [[ -z $current_style ]]; then
-    current_style="$(cat "${XDG_RUNTIME_DIR}/current_theme")"
+    current_style="$(cat "${XDG_RUNTIME_DIR}/current_theme" 2>/dev/null)"
   fi
 
   # Apply default if no style was selected or stored on disk
