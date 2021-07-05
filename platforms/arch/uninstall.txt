@@ -1,26 +1,8 @@
 # vim:ft=config:nospell
 
-# Replaced by awesome
-i3-gaps
-polybar-git
-
-# Replaced by git-delta
-diff-so-fancy
-
-# Replaced by brightnessctl
-xorg-xbacklight
-
-# Just not used anymore
-khal
-vdirsyncer-git
-vdirsyncer
-
-# Replaced with picom-ibhagwan-git
-compton-tryone-git
-
-# Replaced with toggldesktop-git
-toggldesktop-bin
-
 # Moved from AUR to pacman
 procs-bin
 tailscale-bin
+
+# Replaced with wezterm-git
+wezterm-bin

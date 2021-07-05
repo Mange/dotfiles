@@ -1,7 +1,7 @@
 # vim:ft=config:nospell
 
-# Wezterm
-wezterm-bin
+# Terminal emulator. Git version contains some critical font fixes.
+wezterm-git
 
 # Awesome WM
 awesome-git
