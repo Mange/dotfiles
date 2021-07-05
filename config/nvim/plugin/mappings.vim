@@ -230,7 +230,7 @@ let g:which_key_map.f['9'] = 'foldlevel-9'
 
 " {{{ Leader +git
 " TODO: open browser, find, more..?
-nmap <leader>gg :Gstatus<CR>
+nmap <leader>gg :Git<CR>
 let g:which_key_map.g.g = 'status'
 
 nmap <leader>ga :Gw<CR>
@@ -250,9 +250,9 @@ let g:which_key_map.g['/'] = 'fzf-commits'
 
 let g:which_key_map.g.c = {
       \ 'name' : '+create',
-      \ 'c' : [':Gcommit', 'commit'],
-      \ 'C' : [':Gcommit --all --verbose', 'commit-all'],
-      \ 'a' : [':Gcommit --amend --verbose', 'amend'],
+      \ 'c' : [':Git commit --verbose', 'commit'],
+      \ 'C' : [':Git commit --all --verbose', 'commit-all'],
+      \ 'a' : [':Git commit --amend --verbose', 'amend'],
       \ }
 " }}}
 
