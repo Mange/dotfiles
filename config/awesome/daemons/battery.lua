@@ -29,7 +29,7 @@ function battery_info.update()
   local status = read_battery_data("status", "*l")
 
   awesome.emit_signal("mange:battery:update", {
-    real = true,
+    real = has_battery(),
     percent = capacity,
     full = status == "Full",
     charging = status == "Charging",

@@ -30,7 +30,7 @@ local battery_indicator = function()
     font = beautiful.font_bold_size(11),
     align = "center",
     valign = "center",
-    visible = false,
+    visible = true,
   }
 
 
@@ -68,8 +68,9 @@ local battery_indicator = function()
       local icon_name
 
       if info.real then
-        battery_widget.spacing = dpi(5)
-        text.visible = true
+        battery_button.visible = true
+        text.visible = not (info.full and info.charging)
+
         text:set_text(tostring(info.percent) .. "%")
 
         if info.full then
@@ -100,8 +101,7 @@ local battery_indicator = function()
           end
         end
       else
-        battery_widget.spacing = 0
-        text.visible = false
+        battery_button.visible = false
         icon_name = "battery-unknown.svg"
       end
 
