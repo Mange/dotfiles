@@ -26,10 +26,6 @@ inoremap <C-s> <C-o>:w<CR>
 noremap <C-c><C-c> :wq<CR>
 inoremap <C-c><C-c> <Esc>:wq<CR>
 
-" Keyboard layout helpers
-nmap <f2> :Qwerty!<cr>
-nmap <f3> :WorkmanUndo<cr>
-
 " }}}
 
 " {{{ Command mode
@@ -361,15 +357,6 @@ let g:which_key_map.t.h = 'hlsearch'
 
 nmap <leader>tq :ClistToggle<cr>
 let g:which_key_map.t.q = 'quickfix'
-
-let g:which_key_map.t.a = {
-      \ 'name' : '+workman',
-      \ 'a' : [':Workman!', 'workman-normal'],
-      \ 'q' : [':Qwerty!', 'qwerty-normal'],
-      \ 'z' : [':WorkmanUndo', 'workman-undo'],
-      \ 'n' : [':Workman', 'workman-insert'],
-      \ 'i' : [':Qwerty', 'qwerty-insert'],
-      \ }
 " }}}
 
 " {{{ Leader +window

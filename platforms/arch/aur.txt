@@ -1,8 +1,5 @@
 # vim:ft=config:nospell
 
-# Workman keyboard layout
-workman-git
-
 # Wezterm
 wezterm-bin
 
