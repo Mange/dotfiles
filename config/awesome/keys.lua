@@ -65,6 +65,7 @@ keys.awesome_chord = which_keys.new_chord(
           which_keys.key("r", "restore", actions.on_focused_client(actions.client_restore)),
           which_keys.key("n", "minimize", actions.on_focused_client(actions.client_minimize)),
           which_keys.key("s", "sticky-toggle", actions.on_focused_client(actions.client_toggle_sticky)),
+          which_keys.key("t", "ontop-toggle", actions.on_focused_client(actions.client_toggle_ontop)),
           which_keys.key("f", "fullscreen-toggle", actions.on_focused_client(actions.client_toggle_fullscreen)),
           which_keys.key("q", "close", actions.on_focused_client(actions.client_close)),
           which_keys.key("o", "move-other-screen", actions.on_focused_client(actions.client_move_other_screen)),

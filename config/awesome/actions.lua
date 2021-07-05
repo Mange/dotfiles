@@ -115,8 +115,12 @@ function actions.client_restore(c)
   c.fullscreen = false
 end
 
-function actions.client_toggle_sticky(c)
+function actions.client_toggle_ontop(c)
   c.ontop = not c.ontop
+end
+
+function actions.client_toggle_sticky(c)
+  c.sticky = not c.sticky
 end
 
 function actions.client_toggle_floating(_)
