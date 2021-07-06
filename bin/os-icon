@@ -12,31 +12,31 @@ determine_dist() {
       echo " "
       ;;
     *debian*)
-      echo ""
+      echo " "
       ;;
     *ubuntu*)
-      echo ""
+      echo " "
       ;;
     *raspbian*)
-      echo ""
+      echo " "
       ;;
     *coreos*)
-      echo ""
+      echo " "
       ;;
     *gentoo*)
-      echo ""
+      echo " "
       ;;
     *centos* | *clearos*)
-      echo ""
+      echo " "
       ;;
     *alpine*)
-      echo ""
+      echo " "
       ;;
     *nixos*)
-      echo ""
+      echo " "
       ;;
     *)
-      echo ""
+      echo " "
       ;;
   esac
 }
