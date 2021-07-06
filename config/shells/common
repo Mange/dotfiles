@@ -6,6 +6,13 @@ if [ -f /usr/lib/systemd/user-environment-generators/30-systemd-environment-d-ge
   set -a
   eval "$(/usr/lib/systemd/user-environment-generators/30-systemd-environment-d-generator)"
   set +a
+else
+  # Hmm, no helper for us. Try as best we can to do it manually instead…
+  for f in "${HOME}"/.config/environment.d/*.conf; do
+    set -a
+    source "$f"
+    set +a
+  done
 fi
 
 # shellcheck source=/dev/null
