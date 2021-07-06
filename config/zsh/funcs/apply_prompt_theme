@@ -8,6 +8,12 @@ function apply_prompt_theme {
   # shellcheck source=/home/mange/.local/share/gruvbox/colors.env
   source "${XDG_DATA_HOME:-$HOME/.local/share}/gruvbox/colors.env"
 
+  # Fall back to 256 color palette if ZSH version is old or terminal does not
+  # support truecolor.
+  # shellcheck source=/home/mange/.local/share/gruvbox/colors-256.env
+  [[ $COLORTERM =~ ^(truecolor|24bit)$ ]] ||
+    source "${XDG_DATA_HOME:-$HOME/.local/share}/gruvbox/colors-256.env"
+
   if [[ "$theme" == "light" ]]; then
     bg0_hard=$light0_hard
     bg0=$light0
@@ -54,19 +60,19 @@ function apply_prompt_theme {
   local user
   if [[ $USER != "mange" ]]; then
     # Color user differently if we have a privileged user ("!")
-    user="%B%(!.%F{red}%n.%F{$faded_blue}%n)%b"
+    user="%B%(!.%F{red}%n.%F{$faded_blue}%n)%b%K{15}"
   fi
 
   local host
   if [[ -n $SSH_CLIENT ]]; then
     host="%B%F{blue}%m%f%b"
     if [[ -n "$user" ]]; then
-      host="@${host}"
+      host="%B%F{$faded_purple}@${host}"
     fi
   fi
 
   if [[ -n "$user" ]] || [[ -n "$host" ]]; then
-    local machine="${os_icon}${user}${host} "
+    local machine="${os_icon}${user}${host}"
   else
     local machine="${os_icon}"
   fi
