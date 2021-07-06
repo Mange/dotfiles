@@ -26,7 +26,7 @@ determine_dist() {
     *gentoo*)
       echo ""
       ;;
-    *centos*)
+    *centos* | *clearos*)
       echo ""
       ;;
     *alpine*)
