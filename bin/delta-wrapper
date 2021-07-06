@@ -2,4 +2,8 @@
 
 theme=$(cat "${XDG_RUNTIME_DIR}/current_theme" 2>/dev/null || echo dark)
 
-exec delta "--${theme}"
+if hash delta 2>/dev/null; then
+  exec delta "--${theme}"
+else
+  exec less "$@"
+fi
