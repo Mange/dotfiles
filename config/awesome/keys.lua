@@ -3,7 +3,7 @@ local awful = require("awful")
 local hotkeys_popup = require("awful.hotkeys_popup")
 
 local actions = require("actions")
-local which_keys = require("which_keys")
+local which_keys = require("module.which_keys")
 local media_mode = require("media_mode")
 
 -- Settings

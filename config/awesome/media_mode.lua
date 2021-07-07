@@ -1,4 +1,4 @@
-local which_keys = require("which_keys")
+local which_keys = require("module.which_keys")
 local actions = require("actions")
 
 local media_mode = which_keys.new_chord(
