@@ -104,6 +104,10 @@ function Bind:initialize(modifiers, key, action, details)
   self.is_sticky = self.details.which_key_sticky or false
 
   self.key_label, self.sort_key = key_label_and_sort(modifiers, key)
+  if self.details.which_key_key then
+    self.key_label = self.details.which_key_key
+  end
+
   self.action_label = self.details.description or "no-description"
   self.colors = self.details.which_key_colors
 

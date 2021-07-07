@@ -13,14 +13,9 @@ local media_mode = which_keys.new_chord(
 
       -- Volume
       which_keys.key(
-        {{"Shift"}, "+"},
-        "vol +", actions.volume_change("+5"),
-        {group = "Volume", which_key_key = "+", which_key_sticky = true}
-      ),
-      which_keys.key(
         "=",
         "vol +", actions.volume_change("+5"),
-        {group = "Volume", which_key_sticky = true}
+        {group = "Volume", which_key_key = "+", which_key_sticky = true}
       ),
       which_keys.key(
         "-",
