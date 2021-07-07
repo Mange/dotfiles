@@ -36,8 +36,14 @@ theme.font_bold_size = function(size)
   return "Fira Sans Extra Bold " .. size
 end
 
+---@param size integer
+theme.font_mono_size = function(size)
+  return "Fira Code " .. size
+end
+
 theme.font = theme.font_size(11)
 theme.font_bold = theme.font_bold_size(11)
+theme.font_mono = theme.font_mono_size(11)
 
 -- Icons
 theme.icons = icons.dir

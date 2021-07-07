@@ -33,6 +33,7 @@ local Bind = require("module.which_keys.bind")
 local style = {
   font_header = beautiful.font_bold_size(18),
   font = beautiful.font_size(14),
+  font_mono = beautiful.font_mono_size(14),
   color_default = "#83a598",
   color_key = "#79740e",
   color_nested = "#cc241d",
@@ -159,7 +160,7 @@ local function entry_widget(bind)
             text = bind.key_label,
             align = "center",
             ellipsize = "start",
-            font = style.font
+            font = style.font_mono
           }
         }
       },
