@@ -17,7 +17,6 @@
 -- TODO:
 --   * Allow clicking on entries to trigger them
 --   * Add close button on top right for mouse usage
---   * Apply colors for the different categories again
 --   * Add suport for custom widget between title and columns
 --     * Media mode should show media information widget, for example.
 --
@@ -34,9 +33,6 @@ local style = {
   font_header = beautiful.font_bold_size(18),
   font = beautiful.font_size(14),
   font_mono = beautiful.font_mono_size(14),
-  color_default = "#83a598",
-  color_key = "#79740e",
-  color_nested = "#cc241d",
 }
 
 local aliases = {
@@ -97,9 +93,7 @@ local function group_binds_into_columns(binds, num_columns)
   return columns
 end
 
-local which_keys = {
-  color_nested = style.color_nested,
-}
+local which_keys = {}
 
 -- Generate pango markup to change foreground color for the given text.
 local function fg(color, text)
@@ -149,8 +143,8 @@ local function entry_widget(bind)
       {
         -- Key
         widget = wibox.container.background,
-        bg = beautiful.which_key.key_bg,
-        fg = beautiful.which_key.key_fg,
+        bg = bind.colors.key_bg,
+        fg = bind.colors.key_fg,
         {
           widget = wibox.container.margin,
           left = dpi(5),
@@ -167,8 +161,8 @@ local function entry_widget(bind)
       -- Action
       {
         widget = wibox.container.background,
-        bg = beautiful.which_key.action_bg,
-        fg = beautiful.which_key.action_fg,
+        bg = bind.colors.action_bg,
+        fg = bind.colors.action_fg,
         {
           widget = wibox.container.margin,
           left = dpi(5),
@@ -402,7 +396,7 @@ function which_keys.key_nested(combo, name, keys)
     chord.enter,
     {
       description = "+" .. name,
-      which_key_color = which_keys.color_nested
+      which_key_colors = beautiful.which_key.nested
     }
   }
 end

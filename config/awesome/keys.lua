@@ -1,5 +1,6 @@
 local gears = require("gears")
 local awful = require("awful")
+local beautiful = require("beautiful")
 local hotkeys_popup = require("awful.hotkeys_popup")
 
 local actions = require("actions")
@@ -31,7 +32,7 @@ keys.awesome_chord = which_keys.new_chord(
       which_keys.key("w", "window-select", actions.select_window()),
       which_keys.key("e", "emoji-selector", actions.emoji_selector()),
       which_keys.key("P", "passwords", actions.passwords_menu()),
-      which_keys.key("m", "+media", media_mode.enter, {which_key_color = which_keys.color_nested}),
+      which_keys.key("m", "+media", media_mode.enter, {which_key_colors = beautiful.which_key.nested}),
 
       which_keys.key_nested("a", "awesome", {
           which_keys.key("r", "restart", awesome.restart),

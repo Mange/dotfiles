@@ -1,10 +1,17 @@
 local class = require("module.class")
+local theme = require("theme").which_key
 
 ---@alias modifier
 ---| '"Shift"' # Shift
 ---| '"Control"' # Ctrl
 ---| '"Mod1"' # Alt
 ---| '"Mod4"' # Super
+
+---@class BindColor
+---@field key_bg string
+---@field key_fg string
+---@field action_bg string
+---@field action_fg string
 
 ---@class KeybindDetails
 ---@field description string|nil -- Action label.
@@ -17,8 +24,9 @@ local class = require("module.class")
 ---@field key_label string -- Label of full keycombo, ex. "Ctrl+a".
 ---@field action_label string -- Label of the action to take, ex. "+clients".
 ---@field action function() -- Action to trigger.
----@field color string -- Color of this bind.
+---@field colors BindColor -- Colors of this bind.
 ---@field is_hidden boolean -- If this bind should be excluded from showing up in popups.
+---@field is_sticky boolean -- If this bind should be sticky or not.
 ---@field sort_key string -- Key to use when sorting by.
 local Bind = class()
 
@@ -92,10 +100,18 @@ function Bind:initialize(modifiers, key, action, details)
   self.action = action
   self.details = details or {}
 
+  self.is_hidden = self.details.which_key_hidden or false
+  self.is_sticky = self.details.which_key_sticky or false
+
   self.key_label, self.sort_key = key_label_and_sort(modifiers, key)
   self.action_label = self.details.description or "no-description"
-  self.color = self.details.which_key_color
-  self.is_hidden = self.details.which_key_hidden or false
+  self.colors = self.details.which_key_colors
+
+  if self.is_sticky then
+    self.colors = self.colors or theme.sticky
+  else
+    self.colors = self.colors or theme.normal
+  end
 end
 
 return Bind

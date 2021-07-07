@@ -35,7 +35,8 @@ USAGE
 }
 
 run_setup() {
-  sudo luarocks install luaunit
+  sudo luarocks --lua-version 5.3 install luaunit
+
 
   if ! hash awmtt 2>/dev/null; then
     paru -S awmtt
@@ -43,7 +44,7 @@ run_setup() {
 }
 
 run_luaunit() {
-  lua tests.lua
+  lua5.3 tests.lua
 }
 
 export IN_AWMTT=yes

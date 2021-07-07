@@ -177,10 +177,25 @@ theme.toast = {
 theme.which_key = {
   bg = theme.background,
   title_fg = "#E91E63",
-  key_bg = "#E91E63",
-  key_fg = white,
-  action_bg = white,
-  action_fg = black,
+
+  normal = {
+    key_bg = theme.accent,
+    key_fg = white,
+    action_bg = white,
+    action_fg = theme.accent,
+  },
+  nested = {
+    key_bg = "#E91E63",
+    key_fg = white,
+    action_bg = white,
+    action_fg = black,
+  },
+  sticky = {
+    key_bg = gruvbox.faded_green,
+    key_fg = white,
+    action_bg = white,
+    action_fg = gruvbox.faded_green,
+  }
 }
 
 -- Client Snap Theme

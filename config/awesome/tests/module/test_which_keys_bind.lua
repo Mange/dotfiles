@@ -1,5 +1,7 @@
 local luaunit = require("luaunit")
+
 local Bind = require("module.which_keys.bind")
+local which_key_theme = require("theme").which_key
 
 local identity = function(x) return x end
 
@@ -28,8 +30,9 @@ function TestWhichKeysBind:testDefaultFields()
 
   luaunit.assertEquals(bind.key_label, "a")
   luaunit.assertEquals(bind.action_label, "no-description")
-  luaunit.assertEquals(bind.color, nil)
+  luaunit.assertEquals(bind.colors, which_key_theme.normal)
   luaunit.assertEquals(bind.is_hidden, false)
+  luaunit.assertEquals(bind.is_sticky, false)
   luaunit.assertEquals(bind.sort_key, "a1")
 end
 
@@ -71,11 +74,23 @@ function TestWhichKeysBind:testDetails()
   local description = Bind.new({}, "a", identity, {description = "cook-dinner"})
   luaunit.assertEquals(description.action_label, "cook-dinner")
 
-  local color = Bind.new({}, "a", identity, {which_key_color = "#111111"})
-  luaunit.assertEquals(color.color, "#111111")
+  local color = Bind.new({}, "a", identity, {which_key_colors = which_key_theme.sticky})
+  luaunit.assertEquals(color.colors, which_key_theme.sticky)
 
   local hidden = Bind.new({}, "a", identity, {which_key_hidden = true})
   luaunit.assertEquals(hidden.is_hidden, true)
+
+  local sticky = Bind.new({}, "a", identity, {which_key_sticky = true})
+  luaunit.assertEquals(sticky.is_sticky, true)
+end
+
+function TestWhichKeysBind:testSticky()
+  local sticky = Bind.new(
+    {}, "a", identity, {description = "@menu", which_key_sticky = true}
+  )
+  luaunit.assertEquals(sticky.is_sticky, true)
+  luaunit.assertEquals(sticky.action_label, "@menu")
+  luaunit.assertEquals(sticky.colors, which_key_theme.sticky)
 end
 
 return TestWhichKeysBind
