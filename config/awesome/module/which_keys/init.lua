@@ -15,8 +15,6 @@
 -- media_chord.enter()
 
 -- TODO:
---   * Remove "Shift" from key label if key is a letter
---     * If "Shift" is there, `upper()` the key, else `lower()` the key
 --   * Allow clicking on entries to trigger them
 --   * Add close button on top right for mouse usage
 --   * Apply colors for the different categories again
@@ -29,6 +27,8 @@ local wibox = require("wibox")
 local gears = require("gears")
 local beautiful = require("beautiful")
 local dpi = require("utils").dpi
+
+local Bind = require("module.which_keys.bind")
 
 local style = {
   font_header = beautiful.font_bold_size(18),
@@ -47,14 +47,6 @@ local aliases_to_keys = {
   space = " "
 }
 
----@class Bind
----@field key_label string -- Label of full keycombo, ex. "Ctrl+a".
----@field action_label string -- Label of the action to take, ex. "+clients".
----@field action function() -- Action to trigger.
----@field color string -- Color of this bind.
----@field is_hidden boolean -- If this bind should be excluded from showing up in popups.
----@field sort_key string -- Key to use when sorting by.
-
 ---@class Chord
 ---@field binds Bind[]
 ---@field title string
@@ -65,56 +57,11 @@ local aliases_to_keys = {
 
 ---@alias Widget table
 
----@alias modifier
----| '"Shift"' # Shift
----| '"Control"' # Ctrl
----| '"Mod1"' # Alt
----| '"Mod4"' # Super
-
----@class KeybindDetails
----@field description string|nil -- Action label.
----@field which_key_key string|nil -- Override the key label.
----@field which_key_color string|nil -- Override the default color.
----@field which_key_hidden boolean|nil -- Set hidden to true or false.
----@field which_key_sticky boolean|nil -- Set action to be sticky or not. Sticky actions will not exit the chord after being triggered..
-
 ---@class Keybind
 ---@field 1 table<number,modifier> | '"none"' -- Modifiers for this keybind.
 ---@field 2 string -- The actual key, ex. '"a"'.
 ---@field 3 function() -- Function to trigger on this keybind.
 ---@field 4 KeybindDetails? -- Extra details about the keybind.
-
----@param keybind Keybind
----@return Bind
-local function new_bind(keybind)
-  local modifiers = keybind[1]
-  local key = keybind[2]
-  local action = keybind[3]
-  local details = keybind[4]
-
-  if details.which_key_key ~= nil then
-    key = details.which_key_key
-  elseif aliases[key] ~= nil then
-    key = aliases[key]
-  end
-
-  if modifiers and modifiers ~= "none" and #modifiers > 0 then
-    -- {{"shift", "ctrl"}, "a"} -> "shift+ctrl+a"
-    key = table.concat(modifiers, "+") .. "+" .. key
-  end
-
-  local action_label = details.description or "no-description"
-
-  local bind = {
-    key_label = key,
-    action_label = action_label,
-    color = details.which_key_color or style.color_default,
-    is_hidden = details.which_key_hidden or false,
-    sort_key = string.lower(action_label),
-    action = action,
-  }
-  return bind
-end
 
 ---@param binds Bind[]
 ---@param num_columns number
@@ -360,7 +307,7 @@ function which_keys.new_chord(title, keygrabber_args)
     end
 
     keybindings[i] = decorated_binding
-    binds[i] = new_bind(decorated_binding)
+    binds[i] = Bind.new(table.unpack(decorated_binding))
   end
 
   instance.grabber = awful.keygrabber(
