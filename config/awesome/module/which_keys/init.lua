@@ -220,7 +220,7 @@ end
 
 ---@param s awesome.screen
 ---@param instance Chord
-local function generate_popup2(instance, s)
+local function generate_popup(instance, s)
   local num_columns, column_width = calculate_columns(s.workarea.width)
 
   -- Place binds in columns
@@ -261,13 +261,13 @@ local function new(instance)
   function instance.show_popup()
     instance.hide_popup()
     local s = awful.screen.focused()
-    instance.popup2 = generate_popup2(instance, s)
+    instance.popup = generate_popup(instance, s)
   end
 
   function instance.hide_popup()
-    if instance.popup2 ~= nil then
-      instance.popup2.visible = false
-      instance.popup2 = nil
+    if instance.popup ~= nil then
+      instance.popup.visible = false
+      instance.popup = nil
     end
   end
 
