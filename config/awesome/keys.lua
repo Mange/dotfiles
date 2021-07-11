@@ -3,19 +3,20 @@ local awful = require("awful")
 local beautiful = require("beautiful")
 local hotkeys_popup = require("awful.hotkeys_popup")
 
+local constants = require("module.constants")
 local actions = require("actions")
 local which_keys = require("module.which_keys")
 local media_mode = require("media_mode")
 
 -- Settings
-local modkey = "Mod4" -- Super
+local modkey = constants.keys.modkey
 -- Terminal cmdline; note that this is repeated in this file some times because
 -- of non-standard CLI arguments, etc.
 local terminal = "kitty"
 
 local keys = {}
 
--- Readable names for mouse buttons
+-- DEPRECATED
 keys.left_click = 1
 keys.middle_click = 2
 keys.right_click = 3
@@ -23,6 +24,7 @@ keys.scroll_up = 4
 keys.scroll_down = 5
 
 -- Export some variables
+-- DEPRECATED
 keys.modkey = modkey
 
 keys.awesome_chord = which_keys.new_chord(

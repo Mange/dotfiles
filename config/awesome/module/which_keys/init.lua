@@ -25,18 +25,15 @@ local awful = require("awful")
 local wibox = require("wibox")
 local gears = require("gears")
 local beautiful = require("beautiful")
-local dpi = require("utils").dpi
 
+local keys = require("module.constants.keys")
+local dpi = require("utils").dpi
 local Bind = require("module.which_keys.bind")
 
 local style = {
   font_header = beautiful.font_bold_size(18),
   font = beautiful.font_size(14),
   font_mono = beautiful.font_mono_size(14),
-}
-
-local aliases = {
-  [" "] = "SPC"
 }
 
 local aliases_to_keys = {
@@ -134,7 +131,7 @@ end
 ---@param bind Bind
 ---@return Widget
 local function entry_widget(bind)
-  return {
+  local widget = wibox.widget {
     widget = wibox.container.margin,
     top = dpi(5),
     bottom = dpi(5),
@@ -178,6 +175,12 @@ local function entry_widget(bind)
       }
     }
   }
+  widget:add_button(
+    awful.button(
+      {}, keys.left_click, nil, bind.action
+    )
+  )
+  return widget
 end
 
 ---@param column Bind[]
