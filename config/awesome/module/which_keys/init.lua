@@ -27,6 +27,8 @@ local gears = require("gears")
 local beautiful = require("beautiful")
 
 local keys = require("module.constants.keys")
+local clickable_container = require("widgets.clickable-container")
+local icons = require("theme.icons")
 local dpi = require("utils").dpi
 local Bind = require("module.which_keys.bind")
 
@@ -117,6 +119,17 @@ local function vertical(...)
   }
 end
 
+---@param left Widget
+---@param center Widget
+---@param right Widget
+---@return Widget
+local function align_horizontal(left, center, right)
+  return {
+    widget = wibox.layout.align.horizontal,
+    left, center, right
+  }
+end
+
 ---@param title string
 ---@return Widget
 local function title_widget(title)
@@ -194,6 +207,28 @@ local function column_widget(column)
   return vertical(table.unpack(entries))
 end
 
+---@return Widget
+local function close_button(instance)
+  local button = wibox.widget {
+    widget = clickable_container,
+    margin(dpi(10), {
+      widget = wibox.widget.imagebox,
+      image = icons.close,
+      resize = true,
+      valign = "center",
+      halign = "center",
+      forced_height = dpi(18),
+      forced_width = dpi(18),
+    })
+  }
+
+  button:add_button(
+    awful.button({}, keys.left_click, nil, instance.stop)
+  )
+
+  return button
+end
+
 ---@param columns Bind[][]
 ---@return Widget
 local function columns_widget(columns)
@@ -237,7 +272,11 @@ local function generate_popup(instance, s)
     visible = true,
     bg = beautiful.which_key.bg,
     widget = vertical(
-      margin(dpi(10), title_widget(instance.title)),
+      align_horizontal(
+        nil,
+        margin(dpi(10), title_widget(instance.title)),
+        close_button(instance)
+      ),
       columns_widget(columns)
     ),
   }
