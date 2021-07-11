@@ -41,6 +41,7 @@ OPTIONS:
       pacman   (Install software)
       pip      (Install software based on python pip)
       npm      (Install software based on Node.js NPM)
+      lua      (Lua setup)
       rust     (Rust setup)
       ruby     (Ruby setup)
 USAGE
@@ -74,7 +75,7 @@ while true; do
 done
 
 case "$ONLY_SECTION" in
-  all | pacman | rust | projects | neovim | aur | updates | fast | pip | npm | ruby )
+  all | pacman | rust | projects | neovim | aur | updates | fast | pip | npm | ruby | lua )
     # Valid; do nothing
     ;;
   *)
@@ -493,6 +494,25 @@ if run-section "aur"; then
       header "Compile and install AUR software for ${HOSTNAME}"
       compile-install-aur "arch/${HOSTNAME}-aur.txt" || handle-failure
     fi
+  fi
+fi
+
+if run-section "lua"; then
+  header "Lua setup and packages (AwesomeWM, etc.)"
+
+  # Skip lua setup if Awesome is not installed.
+  if hash awesome 2>/dev/null; then
+    if ! hash luarocks 2>/dev/null; then
+      paru -S luarocks || handle-failure "Installing luarocks"
+    fi
+
+    if ! luarocks --lua-version 5.3 show moses 2>/dev/null >/dev/null; then
+      run-command-quietly "luarocks install moses" < <(
+        sudo luarocks --lua-version 5.3 install moses
+      ) || handle-failure "Installing moses"
+    fi
+  else
+    echo "(Skipping because AwesomeWM is not installed)"
   fi
 fi
 
