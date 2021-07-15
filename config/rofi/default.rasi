@@ -1,14 +1,7 @@
 configuration {
   font: "Fira Sans Condensed 10";
   show-icons: true;
-  drun-display-format: "{name}";
   fullscreen: false;
-  threads: 0;
-  matching: "fuzzy";
-  sort: true;
-  sorting-method: "fzf";
-  scroll-method: 0;
-  disable-history: false;
   fullscreen: false;
   window-thumbnail: true;
 }

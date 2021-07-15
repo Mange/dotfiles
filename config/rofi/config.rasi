@@ -4,6 +4,17 @@ configuration {
 
 	theme: "~/.config/rofi/default.rasi";
 
+	drun-display-format: "{name}";
+	threads: 0;
+	disable-history: false;
+	scroll-method: 0;
+
+	matching: "fuzzy";
+	sort: true;
+	/* Must not be set to "fzf" or else sorting will be ruined. */
+	/* sorting-method: "fzf"; */
+	sorting-method: "normal";
+
 	display-window: "Goto";
 	display-run: "Run";
 	display-ssh: "SSH";
