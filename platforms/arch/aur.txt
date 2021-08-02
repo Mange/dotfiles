@@ -13,9 +13,11 @@ tela-icon-theme
 neovim-git
 neovim-gtk-git
 
+# Browsers
+brave-beta-bin
+
 bitwarden-cli-bin # CLI for password manager
 bitwarden-rofi    # Bitwarden in Rofi
-firefox-tridactyl-native # Native plugin for Firefox Tricactyl
 git-delta         # Better diff tool for Git
 gron-bin          # transforms JSON into discrete assignments to make it easier to grep.
 http-prompt       # An interactive HTTP command-line client

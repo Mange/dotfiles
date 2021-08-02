@@ -41,7 +41,7 @@ function setup_touchpad() {
 }
 
 # Apps
-wm-start firefox-developer-edition
+wm-start brave-browser-beta
 wm-start spotify
 wm-start telegram-desktop
 wm-start thunderbird
