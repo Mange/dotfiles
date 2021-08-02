@@ -52,6 +52,16 @@ function! s:Dark()
   set background=dark
   call s:Shared()
 
+  " Improve diff look
+  hi clear DiffAdd
+  hi clear DiffDelete
+  hi clear DiffChange
+  hi clear DiffText
+  hi DiffAdd guibg=#2c3529
+  hi DiffDelete guibg=#352a29
+  hi DiffChange guibg=#353429
+  hi DiffText guibg=#685125
+
   " Improve GitGutter look
   hi GitGutterAddLine guibg=#2c3529
   hi GitGutterChangeLine guibg=#353429
