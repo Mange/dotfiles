@@ -67,6 +67,8 @@ if has("nvim-0.4.0")
   Plug 'kien/rainbow_parentheses.vim'
   Plug 'meain/vim-package-info', { 'do': 'npm install' }
 
+  Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
+
   """ Misc languages and syntax packages
   Plug 'towolf/vim-helm'
   Plug 'calviken/vim-gdscript3'
