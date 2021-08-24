@@ -58,6 +58,12 @@ abs_to_relative() {
   done
 }
 
+only_existing() {
+  while read -r file; do
+    [[ -f "$file" ]] && echo "$file"
+  done
+}
+
 (
   diff_files "$1" | find_specs | abs_to_relative
 
@@ -66,4 +72,4 @@ abs_to_relative() {
 
   # Always include untracked files, no matter what other variant is selected
   "${untracked_files_command[@]}" | find_specs
-) | sort -u
+) | sort -u | only_existing
