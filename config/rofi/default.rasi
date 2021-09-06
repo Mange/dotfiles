@@ -128,6 +128,7 @@ element {
 element-icon {
   size: 36px;
   border: 0;
+  background-color: @transparent;
 }
 
 element-text {
@@ -135,32 +136,31 @@ element-text {
   horizontal-align: 0;
   vertical-align: 0.5;
   margin: 0 10px 0 10px;
+  background-color: @transparent;
+  text-color: @foreground;
 }
 
-element normal.urgent,
-element alternate.urgent {
+element.normal.urgent,
+element.alternate.urgent {
   background-color: @urgent-bg;
   text-color: @foreground;
   border-radius: 9px;
 }
 
-element normal.active,
-element alternate.active {
+element.normal.active,
+element.alternate.active {
   background-color: @background-active;
-  text-color: @foreground;
 }
 
-element selected {
+element.selected {
   background-color: @background-selected;
-  text-color: @foreground;
 }
 
-element selected.urgent {
+element.selected.urgent {
   background-color: @urgent-selected;
-  text-color: @foreground;
 }
 
-element selected.active {
+element.selected.active {
   background-color: @background-active;
   color: @foreground-selected;
 }

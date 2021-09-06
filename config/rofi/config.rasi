@@ -22,7 +22,10 @@ configuration {
 	display-combi: "Rofi";
 	display-emoji: "Emoji";
 
+  /* "Control+l"; */
 	kb-clear-line: "Control+l";
+	kb-mode-complete: "";
+
 	kb-remove-word-back: "Control+w";
 	kb-mode-next: "Tab";
 	kb-mode-previous: "Shift+Tab,ISO_Left_Tab";
