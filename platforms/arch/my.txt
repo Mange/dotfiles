@@ -216,3 +216,6 @@ w3m # For HTML email reading
 
 # Misc developer tooling
 postgresql # Required for pgcli and also installs psql
+
+# CLI toys
+figlet

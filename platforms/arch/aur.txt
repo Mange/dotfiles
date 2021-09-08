@@ -56,3 +56,8 @@ ttf-monaco
 
 # Dictionaries
 hunspell-sv
+
+# CLI toys
+dotacat # like lolcat
+figlet-fonts
+figlet-fonts-extra
