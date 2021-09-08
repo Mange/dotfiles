@@ -13,6 +13,9 @@ npm # To install neovim package for nodejs
 python-pip # To install neovim package for Python
 python2-pip # To install neovim package for Python 2
 
+# Language servers
+lua-language-server
+
 # Coding help
 colordiff
 ctags
