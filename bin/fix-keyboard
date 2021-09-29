@@ -29,5 +29,33 @@ killall xcape 2>/dev/null; xcape -e 'Super_L=Escape'
 # 300ms until repeating, then 40 keys per second
 xset r rate 300 40
 
+setup_touchpad() {
+    touchpad="$1"
+
+    # Natural scrolling
+    xinput set-prop "${touchpad}" "libinput Natural Scrolling Enabled" 1
+
+    # Tapping
+    xinput set-prop "${touchpad}" "libinput Tapping Enabled" 1
+
+    # Disable touchpad while typing
+    xinput set-prop "${touchpad}" "libinput Disable While Typing Enabled" 1
+}
+
+case "$(hostname)" in
+  bilquis)
+    setup_touchpad "SynPS/2 Synaptics TouchPad"
+    ;;
+
+  krista)
+    setup_touchpad "SynPS/2 Synaptics TouchPad"
+    ;;
+
+  morbidus)
+    ;;
+  *)
+    ;;
+esac
+
 # In case my wacom tablet is plugged in, configure it
 fix-wacom

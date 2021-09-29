@@ -27,19 +27,6 @@ wm-start udiskie --no-automount --smart-tray # Device mounter
 wm-start unclutter # Hide mouse cursor when not in use
 wm-start flameshot
 
-function setup_touchpad() {
-    touchpad="$1"
-
-    # Natural scrolling
-    xinput set-prop "${touchpad}" "libinput Natural Scrolling Enabled" 1
-
-    # Tapping
-    xinput set-prop "${touchpad}" "libinput Tapping Enabled" 1
-
-    # Disable touchpad while typing
-    xinput set-prop "${touchpad}" "libinput Disable While Typing Enabled" 1
-}
-
 # Apps
 wm-start brave-browser-beta
 wm-start spotify
@@ -50,12 +37,10 @@ wm-start workrave
 
 case "$(hostname)" in
   bilquis)
-    setup_touchpad "SynPS/2 Synaptics TouchPad"
     wm-start discord
     ;;
 
   krista)
-    setup_touchpad "SynPS/2 Synaptics TouchPad"
     wm-start toggldesktop
     wm-start slack
     ;;
