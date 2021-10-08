@@ -27,3 +27,7 @@ keycode 108 = Mode_switch Mode_switch Mode_switch Mode_switch
 ! Right Super should be Compose
 ! keysym Super_R
 keycode 134 = Multi_key
+
+! Same with "Menu" key (the one that opens the Right Click menu)
+! keysym Menu = Multi_key
+keycode 135 = Multi_key
