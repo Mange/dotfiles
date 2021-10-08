@@ -15,6 +15,10 @@ python2-pip # To install neovim package for Python 2
 
 # Language servers
 lua-language-server
+efm-langserver
+stylua-bin # AUR
+prettier
+shfmt
 
 # Coding help
 colordiff
