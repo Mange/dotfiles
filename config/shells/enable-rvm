@@ -3,6 +3,14 @@
 
 shell=$(readlink "/proc/$$/exe")
 
+# Repair broken RVM_BIN environment variable, if set.
+# This could happen if you uninstall one install of RVM and try to install
+# another one without logging out and logging in again, as this variable will
+# be set in the X session.
+if [[ -n "$RVM_BIN" ]] && [[ ! -s "$RVM_BIN" ]]; then
+  unset RVM_BIN
+fi
+
 # Use interactive, scripting-based RVM in Bash and ZSH
 case "$shell" in
   (*zsh|*bash)

@@ -23,7 +23,8 @@ gron-bin          # transforms JSON into discrete assignments to make it easier 
 http-prompt       # An interactive HTTP command-line client
 i3lock-color      # Lockscreen (for xss-lock, etc.)
 pastel
-rvm               # RVM: Ruby Version Manager
+# Disabled for now. Gop back to doing single-user installs instead…
+# rvm               # RVM: Ruby Version Manager
 slack-desktop     # Slack Desktop (Beta) for Linux
 spotify           # A proprietary music streaming service
 spotify-tui       # TUI frontent for Spotify Connect / spotifyd
