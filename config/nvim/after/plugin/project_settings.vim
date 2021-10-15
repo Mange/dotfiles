@@ -9,10 +9,6 @@ function! s:validate_file_not_tracked_by_git(name)
 endfunction
 
 function! s:projectrc()
-  if filereadable(".nvimrc")
-    echoerr "Found a .nvimrc in this directory! It will no longer be sourced; rename it to .git/local.vim instead."
-  endif
-
   " From testing, it does not appear like git will allow any file with a
   " `.git/` prefix to be added to a repo; it just never shows up and even `git
   " add --force` will not pick it up.
@@ -21,6 +17,10 @@ function! s:projectrc()
   " it could be added by manually editing the index file.
   if filereadable(".git/local.vim") && s:validate_file_not_tracked_by_git(".git/local.vim")
     source .git/local.vim
+  endif
+
+  if filereadable(".git/neovim.lua") && s:validate_file_not_tracked_by_git(".git/neovim.lua")
+    source .git/neovim.lua
   endif
 endfunction
 
