@@ -430,6 +430,8 @@ require("packer").startup(function(use)
   use({
     "vimwiki/vimwiki",
     setup = function()
+      vim.g.vimwiki_global_ext = 0
+
       vim.g.vimwiki_key_mappings = {
         all_maps = 0,
         global = 0,
@@ -445,20 +447,17 @@ require("packer").startup(function(use)
 
       vim.g.vimwiki_list = {
         {
-          path = "~/Documents/Wiki/Personal/",
-          template_path = "~/Documents/Wiki/templates/personal/",
-          html_template = "~/Documents/Wiki/html/personal/",
+          syntax = "markdown",
+          ext = ".md",
+          path = "~/Documents/Wiki/",
+          template_path = "~/Documents/Wiki/templates/",
+          html_template = "~/Documents/Wiki/html/",
           auto_tags = 1,
-        },
-        {
-          path = "~/Documents/Wiki/Work/",
-          template_path = "~/Documents/Wiki/templates/work/",
-          html_template = "~/Documents/Wiki/html/work/",
-          auto_tags = 1,
+          auto_generate_links = 1,
+          auto_generate_tags = 1,
+          auto_toc = 1,
         },
       }
-
-      vim.g.vimwiki_folding = "list"
 
       -- Not supported by taskwiki
       -- https://github.com/tbabej/taskwiki/issues/119

@@ -326,8 +326,7 @@ local function setup()
       ["n"] = {
         name = "Notes",
         n = { "<cmd>SplitOrFocus notes.local<cr>", "Local notes" },
-        w = { "<cmd>VimwikiTabIndex<cr>", "Wiki (personal)" },
-        W = { "<cmd>2VimwikiTabIndex<cr>", "Wiki (work)" },
+        w = { "<cmd>VimwikiTabIndex<cr>", "Wiki" },
         ["/"] = {
           "<cmd>Telescope find_files cwd=~/Documents/Wiki<cr>",
           "Find wiki page",
@@ -450,10 +449,21 @@ end
 
 --- {{{ LSP
 local function attach_lsp(bufnr)
+  -- The <CR> binding would conflict with navigating vimwiki links, etc.
+  if vim.bo[bufnr].filetype ~= "vimwiki" then
+    wk_register({
+      ["<CR>"] = { ":lua vim.lsp.buf.code_action()<cr>", "Code action" },
+    })
+
+    wk_register({
+      ["<CR>"] = { ":lua vim.lsp.buf.range_code_action()<cr>", "Code action" },
+    }, {
+      buffer = bufnr,
+      mode = "v",
+    })
+  end
   -- Normal mode mappings
   wk_register({
-    ["<CR>"] = { ":lua vim.lsp.buf.code_action()<cr>", "Code action" },
-
     ["K"] = { "<Cmd>lua vim.lsp.buf.hover()<CR>", "Hover documentation" },
     ["gK"] = { "<cmd>lua vim.lsp.buf.signature_help()<CR>", "Signature help" },
 
@@ -467,14 +477,6 @@ local function attach_lsp(bufnr)
     },
   }, {
     buffer = bufnr,
-  })
-
-  -- Visual mode mappings
-  wk_register({
-    ["<CR>"] = { ":lua vim.lsp.buf.range_code_action()<cr>", "Code action" },
-  }, {
-    buffer = bufnr,
-    mode = "v",
   })
 
   -- Insert mode mappings
