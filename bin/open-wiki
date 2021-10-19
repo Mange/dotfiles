@@ -4,7 +4,7 @@ set -e
 wikipath=~/Documents/Wiki/
 
 selected_filename=$(
-  find "$wikipath" -not -path '*/.stversions/*' -and -name '*.wiki' -printf '%C@ %P\n' | \
+  find "$wikipath" -not -path '*/.stversions/*' -and -name '*.md' -printf '%C@ %P\n' |
     finder --numeric-reversed
 )
 
