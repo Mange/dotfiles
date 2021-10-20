@@ -449,8 +449,16 @@ end
 
 --- {{{ LSP
 local function attach_lsp(bufnr)
-  -- The <CR> binding would conflict with navigating vimwiki links, etc.
-  if vim.bo[bufnr].filetype ~= "vimwiki" then
+  local ft = vim.bo[bufnr].filetype
+  local modifiable = vim.bo[bufnr].modifiable
+
+  -- Don't override <CR> binding in some filetypes
+  local fts_with_cr = {
+    "vimwiki", -- navigating links
+    "qf", -- quickfix window
+  }
+
+  if modifiable and not vim.tbl_contains(fts_with_cr, ft) then
     wk_register({
       ["<CR>"] = { ":lua vim.lsp.buf.code_action()<cr>", "Code action" },
     })
@@ -462,6 +470,7 @@ local function attach_lsp(bufnr)
       mode = "v",
     })
   end
+
   -- Normal mode mappings
   wk_register({
     ["K"] = { "<Cmd>lua vim.lsp.buf.hover()<CR>", "Hover documentation" },
