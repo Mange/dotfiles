@@ -15,3 +15,6 @@ cmd([[autocmd VimResized * wincmd =]])
 
 -- Prose no line numbers
 cmd([[autocmd FileType vimwiki,markdown,text setlocal nonumber]])
+
+-- Restore <BS> mapping for Vimwiki
+cmd([[autocmd Filetype vimwiki nmap <buffer> <BS> <Plug>VimwikiGoBackLink]])
