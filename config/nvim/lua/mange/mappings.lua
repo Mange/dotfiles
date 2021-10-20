@@ -461,6 +461,8 @@ local function attach_lsp(bufnr)
   if modifiable and not vim.tbl_contains(fts_with_cr, ft) then
     wk_register({
       ["<CR>"] = { ":lua vim.lsp.buf.code_action()<cr>", "Code action" },
+    }, {
+      buffer = bufnr,
     })
 
     wk_register({
