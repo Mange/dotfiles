@@ -69,7 +69,7 @@ if_require("null-ls", function(null_ls)
 end)
 
 if_require("lspconfig", function(lspconfig)
-  --- {{{ Lua
+  -- Lua
   -- Try to configure this to work both in Neovim and in AwesomeWM
   -- environments. This does not seem to be possible to do well, so try to
   -- configure the union of these environments.
@@ -102,9 +102,8 @@ if_require("lspconfig", function(lspconfig)
       },
     },
   })
-  --- }}}
 
-  --- {{{ Ruby / Solargraph
+  --  Ruby / Solargraph
   lspconfig.solargraph.setup({
     capabilities = capabilities(),
     on_attach = on_attach,
@@ -115,24 +114,21 @@ if_require("lspconfig", function(lspconfig)
       diagnostics = false,
     },
   })
-  --- }}}
 
-  --- {{{ HTML
+  --  HTML
   lspconfig.html.setup({
     capabilities = capabilities(),
     on_attach = on_attach,
     filetypes = { "html", "eruby" },
   })
-  --- }}}
 
-  --- {{{ Tailwindcss
+  --  Tailwindcss
   lspconfig.tailwindcss.setup({
     capabilities = capabilities(),
     on_attach = on_attach,
   })
-  --- }}}
 
-  --- {{{ Typescript / tsserver
+  --  Typescript / tsserver
   lspconfig.tsserver.setup({
     capabilities = capabilities(),
     on_attach = function(client, bufnr)
@@ -152,20 +148,23 @@ if_require("lspconfig", function(lspconfig)
       on_attach(client, bufnr)
     end,
   })
-  --- }}}
 
-  --- {{{ null-ls (generic formatting and linter)
+  -- null-ls (generic formatting and linter)
   lspconfig["null-ls"].setup({
     capabilities = capabilities(),
     on_attach = on_attach,
     prefix = "null",
   })
-  --- }}}
+
+  -- Terraform
+  lspconfig.terraformls.setup({
+    capabilities = capabilities(),
+    on_attach = on_attach,
+  })
 
   -- TODO:
   -- CSS
   -- Rust Analyzer via rust-tools.nvim
-  -- Terraform
   -- Bash/Zsh/Sh
   -- Docker
   -- SQL
