@@ -480,6 +480,10 @@ require("packer").startup(function(use)
   })
   --- }}}
 
+  --- {{{ Others
+  use("towolf/vim-helm")
+  --- }}}
+
   --- {{{ External tools
   use({
     "glacambre/firenvim",
