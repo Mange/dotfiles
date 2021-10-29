@@ -31,7 +31,7 @@ wm-start flameshot
 wm-start brave-browser-beta
 wm-start spotify
 wm-start telegram-desktop
-wm-start thunderbird
+# wm-start thunderbird
 wm-start workrave
 # wm-start keybase-gui
 
