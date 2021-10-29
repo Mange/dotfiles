@@ -24,7 +24,7 @@ wm-start xss-lock --transfer-sleep-lock -- lock-screen
 wm-start parcellite --no-icon # Clipboard manager
 wm-start syncthing-gtk --minimized
 wm-start udiskie --no-automount --smart-tray # Device mounter
-wm-start unclutter # Hide mouse cursor when not in use
+wm-start unclutter                           # Hide mouse cursor when not in use
 wm-start flameshot
 
 # Apps
@@ -36,25 +36,25 @@ wm-start workrave
 # wm-start keybase-gui
 
 case "$(hostname)" in
-  bilquis)
-    wm-start discord
-    ;;
+bilquis)
+  wm-start discord
+  ;;
 
-  krista)
-    wm-start toggldesktop
-    wm-start slack
-    ;;
+krista)
+  wm-start toggldesktop
+  wm-start slack
+  ;;
 
-  morbidus)
-    # Start Discord and Slack (working from home)
-    wm-start discord
-    wm-start slack
+morbidus)
+  # Start Discord and Slack (working from home)
+  wm-start discord
+  wm-start slack
 
-    # Start steam
-    # wm-start gtk-launch steam
-    ;;
-  *)
-    ;;
+  # Start steam
+  # wm-start gtk-launch steam
+  ;;
+*) ;;
+
 esac
 
 wm-start startup-reminder
