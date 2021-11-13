@@ -9,14 +9,6 @@ local function has_words_before()
       == nil
 end
 
-local function feedkeys(keys, mode)
-  vim.api.nvim_feedkeys(
-    vim.api.nvim_replace_termcodes(keys, true, true, true),
-    mode,
-    true
-  )
-end
-
 function plugin.setup()
   local cmp = require("cmp")
   local luasnip = require("luasnip")
@@ -32,6 +24,7 @@ function plugin.setup()
       ["<C-f>"] = cmp.mapping.scroll_docs(4),
       ["<C-Space>"] = cmp.mapping.complete(),
       ["<C-e>"] = cmp.mapping.close(),
+      ["<C-y>"] = cmp.config.disable,
       ["<CR>"] = cmp.mapping.confirm({
         behavior = cmp.ConfirmBehavior.Replace,
         select = false, -- Only confirm selection if already selected.
@@ -39,8 +32,10 @@ function plugin.setup()
       ["<Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_next_item()
-        elseif has_words_before() and luasnip.expand_or_jumpable() then
-          feedkeys("<Plug>luasnip-expand-or-jump", "")
+        elseif luasnip.expand_or_jumpable() then
+          luasnip.expand_or_jump()
+        elseif has_words_before() then
+          cmp.complete()
         else
           fallback()
         end
@@ -50,10 +45,10 @@ function plugin.setup()
       }),
 
       ["<S-Tab>"] = cmp.mapping(function(fallback)
-        if vim.fn.pumvisible() == 1 then
-          feedkeys("<C-p>", "n")
+        if cmp.visible() then
+          cmp.select_prev_item()
         elseif luasnip.jumpable(-1) then
-          feedkeys("<Plug>luasnip-jump-prev", "")
+          luasnip.jump(-1)
         else
           fallback()
         end
