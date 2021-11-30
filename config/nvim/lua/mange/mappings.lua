@@ -430,13 +430,19 @@ local function setup()
   --- {{{ Leader (visual)
   wk_register({
     ["<leader>"] = {
-      ["i"] = {
+      s = {
+        name = "Sort",
+        s = { ":'<,'>sort<cr>", "Normal" },
+        n = { ":'<,'>sort n<cr>", "Number" },
+        r = { ":'<,'>sort!<cr>", "Reverse" },
+      },
+      i = {
         name = "Into",
         ["6"] = { ':<C-u>call base64#v("encode")<cr>', "Base64" },
       },
       -- Cannot use "<" here right now.
       -- https://github.com/folke/which-key.nvim/issues/173
-      ["f"] = {
+      f = {
         name = "From",
         ["6"] = { ':<C-u>call base64#v("decode")<cr>', "Base64" },
       },
