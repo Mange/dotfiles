@@ -48,14 +48,14 @@ local function find_rest(primary)
   return rest
 end
 
-function is_portrait(s)
+local function is_portrait(s)
   return s.geometry.height > s.geometry.width
 end
 
-function left(screens)
+local function left(screens)
   local most_left = screens[1]
 
-  for s in screens do
+  for _, s in ipairs(screens) do
     if s.geometry.x < most_left.geometry.x then
       most_left = s
     end
@@ -64,10 +64,10 @@ function left(screens)
   return most_left
 end
 
-function right(screens)
+local function right(screens)
   local most_right = screens[1]
 
-  for s in screens do
+  for _, s in ipairs(screens) do
     if s.geometry.x > most_right.geometry.x then
       most_right = s
     end
