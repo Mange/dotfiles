@@ -1,11 +1,3 @@
-configuration {
-  font: "Fira Sans Condensed 10";
-  show-icons: true;
-  fullscreen: false;
-  fullscreen: false;
-  window-thumbnail: true;
-}
-
 * {
   transparent: #00000000;
   foreground: #f2f2f2ee;

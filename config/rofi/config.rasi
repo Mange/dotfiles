@@ -1,34 +1,40 @@
 configuration {
-	terminal: "kitty";
-	dpi: 1;
+  terminal: "kitty";
+  dpi: 1;
 
-	theme: "~/.config/rofi/default.rasi";
+  drun-display-format: "{name}";
+  threads: 0;
+  disable-history: false;
+  scroll-method: 0;
 
-	drun-display-format: "{name}";
-	threads: 0;
-	disable-history: false;
-	scroll-method: 0;
+  matching: "fuzzy";
+  sort: true;
+  /* Must not be set to "fzf" or else sorting will be ruined. */
+  /* sorting-method: "fzf"; */
+  sorting-method: "normal";
 
-	matching: "fuzzy";
-	sort: true;
-	/* Must not be set to "fzf" or else sorting will be ruined. */
-	/* sorting-method: "fzf"; */
-	sorting-method: "normal";
-
-	display-window: "Goto";
-	display-run: "Run";
-	display-ssh: "SSH";
-	display-drun: "Run";
-	display-combi: "Rofi";
-	display-emoji: "Emoji";
+  display-window: "Goto";
+  display-run: "Run";
+  display-ssh: "SSH";
+  display-drun: "Run";
+  display-combi: "Rofi";
+  display-emoji: "Emoji";
 
   /* "Control+l"; */
-	kb-clear-line: "Control+l";
-	kb-mode-complete: "";
+  kb-clear-line: "Control+l";
+  kb-mode-complete: "";
 
-	kb-remove-word-back: "Control+w";
-	kb-mode-next: "Tab";
-	kb-mode-previous: "Shift+Tab,ISO_Left_Tab";
-	kb-row-up: "Up";
-	kb-row-tab: "";
+  kb-remove-word-back: "Control+w";
+  kb-mode-next: "Tab";
+  kb-mode-previous: "Shift+Tab,ISO_Left_Tab";
+  kb-row-up: "Up";
+  kb-row-tab: "";
+
+  font: "Fira Sans Condensed 10";
+  show-icons: true;
+  fullscreen: false;
+  fullscreen: false;
+  window-thumbnail: true;
 }
+
+@theme "~/.config/rofi/default.rasi"
