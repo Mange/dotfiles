@@ -116,9 +116,12 @@ if_require("lspconfig", function(lspconfig)
 
   -- TODO:
   -- CSS
-  -- Rust Analyzer via rust-tools.nvim
   -- Docker
   -- SQL
+end)
+
+if_require("rust-tools", function(rustTools)
+  rustTools.setup({})
 end)
 
 if_require("null-ls", function(null_ls)

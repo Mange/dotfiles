@@ -356,6 +356,7 @@ require("packer").startup(function(use)
       "ray-x/cmp-treesitter",
       "saadparwaiz1/cmp_luasnip",
       "onsails/lspkind-nvim",
+      "simrat39/rust-tools.nvim",
     },
     config = function()
       require("mange.plugin.cmp").setup()
@@ -404,6 +405,11 @@ require("packer").startup(function(use)
 
   --- {{{ Rust
   use({ "Saecki/crates.nvim", requires = { "nvim-lua/plenary.nvim" } })
+
+  use({
+    "simrat39/rust-tools.nvim",
+    requires = { "nvim-lua/plenary.nvim" },
+  })
   --- }}}
 
   --- {{{ HTML, CSS, JS, TS, Webdev, etc.

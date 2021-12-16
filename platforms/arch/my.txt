@@ -23,6 +23,7 @@ efm-langserver
 stylua-bin # AUR
 prettier
 shfmt
+rust-analyzer
 
 bash-language-server
   bash-completion # dependency
