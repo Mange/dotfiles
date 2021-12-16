@@ -24,50 +24,6 @@ local function on_attach(_, bufnr)
   require("mange.mappings").attach_lsp(bufnr)
 end
 
-if_require("null-ls", function(null_ls)
-  null_ls.config({
-    debug = true,
-    diagnostics_format = "#{m} (#{s} [#{c}])",
-    sources = {
-      null_ls.builtins.formatting.clang_format,
-      null_ls.builtins.formatting.prettier,
-      null_ls.builtins.formatting.shfmt.with({
-        -- Use two spaces for indentation
-        extra_args = { "-i", "2" },
-      }),
-      null_ls.builtins.formatting.stylelint,
-
-      -- Not used because I want to trim whitespace even when I'm not using LSP
-      -- on a buffer or if I disable autoformatting for some other reason.
-      -- null_ls.builtins.formatting.trim_whitespace,
-
-      null_ls.builtins.formatting.stylua.with({
-        extra_args = {
-          "--column-width",
-          "80",
-          "--indent-type",
-          "Spaces",
-          "--indent-width",
-          "2",
-          "--line-endings",
-          "Unix",
-          "--quote-style",
-          "AutoPreferDouble",
-        },
-      }),
-
-      null_ls.builtins.formatting.standardrb,
-      -- null_ls.builtins.formatting.rubocop,
-      null_ls.builtins.diagnostics.standardrb,
-      -- null_ls.builtins.diagnostics.rubocop,
-
-      -- null_ls.builtins.diagnostics.markdownlint,
-      null_ls.builtins.diagnostics.shellcheck,
-      -- null_ls.builtins.diagnostics.write_good,
-    },
-  })
-end)
-
 if_require("lspconfig", function(lspconfig)
   -- Lua
   -- Try to configure this to work both in Neovim and in AwesomeWM
@@ -101,6 +57,7 @@ if_require("lspconfig", function(lspconfig)
         },
       },
     },
+    prefix = "null",
   })
 
   --  Ruby / Solargraph
@@ -151,13 +108,6 @@ if_require("lspconfig", function(lspconfig)
 
   lspconfig.bashls.setup({})
 
-  -- null-ls (generic formatting and linter)
-  lspconfig["null-ls"].setup({
-    capabilities = capabilities(),
-    on_attach = on_attach,
-    prefix = "null",
-  })
-
   -- Terraform
   lspconfig.terraformls.setup({
     capabilities = capabilities(),
@@ -169,4 +119,48 @@ if_require("lspconfig", function(lspconfig)
   -- Rust Analyzer via rust-tools.nvim
   -- Docker
   -- SQL
+end)
+
+if_require("null-ls", function(null_ls)
+  null_ls.setup({
+    debug = true,
+    diagnostics_format = "#{m} (#{s} [#{c}])",
+    sources = {
+      null_ls.builtins.formatting.clang_format,
+      null_ls.builtins.formatting.prettier,
+      null_ls.builtins.formatting.shfmt.with({
+        -- Use two spaces for indentation
+        extra_args = { "-i", "2" },
+      }),
+      null_ls.builtins.formatting.stylelint,
+
+      -- Not used because I want to trim whitespace even when I'm not using LSP
+      -- on a buffer or if I disable autoformatting for some other reason.
+      -- null_ls.builtins.formatting.trim_whitespace,
+
+      null_ls.builtins.formatting.stylua.with({
+        extra_args = {
+          "--column-width",
+          "80",
+          "--indent-type",
+          "Spaces",
+          "--indent-width",
+          "2",
+          "--line-endings",
+          "Unix",
+          "--quote-style",
+          "AutoPreferDouble",
+        },
+      }),
+
+      null_ls.builtins.formatting.standardrb,
+      -- null_ls.builtins.formatting.rubocop,
+      null_ls.builtins.diagnostics.standardrb,
+      -- null_ls.builtins.diagnostics.rubocop,
+
+      -- null_ls.builtins.diagnostics.markdownlint,
+      null_ls.builtins.diagnostics.shellcheck,
+      -- null_ls.builtins.diagnostics.write_good,
+    },
+  })
 end)
