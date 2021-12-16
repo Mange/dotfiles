@@ -12,8 +12,15 @@ end
 function plugin.setup()
   local cmp = require("cmp")
   local luasnip = require("luasnip")
+  local lspkind = require("lspkind")
 
   cmp.setup({
+    formatting = {
+      format = lspkind.cmp_format({
+        with_text = false,
+        maxwidth = 50,
+      }),
+    },
     snippet = {
       expand = function(args)
         require("luasnip").lsp_expand(args.body)

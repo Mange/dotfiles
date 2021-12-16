@@ -339,6 +339,13 @@ require("packer").startup(function(use)
   })
 
   use({
+    "onsails/lspkind-nvim",
+    config = function()
+      require("lspkind").init()
+    end,
+  })
+
+  use({
     "hrsh7th/nvim-cmp",
     requires = {
       "hrsh7th/cmp-buffer",
@@ -348,6 +355,7 @@ require("packer").startup(function(use)
       "Saecki/crates.nvim",
       "ray-x/cmp-treesitter",
       "saadparwaiz1/cmp_luasnip",
+      "onsails/lspkind-nvim",
     },
     config = function()
       require("mange.plugin.cmp").setup()
