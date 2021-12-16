@@ -20,6 +20,9 @@ stylua-bin # AUR
 prettier
 shfmt
 
+bash-language-server
+  bash-completion # dependency
+
 # Coding help
 colordiff
 ctags

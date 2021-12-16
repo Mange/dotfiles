@@ -149,6 +149,8 @@ if_require("lspconfig", function(lspconfig)
     end,
   })
 
+  lspconfig.bashls.setup({})
+
   -- null-ls (generic formatting and linter)
   lspconfig["null-ls"].setup({
     capabilities = capabilities(),
@@ -165,7 +167,6 @@ if_require("lspconfig", function(lspconfig)
   -- TODO:
   -- CSS
   -- Rust Analyzer via rust-tools.nvim
-  -- Bash/Zsh/Sh
   -- Docker
   -- SQL
 end)
