@@ -186,35 +186,30 @@ require("packer").startup(function(use)
       { "sindrets/diffview.nvim" },
     },
     config = function()
-      -- Extremely temporary hack to get nvim to not crash on startup.
-      -- Will debug this problem and report upstream. Seems to be related to
-      -- plenary loading its luv or async module incorrectly on startup.
-      vim.defer_fn(function()
-        require("neogit").setup({
-          -- I know what I'm doing
-          disable_commit_confirmation = true,
+      require("neogit").setup({
+        -- I know what I'm doing
+        disable_commit_confirmation = true,
 
-          -- Nicer characters
-          signs = {
-            section = { "▶", "▼" },
-            item = { "▶", "▼" },
-            hunk = { "▶", "▼" },
-          },
+        -- Nicer characters
+        signs = {
+          section = { "▶", "▼" },
+          item = { "▶", "▼" },
+          hunk = { "▶", "▼" },
+        },
 
-          mappings = {
-            status = {
-              -- I use L to go to next tab; use "M" as in "commit MESSAGES"
-              -- instead.
-              ["L"] = "",
-              ["m"] = "LogPopup",
-            },
+        mappings = {
+          status = {
+            -- I use L to go to next tab; use "M" as in "commit MESSAGES"
+            -- instead.
+            ["L"] = "",
+            ["m"] = "LogPopup",
           },
+        },
 
-          integrations = {
-            diffview = true,
-          },
-        })
-      end, 10)
+        integrations = {
+          diffview = true,
+        },
+      })
     end,
   })
 
