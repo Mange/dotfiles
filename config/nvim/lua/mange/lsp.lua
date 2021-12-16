@@ -106,7 +106,10 @@ if_require("lspconfig", function(lspconfig)
     end,
   })
 
-  lspconfig.bashls.setup({})
+  lspconfig.bashls.setup({
+    capabilities = capabilities(),
+    on_attach = on_attach,
+  })
 
   -- Terraform
   lspconfig.terraformls.setup({
