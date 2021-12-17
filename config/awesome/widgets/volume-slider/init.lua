@@ -1,27 +1,27 @@
-local wibox = require("wibox")
-local gears = require("gears")
-local awful = require("awful")
-local beautiful = require("beautiful")
-local clickable_container = require("widgets.clickable-container")
+local wibox = require "wibox"
+local gears = require "gears"
+local awful = require "awful"
+local beautiful = require "beautiful"
+local clickable_container = require "widgets.clickable-container"
 
-local utils = require("utils")
+local utils = require "utils"
 local dpi = utils.dpi
-local icons = require("theme.icons")
-local volume = require("daemons.volume")
-local actions = require("actions")
-local keys = require("keys")
+local icons = require "theme.icons"
+local volume = require "daemons.volume"
+local actions = require "actions"
+local keys = require "keys"
 
 local action_name = wibox.widget {
   text = "Volume",
   font = beautiful.font_bold_size(10),
   align = "left",
-  widget = wibox.widget.textbox
+  widget = wibox.widget.textbox,
 }
 
 local icon_widget = wibox.widget {
   image = icons.volume_medium,
   resize = true,
-  widget = wibox.widget.imagebox
+  widget = wibox.widget.imagebox,
 }
 
 local action_level = wibox.widget {
@@ -38,7 +38,7 @@ local action_level = wibox.widget {
         expand = "none",
         nil,
         icon_widget,
-        nil
+        nil,
       },
     },
   },
@@ -70,18 +70,8 @@ local volume_slider = slider.volume_slider
 
 volume_slider:buttons(
   gears.table.join(
-    awful.button(
-      {},
-      keys.scroll_up,
-      nil,
-      actions.volume_change("+5")
-    ),
-    awful.button(
-      {},
-      keys.scroll_down,
-      nil,
-      actions.volume_change("-5")
-    )
+    awful.button({}, keys.scroll_up, nil, actions.volume_change "+5"),
+    awful.button({}, keys.scroll_down, nil, actions.volume_change "-5")
   )
 )
 
@@ -92,16 +82,13 @@ volume_slider:buttons(
 -- Guard against that by not reacting on this signal while reacting on some
 -- other signal.
 local is_handling_callback = false
-volume_slider:connect_signal(
-  "property::value",
-  function(_, value)
-    if not is_handling_callback then
-      is_handling_callback = true
-      actions.volume_set_now(value)
-      is_handling_callback = false
-    end
+volume_slider:connect_signal("property::value", function(_, value)
+  if not is_handling_callback then
+    is_handling_callback = true
+    actions.volume_set_now(value)
+    is_handling_callback = false
   end
-)
+end)
 
 local refresh = function(data)
   is_handling_callback = true
@@ -125,14 +112,7 @@ volume:on_update(refresh)
 refresh(volume)
 
 action_level:buttons(
-  awful.util.table.join(
-    awful.button(
-      {},
-      1,
-      nil,
-      actions.volume_mute_toggle()
-    )
-  )
+  awful.util.table.join(awful.button({}, 1, nil, actions.volume_mute_toggle()))
 )
 
 local volume_setting = wibox.widget {
@@ -151,12 +131,12 @@ local volume_setting = wibox.widget {
         layout = wibox.layout.fixed.horizontal,
         forced_height = dpi(24),
         forced_width = dpi(24),
-        action_level
+        action_level,
       },
-      nil
+      nil,
     },
-    slider
-  }
+    slider,
+  },
 }
 
 return volume_setting

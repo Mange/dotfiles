@@ -1,6 +1,6 @@
-local timer = require("gears.timer")
-local spawn = require("awful.spawn")
-local utils = require("utils")
+local timer = require "gears.timer"
+local spawn = require "awful.spawn"
+local utils = require "utils"
 
 local volume = {
   volume_left = 0,
@@ -9,7 +9,10 @@ local volume = {
 }
 
 local function handle_volume_current_output(stdout)
-  local volume_left, volume_right, is_mute = string.match(stdout, "(%d+)%s+(%d+)%s+(%d+)")
+  local volume_left, volume_right, is_mute = string.match(
+    stdout,
+    "(%d+)%s+(%d+)%s+(%d+)"
+  )
   -- If command fails, don't emit signal.
   if volume_left ~= nil then
     volume.volume_left = tonumber(volume_left)
@@ -21,7 +24,7 @@ local function handle_volume_current_output(stdout)
 end
 
 function volume:refresh()
-  spawn.easy_async({"volume-current"}, handle_volume_current_output)
+  spawn.easy_async({ "volume-current" }, handle_volume_current_output)
 end
 
 function volume:on_update(func)
@@ -34,8 +37,8 @@ end
 -- status.
 local function spawn_watcher()
   return spawn.with_line_callback(
-    {"volume-monitor"},
-    {stdout = handle_volume_current_output}
+    { "volume-monitor" },
+    { stdout = handle_volume_current_output }
   )
 end
 utils.kill_on_exit(spawn_watcher())
@@ -46,7 +49,9 @@ timer {
   timeout = 60,
   call_now = true,
   autostart = true,
-  callback = function() volume:refresh() end
+  callback = function()
+    volume:refresh()
+  end,
 }
 
 return volume

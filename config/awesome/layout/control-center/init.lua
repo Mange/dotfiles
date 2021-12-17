@@ -1,46 +1,46 @@
-local beautiful = require('beautiful')
-local wibox = require('wibox')
+local beautiful = require "beautiful"
+local wibox = require "wibox"
 
 local dpi = require("utils").dpi
-local brightness = require("daemons.brightness")
+local brightness = require "daemons.brightness"
 
 local format_item = function(widget)
   return wibox.widget {
     {
       {
         layout = wibox.layout.align.vertical,
-        expand = 'none',
+        expand = "none",
         nil,
         widget,
-        nil
+        nil,
       },
       margins = dpi(10),
-      widget = wibox.container.margin
+      widget = wibox.container.margin,
     },
     forced_height = dpi(88),
     border_width = dpi(1),
     border_color = beautiful.groups.title_bg,
     bg = beautiful.groups.bg,
     shape = beautiful.groups.shape,
-    widget = wibox.container.background
+    widget = wibox.container.background,
   }
 end
 
 local placeholder = function(s)
-  return format_item({
+  return format_item {
     widget = wibox.widget.textbox,
     align = "center",
     valign = "center",
     markup = s,
-  })
+  }
 end
 
-local brightness_slider = format_item({
+local brightness_slider = format_item {
   widget = wibox.container.margin,
   margins = dpi(10),
   id = "brightness_slider",
-  require("widgets.brightness-slider"),
-})
+  require "widgets.brightness-slider",
+}
 brightness_slider.visible = brightness.is_controllable
 brightness:on_update(function(data)
   brightness_slider.visible = data.is_controllable
@@ -49,44 +49,40 @@ end)
 local control_sliders = wibox.widget {
   layout = wibox.layout.fixed.vertical,
   spacing = dpi(10),
-  format_item({
+  format_item {
     widget = wibox.container.margin,
     margins = dpi(10),
-    require("widgets.volume-slider"),
-  }),
+    require "widgets.volume-slider",
+  },
   brightness_slider,
-  format_item({
+  format_item {
     widget = wibox.container.margin,
     margins = dpi(10),
-    require("widgets.blur-slider"),
-  }),
+    require "widgets.blur-slider",
+  },
 }
 
 local media_info = wibox.widget {
   layout = wibox.layout.fixed.vertical,
-  format_item(
-    {
-      margins = dpi(10),
-      widget = wibox.container.margin,
-      require('widgets.media-info'),
-    }
-  )
+  format_item {
+    margins = dpi(10),
+    widget = wibox.container.margin,
+    require "widgets.media-info",
+  },
 }
 
 local last_row = wibox.widget {
   layout = wibox.layout.align.horizontal,
   forced_height = dpi(48),
-  format_item(
-    {
-      layout = wibox.layout.fixed.horizontal,
-      spacing = dpi(10),
-      require("widgets.end-session")(),
-    }
-  ),
+  format_item {
+    layout = wibox.layout.fixed.horizontal,
+    spacing = dpi(10),
+    require "widgets.end-session"(),
+  },
   {
     layout = wibox.container.margin,
     left = dpi(10),
-    format_item(require("widgets.user-profile")()),
+    format_item(require "widgets.user-profile"()),
   },
 }
 
@@ -132,7 +128,7 @@ local control_center = function(s)
               visible = false,
               layout = wibox.layout.fixed.vertical,
               spacing = dpi(10),
-              placeholder("MONITOR"),
+              placeholder "MONITOR",
             },
           },
           last_row,
@@ -141,30 +137,24 @@ local control_center = function(s)
     },
   }
 
-  panel:connect_signal(
-    "property::height",
-    function()
-      awful.placement.top_left(
-        panel,
-        {
-          honor_workarea = true,
-          margins = {
-            top = dpi(5),
-            left = dpi(5),
-          },
-        }
-      )
-    end
-  )
+  panel:connect_signal("property::height", function()
+    awful.placement.top_left(panel, {
+      honor_workarea = true,
+      margins = {
+        top = dpi(5),
+        left = dpi(5),
+      },
+    })
+  end)
 
   function panel:open()
     self.visible = true
-    panel:emit_signal("opened")
+    panel:emit_signal "opened"
   end
 
   function panel:close()
     self.visible = false
-    panel:emit_signal("closed")
+    panel:emit_signal "closed"
   end
 
   function panel:toggle()

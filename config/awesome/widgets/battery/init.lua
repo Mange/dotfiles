@@ -1,13 +1,14 @@
-local wibox = require("wibox")
-local awful = require("awful")
-local gears = require("gears")
-local beautiful = require("beautiful")
+local wibox = require "wibox"
+local awful = require "awful"
+local gears = require "gears"
+local beautiful = require "beautiful"
 
-local clickable_container = require("widgets.clickable-container")
-local battery = require("daemons.battery")
+local clickable_container = require "widgets.clickable-container"
+local battery = require "daemons.battery"
 local dpi = require("utils").dpi
 
-local widget_icon_dir = gears.filesystem.get_configuration_dir() .. "widgets/battery/icons/"
+local widget_icon_dir = gears.filesystem.get_configuration_dir()
+  .. "widgets/battery/icons/"
 
 local battery_indicator = function()
   local imagebox = wibox.widget {
@@ -18,7 +19,7 @@ local battery_indicator = function()
       id = "icon",
       image = widget_icon_dir .. "battery.svg",
       widget = wibox.widget.imagebox,
-      resize = true
+      resize = true,
     },
     nil,
   }
@@ -33,32 +34,30 @@ local battery_indicator = function()
     visible = true,
   }
 
-
   local battery_widget = wibox.widget {
     layout = wibox.layout.fixed.horizontal,
     spacing = dpi(0),
     imagebox,
-    text
+    text,
   }
-
 
   local battery_button = wibox.widget {
     {
       battery_widget,
       margins = dpi(7),
-      widget = wibox.container.margin
+      widget = wibox.container.margin,
     },
-    widget = clickable_container
+    widget = clickable_container,
   }
 
-  local battery_tooltip =  awful.tooltip {
-    objects = {battery_button},
+  local battery_tooltip = awful.tooltip {
+    objects = { battery_button },
     text = "None",
     mode = "outside",
     align = "right",
     margin_leftright = dpi(8),
     margin_topbottom = dpi(8),
-    preferred_positions = {"right", "left", "top", "bottom"}
+    preferred_positions = { "right", "left", "top", "bottom" },
   }
 
   awesome.connect_signal(
@@ -111,22 +110,19 @@ local battery_indicator = function()
     end
   )
 
-local function load_battery_tooltip()
-  battery_tooltip:set_text("Laddar…")
-  battery.describe_state(function(description)
-    battery_tooltip:set_text(description)
-  end)
-end
+  local function load_battery_tooltip()
+    battery_tooltip:set_text "Laddar…"
+    battery.describe_state(function(description)
+      battery_tooltip:set_text(description)
+    end)
+  end
 
   battery.update()
 
-  battery_widget:connect_signal(
-    "mouse::enter",
-    function()
-      battery.update()
-      load_battery_tooltip()
-    end
-  )
+  battery_widget:connect_signal("mouse::enter", function()
+    battery.update()
+    load_battery_tooltip()
+  end)
 
   return battery_button
 end

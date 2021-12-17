@@ -29,7 +29,7 @@ if_require("lspconfig", function(lspconfig)
   -- Try to configure this to work both in Neovim and in AwesomeWM
   -- environments. This does not seem to be possible to do well, so try to
   -- configure the union of these environments.
-  lspconfig.sumneko_lua.setup({
+  lspconfig.sumneko_lua.setup {
     cmd = { "lua-language-server" },
     capabilities = capabilities(),
     on_attach = on_attach,
@@ -58,10 +58,10 @@ if_require("lspconfig", function(lspconfig)
       },
     },
     prefix = "null",
-  })
+  }
 
   --  Ruby / Solargraph
-  lspconfig.solargraph.setup({
+  lspconfig.solargraph.setup {
     capabilities = capabilities(),
     on_attach = on_attach,
     prefix = "solargraph",
@@ -70,23 +70,23 @@ if_require("lspconfig", function(lspconfig)
       formatting = false,
       diagnostics = false,
     },
-  })
+  }
 
   --  HTML
-  lspconfig.html.setup({
+  lspconfig.html.setup {
     capabilities = capabilities(),
     on_attach = on_attach,
     filetypes = { "html", "eruby" },
-  })
+  }
 
   --  Tailwindcss
-  lspconfig.tailwindcss.setup({
+  lspconfig.tailwindcss.setup {
     capabilities = capabilities(),
     on_attach = on_attach,
-  })
+  }
 
   --  Typescript / tsserver
-  lspconfig.tsserver.setup({
+  lspconfig.tsserver.setup {
     capabilities = capabilities(),
     on_attach = function(client, bufnr)
       if_require("nvim-lsp-ts-utils", function(ts_utils)
@@ -94,28 +94,28 @@ if_require("lspconfig", function(lspconfig)
         client.resolved_capabilities.document_formatting = false
         client.resolved_capabilities.document_range_formatting = false
 
-        ts_utils.setup({
+        ts_utils.setup {
           enable_import_on_completion = true,
           enable_formatting = true,
-        })
+        }
 
         ts_utils.setup_client(client)
       end)
 
       on_attach(client, bufnr)
     end,
-  })
+  }
 
-  lspconfig.bashls.setup({
+  lspconfig.bashls.setup {
     capabilities = capabilities(),
     on_attach = on_attach,
-  })
+  }
 
   -- Terraform
-  lspconfig.terraformls.setup({
+  lspconfig.terraformls.setup {
     capabilities = capabilities(),
     on_attach = on_attach,
-  })
+  }
 
   -- TODO:
   -- CSS
@@ -124,20 +124,20 @@ if_require("lspconfig", function(lspconfig)
 end)
 
 if_require("rust-tools", function(rustTools)
-  rustTools.setup({})
+  rustTools.setup {}
 end)
 
 if_require("null-ls", function(null_ls)
-  null_ls.setup({
+  null_ls.setup {
     debug = true,
     diagnostics_format = "#{m} (#{s} [#{c}])",
     sources = {
       null_ls.builtins.formatting.clang_format,
       null_ls.builtins.formatting.prettier,
-      null_ls.builtins.formatting.shfmt.with({
+      null_ls.builtins.formatting.shfmt.with {
         -- Use two spaces for indentation
         extra_args = { "-i", "2" },
-      }),
+      },
       null_ls.builtins.formatting.stylelint,
 
       -- Not used because I want to trim whitespace even when I'm not using LSP
@@ -155,5 +155,5 @@ if_require("null-ls", function(null_ls)
       null_ls.builtins.diagnostics.shellcheck,
       -- null_ls.builtins.diagnostics.write_good,
     },
-  })
+  }
 end)

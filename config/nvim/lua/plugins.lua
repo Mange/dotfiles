@@ -11,48 +11,48 @@
 
 require("packer").startup(function(use)
   --- {{{ Basics
-  use("wbthomason/packer.nvim")
-  use("DataWraith/auto_mkdir")
-  use("tpope/vim-repeat")
-  use("tpope/vim-speeddating") -- CTRL-X/A works on dates
-  use("tpope/vim-surround")
+  use "wbthomason/packer.nvim"
+  use "DataWraith/auto_mkdir"
+  use "tpope/vim-repeat"
+  use "tpope/vim-speeddating"
+  use "tpope/vim-surround"
 
   -- Adds things like :Move, :Rename, :SudoWrite, etc.
-  use("tpope/vim-eunuch")
+  use "tpope/vim-eunuch"
   -- Smart S/re/repl/
-  use("tpope/vim-abolish")
+  use "tpope/vim-abolish"
 
-  use({
+  use {
     "AndrewRadev/switch.vim",
     setup = function()
       vim.g.switch_mapping = "" -- Setup in mange.mappings
     end,
-  })
+  }
 
-  use({
+  use {
     "windwp/nvim-autopairs",
     requires = {
       -- Wants to hook into <CR> mappings set by cmp
       "hrsh7th/nvim-cmp",
     },
     config = function()
-      require("mange.plugin.autopairs")
+      require "mange.plugin.autopairs"
     end,
-  })
+  }
 
-  use("tommcdo/vim-exchange")
+  use "tommcdo/vim-exchange"
 
   -- Strip trailing whitespace from modified lines only. Load before LSP so
   -- it's executed real early.
-  use({
+  use {
     "axelf4/vim-strip-trailing-whitespace",
     before = { "neovim/nvim-lspconfig" },
-  })
+  }
   --- }}}
 
   --- {{{ UI plugins
   -- Dashboard screen on Neovim boot
-  use({
+  use {
     "glepnir/dashboard-nvim",
     setup = function()
       vim.g.dashboard_default_executive = "telescope"
@@ -66,21 +66,21 @@ require("packer").startup(function(use)
         new_file = "SPC b n",
       }
     end,
-  })
+  }
 
   -- Statusline
-  use({
+  use {
     "hoob3rt/lualine.nvim",
     requires = { "kyazdani42/nvim-web-devicons", opt = true },
     config = function()
-      require("mange.statusline")
+      require "mange.statusline"
     end,
-  })
+  }
 
-  use({
+  use {
     "lukas-reineke/indent-blankline.nvim",
     config = function()
-      require("indent_blankline").setup({
+      require("indent_blankline").setup {
         space_char_blankline = " ",
         show_current_context = true,
         buftype_exclude = {
@@ -115,23 +115,21 @@ require("packer").startup(function(use)
         show_first_indent_level = false,
         show_end_of_line = false,
         use_treesitter = true,
-      })
+      }
 
       -- gruvbox.dark1
-      vim.cmd("highlight IndentBlanklineChar guifg=#3c3836 gui=nocombine")
+      vim.cmd "highlight IndentBlanklineChar guifg=#3c3836 gui=nocombine"
       -- gruvbox.dark4
-      vim.cmd(
-        "highlight IndentBlanklineContextChar guifg=#7c6f64 gui=nocombine"
-      )
+      vim.cmd "highlight IndentBlanklineContextChar guifg=#7c6f64 gui=nocombine"
     end,
-  })
+  }
 
   -- Finder
-  use({
+  use {
     "nvim-telescope/telescope.nvim",
     requires = { { "nvim-lua/plenary.nvim" } },
     config = function()
-      require("telescope").setup({
+      require("telescope").setup {
         defaults = {
           mappings = {
             i = {
@@ -142,32 +140,32 @@ require("packer").startup(function(use)
             },
           },
         },
-      })
+      }
     end,
-  })
+  }
 
   -- Colortheme
-  use({ "ellisonleao/gruvbox.nvim", requires = { "rktjmp/lush.nvim" } })
+  use { "ellisonleao/gruvbox.nvim", requires = { "rktjmp/lush.nvim" } }
 
   -- Show keybinds while waiting for the next key. Allows more complicated
   -- keybinds to be remembered.
-  use({
+  use {
     "folke/which-key.nvim",
     config = function()
       require("which-key").setup()
     end,
-  })
+  }
 
   -- Icons; used by some other plugins
-  use("kyazdani42/nvim-web-devicons")
+  use "kyazdani42/nvim-web-devicons"
 
   -- Highlight word under the cursor
-  use("xiyaowong/nvim-cursorword")
+  use "xiyaowong/nvim-cursorword"
 
   -- Show color previews
   -- Fork of norcalli/nvim-colorizer.lua
   -- See: https://github.com/norcalli/nvim-colorizer.lua/pull/55
-  use({
+  use {
     "DarwinSenior/nvim-colorizer.lua",
     config = function()
       -- Enable for all files and render as virtualtext
@@ -175,18 +173,18 @@ require("packer").startup(function(use)
         mode = "virtualtext",
       })
     end,
-  })
+  }
   --- }}}
 
   --- {{{ Git plugins
-  use({
+  use {
     "TimUntersberger/neogit",
     requires = {
       { "nvim-lua/plenary.nvim" },
       { "sindrets/diffview.nvim" },
     },
     config = function()
-      require("neogit").setup({
+      require("neogit").setup {
         -- I know what I'm doing
         disable_commit_confirmation = true,
 
@@ -209,18 +207,18 @@ require("packer").startup(function(use)
         integrations = {
           diffview = true,
         },
-      })
+      }
     end,
-  })
+  }
 
-  use({
+  use {
     "lewis6991/gitsigns.nvim",
     requires = {
       "nvim-lua/plenary.nvim",
       "TimUntersberger/neogit",
     },
     config = function()
-      require("gitsigns").setup({
+      require("gitsigns").setup {
         -- Set up manually in mange.mappings
         keymaps = {},
         signs = {
@@ -230,17 +228,17 @@ require("packer").startup(function(use)
           topdelete = { text = "┋" },
           changedelete = { text = "┋" },
         },
-      })
+      }
     end,
-  })
+  }
 
-  use({
+  use {
     "sindrets/diffview.nvim",
     requires = {
       { "nvim-lua/plenary.nvim" },
     },
     config = function()
-      require("diffview").setup({
+      require("diffview").setup {
         key_bindings = {
           view = {
             ["q"] = "<cmd>DiffviewClose<cr>",
@@ -252,22 +250,22 @@ require("packer").startup(function(use)
             ["q"] = "<cmd>DiffviewClose<cr>",
           },
         },
-      })
+      }
     end,
-  })
+  }
   --- }}}
 
   --- {{{ LSP
-  use({
+  use {
     "neovim/nvim-lspconfig",
     requires = { "jose-elias-alvarez/null-ls.nvim" },
     config = function()
-      require("mange.lsp")
+      require "mange.lsp"
     end,
-  })
+  }
 
-  use("jose-elias-alvarez/null-ls.nvim")
-  use({
+  use "jose-elias-alvarez/null-ls.nvim"
+  use {
     "liuchengxu/vista.vim",
     setup = function()
       vim.g.vista_sidebar_keepalt = 1
@@ -279,20 +277,20 @@ require("packer").startup(function(use)
         markdown = "toc",
       }
     end,
-  })
+  }
 
-  use({
+  use {
     "jose-elias-alvarez/nvim-lsp-ts-utils",
     requires = {
       "neovim/nvim-lspconfig",
       "nvim-lua/plenary.nvim",
       "jose-elias-alvarez/null-ls.nvim",
     },
-  })
+  }
   --- }}}
 
   --- {{{ TreeSitter
-  use({
+  use {
     "nvim-treesitter/nvim-treesitter",
     run = ":TSUpdate",
     requires = {
@@ -302,7 +300,7 @@ require("packer").startup(function(use)
       -- Disabled right now as Neovim crashes when openinng file from
       -- cmdline in some cases.
       -- I need to investigate this.
-      require("nvim-treesitter.configs").setup({
+      require("nvim-treesitter.configs").setup {
         ensure_installed = {},
         highlight = {
           enable = true,
@@ -324,28 +322,28 @@ require("packer").startup(function(use)
           enable = true,
           enable_autocmd = false,
         },
-      })
+      }
     end,
-  })
+  }
   --- }}}
 
   --- {{{ Completion and snippets
-  use({
+  use {
     "L3MON4D3/LuaSnip",
     before = "hrsh7th/nvim-cmp",
     config = function()
-      require("mange.snippets")
+      require "mange.snippets"
     end,
-  })
+  }
 
-  use({
+  use {
     "onsails/lspkind-nvim",
     config = function()
       require("lspkind").init()
     end,
-  })
+  }
 
-  use({
+  use {
     "hrsh7th/nvim-cmp",
     requires = {
       "hrsh7th/cmp-buffer",
@@ -361,63 +359,63 @@ require("packer").startup(function(use)
     config = function()
       require("mange.plugin.cmp").setup()
     end,
-  })
+  }
   --- }}}
 
   --- {{{ Coding
-  use("JoosepAlviste/nvim-ts-context-commentstring")
+  use "JoosepAlviste/nvim-ts-context-commentstring"
 
   -- Insert closing </tags> automatically in HTML-like filetypes.
   -- (Also handles renames of opening tag)
-  use({
+  use {
     "windwp/nvim-ts-autotag",
     config = function()
       require("nvim-ts-autotag").setup()
     end,
-  })
+  }
 
-  use({
+  use {
     "terrortylor/nvim-comment",
     config = function()
-      require("nvim_comment").setup({
+      require("nvim_comment").setup {
         hook = function()
           if_require("ts_context_commentstring.internal", function(module)
             module.update_commentstring()
           end)
         end,
-      })
+      }
     end,
-  })
+  }
 
   -- Mainly for navigation commands like `:A`
-  use("tpope/vim-rails")
+  use "tpope/vim-rails"
   -- …and let's add support for `:A` in other project types.
   -- (Not possible to get full fidelity for Rails apps with just projectionist)
-  use({
+  use {
     "tpope/vim-projectionist",
     setup = function()
-      require("mange.plugin.projectionist")
+      require "mange.plugin.projectionist"
     end,
-  })
+  }
 
-  use("junegunn/vim-easy-align")
+  use "junegunn/vim-easy-align"
   --- }}}}
 
   --- {{{ Rust
-  use({ "Saecki/crates.nvim", requires = { "nvim-lua/plenary.nvim" } })
+  use { "Saecki/crates.nvim", requires = { "nvim-lua/plenary.nvim" } }
 
-  use({
+  use {
     "simrat39/rust-tools.nvim",
     requires = { "nvim-lua/plenary.nvim" },
-  })
+  }
   --- }}}
 
   --- {{{ HTML, CSS, JS, TS, Webdev, etc.
   -- Automatically sort Tailwindcss classes.
-  use({
+  use {
     "steelsojka/headwind.nvim",
     config = function()
-      require("headwind").setup({
+      require("headwind").setup {
         -- Using treesitter is a great idea, but it breaks in CSS using Postcss
         -- (@apply) and in ERB files (since it does not have an eruby
         -- treesitter config as of yet).
@@ -433,13 +431,13 @@ require("packer").startup(function(use)
         },
         -- TODO: Fork upstream to allow multiple places to look for the file in.
         -- https://github.com/steelsojka/headwind.nvim/blob/main/lua/headwind.lua#L308
-      })
+      }
     end,
-  })
+  }
   --- }}}
 
   --- {{{ Vimwiki and Taskwarrior
-  use({
+  use {
     "vimwiki/vimwiki",
     setup = function()
       vim.g.vimwiki_global_ext = 0
@@ -475,29 +473,29 @@ require("packer").startup(function(use)
       -- https://github.com/tbabej/taskwiki/issues/119
       -- vim.g.vimwiki_listsyms = " ○◐●"
     end,
-  })
-  use({
+  }
+  use {
     "blindFS/vim-taskwarrior",
     setup = function()
       vim.g.taskwiki_taskrc_location = "~/.config/taskwarrior/config"
     end,
-  })
-  use({
+  }
+  use {
     "tbabej/taskwiki",
     requires = {
       "vimwiki/vimwiki",
       "tbabej/vim-taskwarrior",
     },
     run = "pip3 install --user --upgrade -r requirements.txt",
-  })
+  }
   --- }}}
 
   --- {{{ Others
-  use("towolf/vim-helm")
+  use "towolf/vim-helm"
   --- }}}
 
   --- {{{ External tools
-  use({
+  use {
     "glacambre/firenvim",
     run = function()
       vim.fn["firenvim#install"](0)
@@ -518,6 +516,6 @@ require("packer").startup(function(use)
         },
       }
     end,
-  })
+  }
   --- }}}
 end)

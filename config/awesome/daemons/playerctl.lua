@@ -1,10 +1,14 @@
-local spawn = require("awful.spawn")
-local timer = require("gears.timer")
-local utils = require("utils")
+local spawn = require "awful.spawn"
+local timer = require "gears.timer"
+local utils = require "utils"
 
 local function repair_spotify_broken_art_url(url)
   if url then
-    return string.gsub(url, "https://open.spotify.com/image/", "https://i.scdn.co/image/")
+    return string.gsub(
+      url,
+      "https://open.spotify.com/image/",
+      "https://i.scdn.co/image/"
+    )
   else
     return url
   end
@@ -43,7 +47,7 @@ local metadata_map = {
 
 local function metadata_get_all(playername)
   local data = all_metadata[playername]
-  if (data == nil) then
+  if data == nil then
     data = {}
     all_metadata[playername] = data
   end
@@ -90,14 +94,17 @@ local metadata_debounce = timer {
   single_shot = true,
   callback = function()
     awesome.emit_signal("mange:playerctl:update", playerctl:current())
-  end
+  end,
 }
 
 -- playerctl outputs this each time a metadata key changes:
 -- <playername> <metadataname>         <value>
 -- There is variable whitespace between metadata name and the value.
 local function handle_metadata_change(line)
-  local playername, metadataname, value = string.match(line, "(%S+)%s+(%S+)%s+(.+)")
+  local playername, metadataname, value = string.match(
+    line,
+    "(%S+)%s+(%S+)%s+(.+)"
+  )
   metadata_set(playername, metadataname, value)
   -- Since this player just changed, make it the current player
   set_current_player(playername)
@@ -114,20 +121,21 @@ local function handle_status_change(line)
 end
 
 local function spawn_status_watcher()
-  return spawn.with_line_callback(
-    {
-      "playerctl", "status",
-      "--no-messages", "--all-players",
-      "--follow", "--format", "{{playerName}}\t{{lc(status)}}"
-    },
-    {stdout = handle_status_change}
-  )
+  return spawn.with_line_callback({
+    "playerctl",
+    "status",
+    "--no-messages",
+    "--all-players",
+    "--follow",
+    "--format",
+    "{{playerName}}\t{{lc(status)}}",
+  }, { stdout = handle_status_change })
 end
 
 local function spawn_metadata_watcher()
   return spawn.with_line_callback(
-    {"playerctl", "metadata", "--no-messages", "--all-players", "--follow"},
-    {stdout = handle_metadata_change}
+    { "playerctl", "metadata", "--no-messages", "--all-players", "--follow" },
+    { stdout = handle_metadata_change }
   )
 end
 
@@ -144,7 +152,7 @@ function playerctl:on_update(func)
 end
 
 local function spawn_playerctl(command)
-  local cmdline = {"playerctl"}
+  local cmdline = { "playerctl" }
   local player = playerctl.current_player
 
   if player then
@@ -157,15 +165,15 @@ local function spawn_playerctl(command)
 end
 
 function playerctl:play_pause()
-  spawn_playerctl("play-pause")
+  spawn_playerctl "play-pause"
 end
 
 function playerctl:previous()
-  spawn_playerctl("previous")
+  spawn_playerctl "previous"
 end
 
 function playerctl:next()
-  spawn_playerctl("next")
+  spawn_playerctl "next"
 end
 
 utils.kill_on_exit(spawn_status_watcher())

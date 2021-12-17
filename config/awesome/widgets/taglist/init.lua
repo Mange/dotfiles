@@ -1,8 +1,8 @@
-local awful = require('awful')
-local wibox = require('wibox')
-local dpi = require('beautiful').xresources.apply_dpi
-local clickable_container = require('widgets.clickable-container')
-local keys = require("keys")
+local awful = require "awful"
+local wibox = require "wibox"
+local dpi = require("beautiful").xresources.apply_dpi
+local clickable_container = require "widgets.clickable-container"
+local keys = require "keys"
 
 --- Common method to create buttons.
 -- @tab buttons
@@ -20,11 +20,11 @@ local function create_buttons(buttons, object)
         modifiers = b.modifiers,
         button = b.button,
         on_press = function()
-          b:emit_signal('press', object)
+          b:emit_signal("press", object)
         end,
         on_release = function()
-          b:emit_signal('release', object)
-        end
+          b:emit_signal("release", object)
+        end,
       }
       btns[#btns + 1] = btn
     end
@@ -52,12 +52,12 @@ local function list_update(w, buttons, label, data, objects)
         tb,
         left = dpi(4),
         right = dpi(16),
-        widget = wibox.container.margin
+        widget = wibox.container.margin,
       }
       ibm = wibox.widget {
         ib,
         margins = dpi(5),
-        widget = wibox.container.margin
+        widget = wibox.container.margin,
       }
       l = wibox.layout.fixed.horizontal()
       bg_clickable = clickable_container()
@@ -78,7 +78,7 @@ local function list_update(w, buttons, label, data, objects)
         tb = tb,
         bgb = bgb,
         tbm = tbm,
-        ibm = ibm
+        ibm = ibm,
       }
     end
 
@@ -91,7 +91,7 @@ local function list_update(w, buttons, label, data, objects)
 
     bgb:set_bg(bg)
 
-    if type(bg_image) == 'function' then
+    if type(bg_image) == "function" then
       -- TODO: Why does this pass nil as an argument?
       bg_image = bg_image(tb, o, nil, objects, i)
     end
@@ -103,13 +103,13 @@ local function list_update(w, buttons, label, data, objects)
       tbm:set_margins(0) -- Hide text when showing icon
     else
       -- The text might be invalid, so use pcall.
-      if text == nil or text == '' then
+      if text == nil or text == "" then
         tbm:set_margins(0)
         ibm:set_margins(10) -- No icon and no text, just show empty space
       else
         ibm:set_margins(0) -- Hide icon when showing text
         if not tb:set_markup_silently(text) then
-          tb:set_markup('<i>&lt;Invalid text&gt;</i>')
+          tb:set_markup "<i>&lt;Invalid text&gt;</i>"
         end
       end
     end
@@ -127,51 +127,31 @@ local taglist = function(s)
     screen = s,
     filter = awful.widget.taglist.filter.all,
     buttons = awful.util.table.join(
-      awful.button(
-        {},
-        keys.left_click,
-        function(t)
+      awful.button({}, keys.left_click, function(t)
+        t:view_only()
+      end),
+      awful.button({ keys.modkey }, keys.left_click, function(t)
+        if client.focus then
+          client.focus:move_to_tag(t)
           t:view_only()
         end
-      ),
-      awful.button(
-        {keys.modkey},
-        keys.left_click,
-        function(t)
-          if client.focus then
-            client.focus:move_to_tag(t)
-            t:view_only()
-          end
-        end
-      ),
+      end),
       awful.button({}, keys.right_click, awful.tag.viewtoggle),
-      awful.button(
-        {keys.modkey},
-        keys.right_click,
-        function(t)
-          if _G.client.focus then
-            _G.client.focus:toggle_tag(t)
-          end
+      awful.button({ keys.modkey }, keys.right_click, function(t)
+        if _G.client.focus then
+          _G.client.focus:toggle_tag(t)
         end
-      ),
-      awful.button(
-        {},
-        keys.scroll_up,
-        function(t)
-          awful.tag.viewprev(t.screen)
-        end
-      ),
-      awful.button(
-        {},
-        keys.scroll_down,
-        function(t)
-          awful.tag.viewnext(t.screen)
-        end
-      )
+      end),
+      awful.button({}, keys.scroll_up, function(t)
+        awful.tag.viewprev(t.screen)
+      end),
+      awful.button({}, keys.scroll_down, function(t)
+        awful.tag.viewnext(t.screen)
+      end)
     ),
     style = {},
     update_function = list_update,
-    base_widget = wibox.layout.fixed.horizontal()
+    base_widget = wibox.layout.fixed.horizontal(),
   }
 end
 

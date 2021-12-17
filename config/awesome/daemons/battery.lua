@@ -1,6 +1,6 @@
-local gears = require("gears")
-local awful = require("awful")
-local utils = require("utils")
+local gears = require "gears"
+local awful = require "awful"
+local utils = require "utils"
 
 local battery_dir = "/sys/class/power_supply/BAT0"
 
@@ -39,7 +39,7 @@ end
 
 ---@param callback function(string): void
 function battery_info.describe_state(callback)
-  awful.spawn.easy_async({"acpi"}, function(stdout)
+  awful.spawn.easy_async({ "acpi" }, function(stdout)
     callback(utils.strip(stdout))
   end)
 end
@@ -49,7 +49,7 @@ if has_battery() then
     timeout = 10,
     call_now = true,
     autostart = true,
-    callback = battery_info.update
+    callback = battery_info.update,
   }
 else
   ---@class BatteryInfo
@@ -59,7 +59,7 @@ else
     percent = 100,
     full = true,
     charging = true,
-    discharging = false
+    discharging = false,
   }
   awesome.emit_signal("mange:battery:update", info)
 end

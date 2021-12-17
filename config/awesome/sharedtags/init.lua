@@ -5,16 +5,16 @@
 -- @license MIT
 
 -- Grab environment we need
-local awful = require("awful")
+local awful = require "awful"
 local capi = {
-    screen = screen
+  screen = screen,
 }
 
 local sharedtags = {
-    _VERSION = "sharedtags v1.0.0 for v4.0",
-    _DESCRIPTION = "Share tags for awesome window manager v4.0",
-    _URL = "https://github.com/Drauthius/awesome-sharedtags",
-    _LICENSE = [[
+  _VERSION = "sharedtags v1.0.0 for v4.0",
+  _DESCRIPTION = "Share tags for awesome window manager v4.0",
+  _URL = "https://github.com/Drauthius/awesome-sharedtags",
+  _LICENSE = [[
         MIT LICENSE
 
         Copyright (c) 2017 Albert Diserholt
@@ -36,21 +36,21 @@ local sharedtags = {
         LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
         FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
         IN THE SOFTWARE.
-    ]]
+    ]],
 }
 
 --- Attempts to salvage a tag when a screen is removed.
 -- @param tag The tag to salvage.
 local function salvage(tag)
-    -- The screen to move the orphaned tag to.
-    local newscreen = capi.screen.primary
+  -- The screen to move the orphaned tag to.
+  local newscreen = capi.screen.primary
 
-    -- Make sure the tag isn't selected when moved to the new screen.
-    tag.selected = false
+  -- Make sure the tag isn't selected when moved to the new screen.
+  tag.selected = false
 
-    sharedtags.movetag(tag, newscreen)
+  sharedtags.movetag(tag, newscreen)
 
-    capi.screen[newscreen]:emit_signal("tag::history::update")
+  capi.screen[newscreen]:emit_signal "tag::history::update"
 end
 
 --- Create one new tag with sharedtags metadata.
@@ -59,20 +59,21 @@ end
 -- @tparam table t The tag definition table for awful.tag.add
 -- @treturn table The created tag.
 function sharedtags.add(i, t)
-   t = awful.util.table.clone(t, false) -- shallow copy for modification
-   t.screen = (t.screen and t.screen <= capi.screen.count()) and t.screen or capi.screen.primary
-   t.sharedtagindex = i
-   local tag = awful.tag.add(t.name or i, t)
+  t = awful.util.table.clone(t, false) -- shallow copy for modification
+  t.screen = (t.screen and t.screen <= capi.screen.count()) and t.screen
+    or capi.screen.primary
+  t.sharedtagindex = i
+  local tag = awful.tag.add(t.name or i, t)
 
-   -- If no tag is selected for this screen, then select this one.
-   if not tag.screen.selected_tag then
-      tag:view_only() -- Updates the history as well.
-   end
+  -- If no tag is selected for this screen, then select this one.
+  if not tag.screen.selected_tag then
+    tag:view_only() -- Updates the history as well.
+  end
 
-   -- Make sure to salvage the tag in case the screen disappears.
-   tag:connect_signal("request::screen", salvage)
+  -- Make sure to salvage the tag in case the screen disappears.
+  tag:connect_signal("request::screen", salvage)
 
-   return tag
+  return tag
 end
 
 --- Create new tag objects.
@@ -95,18 +96,18 @@ end
 --   {})
 -- -- tags[2] and tags["www"] both refer to the same tag.
 function sharedtags.new(def)
-    local tags = {}
+  local tags = {}
 
-    for i,t in ipairs(def) do
-        tags[i] = sharedtags.add(i, t)
+  for i, t in ipairs(def) do
+    tags[i] = sharedtags.add(i, t)
 
-        -- Create an alias between the index and the name.
-        if t.name and type(t.name) ~= "number" then
-            tags[t.name] = tags[i]
-        end
+    -- Create an alias between the index and the name.
+    if t.name and type(t.name) ~= "number" then
+      tags[t.name] = tags[i]
     end
+  end
 
-    return tags
+  return tags
 end
 
 --- Move the specified tag to a new screen, if necessary.
@@ -114,48 +115,50 @@ end
 -- @tparam[opt=awful.screen.focused()] number screen The screen to move the tag to.
 -- @treturn bool Whether the tag was moved.
 function sharedtags.movetag(tag, screen)
-    screen = screen or awful.screen.focused()
-    local oldscreen = tag.screen
+  screen = screen or awful.screen.focused()
+  local oldscreen = tag.screen
 
-    -- If the specified tag is allocated to another screen, we need to move it.
-    if oldscreen ~= screen then
-        local oldsel = oldscreen.selected_tag
-        tag.screen = screen
+  -- If the specified tag is allocated to another screen, we need to move it.
+  if oldscreen ~= screen then
+    local oldsel = oldscreen.selected_tag
+    tag.screen = screen
 
-        if oldsel == tag then
-            -- The tag has been moved away. In most cases the tag history
-            -- function will find the best match, but if we really want we can
-            -- try to find a fallback tag as well.
-            if not oldscreen.selected_tag then
-                local newtag = awful.tag.find_fallback(oldscreen)
-                if newtag then
-                    newtag:view_only()
-                end
-            end
+    if oldsel == tag then
+      -- The tag has been moved away. In most cases the tag history
+      -- function will find the best match, but if we really want we can
+      -- try to find a fallback tag as well.
+      if not oldscreen.selected_tag then
+        local newtag = awful.tag.find_fallback(oldscreen)
+        if newtag then
+          newtag:view_only()
         end
-
-        -- Also sort the tag in the taglist, by reapplying the index. This is just a nicety.
-        local unpack = unpack or table.unpack
-        for _,s in ipairs({ screen, oldscreen }) do
-            local tags = { unpack(s.tags) } -- Copy
-            table.sort(tags, function(a, b) return a.sharedtagindex < b.sharedtagindex end)
-            for i,t in ipairs(tags) do
-                t.index = i
-            end
-        end
-
-        return true
+      end
     end
 
-    return false
+    -- Also sort the tag in the taglist, by reapplying the index. This is just a nicety.
+    local unpack = unpack or table.unpack
+    for _, s in ipairs { screen, oldscreen } do
+      local tags = { unpack(s.tags) } -- Copy
+      table.sort(tags, function(a, b)
+        return a.sharedtagindex < b.sharedtagindex
+      end)
+      for i, t in ipairs(tags) do
+        t.index = i
+      end
+    end
+
+    return true
+  end
+
+  return false
 end
 
 --- View the specified tag on the specified screen.
 -- @param tag The only tag to view.
 -- @tparam[opt=awful.screen.focused()] number screen The screen to view the tag on.
 function sharedtags.viewonly(tag, screen)
-    sharedtags.movetag(tag, screen)
-    tag:view_only()
+  sharedtags.movetag(tag, screen)
+  tag:view_only()
 end
 
 --- Toggle the specified tag on the specified screen.
@@ -164,22 +167,25 @@ end
 -- @param tag The tag to toggle.
 -- @tparam[opt=awful.screen.focused()] number screen The screen to toggle the tag on.
 function sharedtags.viewtoggle(tag, screen)
-    local oldscreen = tag.screen
+  local oldscreen = tag.screen
 
-    if sharedtags.movetag(tag, screen) then
-        -- Always mark the tag selected if the screen changed. Just feels a lot
-        -- more natural.
-        tag.selected = true
-        -- Update the history on the old and new screens.
-        oldscreen:emit_signal("tag::history::update")
-        tag.screen:emit_signal("tag::history::update")
-    else
-        -- Only toggle the tag unless the screen moved.
-        awful.tag.viewtoggle(tag)
-    end
+  if sharedtags.movetag(tag, screen) then
+    -- Always mark the tag selected if the screen changed. Just feels a lot
+    -- more natural.
+    tag.selected = true
+    -- Update the history on the old and new screens.
+    oldscreen:emit_signal "tag::history::update"
+    tag.screen:emit_signal "tag::history::update"
+  else
+    -- Only toggle the tag unless the screen moved.
+    awful.tag.viewtoggle(tag)
+  end
 end
 
-return setmetatable(sharedtags, { __call = function(...) return sharedtags.new(select(2, ...)) end })
+return setmetatable(sharedtags, {
+  __call = function(...)
+    return sharedtags.new(select(2, ...))
+  end,
+})
 
 -- vim: filetype=lua:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:textwidth=80
-

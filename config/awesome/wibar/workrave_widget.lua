@@ -1,10 +1,10 @@
 -- TODO: Add some keybindings to it to pause, etc.
 -- TODO: Is it possible to add a hover-popup showing the real times?
 
-local wibox = require("wibox")
+local wibox = require "wibox"
 
 local gruvbox = require("colors").gruvbox
-local utils = require("utils")
+local utils = require "utils"
 
 local icon_name = "/home/mange/.config/awesome/icons/workrave-gray.png"
 local workrave_widget = {}
@@ -15,13 +15,13 @@ local function make_arcwidget()
     text = "",
     font = "Fira Sans Regular 9", -- TODO: DRY this up (changing from default 11 to 9)
     align = "center",
-    valign = "center"
+    valign = "center",
   }
 
   -- Mirror text since the arcchart will be mirrored
   local text_on_bg = wibox.widget {
     widget = wibox.container.background,
-    wibox.container.mirror(text, { horizontal = true })
+    wibox.container.mirror(text, { horizontal = true }),
   }
 
   local widget = wibox.widget {
@@ -48,7 +48,7 @@ local function make_arcwidget()
 
     if timer.overdue > 10 then
       text.text = math.floor(timer.overdue / 60)
-      widget.colors = {gruvbox.bright_red}
+      widget.colors = { gruvbox.bright_red }
     else
       if timer.remaining > 60 then
         text.text = math.floor(timer.remaining / 60)
@@ -57,9 +57,9 @@ local function make_arcwidget()
       end
 
       if percent > 90 then
-        widget.colors = {gruvbox.bright_yellow}
+        widget.colors = { gruvbox.bright_yellow }
       else
-        widget.colors = {gruvbox.light0}
+        widget.colors = { gruvbox.light0 }
       end
     end
   end
@@ -83,8 +83,8 @@ function workrave_widget.new()
     wibox.widget {
       widget = wibox.container.margin,
       left = utils.dpi(4),
-      rest_widget
-    }
+      rest_widget,
+    },
   }
 
   awesome.connect_signal("mange:workrave:update", function(data)

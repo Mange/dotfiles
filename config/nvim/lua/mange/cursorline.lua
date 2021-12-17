@@ -12,14 +12,14 @@ function cursorline.apply()
 end
 
 function cursorline.setup()
-  vim.cmd([[
+  vim.cmd [[
     augroup MangeCursorline
       autocmd!
       autocmd WinEnter,BufEnter * :lua require("mange.cursorline").apply()
 
       autocmd WinLeave,BufLeave * :setlocal nocursorline
     augroup END
-  ]])
+  ]]
 end
 
 return cursorline

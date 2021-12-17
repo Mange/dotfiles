@@ -1,16 +1,16 @@
-local awful = require("awful")
-local gears = require("gears")
-local beautiful = require("beautiful")
-local xresources = require("beautiful.xresources")
+local awful = require "awful"
+local gears = require "gears"
+local beautiful = require "beautiful"
+local xresources = require "beautiful.xresources"
 
 -- xproperties are persisted on Awesome restarts, which means we can put a
 -- value here on startup and then all restarts will be able to read it out.
 awesome.register_xproperty("awesome_restart_check", "boolean")
-local restart_detected = awesome.get_xproperty("awesome_restart_check") ~= nil
+local restart_detected = awesome.get_xproperty "awesome_restart_check" ~= nil
 awesome.set_xproperty("awesome_restart_check", true)
 
 -- Check if running inside awmtt (using the test.sh script)
-local awmtt_detected = (os.getenv("IN_AWMTT") == "yes")
+local awmtt_detected = (os.getenv "IN_AWMTT" == "yes")
 
 local utils = {
   dpi = xresources.apply_dpi,
@@ -39,19 +39,16 @@ function utils.run_or_raise(cmd, matchers)
   if c then
     c:jump_to()
   else
-    awful.spawn(cmd, {focus = true})
+    awful.spawn(cmd, { focus = true })
   end
 end
 
 function utils.kill_on_exit(pid)
   if type(pid) == "number" then
-    awesome.connect_signal(
-      "exit",
-      function()
-          -- Negative pid means "Send signal to all processes in this group"
-          awesome.kill(-pid, awesome.unix_signal["SIGTERM"])
-        end
-    )
+    awesome.connect_signal("exit", function()
+      -- Negative pid means "Send signal to all processes in this group"
+      awesome.kill(-pid, awesome.unix_signal["SIGTERM"])
+    end)
   end
 end
 
@@ -78,7 +75,11 @@ function utils.wallpaper_path(name)
 end
 
 function utils.reload_wallpaper(s)
-  gears.wallpaper.maximized(s.wallpaper_override or beautiful.wallpaper, s, false)
+  gears.wallpaper.maximized(
+    s.wallpaper_override or beautiful.wallpaper,
+    s,
+    false
+  )
 end
 
 function utils.reload_wallpapers()
@@ -98,24 +99,22 @@ function utils.client_has_tag(c, t)
 end
 
 function utils.placement_centered(scale)
-  local f =
-    awful.placement.scale +
-    awful.placement.no_offscreen +
-    awful.placement.centered
+  local f = awful.placement.scale
+    + awful.placement.no_offscreen
+    + awful.placement.centered
 
   return function(c)
-    f(c, {to_percent = scale})
+    f(c, { to_percent = scale })
   end
 end
 
 function utils.placement_downright(scale)
-  local f =
-    awful.placement.scale +
-    awful.placement.no_offscreen +
-    awful.placement.bottom_right
+  local f = awful.placement.scale
+    + awful.placement.no_offscreen
+    + awful.placement.bottom_right
 
   return function(c)
-    f(c, {to_percent = scale})
+    f(c, { to_percent = scale })
   end
 end
 

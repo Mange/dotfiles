@@ -1,5 +1,5 @@
-local mappings = require("mange.mappings")
-local utils = require("mange.utils")
+local mappings = require "mange.mappings"
+local utils = require "mange.utils"
 
 local vimdiff = {}
 
@@ -8,15 +8,15 @@ local vimdiff = {}
 function vimdiff.setup()
   if vim.o.diff then
     -- Start with current search to search for conflicts.
-    utils.set_search("<<<<<")
+    utils.set_search "<<<<<"
 
-    mappings.wk_register({
+    mappings.wk_register {
       ["<leader>"] = {
         ["1"] = { "<cmd>diffget LOCAL<cr>", "Take local" },
         ["2"] = { "<cmd>diffget BASE<cr>", "Take base" },
         ["3"] = { "<cmd>diffget REMOTE<cr>", "Take remote" },
       },
-    })
+    }
   end
 end
 

@@ -1,5 +1,5 @@
-local wibox = require("wibox")
-local beautiful = require("beautiful")
+local wibox = require "wibox"
+local beautiful = require "beautiful"
 
 local song_info = {}
 
@@ -19,12 +19,12 @@ song_info.music_title = wibox.widget {
       id = "title",
       text = "title",
       font = beautiful.font_bold_size(10),
-      align  = "left",
+      align = "left",
       valign = "center",
       ellipsize = "end",
-      widget = wibox.widget.textbox
+      widget = wibox.widget.textbox,
     },
-  }
+  },
 }
 
 song_info.music_artist = wibox.widget {
@@ -43,11 +43,11 @@ song_info.music_artist = wibox.widget {
       id = "artist",
       text = "artist",
       font = beautiful.font_size(10),
-      align  = "left",
+      align = "left",
       valign = "center",
-      widget = wibox.widget.textbox
+      widget = wibox.widget.textbox,
     },
-  }
+  },
 }
 
 song_info.music_info = wibox.widget {
@@ -57,9 +57,9 @@ song_info.music_info = wibox.widget {
   {
     layout = wibox.layout.fixed.vertical,
     song_info.music_title,
-    song_info.music_artist
+    song_info.music_artist,
   },
-  nil
+  nil,
 }
 
 return song_info

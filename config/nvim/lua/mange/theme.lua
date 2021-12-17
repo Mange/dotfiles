@@ -67,7 +67,7 @@ local function theme_dark()
 end
 
 function theme.reload()
-  require("plenary.reload").reload_module("mange.theme")
+  require("plenary.reload").reload_module "mange.theme"
   require("mange.theme").setup()
 end
 
@@ -82,7 +82,7 @@ function theme.setup()
 
   g.gruvbox_improved_warnings = true
 
-  cmd([[silent! colorscheme gruvbox]])
+  cmd [[silent! colorscheme gruvbox]]
 
   if vim.env.KITTY_THEME == "light" then
     theme_light()

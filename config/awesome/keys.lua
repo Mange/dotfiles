@@ -1,12 +1,12 @@
-local gears = require("gears")
-local awful = require("awful")
-local beautiful = require("beautiful")
-local hotkeys_popup = require("awful.hotkeys_popup")
+local gears = require "gears"
+local awful = require "awful"
+local beautiful = require "beautiful"
+local hotkeys_popup = require "awful.hotkeys_popup"
 
-local constants = require("module.constants")
-local actions = require("actions")
-local which_keys = require("module.which_keys")
-local media_mode = require("media_mode")
+local constants = require "module.constants"
+local actions = require "actions"
+local which_keys = require "module.which_keys"
+local media_mode = require "media_mode"
 
 -- Settings
 local modkey = constants.keys.modkey
@@ -27,290 +27,600 @@ keys.scroll_down = 5
 -- DEPRECATED
 keys.modkey = modkey
 
-keys.awesome_chord = which_keys.new_chord(
-  "Awesome",
-  {
-    keybindings = {
-      which_keys.key("w", "window-select", actions.select_window()),
-      which_keys.key("e", "emoji-selector", actions.emoji_selector()),
-      which_keys.key("P", "passwords", actions.passwords_menu()),
-      which_keys.key("m", "+media", media_mode.enter, {which_key_colors = beautiful.which_key.nested}),
+keys.awesome_chord = which_keys.new_chord("Awesome", {
+  keybindings = {
+    which_keys.key("w", "window-select", actions.select_window()),
+    which_keys.key("e", "emoji-selector", actions.emoji_selector()),
+    which_keys.key("P", "passwords", actions.passwords_menu()),
+    which_keys.key(
+      "m",
+      "+media",
+      media_mode.enter,
+      { which_key_colors = beautiful.which_key.nested }
+    ),
 
-      which_keys.key_nested("a", "awesome", {
-          which_keys.key("r", "restart", awesome.restart),
-          which_keys.key("q", "quit/logout", actions.log_out()),
-          which_keys.key("e", "edit-config", actions.edit_file(gears.filesystem.get_configuration_dir() .. "rc.lua")),
-          which_keys.key("k", "edit-keys", actions.edit_file(gears.filesystem.get_configuration_dir() .. "keys.lua")),
-          -- TODO -- which_keys.key("a", "toggle-aesthetics-mode", function() end),
+    which_keys.key_nested("a", "awesome", {
+      which_keys.key("r", "restart", awesome.restart),
+      which_keys.key("q", "quit/logout", actions.log_out()),
+      which_keys.key(
+        "e",
+        "edit-config",
+        actions.edit_file(gears.filesystem.get_configuration_dir() .. "rc.lua")
+      ),
+      which_keys.key(
+        "k",
+        "edit-keys",
+        actions.edit_file(
+          gears.filesystem.get_configuration_dir() .. "keys.lua"
+        )
+      ),
+      -- TODO -- which_keys.key("a", "toggle-aesthetics-mode", function() end),
+    }),
+
+    which_keys.key_nested("t", "toggle", {
+      which_keys.key("d", "calendar-popup", actions.toggle_calendar_popup()),
+      which_keys.key("c", "control-center", actions.toggle_control_center()),
+      which_keys.key("s", "systray", actions.toggle_systray()),
+      which_keys.key("f", "toggle-focus-mode", actions.toggle_focus_tag()),
+    }),
+
+    which_keys.key_nested("p", "power", {
+      which_keys.key(
+        "s",
+        "suspend",
+        actions.spawn {
+          "sh",
+          "-c",
+          "udiskie-umount --all && systemctl suspend-then-hibernate",
+        }
+      ),
+      which_keys.key(
+        "h",
+        "hibernate",
+        actions.spawn {
+          "sh",
+          "-c",
+          "udiskie-umount --all && systemctl hibernate",
+        }
+      ),
+      which_keys.key("R", "reboot", actions.log_out("reboot", "--force")),
+      which_keys.key("Q", "power-off", actions.log_out("poweroff", "--force")),
+      which_keys.key("l", "log-out", actions.log_out("logout", "--force")),
+    }),
+
+    which_keys.key_nested("o", "open", {
+      which_keys.key("w", "wiki", actions.spawn "open-wiki"),
+      which_keys.key("p", "project", actions.spawn "open-project"),
+    }),
+
+    which_keys.key_nested("c", "client", {
+      which_keys.key(
+        "r",
+        "restore",
+        actions.on_focused_client(actions.client_restore)
+      ),
+      which_keys.key(
+        "n",
+        "minimize",
+        actions.on_focused_client(actions.client_minimize)
+      ),
+      which_keys.key(
+        "s",
+        "sticky-toggle",
+        actions.on_focused_client(actions.client_toggle_sticky)
+      ),
+      which_keys.key(
+        "t",
+        "ontop-toggle",
+        actions.on_focused_client(actions.client_toggle_ontop)
+      ),
+      which_keys.key(
+        "f",
+        "fullscreen-toggle",
+        actions.on_focused_client(actions.client_toggle_fullscreen)
+      ),
+      which_keys.key(
+        "q",
+        "close",
+        actions.on_focused_client(actions.client_close)
+      ),
+      which_keys.key(
+        "o",
+        "move-other-screen",
+        actions.on_focused_client(actions.client_move_other_screen)
+      ),
+
+      -- TODO: Keys to move to tags 1-9
+    }),
+
+    which_keys.key_nested("l", "layout", {
+      which_keys.key(
+        "[",
+        "previous",
+        actions.previous_layout(),
+        { which_key_sticky = true }
+      ),
+      which_keys.key(
+        "]",
+        "next",
+        actions.next_layout(),
+        { which_key_sticky = true }
+      ),
+
+      which_keys.key(
+        "f",
+        "floating",
+        actions.set_layout(awful.layout.suit.floating)
+      ),
+      which_keys.key("l", "tile", actions.set_layout(awful.layout.suit.tile)),
+      which_keys.key(
+        "h",
+        "tile-left",
+        actions.set_layout(awful.layout.suit.tile.left)
+      ),
+      which_keys.key(
+        "j",
+        "tile-bottom",
+        actions.set_layout(awful.layout.suit.tile.bottom)
+      ),
+      which_keys.key(
+        "k",
+        "tile-top",
+        actions.set_layout(awful.layout.suit.tile.top)
+      ),
+      which_keys.key("n", "fair", actions.set_layout(awful.layout.suit.fair)),
+      which_keys.key(
+        "m",
+        "fair-horiz",
+        actions.set_layout(awful.layout.suit.fair.horizontal)
+      ),
+      which_keys.key(
+        "u",
+        "spiral",
+        actions.set_layout(awful.layout.suit.spiral)
+      ),
+      which_keys.key(
+        "b",
+        "bsp",
+        actions.set_layout(awful.layout.suit.spiral.dwindle)
+      ),
+      which_keys.key("i", "max", actions.set_layout(awful.layout.suit.max)),
+      which_keys.key(
+        "I",
+        "max-fullscreen",
+        actions.set_layout(awful.layout.suit.max.fullscreen)
+      ),
+      which_keys.key(
+        "o",
+        "magnifier",
+        actions.set_layout(awful.layout.suit.magnifier)
+      ),
+      which_keys.key(
+        "w",
+        "corner-nw",
+        actions.set_layout(awful.layout.suit.corner.nw)
+      ),
+      which_keys.key(
+        "W",
+        "corner-sw",
+        actions.set_layout(awful.layout.suit.corner.sw)
+      ),
+      which_keys.key(
+        "e",
+        "corner-ne",
+        actions.set_layout(awful.layout.suit.corner.ne)
+      ),
+      which_keys.key(
+        "E",
+        "corner-se",
+        actions.set_layout(awful.layout.suit.corner.se)
+      ),
+    }),
+
+    which_keys.key_nested("s", "screenshot", {
+      which_keys.key("s", "specific-area", actions.flameshot "gui"),
+      which_keys.key("a", "all-screen", actions.flameshot "screen"),
+      which_keys.key("f", "full-screen", actions.flameshot "desktop"),
+
+      which_keys.key_nested("d", "delayed", {
+        which_keys.key(
+          "s",
+          "specific-area",
+          actions.flameshot("gui", "--delay", "5000")
+        ),
+        which_keys.key(
+          "a",
+          "all-screen",
+          actions.flameshot("screen", "--delay", "5000")
+        ),
+        which_keys.key(
+          "d",
+          "all-desktop",
+          actions.flameshot("desktop", "--delay", "5000")
+        ),
       }),
-
-      which_keys.key_nested("t", "toggle", {
-          which_keys.key("d", "calendar-popup", actions.toggle_calendar_popup()),
-          which_keys.key("c", "control-center", actions.toggle_control_center()),
-          which_keys.key("s", "systray", actions.toggle_systray()),
-          which_keys.key("f", "toggle-focus-mode", actions.toggle_focus_tag()),
-      }),
-
-      which_keys.key_nested("p", "power", {
-          which_keys.key("s", "suspend", actions.spawn({"sh", "-c", "udiskie-umount --all && systemctl suspend-then-hibernate"})),
-          which_keys.key("h", "hibernate", actions.spawn({"sh", "-c", "udiskie-umount --all && systemctl hibernate"})),
-          which_keys.key("R", "reboot", actions.log_out("reboot", "--force")),
-          which_keys.key("Q", "power-off", actions.log_out("poweroff", "--force")),
-          which_keys.key("l", "log-out", actions.log_out("logout", "--force")),
-      }),
-
-      which_keys.key_nested("o", "open", {
-          which_keys.key("w", "wiki", actions.spawn("open-wiki")),
-          which_keys.key("p", "project", actions.spawn("open-project")),
-      }),
-
-      which_keys.key_nested("c", "client", {
-          which_keys.key("r", "restore", actions.on_focused_client(actions.client_restore)),
-          which_keys.key("n", "minimize", actions.on_focused_client(actions.client_minimize)),
-          which_keys.key("s", "sticky-toggle", actions.on_focused_client(actions.client_toggle_sticky)),
-          which_keys.key("t", "ontop-toggle", actions.on_focused_client(actions.client_toggle_ontop)),
-          which_keys.key("f", "fullscreen-toggle", actions.on_focused_client(actions.client_toggle_fullscreen)),
-          which_keys.key("q", "close", actions.on_focused_client(actions.client_close)),
-          which_keys.key("o", "move-other-screen", actions.on_focused_client(actions.client_move_other_screen)),
-
-          -- TODO: Keys to move to tags 1-9
-      }),
-
-      which_keys.key_nested("l", "layout", {
-          which_keys.key("[", "previous",       actions.previous_layout(), {which_key_sticky = true}),
-          which_keys.key("]", "next",           actions.next_layout(), {which_key_sticky = true}),
-
-          which_keys.key("f", "floating",       actions.set_layout(awful.layout.suit.floating)),
-          which_keys.key("l", "tile",           actions.set_layout(awful.layout.suit.tile)),
-          which_keys.key("h", "tile-left",      actions.set_layout(awful.layout.suit.tile.left)),
-          which_keys.key("j", "tile-bottom",    actions.set_layout(awful.layout.suit.tile.bottom)),
-          which_keys.key("k", "tile-top",       actions.set_layout(awful.layout.suit.tile.top)),
-          which_keys.key("n", "fair",           actions.set_layout(awful.layout.suit.fair)),
-          which_keys.key("m", "fair-horiz",     actions.set_layout(awful.layout.suit.fair.horizontal)),
-          which_keys.key("u", "spiral",         actions.set_layout(awful.layout.suit.spiral)),
-          which_keys.key("b", "bsp",            actions.set_layout(awful.layout.suit.spiral.dwindle)),
-          which_keys.key("i", "max",            actions.set_layout(awful.layout.suit.max)),
-          which_keys.key("I", "max-fullscreen", actions.set_layout(awful.layout.suit.max.fullscreen)),
-          which_keys.key("o", "magnifier",      actions.set_layout(awful.layout.suit.magnifier)),
-          which_keys.key("w", "corner-nw",      actions.set_layout(awful.layout.suit.corner.nw)),
-          which_keys.key("W", "corner-sw",      actions.set_layout(awful.layout.suit.corner.sw)),
-          which_keys.key("e", "corner-ne",      actions.set_layout(awful.layout.suit.corner.ne)),
-          which_keys.key("E", "corner-se",      actions.set_layout(awful.layout.suit.corner.se)),
-      }),
-
-      which_keys.key_nested("s", "screenshot", {
-          which_keys.key("s", "specific-area", actions.flameshot("gui")),
-          which_keys.key("a", "all-screen", actions.flameshot("screen")),
-          which_keys.key("f", "full-screen", actions.flameshot("desktop")),
-
-          which_keys.key_nested("d", "delayed", {
-              which_keys.key("s", "specific-area", actions.flameshot("gui", "--delay", "5000")),
-              which_keys.key("a", "all-screen", actions.flameshot("screen", "--delay", "5000")),
-              which_keys.key("d", "all-desktop", actions.flameshot("desktop", "--delay", "5000")),
-          })
-      })
-    },
-  }
-)
+    }),
+  },
+})
 
 keys.global = gears.table.join(
-    -- Group: Hidden
-    awful.key({}, "XF86MonBrightnessUp",   actions.brightness_change("+5%")),
-    awful.key({}, "XF86MonBrightnessDown", actions.brightness_change("5%-")),
-    awful.key({}, "XF86AudioRaiseVolume",  actions.volume_change("+5")),
-    awful.key({}, "XF86AudioLowerVolume",  actions.volume_change("-5")),
-    awful.key({}, "XF86AudioMute",         actions.volume_mute_toggle()),
-    awful.key({}, "XF86AudioPlay",         actions.playerctl_play_pause()),
+  -- Group: Hidden
+  awful.key({}, "XF86MonBrightnessUp", actions.brightness_change "+5%"),
+  awful.key({}, "XF86MonBrightnessDown", actions.brightness_change "5%-"),
+  awful.key({}, "XF86AudioRaiseVolume", actions.volume_change "+5"),
+  awful.key({}, "XF86AudioLowerVolume", actions.volume_change "-5"),
+  awful.key({}, "XF86AudioMute", actions.volume_mute_toggle()),
+  awful.key({}, "XF86AudioPlay", actions.playerctl_play_pause()),
 
-    -- Group: Awesome
-    awful.key({modkey, "Shift"}, "/", hotkeys_popup.show_help, {description="Show keybinds", group="Awesome"}),
-    awful.key({modkey}, "z", actions.log_out(), {description = "Quit", group = "Awesome"}),
-    awful.key({modkey, "Control"}, "z", awesome.restart, {description = "Restart Awesome", group = "Awesome"}),
-    awful.key({modkey, "Shift"}, "Escape", actions.spawn("lock-screen"), {description = "Lock screen", group = "Awesome"}),
-    awful.key({"Ctrl", "Shift"}, "Escape", actions.spawn("fix-keyboard"), {description = "Fix keyboard", group = "Awesome"}),
-    awful.key(
-      {modkey}, "x",
-      actions.spawn({"autorandr", "--change", "--default", "horizontal"}),
-      {description = "Reflow screens", group = "Awesome"}
+  -- Group: Awesome
+  awful.key(
+    { modkey, "Shift" },
+    "/",
+    hotkeys_popup.show_help,
+    { description = "Show keybinds", group = "Awesome" }
+  ),
+  awful.key(
+    { modkey },
+    "z",
+    actions.log_out(),
+    { description = "Quit", group = "Awesome" }
+  ),
+  awful.key(
+    { modkey, "Control" },
+    "z",
+    awesome.restart,
+    { description = "Restart Awesome", group = "Awesome" }
+  ),
+  awful.key(
+    { modkey, "Shift" },
+    "Escape",
+    actions.spawn "lock-screen",
+    { description = "Lock screen", group = "Awesome" }
+  ),
+  awful.key(
+    { "Ctrl", "Shift" },
+    "Escape",
+    actions.spawn "fix-keyboard",
+    { description = "Fix keyboard", group = "Awesome" }
+  ),
+  awful.key(
+    { modkey },
+    "x",
+    actions.spawn { "autorandr", "--change", "--default", "horizontal" },
+    { description = "Reflow screens", group = "Awesome" }
+  ),
+  awful.key(
+    { modkey },
+    "space",
+    keys.awesome_chord.enter,
+    { description = "Chord", group = "Awesome" }
+  ),
+
+  awful.key(
+    { modkey },
+    "i",
+    actions.dismiss_notification(),
+    { description = "Dismiss notification", group = "Awesome" }
+  ),
+
+  awful.key(
+    { modkey, "Shift" },
+    "i",
+    actions.dismiss_all_notifications(),
+    { description = "Dismiss all notifications", group = "Awesome" }
+  ),
+
+  -- Group: Client
+  -- awful.key({modkey}, "h", focus("left"), {description = "Focus ←", group = "Client"}),
+  -- awful.key({modkey}, "j", focus("down"), {description = "Focus ↓", group = "Client"}),
+  -- awful.key({modkey}, "k", focus("up"), {description = "Focus ↑", group = "Client"}),
+  -- awful.key({modkey}, "l", focus("right"), {description = "Focus →", group = "Client"}),
+  awful.key(
+    { modkey },
+    "j",
+    actions.focus_by_index(1),
+    { description = "Focus next", group = "Client" }
+  ),
+  awful.key(
+    { modkey },
+    "k",
+    actions.focus_by_index(-1),
+    { description = "Focus previous", group = "Client" }
+  ),
+  awful.key(
+    { modkey, "Shift" },
+    "j",
+    actions.move_focused_client(1),
+    { description = "Move next", group = "Client" }
+  ),
+  awful.key(
+    { modkey, "Shift" },
+    "k",
+    actions.move_focused_client(-1),
+    { description = "Move previous", group = "Client" }
+  ),
+  awful.key(
+    { modkey },
+    "u",
+    awful.client.urgent.jumpto,
+    { description = "Jump to urgent", group = "Client" }
+  ),
+  awful.key(
+    { modkey, "Shift" },
+    "n",
+    actions.unminimize_random(),
+    { description = "Unminimize some client", group = "Client" }
+  ),
+
+  -- Group: Screen
+  awful.key(
+    { modkey },
+    "Escape",
+    actions.focus_screen(1),
+    { description = "Next screen", group = "Screen" }
+  ),
+  awful.key(
+    { modkey },
+    "h",
+    actions.focus_screen_dir "left",
+    { description = "← Screen", group = "Screen" }
+  ),
+  awful.key(
+    { modkey },
+    "l",
+    actions.focus_screen_dir "right",
+    { description = "Screen →", group = "Screen" }
+  ),
+
+  -- Group: Layout
+  awful.key(
+    { modkey },
+    "q",
+    actions.next_layout(),
+    { description = "Next layout", group = "Layout" }
+  ),
+
+  -- Group: Apps
+  awful.key(
+    { modkey },
+    "d",
+    actions.rofi(),
+    { description = "Rofi", group = "Apps" }
+  ),
+
+  awful.key(
+    { modkey },
+    "Return",
+    actions.spawn { "samedir", terminal },
+    { description = "Terminal in same dir", group = "Apps" }
+  ),
+  awful.key(
+    { modkey, "Shift" },
+    "Return",
+    actions.spawn(terminal),
+    { description = "Terminal", group = "Apps" }
+  ),
+  awful.key(
+    { modkey },
+    "p",
+    actions.passwords_menu(),
+    { description = "Passwords", group = "Apps" }
+  ),
+
+  awful.key(
+    { modkey },
+    "w",
+    actions.run_or_raise(
+      { "firefox-developer-edition" },
+      { class = "firefoxdeveloperedition" }
     ),
-    awful.key({modkey},
-      "space",
-      keys.awesome_chord.enter,
-      {description = "Chord", group = "Awesome"}
+    { description = "Focus browser", group = "Apps" }
+  ),
+
+  awful.key(
+    { modkey, "Shift" },
+    "w",
+    actions.focus_tag_client { class = "firefoxdeveloperedition" },
+    { description = "Focus-tag browser", group = "Apps" }
+  ),
+
+  awful.key(
+    { modkey },
+    "e",
+    actions.run_or_raise(
+      { "samedir", "kitty", "nvim" },
+      { class = "kitty", name = "NVIM$" }
     ),
+    { description = "Focus editor", group = "Apps" }
+  ),
 
-    awful.key({modkey}, "i", actions.dismiss_notification(), {description = "Dismiss notification", group = "Awesome"}),
+  awful.key(
+    { modkey, "Shift" },
+    "e",
+    actions.focus_tag_client { class = "kitty", name = "NVIM$" },
+    { description = "Focus-tag editor", group = "Apps" }
+  ),
 
-
-    awful.key({modkey, "Shift"}, "i", actions.dismiss_all_notifications(), {description = "Dismiss all notifications", group = "Awesome"}),
-
-    -- Group: Client
-    -- awful.key({modkey}, "h", focus("left"), {description = "Focus ←", group = "Client"}),
-    -- awful.key({modkey}, "j", focus("down"), {description = "Focus ↓", group = "Client"}),
-    -- awful.key({modkey}, "k", focus("up"), {description = "Focus ↑", group = "Client"}),
-    -- awful.key({modkey}, "l", focus("right"), {description = "Focus →", group = "Client"}),
-    awful.key({modkey}, "j", actions.focus_by_index(1), {description = "Focus next", group = "Client"}),
-    awful.key({modkey}, "k", actions.focus_by_index(-1), {description = "Focus previous", group = "Client"}),
-    awful.key({modkey, "Shift"}, "j", actions.move_focused_client(1), {description = "Move next", group = "Client"}),
-    awful.key({modkey, "Shift"}, "k", actions.move_focused_client(-1), {description = "Move previous", group = "Client"}),
-    awful.key({modkey}, "u", awful.client.urgent.jumpto, {description = "Jump to urgent", group = "Client"}),
-    awful.key({modkey, "Shift"}, "n", actions.unminimize_random(), {description = "Unminimize some client", group = "Client"}),
-
-    -- Group: Screen
-    awful.key({modkey}, "Escape", actions.focus_screen(1), {description = "Next screen", group = "Screen"}),
-    awful.key({modkey}, "h", actions.focus_screen_dir("left"), {description = "← Screen", group = "Screen"}),
-    awful.key({modkey}, "l", actions.focus_screen_dir("right"), {description = "Screen →", group = "Screen"}),
-
-    -- Group: Layout
-    awful.key({modkey}, "q", actions.next_layout(), {description = "Next layout", group = "Layout"}),
-
-    -- Group: Apps
-    awful.key({modkey}, "d", actions.rofi(), {description = "Rofi", group = "Apps"}),
-
-    awful.key({modkey}, "Return", actions.spawn({"samedir", terminal}), {description = "Terminal in same dir", group = "Apps"}),
-    awful.key({modkey, "Shift"}, "Return", actions.spawn(terminal), {description = "Terminal", group = "Apps"}),
-    awful.key({modkey}, "p", actions.passwords_menu(), {description = "Passwords", group = "Apps"}),
-
-    awful.key(
-      {modkey}, "w",
-      actions.run_or_raise(
-        {"firefox-developer-edition"},
-        {class = "firefoxdeveloperedition"}
-        ),
-      {description = "Focus browser", group = "Apps"}
+  awful.key(
+    { modkey },
+    "g",
+    actions.dropdown_toggle(
+      { "kitty", "--class", "dropdown_kitty" },
+      { class = "dropdown_kitty" }
     ),
+    { description = "Terminal dropdown", group = "Apps" }
+  ),
 
-    awful.key(
-      {modkey, "Shift"}, "w",
-      actions.focus_tag_client(
-        {class = "firefoxdeveloperedition"}
-        ),
-      {description = "Focus-tag browser", group = "Apps"}
+  awful.key(
+    { modkey, "Shift" },
+    "g",
+    actions.dropdown_toggle(
+      { "kitty", "--class", "dropdown_calc", "qalc" },
+      { class = "dropdown_calc" }
     ),
+    { description = "Calculator dropdown", group = "Apps" }
+  ),
 
-    awful.key(
-      {modkey}, "e",
-      actions.run_or_raise(
-        {"samedir", "kitty", "nvim"},
-        {class = "kitty", name = "NVIM$"}
-        ),
-      {description = "Focus editor", group = "Apps"}
+  awful.key(
+    { modkey },
+    "t",
+    actions.dropdown_toggle(
+      { "kitty", "--class", "dropdown_vit", "vit" },
+      { class = "dropdown_vit" }
     ),
+    { description = "Tasks dropdown", group = "Apps" }
+  ),
 
-    awful.key(
-      {modkey, "Shift"}, "e",
-      actions.focus_tag_client(
-        {class = "kitty", name = "NVIM$"}
-        ),
-      {description = "Focus-tag editor", group = "Apps"}
-    ),
+  -- Group: Tag
+  awful.key(
+    { modkey, "Shift" },
+    "o",
+    actions.tag_move_other_screen(),
+    { description = "Move tag to other screen", group = "Tag" }
+  ),
 
-    awful.key(
-      {modkey}, "g",
-      actions.dropdown_toggle(
-        {"kitty", "--class", "dropdown_kitty"},
-        {class = "dropdown_kitty"}
-        ),
-      {description = "Terminal dropdown", group = "Apps"}
-    ),
+  -- Group: Modes
+  awful.key(
+    { modkey },
+    "m",
+    media_mode.enter,
+    { description = "Enter media mode", group = "Modes" }
+  ),
 
-    awful.key(
-      {modkey, "Shift"}, "g",
-      actions.dropdown_toggle(
-        {"kitty", "--class", "dropdown_calc", "qalc"},
-        {class = "dropdown_calc"}
-      ),
-      {description = "Calculator dropdown", group = "Apps"}
-    ),
+  --
+  -- Vanilla; to be moved and sorted
+  --
 
-    awful.key(
-      {modkey}, "t",
-      actions.dropdown_toggle(
-        {"kitty", "--class", "dropdown_vit", "vit"},
-        {class = "dropdown_vit"}
-        ),
-      {description = "Tasks dropdown", group = "Apps"}
-    ),
+  -- Layout manipulation
+  awful.key({ modkey }, "Tab", function()
+    awful.client.focus.history.previous()
+    if client.focus then
+      client.focus:raise()
+    end
+  end, { description = "go back", group = "client" }),
 
-    -- Group: Tag
-    awful.key({modkey, "Shift"}, "o", actions.tag_move_other_screen(), {description = "Move tag to other screen", group = "Tag"}),
+  -- Standard program
 
-    -- Group: Modes
-    awful.key({modkey, }, "m", media_mode.enter, {description = "Enter media mode", group = "Modes"}),
-
-    --
-    -- Vanilla; to be moved and sorted
-    --
-
-
-    -- Layout manipulation
-    awful.key(
-      {modkey, }, "Tab",
-      function ()
-        awful.client.focus.history.previous()
-        if client.focus then
-          client.focus:raise()
-        end
-      end,
-      {description = "go back", group = "client"}
-    ),
-
-    -- Standard program
-
-    -- {{}, "l",     function () awful.tag.incmwfact( 0.05)          end,
-    -- {description = "increase master width factor", group = "layout"}},
-    -- {{}, "h",     function () awful.tag.incmwfact(-0.05)          end,
-    -- {description = "decrease master width factor", group = "layout"}},
-    awful.key({modkey, "Shift"}, "h",     function () awful.tag.incnmaster( 1, nil, true) end,
-      {description = "increase the number of master clients", group = "layout"}),
-    awful.key({modkey, "Shift"}, "l",     function () awful.tag.incnmaster(-1, nil, true) end,
-      {description = "decrease the number of master clients", group = "layout"}),
-    awful.key({modkey, "Control"}, "h",     function () awful.tag.incncol( 1, nil, true)    end,
-      {description = "increase the number of columns", group = "layout"}),
-    awful.key({modkey, "Control"}, "l",     function () awful.tag.incncol(-1, nil, true)    end,
-      {description = "decrease the number of columns", group = "layout"})
+  -- {{}, "l",     function () awful.tag.incmwfact( 0.05)          end,
+  -- {description = "increase master width factor", group = "layout"}},
+  -- {{}, "h",     function () awful.tag.incmwfact(-0.05)          end,
+  -- {description = "decrease master width factor", group = "layout"}},
+  awful.key(
+    { modkey, "Shift" },
+    "h",
+    function()
+      awful.tag.incnmaster(1, nil, true)
+    end,
+    { description = "increase the number of master clients", group = "layout" }
+  ),
+  awful.key(
+    { modkey, "Shift" },
+    "l",
+    function()
+      awful.tag.incnmaster(-1, nil, true)
+    end,
+    { description = "decrease the number of master clients", group = "layout" }
+  ),
+  awful.key({ modkey, "Control" }, "h", function()
+    awful.tag.incncol(1, nil, true)
+  end, { description = "increase the number of columns", group = "layout" }),
+  awful.key({ modkey, "Control" }, "l", function()
+    awful.tag.incncol(-1, nil, true)
+  end, { description = "decrease the number of columns", group = "layout" })
 )
 
 -- Bind all key numbers to tags.
 -- Be careful: we use keycodes to make it work on any keyboard layout.
 -- This should map on the top row of your keyboard, usually 1 to 9.
 for i = 1, 10 do
-    local key_num = i % 10 -- Turn 10 into 0
+  local key_num = i % 10 -- Turn 10 into 0
 
-    keys.global = gears.table.join(
-        keys.global,
+  keys.global = gears.table.join(
+    keys.global,
 
-        -- View tag only.
-        awful.key({modkey}, tostring(key_num), actions.goto_tag(i), {description = "Go to tag "..i, group = "Tag"}),
+    -- View tag only.
+    awful.key(
+      { modkey },
+      tostring(key_num),
+      actions.goto_tag(i),
+      { description = "Go to tag " .. i, group = "Tag" }
+    ),
 
-        -- Toggle tag display.
-        awful.key({modkey, "Control"}, tostring(key_num), actions.toggle_tag(i), {description = "Toggle tag "..i, group = "Tag"}),
+    -- Toggle tag display.
+    awful.key(
+      { modkey, "Control" },
+      tostring(key_num),
+      actions.toggle_tag(i),
+      { description = "Toggle tag " .. i, group = "Tag" }
+    ),
 
-        -- Move client to tag.
-        awful.key({modkey, "Shift"}, tostring(key_num), actions.move_to_tag(i), {description = "Move client to tag "..i, group = "Tag"}),
+    -- Move client to tag.
+    awful.key(
+      { modkey, "Shift" },
+      tostring(key_num),
+      actions.move_to_tag(i),
+      { description = "Move client to tag " .. i, group = "Tag" }
+    ),
 
-        -- Toggle tag on focused client.
-        awful.key({modkey, "Control", "Shift"}, tostring(key_num), actions.toggle_client_tag(i), {description = "Toggle client tag "..i, group = "Tag"})
+    -- Toggle tag on focused client.
+    awful.key(
+      { modkey, "Control", "Shift" },
+      tostring(key_num),
+      actions.toggle_client_tag(i),
+      { description = "Toggle client tag " .. i, group = "Tag" }
     )
+  )
 end
 
 keys.clientkeys = gears.table.join(
-    -- Basics
-    awful.key({modkey, "Shift"}, "q", actions.client_close, {description = "Kill client", group = "Client"}),
-    awful.key({modkey}, "n", actions.client_minimize, {description = "Minimize client", group = "Client"}),
+  -- Basics
+  awful.key(
+    { modkey, "Shift" },
+    "q",
+    actions.client_close,
+    { description = "Kill client", group = "Client" }
+  ),
+  awful.key(
+    { modkey },
+    "n",
+    actions.client_minimize,
+    { description = "Minimize client", group = "Client" }
+  ),
 
-    -- Toggles
-    awful.key({modkey}, "f", actions.client_toggle_fullscreen, {description = "Fullscreen toggle", group = "Client"}),
-    awful.key({modkey, "Shift"}, "f", actions.client_toggle_floating, {description = "Floating toggle", group = "Client"}),
-    awful.key({modkey, "Shift"}, "s", actions.client_toggle_sticky, {description = "Sticky toggle", group = "Client"}),
+  -- Toggles
+  awful.key(
+    { modkey },
+    "f",
+    actions.client_toggle_fullscreen,
+    { description = "Fullscreen toggle", group = "Client" }
+  ),
+  awful.key(
+    { modkey, "Shift" },
+    "f",
+    actions.client_toggle_floating,
+    { description = "Floating toggle", group = "Client" }
+  ),
+  awful.key(
+    { modkey, "Shift" },
+    "s",
+    actions.client_toggle_sticky,
+    { description = "Sticky toggle", group = "Client" }
+  ),
 
-    -- Screen
-    awful.key({modkey}, "o", actions.client_move_other_screen, {description = "Move client to other screen", group = "Client"}),
+  -- Screen
+  awful.key(
+    { modkey },
+    "o",
+    actions.client_move_other_screen,
+    { description = "Move client to other screen", group = "Client" }
+  ),
 
-    --
-    -- Vanilla; to be moved and sorted
-    --
-    awful.key({modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end, {description = "move to master", group = "client"})
+  --
+  -- Vanilla; to be moved and sorted
+  --
+  awful.key({ modkey, "Control" }, "Return", function(c)
+    c:swap(awful.client.getmaster())
+  end, { description = "move to master", group = "client" })
 )
 
 keys.mouse_click = function(modifier, button, action)

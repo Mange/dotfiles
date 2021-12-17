@@ -1,7 +1,7 @@
-local wibox = require("wibox")
-local gears = require("gears")
-local beautiful = require("beautiful")
-local clickable_container = require("widgets.clickable-container")
+local wibox = require "wibox"
+local gears = require "gears"
+local beautiful = require "beautiful"
+local clickable_container = require "widgets.clickable-container"
 
 local config_dir = gears.filesystem.get_configuration_dir()
 local widget_icon_dir = config_dir .. "widgets/media-info/icons/"
@@ -16,9 +16,9 @@ media_buttons.play_button_image = wibox.widget {
     image = widget_icon_dir .. "play.svg",
     resize = true,
     opacity = 0.8,
-    widget = wibox.widget.imagebox
+    widget = wibox.widget.imagebox,
   },
-  layout = wibox.layout.align.horizontal
+  layout = wibox.layout.align.horizontal,
 }
 
 media_buttons.next_button_image = wibox.widget {
@@ -27,9 +27,9 @@ media_buttons.next_button_image = wibox.widget {
     image = widget_icon_dir .. "next.svg",
     resize = true,
     opacity = 0.8,
-    widget = wibox.widget.imagebox
+    widget = wibox.widget.imagebox,
   },
-  layout = wibox.layout.align.horizontal
+  layout = wibox.layout.align.horizontal,
 }
 
 media_buttons.prev_button_image = wibox.widget {
@@ -38,9 +38,9 @@ media_buttons.prev_button_image = wibox.widget {
     image = widget_icon_dir .. "prev.svg",
     resize = true,
     opacity = 0.8,
-    widget = wibox.widget.imagebox
+    widget = wibox.widget.imagebox,
   },
-  layout = wibox.layout.align.horizontal
+  layout = wibox.layout.align.horizontal,
 }
 
 media_buttons.play_button = wibox.widget {
@@ -48,15 +48,15 @@ media_buttons.play_button = wibox.widget {
     {
       media_buttons.play_button_image,
       margins = dpi(7),
-      widget = wibox.container.margin
+      widget = wibox.container.margin,
     },
-    widget = clickable_container
+    widget = clickable_container,
   },
   forced_width = dpi(36),
   forced_height = dpi(36),
   bg = beautiful.transparent,
   shape = beautiful.groups.shape,
-  widget = wibox.container.background
+  widget = wibox.container.background,
 }
 
 media_buttons.next_button = wibox.widget {
@@ -64,15 +64,15 @@ media_buttons.next_button = wibox.widget {
     {
       media_buttons.next_button_image,
       margins = dpi(10),
-      widget = wibox.container.margin
+      widget = wibox.container.margin,
     },
-    widget = clickable_container
+    widget = clickable_container,
   },
   forced_width = dpi(36),
   forced_height = dpi(36),
   bg = beautiful.transparent,
   shape = beautiful.groups.shape,
-  widget = wibox.container.background
+  widget = wibox.container.background,
 }
 
 media_buttons.prev_button = wibox.widget {
@@ -80,32 +80,32 @@ media_buttons.prev_button = wibox.widget {
     {
       media_buttons.prev_button_image,
       margins = dpi(10),
-      widget = wibox.container.margin
+      widget = wibox.container.margin,
     },
-    widget = clickable_container
+    widget = clickable_container,
   },
   forced_width = dpi(36),
   forced_height = dpi(36),
   bg = beautiful.transparent,
   shape = beautiful.groups.shape,
-  widget = wibox.container.background
+  widget = wibox.container.background,
 }
 
 media_buttons.navigate_buttons = wibox.widget {
   layout = wibox.layout.fixed.horizontal,
   media_buttons.prev_button,
   media_buttons.play_button,
-  media_buttons.next_button
+  media_buttons.next_button,
 }
 
 media_buttons.update_status = function(status)
   local play = media_buttons.play_button_image.play
 
   if status == "playing" then
-    play:set_image(widget_icon_dir .. 'pause.svg')
+    play:set_image(widget_icon_dir .. "pause.svg")
   else
-    play:set_image(widget_icon_dir .. 'play.svg')
+    play:set_image(widget_icon_dir .. "play.svg")
   end
 end
 
-return  media_buttons
+return media_buttons

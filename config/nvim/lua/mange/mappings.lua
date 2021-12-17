@@ -11,7 +11,7 @@
 --- {{{ Helpers
 local g = vim.g
 local api = vim.api
-local utils = require("mange.utils")
+local utils = require "mange.utils"
 
 local function map(mode, key, command, options)
   options = vim.tbl_extend("force", { noremap = true, silent = true }, options)
@@ -24,32 +24,32 @@ local function wk_register(...)
   if_require("which-key", function(wk)
     return wk.register(unpack(args))
   end, function(_)
-    api.nvim_err_writeln("WhichKeys not installed; cannot apply mappings!")
+    api.nvim_err_writeln "WhichKeys not installed; cannot apply mappings!"
   end)
 end
 
 local function reload_mappings()
-  require("plenary.reload").reload_module("mange.mappings")
+  require("plenary.reload").reload_module "mange.mappings"
   require("mange.mappings").setup()
 end
 --- }}}
 --- {{{ Actions
 local function telescope_cword()
-  local word = vim.fn.expand("<cword>")
+  local word = vim.fn.expand "<cword>"
   utils.set_search_word(word)
-  require("telescope.builtin").grep_string({
+  require("telescope.builtin").grep_string {
     search = "\\b" .. utils.escape_regexp(word) .. "\\b",
     use_regex = true,
-  })
+  }
 end
 
 local function telescope_cWORD()
-  local word = vim.fn.expand("<cWORD>")
+  local word = vim.fn.expand "<cWORD>"
   utils.set_search(word)
-  require("telescope.builtin").grep_string({
+  require("telescope.builtin").grep_string {
     search = word,
     use_regex = false,
-  })
+  }
 end
 
 local function telescope_todos()
@@ -57,10 +57,10 @@ local function telescope_todos()
   local vim_search = "\\<\\(" .. vim.fn.join(words, "\\|") .. "\\)\\>"
   local grep_search = "\\b(" .. vim.fn.join(words, "|") .. ")\\b"
   vim.fn.setreg("/", vim_search)
-  require("telescope.builtin").grep_string({
+  require("telescope.builtin").grep_string {
     search = grep_search,
     use_regex = true,
-  })
+  }
 end
 
 -- Just using :%bd will not work in all cases; it will try to delete a few
@@ -87,7 +87,7 @@ local function setup()
   -- I'll use it for context-sensitive actions depending on filetype
   map("", "Q", "", { expr = true })
 
-  wk_register({
+  wk_register {
     -- Shift-H and Shift-L to switch tabs
     ["<S-h>"] = { "gT", "Tab left" },
     ["<S-l>"] = { "gt", "Tab right" },
@@ -132,7 +132,7 @@ local function setup()
 
     ["<C-s>"] = { ":silent! wall<cr>", "Save all" },
     ["<C-c><C-c>"] = { ":wq<CR>", "Save and close" },
-  })
+  }
 
   -- Insert mode bindings
   wk_register({
@@ -143,7 +143,7 @@ local function setup()
   })
 
   -- Text objects
-  for _, mode in pairs({ "o", "x" }) do
+  for _, mode in pairs { "o", "x" } do
     wk_register({
       ["ih"] = {
         ':<C-U>lua require("gitsigns.actions").select_hunk()<CR>',
@@ -174,7 +174,7 @@ local function setup()
   g.mapleader = " "
   g.maplocalleader = "\\"
 
-  wk_register({
+  wk_register {
     ["<leader>"] = {
       --- {{{ Leader root
       [":"] = { "<cmd>Telescope commands<cr>", "Commands" },
@@ -425,7 +425,7 @@ local function setup()
       },
       --- }}}
     },
-  })
+  }
 
   --- {{{ Leader (visual)
   wk_register({

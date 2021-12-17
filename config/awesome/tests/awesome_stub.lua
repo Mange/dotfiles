@@ -23,7 +23,9 @@ local awesome = awesome_base_object("awesome", {
 })
 
 local client = awesome_base_object("client", {
-  get = function(...) return {} end,
+  get = function(...)
+    return {}
+  end,
 })
 
 local screen = awesome_base_object("screen", {})
@@ -32,15 +34,21 @@ local key = awesome_base_object("key", {})
 local drawin = awesome_base_object("drawin", {})
 
 local mouse = awesome_base_object("mouse", {
-  coords = function() return 0, 0 end,
+  coords = function()
+    return 0, 0
+  end,
 })
 
 local root = awesome_base_object("root", {
-  size = function(...) return 1920, 1080 end,
-  size_mm = function(...) return 598, 336 end,
+  size = function(...)
+    return 1920, 1080
+  end,
+  size_mm = function(...)
+    return 598, 336
+  end,
   keys = {},
   buttons = {},
-  cursor = function(...) end
+  cursor = function(...) end,
 })
 
 local button = awesome_base_object("button", {})
@@ -50,7 +58,7 @@ setmetatable(button, {
       _private = {},
       connect_signal = function(...) end,
     }
-  end
+  end,
 })
 
 return stubs

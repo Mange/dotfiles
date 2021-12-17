@@ -1,12 +1,12 @@
-local awful = require("awful")
-local wibox = require("wibox")
-local gears = require("gears")
-local beautiful = require("beautiful")
+local awful = require "awful"
+local wibox = require "wibox"
+local gears = require "gears"
+local beautiful = require "beautiful"
 
 local dpi = require("utils").dpi
-local clickable_container = require("widgets.clickable-container")
-local icons = require("theme.icons")
-local actions = require("actions")
+local clickable_container = require "widgets.clickable-container"
+local icons = require "theme.icons"
+local actions = require "actions"
 
 local end_session = function()
   local widget = wibox.widget {
@@ -14,9 +14,9 @@ local end_session = function()
       id = "icon",
       image = icons.power,
       resize = true,
-      widget = wibox.widget.imagebox
+      widget = wibox.widget.imagebox,
     },
-    layout = wibox.layout.align.horizontal
+    layout = wibox.layout.align.horizontal,
   }
 
   local widget_button = wibox.widget {
@@ -24,13 +24,13 @@ local end_session = function()
       {
         widget,
         margins = dpi(5),
-        widget = wibox.container.margin
+        widget = wibox.container.margin,
       },
-      widget = clickable_container
+      widget = clickable_container,
     },
     bg = beautiful.transparent,
     shape = gears.shape.circle,
-    widget = wibox.container.background
+    widget = wibox.container.background,
   }
 
   widget_button:buttons(
@@ -39,10 +39,7 @@ local end_session = function()
         {},
         1,
         nil,
-        actions.compose(
-          actions.close_control_center(),
-          actions.log_out()
-        )
+        actions.compose(actions.close_control_center(), actions.log_out())
       )
     )
   )

@@ -7,7 +7,7 @@ awful.screen.focus = function(...)
   local result = original_method(...)
   local new_screen = awful.screen.focused()
   if old_screen.index ~= new_screen.index then
-    new_screen:emit_signal("mange:focus")
+    new_screen:emit_signal "mange:focus"
   end
 
   return result

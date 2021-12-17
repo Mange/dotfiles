@@ -5,21 +5,21 @@ local function has_words_before()
   return col ~= 0
     and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]
         :sub(col, col)
-        :match("%s")
+        :match "%s"
       == nil
 end
 
 function plugin.setup()
-  local cmp = require("cmp")
-  local luasnip = require("luasnip")
-  local lspkind = require("lspkind")
+  local cmp = require "cmp"
+  local luasnip = require "luasnip"
+  local lspkind = require "lspkind"
 
-  cmp.setup({
+  cmp.setup {
     formatting = {
-      format = lspkind.cmp_format({
+      format = lspkind.cmp_format {
         with_text = false,
         maxwidth = 50,
-      }),
+      },
     },
     snippet = {
       expand = function(args)
@@ -32,10 +32,10 @@ function plugin.setup()
       ["<C-Space>"] = cmp.mapping.complete(),
       ["<C-e>"] = cmp.mapping.close(),
       ["<C-y>"] = cmp.config.disable,
-      ["<CR>"] = cmp.mapping.confirm({
+      ["<CR>"] = cmp.mapping.confirm {
         behavior = cmp.ConfirmBehavior.Replace,
         select = false, -- Only confirm selection if already selected.
-      }),
+      },
       ["<Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_next_item()
@@ -74,7 +74,7 @@ function plugin.setup()
       { name = "crates" },
       { name = "luasnip" },
     },
-  })
+  }
 end
 
 return plugin

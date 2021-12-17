@@ -21,16 +21,16 @@
 --     * Media mode should show media information widget, for example.
 --
 
-local awful = require("awful")
-local wibox = require("wibox")
-local gears = require("gears")
-local beautiful = require("beautiful")
+local awful = require "awful"
+local wibox = require "wibox"
+local gears = require "gears"
+local beautiful = require "beautiful"
 
-local keys = require("module.constants.keys")
-local clickable_container = require("widgets.clickable-container")
-local icons = require("theme.icons")
+local keys = require "module.constants.keys"
+local clickable_container = require "widgets.clickable-container"
+local icons = require "theme.icons"
 local dpi = require("utils").dpi
-local Bind = require("module.which_keys.bind")
+local Bind = require "module.which_keys.bind"
 
 local style = {
   font_header = beautiful.font_bold_size(18),
@@ -40,7 +40,7 @@ local style = {
 
 local aliases_to_keys = {
   Space = " ",
-  space = " "
+  space = " ",
 }
 
 ---@class Chord
@@ -79,7 +79,7 @@ local function group_binds_into_columns(binds, num_columns)
 
   for _, bind in ipairs(binds) do
     if not bind.is_hidden then
-      current_column[#current_column+1] = bind
+      current_column[#current_column + 1] = bind
 
       column_index = column_index + 1
       if column_index > num_columns then
@@ -96,7 +96,11 @@ local which_keys = {}
 
 -- Generate pango markup to change foreground color for the given text.
 local function fg(color, text)
-  return "<span foreground=\"" .. tostring(color) .. "\">" .. tostring(text) .. "</span>"
+  return '<span foreground="'
+    .. tostring(color)
+    .. '">'
+    .. tostring(text)
+    .. "</span>"
 end
 
 ---@param margins number
@@ -106,7 +110,7 @@ local function margin(margins, widget)
   return {
     widget = wibox.container.margin,
     margins = margins,
-    widget
+    widget,
   }
 end
 
@@ -115,7 +119,7 @@ end
 local function vertical(...)
   return {
     widget = wibox.layout.fixed.vertical,
-    ...
+    ...,
   }
 end
 
@@ -126,7 +130,9 @@ end
 local function align_horizontal(left, center, right)
   return {
     widget = wibox.layout.align.horizontal,
-    left, center, right
+    left,
+    center,
+    right,
   }
 end
 
@@ -137,7 +143,7 @@ local function title_widget(title)
     widget = wibox.widget.textbox,
     markup = fg(beautiful.which_key.title_fg, string.upper(title)),
     font = style.font_header,
-    align = "center"
+    align = "center",
   }
 end
 
@@ -164,9 +170,9 @@ local function entry_widget(bind)
             text = bind.key_label,
             align = "center",
             ellipsize = "start",
-            font = style.font_mono
-          }
-        }
+            font = style.font_mono,
+          },
+        },
       },
       -- Action
       {
@@ -182,17 +188,13 @@ local function entry_widget(bind)
             text = bind.action_label,
             align = "left",
             ellipsize = "end",
-            font = style.font
-          }
-        }
-      }
-    }
+            font = style.font,
+          },
+        },
+      },
+    },
   }
-  widget:add_button(
-    awful.button(
-      {}, keys.left_click, nil, bind.action
-    )
-  )
+  widget:add_button(awful.button({}, keys.left_click, nil, bind.action))
   return widget
 end
 
@@ -219,12 +221,10 @@ local function close_button(instance)
       halign = "center",
       forced_height = dpi(18),
       forced_width = dpi(18),
-    })
+    }),
   }
 
-  button:add_button(
-    awful.button({}, keys.left_click, nil, instance.stop)
-  )
+  button:add_button(awful.button({}, keys.left_click, nil, instance.stop))
 
   return button
 end
@@ -239,7 +239,7 @@ local function columns_widget(columns)
 
   return margin(dpi(10), {
     widget = wibox.layout.flex.horizontal,
-    table.unpack(widgets)
+    table.unpack(widgets),
   })
 end
 
@@ -268,7 +268,9 @@ local function generate_popup(instance, s)
   return awful.popup {
     screen = s,
     ontop = true,
-    placement = awful.placement.no_offscreen + awful.placement.bottom + awful.placement.maximize_horizontally,
+    placement = awful.placement.no_offscreen
+      + awful.placement.bottom
+      + awful.placement.maximize_horizontally,
     visible = true,
     bg = beautiful.which_key.bg,
     widget = vertical(
@@ -347,21 +349,20 @@ function which_keys.new_chord(title, keygrabber_args)
     binds[i] = Bind.new(table.unpack(decorated_binding))
   end
 
-  instance.grabber = awful.keygrabber(
-    gears.table.join(
-      keygrabber_args,
-      {
-        keybindings = keybindings,
-        timeout_callback = function() instance.hide_popup() end,
-        stop_callback = function() instance.hide_popup() end,
-        mask_modkeys = true,
-        -- Does not work. :(
-        -- allowed_keys = {},
-        stop_event = "release",
-        stop_key = {"Escape"},
-      }
-    )
-  )
+  instance.grabber = awful.keygrabber(gears.table.join(keygrabber_args, {
+    keybindings = keybindings,
+    timeout_callback = function()
+      instance.hide_popup()
+    end,
+    stop_callback = function()
+      instance.hide_popup()
+    end,
+    mask_modkeys = true,
+    -- Does not work. :(
+    -- allowed_keys = {},
+    stop_event = "release",
+    stop_key = { "Escape" },
+  }))
   instance.title = title
   instance.binds = binds
 
@@ -402,16 +403,20 @@ end
 function which_keys.key(combo, name, action, overrides)
   local modifiers, key = split_combo(combo)
   local desc = {
-    description = name
+    description = name,
   }
 
   -- Auto-detect shifted keys. E.g. when a key is "Ctrl-Q", then render that as
   -- "Ctrl-Q" but register it as {{"Ctrl", "Shift"}, "Q"}.
   -- Don't register characters that are the same in upper/lowercase, like "-".
-  if string.len(key) == 1 and string.upper(key) == key and string.lower(key) ~= key then
+  if
+    string.len(key) == 1
+    and string.upper(key) == key
+    and string.lower(key) ~= key
+  then
     desc.which_key_key = desc.which_key_key or combo
     if not gears.table.hasitem(modifiers, "Shift") then
-      modifiers = gears.table.join(modifiers, {"Shift"})
+      modifiers = gears.table.join(modifiers, { "Shift" })
     end
     key = string.upper(key)
   end
@@ -425,12 +430,12 @@ function which_keys.key(combo, name, action, overrides)
     end
   end
 
-  return {modifiers, key, action, desc}
+  return { modifiers, key, action, desc }
 end
 
 function which_keys.key_nested(combo, name, keys)
   local modifiers, key = split_combo(combo)
-  local chord = which_keys.new_chord(name, {keybindings = keys})
+  local chord = which_keys.new_chord(name, { keybindings = keys })
 
   return {
     modifiers,
@@ -438,10 +443,9 @@ function which_keys.key_nested(combo, name, keys)
     chord.enter,
     {
       description = "+" .. name,
-      which_key_colors = beautiful.which_key.nested
-    }
+      which_key_colors = beautiful.which_key.nested,
+    },
   }
 end
 
 return which_keys
-

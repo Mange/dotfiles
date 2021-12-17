@@ -1,3 +1,3 @@
 return {
-  keys = require("module.constants.keys")
+  keys = require "module.constants.keys",
 }

@@ -1,8 +1,8 @@
-local wibox = require("wibox")
-local beautiful = require("beautiful")
+local wibox = require "wibox"
+local beautiful = require "beautiful"
 
 local gruvbox = require("colors").gruvbox
-local utils = require("utils")
+local utils = require "utils"
 
 local battery_widget = {}
 
@@ -10,12 +10,12 @@ function battery_widget.new()
   local text = wibox.widget {
     widget = wibox.widget.textbox,
     align = "center",
-    valign = "center"
+    valign = "center",
   }
 
   local text_on_bg = wibox.widget {
     widget = wibox.container.background,
-    text
+    text,
   }
 
   local widget = wibox.widget {
@@ -32,7 +32,7 @@ function battery_widget.new()
   local function update(data)
     widget.value = data.percent
     text.text = data.percent
-    widget.visible = not(data.full)
+    widget.visible = not data.full
 
     if data.percent < 10 then
       widget.colors = { gruvbox.bright_red }
@@ -51,7 +51,9 @@ function battery_widget.new()
     end
   end
 
-  awesome.connect_signal("mange:battery:update", function(data) update(data) end)
+  awesome.connect_signal("mange:battery:update", function(data)
+    update(data)
+  end)
 
   return widget
 end

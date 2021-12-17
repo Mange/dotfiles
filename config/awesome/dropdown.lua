@@ -1,20 +1,17 @@
-local awful = require("awful")
+local awful = require "awful"
 
-local utils = require("utils")
+local utils = require "utils"
 
 local dropdown = {}
 
 function dropdown.add_rules(rules)
-  table.insert(
-    rules,
-    {
-      rule_any = {class = {"dropdown_"}},
-      properties = {
-        floating = true,
-        placement = utils.placement_centered(0.5),
-      }
-    }
-  )
+  table.insert(rules, {
+    rule_any = { class = { "dropdown_" } },
+    properties = {
+      floating = true,
+      placement = utils.placement_centered(0.5),
+    },
+  })
 end
 
 local function raise(c)

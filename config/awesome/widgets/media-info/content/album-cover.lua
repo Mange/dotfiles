@@ -1,5 +1,5 @@
-local gears = require("gears")
-local wibox = require("wibox")
+local gears = require "gears"
+local wibox = require "wibox"
 local config_dir = gears.filesystem.get_configuration_dir()
 local widget_icon_dir = config_dir .. "widgets/media-info/icons/"
 

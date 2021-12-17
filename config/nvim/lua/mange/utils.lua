@@ -61,11 +61,11 @@ function utils.buf_set_autoformat(enabled)
   vim.b.mange_autoformat_override = enabled
 
   if enabled == true then
-    print("Autoformatting enabled (override)")
+    print "Autoformatting enabled (override)"
   elseif enabled == false then
-    print("Autoformatting disabled (override)")
+    print "Autoformatting disabled (override)"
   else
-    print("Autoformatting automatic (no override)")
+    print "Autoformatting automatic (no override)"
   end
 end
 

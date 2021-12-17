@@ -1,11 +1,11 @@
-local awful = require("awful")
-local wibox = require("wibox")
-local gears = require("gears")
-local beautiful = require("beautiful")
+local awful = require "awful"
+local wibox = require "wibox"
+local gears = require "gears"
+local beautiful = require "beautiful"
 
 local dpi = require("utils").dpi
-local keys = require("keys")
-local profile = require("daemons.profile")
+local keys = require "keys"
+local profile = require "daemons.profile"
 
 local create_profile = function()
   local profile_imagebox = wibox.widget {
@@ -17,7 +17,7 @@ local create_profile = function()
       forced_height = dpi(28),
       clip_shape = beautiful.groups.shape,
     },
-    layout = wibox.layout.align.horizontal
+    layout = wibox.layout.align.horizontal,
   }
 
   local profile_name = wibox.widget {
@@ -33,12 +33,12 @@ local create_profile = function()
     spacing = dpi(5),
     {
       layout = wibox.layout.align.vertical,
-      expand = 'none',
+      expand = "none",
       nil,
       profile_imagebox,
-      nil
+      nil,
     },
-    profile_name
+    profile_name,
   }
 
   local refresh = function(update)
@@ -47,26 +47,14 @@ local create_profile = function()
   end
   profile:on_update(refresh)
 
-  profile_imagebox:buttons(
-    gears.table.join(
-      awful.button(
-        {},
-        keys.left_click,
-        nil,
-        function()
-          awful.spawn.single_instance("mugshot")
-        end
-      ),
-      awful.button(
-        {},
-        keys.right_click,
-        nil,
-        function()
-          profile:refresh()
-        end
-      )
-    )
-  )
+  profile_imagebox:buttons(gears.table.join(
+    awful.button({}, keys.left_click, nil, function()
+      awful.spawn.single_instance "mugshot"
+    end),
+    awful.button({}, keys.right_click, nil, function()
+      profile:refresh()
+    end)
+  ))
 
   return user_profile
 end

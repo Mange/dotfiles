@@ -14,7 +14,7 @@
 -- standardized destinations for tags, clients, etc. to be used in the other
 -- parts of this config.
 
-local utils = require("utils")
+local utils = require "utils"
 
 local function single_layout()
   return {
@@ -115,7 +115,7 @@ function screen_layout.is_portrait(s)
 end
 
 function screen_layout.apply_wallpaper_overrides(layout)
-  local main_portrait = utils.wallpaper_path("wallhaven-eyq6zr.jpg")
+  local main_portrait = utils.wallpaper_path "wallhaven-eyq6zr.jpg"
 
   for s in screen do
     if is_portrait(s) then
@@ -127,7 +127,8 @@ function screen_layout.apply_wallpaper_overrides(layout)
 
   -- If H layout, comms have a different portrait wallpaper
   if layout.name == "H" then
-    layout.comms.wallpaper_override = utils.wallpaper_path("wallhaven-r21q37.jpg")
+    layout.comms.wallpaper_override =
+      utils.wallpaper_path "wallhaven-r21q37.jpg"
   end
 end
 

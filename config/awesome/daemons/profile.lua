@@ -1,10 +1,10 @@
-local spawn = require("awful.spawn")
-local fs = require("gears.filesystem")
+local spawn = require "awful.spawn"
+local fs = require "gears.filesystem"
 
-local icons = require("theme.icons")
-local utils = require("utils")
+local icons = require "theme.icons"
+local utils = require "utils"
 
-local username = os.getenv("USER")
+local username = os.getenv "USER"
 local expected_profile_image = "/var/lib/AccountsService/icons/" .. username
 
 local profile = {
@@ -16,7 +16,7 @@ local profile = {
 function profile:refresh()
   -- Load full name
   spawn.easy_async(
-    {"whoamireally"},
+    { "whoamireally" },
     ---@diagnostic disable-next-line: unused-local
     function(stdout, _stderr, _exitreason, exitcode)
       if exitcode == 0 then

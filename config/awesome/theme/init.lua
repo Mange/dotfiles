@@ -1,7 +1,7 @@
-local gears = require("gears")
+local gears = require "gears"
 local gruvbox = require("../colors").gruvbox
 local dpi = require("utils").dpi
-local icons = require("theme.icons")
+local icons = require "theme.icons"
 
 local default_theme = assert(
   loadfile(gears.filesystem.get_themes_dir() .. "default/theme.lua")
@@ -95,17 +95,17 @@ theme.events = {
   leave = transparent,
   enter = opacity(white, "10"),
   press = opacity(white, "15"),
-  release = opacity(white, "10")
+  release = opacity(white, "10"),
 }
 
 -- Menu
 theme.menu_font = theme.font_size(11)
-theme.menu_submenu = '' -- ➤
+theme.menu_submenu = "" -- ➤
 
 theme.menu_height = dpi(34)
 theme.menu_width = dpi(200)
 theme.menu_border_width = dpi(20)
-theme.menu_bg_focus = opacity(theme.accent, 'cc')
+theme.menu_bg_focus = opacity(theme.accent, "cc")
 
 theme.menu_bg_normal = opacity(theme.background, "33")
 theme.menu_fg_normal = white
@@ -125,13 +125,13 @@ end
 theme.separator_color = opacity("#f2f2f2", "44")
 
 -- Layoutbox icons
-theme.layout_max = theme.icons .. 'layouts/max.svg'
-theme.layout_tile = theme.icons .. 'layouts/tile.svg'
-theme.layout_dwindle = theme.icons .. 'layouts/dwindle.svg'
-theme.layout_floating = theme.icons .. 'layouts/floating.svg'
+theme.layout_max = theme.icons .. "layouts/max.svg"
+theme.layout_tile = theme.icons .. "layouts/tile.svg"
+theme.layout_dwindle = theme.icons .. "layouts/dwindle.svg"
+theme.layout_floating = theme.icons .. "layouts/floating.svg"
 
 -- Taglist
-theme.taglist_bg_empty = opacity(theme.background, '00')
+theme.taglist_bg_empty = opacity(theme.background, "00")
 theme.taglist_bg_occupied = opacity(white, "1a")
 theme.taglist_bg_urgent = opacity("#E91E63", 99)
 theme.taglist_bg_focus = theme.background
@@ -195,7 +195,7 @@ theme.which_key = {
     key_fg = white,
     action_bg = white,
     action_fg = gruvbox.faded_green,
-  }
+  },
 }
 
 -- Client Snap Theme
@@ -214,6 +214,7 @@ theme.bg_systray = theme.background -- Looks horrible
 theme.systray_icon_spacing = dpi(16)
 
 -- Wallpaper
-theme.wallpaper = gears.filesystem.get_xdg_data_home() .. "wallpapers/current.jpg"
+theme.wallpaper = gears.filesystem.get_xdg_data_home()
+  .. "wallpapers/current.jpg"
 
 return theme

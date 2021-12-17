@@ -1,8 +1,8 @@
-local awful = require("awful")
-local fs = require("gears.filesystem")
-local timer = require("gears.timer")
+local awful = require "awful"
+local fs = require "gears.filesystem"
+local timer = require "gears.timer"
 
-local utils = require("utils")
+local utils = require "utils"
 
 local blur_config_path = fs.get_xdg_config_home() .. "/picom/blur.cfg"
 
@@ -21,8 +21,8 @@ local picom_reload_debounce = timer {
   single_shot = true,
   callback = function()
     -- Send signal to picom to reload config
-    awful.spawn({"killall", "-USR1", "picom"}, false)
-  end
+    awful.spawn({ "killall", "-USR1", "picom" }, false)
+  end,
 }
 
 local function picom_reload()
@@ -42,7 +42,11 @@ local function emit_blur_strength_signal()
 end
 
 function picom:set_blur_strength(value)
-  local strength = utils.clamp(picom.min_blur_strength, value, picom.max_blur_strength)
+  local strength = utils.clamp(
+    picom.min_blur_strength,
+    value,
+    picom.max_blur_strength
+  )
 
   self.blur_strength = strength
   write_blur_strength()

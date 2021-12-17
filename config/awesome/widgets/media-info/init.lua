@@ -1,16 +1,16 @@
-local wibox = require("wibox")
-local spawn = require("awful.spawn")
+local wibox = require "wibox"
+local spawn = require "awful.spawn"
 
-local ui_content = require("widgets.media-info.content")
+local ui_content = require "widgets.media-info.content"
 local album_cover = ui_content.album_cover
 local song_info = ui_content.song_info
 local media_buttons = ui_content.media_buttons
 
-local utils = require("utils")
-local keys = require("keys")
-local actions = require("actions")
+local utils = require "utils"
+local keys = require "keys"
+local actions = require "actions"
 local dpi = utils.dpi
-local playerctl = require("daemons.playerctl")
+local playerctl = require "daemons.playerctl"
 
 local media_info = wibox.widget {
   layout = wibox.layout.align.horizontal,
@@ -26,8 +26,8 @@ local media_info = wibox.widget {
     expand = "none",
     nil,
     media_buttons.navigate_buttons,
-    nil
-  }
+    nil,
+  },
 }
 
 local current_album_art_url = nil
@@ -42,17 +42,14 @@ local function update_album_art(art_url)
   -- switch to the cached copy.
   album_cover.set_default()
   if art_url and string.len(art_url) > 5 then
-    spawn.easy_async(
-      {"coverart-cache", art_url},
-      function(stdout)
-        if stdout then
-          local path = utils.strip(stdout)
-          if string.len(path) > 10 then
-            album_cover.set_image(path)
-          end
+    spawn.easy_async({ "coverart-cache", art_url }, function(stdout)
+      if stdout then
+        local path = utils.strip(stdout)
+        if string.len(path) > 10 then
+          album_cover.set_image(path)
         end
       end
-    )
+    end)
   end
 end
 

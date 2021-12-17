@@ -1,14 +1,13 @@
-local awful = require("awful")
+local awful = require "awful"
 
-local sharedtags = require("sharedtags")
-local utils = require("utils")
-
+local sharedtags = require "sharedtags"
+local utils = require "utils"
 
 local focus_client = {
   tag_name = "focused",
   previous_tags = nil,
   client = nil,
-  tag = nil
+  tag = nil,
 }
 
 local function setup(c)
@@ -24,7 +23,7 @@ local function setup(c)
       gap = utils.dpi(30),
       gap_single_client = true,
       volatile = true,
-      clients = {c},
+      clients = { c },
     }
   )
 

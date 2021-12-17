@@ -1,4 +1,4 @@
-local class = require("module.class")
+local class = require "module.class"
 local theme = require("theme").which_key
 
 ---@alias modifier
@@ -39,7 +39,7 @@ local function key_label_and_sort(modifiers, key)
     Control = "C",
     Shift = "S",
     Mod1 = "A",
-    Mod4 = ""
+    Mod4 = "",
   }
 
   -- Convert list of modifiers into a lookup table
@@ -79,10 +79,18 @@ local function key_label_and_sort(modifiers, key)
   local mods_label = ""
   -- Mods should end up in a consistent order in the modifiers string:
   -- Mod4, Shift, Control, Mod1
-  if mods.Mod4 then mods_label = mods_label .. aliases.Mod4 end
-  if mods.Shift then mods_label = mods_label .. aliases.Shift end
-  if mods.Control then mods_label = mods_label .. aliases.Control end
-  if mods.Mod1 then mods_label = mods_label .. aliases.Mod1 end
+  if mods.Mod4 then
+    mods_label = mods_label .. aliases.Mod4
+  end
+  if mods.Shift then
+    mods_label = mods_label .. aliases.Shift
+  end
+  if mods.Control then
+    mods_label = mods_label .. aliases.Control
+  end
+  if mods.Mod1 then
+    mods_label = mods_label .. aliases.Mod1
+  end
   if string.len(mods_label) > 0 then
     label = mods_label .. "-" .. label
   end

@@ -1,4 +1,4 @@
-require("lualine").setup({
+require("lualine").setup {
   options = {
     icons_enabled = true,
     theme = "gruvbox",
@@ -22,4 +22,4 @@ require("lualine").setup({
     lualine_y = {},
     lualine_z = {},
   },
-})
+}

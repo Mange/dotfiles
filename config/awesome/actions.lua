@@ -1,25 +1,25 @@
-local awful = require("awful")
-local naughty = require("naughty")
+local awful = require "awful"
+local naughty = require "naughty"
 
-local dropdown = require("dropdown")
-local sharedtags = require("sharedtags")
-local focus_client = require("focus_client")
-local utils = require("utils")
+local dropdown = require "dropdown"
+local sharedtags = require "sharedtags"
+local focus_client = require "focus_client"
+local utils = require "utils"
 local tags = require("configuration.tags").tags
 
-local playerctl = require("daemons.playerctl")
-local brightness = require("daemons.brightness")
+local playerctl = require "daemons.playerctl"
+local brightness = require "daemons.brightness"
 
 local actions = {}
 
 local function ensure_all_functions(...)
   local funcs = {}
 
-  for i, fn in ipairs({...}) do
+  for i, fn in ipairs { ... } do
     if type(fn) ~= "function" then
       error("Argument " .. i .. " is not a function, is " .. tostring(fn))
     end
-    funcs[#funcs+1] = fn
+    funcs[#funcs + 1] = fn
   end
 
   return funcs
@@ -28,9 +28,9 @@ end
 function actions.compose(...)
   local funcs = ensure_all_functions(...)
   return function(...)
-    local result = {...}
+    local result = { ... }
     for _, fn in ipairs(funcs) do
-      result = {fn(table.unpack(result))}
+      result = { fn(table.unpack(result)) }
     end
     return result
   end
@@ -55,14 +55,14 @@ function actions.focus_screen_dir(direction)
 end
 
 function actions.move_focused_client(offset)
-  return function ()
+  return function()
     awful.client.swap.byidx(offset)
   end
 end
 
 ---@param cmdline string[] | string
 function actions.spawn(cmdline)
-  return function ()
+  return function()
     awful.spawn(cmdline)
   end
 end
@@ -190,7 +190,10 @@ function actions.goto_tag(index)
     local tag = tags[index]
 
     if not tag then
-      tag = sharedtags.add(index, {name = tostring(index), layout = awful.layout.layouts[1]})
+      tag = sharedtags.add(
+        index,
+        { name = tostring(index), layout = awful.layout.layouts[1] }
+      )
     end
 
     sharedtags.viewonly(tag, tag.screen or awful.screen.focused())
@@ -254,32 +257,37 @@ function actions.tag_move_other_screen()
 end
 
 function actions.emoji_selector()
-  return actions.spawn({"rofi", "-modi", "emoji", "-show", "emoji"})
+  return actions.spawn { "rofi", "-modi", "emoji", "-show", "emoji" }
 end
 
 function actions.rofi()
-  return actions.spawn({
-      "rofi",
-      "-show", "combi",
-      "-modi", "combi,run,window",
-      "-combi-modi", "drun,window"
-    })
+  return actions.spawn {
+    "rofi",
+    "-show",
+    "combi",
+    "-modi",
+    "combi,run,window",
+    "-combi-modi",
+    "drun,window",
+  }
 end
 
 function actions.select_window()
-  return actions.spawn({
-      "rofi",
-      "-show", "window",
-      "-modi", "window,windowcd"
-    })
+  return actions.spawn {
+    "rofi",
+    "-show",
+    "window",
+    "-modi",
+    "window,windowcd",
+  }
 end
 
 function actions.passwords_menu()
-  return actions.spawn({"bwmenu", "--clear", "20"})
+  return actions.spawn { "bwmenu", "--clear", "20" }
 end
 
 function actions.flameshot(...)
-  return actions.spawn({"flameshot", ...})
+  return actions.spawn { "flameshot", ... }
 end
 
 function actions.dismiss_notification()
@@ -307,14 +315,16 @@ function actions.dismiss_all_notifications()
 end
 
 function actions.log_out(...)
-  return actions.spawn({"wmquit", ...})
+  return actions.spawn { "wmquit", ... }
 end
 
 function actions.edit_file(path)
-  return actions.spawn({
+  return actions.spawn {
     "kitty",
-    "nvim", path, "+cd %:p:h"
-  })
+    "nvim",
+    path,
+    "+cd %:p:h",
+  }
 end
 
 function actions.toggle_focus_tag()
@@ -352,12 +362,12 @@ end
 
 function actions.toggle_systray()
   return function()
-    awesome.emit_signal("widget::systray:toggle")
+    awesome.emit_signal "widget::systray:toggle"
   end
 end
 
 function actions.volume_set(percent)
-  return actions.spawn({"pulsemixer", "--set-volume", tostring(percent)})
+  return actions.spawn { "pulsemixer", "--set-volume", tostring(percent) }
 end
 
 function actions.volume_set_now(percent)
@@ -365,19 +375,19 @@ function actions.volume_set_now(percent)
 end
 
 function actions.volume_change(amount)
-  return actions.spawn({"pulsemixer", "--change-volume", amount})
+  return actions.spawn { "pulsemixer", "--change-volume", amount }
 end
 
 function actions.volume_mute_toggle()
-  return actions.spawn({"pulsemixer", "--toggle-mute"})
+  return actions.spawn { "pulsemixer", "--toggle-mute" }
 end
 
 function actions.volume_tui()
-  return actions.spawn({"kitty", "pulsemixer"})
+  return actions.spawn { "kitty", "pulsemixer" }
 end
 
 function actions.volume_gui()
-  return actions.spawn({"pavucontrol"})
+  return actions.spawn { "pavucontrol" }
 end
 
 function actions.playerctl_play_pause()
