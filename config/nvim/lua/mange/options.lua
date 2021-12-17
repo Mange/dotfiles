@@ -2,6 +2,7 @@ local opt = vim.opt
 
 -- Interaction options
 opt.timeoutlen = 400
+opt.updatetime = 1000
 
 -- Scrolling options
 opt.scrolloff = 10
