@@ -144,20 +144,7 @@ if_require("null-ls", function(null_ls)
       -- on a buffer or if I disable autoformatting for some other reason.
       -- null_ls.builtins.formatting.trim_whitespace,
 
-      null_ls.builtins.formatting.stylua.with({
-        extra_args = {
-          "--column-width",
-          "80",
-          "--indent-type",
-          "Spaces",
-          "--indent-width",
-          "2",
-          "--line-endings",
-          "Unix",
-          "--quote-style",
-          "AutoPreferDouble",
-        },
-      }),
+      null_ls.builtins.formatting.stylua,
 
       null_ls.builtins.formatting.standardrb,
       -- null_ls.builtins.formatting.rubocop,
