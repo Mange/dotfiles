@@ -8,7 +8,7 @@ local function capabilities()
   end)
 end
 
-local function on_attach(_, bufnr)
+local function on_attach(client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
   vim.api.nvim_exec(
@@ -20,6 +20,19 @@ local function on_attach(_, bufnr)
     ]],
     true
   )
+
+  if client.resolved_capabilities.document_highlight then
+    vim.cmd [[
+      hi LspReferenceRead guibg=#5f5840
+      hi LspReferenceText guibg=#504945
+      hi LspReferenceWrite guibg=#6c473e
+      augroup lsp_document_highlight
+      autocmd! * <buffer>
+      autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+      autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+      augroup END
+    ]]
+  end
 
   require("mange.mappings").attach_lsp(bufnr)
 end

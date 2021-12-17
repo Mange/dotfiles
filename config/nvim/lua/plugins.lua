@@ -159,9 +159,6 @@ require("packer").startup(function(use)
   -- Icons; used by some other plugins
   use "kyazdani42/nvim-web-devicons"
 
-  -- Highlight word under the cursor
-  use "xiyaowong/nvim-cursorword"
-
   -- Show color previews
   -- Fork of norcalli/nvim-colorizer.lua
   -- See: https://github.com/norcalli/nvim-colorizer.lua/pull/55
