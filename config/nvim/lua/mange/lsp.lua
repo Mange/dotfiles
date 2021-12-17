@@ -117,9 +117,13 @@ if_require("lspconfig", function(lspconfig)
     on_attach = on_attach,
   }
 
+  lspconfig.dockerls.setup {
+    capabilities = capabilities(),
+    on_attach = on_attach,
+  }
+
   -- TODO:
   -- CSS
-  -- Docker
   -- SQL
 end)
 

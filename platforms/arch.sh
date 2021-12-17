@@ -214,7 +214,9 @@ install-pip-software() {
 install-npm-software() {
     header "Installing NPM software"
 
-    wanted_software=()
+    wanted_software=(
+      dockerfile-language-server-nodejs
+    )
 
     if [[ $HOSTNAME == krista ]]; then
       wanted_software+=(toggl-cli)
