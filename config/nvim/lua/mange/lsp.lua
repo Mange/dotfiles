@@ -122,6 +122,16 @@ if_require("lspconfig", function(lspconfig)
     on_attach = on_attach,
   }
 
+  lspconfig.yamlls.setup {
+    capabilities = capabilities(),
+    on_attach = on_attach,
+    settings = {
+      redhat = {
+        telemetry = { enabled = false },
+      },
+    },
+  }
+
   -- TODO:
   -- CSS
   -- SQL
