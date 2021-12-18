@@ -455,24 +455,23 @@ end
 
 --- {{{ LSP
 local function attach_lsp(bufnr)
-  local ft = vim.bo[bufnr].filetype
   local modifiable = vim.bo[bufnr].modifiable
 
-  -- Don't override <CR> binding in some filetypes
-  local fts_with_cr = {
-    "vimwiki", -- navigating links
-    "qf", -- quickfix window
-  }
-
-  if modifiable and not vim.tbl_contains(fts_with_cr, ft) then
+  if modifiable then
     wk_register({
-      ["<CR>"] = { ":lua vim.lsp.buf.code_action()<cr>", "Code action" },
+      ["<leader><CR>"] = {
+        ":lua vim.lsp.buf.code_action()<cr>",
+        "Code action",
+      },
     }, {
       buffer = bufnr,
     })
 
     wk_register({
-      ["<CR>"] = { ":lua vim.lsp.buf.range_code_action()<cr>", "Code action" },
+      ["<leader><CR>"] = {
+        ":lua vim.lsp.buf.range_code_action()<cr>",
+        "Code action",
+      },
     }, {
       buffer = bufnr,
       mode = "v",
