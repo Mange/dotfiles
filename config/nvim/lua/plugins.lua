@@ -144,6 +144,13 @@ require("packer").startup(function(use)
     end,
   }
 
+  use {
+    "stevearc/dressing.nvim",
+    config = function()
+      require "mange.plugin.dressing"
+    end,
+  }
+
   -- Colortheme
   use { "ellisonleao/gruvbox.nvim", requires = { "rktjmp/lush.nvim" } }
 
