@@ -169,6 +169,10 @@ local function setup()
   })
 
   --- }}}
+  --- {{{ Visual mode
+  map("v", "<C-j>", ":m '>+1<CR>gv=gvzz", { silent = false }) -- Move line down
+  map("v", "<C-k>", ":m '<-2<CR>gv=gvzz", { silent = false }) -- Move line down
+  --- }}}
 
   -- Setup leader key to space
   g.mapleader = " "
