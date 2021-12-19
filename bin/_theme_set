@@ -10,9 +10,8 @@ if [[ "$new_style" != dark && "$new_style" != light ]]; then
   exit 1
 fi
 
-echo "$new_style" > "${XDG_RUNTIME_DIR}/current_theme"
+echo "$new_style" >"${XDG_RUNTIME_DIR}/current_theme"
 
-ln -sf "./gruvbox_${new_style}.conf" "${XDG_CONFIG_HOME}/kitty/theme.conf"
 ln -sf "./gruvbox-${new_style}-256.theme" "${XDG_CONFIG_HOME}/taskwarrior/current-theme.theme"
 ln -sf "./${new_style}.jpg" "${XDG_DATA_HOME}/wallpapers/current.jpg"
 
