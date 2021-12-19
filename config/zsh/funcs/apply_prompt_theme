@@ -1,108 +1,192 @@
+#!/usr/bin/env zsh
 # vim: ft=sh
 # Shell function to build up my current prompt settings.
 
+# Prompt has three sections on both sides, with background gradient between the
+# different sections.
 function apply_prompt_theme {
   local theme="${1:-$MANGE_THEME}"
 
   # Set up colors
-  # shellcheck source=/home/mange/.local/share/gruvbox/colors.env
-  source "${XDG_DATA_HOME:-$HOME/.local/share}/gruvbox/colors.env"
+  # shellcheck source=/home/mange/.config/shells/catppuccin
+  source "${XDG_CONFIG_HOME:-$HOME/.config}/shells/catppuccin"
 
-  # Fall back to 256 color palette if ZSH version is old or terminal does not
-  # support truecolor.
-  # shellcheck source=/home/mange/.local/share/gruvbox/colors-256.env
-  [[ $COLORTERM =~ ^(truecolor|24bit)$ ]] ||
-    source "${XDG_DATA_HOME:-$HOME/.local/share}/gruvbox/colors-256.env"
-
-  if [[ "$theme" == "light" ]]; then
-    bg0_hard=$light0_hard
-    bg0=$light0
-    bg0_soft=$light0_soft
-    bg1=$light1
-    bg2=$light2
-    bg3=$light3
-    bg4=$light4
-  else
-    bg0_hard=$dark0_hard
-    bg0=$dark0
-    bg0_soft=$dark0_soft
-    bg1=$dark1
-    bg2=$dark2
-    bg3=$dark3
-    bg4=$dark4
-  fi
-
-  # Leave icon color to make branch name appear in that color if that icon is
-  # last before the name.
-  zstyle ':vcs_info:*:prompt:*' stagedstr "%F{$bright_yellow} "
-  zstyle ':vcs_info:*:prompt:*' unstagedstr "%F{$neutral_orange} "
-
-  local dir="%K{$bg2} %B%F{cyan}%r%%b%F{cyan}%F{blue}%S %k%f"
-  local action="%K{$faded_yellow}%B%F{15} %a %%b%f%F{$faded_yellow}%K{$bg3}"
-  local icons_and_branch="%K{$bg3} %F{10}%B%b%%b %k"
-
-  # Format when there is no VCS info; e.g. display plain directory info
-  zstyle ':vcs_info:*:prompt:*' nvcsformats \
-    "%K{$bg2}%F{blue}%B %4~ %b%f%k" \
-    ""
-  zstyle ':vcs_info:*:prompt:*' formats       "${dir}" "${icons_and_branch}"
-  zstyle ':vcs_info:*:prompt:*' actionformats "${dir}" "${action}${icons_and_branch}"
-
-  #
-  # Actually set up the PROMPT and RPROMPT variables
-  #
-  # NOTE: Eval os-icon once on load
-  # NOTE: os_icon + user + hostname share the same background and must be
-  # rendered in that order to make sense and to reset formatting rules.
-  local os_icon="%F{15}%F{blue}%K{15}$(os-icon)"
+  ###
+  ### Left 3
+  ### OS icon + user + hostname
+  ###
+  local os_icon="%F{blue}$(os-icon)"
 
   # Don't show user at all if it's expected username
   local user
   if [[ $USER != "mange" ]]; then
     # Color user differently if we have a privileged user ("!")
-    user="%B%(!.%F{red}%n.%F{$faded_blue}%n)%b%K{15}"
+    user="%(!.%F{red}%n.%F{blue}%n)"
   fi
 
+  # Same with host. Only show on remote connections!
   local host
   if [[ -n $SSH_CLIENT ]]; then
-    host="%B%F{blue}%m%f%b"
+    host="%F{blue}%m%f"
+    # user + host different? Show a colored "@" between them
     if [[ -n "$user" ]]; then
-      host="%B%F{$faded_purple}@${host}"
+      host="%B%F{magenta}@${host}"
     fi
   fi
 
-  if [[ -n "$user" ]] || [[ -n "$host" ]]; then
-    local machine="${os_icon}${user}${host}"
-  else
-    local machine="${os_icon}"
-  fi
+  local left3="${os_icon}${user}${host}"
 
-  local md_sep="%F{15}%K{$bg2}"
-  local dir='$vcs_info_msg_0_'
-  local last_status='%(?.$(prompt_start_character "'$bg2'")%K{'$bg2'}%F{green} ✔.$(prompt_start_character "'$faded_orange'")%K{'$faded_orange'}%F{10} ✘) %f%k%b'
-  local current_jobs="%(1j.%K{$bright_purple}%F{black} 🗗 %B%j%b %k%f.)"
-  local slow_command_duration='$(prompt_slow_command_duration)'
-  local left_end='$(prompt_end_character "'$bg2'")%f%k%b'
-  local time="%F{15}%K{$bg0_soft} %D{%H:%M}%k%F{$bg0_soft}%f"
+  ###
+  ### Left 2
+  ### Path (smart, based on VCS root if possible)
+  ###
+
+  # NOTE: Will not be used directly in the prompt, instead it will be included
+  # through $vcs_info_msg_0_.
+  # Reference:
+  #   %r = Repository name
+  #   %S = subdirectory within repo
+  local repo_dir=" %F{cyan}%r%F{magenta}%F{blue}%S "
+  local norm_dir=" %F{blue}%4~ "
+  local left2='$vcs_info_msg_0_'
+
+  ###
+  ### Left 1
+  ### Actually empty right now
+  ###
+  local left1=''
+
+  ###
+  ### Prompt
+  ### Changes depending on VI input mode, so it dynamically calls a function.
+  ###
+  local prompt_left='$(prompt_end_character)%f%k%b '
+  local prompt_right='%f%k%b$(prompt_start_character)'
+
+  ###
+  ### Right 1
+  ### Exit status + Duration + Jobs
+  ###
+  local last_status='%(?.%F{green} ✔ .%F{red} ✘ )'
+  local duration='$(prompt_slow_command_duration)'
+  local jobs="%(1j.%F{magenta} 🗗 %j %f.)"
+  local right1="${last_status}${duration}${jobs}"
+
+  ###
+  ### Right 2
+  ### Branch + VCS status
+  ###
+
+  # Modify how the branch is rendered. Here's the trick:
+  # 1. Show information in this order: unstaged, staged, branch
+  # 2. Each info changes foreground color.
+  # Now if there's staged stuff, the branch will show in that color. If there's
+  # unstaged stuff, then it will be in that color. On both, the staged will
+  # win.
+  # Branch will default to blue, and unstaged to red, and staged to green.
+  zstyle ':vcs_info:*:prompt:*' unstagedstr "%F{red} "
+  zstyle ':vcs_info:*:prompt:*' stagedstr "%F{green} "
+
+  # NOTE: Will not be used directly in the prompt, instead it will be included
+  # through $vcs_info_msg_1_.
+  # Reference:
+  #   %a = Action
+  #   %b = Branch
+  #   %c = stagedstr (if anything staged)
+  #   %u = unstagedstr (if anything unstaged)
+  local vcs_status="$(prompt_separator diagonal 2 yellow)%F{black} %a %f$(prompt_separator diagonal yellow 2)"
+  local branch_and_status="%F{blue}%u%c %b %f"
+  local right2='$vcs_info_msg_1_'
+
+  ###
+  ### Right 3
+  ### Clock
+  ###
+  local clock="%F{white} %D{%H:%M} %f"
+  local right3="${clock}"
+
+  #
+  # Set up ZSH's built-in VCS modules to be able to populate the modules.
+  #
+
+  # Format outside of repos
+  zstyle ':vcs_info:*:prompt:*' nvcsformats "${norm_dir}" ""
+  # Inside repos
+  zstyle ':vcs_info:*:prompt:*' formats "${repo_dir}" "${branch_and_status}"
+  zstyle ':vcs_info:*:prompt:*' actionformats "${repo_dir}" "${vcs_status}${branch_and_status}"
+
+  #
+  # Actually set up the PROMPT and RPROMPT variables
+  #
+
   local newline=$'\n'
+  export PROMPT="${newline}$(prompt_separator bubble_left 0 3)${left3}$(prompt_separator diagonal 3 2)${left2}${left1}${prompt_left}"
+  export RPROMPT="${prompt_right}${right1}$(prompt_separator diagonal 1 2)${right2}$(prompt_separator diagonal 2 3)${right3}$(prompt_separator bubble_right 3 0)"
+}
 
-  export PROMPT="${newline}${machine}${md_sep}${dir}${left_end}"
-  export RPROMPT="${last_status}${slow_command_duration}${current_jobs}\$vcs_info_msg_1_${time}"
+function module_color {
+  local section=$1
+  case $section in
+  0)
+    echo default
+    ;;
+  1)
+    echo $theme_bg_l1
+    ;;
+  2)
+    echo $theme_bg_l2
+    ;;
+  3)
+    echo $theme_bg_l3
+    ;;
+  *)
+    echo $section
+    ;;
+  esac
+}
+
+function prompt_separator {
+  local type=$1
+  local from=$2
+  local to=$3
+
+  local color_from="$(module_color $from)"
+  local color_to="$(module_color $to)"
+
+  case $type in
+  diagonal)
+    echo "%F{$color_from}%K{$color_to}%f"
+    ;;
+  pyramid_right)
+    echo "%F{$color_from}%K{$color_to}%f"
+    ;;
+  pyramid_left)
+    echo "%F{$color_to}%K{$color_from}%f%K{$color_to}"
+    ;;
+  bubble_right)
+    echo "%F{$color_from}%K{$color_to}%f"
+    ;;
+  bubble_left)
+    echo "%F{$color_to}%K{$color_from}%f%K{$color_to}"
+    ;;
+  empty)
+    echo "%K{$color_to}%f"
+    ;;
+  esac
 }
 
 # Show mode information by the last character in the prompt
 function prompt_end_character {
-  local color="${1}"
-  zle_mode_output "%F{$color}%f " "%F{$color}%f "
+  zle_mode_output "$(prompt_separator pyramid_right 2 0)" "$(prompt_separator bubble_right 2 0)"
 }
+
 function prompt_start_character {
-  local color="${1}"
-  zle_mode_output " %F{$color}%f" " %F{$color}%f"
+  zle_mode_output "$(prompt_separator pyramid_left 0 1)" "$(prompt_separator bubble_left 0 1)"
 }
 
 function prompt_slow_command_duration {
-  if [[ -n "$_mange_last_cmd_duration" ]] && ((_mange_last_cmd_duration >= 10)); then
-    echo -n "%F{15}%K{$bg1}  $(seconds-to-human $_mange_last_cmd_duration) %k%f"
+  if [[ -n "$_mange_last_cmd_duration" ]] && ((_mange_last_cmd_duration >= 5)); then
+    echo -n "%F{yellow} $(seconds-to-human $_mange_last_cmd_duration) %f"
   fi
 }
 

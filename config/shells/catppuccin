@@ -1,0 +1,38 @@
+#!/bin/sh
+
+export theme_bg_l3="#6E6C7C"
+export theme_bg_l2="#3e4058"
+export theme_bg_l1="#2D293B"
+export theme_bg="#1E1E28"
+export theme_bg_transparent="#1E1E29" # BG in Kitty; will cause transparent background
+export theme_bg_d1="#1B1923"
+export theme_bg_d2="#15121C"
+
+export theme_fg="#D7DAE0"
+export theme_black="#6E6C7C"
+export theme_red="#E28C8C"
+export theme_green="#B3E1A3"
+export theme_yellow="#EADDA0"
+export theme_blue="#A4B9EF"
+export theme_magenta="#C6AAE8"
+export theme_pink="#F0AFE1"
+export theme_white="#D7DAE0"
+
+###
+# The neovim color palette
+# catppuccin0 = "#9DDDCB",
+# catppuccin1 = "#1E1E28",
+# catppuccin2 = "#ECBFBD",
+# catppuccin3 = "#C6AAE8",
+# catppuccin4 = "#F0AFE1",
+# catppuccin5 = "#E28C8C",
+# catppuccin6 = "#F7C196",
+# catppuccin7 = "#B3E1A3",
+# catppuccin8 = "#EADDA0",
+# catppuccin9 = "#A4B9EF",
+# catppuccin10 = "#D7DAE0",
+# catppuccin11 = "#6E6C7C",
+# catppuccin12 = "#3e4058",
+# catppuccin13 = "#15121C",
+# catppuccin14 = "#1B1923",
+# catppuccin15 = "#2D293B",
