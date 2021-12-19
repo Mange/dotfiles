@@ -21,6 +21,8 @@ local function on_attach(client, bufnr)
     true
   )
 
+  vim.cmd "autocmd CursorHold * lua vim.diagnostic.open_float()"
+
   if client.resolved_capabilities.document_highlight then
     vim.cmd [[
       hi LspReferenceRead guibg=#5f5840
