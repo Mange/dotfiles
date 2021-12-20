@@ -8,20 +8,32 @@ local function capabilities()
   end)
 end
 
+local function unique_autocmd(name, cmd)
+  vim.cmd("augroup Lsp" .. name)
+  vim.cmd "  autocmd! * <buffer>"
+  vim.cmd(cmd)
+  vim.cmd "augroup END"
+end
+
 local function on_attach(client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
-  vim.api.nvim_exec(
-    [[
-    augroup LspAutocommands
-      autocmd! * <buffer>
-      autocmd BufWritePre <buffer> lua require("mange.utils").maybe_autoformat()
-    augroup END
-    ]],
-    true
+  unique_autocmd(
+    "MaybeAutoformat",
+    "autocmd BufWritePre <buffer> lua require('mange.utils').maybe_autoformat()"
   )
 
-  vim.cmd "autocmd CursorHold * lua vim.diagnostic.open_float()"
+  unique_autocmd(
+    "DiagnosticHover",
+    "autocmd CursorHold <buffer> lua vim.diagnostic.open_float()"
+  )
+
+  if client.resolved_capabilities.signature_help then
+    unique_autocmd(
+      "SignatureHelp",
+      "autocmd CursorHoldI <buffer> lua vim.lsp.buf.signature_help()"
+    )
+  end
 
   if client.resolved_capabilities.document_highlight then
     vim.cmd [[
