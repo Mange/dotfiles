@@ -1,44 +1,40 @@
 
 
-# Gruvbox dark theme
-# https://github.com/morhetz/gruvbox-contrib/issues/40
-set completion-bg \#7c6f64
-set completion-fg \#282828
-set completion-group-bg \#3c3836
-set completion-group-fg \#ebdbb2
-set completion-highlight-bg \#83a598
-set completion-highlight-fg \#504945
-set default-fg \#ebdbb2
-set default-bg \#3c3836
-set font Droid\ Sans\ Mono\ Slashed\ 11
-set guioptions cs
-set inputbar-fg \#ebdbb2
-set inputbar-bg \#282828
-set notification-bg \#282828
-set notification-fg \#ebdbb2
-set notification-error-bg \#fb4934
-set notification-error-fg \#282828
-set notification-warning-bg \#282828
-set notification-warning-fg \#fb4934
-# set tabbar-bg \#282828
-# set tabbar-fg \#7c6f64
-# set tabbar-focus-bg \#7c6f64
-# set tabbar-focus-fg \#282828
-set statusbar-bg \#7c6f64
-set statusbar-fg \#282828
-set adjust-open width
-set incremental-search false
-set highlight-color \#3c3836
-set highlight-active-color \#ebdbb2
-set recolor true
-set recolor-darkcolor \#ebdbb2
-set recolor-lightcolor \#282828
-set recolor-reverse-video false
-set render-loading-bg \#282828
-set render-loading-fg \#ebdbb2
-set statusbar-home-tilde true
-set selection-clipboard primary
-set index-bg \#282828
-set index-fg \#98971a
-set index-active-bg \#3c3836
-set index-active-fg \#98971a
+# Catppuccino theme
+# https://github.com/catppuccin/catppuccin/issues/9
+set default-fg 			    "#D7DAE0"
+set default-bg 			    "#1E1E28"
+
+set completion-bg		    "#2D293B"
+set completion-fg		    "#D7DAE0"
+set completion-highlight-bg	"#F0AFE1"
+set completion-highlight-fg	"#1E1E28"
+set completion-group-bg		"#2D293B"
+set completion-group-fg		"#F0AFE1"
+
+set statusbar-fg		    "#D7DAE0"
+set statusbar-bg		    "#2D293B"
+
+set notification-bg		    "#2D293B"
+set notification-fg		    "#D7DAE0"
+set notification-error-bg	"#EADDA0"
+set notification-error-fg	"#1E1E28"
+set notification-warning-bg	"#E28C8C"
+set notification-warning-fg	"#1E1E28"
+
+set inputbar-fg			    "#D7DAE0"
+set inputbar-bg 		    "#2D293B"
+
+set recolor-lightcolor		"#1E1E28"
+set recolor-darkcolor		"#D7DAE0"
+
+set index-fg			    "#D7DAE0"
+set index-bg			    "#1E1E28"
+set index-active-fg		    "#1E1E28"
+set index-active-bg		    "#F0AFE1"
+
+set render-loading-bg		"#1E1E28"
+set render-loading-fg		"#D7DAE0"
+
+set highlight-color		    "#A4B9EF"
+set highlight-active-color	"#F0AFE1"
