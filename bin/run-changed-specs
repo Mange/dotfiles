@@ -32,7 +32,27 @@ case "$1"; in
     ;;
 esac
 
+# Does any of the rspec options match a filename? Then we should run
+# even if nothing has changed.
+function no_filenames {
+  while [[ "$#" -gt 0 ]]; do
+    if [[ -f "$1" ]]; then
+      false
+      return
+    else
+      shift
+    fi
+  done
+
+  true
+}
+opts=()
+
+if no_filenames "$@"; then
+  opts+=(--no-run-if-empty)
+fi
+
 # Use arg-file to not muck up stdin; which would break "docker exec" wrappers
 # as well as interactive debugging sessions.
 # If no files matched, then do nothing.
-xargs --arg-file=<("${command[@]}") --no-run-if-empty -- "$rspec" "$@"
+xargs --arg-file=<("${command[@]}") "${opts[@]}" -- "$rspec" "$@"
