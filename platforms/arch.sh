@@ -605,6 +605,9 @@ if run-section "fast"; then
     "$HOME/.config/user-dirs.dirs"
   create-user-dirs
 
+  header "Setting up default apps"
+  xdg-mime default spacefm.desktop inode/directory
+
   header "Setting up wallpapers"
   sudo rsync --archive --delete ../data/wallpapers/ /usr/share/wallpapers/Mange || handle-failure "running rsync"
   sudo chown -R root:root /usr/share/wallpapers/Mange
