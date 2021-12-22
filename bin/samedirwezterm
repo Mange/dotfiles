@@ -1,0 +1,29 @@
+#!/bin/bash
+
+wezterm_args=()
+original_args=()
+
+# Started with no arguments should just start wezterm in the same dir (like
+# "wezterm" with no argument is the same as "wezterm start").
+if [[ $# -eq 0 ]]; then
+  wezterm_args+=("start" "--cwd" "$(samedir --print)")
+fi
+
+while [[ $# -gt 0 ]]; do
+  original_args+=("$1")
+
+  if [[ "$1" == "--cwd" ]]; then
+    # Bail. We shouldn't set this option if it was passed in!
+    shift # since "$1" is already in $original_args
+    exec wezterm "${original_args[@]}" "$@"
+  elif [[ "$1" == start ]]; then
+    # Add it right after "wezterm start"
+    wezterm_args+=("$1" "--cwd" "$(samedir --print)")
+    shift
+  else
+    wezterm_args+=("$1")
+    shift
+  fi
+done
+
+exec wezterm "${wezterm_args[@]}"

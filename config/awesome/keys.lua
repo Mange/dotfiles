@@ -391,7 +391,7 @@ keys.global = gears.table.join(
   awful.key(
     { modkey },
     "Return",
-    actions.spawn { "samedir", terminal },
+    actions.spawn { "samedirwezterm" },
     { description = "Terminal in same dir", group = "Apps" }
   ),
   awful.key(
@@ -428,7 +428,7 @@ keys.global = gears.table.join(
     { modkey },
     "e",
     actions.run_or_raise(
-      { "samedir", "wezterm", "start", "--", "nvim" },
+      { "samedirwezterm", "start", "--", "nvim" },
       { class = "org.wezfurlong.wezterm", name = "NVIM$" }
     ),
     { description = "Focus editor", group = "Apps" }
@@ -448,7 +448,7 @@ keys.global = gears.table.join(
     { modkey },
     "g",
     actions.dropdown_toggle(
-      { "samedir", "wezterm", "start", "--class", "dropdown_terminal" },
+      { "samedirwezterm", "start", "--class", "dropdown_terminal" },
       { class = "dropdown_terminal" }
     ),
     { description = "Terminal dropdown", group = "Apps" }

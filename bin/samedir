@@ -3,31 +3,38 @@
 usage() {
   cat <<USAGE
 Usage: $0 COMMAND [ARG…]
+   or: $0 --print
    or: $0 --debug
 
 Tries to run COMMAND in the same CWD as the currently focused window. Will
 start in \$HOME if CWD cannot be determined.
 
-With --debug option, no command will run. Instead a list of pids and their CWDs
-will be printed out. Added as a notification if no stdout is present.
+With --print option, no command will run. Instead the path that would be used
+as CWD for a command is printed to stdout.
+
+With the --debug option, much more output will be printed. It will print a list
+of all checked processes.
 USAGE
 }
 
-debug_mode=no
+mode=run
+
 if [[ $1 == "--help" ]]; then
   usage
   exit 0
 elif [[ $# -le 0 ]]; then
   usage >&2
   exit 1
+elif [[ $# -eq 1 ]] && [[ $1 == "--print" ]]; then
+  mode=print
 elif [[ $# -eq 1 ]] && [[ $1 == "--debug" ]]; then
-  debug_mode=yes
+  mode=debug
 fi
 
 # Find PID of active window
 PID=$(
-  xprop -id "$(xprop -root | awk '/_NET_ACTIVE_WINDOW\(WINDOW\)/{print $NF}')" | \
-    grep -m 1 PID | \
+  xprop -id "$(xprop -root | awk '/_NET_ACTIVE_WINDOW\(WINDOW\)/{print $NF}')" |
+    grep -m 1 PID |
     cut -d " " -f 3
 )
 
@@ -58,24 +65,23 @@ debug_output=""
 
 while read -r pid; do
   if dir="$(readlink /proc/"$pid"/cwd)"; then
-    if [[ $debug_mode == "yes" ]]; then
+    if [[ $mode == "debug" ]]; then
       debug_output="${debug_output}
 $pid ($(cat /proc/"$pid"/comm)): $dir"
+    elif [[ $mode == "print" ]]; then
+      echo "$dir"
+      exit 0
     else
       cd "$dir" && exec "$@"
     fi
-  elif [[ $debug_mode == "yes" ]]; then
+  elif [[ $mode == "debug" ]]; then
     debug_output="${debug_output}
 $pid gone"
   fi
-done <<< "$pids"
+done <<<"$pids"
 
-if [[ $debug_mode == "yes" ]]; then
-  if [[ -t 1 ]]; then
-    echo $"$debug_output"
-  else
-    notify-send "samedir" $"$debug_output"
-  fi
+if [[ $mode == "debug" ]]; then
+  echo $"$debug_output"
 else
   # Cannot determine CWD, let's just start in HOME
   cd "$HOME" && exec "$@"
