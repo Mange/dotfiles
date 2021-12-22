@@ -320,7 +320,7 @@ if command-exist bat; then
   export FZF_CTRL_T_OPTS="--preview '(bat --style=numbers --color=always {} || cat {} || tree -C {}) 2> /dev/null | head -200'"
 fi
 
-export BAT_THEME=gruvbox
+export BAT_THEME=base16
 # }}}
 # {{{ Copy/Paste
 if command-exist pbcopy; then

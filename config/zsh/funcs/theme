@@ -20,26 +20,27 @@ theme <light|dark|apply|load>
   local apply
 
   case "$1" in
-    dark)
-      current_style=dark
-      apply=1
-      ;;
-    light)
-      current_style=light
-      apply=1
-      ;;
-    apply)
-      apply=1
-      ;;
-    load)
-      ;;
-    --help)
-      echo "$usage"
-      return 0
-      ;;
-    *)
-      echo "$usage" >&2
-      return 1
+  dark)
+    current_style=dark
+    apply=1
+    ;;
+  light)
+    current_style=light
+    apply=1
+    ;;
+  apply)
+    apply=1
+    ;;
+  load) ;;
+
+  --help)
+    echo "$usage"
+    return 0
+    ;;
+  *)
+    echo "$usage" >&2
+    return 1
+    ;;
   esac
 
   # Load the current style from disk
@@ -55,12 +56,12 @@ theme <light|dark|apply|load>
   export MANGE_THEME="$current_style"
   export KITTY_THEME="$current_style"
   case "$current_style" in
-    dark)
-      export BAT_THEME="gruvbox"
-      ;;
-    light)
-      export BAT_THEME="gruvbox-light"
-      ;;
+  dark)
+    export BAT_THEME="base16"
+    ;;
+  light)
+    export BAT_THEME="base16"
+    ;;
   esac
 
   apply_prompt_theme "$current_style"
