@@ -30,7 +30,6 @@ bash-language-server
 
 # Coding help
 colordiff
-ctags
 fzf
 github-cli
 highlight

@@ -55,34 +55,34 @@ eval set -- "$OPTS"
 
 while true; do
   case "$1" in
-    --help)
-      usage
-      shift
-      exit 0
-      ;;
-    -o | --only)
-      ONLY_SECTION="$2"
-      shift 2
-      ;;
-    --)
-      shift
-      break
-      ;;
-    *)
-      break
-      ;;
+  --help)
+    usage
+    shift
+    exit 0
+    ;;
+  -o | --only)
+    ONLY_SECTION="$2"
+    shift 2
+    ;;
+  --)
+    shift
+    break
+    ;;
+  *)
+    break
+    ;;
   esac
 done
 
 case "$ONLY_SECTION" in
-  all | pacman | rust | projects | neovim | aur | updates | fast | pip | npm | ruby | lua )
-    # Valid; do nothing
-    ;;
-  *)
-    echo "ERROR: $ONLY_SECTION is not a known section" >&2
-    usage
-    exit 1
-    ;;
+all | pacman | rust | projects | neovim | aur | updates | fast | pip | npm | ruby | lua)
+  # Valid; do nothing
+  ;;
+*)
+  echo "ERROR: $ONLY_SECTION is not a known section" >&2
+  usage
+  exit 1
+  ;;
 esac
 
 run-section() {
@@ -103,8 +103,14 @@ install-pacman() {
   # See if everything is already installed by resolving all the packages
   # (groups and indvidual) into their individual packages. Then filter them
   # through the local package database to get a list of "missing" software.
-  wanted_packages=$(set +e; echo "$wanted_software" | pacman -Sp --print-format "%n" - | sort)
-  installed_packages=$(set +e; echo "$wanted_packages" | pacman -Q - 2>/dev/null | awk '{ print $1 }' | sort)
+  wanted_packages=$(
+    set +e
+    echo "$wanted_software" | pacman -Sp --print-format "%n" - | sort
+  )
+  installed_packages=$(
+    set +e
+    echo "$wanted_packages" | pacman -Q - 2>/dev/null | awk '{ print $1 }' | sort
+  )
   needed="$(comm -23 <(echo "$wanted_packages") <(echo "$installed_packages"))"
 
   if [[ -n "$needed" ]]; then
@@ -133,7 +139,7 @@ uninstall-pacman() {
   unwanted_packages=()
   for pkg in $unwanted; do
     # Find exact matches of the package name
-    if pacman -S --quiet -s "$pkg" | grep --quiet "^${pkg}$" ; then
+    if pacman -S --quiet -s "$pkg" | grep --quiet "^${pkg}$"; then
       unwanted_packages+=("$pkg")
     fi
   done
@@ -143,7 +149,10 @@ uninstall-pacman() {
     return
   fi
 
-  installed_packages=$(set +e; printf "%s\n" "${unwanted_packages[@]}" | pacman -Q - 2>/dev/null | awk '{ print $1 }' | sort)
+  installed_packages=$(
+    set +e
+    printf "%s\n" "${unwanted_packages[@]}" | pacman -Q - 2>/dev/null | awk '{ print $1 }' | sort
+  )
   to_uninstall="$(comm -12 <(printf "%s\n" "${unwanted_packages[@]}" | sort) <(echo "$installed_packages"))"
 
   if [[ -n "$to_uninstall" ]] && hash -q paru 2>/dev/null; then
@@ -192,72 +201,75 @@ compile-install-aur() {
 }
 
 install-pip-software() {
-    header "Installing PIP software"
+  header "Installing PIP software"
 
-    wanted_software=(
-      pgcli
-    )
+  wanted_software=(
+    pgcli
+  )
 
-    for package in "${wanted_software[@]}"; do
-      if pip show "$package" >/dev/null 2>/dev/null; then
-        run-command-quietly "Upgrading $package" < <(
-          pip install --user --upgrade "$package" 2>&1
-        )
-      else
-        run-command-quietly "Installing $package" < <(
-          pip install --user "$package" 2>&1
-        )
-      fi
-    done
+  for package in "${wanted_software[@]}"; do
+    if pip show "$package" >/dev/null 2>/dev/null; then
+      run-command-quietly "Upgrading $package" < <(
+        pip install --user --upgrade "$package" 2>&1
+      )
+    else
+      run-command-quietly "Installing $package" < <(
+        pip install --user "$package" 2>&1
+      )
+    fi
+  done
 }
 
 install-npm-software() {
-    header "Installing NPM software"
+  header "Installing NPM software"
 
-    wanted_software=(
-      dockerfile-language-server-nodejs
-    )
+  wanted_software=(
+    dockerfile-language-server-nodejs
+  )
 
-    if [[ $HOSTNAME == krista ]]; then
-      wanted_software+=(toggl-cli)
+  if [[ $HOSTNAME == krista ]]; then
+    wanted_software+=(toggl-cli)
+  fi
+
+  for package in "${wanted_software[@]}"; do
+    if npm list -g "$package" >/dev/null 2>/dev/null; then
+      run-command-quietly "Upgrading $package" < <(
+        sudo npm upgrade -g "$package" 2>&1
+      )
+    else
+      run-command-quietly "Installing $package" < <(
+        sudo npm install -g "$package" 2>&1
+      )
     fi
-
-    for package in "${wanted_software[@]}"; do
-      if npm list -g "$package" >/dev/null 2>/dev/null; then
-        run-command-quietly "Upgrading $package" < <(
-          sudo npm upgrade -g "$package" 2>&1
-        )
-      else
-        run-command-quietly "Installing $package" < <(
-          sudo npm install -g "$package" 2>&1
-        )
-      fi
-    done
+  done
 }
 
 compile-paru() {
-    header "Installing paru"
+  header "Installing paru"
 
-    subheader "Download and install from source"
-    if [[ ! -d ~/.cache/paru-install ]]; then
-      mkdir -p ~/.cache
-      git clone https://aur.archlinux.org/paru.git ~/.cache/paru-install
-    fi
+  subheader "Download and install from source"
+  if [[ ! -d ~/.cache/paru-install ]]; then
+    mkdir -p ~/.cache
+    git clone https://aur.archlinux.org/paru.git ~/.cache/paru-install
+  fi
 
-    # Install dependencies
-    sudo pacman -S --needed base-devel
-    if ! hash rustup 2>/dev/null; then
-      sudo pacman -S rustup
-      rustup install stable
-    fi
+  # Install dependencies
+  sudo pacman -S --needed base-devel
+  if ! hash rustup 2>/dev/null; then
+    sudo pacman -S rustup
+    rustup install stable
+  fi
 
-    (cd ~/.cache/paru-install; makepkg -si)
+  (
+    cd ~/.cache/paru-install
+    makepkg -si
+  )
 
-    subheader "Installing paru using paru (whoa!)"
-    paru paru
+  subheader "Installing paru using paru (whoa!)"
+  paru paru
 
-    subheader "Cleaning up source"
-    rm -rf ~/.cache/paru-install
+  subheader "Cleaning up source"
+  rm -rf ~/.cache/paru-install
 }
 
 copy-replace-with-diff() {
@@ -318,7 +330,7 @@ confirm-diff() {
   fi
 
   if diff="$("${differ}" -u "${old}" "${new}" 2>&1)"; then
-    echo "Warning: confirm-diff got two identical files '${old}' '${new}'" > /dev/stderr
+    echo "Warning: confirm-diff got two identical files '${old}' '${new}'" >/dev/stderr
     return 0
   else
     echo "${yellow}Installed file differs from repo file:${reset}"
@@ -440,7 +452,7 @@ disable-user-systemd-unit() {
 
 init-sudo() {
   # Ask for password up front
-  sudo echo > /dev/null
+  sudo echo >/dev/null
 }
 
 if run-section "fast"; then
@@ -521,7 +533,6 @@ fi
 if run-section "ruby"; then
   header "Ruby setup and packages"
   install-ruby-via-rvm || handle-failure "Installing Ruby"
-  install-global-ruby-gem "ripper-tags"
   install-global-ruby-gem "standard"
   install-global-ruby-gem "solargraph"
 fi
@@ -558,8 +569,8 @@ if run-section "neovim"; then
       if hash pip3 2>/dev/null; then
         pip3 install --user --upgrade --upgrade-strategy eager -q neovim 2>&1
       else
-      echo "pip3 not installed!"
-      exit 1
+        echo "pip3 not installed!"
+        exit 1
       fi
     )
 
@@ -664,7 +675,6 @@ fi
 
 if run-section "updates" || run-section "ruby"; then
   subheader "Installing RVM/Ruby updates"
-  update-global-ruby-gem "ripper-tags"
   update-global-ruby-gem "standard"
   update-global-ruby-gem "solargraph"
 fi
