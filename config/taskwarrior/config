@@ -12,9 +12,6 @@
 # Files
 data.location=~/.local/share/taskwarrior
 
-# Color theme
-include ~/.config/taskwarrior/current-theme.theme
-
 # Generic
 weekstart=Monday
 verbose=blank,label,new-id,affected,edit,special,project,sync
