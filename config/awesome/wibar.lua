@@ -120,8 +120,8 @@ function wibar.create_for_screen(s)
         polybar_wrapper {
           command = { polybar_dir .. "task-counters" },
           interval = 60,
-          left_click = actions.spawn { "kitty", "vit" },
-          right_click = actions.spawn { "kitty", "vit" },
+          left_click = actions.spawn { "wezterm", "start", "--", "vit" },
+          right_click = actions.spawn { "wezterm", "start", "--", "vit" },
         },
         battery_widget.new(),
         wibox.widget.systray(),

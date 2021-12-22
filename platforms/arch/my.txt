@@ -139,7 +139,7 @@ dunst # libnotify server
 feh # image viewer and background setter
 flameshot # Screenshot app
 gucharmap # character lookup gui, good for icon fonts
-kitty # terminal emulator
+# wezterm-bin # terminal emulator (using wezterm-git right now)
 lxappearance # dunno lol
 lxrandr # gui for xrandr
 network-manager-applet

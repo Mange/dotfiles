@@ -14,7 +14,7 @@ if [[ -f "$path" ]]; then
   if [[ -t 1 ]]; then
     exec nvim "$path"
   else
-    kitty nvim "$path"
+    wezterm start -- nvim "$path"
   fi
 else
   smart-notification \

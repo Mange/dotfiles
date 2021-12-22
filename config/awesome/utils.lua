@@ -34,6 +34,19 @@ function utils.clamp(min, current, max)
   end
 end
 
+--- Splits a path like "/path/to/file.txt" into "/path/to" and "file.txt".
+--- If only a filename is given ("file"), then nil and "file" is returned.
+--- @param path string
+--- @return string | nil dirname, string basename
+function utils.path_split(path)
+  local dir, file = string.match(path, "(.-)([^\\/]-)$")
+  if dir == "" then
+    return nil, file
+  else
+    return dir, file
+  end
+end
+
 function utils.run_or_raise(cmd, matchers)
   local c = utils.find_client(matchers)
   if c then

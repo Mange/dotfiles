@@ -6,6 +6,7 @@ tailscale-bin
 
 # Replaced with wezterm-git
 wezterm-bin
+kitty
 
 # Mail, etc.
 thunderbird

@@ -4,8 +4,8 @@ if [ -t 1 ]; then
   xwininfo -root -tree | bat
 else
   tmp="$(mktemp)"
-  xwininfo -root -tree > "$tmp"
-  kitty --detach --hold bat "$tmp"
+  xwininfo -root -tree >"$tmp"
+  wezterm start -- bat "$tmp" >/dev/null 2>&1 &
   sleep 3
   rm "$tmp"
 fi

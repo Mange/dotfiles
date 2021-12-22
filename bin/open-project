@@ -4,15 +4,15 @@ set -e
 projectspath=~/Projects/
 
 selected_path=$(
-  find "$projectspath" -maxdepth 3 -type d -and -name '.git' -printf '%C@ %P\n' | \
-    sed 's#/.git##' | \
+  find "$projectspath" -maxdepth 3 -type d -and -name '.git' -printf '%C@ %P\n' |
+    sed 's#/.git##' |
     finder --numeric-reversed
 )
 
 path="${projectspath}/${selected_path}"
 
 if [[ -d "$path" ]]; then
-  exec with-wd "$path" kitty
+  exec wezterm start --cwd "$path"
 else
   smart-notification \
     --urgency=critical \

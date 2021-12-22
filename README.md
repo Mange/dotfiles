@@ -8,7 +8,7 @@ Quick summary of my stack:
 - **Window manager:** [Awesome WM][awesome] + [picom] (compositor)
 - **Editor:** [Neovim]
 - **Shell:** [ZSH]
-- **Terminal emulator:** [kitty]
+- **Terminal emulator:** [Wezterm]
 - **Web browser:** [Firefox] (Developer Edition)
 - **Colors:** [Catppuccin]
 
@@ -88,6 +88,6 @@ repository.
 [picom]: https://github.com/yshui/picom
 [Neovim]: https://neovim.io/
 [ZSH]: http://zsh.sourceforge.net/
-[kitty]: https://sw.kovidgoyal.net/kitty/
+[Wezterm]: https://wezfurlong.org/wezterm/
 [Firefox]: https://www.mozilla.org/en-US/firefox/
 [Catppuccin]: https://github.com/catppuccin/catppuccin

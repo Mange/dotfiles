@@ -319,12 +319,22 @@ function actions.log_out(...)
 end
 
 function actions.edit_file(path)
-  return actions.spawn {
-    "kitty",
-    "nvim",
-    path,
-    "+cd %:p:h",
+  local dir, file = utils.path_split(path)
+  local args = {
+    "wezterm",
+    "start",
   }
+
+  if dir ~= nil then
+    table.insert(args, "--cwd")
+    table.insert(args, dir)
+  end
+
+  table.insert(args, "--")
+  table.insert(args, "nvim")
+  table.insert(args, file)
+
+  return actions.spawn(args)
 end
 
 function actions.toggle_focus_tag()
@@ -383,7 +393,7 @@ function actions.volume_mute_toggle()
 end
 
 function actions.volume_tui()
-  return actions.spawn { "kitty", "pulsemixer" }
+  return actions.spawn { "wezterm", "start", "--", "pulsemixer" }
 end
 
 function actions.volume_gui()

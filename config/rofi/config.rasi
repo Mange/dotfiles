@@ -1,5 +1,7 @@
 configuration {
-  terminal: "kitty";
+  terminal: "wezterm";
+  ssh-command: "{terminal} start -- {ssh-client} {host} [-p {port}]";
+  run-shell-command: "{terminal} start -- {cmd}";
   dpi: 1;
 
   drun-display-format: "{name}";

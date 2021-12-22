@@ -54,7 +54,6 @@ theme <light|dark|apply|load>
   fi
 
   export MANGE_THEME="$current_style"
-  export KITTY_THEME="$current_style"
   case "$current_style" in
   dark)
     export BAT_THEME="base16"
@@ -69,7 +68,6 @@ theme <light|dark|apply|load>
   if [[ -n $apply ]]; then
     ~/.local/bin/_theme_set "$current_style"
     ~/.local/bin/set-wallpaper
-    ~/.local/bin/_theme_reload_window
   fi
 }
 

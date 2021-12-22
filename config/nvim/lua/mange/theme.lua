@@ -5,7 +5,7 @@ local catppuccin = require "catppuccin"
 
 local theme = {}
 
-local function theme_shared()
+local function theme_overrides()
   -- Highlight line number instead of showing a sign on lines with diagnostics
   vim.cmd [[
     highlight DiagnosticLineNrError guibg=#51202A guifg=#FF0000 gui=bold
@@ -18,16 +18,6 @@ local function theme_shared()
     sign define DiagnosticSignInfo text= texthl=DiagnosticSignInfo linehl= numhl=DiagnosticLineNrInfo
     sign define DiagnosticSignHint text= texthl=DiagnosticSignHint linehl= numhl=DiagnosticLineNrHint
   ]]
-end
-
-local function theme_light()
-  opt.background = "light"
-  theme_shared()
-end
-
-local function theme_dark()
-  opt.background = "dark"
-  theme_shared()
 end
 
 function theme.reload()
@@ -108,11 +98,7 @@ function theme.setup()
 
   cmd [[silent! colorscheme catppuccin]]
 
-  if vim.env.KITTY_THEME == "light" then
-    theme_light()
-  else
-    theme_dark()
-  end
+  theme_overrides()
 end
 
 return theme

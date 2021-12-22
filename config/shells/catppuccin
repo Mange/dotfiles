@@ -4,7 +4,6 @@ export theme_bg_l3="#6E6C7C"
 export theme_bg_l2="#3e4058"
 export theme_bg_l1="#2D293B"
 export theme_bg="#1E1E28"
-export theme_bg_transparent="#1E1E29" # BG in Kitty; will cause transparent background
 export theme_bg_d1="#1B1923"
 export theme_bg_d2="#15121C"
 

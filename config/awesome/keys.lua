@@ -12,7 +12,7 @@ local media_mode = require "media_mode"
 local modkey = constants.keys.modkey
 -- Terminal cmdline; note that this is repeated in this file some times because
 -- of non-standard CLI arguments, etc.
-local terminal = "kitty"
+local terminal = "wezterm"
 
 local keys = {}
 
@@ -428,8 +428,8 @@ keys.global = gears.table.join(
     { modkey },
     "e",
     actions.run_or_raise(
-      { "samedir", "kitty", "nvim" },
-      { class = "kitty", name = "NVIM$" }
+      { "samedir", "wezterm", "start", "--", "nvim" },
+      { class = "org.wezfurlong.wezterm", name = "NVIM$" }
     ),
     { description = "Focus editor", group = "Apps" }
   ),
@@ -437,7 +437,10 @@ keys.global = gears.table.join(
   awful.key(
     { modkey, "Shift" },
     "e",
-    actions.focus_tag_client { class = "kitty", name = "NVIM$" },
+    actions.focus_tag_client {
+      class = "org.wezfurlong.wezterm",
+      name = "NVIM$",
+    },
     { description = "Focus-tag editor", group = "Apps" }
   ),
 
@@ -445,8 +448,8 @@ keys.global = gears.table.join(
     { modkey },
     "g",
     actions.dropdown_toggle(
-      { "kitty", "--class", "dropdown_kitty" },
-      { class = "dropdown_kitty" }
+      { "samedir", "wezterm", "start", "--class", "dropdown_terminal" },
+      { class = "dropdown_terminal" }
     ),
     { description = "Terminal dropdown", group = "Apps" }
   ),
@@ -455,7 +458,7 @@ keys.global = gears.table.join(
     { modkey, "Shift" },
     "g",
     actions.dropdown_toggle(
-      { "kitty", "--class", "dropdown_calc", "qalc" },
+      { "wezterm", "start", "--class", "dropdown_calc", "--", "qalc" },
       { class = "dropdown_calc" }
     ),
     { description = "Calculator dropdown", group = "Apps" }
@@ -465,7 +468,7 @@ keys.global = gears.table.join(
     { modkey },
     "t",
     actions.dropdown_toggle(
-      { "kitty", "--class", "dropdown_vit", "vit" },
+      { "wezterm", "start", "--class", "dropdown_vit", "--", "vit" },
       { class = "dropdown_vit" }
     ),
     { description = "Tasks dropdown", group = "Apps" }

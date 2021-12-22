@@ -8,6 +8,7 @@ local function font(name, params)
 end
 
 return {
+  check_for_updates = false,
   color_scheme = "Catppuccino",
   color_schemes = {
     -- https://github.com/catppuccin/catppuccin/issues/17

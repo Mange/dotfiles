@@ -123,14 +123,6 @@ command! fzf :set noquickview | :execute 'goto "'.system('find | fzf --height 10
 
 " Pdf / comics / etc
 filextype *.pdf,*.cbr,*.cbz zathura %c %i &
-fileviewer *.pdf
-        \ preview-image.sh pdfpreview %px %py %pw %ph %c
-        \ %pc
-        \ preview-image.sh clear
-fileviewer *.epub
-        \ preview-image.sh epubpreview %px %py %pw %ph %c
-        \ %pc
-        \ preview-image.sh clear
 
 " PostScript
 filextype *.ps,*.eps,*.ps.gz
@@ -155,12 +147,6 @@ filextype *.avi,*.mp4,*.wmv,*.dat,*.3gp,*.ogv,*.mkv,*.mpg,*.mpeg,*.vob,
          \*.as[fx]
         \ {View using mpv}
         \ mpv %f,
-fileviewer *.avi,*.mp4,*.wmv,*.dat,*.3gp,*.ogv,*.mkv,*.mpg,*.mpeg,*.vob,
-          \*.fl[icv],*.m2v,*.mov,*.webm,*.ts,*.mts,*.m4v,*.r[am],*.qt,*.divx,
-          \*.as[fx]
-        \ preview-image.sh videopreview %px %py %pw %ph %c
-        \ %pc
-        \ preview-image.sh clear
 
 " Web
 fileviewer *.html,*.htm w3m -dump %c
@@ -182,14 +168,6 @@ filextype *.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm
         \ sxiv %f,
         \ {View in shotwell}
         \ shotwell,
-fileviewer *.bmp,*.jpg,*.jpeg,*.png,*.xpm
-        \ preview-image.sh draw %px %py %pw %ph %c
-        \ %pc
-        \ preview-image.sh clear
-fileviewer *.gif
-        \ preview-image.sh gifpreview %px %py %pw %ph %c
-        \ %pc
-        \ preview-image.sh clear
 
 " MD5
 filetype *.md5
@@ -348,7 +326,7 @@ unmap <space>
 nnoremap <wait> <space><space> tj
 
 " Open console in current directory
-nnoremap <wait> <space>t :!kitty 2>/dev/null &<cr>
+nnoremap <wait> <space>t :!wezterm start 2>/dev/null &<cr>
 
 " Open editor to edit vifmrc and apply settings after returning to vifm
 nnoremap <wait> <space>c :write | edit $MYVIFMRC | restart<cr>

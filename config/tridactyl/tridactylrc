@@ -2,8 +2,8 @@
 sanitise tridactyllocal tridactylsync
 
 " {{{ Settings
-" Editor command is Neovim in Kitty
-set editorcmd kitty nvim "%f"
+" Editor command is Neovim in Wezterm
+set editorcmd wezterm start -- nvim "%f"
 
 set theme dark
 
