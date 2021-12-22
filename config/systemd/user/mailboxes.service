@@ -1,7 +1,0 @@
-[Unit]
-Description="Syncs all mailboxes"
-Wants=network-online.target
-
-[Service]
-Type=simple
-ExecStart=/home/mange/.local/bin/mailboxes sync

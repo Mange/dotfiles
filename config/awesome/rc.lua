@@ -243,13 +243,6 @@ awful.rules.rules = {
     properties = { tag = tags[3] },
   },
 
-  -- Mail clients
-  {
-    rule_any = {
-      class = { "Thunderbird" },
-    },
-    properties = { tag = tags[5] },
-  },
   {
     rule_any = {
       role = { "AlarmWindow" },

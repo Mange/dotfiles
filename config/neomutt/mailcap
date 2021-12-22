@@ -1,7 +1,0 @@
-text/plain; $VISUAL %s ;
-text/html; email-openfile %s ;
-text/html; w3m -I %{charset} -T text/html; copiousoutput;
-image/*; email-openfile %s ; copiousoutput
-video/*; setsid mpv --quiet %s &; copiousoutput
-application/pdf; email-openfile %s ;
-application/pgp-encrypted; gpg -d '%s'; copiousoutput;

@@ -6,3 +6,14 @@ tailscale-bin
 
 # Replaced with wezterm-git
 wezterm-bin
+
+# Mail, etc.
+thunderbird
+afew # Notmuch tagger
+isync # Email sync via IMAP
+msmtp # For email sending
+neomutt # Email client
+notmuch # Email indexer and search engine
+notmuch-vim # Email client (does not work with rvm, it appears)
+urlscan # Pick URLs from HTML
+w3m # For HTML email reading
