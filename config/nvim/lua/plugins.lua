@@ -116,11 +116,6 @@ require("packer").startup(function(use)
         show_end_of_line = false,
         use_treesitter = true,
       }
-
-      -- gruvbox.dark1
-      vim.cmd "highlight IndentBlanklineChar guifg=#3c3836 gui=nocombine"
-      -- gruvbox.dark4
-      vim.cmd "highlight IndentBlanklineContextChar guifg=#7c6f64 gui=nocombine"
     end,
   }
 
@@ -152,7 +147,7 @@ require("packer").startup(function(use)
   }
 
   -- Colortheme
-  use { "ellisonleao/gruvbox.nvim", requires = { "rktjmp/lush.nvim" } }
+  use { "catppuccin/nvim", as = "catppuccin" }
 
   -- Show keybinds while waiting for the next key. Allows more complicated
   -- keybinds to be remembered.

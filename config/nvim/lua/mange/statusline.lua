@@ -1,35 +1,7 @@
-local gb = require "mange.gruvbox"
-
 require("lualine").setup {
   options = {
     icons_enabled = true,
-    theme = vim.tbl_deep_extend("force", require "lualine.themes.gruvbox", {
-      normal = {
-        a = { bg = gb.light4 },
-        b = { bg = gb.dark1 },
-        c = { bg = gb.dark1 },
-      },
-      insert = {
-        b = { bg = gb.dark1 },
-        c = { bg = gb.dark1 },
-      },
-      visual = {
-        b = { bg = gb.dark1 },
-        c = { bg = gb.dark1 },
-      },
-      replace = {
-        b = { bg = gb.dark1 },
-        c = { bg = gb.dark1 },
-      },
-      command = {
-        b = { bg = gb.dark1 },
-        c = { bg = gb.dark1 },
-      },
-      inactive = {
-        b = { bg = gb.dark1 },
-        c = { bg = gb.dark1 },
-      },
-    }),
+    theme = "catppuccin",
 
     -- component_separators = { "", "" },
     -- section_separators = { "", "" },

@@ -10,7 +10,7 @@ Quick summary of my stack:
 - **Shell:** [ZSH]
 - **Terminal emulator:** [kitty]
 - **Web browser:** [Firefox] (Developer Edition)
-- **Colors:** [Gruvbox]
+- **Colors:** [Catppuccin]
 
 ## Structure
 
@@ -90,4 +90,4 @@ repository.
 [ZSH]: http://zsh.sourceforge.net/
 [kitty]: https://sw.kovidgoyal.net/kitty/
 [Firefox]: https://www.mozilla.org/en-US/firefox/
-[Gruvbox]: https://github.com/morhetz/gruvbox
+[Catppuccin]: https://github.com/catppuccin/catppuccin
