@@ -59,17 +59,11 @@ pages:
 
       - title: Shortcuts
         entries:
-          - shortcut: d
-            title: Downloads
-            shortcut_color: red
-            return: false
-            mode: background
-            command: wezterm start -- vifm "$HOME/Downloads"
           - shortcut: D
             title: Downloads (GUI)
             shortcut_color: red
             return: false
-            command: dolphin ~/Downloads
+            command: spacefm ~/Downloads
             mode: background
 
       - title: System

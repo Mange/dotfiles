@@ -92,6 +92,9 @@ zsh-completions
 zsh-history-substring-search
 zsh-syntax-highlighting
 
+imagemagick # for image previews, post-processing, etc.
+ghostscript # imagemagick optional dependency for PDF support
+
 # Task keeping
 task
 vit
@@ -100,15 +103,7 @@ vit
 libqalculate
 gnuplot # For plotting support
 
-#
-# vifm (CLI file manager)
-# also see aur.txt for extra dependencies and helpers
-#
-vifm
-
-imagemagick # for image previews, post-processing, etc.
-ghostscript # imagemagick optional dependency for PDF support
-
+# Archives
 atool # for archives
 p7zip
 unrar
@@ -116,9 +111,7 @@ unzip
 xz
 zip
 
-ffmpegthumbnailer # video previews
-poppler # PDF previews
-highlight # code preview
+# File information probes
 mediainfo
 transmission-cli # bittorrent info
 

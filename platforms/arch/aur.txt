@@ -32,9 +32,6 @@ spotifyd-full-git # Headless FLOSS version of Spotify
 picom-ibhagwan-git
 flashfocus-git # Flash windows when focus changes
 
-# Vifm stuff
-epub-thumbnailer-git
-
 # My own stuff
 graceful-shutdown
 rofi-emoji

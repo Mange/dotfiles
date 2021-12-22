@@ -21,3 +21,6 @@ w3m # For HTML email reading
 
 # Replaced with Awesome WM
 dunst
+
+# Replaced with spacefm (GUI) and nothing in cli
+vifm
