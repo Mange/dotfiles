@@ -1,4 +1,16 @@
-# yaml-language-server: $schema=https://json.schemastore.org/ansible-playbook.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-playbook.json
 - name: Set up local environment
   hosts: localhost
-  tasks: []
+  become: true
+  become_user: root
+  become_method: sudo
+  tasks:
+    - name: Load variables
+      include_vars: variables.yml
+      tags:
+        - always
+
+    - include_tasks: tasks/arch.yml
+      when: ansible_os_family == "Archlinux"
+      tags:
+        - arch
