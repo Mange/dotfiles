@@ -1,0 +1,4 @@
+# yaml-language-server: $schema=https://json.schemastore.org/ansible-playbook.json
+- name: Set up local environment
+  hosts: localhost
+  tasks: []

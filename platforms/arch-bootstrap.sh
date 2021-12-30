@@ -4,13 +4,24 @@
 #
 # The script will create your user, install dependencies of the dotfiles and
 # then clone the dotfiles and let the normal platform script take over.
+set -e
 
 if [[ $(whoami) != root ]]; then
   echo "You need to run this script as root." >/dev/stderr
   exit 1
 fi
 
+mode=interactive
+if ! [ -t 0 ]; then
+  mode=unattended
+fi
+
 confirm-continue() {
+  if [[ $mode == unattended ]]; then
+    echo "Aborting" >/dev/stderr
+    exit 0
+  fi
+
   echo -n "${1}. Continue? [yN]: " >/dev/stderr
   read -r answer
   if [[ $answer == "y" || $answer == "Y" ]]; then
@@ -22,17 +33,24 @@ confirm-continue() {
 }
 
 # Ask for user to create
-echo -n "Username of new user [mange]: " >/dev/stderr
-read -r username
-if [[ -z "$username" ]]; then
-  username=mange
+default_username=mange
+username=$default_username
+
+if [[ $mode == interactive ]]; then
+  echo -n "Username of new user [$default_username]: " >/dev/stderr
+  read -r username
+  if [[ -z "$username" ]]; then
+    username=$default_username
+  fi
 fi
 
-set -e
 set -o pipefail
 
-# Install git and zsh (because user should switch to it)
-(set -x; pacman -Sy --needed --quiet git zsh)
+# Install tools needed to setup everything.
+(
+  set -x
+  pacman -Sy --needed --quiet --noconfirm git zsh sudo ansible
+)
 
 # Create user, if it does not exist
 if id "$username" >/dev/null 2>/dev/null; then
@@ -41,42 +59,59 @@ else
   echo ">> Creating $username" >/dev/stderr
   (
     set -x
-    useradd --create-home --shell "$(which zsh)" --user-group "$username"
+    useradd --create-home --shell "$(type -p zsh)" --user-group "$username"
 
-    # Allow full name to be set
-    chfn "$username"
+    if [[ $mode == interactive ]]; then
+      # Allow full name to be set
+      chfn "$username"
 
-    # Set password
-    passwd "$username"
+      # Set password
+      passwd "$username"
+    fi
   )
 fi
 
 if ! groups "$username" | grep -qE '\bwheel\b'; then
   echo ">> Adding $username to wheel group (sudoers)" >/dev/stderr
-  (set -x; gpasswd -a "$username" wheel)
+  (
+    set -x
+    gpasswd -a "$username" wheel
+  )
 fi
 
 if ! groups "$username" | grep -qE '\bvideo\b'; then
   echo ">> Adding $username to video group (control brightness)" >/dev/stderr
-  (set -x; gpasswd -a "$username" video)
+  (
+    set -x
+    gpasswd -a "$username" video
+  )
 fi
 
 if ! groups "$username" | grep -qE '\binput\b'; then
   echo ">> Adding $username to input group (control LEDs)" >/dev/stderr
-  (set -x; gpasswd -a "$username" input)
+  (
+    set -x
+    gpasswd -a "$username" input
+  )
 fi
 
 if ! groups "$username" | grep -qE '\bdocker\b'; then
   echo ">> Adding $username to docker group" >/dev/stderr
   # groupadd --force exits with 0 even if group alrady exists
-  (set -x; groupadd --force docker; gpasswd -a "$username" docker)
+  (
+    set -x
+    groupadd --force docker
+    gpasswd -a "$username" docker
+  )
 fi
 
-if ! grep -qE '^%wheel ALL' /etc/sudoers; then
-  echo ">> Enabling wheel group for sudoers" >/dev/stderr
-  echo "This is not done automatically for safety reasons..." >/dev/stderr
-  confirm-continue "Uncomment the line for \"%wheel\""
-  visudo
+if [[ $mode == interactive ]]; then
+  if ! grep -qE '^%wheel ALL' /etc/sudoers; then
+    echo ">> Enabling wheel group for sudoers" >/dev/stderr
+    echo "This is not done automatically for safety reasons..." >/dev/stderr
+    confirm-continue "Uncomment the line for \"%wheel\""
+    visudo
+  fi
 fi
 
 # Add structure to user's home directory
@@ -95,28 +130,29 @@ if [[ ! -d "$projects_dir" ]]; then
   )
 fi
 
-# Clone dotfiles
-# Run using normal bash shell to prevent any ZSH config guides to kick in or
-# anything like that. Also, this is a script and not an interactive session and
-# I use bash for scripts and ZSH for interactive sessions anyway.
-if [[ ! -d "${projects_dir}/dotfiles" ]]; then
-  (
-    set -x
-    su --login --shell "$SHELL" --command="git clone https://github.com/Mange/dotfiles \"${projects_dir}/dotfiles\"" - mange
-  )
-fi
+if [[ $mode == interactive ]]; then
+  # Clone dotfiles
+  # Run using normal bash shell to prevent any ZSH config guides to kick in or
+  # anything like that. Also, this is a script and not an interactive session and
+  # I use bash for scripts and ZSH for interactive sessions anyway.
+  if [[ ! -d "${projects_dir}/dotfiles" ]]; then
+    (
+      set -x
+      su --login --shell "$SHELL" --command="git clone https://github.com/Mange/dotfiles \"${projects_dir}/dotfiles\"" - mange
+    )
+  fi
 
-# Run platform script
-set +e
-echo "Running platform script as $username" >/dev/stderr
-# Using sudo since it deals with interactive sessions better, and also nested sudo calls.
-if ! sudo --login --user="$username" -- "${projects_dir}/dotfiles/platforms/arch.sh"; then
-  echo "Script failed!" >/dev/stderr
-  confirm-continue "Please rerun it as $username at a later time"
-fi
+  # Run platform script
+  set +e
+  echo "Running platform script as $username" >/dev/stderr
+  # Using sudo since it deals with interactive sessions better, and also nested sudo calls.
+  if ! sudo --login --user="$username" -- "${projects_dir}/dotfiles/platforms/arch.sh"; then
+    echo "Script failed!" >/dev/stderr
+    confirm-continue "Please rerun it as $username at a later time"
+  fi
 
-# Print a TODO list
-cat <<-EOF >/dev/stderr
+  # Print a TODO list
+  cat <<-EOF >/dev/stderr
 
 ===============================================================================
 All done!
@@ -136,5 +172,6 @@ Enjoy your new computer!
 ===============================================================================
 EOF
 
-confirm-continue "Will now log in as $username"
-exec su --login - "$username"
+  confirm-continue "Will now log in as $username"
+  exec su --login - "$username"
+fi

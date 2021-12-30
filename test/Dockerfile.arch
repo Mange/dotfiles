@@ -1,0 +1,20 @@
+FROM archlinux:base
+RUN pacman -Syu --noconfirm
+
+COPY platforms/arch-bootstrap.sh /root/arch-bootstrap.sh
+RUN /root/arch-bootstrap.sh
+
+# Ensure wheel group users are not
+# asked for a password when using
+# sudo command by ammending sudoers file
+RUN echo '%wheel ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+# Prevent ZSH newuser prompt everytime a new testing container is started.
+RUN rm /usr/share/zsh/scripts/newuser
+
+# Now run the rest of the setup as mange
+# (And copy the repo into the container. Don't use a volume or it will affect
+# the outside system whenever you make changes as part of a script.)
+USER mange
+WORKDIR /home/mange
+
+COPY --chown=mange:mange . /home/mange/Projects/dotfiles
