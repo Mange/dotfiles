@@ -41,7 +41,6 @@ fpath=("${XDG_CONFIG_HOME}/zsh/funcs" $fpath)
 
 autoload seconds-to-human
 autoload apply_prompt_theme
-autoload theme
 
 # }}}
 # {{{ umask
@@ -518,7 +517,7 @@ stty -ixon -ixoff
 [ -f $HOME/.travis/travis.sh ] && source $HOME/.travis/travis.sh
 # }}}
 # {{{ Theme and prompt design
-theme load
+apply_prompt_theme
 # }}}
 
 # Chain with true to avoid $? being false

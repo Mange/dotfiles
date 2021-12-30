@@ -1,13 +1,6 @@
 #!/usr/bin/env bash
 # Run after installing dotfiles to perform extra work.
 
-# Setup theme file
-if [[ ! -f "${XDG_RUNTIME_DIR}/current_theme" ]]; then
-  ~/.local/bin/_theme_set dark
-else
-  ~/.local/bin/_theme_set "$(cat "${XDG_RUNTIME_DIR}/current_theme")"
-fi
-
 # Seed template files
 (
   shopt -s globstar

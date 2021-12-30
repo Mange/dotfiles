@@ -5,8 +5,6 @@
 # Prompt has three sections on both sides, with background gradient between the
 # different sections.
 function apply_prompt_theme {
-  local theme="${1:-$MANGE_THEME}"
-
   # Set up colors
   # shellcheck source=/home/mange/.config/shells/catppuccin
   source "${XDG_CONFIG_HOME:-$HOME/.config}/shells/catppuccin"
