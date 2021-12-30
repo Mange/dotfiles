@@ -46,7 +46,7 @@ function theme.setup()
     transparent_background = true,
     term_colors = true,
     styles = {
-      comments = "italic",
+      comments = "NONE",
       functions = "NONE",
       keywords = "bold,italic",
       strings = "NONE",
