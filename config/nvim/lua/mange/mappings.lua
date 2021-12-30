@@ -138,6 +138,9 @@ local function setup()
   wk_register({
     ["<C-s>"] = { "<C-o>:silent! wall<cr>", "Save all" },
     ["<C-c><C-c>"] = { "<C-o>:wq<CR>", "Save and close" },
+
+    -- Digraph (replaces C-k, which I use for LSP signature help in insert mode)
+    ["<C-l>"] = { "<C-k>", "Enter digraph" },
   }, {
     mode = "i",
   })
