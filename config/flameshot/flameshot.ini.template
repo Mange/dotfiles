@@ -8,6 +8,7 @@ saveAfterCopy=true
 saveAfterCopyPath=/home/mange/Media/Pictures
 savePath=/home/mange/Media/Pictures
 savePathFixed=false
+setSaveAsFileExtension=Portable Network Graphic file (PNG) (*.png)
 showDesktopNotification=false
 showHelp=false
 

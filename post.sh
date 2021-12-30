@@ -8,22 +8,18 @@ else
   ~/.local/bin/_theme_set "$(cat "${XDG_RUNTIME_DIR}/current_theme")"
 fi
 
+# Seed template files
+(
+  shopt -s globstar
+  for file in **/*.template; do
+    if [[ -e "${file}" ]] && ! [[ -e "${file%.template}" ]]; then
+      cp -v "${file}" "${file%.template}"
+    fi
+  done
+)
+
 # Create directory for ZSH history, etc., if it does not exist already.
 mkdir -p "${XDG_DATA_HOME}/zsh"
-
-# Install Vim plugs
-if [[ ! -f "${XDG_DATA_HOME}/nvim/site/autoload/plug.vim" ]]; then
-  echo "Downloading Vim plug"
-  curl \
-    --create-dirs --silent --fail --location \
-    --output "${XDG_DATA_HOME}/nvim/site/autoload/plug.vim" \
-    "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
-fi
-
-# Install Vim plugins
-if [[ ! -d "${XDG_DATA_HOME}/nvim/plugged" ]]; then
-  nvim -u "${XDG_CONFIG_HOME}/nvim/plugs.vim" +PlugInstall +qa
-fi
 
 # Install zsh plugins
 if [[ -d "${XDG_CONFIG_HOME}/zsh/fzf-tab" ]]; then
@@ -51,13 +47,8 @@ migrate_xdg ~/.cargo "$CARGO_HOME"
 migrate_xdg ~/.rustup "$RUSTUP_HOME"
 migrate_xdg ~/.gnupg "$GNUPGHOME"
 
-# Seed Picom blur config
-if [[ ! -f "${XDG_CONFIG_HOME}/picom/blur.cfg" ]]; then
-  echo "strength = 8.0" > "${XDG_CONFIG_HOME}/picom/blur.cfg"
-fi
-
 if [[ "$SHELL" != *zsh ]]; then
-  echo "Warning: You seem to be using a shell different from zsh (${SHELL})" > /dev/stderr
-  echo "Fix this by running:" > /dev/stderr
-  echo "  chsh -s \$(which zsh)" > /dev/stderr
+  echo "Warning: You seem to be using a shell different from zsh (${SHELL})" >/dev/stderr
+  echo "Fix this by running:" >/dev/stderr
+  echo "  chsh -s \$(which zsh)" >/dev/stderr
 fi
