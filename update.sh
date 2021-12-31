@@ -63,4 +63,5 @@ if [[ "${#tags}" -gt 0 ]]; then
 fi
 
 echo "Running ansible bootstrap…"
+ansible-galaxy collection install -r "${dir}/ansible/requirements.yml"
 ansible-playbook "${ansible_options[@]}"

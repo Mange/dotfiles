@@ -244,34 +244,6 @@ install-npm-software() {
   done
 }
 
-compile-paru() {
-  header "Installing paru"
-
-  subheader "Download and install from source"
-  if [[ ! -d ~/.cache/paru-install ]]; then
-    mkdir -p ~/.cache
-    git clone https://aur.archlinux.org/paru.git ~/.cache/paru-install
-  fi
-
-  # Install dependencies
-  sudo pacman -S --needed base-devel
-  if ! hash rustup 2>/dev/null; then
-    sudo pacman -S rustup
-    rustup install stable
-  fi
-
-  (
-    cd ~/.cache/paru-install
-    makepkg -si
-  )
-
-  subheader "Installing paru using paru (whoa!)"
-  paru paru
-
-  subheader "Cleaning up source"
-  rm -rf ~/.cache/paru-install
-}
-
 copy-replace-with-diff() {
   local source="$1"
   local target="$2"
@@ -494,11 +466,6 @@ if run-section "rust"; then
 fi
 
 if run-section "aur"; then
-  if ! hash paru 2>/dev/null; then
-    init-sudo
-    compile-paru || handle-failure
-  fi
-
   if hash paru 2>/dev/null; then
     init-sudo
     header "Compile and install AUR software"

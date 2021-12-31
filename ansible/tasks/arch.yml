@@ -27,3 +27,24 @@
             option: "Include",
             value: "/etc/pacman.d/mirrorlist",
           }
+
+    - name: Update pacman
+      pacman:
+        update_cache: true
+        upgrade: false
+
+    - name: Install base-devel
+      pacman:
+        name: base-devel
+        state: present
+
+    - name: Upgrade pacman
+      pacman:
+        update_cache: false
+        upgrade: true
+
+    # Paru requires Rust to be installed; and I want to install it using
+    # "rustup" rather than makepkg just installing "rust" as a dependency and
+    # me then having to clean that up afterward.
+    - include_tasks: tasks/rust.yml
+    - include_tasks: tasks/paru.yml

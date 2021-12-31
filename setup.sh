@@ -36,6 +36,7 @@ esac
 dir="$(dirname "$(readlink -f "$0")")"
 
 echo "Running ansible bootstrap…"
+ansible-galaxy collection install -r "${dir}/ansible/requirements.yml"
 ansible-playbook \
   -i "${dir}/ansible/hosts" \
   "${dir}/ansible/environment.yml" \

@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-tasks.json
+- block:
+    - name: Install rustup (Arch)
+      pacman:
+        name: rustup
+        state: present
+      when: ansible_os_family == "Archlinux"
+
+    - name: Install Rust stable
+      become_user: mange
+      command: rustup install stable
+      args:
+        creates: /home/mange/.local/share/rustup/toolchains/stable-x86_64-unknown-linux-gnu
