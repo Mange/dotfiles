@@ -1,0 +1,7 @@
+---
+dependencies:
+  - role: group-desktop
+  - role: group-home
+  - role: group-work
+  - role: group-drawing
+  - role: group-gaming

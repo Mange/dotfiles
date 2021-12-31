@@ -10,5 +10,10 @@
       tags:
         - always
 
-    - include_tasks: tasks/host-morbidus.yml
+    - include_role:
+        name: host-morbidus
       when: ansible_hostname == "morbidus"
+
+    - include_role:
+        name: host-krista
+      when: ansible_hostname == "krista"

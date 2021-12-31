@@ -42,3 +42,6 @@
       pacman:
         update_cache: false
         upgrade: true
+
+    - include_role:
+        name: paru

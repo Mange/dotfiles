@@ -1,5 +1,0 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-tasks.json
-# Morbidus is my main workstation at home. Include some groups.
-- block:
-    - include_role:
-        name: group-base
