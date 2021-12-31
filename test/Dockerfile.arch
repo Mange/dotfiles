@@ -11,6 +11,8 @@ RUN echo '%wheel ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 # Prevent ZSH newuser prompt everytime a new testing container is started.
 RUN rm /usr/share/zsh/scripts/newuser
 
+CMD zsh
+
 # Now run the rest of the setup as mange
 # (And copy the repo into the container. Don't use a volume or it will affect
 # the outside system whenever you make changes as part of a script.)
