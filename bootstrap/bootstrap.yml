@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-playbook.json
+- name: Bootstrap new machine
+  hosts: localhost
+  become: true
+  become_user: root
+  become_method: sudo
+  tasks:
+    - include_tasks: tasks/main.yml

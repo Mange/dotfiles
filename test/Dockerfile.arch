@@ -1,8 +1,17 @@
 FROM archlinux:base
 RUN pacman -Syu --noconfirm
 
-COPY platforms/arch-bootstrap.sh /root/arch-bootstrap.sh
-RUN /root/arch-bootstrap.sh
+# Install the bootstrap dependencies first to make the script quicker to run
+# while iterating.
+RUN pacman -Syu && pacman -S --noconfirm git sudo ansible
+
+COPY --chown=root:root . /root/dotfiles-bootstrap
+RUN /root/dotfiles-bootstrap/bootstrap/bootstrap.sh
+
+# Bootstrap tests:
+RUN test -d /home/mange # Mange has a home
+RUN groups mange | grep wheel # Mange is part of group wheel
+RUN grep -qE "^%wheel ALL=\(ALL\)" /etc/sudoers # Wheel group can use sudo
 
 # Ensure wheel group users are not
 # asked for a password when using
