@@ -10,7 +10,5 @@
       tags:
         - always
 
-    - include_tasks: tasks/arch.yml
-      when: ansible_os_family == "Archlinux"
-      tags:
-        - arch
+    - include_tasks: tasks/host-morbidus.yml
+      when: ansible_hostname == "morbidus"

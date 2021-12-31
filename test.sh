@@ -44,6 +44,7 @@ done
 
 image_name="dotfiles-$platform"
 container_name="dotfiles-$platform-run"
+hostname="${HOST:-$(hostname)}"
 
 has_container() {
   count="$(docker ps --quiet --all --filter name="$1" | wc -l)"
@@ -59,6 +60,7 @@ else
   exec docker run \
     -ti \
     --name "$container_name" \
+    --hostname "$hostname" \
     --volume "$(pwd)/ansible:/home/mange/Projects/dotfiles/ansible" \
     "$image_name"
 fi
