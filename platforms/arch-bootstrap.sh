@@ -5,6 +5,9 @@
 # The script will create your user, install dependencies of the dotfiles and
 # then clone the dotfiles and let the normal platform script take over.
 set -e
+set -o pipefail
+
+username=mange
 
 if [[ $(whoami) != root ]]; then
   echo "You need to run this script as root." >/dev/stderr
@@ -32,30 +35,15 @@ confirm-continue() {
   fi
 }
 
-# Ask for user to create
-default_username=mange
-username=$default_username
-
-if [[ $mode == interactive ]]; then
-  echo -n "Username of new user [$default_username]: " >/dev/stderr
-  read -r username
-  if [[ -z "$username" ]]; then
-    username=$default_username
-  fi
-fi
-
-set -o pipefail
-
 # Install tools needed to setup everything.
 (
   set -x
-  pacman -Sy --needed --quiet --noconfirm git zsh sudo ansible
+  pacman -Sy --needed --quiet --noconfirm \
+    git zsh sudo ansible
 )
 
 # Create user, if it does not exist
-if id "$username" >/dev/null 2>/dev/null; then
-  confirm-continue "User $username already exists"
-else
+if ! id "$username" >/dev/null 2>/dev/null; then
   echo ">> Creating $username" >/dev/stderr
   (
     set -x
