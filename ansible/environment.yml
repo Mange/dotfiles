@@ -4,6 +4,8 @@
   become: true
   become_user: root
   become_method: sudo
+  roles:
+    - group-base
   tasks:
     - name: Load variables
       include_vars: variables.yml
