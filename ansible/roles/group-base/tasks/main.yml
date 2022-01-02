@@ -4,3 +4,35 @@
       when: ansible_os_family == "Archlinux"
       tags:
         - arch
+
+    - name: Install base packages
+      become: false
+      when: ansible_os_family == "Archlinux"
+      kewlfft.aur.aur:
+        name:
+          - base-devel
+          - curl
+          - dnsutils # host(1), etc.
+          - git
+          - inetutils # hostname(1), etc.
+          - jq
+          - lsof
+          - man-pages
+          - openssh # SSH client
+          - parallel
+          - polkit
+          - tmux
+
+          # Shell
+          - zsh
+          - zsh-completions
+          - zsh-history-substring-search
+          - zsh-syntax-highlighting
+
+          # Filesystems
+          - nfs-utils # NFS (filesystem)
+          - ntfs-3g # NTFS (filesystem)
+          - exfat-utils # exFAT (filesystem)
+          - btrfs-progs # btrfs (filesystem)
+
+    - include_tasks: grub_theme.yml

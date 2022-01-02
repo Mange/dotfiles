@@ -1,7 +1,8 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-tasks.json
 - block:
-    - name: Install GUI programs
+    - name: Install GUI packages
       become: false
+      when: ansible_os_family == "Archlinux"
       kewlfft.aur.aur:
         name:
           # Graphical environment
@@ -22,7 +23,6 @@
           - mugshot # Customize user avatar (used in my AwesomeWM theme)
           - network-manager-applet
           - parcellite # Clipboard manager
-          - pavucontrol # pulse audio settings gui
           - rofi # graphical selector and app launcher
           - rofi-emoji
           - udiskie # auto-mounter for devices (and tray icon)
@@ -38,11 +38,13 @@
           # File management
           - spacefm
           # Media
-          - pulseaudio # Audio server
-          - spotify # A proprietary music streaming service
-          - playerctl
-          - vlc
           - mpv
+          - pavucontrol # Pulseaudio settings gui
+          - playerctl
+          - pulseaudio # Audio server
+          - pulsemixer # Pulseaudio TUI mixer
+          - spotify # A proprietary music streaming service
+          - vlc
           # PDF, comics, etc.
           - zathura
           - zathura-cb # Adds comic book support to zathura
@@ -71,7 +73,9 @@
           - aspell-en
           - aspell-sv
           - ispell
+          # Torrents and similar
+          - transmission-remote-gtk
+          - transmission-cli
           # Misc
           - xdg-utils # Desktop software support
           - gnome-keyring # To get GPG etc. unlocked globally
-      when: ansible_os_family == "Archlinux"

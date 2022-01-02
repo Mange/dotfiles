@@ -7,3 +7,91 @@
           - video # Control brightness
           - input # Control LEDs
         append: true
+
+    - name: Install workstation packages
+      become: false
+      when: ansible_os_family == "Archlinux"
+      kewlfft.aur.aur:
+        name:
+          # Hardware
+          - bluez # Bluetooth
+          - bluez-utils # Bluetooth
+
+          # Files and directories
+          - fzf
+          - tree
+          - vimv # Batch-rename files using Vim
+
+          # Docs and references
+          - tldr
+
+          # Network
+          - httpie
+          - nmap
+          - rsync
+          - curl
+
+          # Modern UNIX replacements
+          - bat
+          - exa
+          - htop
+          - prettyping
+          - procs # Modern replacement for ps(1)
+          - ripgrep
+
+          # Git and VCS
+          - git
+          - github-cli
+          - git-delta # Better diff tool for Git
+          - hub
+
+          # Task keeping
+          - task # Taskwarrior
+          - vit # Taskwarrior TUI
+
+          # Calculator
+          - libqalculate
+          - gnuplot # For plotting support
+
+          # Archives
+          - atool
+          - p7zip
+          - unrar
+          - unzip
+          - xz
+          - zip
+
+          # Misc developer tooling
+          - postgresql
+          - postgresql-libs
+          - jiq # interactive jq
+          - jq
+          - watchexec
+          - gron-bin # transforms JSON into discrete assignments to make it easier to grep.
+          - parallel
+          - pastel
+
+          # CLI toys
+          - dotacat # like lolcat
+          - figlet
+          - figlet-fonts
+          - figlet-fonts-extra
+
+          # Media
+          - mediainfo
+          - youtube-dl
+          - imagemagick # for image previews, post-processing, etc.
+          - ghostscript # imagemagick optional dependency for PDF support
+
+          # Misc
+          - duplicity # Backup tool
+          - tydra
+
+    - name: Install workstation PIP packages
+      pip:
+        state: latest
+        name:
+          - pgcli
+          # TODO: Cannot install http-prompt since it is incompatible with
+          # pgcli; they depend on the same thing but in different versions and pip cannot
+          # deal with that…

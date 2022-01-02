@@ -1,9 +1,10 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-tasks.json
 - block:
-    - name: Install nvidia drivers
+    - name: Install drawing packages
+      become: false
       when: ansible_os_family == "Archlinux"
-      pacman:
+      kewlfft.aur.aur:
         name:
-          - nvidia
-          - nvidia-utils
-          - nvidia-settings
+          - libwacom
+          - xf86-input-wacom
+          - krita

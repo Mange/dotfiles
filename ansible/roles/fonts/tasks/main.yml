@@ -2,6 +2,7 @@
 - block:
     - name: Install fonts
       become: false
+      when: ansible_os_family == "Archlinux"
       kewlfft.aur.aur:
         name:
           - font-victor-mono
@@ -27,4 +28,3 @@
           - ttf-arphic-uming # Chinese
           - ttf-baekmuk # Korean
           - ttf-indic-otf # Indic; includes ಠ_ಠ
-      when: ansible_os_family == "Archlinux"

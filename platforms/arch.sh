@@ -94,132 +94,6 @@ run-section() {
   fi
 }
 
-install-pacman() {
-  local filename="$1"
-  local wanted_software wanted_packages installed_packages needed
-
-  wanted_software=$(sed 's/\s*#.*$//' "$filename" | sed '/^$/d' | sort)
-
-  # See if everything is already installed by resolving all the packages
-  # (groups and indvidual) into their individual packages. Then filter them
-  # through the local package database to get a list of "missing" software.
-  wanted_packages=$(
-    set +e
-    echo "$wanted_software" | pacman -Sp --print-format "%n" - | sort
-  )
-  installed_packages=$(
-    set +e
-    echo "$wanted_packages" | pacman -Q - 2>/dev/null | awk '{ print $1 }' | sort
-  )
-  needed="$(comm -23 <(echo "$wanted_packages") <(echo "$installed_packages"))"
-
-  if [[ -n "$needed" ]]; then
-    subheader "Installing new software:"
-    echo "$needed" | column
-    # --needed does not reinstall already installed software. Just to be safe.
-    set +e
-    echo "$red"
-    run-command-quietly "" < <(
-      echo "$needed" | $PACMAN -S --quiet --needed - 2>&1
-    )
-    set -e
-  else
-    echo "${green}Everything installed ✔${reset}"
-  fi
-}
-
-uninstall-pacman() {
-  local filename="$1"
-  local unwanted unwanted_packages installed_packages to_uninstall
-
-  unwanted=$(sed 's/#.*$//' "$filename" | sed '/^$/d' | sort)
-
-  # Filter out unknown package names (most likely packages installed through AUR
-  # and then removed).
-  unwanted_packages=()
-  for pkg in $unwanted; do
-    # Find exact matches of the package name
-    if pacman -S --quiet -s "$pkg" | grep --quiet "^${pkg}$"; then
-      unwanted_packages+=("$pkg")
-    fi
-  done
-
-  if [[ "${#unwanted_packages[@]}" -eq 0 ]]; then
-    echo "${green}Everything uninstalled ✔${reset}"
-    return
-  fi
-
-  installed_packages=$(
-    set +e
-    printf "%s\n" "${unwanted_packages[@]}" | pacman -Q - 2>/dev/null | awk '{ print $1 }' | sort
-  )
-  to_uninstall="$(comm -12 <(printf "%s\n" "${unwanted_packages[@]}" | sort) <(echo "$installed_packages"))"
-
-  if [[ -n "$to_uninstall" ]] && hash -q paru 2>/dev/null; then
-    subheader "Uninstalling software:"
-    echo "$to_uninstall" | column
-    set +e
-    echo "$red"
-
-    run-command-quietly "" < <(
-      paru -Rs "$to_uninstall"
-    )
-
-    set -e
-  else
-    echo "${green}Everything uninstalled ✔${reset}"
-  fi
-}
-
-compile-install-aur() {
-  local filename="$1"
-  local installed=0
-  local errors=0
-
-  mapfile -t packages < <(sed -E 's/#.*$//; s/ +$//; /^$/d' "$filename")
-
-  for package in "${packages[@]}"; do
-    # Skip if already installed
-    if paru -Q --quiet "$package" 2>/dev/null >/dev/null; then
-      continue
-    fi
-
-    subheader "Compiling package $package"
-    if paru -Sa --quiet "$package"; then
-      installed=$((installed + 1))
-    else
-      errors=$((errors + 1))
-    fi
-  done
-
-  if [[ $errors -eq 0 ]]; then
-    echo "${green}Everything compiled/installed ✔${reset}"
-  else
-    echo "${yellow}${errors} package(s) failed to install. ${installed} installed successfully.${reset}"
-    handle-failure
-  fi
-}
-
-install-pip-software() {
-  header "Installing PIP software"
-
-  wanted_software=(
-    pgcli
-  )
-
-  for package in "${wanted_software[@]}"; do
-    if pip show "$package" >/dev/null 2>/dev/null; then
-      run-command-quietly "Upgrading $package" < <(
-        pip install --user --upgrade "$package" 2>&1
-      )
-    else
-      run-command-quietly "Installing $package" < <(
-        pip install --user "$package" 2>&1
-      )
-    fi
-  done
-}
-
 install-npm-software() {
   header "Installing NPM software"
 
@@ -358,33 +232,6 @@ configure-polkit() {
   sudo-copy-replace-with-diff "$dotfile_config" "$config" || handle-failure
 }
 
-configure-pacman() {
-  header "Configuring Pacman"
-
-  local config=/etc/pacman.conf
-
-  # Enable color, if not enabled
-  if ! grep -Eq "^Color" "$config"; then
-    run-command-quietly "Enabling Color in Pacman" < <(
-      sudo sed -i "s/^#Color/Color/" "$config" 2>&1
-    )
-  fi
-
-  if ! grep -Eq '^IgnorePkg' "$config"; then
-    run-command-quietly "Enabling IgnorePkg" < <(
-      sudo sed -i "s/^#IgnorePkg/IgnorePkg/" "$config" 2>&1
-    )
-  fi
-
-  # Forbid kglobalaccel from being installed
-  pkg="kglobalaccel"
-  if ! grep -Eq "IgnorePkg\\s*=.*\\b${pkg}\\b" "$config"; then
-    run-command-quietly "Forbidding $pkg" < <(
-      sudo sed -Ei "/^IgnorePkg\\b/ s/\$/ ${pkg}/" "$config" 2>&1
-    )
-  fi
-}
-
 setup-nerd-fonts() {
   local package_config=/etc/fonts/conf.avail/10-nerd-font-symbols.conf
   local user_config=${XDG_CONFIG_HOME:-~/.config}/fontconfig/conf.d/10-nerd-font-symbols.conf
@@ -407,7 +254,6 @@ enable-systemd-unit() {
 
 enable-user-systemd-unit() {
   if [[ $(systemctl is-enabled --user "$1") != "enabled" ]] || [[ $(systemctl is-active --user "$1") != "active" ]]; then
-    init-sudo
     run-command-quietly "Starting and enabling $1 at login" < <(
       systemctl enable --user --now "$1" 2>&1
     )
@@ -422,38 +268,9 @@ disable-user-systemd-unit() {
   fi
 }
 
-init-sudo() {
-  # Ask for password up front
-  sudo echo >/dev/null
-}
-
 if run-section "fast"; then
   header "Setting up GPG"
   setup-gpg-auto-retrieve
-fi
-
-if run-section "updates" || run-section "pacman"; then
-  init-sudo
-
-  header "Refreshing pacman cache"
-  run-command-quietly "Refreshing pacman" < <(
-    $PACMAN -S --refresh --quiet 2>&1
-  )
-fi
-
-if run-section "pacman" || run-section "fast"; then
-  header "Uninstall deprecated software"
-  uninstall-pacman "arch/uninstall.txt" || handle-failure
-fi
-
-if run-section "pacman"; then
-  for bundle in base "${HOSTNAME}" my; do
-    bundle_file="arch/${bundle}.txt"
-    if [[ -f $bundle_file ]]; then
-      header "Install ${bundle} software"
-      install-pacman "${bundle_file}" || handle-failure
-    fi
-  done
 fi
 
 # Rust is sometimes used to build things in AUR, install before AUR stuff.
@@ -463,19 +280,6 @@ fi
 if run-section "rust"; then
   install-crates rust/crates.txt "Rust software" || handle-failure
   cargo-update || handle-failure
-fi
-
-if run-section "aur"; then
-  if hash paru 2>/dev/null; then
-    init-sudo
-    header "Compile and install AUR software"
-    compile-install-aur arch/aur.txt || handle-failure
-
-    if [[ -f "arch/${HOSTNAME}-aur.txt" ]]; then
-      header "Compile and install AUR software for ${HOSTNAME}"
-      compile-install-aur "arch/${HOSTNAME}-aur.txt" || handle-failure
-    fi
-  fi
 fi
 
 if run-section "lua"; then
@@ -504,13 +308,7 @@ if run-section "ruby"; then
   install-global-ruby-gem "solargraph"
 fi
 
-if run-section "pip"; then
-  init-sudo
-  install-pip-software || handle-failure "Installing Python PIP software"
-fi
-
 if run-section "npm"; then
-  init-sudo
   install-npm-software || handle-failure "Installing NodeJS NPM software"
 fi
 
@@ -521,7 +319,6 @@ fi
 if run-section "neovim"; then
   if hash nvim 2>/dev/null; then
     header "Neovim"
-    init-sudo
 
     run-command-quietly "Python 2 plugin" < <(
       if hash pip2 2>/dev/null; then
@@ -581,7 +378,6 @@ if run-section "fast"; then
 
   configure-lightdm
   configure-polkit
-  configure-pacman
 
   header "Configuring Systemd"
   enable-systemd-unit "NetworkManager"

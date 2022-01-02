@@ -2,14 +2,16 @@
 set -e
 
 if [ "$1" = "--help" ]; then
-  echo "Usage: $0"
+  echo "Usage: $0 [ansible-playbook options]"
   echo ""
   echo "Sets up the current machine."
   exit 0
 fi
 
 setup_arch() {
-  sudo pacman -S --noconfirm --needed ansible
+  if ! hash ansible-playbook >/dev/null 2>/dev/null; then
+    sudo pacman -S --noconfirm --needed ansible
+  fi
 }
 
 case "$(uname -s)" in
@@ -34,10 +36,8 @@ Linux)
 esac
 
 dir="$(dirname "$(readlink -f "$0")")"
+cd "$dir"
 
 echo "Running ansible bootstrap…"
-ansible-galaxy collection install -r "${dir}/ansible/requirements.yml"
-ansible-playbook \
-  -i "${dir}/ansible/hosts" \
-  "${dir}/ansible/environment.yml" \
-  --ask-become-pass
+ansible-galaxy collection install -r requirements.yml
+ansible-playbook -i hosts environment.yml --ask-become-pass "$@"

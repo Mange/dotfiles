@@ -6,5 +6,25 @@
         name:
           - neovim-git
 
+          # Plugin hosts
+          - python # For neovim plugins
+          - python-pip # To install neovim package for Python
+          - nodejs # For neovim plugins
+          - yarn # For neovim plugins
+          - npm # To install neovim package for nodejs
+
+          # Language servers, linters, etc.
+          - texlab # LaTeX
+          - lua-language-server
+          - prettier # TS, JS, CSS, etc.
+          - rust-analyzer
+          - shfmt
+          - shellcheck
+          - stylua-bin
+          - yaml-language-server
+          - bash-language-server
+          - bash-completion # dependency of bash-language-server
+
+
     # TODO: Install all the hosts, set up gems/npm/etc.
     # TODO: Language servers

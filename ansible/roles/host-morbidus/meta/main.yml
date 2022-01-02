@@ -6,3 +6,5 @@ dependencies:
   - role: group-drawing
   - role: group-gaming
   - role: nvidia
+  - role: beets
+  - role: latex

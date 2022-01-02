@@ -2,6 +2,7 @@
 - block:
     - name: Install AwesomeWM and dependencies
       become: false
+      when: ansible_os_family == "Archlinux"
       kewlfft.aur.aur:
         name:
           - awesome-git
@@ -23,5 +24,3 @@
           - wireless_tools # for wibar
           - wmctrl # for wmquit, etc.
           - xss-lock # Screenlocker
-
-      when: ansible_os_family == "Archlinux"

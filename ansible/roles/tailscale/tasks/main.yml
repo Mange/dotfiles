@@ -1,9 +1,9 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-tasks.json
+# Private VPN
 - block:
-    - name: Install nvidia drivers
+    - name: Install tailscale packages
+      become: false
       when: ansible_os_family == "Archlinux"
-      pacman:
+      kewlfft.aur.aur:
         name:
-          - nvidia
-          - nvidia-utils
-          - nvidia-settings
+          - tailscale
