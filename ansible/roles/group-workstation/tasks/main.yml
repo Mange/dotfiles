@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-tasks.json
+- block:
+    - name: Add mange to video and input groups
+      user:
+        name: mange
+        groups:
+          - video # Control brightness
+          - input # Control LEDs
+        append: true

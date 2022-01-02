@@ -1,0 +1,17 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-tasks.json
+- block:
+    - name: Install docker
+      pacman:
+        name: docker
+      when: ansible_os_family == "Archlinux"
+
+    - name: Ensure docker group
+      group:
+        name: docker
+        state: present
+
+    - name: Add mange to docker group
+      user:
+        name: mange
+        groups: docker
+        append: true
