@@ -9,7 +9,7 @@ Quick summary of my stack:
 - **Editor:** [Neovim]
 - **Shell:** [ZSH]
 - **Terminal emulator:** [Wezterm]
-- **Web browser:** [Firefox] (Developer Edition)
+- **Web browser:** [Brave]
 - **Colors:** [Catppuccin]
 
 ## Structure
@@ -17,7 +17,8 @@ Quick summary of my stack:
 This repo is structured in three different sections.
 
  * Root section (actual dotfiles)
- * Platforms section (setup scripts for setting up machines)
+ * `ansible` for setting up and installing dependencies on computers.
+ * `bootstrap` for bootstrapping a new machine, creating my user, etc.
  * `dotfiles-cli` section (CLI util for managing dotfiles)
 
 ### Root section
@@ -31,27 +32,16 @@ Some software does not follow XDG specifications and might require custom
 locations. Those files are inside the `snowflakes` directory, managed with
 `snowflakes/manifest.txt`.
 
-### Platforms section
-
-The `platforms` directory contains setup scripts for setting up machines and
-manage software or system-level configuration on them.
-
-- `platforms/arch.sh` - Sets up wanted software and preferences on an Arch
-  machine.
-- `platforms/arch-bootstrap.sh` - Sets up a *new* Arch machine (adds my user,
-  clones this repo, etc.).
-
 #### How to bootstrap
 
 As root, on you newly booted Arch machine:
 
 ```bash
-pacman -Sy wget
-wget https://github.com/Mange/dotfiles/raw/master/platforms/arch-bootstrap.sh
-chmod +x arch-bootstrap.sh
-./arch-bootstrap.sh
+pacman -Sy --noconfirm curl
+curl -o /root/bootstrap.sh https://github.com/Mange/dotfiles/raw/master/bootstrap/bootstrap.sh
+chmod +x /root/arch-bootstrap.sh
+/root/arch-bootstrap.sh
 ```
-
 
 ### `dotfiles-cli`
 
@@ -89,5 +79,5 @@ repository.
 [Neovim]: https://neovim.io/
 [ZSH]: http://zsh.sourceforge.net/
 [Wezterm]: https://wezfurlong.org/wezterm/
-[Firefox]: https://www.mozilla.org/en-US/firefox/
+[Brave]: https://brave.com/
 [Catppuccin]: https://github.com/catppuccin/catppuccin
