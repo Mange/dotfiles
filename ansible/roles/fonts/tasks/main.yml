@@ -1,0 +1,30 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-tasks.json
+- block:
+    - name: Install fonts
+      become: false
+      kewlfft.aur.aur:
+        name:
+          - font-victor-mono
+          - gnu-free-fonts # FreeMono; monospaced Unicode font. Popular in Kaomoji, etc.
+          - noto-fonts # Android
+          - noto-fonts-emoji # Emoji
+          - noto-fonts-extra # etc.
+          - otf-fira-mono
+          - ttf-ancient-fonts # Just because it is cool
+          - ttf-dejavu
+          - ttf-droid # Android
+          - ttf-fira-code
+          - ttf-fira-mono
+          - ttf-fira-sans
+          - ttf-hack
+          - ttf-inconsolata
+          - ttf-liberation # Arial, Times New Roman, etc.
+          - ttf-monaco
+          - ttf-nerd-fonts-symbols
+          - ttf-roboto # Android
+          # Eastern fonts, for Kaomoji, when opening Japanese websites, etc.
+          - otf-ipafont # Japanese
+          - ttf-arphic-uming # Chinese
+          - ttf-baekmuk # Korean
+          - ttf-indic-otf # Indic; includes ಠ_ಠ
+      when: ansible_os_family == "Archlinux"

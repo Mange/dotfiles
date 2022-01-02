@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-tasks.json
+- block:
+    - name: Install Neovim (git)
+      become: false
+      kewlfft.aur.aur:
+        name:
+          - neovim-git
+
+    # TODO: Install all the hosts, set up gems/npm/etc.
+    # TODO: Language servers

@@ -1,13 +1,6 @@
 # vim:ft=config:nospell
 # My stuff
 
-# To get GPG etc. unlocked globally
-gnome-keyring
-
-# Password manager
-bitwarden-cli     # CLI for password manager
-bitwarden-rofi    # Bitwarden in Rofi
-
 # Neovim
 # neovim # Using neovim-git via AUR right now
 python # For neovim plugins
@@ -37,37 +30,6 @@ pandoc
 python-pygments  # some tools use this to highlight code
 shellcheck
 watchexec
-
-# Yubikey
-yubikey-manager
-yubikey-manager-qt
-ccid # smartcard drivers + pcscd
-
-# Fonts
-ttf-fira-code
-ttf-fira-mono
-otf-fira-mono
-ttf-fira-sans
-
-ttf-dejavu
-ttf-hack
-ttf-inconsolata
-
-ttf-nerd-fonts-symbols
-noto-fonts       # Android
-noto-fonts-emoji # Emoji
-noto-fonts-extra # etc.
-ttf-droid        # Android
-ttf-roboto       # Android
-
-ttf-liberation # Arial, Times New Roman, etc.
-gnu-free-fonts # FreeMono; monospaced Unicode font. Popular in Kaomoji, etc.
-
-# Eastern fonts, for Kaomoji, when opening Japanese websites, etc.
-otf-ipafont # Japanese
-ttf-arphic-uming # Chinese
-ttf-baekmuk # Korean
-ttf-indic-otf # Indic; includes ಠ_ಠ
 
 # CLI env
 bat
@@ -119,76 +81,7 @@ transmission-cli # bittorrent info
 # Desktop env
 #
 
-# ktouch # I'm practicing touch typing; replaced with keybr.com as I don't want kglobalaccel to infect my systems
-# picom # disabled for AUR picom-ibhagwan-git
-
-acpi # for battery indication, etc. in wibar
-autorandr # xrandr config for screen combinations
-blueman # bluetooth support
-brightnessctl # control brightness from cli
-discord # All-in-one voice and text chat for gamers that's free and secure.
-feh # image viewer and background setter
-flameshot # Screenshot app
-gucharmap # character lookup gui, good for icon fonts
-# wezterm-bin # terminal emulator (using wezterm-git right now)
-lxappearance # dunno lol
-lxrandr # gui for xrandr
-network-manager-applet
-parcellite # Clipboard manager
-pavucontrol # pulse audio settings gui
-rofi # graphical selector and app launcher
-sysstat # sysstat installs mpstat(1) for bar-cpu
-telegram-desktop # chat
-udiskie # auto-mounter for devices (and tray icon)
-unclutter # Hide mouse cursor when not in use
-wireless_tools # for wibar
-wmctrl # for wmquit, etc.
-workrave # anti-rsi + workbreak timer
-xcape # Make Super into both Super and Escape
-xsel # used by a lot of cli tools to copy/paste
-xss-lock # Screenlocker
-zenity # GUI prompts from scripts (ytpip, etc.)
-
-adapta-gtk-theme # gtk theme
-
-# Awesome WM
-# awesome # Replaced with awesome-git from AUR
-luarocks
-rlwrap # readline support for awesome-client
-inotify-tools # Used by some daemons in my AwesomeWM config
-
-# Keybase
-keybase
-keybase-gui
-
-# Redshift + dependencies
-redshift
-python-gobject
-python-xdg
-gtk3
-
-# Firefox
-firefox-developer-edition
-hunspell
-hunspell-en_US
-# hunspell-sv # only exists in aur, see aur.txt
-
-# Other spell check libraries
-aspell
-aspell-en
-aspell-sv
-ispell
-
-# Zathura PDF viewer
-zathura
-zathura-cb # Adds comic book support to zathura
-zathura-djvu # DjVu support for Zathura
-zathura-pdf-mupdf # EPUB, PDF and XPS support based on MuPDF
-
 # Media
-vlc
-playerctl
-mpv
 youtube-dl
 
 #
@@ -197,10 +90,6 @@ youtube-dl
 
 openssh # I want to be able to connect to all my machines
 tailscale # Private VPN
-
-# Syncthing
-syncthing
-syncthing-gtk-python3
 
 # Docker
 docker

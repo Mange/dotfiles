@@ -5,3 +5,4 @@ dependencies:
   - role: group-work
   - role: group-drawing
   - role: group-gaming
+  - role: nvidia

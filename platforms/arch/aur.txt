@@ -1,44 +1,13 @@
 # vim:ft=config:nospell
 
-# Terminal emulator. Git version contains some critical font fixes.
-wezterm-git
-
-# Awesome WM
-awesome-git
-awmtt # Awesome WM testing utility
-mugshot # Customize name and avatar, used in AwesomeWM themes
-tela-icon-theme
-
-# Text editors
-neovim-git
-neovim-gtk-git
-
-# Browsers
-brave-beta-bin
-
-# File management
-spacefm
 vimv # Batch-rename files using Vim
 
 git-delta         # Better diff tool for Git
 gron-bin          # transforms JSON into discrete assignments to make it easier to grep.
 http-prompt       # An interactive HTTP command-line client
-i3lock-color      # Lockscreen (for xss-lock, etc.)
 pastel
-# Disabled for now. Gop back to doing single-user installs instead…
-# rvm               # RVM: Ruby Version Manager
-slack-desktop     # Slack Desktop (Beta) for Linux
-spotify           # A proprietary music streaming service
-spotify-tui       # TUI frontent for Spotify Connect / spotifyd
-spotifyd-full-git # Headless FLOSS version of Spotify
-
-# Fork of picom with better blurring and rounded corners
-picom-ibhagwan-git
-flashfocus-git # Flash windows when focus changes
 
 # My own stuff
-graceful-shutdown
-rofi-emoji
 tydra
 
 # Docker
@@ -48,13 +17,7 @@ docker-credential-secretservice
 # pgcli # Install via pip instead; it keeps breaking on AUR
 jiq # interactive jq
 
-# Fonts (also see my.txt)
-font-victor-mono
-ttf-ancient-fonts # Just because it is cool
-ttf-monaco
-
 # Dictionaries
-hunspell-sv
 
 # CLI toys
 dotacat # like lolcat

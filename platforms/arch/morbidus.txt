@@ -1,8 +1,5 @@
 # vim:ft=config:nospell
 # morbidus-specific
-nvidia
-nvidia-utils
-nvidia-settings
 
 # Photo manager
 shotwell

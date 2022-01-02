@@ -1,0 +1,27 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-tasks.json
+- block:
+    - name: Install AwesomeWM and dependencies
+      become: false
+      kewlfft.aur.aur:
+        name:
+          - awesome-git
+
+          - awmtt # AwesomeWM testing utility
+          - luarocks
+          - rlwrap # readline support for awesome-client
+
+          # Used in my AwesomeWM setup
+          - inotify-tools
+          - acpi # for battery indication, etc. in wibar
+          - blueman # bluetooth tools
+          - brightnessctl # control brightness from cli
+          - flashfocus-git # Flash windows when focus changes
+          - graceful-shutdown # My own project for shutting down things
+          - i3lock-color # Lockscreen (for xss-lock, etc.)
+          - tela-icon-theme
+          - unclutter # Hide mouse cursor when not in use
+          - wireless_tools # for wibar
+          - wmctrl # for wmquit, etc.
+          - xss-lock # Screenlocker
+
+      when: ansible_os_family == "Archlinux"

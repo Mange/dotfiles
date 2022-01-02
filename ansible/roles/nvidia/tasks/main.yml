@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-tasks.json
+- block:
+    - name: Install nvidia drivers
+      pacman:
+        name:
+          - nvidia
+          - nvidia-utils
+          - nvidia-settings
+      when: ansible_os_family == "Archlinux"

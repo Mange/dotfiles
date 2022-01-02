@@ -17,18 +17,10 @@ nfs-utils    # NFS (filesystem)
 ntfs-3g      # NTFS (filesystem)
 openssh      # SSH client
 polkit
-pulseaudio   # Audio server
-xdg-utils    # Desktop software support
 
 # CLI environment
 tmux
 zsh
-
-# Graphical environment
-lightdm
-lightdm-gtk-greeter
-lightdm-gtk-greeter-settings
-xorg
 
 # For AUR
 jq
