@@ -1,0 +1,45 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-tasks.json
+- block:
+    - name: Install repo symlink
+      file:
+        src: "{{ '.' | realpath }}"
+        dest: "{{ xdg_config_home }}/dotfiles"
+        state: link
+        force: true
+        follow: false
+
+    - name: Get .config dotfiles
+      find:
+        paths: "../config"
+        depth: no
+        file_type: any
+        follow: no
+        hidden: yes
+      register: dotfiles_config
+      become: false
+
+    - name: Get .local/share dotfiles
+      find:
+        paths: "../data"
+        depth: no
+        file_type: any
+        follow: no
+        hidden: yes
+      register: dotfiles_data
+      become: false
+
+    - name: Install .config dotfiles
+      file:
+        src: "dotfiles/config/{{ item }}"
+        dest: "{{ xdg_config_home }}/{{ item }}"
+        state: link
+      loop: "{{ dotfiles_config.files | map(attribute='path') | map('basename') }}"
+      become: false
+
+    - name: Install .local/share dotfiles
+      file:
+        src: "{{ xdg_config_home }}/dotfiles/data/{{ item }}"
+        dest: "{{ xdg_data_home }}/{{ item }}"
+        state: link
+      loop: "{{ dotfiles_data.files | map(attribute='path') | map('basename') }}"
+      become: false
