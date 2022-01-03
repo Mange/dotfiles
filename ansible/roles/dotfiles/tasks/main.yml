@@ -16,7 +16,6 @@
         follow: no
         hidden: yes
       register: dotfiles_config
-      become: false
 
     - name: Get .local/share dotfiles
       find:
@@ -26,7 +25,6 @@
         follow: no
         hidden: yes
       register: dotfiles_data
-      become: false
 
     - name: Get snowflake dotfiles
       find:
@@ -36,7 +34,6 @@
         follow: no
         hidden: yes
       register: dotfiles_snowflakes
-      become: false
 
     - name: Install .config dotfiles
       file:
@@ -44,7 +41,6 @@
         dest: "{{ xdg_config_home }}/{{ item }}"
         state: link
       loop: "{{ dotfiles_config.files | map(attribute='path') | map('basename') }}"
-      become: false
 
     - name: Install .local/share dotfiles
       file:
@@ -52,7 +48,6 @@
         dest: "{{ xdg_data_home }}/{{ item }}"
         state: link
       loop: "{{ dotfiles_data.files | map(attribute='path') | map('basename') }}"
-      become: false
 
     - name: Install snowflakes
       file:
@@ -61,4 +56,3 @@
         state: link
         force: true
       loop: "{{ dotfiles_snowflakes.files | map(attribute='path') | map('basename') }}"
-      become: false

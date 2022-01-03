@@ -1,7 +1,6 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-tasks.json
 - block:
     - name: Install Work packages
-      become: false
       when: ansible_os_family == "Archlinux"
       kewlfft.aur.aur:
         name:
@@ -12,5 +11,6 @@
           - chromedriver
 
     - name: Install toggl-cli
+      become: true
       shell: |
         npm install -g toggl-cli@latest --no-audit --no-fund

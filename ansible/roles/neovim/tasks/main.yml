@@ -1,7 +1,6 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-tasks.json
 - block:
     - name: Install Neovim (git)
-      become: false
       kewlfft.aur.aur:
         name:
           - neovim-git
@@ -26,17 +25,16 @@
           - bash-completion # dependency of bash-language-server
 
     - name: Install Neovim NodeJS plugin
+      become: true
       shell: |
         npm install -g --no-audit --no-fund \
           neovim
 
     - name: Install Neovim Python plugin
-      become: false
       shell: |
         pip install --user --upgrade --upgrade-strategy eager -q neovim
 
     - name: Install Neovim Ruby plugin
-      become: false
       shell: |
         script_candidates=(
           "${XDG_CONFIG_HOME}/shells/enable-rvm"
@@ -63,6 +61,7 @@
         fi
 
     - name: Install language servers through NPM
+      become: true
       shell: |
         npm install -g --no-audit --no-fund \
           dockerfile-language-server-nodejs \

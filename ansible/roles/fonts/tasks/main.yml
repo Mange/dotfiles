@@ -1,7 +1,6 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-tasks.json
 - block:
     - name: Install fonts
-      become: false
       when: ansible_os_family == "Archlinux"
       kewlfft.aur.aur:
         name:
@@ -31,13 +30,11 @@
       register: font_install
 
     - name: Make sure fontconfig directory exists
-      become: false
       file:
         path: "{{ xdg_config_home }}/fontconfig/conf.d"
         state: directory
 
     - name: Install fontconfig fallback
-      become: false
       file:
         src: 90-fallbacks.conf
         dest: "{{ xdg_config_home }}/fontconfig/conf.d/90-fallbacks.conf"

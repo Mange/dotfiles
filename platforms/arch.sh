@@ -17,7 +17,6 @@ set +a
 . ./shared/generic.sh
 . ./shared/rust.sh
 
-PACMAN="sudo pacman --noconfirm"
 HOSTNAME="$(hostname --short)"
 
 usage() {
@@ -352,19 +351,6 @@ if run-section "fast"; then
   fi
 
   sudo systemctl daemon-reload
-fi
-
-if run-section "updates"; then
-  header "Installing updates"
-  subheader "Installing AUR updates"
-  if confirm "Really install all AUR updates now?" "n"; then
-    paru -Sua || handle-failure
-  fi
-
-  subheader "Installing package updates"
-  if confirm "Really install all updates now?" "n"; then
-    $PACMAN -Su
-  fi
 fi
 
 echo ""

@@ -5,7 +5,6 @@
         manager: auto
 
     - name: Install grub theme
-      become: false
       when: ansible_os_family == "Archlinux" and packages["grub"] is defined
       kewlfft.aur.aur:
         name:

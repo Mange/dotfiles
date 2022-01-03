@@ -2,7 +2,6 @@
 # Private VPN
 - block:
     - name: Install tailscale packages
-      become: false
       when: ansible_os_family == "Archlinux"
       kewlfft.aur.aur:
         name:

@@ -6,7 +6,6 @@
         - arch
 
     - name: Install base packages
-      become: false
       when: ansible_os_family == "Archlinux"
       kewlfft.aur.aur:
         name:

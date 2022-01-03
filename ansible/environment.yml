@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-playbook.json
 - name: Set up local environment
   hosts: localhost
-  become: true
+  become: false
   become_user: root
   become_method: sudo
   roles:

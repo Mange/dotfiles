@@ -1,7 +1,6 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-tasks.json
 - block:
     - name: Install docker
-      become: false
       when: ansible_os_family == "Archlinux"
       kewlfft.aur.aur:
         name:
@@ -10,11 +9,13 @@
           - docker-compose
 
     - name: Ensure docker group
+      become: true
       group:
         name: docker
         state: present
 
     - name: Add mange to docker group
+      become: true
       user:
         name: mange
         groups: docker

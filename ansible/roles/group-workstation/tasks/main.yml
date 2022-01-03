@@ -1,6 +1,7 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-tasks.json
 - block:
     - name: Add mange to video and input groups
+      become: true
       user:
         name: mange
         groups:
@@ -9,7 +10,6 @@
         append: true
 
     - name: Install workstation packages
-      become: false
       when: ansible_os_family == "Archlinux"
       kewlfft.aur.aur:
         name:
@@ -88,6 +88,7 @@
           - tydra
 
     - name: Install workstation PIP packages
+      become: true
       pip:
         state: latest
         name:

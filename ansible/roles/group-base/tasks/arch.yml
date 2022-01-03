@@ -1,6 +1,7 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-tasks.json
 - block:
     - name: Configure pacman
+      become: true
       lineinfile:
         path: /etc/pacman.conf
         line: "{{ item.line }}"
@@ -16,6 +17,7 @@
           }
 
     - name: Enable Multilib
+      become: true
       ini_file:
         path: /etc/pacman.conf
         section: "{{ item.section }}"
@@ -29,16 +31,19 @@
           }
 
     - name: Update pacman
+      become: true
       pacman:
         update_cache: true
         upgrade: false
 
     - name: Install base-devel
+      become: true
       pacman:
         name: base-devel
         state: present
 
     - name: Upgrade pacman
+      become: true
       pacman:
         update_cache: false
         upgrade: true
