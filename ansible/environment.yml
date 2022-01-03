@@ -14,6 +14,7 @@
     xdg_config_home: "{{ lookup('env', 'XDG_CONFIG_HOME') or (lookup('env', 'HOME') or '/home/mange') + '/.config' }}"
     xdg_data_home: "{{ lookup('env', 'XDG_DATA_HOME') or (lookup('env', 'HOME') or '/home/mange') + '/.local/share' }}"
     xdg_cache_home: "{{ lookup('env', 'XDG_DATA_HOME') or (lookup('env', 'HOME') or '/home/mange') + '/.cache' }}"
+    inside_docker: "{{ lookup('env', 'INSIDE_DOCKER') == '1' }}"
 
   # Set some XDG stuff that is likely to be used during installation of
   # packages in this setup.

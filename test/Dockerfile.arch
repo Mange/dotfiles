@@ -5,6 +5,11 @@ RUN pacman -Syu --noconfirm
 # while iterating.
 RUN pacman -Syu && pacman -S --noconfirm git sudo ansible
 
+# Let some of the scripts be able to detect this case to avoid crashing on
+# things that are not possible inside the container (for example: dealing with
+# systemd).
+ENV INSIDE_DOCKER=1
+
 COPY --chown=root:root . /root/dotfiles-bootstrap
 RUN /root/dotfiles-bootstrap/bootstrap/bootstrap.sh
 

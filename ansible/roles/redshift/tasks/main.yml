@@ -7,3 +7,11 @@
           - python-gobject
           - python-xdg
           - gtk3
+
+    - name: Enable redshift service
+      when: not inside_docker
+      systemd:
+        name: redshift
+        enabled: true
+        state: started
+        scope: user

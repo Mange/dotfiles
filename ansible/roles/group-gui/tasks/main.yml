@@ -78,3 +78,14 @@
           # Misc
           - xdg-utils # Desktop software support
           - gnome-keyring # To get GPG etc. unlocked globally
+
+    - name: "Enable services"
+      become: true
+      when: not inside_docker
+      systemd:
+        name: "{{ item }}"
+        enabled: true
+        state: started
+      loop:
+        - lightdm
+        - pcscd # smartcard daemon, for Yubikey, etc.

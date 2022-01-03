@@ -7,8 +7,6 @@
     #   1. If paru is not available, clone the repo to a global path.
     #   2. If cloned repo exist, then install it using the aur module.
     #   3. If cloned repo exist and the command exist, delete the cloned repo.
-    #   4. Tell aur helper to make sure paru is the latest installed version.
-    #      (Which makes paru manage itself)
     - block:
         # Step 1
         - block:
@@ -41,6 +39,13 @@
                 local_pkgbuild: /opt/paru
                 use: makepkg
 
+        - name: Make paru manage paru
+          when: paru_repo.stat.exists
+          kewlfft.aur.aur:
+            name: paru
+            state: latest
+            use: paru
+
         # Step 3
         - block:
             - name: Check if Paru is installed
@@ -57,10 +62,3 @@
               become: true
               when: paru_bin.stat.exists and paru_repo.stat.exists
               command: rm -rf /opt/paru
-
-        # Step 4
-        - name: Make paru manage paru
-          kewlfft.aur.aur:
-            name: paru
-            state: latest
-            use: paru

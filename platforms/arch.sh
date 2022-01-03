@@ -17,8 +17,6 @@ set +a
 . ./shared/generic.sh
 . ./shared/rust.sh
 
-HOSTNAME="$(hostname --short)"
-
 copy-replace-with-diff() {
   local source="$1"
   local target="$2"
@@ -153,22 +151,6 @@ enable-systemd-unit() {
   fi
 }
 
-enable-user-systemd-unit() {
-  if [[ $(systemctl is-enabled --user "$1") != "enabled" ]] || [[ $(systemctl is-active --user "$1") != "active" ]]; then
-    run-command-quietly "Starting and enabling $1 at login" < <(
-      systemctl enable --user --now "$1" 2>&1
-    )
-  fi
-}
-
-disable-user-systemd-unit() {
-  if [[ $(systemctl is-enabled --user "$1") == "enabled" ]] || [[ $(systemctl is-active --user "$1") == "active" ]]; then
-    run-command-quietly "Stopping and disabling $1 at login" < <(
-      sudo systemctl disable --user --now "$1" 2>&1
-    )
-  fi
-}
-
 # Rust is sometimes used to build things in AUR, install before AUR stuff.
 install-rustup-components || handle-failure
 
@@ -196,18 +178,6 @@ sudo chown -R root:root /usr/share/wallpapers/Mange
 configure-lightdm
 configure-polkit
 
-header "Configuring Systemd"
-enable-systemd-unit "NetworkManager"
-enable-systemd-unit "lightdm"
-enable-systemd-unit "bluetooth"
-enable-systemd-unit "sshd"
-enable-systemd-unit "tailscaled"
-enable-systemd-unit "pcscd" # smartcard daemon, for Yubikey, etc.
-
-if hash docker 2>/dev/null; then
-  enable-systemd-unit "docker"
-fi
-
 sudo-copy-replace-with-diff \
   "shared/polkit/50-udiskie.rules" \
   "/etc/polkit-1/rules.d/50-udiskie.rules"
@@ -231,13 +201,6 @@ enable-systemd-unit "download-pacman-updates.timer"
 if ! timedatectl show | grep -q "^NTP=yes"; then
   subheader "Enabling timesync (NTP)"
   sudo timedatectl set-ntp true
-fi
-
-enable-user-systemd-unit "redshift"
-disable-user-systemd-unit "spotifyd"
-
-if [[ $HOSTNAME == "morbidus" ]]; then
-  enable-systemd-unit avahi-daemon
 fi
 
 sudo systemctl daemon-reload

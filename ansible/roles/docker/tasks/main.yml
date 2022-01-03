@@ -20,3 +20,11 @@
         name: mange
         groups: docker
         append: true
+
+    - name: Enable docker service
+      become: true
+      when: not inside_docker
+      systemd:
+        name: docker
+        enabled: true
+        state: started

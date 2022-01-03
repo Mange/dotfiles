@@ -17,7 +17,7 @@
           - jq
           - lsof
           - man-pages
-          - openssh # SSH client
+          - openssh # SSH client and server
           - parallel
           - polkit
           - tmux
@@ -29,9 +29,20 @@
           - zsh-syntax-highlighting
 
           # Filesystems
-          - nfs-utils # NFS (filesystem)
-          - ntfs-3g # NTFS (filesystem)
-          - exfat-utils # exFAT (filesystem)
-          - btrfs-progs # btrfs (filesystem)
+          - nfs-utils
+          - ntfs-3g
+          - exfat-utils
+          - btrfs-progs
 
     - include_tasks: grub_theme.yml
+
+    - name: "Enable services"
+      become: true
+      when: not inside_docker
+      systemd:
+        name: "{{ item }}"
+        enabled: true
+        state: started
+      loop:
+        - sshd
+        - bluetooth
