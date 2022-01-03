@@ -19,80 +19,6 @@ set +a
 
 HOSTNAME="$(hostname --short)"
 
-usage() {
-  cat <<USAGE
-USAGE: $0 [OPTIONS]
-
-OPTIONS:
-  --help
-    Display this help text.
-
-  --only SECTION, -o SECTION
-    Only run the stuff part of that section.
-
-    SECTIONS:
-      all      (All sections)
-      fast     (Only fast sections; no updates or installs)
-      updates  (Installing updates)
-
-      aur      (Install AUR software and tools)
-      neovim   (Neovim support)
-      pacman   (Install software)
-      pip      (Install software based on python pip)
-      npm      (Install software based on Node.js NPM)
-      lua      (Lua setup)
-      rust     (Rust setup)
-      ruby     (Ruby setup)
-USAGE
-}
-ONLY_SECTION="all"
-
-if ! OPTS="$(getopt -n "$0" --longoptions "help,only:" --options "o:" --shell bash -- "$@")"; then
-  exit 1
-fi
-eval set -- "$OPTS"
-
-while true; do
-  case "$1" in
-  --help)
-    usage
-    shift
-    exit 0
-    ;;
-  -o | --only)
-    ONLY_SECTION="$2"
-    shift 2
-    ;;
-  --)
-    shift
-    break
-    ;;
-  *)
-    break
-    ;;
-  esac
-done
-
-case "$ONLY_SECTION" in
-all | pacman | rust | projects | neovim | aur | updates | fast | pip | npm | ruby | lua)
-  # Valid; do nothing
-  ;;
-*)
-  echo "ERROR: $ONLY_SECTION is not a known section" >&2
-  usage
-  exit 1
-  ;;
-esac
-
-run-section() {
-  local name="$1"
-  if [[ "$ONLY_SECTION" == "all" || "$ONLY_SECTION" == "$name" ]]; then
-    return 0
-  else
-    return 1
-  fi
-}
-
 copy-replace-with-diff() {
   local source="$1"
   local target="$2"
@@ -244,113 +170,76 @@ disable-user-systemd-unit() {
 }
 
 # Rust is sometimes used to build things in AUR, install before AUR stuff.
-if run-section "rust" || run-section "updates"; then
-  install-rustup-components || handle-failure
-fi
-if run-section "rust"; then
-  install-crates rust/crates.txt "Rust software" || handle-failure
-  cargo-update || handle-failure
-fi
+install-rustup-components || handle-failure
 
-if run-section "ruby"; then
-  header "Ruby setup and packages"
-  install-ruby-via-rvm || handle-failure "Installing Ruby"
-fi
+install-crates rust/crates.txt "Rust software" || handle-failure
+cargo-update || handle-failure
 
-if run-section "fast"; then
-  setup-nerd-fonts || handle-failure "Installing Nerd Font overrides"
-fi
+header "Ruby setup and packages"
+install-ruby-via-rvm || handle-failure "Installing Ruby"
 
-if run-section "neovim"; then
-  if hash nvim 2>/dev/null; then
-    header "Neovim"
+setup-nerd-fonts || handle-failure "Installing Nerd Font overrides"
 
-    run-command-quietly "Ruby plugin" < <(
-      if hash gem 2>/dev/null; then
-        gem install -q neovim 2>&1
-      else
-        echo "Ruby/gem not installed"
-        exit 1
-      fi
-    )
+header "Setting up user directories"
+copy-replace-with-diff \
+  "shared/user-dirs.dirs" \
+  "$HOME/.config/user-dirs.dirs"
+create-user-dirs
 
-    run-command-quietly "NodeJS plugin" < <(
-      if hash npm 2>/dev/null; then
-        sudo npm install -g neovim 2>&1
-      else
-        echo "npm not installed"
-        exit 1
-      fi
-    )
-  fi
+header "Setting up default apps"
+xdg-mime default spacefm.desktop inode/directory
+
+header "Setting up wallpapers"
+sudo rsync --archive --delete ../data/wallpapers/ /usr/share/wallpapers/Mange || handle-failure "running rsync"
+sudo chown -R root:root /usr/share/wallpapers/Mange
+
+configure-lightdm
+configure-polkit
+
+header "Configuring Systemd"
+enable-systemd-unit "NetworkManager"
+enable-systemd-unit "lightdm"
+enable-systemd-unit "bluetooth"
+enable-systemd-unit "sshd"
+enable-systemd-unit "tailscaled"
+enable-systemd-unit "pcscd" # smartcard daemon, for Yubikey, etc.
+
+if hash docker 2>/dev/null; then
+  enable-systemd-unit "docker"
 fi
 
-if run-section "fast"; then
-  if hash gsettings 2>/dev/null; then
-    gsettings set org.gnome.desktop.background show-desktop-icons false
-  fi
+sudo-copy-replace-with-diff \
+  "shared/polkit/50-udiskie.rules" \
+  "/etc/polkit-1/rules.d/50-udiskie.rules"
 
-  header "Setting up user directories"
-  copy-replace-with-diff \
-    "shared/user-dirs.dirs" \
-    "$HOME/.config/user-dirs.dirs"
-  create-user-dirs
+sudo-copy-replace-with-diff \
+  "shared/duplicity-backup.service" \
+  "/etc/systemd/system/duplicity-backup.service"
+sudo-copy-replace-with-diff \
+  "shared/duplicity-backup.timer" \
+  "/etc/systemd/system/duplicity-backup.timer"
+enable-systemd-unit "duplicity-backup.timer"
 
-  header "Setting up default apps"
-  xdg-mime default spacefm.desktop inode/directory
+sudo-copy-replace-with-diff \
+  "arch/download-pacman-updates.service" \
+  "/etc/systemd/system/download-pacman-updates.service"
+sudo-copy-replace-with-diff \
+  "arch/download-pacman-updates.timer" \
+  "/etc/systemd/system/download-pacman-updates.timer"
+enable-systemd-unit "download-pacman-updates.timer"
 
-  header "Setting up wallpapers"
-  sudo rsync --archive --delete ../data/wallpapers/ /usr/share/wallpapers/Mange || handle-failure "running rsync"
-  sudo chown -R root:root /usr/share/wallpapers/Mange
-
-  configure-lightdm
-  configure-polkit
-
-  header "Configuring Systemd"
-  enable-systemd-unit "NetworkManager"
-  enable-systemd-unit "lightdm"
-  enable-systemd-unit "bluetooth"
-  enable-systemd-unit "sshd"
-  enable-systemd-unit "tailscaled"
-  enable-systemd-unit "pcscd" # smartcard daemon, for Yubikey, etc.
-
-  if hash docker 2>/dev/null; then
-    enable-systemd-unit "docker"
-  fi
-
-  sudo-copy-replace-with-diff \
-    "shared/polkit/50-udiskie.rules" \
-    "/etc/polkit-1/rules.d/50-udiskie.rules"
-
-  sudo-copy-replace-with-diff \
-    "shared/duplicity-backup.service" \
-    "/etc/systemd/system/duplicity-backup.service"
-  sudo-copy-replace-with-diff \
-    "shared/duplicity-backup.timer" \
-    "/etc/systemd/system/duplicity-backup.timer"
-  enable-systemd-unit "duplicity-backup.timer"
-
-  sudo-copy-replace-with-diff \
-    "arch/download-pacman-updates.service" \
-    "/etc/systemd/system/download-pacman-updates.service"
-  sudo-copy-replace-with-diff \
-    "arch/download-pacman-updates.timer" \
-    "/etc/systemd/system/download-pacman-updates.timer"
-  enable-systemd-unit "download-pacman-updates.timer"
-
-  if ! timedatectl show | grep -q "^NTP=yes"; then
-    subheader "Enabling timesync (NTP)"
-    sudo timedatectl set-ntp true
-  fi
-
-  enable-user-systemd-unit "redshift"
-  disable-user-systemd-unit "spotifyd"
-
-  if [[ $HOSTNAME == "morbidus" ]]; then
-    enable-systemd-unit avahi-daemon
-  fi
-
-  sudo systemctl daemon-reload
+if ! timedatectl show | grep -q "^NTP=yes"; then
+  subheader "Enabling timesync (NTP)"
+  sudo timedatectl set-ntp true
 fi
+
+enable-user-systemd-unit "redshift"
+disable-user-systemd-unit "spotifyd"
+
+if [[ $HOSTNAME == "morbidus" ]]; then
+  enable-systemd-unit avahi-daemon
+fi
+
+sudo systemctl daemon-reload
 
 echo ""
