@@ -94,30 +94,6 @@ run-section() {
   fi
 }
 
-install-npm-software() {
-  header "Installing NPM software"
-
-  wanted_software=(
-    dockerfile-language-server-nodejs
-  )
-
-  if [[ $HOSTNAME == krista ]]; then
-    wanted_software+=(toggl-cli)
-  fi
-
-  for package in "${wanted_software[@]}"; do
-    if npm list -g "$package" >/dev/null 2>/dev/null; then
-      run-command-quietly "Upgrading $package" < <(
-        sudo npm upgrade -g "$package" 2>&1
-      )
-    else
-      run-command-quietly "Installing $package" < <(
-        sudo npm install -g "$package" 2>&1
-      )
-    fi
-  done
-}
-
 copy-replace-with-diff() {
   local source="$1"
   local target="$2"
@@ -268,11 +244,6 @@ disable-user-systemd-unit() {
   fi
 }
 
-if run-section "fast"; then
-  header "Setting up GPG"
-  setup-gpg-auto-retrieve
-fi
-
 # Rust is sometimes used to build things in AUR, install before AUR stuff.
 if run-section "rust" || run-section "updates"; then
   install-rustup-components || handle-failure
@@ -282,34 +253,9 @@ if run-section "rust"; then
   cargo-update || handle-failure
 fi
 
-if run-section "lua"; then
-  header "Lua setup and packages (AwesomeWM, etc.)"
-
-  # Skip lua setup if Awesome is not installed.
-  if hash awesome 2>/dev/null; then
-    if ! hash luarocks 2>/dev/null; then
-      paru -S luarocks || handle-failure "Installing luarocks"
-    fi
-
-    if ! luarocks --lua-version 5.3 show moses 2>/dev/null >/dev/null; then
-      run-command-quietly "luarocks install moses" < <(
-        sudo luarocks --lua-version 5.3 install moses
-      ) || handle-failure "Installing moses"
-    fi
-  else
-    echo "(Skipping because AwesomeWM is not installed)"
-  fi
-fi
-
 if run-section "ruby"; then
   header "Ruby setup and packages"
   install-ruby-via-rvm || handle-failure "Installing Ruby"
-  install-global-ruby-gem "standard"
-  install-global-ruby-gem "solargraph"
-fi
-
-if run-section "npm"; then
-  install-npm-software || handle-failure "Installing NodeJS NPM software"
 fi
 
 if run-section "fast"; then
@@ -319,24 +265,6 @@ fi
 if run-section "neovim"; then
   if hash nvim 2>/dev/null; then
     header "Neovim"
-
-    run-command-quietly "Python 2 plugin" < <(
-      if hash pip2 2>/dev/null; then
-        pip2 install --user --upgrade --upgrade-strategy eager -q neovim 2>&1
-      else
-        echo "pip2 not installed!"
-        exit 1
-      fi
-    )
-
-    run-command-quietly "Python 3 plugin" < <(
-      if hash pip3 2>/dev/null; then
-        pip3 install --user --upgrade --upgrade-strategy eager -q neovim 2>&1
-      else
-        echo "pip3 not installed!"
-        exit 1
-      fi
-    )
 
     run-command-quietly "Ruby plugin" < <(
       if hash gem 2>/dev/null; then
@@ -437,12 +365,6 @@ if run-section "updates"; then
   if confirm "Really install all updates now?" "n"; then
     $PACMAN -Su
   fi
-fi
-
-if run-section "updates" || run-section "ruby"; then
-  subheader "Installing RVM/Ruby updates"
-  update-global-ruby-gem "standard"
-  update-global-ruby-gem "solargraph"
 fi
 
 echo ""

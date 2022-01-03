@@ -6,6 +6,18 @@
   become_method: sudo
   roles:
     - group-base
+    - gpg-config
+
+  environment:
+    XDG_CONFIG_HOME: "/home/mange/.config"
+    XDG_DATA_HOME: "/home/mange/.local/share}"
+    XDG_CACHE_HOME: "/home/mange/.cache}"
+    GNUPGHOME: "/home/mange/.local/share/gnupg"
+    NPM_CONFIG_USERCONFIG: "/home/mange/.config/npm/config"
+    NPM_CONFIG_CACHE: "/home/mange/.cache/npm"
+    CARGO_HOME: "/home/mange/.local/share/cargo"
+    RUSTUP_HOME: "/home/mange/.local/share/rustup"
+
   tasks:
     - name: Load variables
       include_vars: variables.yml

@@ -10,3 +10,7 @@
           - google-cloud-sdk
           - google-chrome
           - chromedriver
+
+    - name: Install toggl-cli
+      shell: |
+        npm install -g toggl-cli@latest --no-audit --no-fund

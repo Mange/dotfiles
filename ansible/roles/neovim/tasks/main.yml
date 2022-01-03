@@ -25,6 +25,47 @@
           - bash-language-server
           - bash-completion # dependency of bash-language-server
 
+    - name: Install Neovim NodeJS plugin
+      shell: |
+        npm install -g --no-audit --no-fund \
+          neovim
 
-    # TODO: Install all the hosts, set up gems/npm/etc.
-    # TODO: Language servers
+    - name: Install Neovim Python plugin
+      become: false
+      shell: |
+        pip install --user --upgrade --upgrade-strategy eager -q neovim
+
+    - name: Install Neovim Ruby plugin
+      become: false
+      shell: |
+        script_candidates=(
+          "${XDG_CONFIG_HOME}/shells/enable-rvm"
+          "${HOME}/Projects/dotfiles/config/shells/enable-rvm"
+          ../config/shells/enable-rvm
+          /usr/share/rvm/scripts/rvm
+          /usr/local/rvm/scripts/rvm
+          "${HOME}/.rvm/scripts/rvm"
+        )
+
+        for candidate in "${script_candidates[@]}"; do
+          if [ -f "$candidate" ]; then
+            # shellcheck source=/dev/null
+            source "$candidate"
+            break
+          fi
+        done
+
+        if type rvm >/dev/null 2>/dev/null; then
+          rvm @global do gem install neovim
+          rvm all do gem install neovim
+        elif hash gem >/dev/null 2>/dev/null; then
+          gem install -q neovim
+        fi
+
+    - name: Install language servers through NPM
+      shell: |
+        npm install -g --no-audit --no-fund \
+          dockerfile-language-server-nodejs \
+          @tailwindcss/language-server \
+          typescript-language-server \
+          vscode-langservers-extracted
