@@ -14,14 +14,6 @@ set +a
 
 . ./support/functions.bash
 
-. ./shared/rust.sh
-
-# Rust is sometimes used to build things in AUR, install before AUR stuff.
-install-rustup-components || handle-failure
-
-install-crates rust/crates.txt "Rust software" || handle-failure
-cargo-update || handle-failure
-
 header "Ruby setup and packages"
 install-ruby-via-rvm || handle-failure "Installing Ruby"
 
