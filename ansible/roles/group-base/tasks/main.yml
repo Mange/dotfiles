@@ -64,3 +64,16 @@
           become: true
           command: timedatectl set-ntp true
           when: "'NTP=yes' not in timedatectl_result.stdout"
+
+    - name: Ensure en_US.UTF-8 locale
+      become: true
+      community.general.locale_gen:
+        name: en_US.UTF-8
+
+    - name: Ensure sv_SE.UTF-8 locale
+      become: true
+      # Arch linux Docker image only has en_US.UTF-8 locale available to keep
+      # docker image size down. Pacman does not have other locales available.
+      when: not inside_docker
+      community.general.locale_gen:
+        name: sv_SE.UTF-8
