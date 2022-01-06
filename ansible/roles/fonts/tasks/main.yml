@@ -34,6 +34,16 @@
         path: "{{ xdg_config_home }}/fontconfig/conf.d"
         state: directory
 
+    - name: Install NerdFonts config
+      when: ansible_os_family == "Archlinux"
+      file:
+        src: "/usr/share/fontconfig/conf.avail/10-nerd-font-symbols.conf"
+        dest: "{{ xdg_config_home }}/fontconfig/conf.d/10-nerd-font-symbols.conf"
+        state: link
+        force: true
+        follow: false
+      register: nerdfont_config
+
     - name: Install fontconfig fallback
       file:
         src: 90-fallbacks.conf
@@ -44,5 +54,5 @@
       register: font_fallbacks
 
     - name: Rebuild font cache
-      when: font_install.changed or font_fallbacks.changed
+      when: nerdfont_config.changed or font_install.changed or font_fallbacks.changed
       command: fc-cache

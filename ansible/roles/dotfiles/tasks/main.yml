@@ -82,3 +82,52 @@
         state: link
         force: true
       loop: "{{ dotfiles_snowflakes.files | map(attribute='path') | map('basename') }}"
+
+    - name: Ensure wallpapers directory exist
+      become: true
+      file:
+        path: "/usr/share/wallpapers/Mange"
+        state: directory
+        owner: root
+        group: root
+        mode: u=rwX,g=rX,o=rX
+
+    - name: Copy wallpapers to system directory
+      become: true
+      ansible.posix.synchronize:
+        src: "../data/wallpapers/"
+        dest: "/usr/share/wallpapers/Mange"
+        archive: true
+        delete: true
+
+    - name: Set permissions of system wallpapers
+      become: true
+      file:
+        path: "/usr/share/wallpapers/Mange"
+        state: directory
+        recurse: true
+        owner: root
+        group: root
+        mode: u=rwX,g=rX,o=rX
+
+    - name: Check if user directories are installed
+      stat:
+        path: "{{ xdg_config_home }}/user-dirs.dirs"
+      register: user_dirs
+
+    - name: Set up default user directories
+      when: not user_dirs.stat.exists
+      copy:
+        src: user-dirs.dirs
+        dest: "{{ xdg_config_home }}/user-dirs.dirs"
+
+    - name: Create missing user directories
+      shell: >
+        . "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs"
+
+        for var in \
+          XDG_DESKTOP_DIR XDG_DOCUMENTS_DIR XDG_DOWNLOAD_DIR \
+          XDG_MUSIC_DIR XDG_PICTURES_DIR XDG_PUBLICSHARE_DIR \
+          XDG_TEMPLATES_DIR XDG_VIDEOS_DIR; do
+          [ -d "${!var}" ] || mkdir -vp "${!var}"
+        done
