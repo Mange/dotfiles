@@ -46,3 +46,21 @@
       loop:
         - sshd
         - bluetooth
+        - systemd-timesyncd
+
+    - when: not inside_docker
+      block:
+        - name: Check timedatectl
+          command: timedatectl show
+          changed_when: false
+          register: timedatectl_result
+
+        - name: Set timezone
+          become: true
+          command: timedatectl set-timezone Europe/Stockholm
+          when: "'Europe/Stockholm' not in timedatectl_result.stdout"
+
+        - name: Enable ntp
+          become: true
+          command: timedatectl set-ntp true
+          when: "'NTP=yes' not in timedatectl_result.stdout"
