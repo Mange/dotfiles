@@ -50,3 +50,27 @@
 
     - include_role:
         name: paru
+
+    - name: Install arch systemd units
+      become: true
+      copy:
+        src: systemd/arch/
+        dest: /etc/systemd/system/
+        group: root
+        owner: root
+        mode: u=rw,g=r,o=r
+      register: arch_systemd_units
+
+    - name: Reload systemd
+      become: true
+      when: arch_systemd_units.changed and not inside_docker
+      systemd:
+        daemon_reload: true
+
+    - name: "Enable download-pacman-updates timer"
+      become: true
+      when: not inside_docker
+      systemd:
+        name: download-pacman-updates.timer
+        enabled: true
+        state: started

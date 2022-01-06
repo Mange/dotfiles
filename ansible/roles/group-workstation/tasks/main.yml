@@ -16,6 +16,7 @@
           # Hardware
           - bluez # Bluetooth
           - bluez-utils # Bluetooth
+          - blueman
 
           # Files and directories
           - fzf
@@ -98,6 +99,25 @@
           # pgcli; they depend on the same thing but in different versions and pip cannot
           # deal with that…
 
+    - name: Install blueman polkit config
+      become: true
+      copy:
+        src: polkit/50-blueman.rules
+        dest: /etc/polkit-1/rules.d/50-blueman.rules
+        group: root
+        owner: root
+        mode: u=rw,g=r,o=r
+
+    - name: Install systemd units
+      become: true
+      copy:
+        src: systemd/
+        dest: /etc/systemd/system/
+        group: root
+        owner: root
+        mode: u=rw,g=r,o=r
+      register: systemd_units
+
     - name: Reload systemd
       become: true
       when: not inside_docker
@@ -113,3 +133,4 @@
         state: started
       loop:
         - NetworkManager
+        - duplicity-backup.timer

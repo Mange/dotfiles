@@ -79,6 +79,24 @@
           - xdg-utils # Desktop software support
           - gnome-keyring # To get GPG etc. unlocked globally
 
+    - name: Install lightdm config
+      become: true
+      copy:
+        src: lightdm-gtk-greeter.conf
+        dest: /etc/lightdm/lightdm-gtk-greeter.conf
+        group: root
+        owner: root
+        mode: u=rw,g=r,o=r
+
+    - name: Install udiskie polkit config
+      become: true
+      copy:
+        src: polkit/50-udiskie.rules
+        dest: /etc/polkit-1/rules.d/50-udiskie.rules
+        group: root
+        owner: root
+        mode: u=rw,g=r,o=r
+
     - name: "Enable services"
       become: true
       when: not inside_docker

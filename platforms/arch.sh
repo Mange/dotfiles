@@ -35,24 +35,6 @@ copy-replace-with-diff() {
   cp "$source" "$target"
 }
 
-sudo-copy-replace-with-diff() {
-  local source="$1"
-  local target="$2"
-
-  if [[ -f "$target" ]]; then
-    if is-identical-file "$target" "$source"; then
-      return 0
-    elif ! confirm-diff "$target" "$source"; then
-      # Abort
-      return 0
-    fi
-  fi
-
-  sudo cp "$source" "$target"
-  sudo chown root:root "$target"
-  sudo chmod u=rw,og=r "$target"
-}
-
 is-identical-file() {
   local a="$1"
   local b="$2"
@@ -114,23 +96,6 @@ confirm() {
   fi
 }
 
-configure-lightdm() {
-  local config=/etc/lightdm/lightdm-gtk-greeter.conf
-  local dotfile_config=shared/lightdm-gtk-greeter.conf
-
-  header "Configuring LightDM"
-  sudo-copy-replace-with-diff "$dotfile_config" "$config" || handle-failure
-}
-
-configure-polkit() {
-  header "Configuring PolicyKit"
-
-  local config=/etc/polkit-1/rules.d/blueman.rules
-  local dotfile_config=./arch/polkit-blueman.rules
-
-  sudo-copy-replace-with-diff "$dotfile_config" "$config" || handle-failure
-}
-
 setup-nerd-fonts() {
   local package_config=/etc/fonts/conf.avail/10-nerd-font-symbols.conf
   local user_config=${XDG_CONFIG_HOME:-~/.config}/fontconfig/conf.d/10-nerd-font-symbols.conf
@@ -140,14 +105,6 @@ setup-nerd-fonts() {
     mkdir -p "$(dirname "${user_config}")"
     ln -s "$package_config" "$user_config"
     fc-cache
-  fi
-}
-
-enable-systemd-unit() {
-  if [[ $(systemctl is-enabled "$1") != "enabled" ]] || [[ $(systemctl is-active "$1") != "active" ]]; then
-    run-command-quietly "Starting and enabling $1 at boot" < <(
-      sudo systemctl enable --now "$1" 2>&1
-    )
   fi
 }
 
@@ -175,34 +132,7 @@ header "Setting up wallpapers"
 sudo rsync --archive --delete ../data/wallpapers/ /usr/share/wallpapers/Mange || handle-failure "running rsync"
 sudo chown -R root:root /usr/share/wallpapers/Mange
 
-configure-lightdm
-configure-polkit
-
-sudo-copy-replace-with-diff \
-  "shared/polkit/50-udiskie.rules" \
-  "/etc/polkit-1/rules.d/50-udiskie.rules"
-
-sudo-copy-replace-with-diff \
-  "shared/duplicity-backup.service" \
-  "/etc/systemd/system/duplicity-backup.service"
-sudo-copy-replace-with-diff \
-  "shared/duplicity-backup.timer" \
-  "/etc/systemd/system/duplicity-backup.timer"
-enable-systemd-unit "duplicity-backup.timer"
-
-sudo-copy-replace-with-diff \
-  "arch/download-pacman-updates.service" \
-  "/etc/systemd/system/download-pacman-updates.service"
-sudo-copy-replace-with-diff \
-  "arch/download-pacman-updates.timer" \
-  "/etc/systemd/system/download-pacman-updates.timer"
-enable-systemd-unit "download-pacman-updates.timer"
-
 if ! timedatectl show | grep -q "^NTP=yes"; then
   subheader "Enabling timesync (NTP)"
   sudo timedatectl set-ntp true
 fi
-
-sudo systemctl daemon-reload
-
-echo ""
