@@ -25,9 +25,6 @@ cargo-update || handle-failure
 header "Ruby setup and packages"
 install-ruby-via-rvm || handle-failure "Installing Ruby"
 
-header "Setting up default apps"
-xdg-mime default spacefm.desktop inode/directory
-
 if ! timedatectl show | grep -q "^NTP=yes"; then
   subheader "Enabling timesync (NTP)"
   sudo timedatectl set-ntp true
