@@ -26,13 +26,16 @@
 
     - name: Install Neovim NodeJS plugin
       become: true
-      shell: |
-        npm install -g --no-audit --no-fund \
-          neovim
+      community.general.npm:
+        name: neovim
+        state: latest
+        global: true
 
     - name: Install Neovim Python plugin
-      shell: |
-        pip install --user --upgrade --upgrade-strategy eager -q neovim
+      pip:
+        name: neovim
+        state: latest
+        extra_args: "--user"
 
     - name: Install Neovim Ruby plugin
       shell: |
@@ -62,9 +65,12 @@
 
     - name: Install language servers through NPM
       become: true
-      shell: |
-        npm install -g --no-audit --no-fund \
-          dockerfile-language-server-nodejs \
-          @tailwindcss/language-server \
-          typescript-language-server \
-          vscode-langservers-extracted
+      community.general.npm:
+        name: "{{ item }}"
+        state: latest
+        global: true
+      loop:
+        - "dockerfile-language-server-nodejs"
+        - "@tailwindcss/language-server"
+        - "typescript-language-server"
+        - "vscode-langservers-extracted"
