@@ -109,5 +109,5 @@
         - pcscd # smartcard daemon, for Yubikey, etc.
 
     - name: Setup default apps
-      shell: >
+      shell: |
         xdg-mime default spacefm.desktop inode/directory
