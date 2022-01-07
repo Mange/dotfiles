@@ -151,3 +151,24 @@
           XDG_TEMPLATES_DIR XDG_VIDEOS_DIR; do
           [ -d "${!var}" ] || mkdir -vp "${!var}"
         done
+
+    - name: Migrate some dotfiles into XDG locations
+      shell: |
+        . "{{ xdg_config_home }}/shells/common"
+
+        if [[ -n "{{ item.to }}" ]] && [[ -d "{{ item.from }}" ]]; then
+          if ! [[ -d "{{ item.to }}" ]]; then
+            echo "Moving {{ item.from }} → {{ item.to }}"
+            mkdir -p "$(dirname "{{ item.to }}")" && mv "{{ item.from }}" "{{ item.to }}"
+          else
+            echo "Cannot move {{ item.from }} → {{ item.to }} as destination exist"
+            exit 1
+          fi
+        fi
+      register: xdg_migration
+      changed_when: "'Moving ' in xdg_migration.stdout"
+      loop:
+        - { from: "~/.go", to: "$GOPATH" }
+        - { from: "~/.cargo", to: "$CARGO_HOME" }
+        - { from: "~/.rustup", to: "$RUSTUP_HOME" }
+        - { from: "~/.gnupg", to: "$GNUPGHOME" }
