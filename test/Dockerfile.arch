@@ -1,36 +1,31 @@
 FROM archlinux:base
 RUN pacman -Syu --noconfirm
 
-# Install the bootstrap dependencies first to make the script quicker to run
-# while iterating.
-RUN pacman -Syu && pacman -S --noconfirm git sudo ansible
-
 # Let some of the scripts be able to detect this case to avoid crashing on
 # things that are not possible inside the container (for example: dealing with
 # systemd).
 ENV INSIDE_DOCKER=1
 
-COPY --chown=root:root . /root/dotfiles-bootstrap
-RUN /root/dotfiles-bootstrap/bootstrap/bootstrap.sh
+# Install the bootstrap dependencies first to make the script quicker to run
+# while iterating.
+RUN pacman -Sy && \
+  pacman -S --needed --noconfirm \
+  sudo ansible curl zsh
 
-# Bootstrap tests:
-RUN test -d /home/mange # Mange has a home
-RUN groups mange | grep wheel # Mange is part of group wheel
-RUN grep -qE "^%wheel ALL=\(ALL\)" /etc/sudoers # Wheel group can use sudo
-
-# Ensure wheel group users are not
-# asked for a password when using
-# sudo command by ammending sudoers file
-RUN echo '%wheel ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 # Prevent ZSH newuser prompt everytime a new testing container is started.
 RUN rm /usr/share/zsh/scripts/newuser
+
+COPY --chown=root:root ./bootstrap/bootstrap.sh /root/bootstrap.sh
+COPY --chown=root:root ./bootstrap/bootstrap.yml /root/bootstrap.yml
+RUN /root/bootstrap.sh
 
 CMD zsh
 
 # Now run the rest of the setup as mange
-# (And copy the repo into the container. Don't use a volume or it will affect
-# the outside system whenever you make changes as part of a script.)
 USER mange
 WORKDIR /home/mange
 
+# (Copy the repo into the container. Don't use a volume or it will affect the
+# outside system whenever you make changes as part of a script.)
+RUN rm -rf /home/mange/Projects/dotfiles
 COPY --chown=mange:mange . /home/mange/Projects/dotfiles

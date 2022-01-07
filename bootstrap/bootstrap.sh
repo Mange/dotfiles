@@ -17,22 +17,30 @@ if [[ $(whoami) != root ]]; then
   exit 1
 fi
 
-repo_url=https://github.com/Mange/dotfiles
+bootstrap_script=https://raw.githubusercontent.com/Mange/dotfiles/master/bootstrap/bootstrap.yml
 
 setup_arch() {
   pacman -Syu --noconfirm
   pacman -S --noconfirm --needed \
-    git sudo ansible
+    sudo ansible curl
 
-  dir="/root/dotfiles-bootstrap"
-
-  if [[ ! -d "$dir" ]]; then
-    git clone "$repo_url" "$dir"
+  if [[ ! -f /root/bootstrap.yml ]]; then
+    curl -o /root/bootstrap.yml "$bootstrap_script"
   fi
 
-  ansible-playbook -i "${dir}/ansible/hosts" "${dir}/bootstrap/bootstrap.yml"
-  echo "Now you need to set a password for the user:"
-  echo "  passwd mange"
+  ansible-playbook \
+    --connection=local --inventory localhost, \
+    "/root/bootstrap.yml"
+
+  cat <<EOF
+Welcome. You should now set the password for your user:
+    passwd mange
+
+After that, log in as it and apply the dotfiles project.
+    sudo su mange
+    cd Projects/dotfiles
+    ./setup.sh
+EOF
 }
 
 case "$(uname -s)" in
