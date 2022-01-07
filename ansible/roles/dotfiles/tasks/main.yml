@@ -133,6 +133,14 @@
         group: root
         mode: u=rwX,g=rX,o=rX
 
+    - name: Installing ZSH plugins
+      git:
+        repo: "{{ item.repo }}"
+        dest: "{{ xdg_config_home }}/zsh/{{ item.name }}"
+        single_branch: true
+      loop:
+        - { name: "fzf-tab", repo: "https://github.com/Aloxaf/fzf-tab" }
+
     - name: Create missing user directories
       shell: |
         . "${XDG_CONFIG_HOME:-$HOME/.config}/user-dirs.dirs"

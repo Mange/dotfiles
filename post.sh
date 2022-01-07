@@ -1,13 +1,6 @@
 #!/usr/bin/env bash
 # Run after installing dotfiles to perform extra work.
 
-# Install zsh plugins
-if [[ -d "${XDG_CONFIG_HOME}/zsh/fzf-tab" ]]; then
-  (cd "${XDG_CONFIG_HOME}/zsh/fzf-tab" && git pull --rebase --quiet)
-else
-  git clone https://github.com/Aloxaf/fzf-tab "${XDG_CONFIG_HOME}/zsh/fzf-tab"
-fi
-
 # Clean up left-overs, if found
 [ -d ~/.fzf ] && rm -rf ~/.fzf
 rm -f ~/.fzf.*
