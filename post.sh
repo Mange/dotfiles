@@ -1,19 +1,6 @@
 #!/usr/bin/env bash
 # Run after installing dotfiles to perform extra work.
 
-# Seed template files
-(
-  shopt -s globstar
-  for file in **/*.template; do
-    if [[ -e "${file}" ]] && ! [[ -e "${file%.template}" ]]; then
-      cp -v "${file}" "${file%.template}"
-    fi
-  done
-)
-
-# Create directory for ZSH history, etc., if it does not exist already.
-mkdir -p "${XDG_DATA_HOME}/zsh"
-
 # Install zsh plugins
 if [[ -d "${XDG_CONFIG_HOME}/zsh/fzf-tab" ]]; then
   (cd "${XDG_CONFIG_HOME}/zsh/fzf-tab" && git pull --rebase --quiet)
