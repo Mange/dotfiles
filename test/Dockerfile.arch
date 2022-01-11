@@ -15,6 +15,10 @@ RUN pacman -Sy && \
 # Prevent ZSH newuser prompt everytime a new testing container is started.
 RUN rm /usr/share/zsh/scripts/newuser
 
+# Let wheel users run all sudo things without a password to make testing simpler.
+# (As you cannot log in as root to set a password for the mange user)
+RUN echo "%wheel ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/wheel-passwordless
+
 COPY --chown=root:root ./bootstrap/bootstrap.sh /root/bootstrap.sh
 COPY --chown=root:root ./bootstrap/bootstrap.yml /root/bootstrap.yml
 RUN /root/bootstrap.sh

@@ -34,6 +34,7 @@
         append: true # Append groups
         groups:
           - wheel
+        password_lock: false
 
     - name: Create Projects directory
       become_user: mange
