@@ -61,7 +61,7 @@ else
     -ti \
     --name "$container_name" \
     --hostname "$hostname" \
-    --volume "$(pwd)/ansible:/home/mange/Projects/dotfiles/ansible" \
-    --volume "$(pwd)/bootstrap:/root/dotfiles-bootstrap/bootstrap" \
+    --volume "$(pwd):/home/mange/Projects/dotfiles" \
+    --volume "$(pwd)/bootstrap/bootstrap.yml:/root/bootstrap.yml" \
     "$image_name"
 fi

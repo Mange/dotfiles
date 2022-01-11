@@ -1,13 +1,5 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-tasks.json
 - block:
-    - name: Install repo symlink
-      file:
-        src: "{{ '.' | realpath }}"
-        dest: "{{ xdg_config_home }}/dotfiles"
-        state: link
-        force: true
-        follow: false
-
     - name: Ensure XDG directories exist
       file:
         path: "{{ item }}"
@@ -18,15 +10,23 @@
         - "{{ xdg_cache_home }}"
         - "{{ xdg_bin }}"
 
+    - name: Install repo symlink
+      file:
+        src: "{{ '.' | realpath }}"
+        dest: "{{ xdg_config_home }}/dotfiles"
+        state: link
+        force: true
+        follow: false
+
     - block:
         - name: Get template files under dotfiles
           find:
             patterns: "*.template"
             paths:
-              - "../bin"
-              - "../config"
-              - "../data"
-              - "../snowflakes"
+              - "bin"
+              - "config"
+              - "data"
+              - "snowflakes"
             follow: false
             hidden: true
             recurse: true
@@ -43,7 +43,7 @@
 
     - name: Get .config dotfiles
       find:
-        paths: "../config"
+        paths: "config"
         depth: no
         file_type: any
         follow: no
@@ -52,7 +52,7 @@
 
     - name: Get .local/share dotfiles
       find:
-        paths: "../data"
+        paths: "data"
         depth: no
         file_type: any
         follow: no
@@ -61,7 +61,7 @@
 
     - name: Get .local/bin files
       find:
-        paths: "../bin"
+        paths: "bin"
         depth: no
         file_type: any
         follow: no
@@ -70,7 +70,7 @@
 
     - name: Get snowflake dotfiles
       find:
-        paths: "../snowflakes"
+        paths: "snowflakes"
         depth: no
         file_type: any
         follow: no
@@ -118,7 +118,7 @@
     - name: Copy wallpapers to system directory
       become: true
       ansible.posix.synchronize:
-        src: "../data/wallpapers/"
+        src: "data/wallpapers/"
         dest: "/usr/share/wallpapers/Mange"
         archive: true
         delete: true

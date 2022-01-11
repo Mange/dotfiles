@@ -4,7 +4,7 @@ set -e
 script_candidates=(
   "${XDG_CONFIG_HOME}/shells/enable-rvm"
   "${HOME}/Projects/dotfiles/config/shells/enable-rvm"
-  ../config/shells/enable-rvm
+  config/shells/enable-rvm
   /usr/share/rvm/scripts/rvm
   /usr/local/rvm/scripts/rvm
   "${HOME}/.rvm/scripts/rvm"

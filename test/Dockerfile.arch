@@ -24,8 +24,3 @@ CMD zsh
 # Now run the rest of the setup as mange
 USER mange
 WORKDIR /home/mange
-
-# (Copy the repo into the container. Don't use a volume or it will affect the
-# outside system whenever you make changes as part of a script.)
-RUN rm -rf /home/mange/Projects/dotfiles
-COPY --chown=mange:mange . /home/mange/Projects/dotfiles
