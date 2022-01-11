@@ -117,6 +117,7 @@
 
     - name: Copy wallpapers to system directory
       become: true
+      # NOTE: Requires rsync to be installed
       ansible.posix.synchronize:
         src: "data/wallpapers/"
         dest: "/usr/share/wallpapers/Mange"

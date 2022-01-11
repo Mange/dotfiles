@@ -5,9 +5,9 @@
   become_user: root
   become_method: sudo
   roles:
+    - group-base
     - dotfiles
     - gpg-config
-    - group-base
 
   vars:
     user_home: "{{ lookup('env', 'HOME') or '/home/mange' }}"
