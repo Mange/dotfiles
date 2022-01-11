@@ -1,0 +1,47 @@
+#!/bin/sh
+set -e
+
+usage() {
+  cat <<EOF
+Usage: dotfiles [COMMAND]
+
+Commands:
+  - setup
+    Runs the Ansible playbook, installing dependencies, setting up dotfiles symlinks, etc.
+EOF
+}
+
+if [ "$1" = "--help" ]; then
+  usage
+  exit 0
+fi
+
+dir="${XDG_CONFIG_HOME:-$HOME/.config}/dotfiles"
+if ! [ -d "$dir" ]; then
+  dir="$(dirname "$(dirname "$(readlink -f "$0")")")"
+  if ! [ -d "$dir" ]; then
+    echo "Cannot determine dotfiles dir!" >&2
+    exit 1
+  fi
+fi
+
+if [ "$1" = "--env" ]; then
+  cat <<SH
+export DOTFILES_PATH="$dir"
+SH
+  exit 0
+else
+  export DOTFILES_PATH="$dir"
+fi
+
+command="dotfiles-$1"
+
+if hash "$command" >/dev/null 2>/dev/null; then
+  shift
+  sudo -v
+  exec "$command" "$@"
+else
+  echo "Unknown command \"$1\"." >&2
+  usage >&2
+  exit 127
+fi
