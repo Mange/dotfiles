@@ -30,11 +30,6 @@
     RUSTUP_HOME: "{{ xdg_data_home }}/rustup"
 
   tasks:
-    - name: Load variables
-      include_vars: variables.yml
-      tags:
-        - always
-
     - include_role:
         name: host-morbidus
       when: ansible_hostname == "morbidus"

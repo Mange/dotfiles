@@ -38,6 +38,10 @@ esac
 dir="$(dirname "$(readlink -f "$0")")"
 cd "$dir"
 
-echo "Running ansible bootstrap…"
 ansible-galaxy collection install -r requirements.yml
-ansible-playbook -i hosts environment.yml --ask-become-pass "$@"
+
+ansible-playbook \
+  --connection=local --inventory localhost, \
+  --ask-become-pass \
+  environment.yml \
+  "$@"
