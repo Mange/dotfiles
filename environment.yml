@@ -4,10 +4,6 @@
   become: false
   become_user: root
   become_method: sudo
-  roles:
-    - { role: group-base, tags: [base] }
-    - { role: dotfiles, tags: [dotfiles] }
-    - { role: gpg-config, tags: [gpg] }
 
   vars:
     user_home: "{{ lookup('env', 'HOME') or '/home/mange' }}"
@@ -29,15 +25,18 @@
     CARGO_HOME: "{{ xdg_data_home }}/cargo"
     RUSTUP_HOME: "{{ xdg_data_home }}/rustup"
 
-  tasks:
-    - include_role:
-        name: host-morbidus
-      tags:
-        - system
-      when: ansible_hostname == "morbidus"
+  roles:
+    - { role: group-base, tags: [base] }
+    - { role: dotfiles, tags: [dotfiles] }
+    - { role: gpg-config, tags: [gpg] }
 
-    - include_role:
-        name: host-krista
-      tags:
-        - system
-      when: ansible_hostname == "krista"
+    - {
+        role: host-morbidus,
+        tags: [system],
+        when: 'ansible_hostname == "morbidus"',
+      }
+    - {
+        role: host-krista,
+        tags: [system],
+        when: 'ansible_hostname == "krista"',
+      }
