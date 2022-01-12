@@ -2,9 +2,21 @@
 set -e
 
 if [ "$1" = "--help" ]; then
-  echo "Usage: dotfiles setup [ansible-playbook options]"
-  echo ""
-  echo "Sets up the current machine using Ansible."
+  cat <<EOF
+Usage: dotfiles setup [ansible-playbook options]
+
+Sets up the current machine using Ansible.
+
+Examples:
+  dotfiles setup
+    Sets up everything.
+
+  dotfiles setup -t dotfiles
+    Only setup actual dotfiles, don't do most system stuff.
+
+  dotfiles setup --skip-tags base
+    Setup dotfiles and machine-specific stuff only.
+EOF
   exit 0
 fi
 

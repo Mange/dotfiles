@@ -6,8 +6,14 @@ usage() {
 Usage: dotfiles [COMMAND]
 
 Commands:
+  - update
+    Pulls and then setups up dotfiles.
+
   - setup
     Runs the Ansible playbook, installing dependencies, setting up dotfiles symlinks, etc.
+
+  - pull
+    Pulls the latest commits into the dotfiles repo.
 EOF
 }
 

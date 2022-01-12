@@ -1,0 +1,15 @@
+#!/bin/sh
+set -e
+
+if [ "$1" = "--help" ]; then
+  echo "Usage: dotfiles edit"
+  echo ""
+  echo "Lets you pick a dotfiles file to edit, then edits it in \$EDITOR."
+  exit 0
+fi
+
+file="$(fd | finder)"
+
+if [ -n "$file" ]; then
+  $EDITOR "$file"
+fi

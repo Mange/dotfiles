@@ -5,9 +5,9 @@
   become_user: root
   become_method: sudo
   roles:
-    - group-base
-    - dotfiles
-    - gpg-config
+    - { role: group-base, tags: [base] }
+    - { role: dotfiles, tags: [dotfiles] }
+    - { role: gpg-config, tags: [gpg] }
 
   vars:
     user_home: "{{ lookup('env', 'HOME') or '/home/mange' }}"
@@ -32,8 +32,12 @@
   tasks:
     - include_role:
         name: host-morbidus
+      tags:
+        - system
       when: ansible_hostname == "morbidus"
 
     - include_role:
         name: host-krista
+      tags:
+        - system
       when: ansible_hostname == "krista"

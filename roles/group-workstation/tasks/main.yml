@@ -22,6 +22,7 @@
           - fzf
           - tree
           - vimv # Batch-rename files using Vim
+          - fd # Simple, fast and user-friendly alternative to find
 
           # Docs and references
           - tldr
