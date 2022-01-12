@@ -3,6 +3,7 @@
     - name: Install AwesomeWM and dependencies
       when: ansible_os_family == "Archlinux"
       kewlfft.aur.aur:
+        state: present
         name:
           - awesome-git
 

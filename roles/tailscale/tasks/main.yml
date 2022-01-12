@@ -4,6 +4,7 @@
     - name: Install tailscale packages
       when: ansible_os_family == "Archlinux"
       kewlfft.aur.aur:
+        state: present
         name:
           - tailscale
 

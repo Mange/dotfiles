@@ -8,6 +8,7 @@
     - name: Install base packages
       when: ansible_os_family == "Archlinux"
       kewlfft.aur.aur:
+        state: present
         name:
           - base-devel
           - curl

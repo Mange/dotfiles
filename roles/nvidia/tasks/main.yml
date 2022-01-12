@@ -2,7 +2,8 @@
 - block:
     - name: Install nvidia drivers
       when: ansible_os_family == "Archlinux"
-      pacman:
+      become: true
+      kewlfft.aur.aur:
         name:
           - nvidia
           - nvidia-utils

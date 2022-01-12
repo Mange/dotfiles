@@ -2,6 +2,7 @@
 - block:
     - name: Install Redshift
       kewlfft.aur.aur:
+        state: present
         name:
           - redshift
           - python-gobject

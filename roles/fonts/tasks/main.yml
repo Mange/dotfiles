@@ -3,6 +3,7 @@
     - name: Install fonts
       when: ansible_os_family == "Archlinux"
       kewlfft.aur.aur:
+        state: present
         name:
           - font-victor-mono
           - gnu-free-fonts # FreeMono; monospaced Unicode font. Popular in Kaomoji, etc.

@@ -3,14 +3,27 @@
     - name: Install Work packages
       when: ansible_os_family == "Archlinux"
       kewlfft.aur.aur:
+        state: present
         name:
           - slack-desktop
-          - toggldesktop-git
-          - google-cloud-sdk
           - google-chrome
           - chromedriver
 
+    - name: Install Work packages (unstable)
+      when: ansible_os_family == "Archlinux"
+      # These packages have a bigger tendency than normal of failing, and there
+      # probably won't be a lot of stuff in this whole setup that would *break* if a
+      # package here is missing. Let's keep going if some of them fails to install.
+      ignore_errors: true
+      kewlfft.aur.aur:
+        state: present
+        name:
+          - toggldesktop-git
+          - google-cloud-sdk
+
     - name: Install toggl-cli
       become: true
-      shell: |
-        npm install -g toggl-cli@latest --no-audit --no-fund
+      npm:
+        name: toggl-cli
+        state: latest
+        global: true

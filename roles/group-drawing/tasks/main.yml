@@ -3,6 +3,7 @@
     - name: Install drawing packages
       when: ansible_os_family == "Archlinux"
       kewlfft.aur.aur:
+        state: present
         name:
           - libwacom
           - xf86-input-wacom

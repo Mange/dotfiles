@@ -12,6 +12,7 @@
     - name: Install workstation packages
       when: ansible_os_family == "Archlinux"
       kewlfft.aur.aur:
+        state: present
         name:
           # Hardware
           - bluez # Bluetooth

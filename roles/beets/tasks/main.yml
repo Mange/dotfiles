@@ -3,6 +3,7 @@
     - name: Install Morbidus packages
       when: ansible_os_family == "Archlinux"
       kewlfft.aur.aur:
+        state: present
         name:
           # beets
           - beets

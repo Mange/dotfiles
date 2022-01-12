@@ -3,6 +3,7 @@
     - name: Install Krista packages
       when: ansible_os_family == "Archlinux"
       kewlfft.aur.aur:
+        state: present
         name:
           - bolt # Thunderbolt 3 dock manager
           - vulkan-intel

@@ -3,6 +3,7 @@
     - name: Install System76 packages
       when: ansible_os_family == "Archlinux"
       kewlfft.aur.aur:
+        state: present
         name:
           - firmware-manager-git
           - system76-acpi-dkms

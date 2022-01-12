@@ -3,6 +3,7 @@
     - name: Install LaTeX packages
       when: ansible_os_family == "Archlinux"
       kewlfft.aur.aur:
+        state: present
         name:
           - texlive-core
           - texlive-science

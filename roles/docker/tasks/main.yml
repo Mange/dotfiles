@@ -3,6 +3,7 @@
     - name: Install docker
       when: ansible_os_family == "Archlinux"
       kewlfft.aur.aur:
+        state: present
         name:
           - docker
           - docker-credential-secretservice

@@ -2,6 +2,7 @@
 - block:
     - name: Install Neovim (git)
       kewlfft.aur.aur:
+        state: present
         name:
           - neovim-git
 
