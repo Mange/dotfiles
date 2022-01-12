@@ -14,14 +14,14 @@ Quick summary of my stack:
 
 ## Structure
 
-This repo is structured in three different sections.
+This repo uses Ansible to setup new machines. Usage of roles makes it possible
+to quickly pick what I want to include or not include on a new machine.
 
- * Root section (actual dotfiles)
- * `ansible` for setting up and installing dependencies on computers.
- * `bootstrap` for bootstrapping a new machine, creating my user, etc.
- * `dotfiles-cli` section (CLI util for managing dotfiles)
+You can see all roles under `roles/` and the initial setup in `environment.yml`.
 
-### Root section
+Ansible also copies the dotfiles and installs them for the user in question.
+
+### Dotfiles
 
 Dotfiles are mainly placed in accordance with the XDG directory specification.
 This simplifies things a whole lot. You can find files for the configuration
@@ -29,39 +29,63 @@ directory inside the `config` directory, data files inside the `data` directory
 and executables inside the `bin` directory.
 
 Some software does not follow XDG specifications and might require custom
-locations. Those files are inside the `snowflakes` directory, managed with
-`snowflakes/manifest.txt`.
+locations. Those files are inside the `snowflakes` directory.
 
-#### How to bootstrap
+## Dotfiles CLI
 
-As root, on you newly booted Arch machine:
+After installing the dotfiles there is a CLI you can use.
 
 ```bash
-pacman -Sy --noconfirm curl
-curl -o /root/bootstrap.sh https://github.com/Mange/dotfiles/raw/master/bootstrap/bootstrap.sh
-chmod +x /root/arch-bootstrap.sh
-/root/arch-bootstrap.sh
+dotfiles --help
+
+# Update and install
+dotfiles update
+
+# Update symlinks
+dotfiles update -t dotfiles
+# …or without checking out new changes
+dotfiles setup -t dotfiles
+
+# If you want to edit a file
+dotfiles edit
 ```
 
-### `dotfiles-cli`
+## How to bootstrap
 
-`dotfiles` is a CLI utility that is written in Rust and can be called to manage
-the dotfiles in this repo; installing files, etc.
+As root, run the install script:
 
-It will be extended in the future to deal with even more parts of this repo.
+```bash
+# For Arch:
+pacman -Sy --noconfirm curl
 
-## How to install
+curl -o - https://github.com/Mange/dotfiles/raw/master/bootstrap/bootstrap.sh | bash -
+```
 
-Run `initial-setup.sh` file at the project root. It will compile `dotfiles` and
-use it to install itself in your HOME, together with all the other files.
+This script will run the bootstrap playbook (see `bootstrap/bootstrap.yml`),
+which should create my user account. Follow the prompts to get running.
 
-After this initial install you can call `dotfiles --help` to see other
-operations that you can use.
+After you've set up the account, log in as the user and go to the dotfiles
+checkout. Run the `setup.sh` script.
 
-In order to compile this binary Rust must be installed and set up. You can run
-the platform scripts first in order to bootstrap and prepare your machine.
+```bash
+sudo su - mange
+cd Projects/dotfiles
+./setup.sh
+```
 
-# Copyright
+## Tests
+
+If you want to test the dotfiles and/or setup, you can use the test script
+under `test/test.sh`. It will boot up a Docker container for the given platform
+and bootstrap it. Then you are free to use the shell to test out the dotfiles.
+
+```
+host-machine$ dotfiles test --rebuild arch
+docker-container$ cd Projects/dotfiles
+docker-container$ ./setup.sh
+```
+
+## Copyright
 
 I really don't think most settings and configs could be worthy enough to
 require licenses, but in case you are a person that cares about matters like
