@@ -1,0 +1,136 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-tasks.json
+- block:
+    - name: Install GUI packages
+      when: ansible_os_family == "Archlinux"
+      kewlfft.aur.aur:
+        state: present
+        name:
+          # Graphical environment
+          - lightdm
+          - lightdm-gtk-greeter
+          - lightdm-gtk-greeter-settings
+          - xorg
+          - adapta-gtk-theme # gtk theme
+          # GUI tools
+          - autorandr # xrandr config for screen combinations
+          - feh # image viewer and background setter
+          - flameshot # Screenshot app
+          - gucharmap # character lookup gui, good for icon fonts
+          - lxappearance # dunno lol
+          - lxrandr # gui for xrandr
+          - mugshot # Customize user avatar
+          - mugshot # Customize user avatar (used in my AwesomeWM theme)
+          - network-manager-applet
+          - parcellite # Clipboard manager
+          - rofi # graphical selector and app launcher
+          - rofi-emoji
+          - udiskie # auto-mounter for devices (and tray icon)
+          - workrave # anti-rsi + workbreak timer
+          - xcape # Make Super into both Super and Escape
+          - xsel # used by a lot of cli tools to copy/paste
+          - zenity # GUI prompts from scripts (ytpip, etc.)
+          # Browser
+          - brave-beta-bin
+          - firefox-developer-edition
+          # File management
+          - spacefm
+          # Media
+          - mpv
+          - pavucontrol # Pulseaudio settings gui
+          - playerctl
+          - pulseaudio # Audio server
+          - pulsemixer # Pulseaudio TUI mixer
+          - spotify # A proprietary music streaming service
+          - vlc
+          # PDF, comics, etc.
+          - zathura
+          - zathura-cb # Adds comic book support to zathura
+          - zathura-djvu # DjVu support for Zathura
+          - zathura-pdf-mupdf # EPUB, PDF and XPS support based on MuPDF
+          # Chatting
+          - telegram-desktop # chat
+          - discord # All-in-one voice and text chat for gamers that's free and secure.
+          # Password manager, encryption, etc.
+          - bitwarden-cli # CLI for password manager
+          - bitwarden-rofi # Bitwarden in Rofi
+          - keybase
+          - keybase-gui
+          # Yubikey
+          - yubikey-manager
+          - yubikey-manager-qt
+          - ccid # smartcard drivers + pcscd
+          # Syncthing
+          - syncthing
+          # Spell checking
+          - hunspell
+          - hunspell-en_US
+          - hunspell-sv
+          - aspell
+          - aspell-en
+          - aspell-sv
+          - ispell
+          # Torrents and similar
+          - transmission-remote-gtk
+          - transmission-cli
+          # Misc
+          - xdg-utils # Desktop software support
+          - gnome-keyring # To get GPG etc. unlocked globally
+
+    - name: Install GUI packages (git)
+      when: ansible_os_family == "Archlinux"
+
+      # These packages have a bigger tendency than normal of failing, and there
+      # probably won't be a lot of stuff in this whole setup that would *break* if a
+      # package here is missing. Let's keep going if some of them fails to install.
+      ignore_errors: true
+
+      kewlfft.aur.aur:
+        state: present
+        name:
+          # Graphical environment
+          - picom-ibhagwan-git # Fork of picom with better blurring and rounded corners
+          # Terminal
+          - wezterm-git
+
+    - name: Install lightdm config
+      become: true
+      copy:
+        src: lightdm-gtk-greeter.conf
+        dest: /etc/lightdm/lightdm-gtk-greeter.conf
+        group: root
+        owner: root
+        mode: u=rw,g=r,o=r
+
+    - name: Install udiskie polkit config
+      become: true
+      copy:
+        src: polkit/50-udiskie.rules
+        dest: /etc/polkit-1/rules.d/50-udiskie.rules
+        group: root
+        owner: root
+        mode: u=rw,g=r,o=r
+
+    - name: "Enable services"
+      become: true
+      when: not inside_docker
+      systemd:
+        name: "{{ item }}"
+        enabled: true
+        state: started
+      loop:
+        - lightdm
+        - pcscd # smartcard daemon, for Yubikey, etc.
+
+    - name: "Enable user services"
+      when: not inside_docker
+      systemd:
+        scope: user
+        name: "{{ item }}"
+        enabled: true
+        state: started
+      loop:
+        - syncthing
+
+    - name: Setup default apps
+      shell: |
+        xdg-mime default spacefm.desktop inode/directory

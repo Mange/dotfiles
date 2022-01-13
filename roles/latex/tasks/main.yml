@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-tasks.json
+- block:
+    - name: Install LaTeX packages
+      when: ansible_os_family == "Archlinux"
+      kewlfft.aur.aur:
+        state: present
+        name:
+          - texlive-core
+          - texlive-science
+          - texlive-pictures
+          - texlive-latexextra
+          - texlive-formatsextra
+          - texlive-fontsextra
+          - python2-pygments # for pygmentex
+          - python-pygments
+          - pandoc

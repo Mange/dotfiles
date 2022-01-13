@@ -1,0 +1,31 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-tasks.json
+- block:
+    - name: Install docker
+      when: ansible_os_family == "Archlinux"
+      kewlfft.aur.aur:
+        state: present
+        name:
+          - docker
+          - docker-credential-secretservice
+          - docker-compose
+
+    - name: Ensure docker group
+      become: true
+      group:
+        name: docker
+        state: present
+
+    - name: Add mange to docker group
+      become: true
+      user:
+        name: mange
+        groups: docker
+        append: true
+
+    - name: Enable docker service
+      become: true
+      when: not inside_docker
+      systemd:
+        name: docker
+        enabled: true
+        state: started

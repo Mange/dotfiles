@@ -1,0 +1,50 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-playbook.json
+- name: Bootstrap new machine
+  hosts: localhost
+  connection: local
+  become: true
+  become_user: root
+  become_method: sudo
+  tasks:
+    - name: Install base packages
+      package:
+        name:
+          - git
+          - sudo
+          - zsh
+
+    - name: Ensure wheel group
+      group:
+        name: wheel
+        state: present
+
+    - name: Allow wheel group to use sudo
+      lineinfile:
+        path: /etc/sudoers
+        regexp: "%wheel"
+        line: "%wheel ALL=(ALL) ALL"
+        validate: visudo -cf %s
+
+    - name: Create mange
+      user:
+        name: mange
+        comment: Magnus Bergmark
+        shell: /usr/bin/zsh
+        umask: 002
+        append: true # Append groups
+        groups:
+          - wheel
+        password_lock: false
+
+    - name: Create Projects directory
+      become_user: mange
+      file:
+        path: "/home/mange/Projects"
+        state: directory
+
+    - name: Clone dotfiles repo
+      become_user: mange
+      git:
+        repo: "https://github.com/Mange/dotfiles"
+        dest: "/home/mange/Projects/dotfiles"
+        update: false

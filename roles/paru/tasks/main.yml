@@ -1,0 +1,64 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-tasks.json
+- when: ansible_os_family == "Archlinux"
+  block:
+    # Installing Paru is an interesting process in Ansible.
+    #
+    # Here's the basic outline of it:
+    #   1. If paru is not available, clone the repo to a global path.
+    #   2. If cloned repo exist, then install it using the aur module.
+    #   3. If cloned repo exist and the command exist, delete the cloned repo.
+    - block:
+        # Step 1
+        - block:
+            - name: Check if Paru is installed
+              stat:
+                path: /usr/bin/paru
+              register: paru_bin
+
+            - name: Clone paru repo
+              become: true
+              when: not paru_bin.stat.exists
+              shell: |
+                set -e
+                mkdir -p /opt/paru
+                [ ! -d /opt/paru/.git ] && git clone https://aur.archlinux.org/paru.git /opt/paru || true
+                chown -R mange:mange /opt/paru
+
+        # Step 2
+        - block:
+            - name: Check if Paru repo is cloned
+              stat:
+                path: /opt/paru/.git
+              register: paru_repo
+
+            - name: Install paru through repo
+              when: paru_repo.stat.exists
+              kewlfft.aur.aur:
+                name: paru
+                state: present
+                local_pkgbuild: /opt/paru
+                use: makepkg
+
+        - name: Make paru manage paru
+          when: paru_repo.stat.exists
+          kewlfft.aur.aur:
+            name: paru
+            state: latest
+            use: paru
+
+        # Step 3
+        - block:
+            - name: Check if Paru is installed
+              stat:
+                path: /usr/bin/paru
+              register: paru_bin
+
+            - name: Check if Paru repo is cloned
+              stat:
+                path: /opt/paru/.git
+              register: paru_repo
+
+            - name: Remove paru repo
+              become: true
+              when: paru_bin.stat.exists and paru_repo.stat.exists
+              command: rm -rf /opt/paru

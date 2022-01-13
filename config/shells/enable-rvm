@@ -1,4 +1,5 @@
 # vim: ft=sh
+# shellcheck shell=sh
 # Determine what shell is loading this script
 
 shell=$(readlink "/proc/$$/exe")
@@ -7,50 +8,51 @@ shell=$(readlink "/proc/$$/exe")
 # This could happen if you uninstall one install of RVM and try to install
 # another one without logging out and logging in again, as this variable will
 # be set in the X session.
-if [[ -n "$RVM_BIN" ]] && [[ ! -s "$RVM_BIN" ]]; then
+if [ -n "${RVM_BIN:-}" ] && [ ! -s "${RVM_BIN:-}" ]; then
   unset RVM_BIN
 fi
 
 # Use interactive, scripting-based RVM in Bash and ZSH
 case "$shell" in
-  (*zsh|*bash)
-    if [[ -s /usr/share/rvm/scripts/rvm ]]; then
-      # Arch-typical install directory
+*zsh | *bash)
+  if [ -s /usr/share/rvm/scripts/rvm ]; then
+    # Arch-typical install directory
+    # shellcheck source=/dev/null
+    . /usr/share/rvm/scripts/rvm
+  elif [ -s /usr/local/rvm/scripts/rvm ]; then
+    # Debian-typical install directory
+    # shellcheck source=/dev/null
+    . /usr/local/rvm/scripts/rvm
+  elif [ -s "$HOME/.rvm/scripts/rvm" ]; then
+    # Manually per-user install directory
+    # shellcheck source=/dev/null
+    . "$HOME/.rvm/scripts/rvm"
+  fi
+  ;;
+*)
+  # In other shells (like sh, Xsession, etc.) then add the default
+  # Ruby to the PATH if Ruby is not on PATH.
+  if ! hash ruby 2>/dev/null; then
+    if [ -f "$HOME/.rvm/environments/default" ]; then
       # shellcheck source=/dev/null
-      source /usr/share/rvm/scripts/rvm
-    elif [[ -s /usr/local/rvm/scripts/rvm ]]; then
-      # Debian-typical install directory
-      # shellcheck source=/dev/null
-      source /usr/local/rvm/scripts/rvm
-    elif [[ -s "$HOME/.rvm/scripts/rvm" ]]; then
-      # Manually per-user install directory
-      # shellcheck source=/dev/null
-      source "$HOME/.rvm/scripts/rvm"
+      . "$HOME/.rvm/environments/default"
     fi
-    ;;
-  (*)
-    # In other shells (like sh, Xsession, etc.) then add the default
-    # Ruby to the PATH if Ruby is not on PATH.
-    if ! hash ruby 2>/dev/null; then
-      if [[ -f "$HOME/.rvm/environments/default" ]]; then
-        # shellcheck source=/dev/null
-        source "$HOME/.rvm/environments/default"
-      fi
-    fi
+  fi
+  ;;
 esac
 
 unset shell
 
 # For direct use in some scripts where this file is not sourced; mainly Bash
 # subshells and whatnot.
-if [[ -z "$RVM_BIN" ]]; then
-  if [[ -f /usr/share/rvm/bin/rvm ]]; then
+if [ -z "${RVM_BIN:-}" ]; then
+  if [ -f /usr/share/rvm/bin/rvm ]; then
     # Arch-typical install directory
     export RVM_BIN=/usr/share/rvm/bin/rvm
-  elif [[ -f /usr/local/rvm/bin/rvm ]]; then
+  elif [ -f /usr/local/rvm/bin/rvm ]; then
     # Debian-typical install directory
     export RVM_BIN=/usr/local/rvm/bin/rvm
-  elif [[ -f "$HOME/.rvm/bin/rvm" ]]; then
+  elif [ -f "$HOME/.rvm/bin/rvm" ]; then
     # Manually per-user install directory
     export RVM_BIN="$HOME/.rvm/bin/rvm"
   fi

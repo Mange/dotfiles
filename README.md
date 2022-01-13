@@ -9,18 +9,19 @@ Quick summary of my stack:
 - **Editor:** [Neovim]
 - **Shell:** [ZSH]
 - **Terminal emulator:** [Wezterm]
-- **Web browser:** [Firefox] (Developer Edition)
+- **Web browser:** [Brave]
 - **Colors:** [Catppuccin]
 
 ## Structure
 
-This repo is structured in three different sections.
+This repo uses Ansible to setup new machines. Usage of roles makes it possible
+to quickly pick what I want to include or not include on a new machine.
 
- * Root section (actual dotfiles)
- * Platforms section (setup scripts for setting up machines)
- * `dotfiles-cli` section (CLI util for managing dotfiles)
+You can see all roles under `roles/` and the initial setup in `environment.yml`.
 
-### Root section
+Ansible also copies the dotfiles and installs them for the user in question.
+
+### Dotfiles
 
 Dotfiles are mainly placed in accordance with the XDG directory specification.
 This simplifies things a whole lot. You can find files for the configuration
@@ -28,50 +29,63 @@ directory inside the `config` directory, data files inside the `data` directory
 and executables inside the `bin` directory.
 
 Some software does not follow XDG specifications and might require custom
-locations. Those files are inside the `snowflakes` directory, managed with
-`snowflakes/manifest.txt`.
+locations. Those files are inside the `snowflakes` directory.
 
-### Platforms section
+## Dotfiles CLI
 
-The `platforms` directory contains setup scripts for setting up machines and
-manage software or system-level configuration on them.
-
-- `platforms/arch.sh` - Sets up wanted software and preferences on an Arch
-  machine.
-- `platforms/arch-bootstrap.sh` - Sets up a *new* Arch machine (adds my user,
-  clones this repo, etc.).
-
-#### How to bootstrap
-
-As root, on you newly booted Arch machine:
+After installing the dotfiles there is a CLI you can use.
 
 ```bash
-pacman -Sy wget
-wget https://github.com/Mange/dotfiles/raw/master/platforms/arch-bootstrap.sh
-chmod +x arch-bootstrap.sh
-./arch-bootstrap.sh
+dotfiles --help
+
+# Update and install
+dotfiles update
+
+# Update symlinks
+dotfiles update -t dotfiles
+# …or without checking out new changes
+dotfiles setup -t dotfiles
+
+# If you want to edit a file
+dotfiles edit
 ```
 
+## How to bootstrap
 
-### `dotfiles-cli`
+As root, run the install script:
 
-`dotfiles` is a CLI utility that is written in Rust and can be called to manage
-the dotfiles in this repo; installing files, etc.
+```bash
+# For Arch:
+pacman -Sy --noconfirm curl
 
-It will be extended in the future to deal with even more parts of this repo.
+curl -o - https://github.com/Mange/dotfiles/raw/master/bootstrap/bootstrap.sh | bash -
+```
 
-## How to install
+This script will run the bootstrap playbook (see `bootstrap/bootstrap.yml`),
+which should create my user account. Follow the prompts to get running.
 
-Run `initial-setup.sh` file at the project root. It will compile `dotfiles` and
-use it to install itself in your HOME, together with all the other files.
+After you've set up the account, log in as the user and go to the dotfiles
+checkout. Run the `setup.sh` script.
 
-After this initial install you can call `dotfiles --help` to see other
-operations that you can use.
+```bash
+sudo su - mange
+cd Projects/dotfiles
+./setup.sh
+```
 
-In order to compile this binary Rust must be installed and set up. You can run
-the platform scripts first in order to bootstrap and prepare your machine.
+## Tests
 
-# Copyright
+If you want to test the dotfiles and/or setup, you can use the test script
+under `test/test.sh`. It will boot up a Docker container for the given platform
+and bootstrap it. Then you are free to use the shell to test out the dotfiles.
+
+```
+host-machine$ dotfiles test --rebuild arch
+docker-container$ cd Projects/dotfiles
+docker-container$ ./setup.sh
+```
+
+## Copyright
 
 I really don't think most settings and configs could be worthy enough to
 require licenses, but in case you are a person that cares about matters like
@@ -89,5 +103,5 @@ repository.
 [Neovim]: https://neovim.io/
 [ZSH]: http://zsh.sourceforge.net/
 [Wezterm]: https://wezfurlong.org/wezterm/
-[Firefox]: https://www.mozilla.org/en-US/firefox/
+[Brave]: https://brave.com/
 [Catppuccin]: https://github.com/catppuccin/catppuccin

@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-tasks.json
+- block:
+    - name: Install Redshift
+      kewlfft.aur.aur:
+        state: present
+        name:
+          - redshift
+          - python-gobject
+          - python-xdg
+          - gtk3
+
+    - name: Enable redshift service
+      when: not inside_docker
+      systemd:
+        name: redshift
+        enabled: true
+        state: started
+        scope: user

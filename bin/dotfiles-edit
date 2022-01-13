@@ -1,0 +1,21 @@
+#!/bin/sh
+set -e
+
+if [ "$1" = "--help" ]; then
+  echo "Usage: dotfiles edit"
+  echo ""
+  echo "Lets you pick a dotfiles file to edit, then edits it in your editor."
+  exit 0
+fi
+
+file="$(fd | finder)"
+editor=${VISUAL:-${EDITOR:-vi}}
+
+if [ -n "$file" ]; then
+  if [ -t 1 ]; then
+    $editor "$file"
+  else
+    # shellcheck disable=SC2086
+    wezterm start --cwd "$DOTFILES_PATH" -- $editor "$file"
+  fi
+fi

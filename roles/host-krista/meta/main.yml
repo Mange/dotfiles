@@ -1,0 +1,5 @@
+---
+dependencies:
+  - role: group-laptop
+  - role: group-work
+  - role: system76

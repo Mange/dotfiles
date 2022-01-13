@@ -1,0 +1,9 @@
+#!/bin/sh
+set -e
+
+if [ -z "${DOTFILES_PATH:-}" ]; then
+  eval "$(dotfiles --env)"
+fi
+cd "${DOTFILES_PATH:?}"
+
+./test/test.sh "$@"

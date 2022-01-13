@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-tasks.json
+- block:
+    - name: Enable avahi-daemon service
+      become: true
+      when: not inside_docker
+      systemd:
+        name: avahi-daemon
+        enabled: true
+        state: started

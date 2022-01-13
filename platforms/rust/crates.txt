@@ -1,6 +1,0 @@
-# For "cargo install-update"
-cargo-update
-
-# Rust development
-cargo-edit
-cargo-watch

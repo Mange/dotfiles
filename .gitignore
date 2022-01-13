@@ -1,6 +1,5 @@
-# Generated install
-bin/dotfiles
-config/dotfiles/path
+# Generated
+config/user-dirs.dirs
 
 # Allow machine-local files that are not added to the repo
 *.local

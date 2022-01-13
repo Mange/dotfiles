@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-tasks.json
+- block:
+    - name: Load information about installed packages
+      ansible.builtin.package_facts:
+        manager: auto
+
+    - name: Install grub theme
+      when: ansible_os_family == "Archlinux" and packages["grub"] is defined
+      kewlfft.aur.aur:
+        state: present
+        name:
+          - grub-theme-tela-color-1080p-git

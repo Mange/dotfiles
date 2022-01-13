@@ -1,0 +1,62 @@
+#!/bin/sh
+set -e
+
+if [ "$1" = "--help" ]; then
+  cat <<EOF
+Usage: dotfiles setup [ansible-playbook options]
+
+Sets up the current machine using Ansible.
+
+Examples:
+  dotfiles setup
+    Sets up everything.
+
+  dotfiles setup -t dotfiles
+    Only setup actual dotfiles, don't do most system stuff.
+
+  dotfiles setup --skip-tags base
+    Setup dotfiles and machine-specific stuff only.
+EOF
+  exit 0
+fi
+
+if [ -z "${DOTFILES_PATH:-}" ]; then
+  eval "$(dotfiles --env)"
+fi
+cd "${DOTFILES_PATH:?}"
+
+setup_arch() {
+  if ! hash ansible-playbook >/dev/null 2>/dev/null; then
+    sudo pacman -S --noconfirm --needed ansible
+  fi
+}
+
+case "$(uname -s)" in
+Linux)
+  if [ -f /etc/os-release ]; then
+    dist=$(awk -F '=' '/^ID=/ { print $2 }' /etc/os-release)
+    case "$dist" in
+    arch*)
+      setup_arch
+      ;;
+    *)
+      echo "Not a supported dist: $dist"
+      exit 1
+      ;;
+    esac
+  fi
+  ;;
+*)
+  echo "Not a supported system."
+  exit 1
+  ;;
+esac
+
+sudo -v
+
+ansible-galaxy collection install -r requirements.yml
+
+exec ansible-playbook \
+  --connection=local --inventory localhost, \
+  environment.yml \
+  "$@"
