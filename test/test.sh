@@ -42,6 +42,12 @@ while [ "$#" -gt 0 ]; do
   esac
 done
 
+if [ -z "$platform" ]; then
+  echo "No platform specified" >&2
+  usage >&2
+  exit 1
+fi
+
 image_name="dotfiles-$platform"
 container_name="dotfiles-$platform-run"
 hostname="${HOST:-$(hostname)}"

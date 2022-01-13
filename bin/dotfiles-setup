@@ -52,6 +52,8 @@ Linux)
   ;;
 esac
 
+sudo -v
+
 ansible-galaxy collection install -r requirements.yml
 
 exec ansible-playbook \

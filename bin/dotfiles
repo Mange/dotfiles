@@ -14,6 +14,12 @@ Commands:
 
   - pull
     Pulls the latest commits into the dotfiles repo.
+
+  - edit
+    Pick a file in the dotfiles repo to edit in your editor.
+
+  - test
+    Start a Docker container with the dotfiles to test changes.
 EOF
 }
 
@@ -41,13 +47,14 @@ else
 fi
 
 command="dotfiles-$1"
+shift
 
 if hash "$command" >/dev/null 2>/dev/null; then
-  shift
-  sudo -v
   exec "$command" "$@"
+elif [ -x "${DOTFILES_PATH}/bin/${command}" ]; then
+  exec "${DOTFILES_PATH}/bin/${command}" "$@"
 else
-  echo "Unknown command \"$1\"." >&2
+  echo "Cannot find command \"${command}\"." >&2
   usage >&2
   exit 127
 fi
