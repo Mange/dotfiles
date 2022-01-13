@@ -61,7 +61,6 @@
           - ccid # smartcard drivers + pcscd
           # Syncthing
           - syncthing
-          - syncthing-gtk-python3
           # Spell checking
           - hunspell
           - hunspell-en_US
@@ -121,6 +120,16 @@
       loop:
         - lightdm
         - pcscd # smartcard daemon, for Yubikey, etc.
+
+    - name: "Enable user services"
+      when: not inside_docker
+      systemd:
+        scope: user
+        name: "{{ item }}"
+        enabled: true
+        state: started
+      loop:
+        - syncthing
 
     - name: Setup default apps
       shell: |
