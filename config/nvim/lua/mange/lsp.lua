@@ -177,7 +177,6 @@ if_require("null-ls", function(null_ls)
     debug = true,
     diagnostics_format = "#{m} (#{s} [#{c}])",
     sources = {
-      null_ls.builtins.formatting.clang_format,
       null_ls.builtins.formatting.prettier,
       null_ls.builtins.formatting.shfmt.with {
         -- Use two spaces for indentation
