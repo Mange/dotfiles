@@ -6,7 +6,13 @@
 directory: ~/Media/Music
 library: ~/Media/Music/beets.db
 
-plugins: inline embedart fetchart lastgenre mbsync smartplaylist thumbnails fuzzy missing random duplicates
+plugins: deezer spotify edit inline embedart fetchart lastgenre mbsync smartplaylist thumbnails fuzzy missing random duplicates
+
+spotify:
+  source_weight: 0.1 # Don't penalize a lot compared to musicbrains
+
+deezer:
+  source_weight: 0.2 # Don't penalize a lot compared to musicbrains
 
 import:
   move: yes # Move files instead of copying them
@@ -24,8 +30,18 @@ import:
 match:
   # I get no media from visual media like this, so don't even try to match on
   # it.
-  ignored_media: ['Data CD', 'DVD', 'DVD-Video', 'Blu-ray', 'HD-DVD',
-                  'VCD', 'SVCD', 'UMD', 'VHS']
+  ignored_media:
+    [
+      "Data CD",
+      "DVD",
+      "DVD-Video",
+      "Blu-ray",
+      "HD-DVD",
+      "VCD",
+      "SVCD",
+      "UMD",
+      "VHS",
+    ]
   ignore_video_tracks: yes
 
   strong_rec_thresh: 0.07 # Auto-accept matches of 93%+
