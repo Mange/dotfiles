@@ -138,7 +138,11 @@ if_require("lspconfig", function(lspconfig)
     on_attach = on_attach,
   }
 
-  -- Terraform
+  lspconfig.ccls.setup {
+    capabilities = capabilities(),
+    on_attach = on_attach,
+  }
+
   lspconfig.terraformls.setup {
     capabilities = capabilities(),
     on_attach = on_attach,

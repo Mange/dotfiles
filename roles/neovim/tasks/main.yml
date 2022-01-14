@@ -24,6 +24,8 @@
           - yaml-language-server
           - bash-language-server
           - bash-completion # dependency of bash-language-server
+          - ccls
+          - bear # tool to generate compilation database for clang tooling
 
     - name: Install Neovim NodeJS plugin
       become: true
