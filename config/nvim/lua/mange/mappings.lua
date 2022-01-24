@@ -480,6 +480,11 @@ local function attach_lsp(bufnr)
         ":lua vim.lsp.buf.range_code_action()<cr>",
         "Code action",
       },
+      ["="] = { "<cmd>lua vim.lsp.buf.range_formatting()<cr>", "Format" },
+      ["<leader>="] = {
+        "<cmd>lua vim.lsp.buf.range_formatting()<cr>",
+        "Format",
+      },
     }, {
       buffer = bufnr,
       mode = "v",
@@ -490,6 +495,7 @@ local function attach_lsp(bufnr)
   wk_register({
     ["K"] = { "<Cmd>lua vim.lsp.buf.hover()<CR>", "Hover documentation" },
     ["gK"] = { "<cmd>lua vim.lsp.buf.signature_help()<CR>", "Signature help" },
+    ["<C-]>"] = { "<cmd>Telescope lsp_definitions<cr>", "Definitions" },
 
     ["[e"] = {
       "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>",
