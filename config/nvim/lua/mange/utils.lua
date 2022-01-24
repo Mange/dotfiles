@@ -26,6 +26,7 @@ end
 local disabled_autoformat_types = {
   "markdown",
   "vimwiki",
+  "eruby", -- Breaks completely in most formatters
 }
 
 -- Sloooooow autoformatters should run async instead of sync. You'll need to
