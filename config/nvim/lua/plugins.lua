@@ -225,8 +225,6 @@ require("packer").startup(function(use)
     },
     config = function()
       require("gitsigns").setup {
-        -- Set up manually in mange.mappings
-        keymaps = {},
         signs = {
           add = { text = "┃" },
           change = { text = "╏" },
