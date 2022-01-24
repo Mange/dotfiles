@@ -1,0 +1,113 @@
+#!/bin/bash
+set -e
+
+usage() {
+  cat <<EOF
+Usage: $0 [options] [--] <files…>
+
+Preview files in the terminal.
+
+Options:
+  -h, --headers
+    Show headers before each preview, including the filename and basic details.
+    Default on more than one file.
+
+  -H, --no-headers
+    Don't show headers before each preview. Default when only one file
+    specified.
+EOF
+}
+
+image_preview_height=120
+headers=default
+
+preview_file() {
+  local file="$1"
+  local mime
+  mime=$(file --dereference --brief --mime-type "$file")
+
+  [[ "$headers" == yes ]] && file --dereference "$file"
+
+  case "$mime" in
+  inode/directory)
+    tree -L 1 --dirsfirst -a "$file"
+    ;;
+  image/svg+xml)
+    convert -size "x${image_preview_height}" "$file" png:- | preview_image
+    ;;
+  image/*)
+    preview_image <"$file"
+    ;;
+  text/*)
+    bat --line-range :10 --paging never --style grid,numbers,snip "$file"
+    ;;
+  *)
+    echo "TODO: No preview yet for $mime"
+    ;;
+  esac
+}
+
+preview_image() {
+  if [[ "$TERM_PROGRAM" == "WezTerm" ]]; then
+    wezterm imgcat --height "${image_preview_height}px"
+    echo ""
+  else
+    # TODO: Install some program that can output images
+    echo "(Cannot preview image)"
+  fi
+}
+
+if ! TEMP=$(
+  getopt \
+    -o 'hH' \
+    --long 'help,headers,no-headers' \
+    -- "$@"
+); then
+  echo "Failed to parse arguments…" >&2
+  usage >&2
+  exit 1
+fi
+eval set -- "$TEMP"
+unset TEMP
+
+while [[ "$#" -gt 0 ]]; do
+  case "$1" in
+  --help)
+    usage
+    exit 0
+    ;;
+
+  -h | --headers)
+    shift
+    headers=yes
+    ;;
+
+  -H | --no-headers)
+    shift
+    headers=no
+    ;;
+
+  --)
+    shift
+    break
+    ;;
+
+  *)
+    echo "Unsupported option $1" >&2
+    usage >&2
+    exit 1
+    ;;
+  esac
+done
+
+if [[ "$headers" == default ]]; then
+  if [[ "$#" -gt 1 ]]; then
+    headers=yes
+  else
+    headers=no
+  fi
+fi
+
+for file in "$@"; do
+  preview_file "$file"
+done
