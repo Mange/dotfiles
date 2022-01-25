@@ -129,13 +129,13 @@ function module_color {
     echo default
     ;;
   1)
-    echo $theme_bg_l1
+    echo $theme_black_3
     ;;
   2)
-    echo $theme_bg_l2
+    echo $theme_black_4
     ;;
   3)
-    echo $theme_bg_l3
+    echo $theme_gray_0
     ;;
   *)
     echo $section

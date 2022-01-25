@@ -1,37 +1,24 @@
 #!/bin/sh
 
-export theme_bg_l3="#6E6C7C"
-export theme_bg_l2="#3e4058"
-export theme_bg_l1="#2D293B"
-export theme_bg="#1E1E28"
-export theme_bg_d1="#1B1923"
-export theme_bg_d2="#15121C"
-
-export theme_fg="#D7DAE0"
-export theme_black="#6E6C7C"
-export theme_red="#E28C8C"
-export theme_green="#B3E1A3"
-export theme_yellow="#EADDA0"
-export theme_blue="#A4B9EF"
-export theme_magenta="#C6AAE8"
-export theme_pink="#F0AFE1"
-export theme_white="#D7DAE0"
-
-###
-# The neovim color palette
-# catppuccin0 = "#9DDDCB",
-# catppuccin1 = "#1E1E28",
-# catppuccin2 = "#ECBFBD",
-# catppuccin3 = "#C6AAE8",
-# catppuccin4 = "#F0AFE1",
-# catppuccin5 = "#E28C8C",
-# catppuccin6 = "#F7C196",
-# catppuccin7 = "#B3E1A3",
-# catppuccin8 = "#EADDA0",
-# catppuccin9 = "#A4B9EF",
-# catppuccin10 = "#D7DAE0",
-# catppuccin11 = "#6E6C7C",
-# catppuccin12 = "#3e4058",
-# catppuccin13 = "#15121C",
-# catppuccin14 = "#1B1923",
-# catppuccin15 = "#2D293B",
+export theme_rosewater="#f5e0dc"
+export theme_flamingo="#f2cdcd"
+export theme_mauve="#ddb6f2"
+export theme_pink="#f5c2e7"
+export theme_maroon="#e8a2af"
+export theme_red="#f28fad"
+export theme_peach="#f8bd96"
+export theme_yellow="#fae3b0"
+export theme_green="#abe9b3"
+export theme_teal="#b5e8e0"
+export theme_blue="#96cdfb"
+export theme_sky="#89dceb"
+export theme_lavender="#c9cbff"
+export theme_black_0="#161320"
+export theme_black_1="#1a1826"
+export theme_black_2="#1e1e2e"
+export theme_black_3="#302d41"
+export theme_black_4="#575268"
+export theme_gray_0="#6e6c7e"
+export theme_gray_1="#988ba2"
+export theme_gray_2="#c3bac6"
+export theme_white="#d9e0ee"
