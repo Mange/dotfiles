@@ -81,11 +81,23 @@ function plugin.setup()
   }
 
   cmp.setup.cmdline(":", {
-    sources = { { name = "cmdline" } },
+    sources = { { name = "cmdline" }, { name = "cmdline_history" } },
   })
 
   cmp.setup.cmdline("/", {
-    sources = { { name = "buffer" } },
+    sources = { { name = "buffer" }, { name = "cmdline_history" } },
+  })
+
+  cmp.setup.cmdline("?", {
+    sources = { { name = "buffer" }, { name = "cmdline_history" } },
+  })
+
+  cmp.setup.cmdline("=", {
+    sources = { { name = "cmdline_history" } },
+  })
+
+  cmp.setup.cmdline("@", {
+    sources = { { name = "cmdline_history" } },
   })
 end
 

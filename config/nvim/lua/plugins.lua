@@ -325,15 +325,16 @@ require("packer").startup(function(use)
   use {
     "hrsh7th/nvim-cmp",
     requires = {
+      "Saecki/crates.nvim",
+      "dmitmel/cmp-cmdline-history",
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-cmdline",
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-nvim-lua",
       "hrsh7th/cmp-path",
-      "Saecki/crates.nvim",
+      "onsails/lspkind-nvim",
       "ray-x/cmp-treesitter",
       "saadparwaiz1/cmp_luasnip",
-      "onsails/lspkind-nvim",
       "simrat39/rust-tools.nvim",
     },
     config = function()
