@@ -10,6 +10,7 @@ local function has_words_before()
 end
 
 function plugin.setup()
+  ---@diagnostic disable-next-line: different-requires
   local cmp = require "cmp"
   local luasnip = require "luasnip"
   local lspkind = require "lspkind"
@@ -78,6 +79,14 @@ function plugin.setup()
       { name = "crates" },
     },
   }
+
+  cmp.setup.cmdline(":", {
+    sources = { { name = "cmdline" } },
+  })
+
+  cmp.setup.cmdline("/", {
+    sources = { { name = "buffer" } },
+  })
 end
 
 return plugin
