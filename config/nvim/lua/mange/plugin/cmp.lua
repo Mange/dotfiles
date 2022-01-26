@@ -64,15 +64,18 @@ function plugin.setup()
         "s",
       }),
     },
+    completion = {
+      keyword_length = 3,
+    },
     sources = {
-      -- Shows too much. Might be appropriate in some filetypes, like text files.
-      -- { name = "buffer" },
       { name = "path" },
+
       { name = "nvim_lsp" },
-      { name = "treesitter" },
+      { name = "treesitter", max_item_count = 10, keyword_length = 5 },
+      { name = "luasnip" },
+
       { name = "nvim_lua" },
       { name = "crates" },
-      { name = "luasnip" },
     },
   }
 end
