@@ -81,15 +81,26 @@ function plugin.setup()
   }
 
   cmp.setup.cmdline(":", {
-    sources = { { name = "cmdline" }, { name = "cmdline_history" } },
+    sources = {
+      { name = "cmdline" },
+      { name = "cmdline_history", max_item_count = 5, keyword_length = 5 },
+    },
   })
 
   cmp.setup.cmdline("/", {
-    sources = { { name = "buffer" }, { name = "cmdline_history" } },
+    max_item_count = 12,
+    sources = {
+      { name = "buffer", max_item_count = 10 },
+      { name = "cmdline_history" },
+    },
   })
 
   cmp.setup.cmdline("?", {
-    sources = { { name = "buffer" }, { name = "cmdline_history" } },
+    max_item_count = 12,
+    sources = {
+      { name = "buffer", max_item_count = 10 },
+      { name = "cmdline_history" },
+    },
   })
 
   cmp.setup.cmdline("=", {
