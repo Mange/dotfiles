@@ -308,11 +308,16 @@ require("packer").startup(function(use)
 
   --- {{{ Completion and snippets
   use {
-    "L3MON4D3/LuaSnip",
+    "dcampos/nvim-snippy",
     before = "hrsh7th/nvim-cmp",
     config = function()
-      require "mange.snippets"
+      require("snippy").setup {}
     end,
+  }
+
+  -- Snippets collection. Might replace with my own later when I have time.
+  use {
+    "honza/vim-snippets",
   }
 
   use {
@@ -334,7 +339,7 @@ require("packer").startup(function(use)
       "hrsh7th/cmp-path",
       "onsails/lspkind-nvim",
       "ray-x/cmp-treesitter",
-      "saadparwaiz1/cmp_luasnip",
+      "dcampos/cmp-snippy",
       "simrat39/rust-tools.nvim",
     },
     config = function()

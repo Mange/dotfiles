@@ -12,7 +12,7 @@ end
 function plugin.setup()
   ---@diagnostic disable-next-line: different-requires
   local cmp = require "cmp"
-  local luasnip = require "luasnip"
+  local snippy = require "snippy"
   local lspkind = require "lspkind"
 
   cmp.setup {
@@ -24,7 +24,7 @@ function plugin.setup()
     },
     snippet = {
       expand = function(args)
-        require("luasnip").lsp_expand(args.body)
+        snippy.expand_snippet(args.body)
       end,
     },
     mapping = {
@@ -40,8 +40,8 @@ function plugin.setup()
       ["<Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_next_item()
-        elseif luasnip.expand_or_jumpable() then
-          luasnip.expand_or_jump()
+        elseif snippy.can_expand_or_advance() then
+          snippy.expand_or_advance()
         elseif has_words_before() then
           cmp.complete()
         else
@@ -55,8 +55,8 @@ function plugin.setup()
       ["<S-Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_prev_item()
-        elseif luasnip.jumpable(-1) then
-          luasnip.jump(-1)
+        elseif snippy.can_jump(-1) then
+          snippy.previous(-1)
         else
           fallback()
         end
@@ -73,7 +73,7 @@ function plugin.setup()
 
       { name = "nvim_lsp" },
       { name = "treesitter", max_item_count = 10, keyword_length = 5 },
-      { name = "luasnip" },
+      { name = "snippy" },
 
       { name = "nvim_lua" },
       { name = "crates" },

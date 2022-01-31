@@ -40,7 +40,7 @@ local function load_plugins()
   cmd [[
     augroup packer_aus
       au!
-      au BufWritePost */config/lua/plugins.lua source <afile> | PackerCompile
+      au BufWritePost */config/lua/plugins.lua source <afile> | PackerCompile | echo "Refreshed plugins"
     augroup END
   ]]
 end
