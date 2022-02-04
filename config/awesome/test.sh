@@ -4,7 +4,7 @@
 set -e
 
 function usage() {
-    cat <<USAGE
+  cat <<USAGE
 Usage: $0 [options] <commands…>
 
 Commands:
@@ -37,60 +37,64 @@ USAGE
 run_setup() {
   sudo luarocks --lua-version 5.3 install luaunit
 
-
   if ! hash awmtt 2>/dev/null; then
     paru -S awmtt
   fi
 }
 
 run_luaunit() {
-  lua5.3 tests.lua
+  lua5.4 tests.lua
 }
 
 export IN_AWMTT=yes
 
+if [[ "$#" -eq 0 ]]; then
+  usage
+  exit 1
+fi
+
 while [[ "$#" -ge 1 ]]; do
   case "$1" in
-    --help)
-      usage
-      exit 0
-      ;;
-    start)
-      shift
-      awmtt start
-      ;;
-    restart)
-      shift
-      awmtt restart
-      ;;
-    stop)
-      shift
-      awmtt stop
-      ;;
-    setup)
-      shift
-      run_setup
-      ;;
-    luaunit)
-      shift
-      run_luaunit
-      ;;
-    iteration)
-      shift
-      (run_luaunit && awmtt restart) || true
-      ;;
-    dev)
-      shift
-      awmtt start
-      set +e
-      watchexec -ce lua -- "$0" iteration
-      set -e
-      awmtt stop
-      ;;
-    *)
-      echo "Unknown command or option: $1" >&2
-      usage >&2
-      exit 1
-      ;;
+  --help)
+    usage
+    exit 0
+    ;;
+  start)
+    shift
+    awmtt start
+    ;;
+  restart)
+    shift
+    awmtt restart
+    ;;
+  stop)
+    shift
+    awmtt stop
+    ;;
+  setup)
+    shift
+    run_setup
+    ;;
+  luaunit)
+    shift
+    run_luaunit
+    ;;
+  iteration)
+    shift
+    (run_luaunit && awmtt restart) || true
+    ;;
+  dev)
+    shift
+    awmtt start
+    set +e
+    watchexec -ce lua -- "$0" iteration
+    set -e
+    awmtt stop
+    ;;
+  *)
+    echo "Unknown command or option: $1" >&2
+    usage >&2
+    exit 1
+    ;;
   esac
 done

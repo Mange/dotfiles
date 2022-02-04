@@ -139,4 +139,4 @@ local volume_setting = wibox.widget {
   },
 }
 
-return volume_setting
+return { widget = volume_setting }

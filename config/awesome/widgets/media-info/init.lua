@@ -87,4 +87,4 @@ media_buttons.next_button:buttons(
   keys.mouse_click({}, keys.left_click, actions.playerctl_next())
 )
 
-return media_info
+return { widget = media_info }

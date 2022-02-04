@@ -133,4 +133,4 @@ action_level:buttons(awful.util.table.join(awful.button({}, 1, nil, function()
   end
 end)))
 
-return brightness_setting
+return { widget = brightness_setting }

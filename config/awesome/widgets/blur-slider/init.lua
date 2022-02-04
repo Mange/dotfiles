@@ -134,4 +134,4 @@ local blur_slider = wibox.widget {
   },
 }
 
-return blur_slider
+return { widget = blur_slider }

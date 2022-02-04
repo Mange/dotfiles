@@ -39,7 +39,7 @@ local brightness_slider = format_item {
   widget = wibox.container.margin,
   margins = dpi(10),
   id = "brightness_slider",
-  require "widgets.brightness-slider",
+  require("widgets.brightness-slider").widget,
 }
 brightness_slider.visible = brightness.is_controllable
 brightness:on_update(function(data)
@@ -52,13 +52,13 @@ local control_sliders = wibox.widget {
   format_item {
     widget = wibox.container.margin,
     margins = dpi(10),
-    require "widgets.volume-slider",
+    require("widgets.volume-slider").widget,
   },
   brightness_slider,
   format_item {
     widget = wibox.container.margin,
     margins = dpi(10),
-    require "widgets.blur-slider",
+    require("widgets.blur-slider").widget,
   },
 }
 
@@ -67,7 +67,7 @@ local media_info = wibox.widget {
   format_item {
     margins = dpi(10),
     widget = wibox.container.margin,
-    require "widgets.media-info",
+    require("widgets.media-info").widget,
   },
 }
 
