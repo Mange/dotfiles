@@ -6,13 +6,15 @@ local dpi = require("utils").dpi
 local clickable_container = require "widgets.clickable-container"
 
 local create_clock = function(s)
-  local clock_format = '<span font="' .. beautiful.font_bold .. '">%H:%M</span>'
+  local clock_format = '<span font="'
+    .. beautiful.font_bold
+    .. '">%-d/%-m %H:%M</span>'
 
-  s.clock_widget = wibox.widget.textclock(clock_format, 1)
+  local clock = wibox.widget.textclock(clock_format, 1)
 
   s.clock_widget = wibox.widget {
     {
-      s.clock_widget,
+      clock,
       margins = dpi(7),
       widget = wibox.container.margin,
     },
@@ -32,7 +34,7 @@ local create_clock = function(s)
     end,
   }
 
-  s.clock_widget:connect_signal("button::press", function(self, lx, ly, button)
+  s.clock_widget:connect_signal("button::press", function(_, _, _, button)
     -- Hide the tooltip when you press the clock widget
     if s.clock_tooltip.visible and button == 1 then
       s.clock_tooltip.visible = false
