@@ -7,3 +7,11 @@
         name: avahi-daemon
         enabled: true
         state: started
+
+    - name: Install printer stuff
+      when: ansible_os_family == "Archlinux"
+      kewlfft.aur.aur:
+        state: present
+        name:
+          - cups
+          - brother-dcpl3550cdw
