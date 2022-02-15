@@ -9,7 +9,7 @@ configuration {
   disable-history: false;
   scroll-method: 0;
 
-  matching: "fuzzy";
+  matching: "normal";
   sort: true;
   /* Must not be set to "fzf" or else sorting will be ruined. */
   /* sorting-method: "fzf"; */
