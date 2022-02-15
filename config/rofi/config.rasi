@@ -34,9 +34,9 @@ configuration {
 
   font: "Fira Sans Condensed 10";
   show-icons: true;
-  fullscreen: false;
+  icon-theme: "Tela";
   fullscreen: false;
   window-thumbnail: true;
 }
 
-@theme "~/.config/rofi/default.rasi"
+@theme "~/.config/rofi/catpuccin.rasi"
