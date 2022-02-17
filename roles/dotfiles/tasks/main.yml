@@ -33,7 +33,7 @@
           register: dotfile_templates
 
         - name: Copy template
-          loop: "{{ dotfile_templates.files | map(attribute='path') }}"
+          loop: "{{ dotfile_templates.files | map(attribute='path') | list }}"
           command:
             argv:
               - cp
@@ -82,21 +82,21 @@
         src: "dotfiles/config/{{ item }}"
         dest: "{{ xdg_config_home }}/{{ item }}"
         state: link
-      loop: "{{ dotfiles_config.files | map(attribute='path') | map('basename') }}"
+      loop: "{{ dotfiles_config.files | map(attribute='path') | map('basename') | list }}"
 
     - name: Install .local/share dotfiles
       file:
         src: "{{ xdg_config_home }}/dotfiles/data/{{ item }}"
         dest: "{{ xdg_data_home }}/{{ item }}"
         state: link
-      loop: "{{ dotfiles_data.files | map(attribute='path') | map('basename') }}"
+      loop: "{{ dotfiles_data.files | map(attribute='path') | map('basename') | list }}"
 
     - name: Install .local/bin dotfiles
       file:
         src: "{{ xdg_config_home }}/dotfiles/bin/{{ item }}"
         dest: "{{ xdg_bin }}/{{ item }}"
         state: link
-      loop: "{{ dotfiles_bin.files | map(attribute='path') | map('basename') }}"
+      loop: "{{ dotfiles_bin.files | map(attribute='path') | map('basename') | list }}"
 
     - name: Install snowflakes
       file:
@@ -104,7 +104,7 @@
         dest: "{{ user_home }}/.{{ item }}"
         state: link
         force: true
-      loop: "{{ dotfiles_snowflakes.files | map(attribute='path') | map('basename') }}"
+      loop: "{{ dotfiles_snowflakes.files | map(attribute='path') | map('basename') | list }}"
 
     - name: Ensure wallpapers directory exist
       become: true
