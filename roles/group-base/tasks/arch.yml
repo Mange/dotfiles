@@ -67,6 +67,14 @@
       systemd:
         daemon_reload: true
 
+    - name: Enable timesyncd service
+      become: true
+      when: not inside_docker
+      systemd:
+        name: systemd-timesyncd
+        enabled: true
+        state: started
+
     - name: "Enable download-pacman-updates timer"
       become: true
       when: not inside_docker

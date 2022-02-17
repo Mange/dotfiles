@@ -47,8 +47,6 @@
         state: started
       loop:
         - sshd
-        - bluetooth
-        - systemd-timesyncd
 
     - when: not inside_docker
       block:

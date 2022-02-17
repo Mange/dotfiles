@@ -31,6 +31,12 @@ setup_arch() {
   fi
 }
 
+setup_clearos() {
+  if ! hash ansible-playbook >/dev/null 2>/dev/null; then
+    sudo yum install --assumeyes ansible
+  fi
+}
+
 case "$(uname -s)" in
 Linux)
   if [ -f /etc/os-release ]; then
@@ -38,6 +44,9 @@ Linux)
     case "$dist" in
     arch*)
       setup_arch
+      ;;
+    clearos)
+      setup_clearos
       ;;
     *)
       echo "Not a supported dist: $dist"
