@@ -6,12 +6,12 @@
         - arch
 
     - include_tasks: centos.yml
-      when: ansible_distribution == "CentOS"
+      when: is_centos
       tags:
         - centos
 
     - name: Install base packages (all)
-      # when: ansible_distribution == "CentOS"
+      # when: is_centos
       become: true
       package:
         state: present
@@ -64,7 +64,7 @@
       loop:
         - sshd
 
-    - when: not inside_docker
+    - when: not inside_docker and not is_centos
       block:
         - name: Check timedatectl
           command: timedatectl show

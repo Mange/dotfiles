@@ -10,7 +10,7 @@
               - docker-credential-secretservice
               - docker-compose
 
-    - when: ansible_distribution == "CentOS"
+    - when: is_centos
       block:
         - name: Install docker (Centos)
           become: true

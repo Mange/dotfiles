@@ -12,6 +12,7 @@
     xdg_bin: "{{ (lookup('env', 'HOME') or '/home/mange') + '/.local/bin' }}"
     xdg_cache_home: "{{ lookup('env', 'XDG_DATA_HOME') or (lookup('env', 'HOME') or '/home/mange') + '/.cache' }}"
     inside_docker: "{{ lookup('env', 'INSIDE_DOCKER') == '1' }}"
+    is_centos: '{{ ansible_distribution in ["CentOS", "ClearOS"] }}'
 
   # Set some XDG stuff that is likely to be used during installation of
   # packages in this setup.
