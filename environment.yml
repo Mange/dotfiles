@@ -40,3 +40,4 @@
         tags: [system],
         when: 'ansible_hostname == "krista"',
       }
+    - { role: host-knas, tags: [system], when: 'ansible_hostname == "knas"' }

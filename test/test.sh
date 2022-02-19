@@ -1,6 +1,10 @@
 #!/bin/sh
 set -e
 
+mode=reuse
+platform=
+hostname="${HOST:-$(hostname)}"
+
 usage() {
   cat <<EOF
 Usage: $0 [options] <platform>
@@ -9,15 +13,16 @@ Test the setup of <platform> using Docker.
 
 Known platforms:
   - arch
+  - centos7
 
 Options:
   --rebuild
     Rebuild the container before starting it, even if it already exist.
+
+  --host HOST, -h HOST
+    Set hostname inside the container. Defaults to \"$hostname\".
 EOF
 }
-
-mode=reuse
-platform=
 
 while [ "$#" -gt 0 ]; do
   case "$1" in
@@ -30,8 +35,13 @@ while [ "$#" -gt 0 ]; do
     mode=rebuild
     shift
     ;;
-  arch)
-    platform=arch
+  -h | --host | --hostname)
+    shift
+    hostname="$1"
+    shift
+    ;;
+  arch | centos7)
+    platform="$1"
     shift
     ;;
   *)
@@ -50,7 +60,6 @@ fi
 
 image_name="dotfiles-$platform"
 container_name="dotfiles-$platform-run"
-hostname="${HOST:-$(hostname)}"
 
 has_container() {
   count="$(docker ps --quiet --all --filter name="$1" | wc -l)"

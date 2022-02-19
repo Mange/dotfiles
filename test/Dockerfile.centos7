@@ -1,0 +1,32 @@
+FROM centos:7
+# Make sure UTF-8 is default encoding, or else a lot of tools break and ansible
+# cannot be installed.
+RUN localedef -c -f UTF-8 -i en_US en_US.UTF-8
+ENV ENV_LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8
+
+# Let some of the scripts be able to detect this case to avoid crashing on
+# things that are not possible inside the container (for example: dealing with
+# systemd).
+ENV INSIDE_DOCKER=1
+
+#
+# CentOS 7 does not support bootstrapping, so just start out with a finished
+# user.
+#
+RUN yum install --assumeyes zsh sudo
+
+# Prevent ZSH newuser prompt everytime a new testing container is started.
+RUN rm /usr/share/zsh/*/scripts/newuser
+
+# Let wheel users run all sudo things without a password to make testing simpler.
+# (As you cannot log in as root to set a password for the mange user)
+RUN echo "%wheel ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/wheel-passwordless
+
+RUN adduser --create-home --home-dir /home/mange --shell /bin/zsh --groups wheel mange
+
+#
+# Done
+#
+USER mange
+WORKDIR /home/mange
+CMD zsh

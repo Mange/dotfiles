@@ -1,0 +1,4 @@
+---
+dependencies:
+  - role: group-base
+  - role: docker

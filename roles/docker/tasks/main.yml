@@ -1,13 +1,23 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-tasks.json
 - block:
-    - name: Install docker
-      when: ansible_os_family == "Archlinux"
-      kewlfft.aur.aur:
-        state: present
-        name:
-          - docker
-          - docker-credential-secretservice
-          - docker-compose
+    - when: ansible_os_family == "Archlinux"
+      block:
+        - name: Install docker (Arch)
+          kewlfft.aur.aur:
+            state: present
+            name:
+              - docker
+              - docker-credential-secretservice
+              - docker-compose
+
+    - when: ansible_distribution == "CentOS"
+      block:
+        - name: Install docker (Centos)
+          become: true
+          package:
+            state: present
+            name:
+              - docker
 
     - name: Ensure docker group
       become: true

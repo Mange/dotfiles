@@ -25,28 +25,43 @@ if [ -z "${DOTFILES_PATH:-}" ]; then
 fi
 cd "${DOTFILES_PATH:?}"
 
+ANSIBLE_PLAYBOOK="ansible-playbook"
+ANSIBLE_GALAXY="ansible-galaxy"
+
+missing_command() {
+  ! hash "$1" >/dev/null 2>/dev/null
+}
+
 setup_arch() {
-  if ! hash ansible-playbook >/dev/null 2>/dev/null; then
+  if missing_command ansible-playbook; then
     sudo pacman -S --noconfirm --needed ansible
   fi
 }
 
-setup_clearos() {
-  if ! hash ansible-playbook >/dev/null 2>/dev/null; then
-    sudo yum install --assumeyes ansible
+setup_centos() {
+  ANSIBLE_PLAYBOOK="$HOME/.local/bin/ansible-playbook"
+  ANSIBLE_GALAXY="$HOME/.local/bin/ansible-galaxy"
+
+  if missing_command pip3; then
+    sudo yum install --assumeyes python3
+    sudo pip3 install --upgrade pip
+  fi
+
+  if [ ! -f "$ANSIBLE_PLAYBOOK" ]; then
+    pip3 install ansible
   fi
 }
 
 case "$(uname -s)" in
 Linux)
   if [ -f /etc/os-release ]; then
-    dist=$(awk -F '=' '/^ID=/ { print $2 }' /etc/os-release)
+    dist=$(awk -F '=' '/^ID=/ { print $2 }' /etc/os-release | tr -d '"')
     case "$dist" in
     arch*)
       setup_arch
       ;;
-    clearos)
-      setup_clearos
+    clearos | centos)
+      setup_centos
       ;;
     *)
       echo "Not a supported dist: $dist"
@@ -63,9 +78,9 @@ esac
 
 sudo -v
 
-ansible-galaxy collection install -r requirements.yml
+"$ANSIBLE_GALAXY" collection install -r requirements.yml
 
-exec ansible-playbook \
+exec "$ANSIBLE_PLAYBOOK" \
   --connection=local --inventory localhost, \
   environment.yml \
   "$@"
