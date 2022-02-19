@@ -106,34 +106,6 @@
         force: true
       loop: "{{ dotfiles_snowflakes.files | map(attribute='path') | map('basename') | list }}"
 
-    - name: Ensure wallpapers directory exist
-      become: true
-      file:
-        path: "/usr/share/wallpapers/Mange"
-        state: directory
-        owner: root
-        group: root
-        mode: u=rwX,g=rX,o=rX
-
-    - name: Copy wallpapers to system directory
-      become: true
-      # NOTE: Requires rsync to be installed
-      ansible.posix.synchronize:
-        src: "data/wallpapers/"
-        dest: "/usr/share/wallpapers/Mange"
-        archive: true
-        delete: true
-
-    - name: Set permissions of system wallpapers
-      become: true
-      file:
-        path: "/usr/share/wallpapers/Mange"
-        state: directory
-        recurse: true
-        owner: root
-        group: root
-        mode: u=rwX,g=rX,o=rX
-
     - name: Installing ZSH plugins
       git:
         repo: "{{ item.repo }}"
