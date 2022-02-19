@@ -9,6 +9,8 @@ function apply_prompt_theme {
   # shellcheck source=/home/mange/.config/shells/catppuccin
   source "${XDG_CONFIG_HOME:-$HOME/.config}/shells/catppuccin"
 
+  is_inside_container="${HOME}/.local/bin/is-inside-container"
+
   ###
   ### Left 3
   ### OS icon + user + hostname
@@ -24,11 +26,11 @@ function apply_prompt_theme {
 
   # Same with host. Only show on remote connections!
   local host
-  if [[ -n $SSH_CLIENT ]]; then
-    host="%F{blue}%m%f"
+  if [[ -n $SSH_CLIENT ]] || ([[ -x "$is_inside_container" ]] && "$is_inside_container"); then
+    host="%F{magenta}%m%f"
     # user + host different? Show a colored "@" between them
     if [[ -n "$user" ]]; then
-      host="%B%F{magenta}@${host}"
+      host="%F{magenta}@${host}%f"
     fi
   fi
 
