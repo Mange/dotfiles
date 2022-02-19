@@ -1,6 +1,7 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-tasks.json
-- block:
-    - name: Install Knas packages
-      package:
-        state: present
-        name: []
+- block: []
+# - name: Install Knas packages
+#   become: true
+#   package:
+#     state: present
+#     name: []
