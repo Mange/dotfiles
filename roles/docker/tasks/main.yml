@@ -17,7 +17,7 @@
           package:
             state: present
             name:
-              - docker
+              - docker-ce
 
     - name: Ensure docker group
       become: true
