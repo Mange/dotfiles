@@ -529,30 +529,32 @@ source "${XDG_CONFIG_HOME}/shells/enable-rvm"
 # }}}
 
 # {{{ Plugins
-try-source-plugin zsh-syntax-highlighting || true
+if is-at-least 5.8; then
+  try-source-plugin zsh-syntax-highlighting || true
 
-if try-source-plugin zsh-history-substring-search; then
-  bindkey -M viins '^N' history-substring-search-up
-  bindkey -M viins '^P' history-substring-search-down
-  bindkey -M vicmd '^N' history-substring-search-up
-  bindkey -M vicmd '^P' history-substring-search-down
-fi
+  if try-source-plugin zsh-history-substring-search; then
+    bindkey -M viins '^N' history-substring-search-up
+    bindkey -M viins '^P' history-substring-search-down
+    bindkey -M vicmd '^N' history-substring-search-up
+    bindkey -M vicmd '^P' history-substring-search-down
+  fi
 
-if command-exist fzf && [[ -f ~/.config/zsh/fzf-tab/fzf-tab.plugin.zsh ]]; then
-  source ~/.config/zsh/fzf-tab/fzf-tab.plugin.zsh
+  if command-exist fzf && [[ -f ~/.config/zsh/fzf-tab/fzf-tab.plugin.zsh ]]; then
+    source ~/.config/zsh/fzf-tab/fzf-tab.plugin.zsh
 
-  zstyle ":completion:*:git-checkout:*" sort false
-  zstyle ':completion:*:descriptions' format '[%d]'
-  zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+    zstyle ":completion:*:git-checkout:*" sort false
+    zstyle ':completion:*:descriptions' format '[%d]'
+    zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
-  # give a preview when completing `kill`
-  zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm,cmd -w -w"
-  zstyle ':fzf-tab:complete:kill:argument-rest' extra-opts '--preview=echo $(<{f})' --preview-window=down:3:wrap
+    # give a preview when completing `kill`
+    zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm,cmd -w -w"
+    zstyle ':fzf-tab:complete:kill:argument-rest' extra-opts '--preview=echo $(<{f})' --preview-window=down:3:wrap
 
-  if command-exist exa; then
-    zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
-  else
-    zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls -1 --color=always $realpath'
+    if command-exist exa; then
+      zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
+    else
+      zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls -1 --color=always $realpath'
+    fi
   fi
 fi
 # }}}
