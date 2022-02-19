@@ -44,7 +44,7 @@
         no_extra_spaces: yes
       with_items:
         - { name: "gf", enable: true }
-        - { name: "gf-plus", enable: true }
+        - { name: "gf-plus", enable: false } # Upgrading nss-pam-ldapd breaks all user accounts!!!!
         - { name: "gf-testing", enable: false }
         - { name: "gf-source", enable: false }
         - { name: "gf-plus-source", enable: false }
