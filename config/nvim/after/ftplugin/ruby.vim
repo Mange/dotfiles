@@ -7,3 +7,5 @@ let b:switch_custom_definitions =
       \     '\.fetch(\([^)]\+\))': '[\1]'
       \   },
       \ ]
+
+let b:splitjoin_trailing_comma = 0

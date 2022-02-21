@@ -186,6 +186,8 @@ local function setup()
       --- {{{ Leader root
       [":"] = { "<cmd>Telescope commands<cr>", "Commands" },
       N = { "<cmd>Telescope resume<cr>", "Telescope resume" },
+      j = { "<cmd>SplitjoinSplit<cr>", "Split line" },
+      k = { "<cmd>SplitjoinJoin<cr>", "Join line" },
       --- }}}
 
       --- {{{ Leader visual
