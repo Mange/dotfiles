@@ -83,7 +83,9 @@ function plugin.setup()
   cmp.setup.cmdline(":", {
     sources = {
       { name = "cmdline" },
-      { name = "cmdline_history", max_item_count = 5, keyword_length = 5 },
+      -- Super annoying with ":e some/path" as it will start to show
+      -- suggestions from history instead of actual files.
+      -- { name = "cmdline_history", max_item_count = 5, keyword_length = 5 },
     },
   })
 
