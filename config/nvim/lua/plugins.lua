@@ -140,20 +140,9 @@ require("packer").startup(function(use)
   -- Finder
   use {
     "nvim-telescope/telescope.nvim",
-    requires = { { "nvim-lua/plenary.nvim" } },
+    requires = { "nvim-lua/plenary.nvim" },
     config = function()
-      require("telescope").setup {
-        defaults = {
-          mappings = {
-            i = {
-              ["<C-j>"] = require("telescope.actions").cycle_history_next,
-              ["<C-k>"] = require("telescope.actions").cycle_history_prev,
-              ["<C-n>"] = require("telescope.actions").cycle_history_next,
-              ["<C-p>"] = require("telescope.actions").cycle_history_prev,
-            },
-          },
-        },
-      }
+      require "mange.plugin.telescope"
     end,
   }
   use {
@@ -161,6 +150,14 @@ require("packer").startup(function(use)
     requires = { "nvim-telescope/telescope.nvim" },
     config = function()
       require("telescope").load_extension "file_browser"
+    end,
+  }
+  use {
+    "nvim-telescope/telescope-fzf-native.nvim",
+    run = "make",
+    requires = { "nvim-telescope/telescope.nvim" },
+    config = function()
+      require("telescope").load_extension "fzf"
     end,
   }
 
