@@ -12,6 +12,7 @@
 require("packer").startup(function(use)
   --- {{{ Basics
   use "wbthomason/packer.nvim"
+  use "jakelinnzy/autocmd-lua"
   use "DataWraith/auto_mkdir"
   use "tpope/vim-repeat"
   use "tpope/vim-speeddating"

@@ -34,17 +34,6 @@ _G.if_require = function(module, block, errblock)
 end
 --- }}}
 
-local function load_plugins()
-  require "plugins"
-  --- Automatically compile plugins file when edited.
-  cmd [[
-    augroup packer_aus
-      au!
-      au BufWritePost */config/lua/plugins.lua source <afile> | PackerCompile | echo "Refreshed plugins"
-    augroup END
-  ]]
-end
-
 _G.load_config = function()
   require "mange.options"
 
@@ -71,11 +60,11 @@ do
       install_path,
     }
     cmd "packadd packer.nvim"
-    load_plugins()
+    require "plugins"
     require("packer").sync()
     cmd "autocmd User PackerComplete ++once lua load_config()"
   else
-    load_plugins()
+    require "plugins"
     load_config()
   end
 end
