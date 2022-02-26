@@ -445,15 +445,15 @@ require("packer").startup(function(use)
       vim.g.vimwiki_global_ext = 0
 
       vim.g.vimwiki_key_mappings = {
-        all_maps = 0,
+        all_maps = 1,
         global = 0,
         headers = 1,
         text_objs = 1,
         table_format = 1,
         table_mappings = 1,
         lists = 1,
-        links = 1,
-        html = 1,
+        links = 0, -- contains some <leader> mappings
+        html = 0,
         mouse = 0,
       }
 
@@ -480,6 +480,9 @@ require("packer").startup(function(use)
     "blindFS/vim-taskwarrior",
     setup = function()
       vim.g.taskwiki_taskrc_location = "~/.config/taskwarrior/config"
+      -- Will override my localleader unless disabled
+      -- See https://github.com/tools-life/taskwiki/issues/362
+      vim.g.taskwiki_suppress_mappings = true
     end,
   }
   use {

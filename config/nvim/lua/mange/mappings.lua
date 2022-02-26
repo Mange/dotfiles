@@ -524,9 +524,46 @@ local function attach_lsp(bufnr)
 end
 --- }}}
 
+--- {{{ Vimwiki
+local function attach_vimwiki(bufnr)
+  wk_register({
+    ["<CR>"] = { "<Plug>VimwikiFollowLink", "Follow link" },
+    ["<S-CR>"] = { "<Plug>VimwikiSplitLink", "Split link" },
+    ["<BS>"] = { "<Plug>VimwikiGoBackLink", "Go back" },
+    ["<C-Space>"] = { "<Plug>VimwikiToggleListItem", "Toggle list item" },
+    ["+"] = { "<PlugVimwikiNormalizeLink", "Normalize link" },
+    ["<LocalLeader>"] = {
+      name = "+localleader",
+      n = { "<Plug>VimwikiNextTask", "Next task" },
+      g = { "<Plug>VimwikiGoto", "Goto (new)" },
+      d = { "<Plug>VimwikiDeleteFile", "Delete current" },
+      r = { "<Plug>VimwikiRenameFile", "Rename current" },
+      l = {
+        name = "+lists",
+        d = { "<Plug>VimwikiRemoveSingleCB", "Remove checkbox" },
+        D = { "<Plug>VimwikiRemoveCBInList", "Remove nested checkboxes" },
+        n = { "<Plug>VimwikiIncrementListItem", "Increase done state" },
+        l = { "<Plug>VimwikiIncreaseLvlSingleItem", "Increase level" },
+        L = { "<Plug>VimwikiIncreaseLvlWholeItem", "Increase level whole" },
+        H = { "<Plug>VimwikiDecreaseLvlWholeItem", "Decrease level whole" },
+        h = { "<Plug>VimwikiDecreaseLvlSingleItem", "Decrease level" },
+        r = { "<Plug>VimwikiRenumberList", "Renumber list" },
+        R = { "<Plug>VimwikiRenumberAllLists", "Renumber all" },
+        x = { "<Plug>VimwikiToggleRejectedListItem", "Reject item" },
+      },
+    },
+  }, { buffer = bufnr, mode = "n" })
+
+  wk_register({
+    ["+"] = { "<PlugVimwikiNormalizeLinkVisual", "Normalize link" },
+  }, { buffer = bufnr, mode = "v" })
+end
+--- }}}
+
 return {
   setup = setup,
   attach_lsp = attach_lsp,
+  attach_vimwiki = attach_vimwiki,
   reload = reload_mappings,
   wk_register = wk_register,
 }

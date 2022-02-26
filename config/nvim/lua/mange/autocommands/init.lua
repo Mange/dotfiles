@@ -42,13 +42,42 @@ if_require("autocmd-lua", function(autocmd)
       },
     },
   }
+
+  autocmd.augroup {
+    group = "mange_prose",
+    autocmds = {
+      -- No visible line numbers
+      {
+        event = "FileType",
+        pattern = "vimwiki,markdown,text",
+        cmd = "setlocal nonumber",
+      },
+    },
+  }
+
+  autocmd.augroup {
+    group = "mange_ui",
+    autocmds = {
+      -- Resize splits automatically
+      {
+        event = "VimResized",
+        pattern = "*",
+        cmd = "wincmd =",
+      },
+    },
+  }
+
+  autocmd.augroup {
+    group = "mange_vimwiki",
+    autocmds = {
+      -- Attach my mappings to vimwiki buffers
+      {
+        event = "Filetype",
+        pattern = "vimwiki",
+        cmd = function()
+          require("mange.mappings").attach_vimwiki(0)
+        end,
+      },
+    },
+  }
 end)
-
--- Resize splits automatically
-cmd [[autocmd VimResized * wincmd =]]
-
--- Prose no line numbers
-cmd [[autocmd FileType vimwiki,markdown,text setlocal nonumber]]
-
--- Restore <BS> mapping for Vimwiki
-cmd [[autocmd Filetype vimwiki nmap <buffer> <BS> <Plug>VimwikiGoBackLink]]
