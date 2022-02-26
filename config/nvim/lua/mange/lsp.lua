@@ -174,8 +174,11 @@ end)
 
 if_require("null-ls", function(null_ls)
   null_ls.setup {
-    debug = true,
+    debug = false,
     diagnostics_format = "#{m} (#{s} [#{c}])",
+    should_attach = function(bufnr)
+      return not vim.api.nvim_buf_get_name(bufnr):match "%.env$"
+    end,
     sources = {
       null_ls.builtins.formatting.prettier,
       null_ls.builtins.formatting.shfmt.with {
