@@ -513,11 +513,11 @@ local function attach_lsp(bufnr)
     ["<C-]>"] = { "<cmd>Telescope lsp_definitions<cr>", "Definitions" },
 
     ["[e"] = {
-      "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>",
+      "<cmd>lua vim.diagnostic.goto_prev()<CR>",
       "Previous diagnostic",
     },
     ["]e"] = {
-      "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>",
+      "<cmd>lua vim.diagnostic.goto_next()<CR>",
       "Next diagnostic",
     },
   }, {
