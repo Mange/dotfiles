@@ -10,18 +10,18 @@
 --
 
 require("packer").startup(function(use)
-  --- {{{ Basics
+  ---
+  --- Basics
+  ---
   use "wbthomason/packer.nvim"
   use "jakelinnzy/autocmd-lua"
   use "DataWraith/auto_mkdir"
   use "tpope/vim-repeat"
   use "tpope/vim-speeddating"
   use "tpope/vim-surround"
-
-  -- Adds things like :Move, :Rename, :SudoWrite, etc.
-  use "tpope/vim-eunuch"
-  -- Smart S/re/repl/
-  use "tpope/vim-abolish"
+  use "tpope/vim-eunuch" -- Adds things like :Move, :Rename, :SudoWrite, etc.
+  use "tpope/vim-abolish" -- Smart S/re/repl/
+  use "tommcdo/vim-exchange"
 
   use {
     "AndrewRadev/switch.vim",
@@ -59,17 +59,16 @@ require("packer").startup(function(use)
     end,
   }
 
-  use "tommcdo/vim-exchange"
-
   -- Strip trailing whitespace from modified lines only. Load before LSP so
   -- it's executed real early.
   use {
     "axelf4/vim-strip-trailing-whitespace",
     before = { "neovim/nvim-lspconfig" },
   }
-  --- }}}
 
-  --- {{{ UI plugins
+  ---
+  --- UI plugins
+  ---
   -- Dashboard screen on Neovim boot
   use {
     "glepnir/dashboard-nvim",
@@ -196,9 +195,10 @@ require("packer").startup(function(use)
       })
     end,
   }
-  --- }}}
 
-  --- {{{ Git plugins
+  ---
+  --- Git plugins
+  ---
   use {
     "TimUntersberger/neogit",
     requires = {
@@ -273,9 +273,10 @@ require("packer").startup(function(use)
       }
     end,
   }
-  --- }}}
 
-  --- {{{ LSP
+  ---
+  --- LSP
+  ---
   use {
     "neovim/nvim-lspconfig",
     requires = { "jose-elias-alvarez/null-ls.nvim" },
@@ -307,9 +308,10 @@ require("packer").startup(function(use)
       "jose-elias-alvarez/null-ls.nvim",
     },
   }
-  --- }}}
 
-  --- {{{ TreeSitter
+  ---
+  --- TreeSitter
+  ---
   use {
     "nvim-treesitter/nvim-treesitter",
     run = ":TSUpdate",
@@ -320,9 +322,10 @@ require("packer").startup(function(use)
       require "mange.treesitter"
     end,
   }
-  --- }}}
 
-  --- {{{ Completion and snippets
+  ---
+  --- Completion and snippets
+  ---
   use {
     "dcampos/nvim-snippy",
     before = "hrsh7th/nvim-cmp",
@@ -332,9 +335,7 @@ require("packer").startup(function(use)
   }
 
   -- Snippets collection. Might replace with my own later when I have time.
-  use {
-    "honza/vim-snippets",
-  }
+  use "honza/vim-snippets"
 
   use {
     "onsails/lspkind-nvim",
@@ -362,10 +363,12 @@ require("packer").startup(function(use)
       require("mange.plugin.cmp").setup()
     end,
   }
-  --- }}}
 
-  --- {{{ Coding
+  ---
+  --- Coding
+  ---
   use "JoosepAlviste/nvim-ts-context-commentstring"
+  use "junegunn/vim-easy-align"
 
   -- Insert closing </tags> automatically in HTML-like filetypes.
   -- (Also handles renames of opening tag)
@@ -400,19 +403,19 @@ require("packer").startup(function(use)
     end,
   }
 
-  use "junegunn/vim-easy-align"
-  --- }}}}
-
-  --- {{{ Rust
+  ---
+  --- Rust
+  ---
   use { "Saecki/crates.nvim", requires = { "nvim-lua/plenary.nvim" } }
 
   use {
     "simrat39/rust-tools.nvim",
     requires = { "nvim-lua/plenary.nvim" },
   }
-  --- }}}
 
-  --- {{{ HTML, CSS, JS, TS, Webdev, etc.
+  ---
+  --- HTML, CSS, JS, TS, Webdev, etc.
+  ---
   -- Automatically sort Tailwindcss classes.
   use {
     "steelsojka/headwind.nvim",
@@ -436,9 +439,10 @@ require("packer").startup(function(use)
       }
     end,
   }
-  --- }}}
 
-  --- {{{ Vimwiki and Taskwarrior
+  ---
+  --- Vimwiki and Taskwarrior
+  ---
   use {
     "vimwiki/vimwiki",
     setup = function()
@@ -493,13 +497,15 @@ require("packer").startup(function(use)
     },
     run = "pip3 install --user --upgrade -r requirements.txt",
   }
-  --- }}}
 
-  --- {{{ Others
+  ---
+  --- Others
+  ---
   use "towolf/vim-helm"
-  --- }}}
 
-  --- {{{ External tools
+  ---
+  --- External tools
+  ---
   use {
     "glacambre/firenvim",
     run = function()
@@ -522,5 +528,4 @@ require("packer").startup(function(use)
       }
     end,
   }
-  --- }}}
 end)
