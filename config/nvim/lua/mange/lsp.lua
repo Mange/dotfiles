@@ -1,3 +1,11 @@
+vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
+  vim.lsp.handlers.signature_help,
+  {
+    border = "single",
+    focus = false,
+  }
+)
+
 local function capabilities()
   local caps = vim.lsp.protocol.make_client_capabilities()
 
@@ -25,13 +33,13 @@ local function on_attach(client, bufnr)
 
   unique_autocmd(
     "DiagnosticHover",
-    "autocmd CursorHold <buffer> lua vim.diagnostic.open_float()"
+    "autocmd CursorHold <buffer> lua require('mange.utils').show_diagnostic_float()"
   )
 
   if client.resolved_capabilities.signature_help then
     unique_autocmd(
       "SignatureHelp",
-      "autocmd CursorHoldI <buffer> lua vim.lsp.buf.signature_help()"
+      "autocmd CursorHoldI <buffer> lua require('mange.utils').show_signature_help()"
     )
   end
 

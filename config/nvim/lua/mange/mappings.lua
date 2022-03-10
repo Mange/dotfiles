@@ -502,7 +502,14 @@ local function attach_lsp(bufnr)
   -- Normal mode mappings
   wk_register({
     ["K"] = { "<Cmd>lua vim.lsp.buf.hover()<CR>", "Hover documentation" },
-    ["gK"] = { "<cmd>lua vim.lsp.buf.signature_help()<CR>", "Signature help" },
+    ["gK"] = {
+      "<cmd>lua require('mange.utils').show_signature_help()<CR>",
+      "Signature help",
+    },
+    ["gd"] = {
+      "<cmd>lua require('mange.utils').show_diagnostic_float({force = true})<CR>",
+      "Show diagnostics on line",
+    },
     ["<C-]>"] = { "<cmd>Telescope lsp_definitions<cr>", "Definitions" },
 
     ["[e"] = {
@@ -520,7 +527,7 @@ local function attach_lsp(bufnr)
   -- Insert mode mappings
   wk_register({
     ["<C-k>"] = {
-      "<cmd>lua vim.lsp.buf.signature_help()<CR>",
+      "<cmd>lua require('mange.utils').show_signature_help({force = true})<CR>",
       "Signature help",
     },
   }, {

@@ -74,4 +74,38 @@ function utils.buf_toggle_autoformat()
   utils.buf_set_autoformat(not utils.should_autoformat_buffer())
 end
 
+function utils.unless_floating_window(fun, ...)
+  -- Only works for LSP and vim.diagnostics families of floating windows…
+  local existing_float = vim.b["lsp_floating_preview"]
+  if not existing_float or not vim.api.nvim_win_is_valid(existing_float) then
+    fun(...)
+  end
+end
+
+function utils.show_signature_help(options)
+  local opts = options or {}
+  local force = opts.force or false
+
+  if force then
+    vim.lsp.buf.signature_help()
+  else
+    utils.unless_floating_window(function()
+      vim.lsp.buf.signature_help()
+    end)
+  end
+end
+
+function utils.show_diagnostic_float(options)
+  local opts = options or {}
+  local force = opts.force or false
+
+  if force then
+    vim.diagnostic.open_float()
+  else
+    utils.unless_floating_window(function()
+      vim.diagnostic.open_float { focus = false }
+    end)
+  end
+end
+
 return utils
