@@ -275,7 +275,7 @@ require("packer").startup(function(use)
   }
 
   ---
-  --- LSP
+  --- LSP and Treesitter
   ---
   use {
     "neovim/nvim-lspconfig",
@@ -309,9 +309,6 @@ require("packer").startup(function(use)
     },
   }
 
-  ---
-  --- TreeSitter
-  ---
   use {
     "nvim-treesitter/nvim-treesitter",
     run = ":TSUpdate",
@@ -320,6 +317,14 @@ require("packer").startup(function(use)
     },
     config = function()
       require "mange.treesitter"
+    end,
+  }
+
+  use {
+    "narutoxy/dim.lua",
+    requires = { "nvim-treesitter/nvim-treesitter", "neovim/nvim-lspconfig" },
+    config = function()
+      require("dim").setup {}
     end,
   }
 
