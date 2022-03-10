@@ -15,8 +15,14 @@ local utils = require "mange.utils"
 
 local function map(mode, key, command, options)
   options = vim.tbl_extend("force", { noremap = true, silent = true }, options)
+  local buffer = options.buffer
+  options.buffer = nil
 
-  return api.nvim_set_keymap(mode, key, command, options)
+  if buffer then
+    return api.nvim_buf_set_keymap(buffer, mode, key, command, options)
+  else
+    return api.nvim_set_keymap(mode, key, command, options)
+  end
 end
 
 local function wk_register(...)
@@ -531,7 +537,7 @@ local function attach_vimwiki(bufnr)
     ["<S-CR>"] = { "<Plug>VimwikiSplitLink", "Split link" },
     ["<BS>"] = { "<Plug>VimwikiGoBackLink", "Go back" },
     ["<C-Space>"] = { "<Plug>VimwikiToggleListItem", "Toggle list item" },
-    ["+"] = { "<PlugVimwikiNormalizeLink", "Normalize link" },
+    ["+"] = { "<Plug>VimwikiNormalizeLink", "Normalize link" },
     ["<LocalLeader>"] = {
       name = "+localleader",
       n = { "<Plug>VimwikiNextTask", "Next task" },
@@ -555,8 +561,21 @@ local function attach_vimwiki(bufnr)
   }, { buffer = bufnr, mode = "n" })
 
   wk_register({
-    ["+"] = { "<PlugVimwikiNormalizeLinkVisual", "Normalize link" },
+    ["+"] = { "<Plug>VimwikiNormalizeLinkVisual", "Normalize link" },
   }, { buffer = bufnr, mode = "v" })
+
+  map(
+    "i",
+    ">>",
+    "<C-o><Plug>VimwikiIncreaseLvlSingleItem",
+    { buffer = bufnr, noremap = false }
+  )
+  map(
+    "i",
+    "<<",
+    "<C-o><Plug>VimwikiDecreaseLvlSingleItem",
+    { buffer = bufnr, noremap = false }
+  )
 end
 --- }}}
 
