@@ -24,6 +24,13 @@ require("packer").startup(function(use)
   use "tommcdo/vim-exchange"
 
   use {
+    "nathom/filetype.nvim",
+    config = function()
+      require "mange.plugin.filetypes"
+    end,
+  }
+
+  use {
     "AndrewRadev/switch.vim",
     setup = function()
       vim.g.switch_mapping = "" -- Setup in mange.mappings
