@@ -1,4 +1,4 @@
-# vim:ft=sh
+#!/bin/sh
 # Copy this file as options.local to enable backups on this machine.
 # shellcheck disable=2034
 
