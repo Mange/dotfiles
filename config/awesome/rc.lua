@@ -53,6 +53,7 @@ utils = require "utils"
 keys = require "keys"
 actions = require "actions"
 local dropdown = require "dropdown"
+local handle_notification = require("module.notification_rules").handle
 
 -- Patch some things in AwesomeWM to make it easier to build things.
 require "module.patches"
@@ -113,45 +114,11 @@ root.keys(keys.global)
 naughty.config.defaults.timeout = 10
 
 naughty.config.notify_callback = function(args)
-  -- Google Calendar notifications from Firefox looks like this:
-  --    title = "<Meeting title>"
-  --    text = "09:00 - 09:30"
-  --    appname = "Firefox Developer Edition"
-  -- Google Calendar notifications from Brave looks like this:
-  --    title = "<Meeting title>"
-  --    text = "calendar.google.com\n\n09:00 - 09:30"
-  --    appname = "Brave"
-  -- Try to match this
-  if
-    (
-      args.appname == "Firefox Developer Edition"
-      and string.find(args.text, "^%d%d:%d%d")
-    )
-    or (args.appname == "Brave" and string.find(args.text, "%d%d:%d%d"))
-  then
-    -- Never time out!
-    args.timeout = 0
+  if handle_notification(args) then
+    return args
+  else
+    return nil
   end
-
-  -- Spotify notifications are not important and should disappear quickly.
-  if args.appname == "Spotify" then
-    args.timeout = 2
-  end
-
-  -- Brave notifications ad blocker. (I could disable them, but perhaps I'll
-  -- get free rewards by having them enabled and just blocking them!)
-  -- Brave notifications all start with the URL of the website pushing the
-  -- notification, which in the case of ads is no URL. For this reason, all ad
-  -- notifications look like "\n\n<AD TEXT…>".
-  -- if args.appname == "Brave" and string.find(args.text, "^\n\n") then
-  --   args.timeout = 1
-  --   args.urgency = "low"
-
-  --   -- TODO: Actually remove them instead. Waiting for a bit to see if there is any false positives first.
-  --   -- return nil
-  -- end
-
-  return args
 end
 -- }}}
 

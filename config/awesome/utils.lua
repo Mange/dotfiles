@@ -80,7 +80,27 @@ function utils.on_first_start(func)
 end
 
 function utils.is_test()
-  return awmtt_detected
+  return awmtt_detected or _G.is_test == true
+end
+
+-- Uses gears.debug.dump_return to log a complex value to a log file.
+--- @param log_name string The name of the log
+--- @param data any value to log
+--- @param tag string The name of the value
+--- @param depth? integer Depth of recursion
+function utils.log(log_name, data, tag, depth)
+  local filename = gears.filesystem.get_xdg_cache_home()
+    .. "awesome/"
+    .. log_name
+    .. ".log"
+  local f = assert(io.open(filename, "a"))
+  if type(data) == "string" then
+    f:write(data)
+  else
+    f:write(gears.debug.dump_return(data, tag, depth))
+  end
+  f:write "\n"
+  f:close()
 end
 
 function utils.wallpaper_path(name)

@@ -35,10 +35,13 @@ USAGE
 }
 
 run_setup() {
-  sudo luarocks --lua-version 5.3 install luaunit
+  sudo luarocks --lua-version 5.4 install luaunit
 
   if ! hash awmtt 2>/dev/null; then
-    paru -S awmtt
+    (
+      set -x
+      paru -S awmtt
+    )
   fi
 }
 
