@@ -422,11 +422,18 @@ function which_keys.key(combo, name, action, overrides)
   end
 
   if overrides ~= nil then
-    desc = gears.table.join(desc, overrides)
+    if type(overrides) == "table" then
+      desc = gears.table.join(desc, overrides)
 
-    -- Sticky keys should have a "@" in front of their descriptions.
-    if overrides.which_key_sticky then
-      desc.description = "@" .. desc.description
+      -- Sticky keys should have a "@" in front of their descriptions.
+      if overrides.which_key_sticky then
+        desc.description = "@" .. desc.description
+      end
+    else
+      naughty.notify {
+        preset = naughty.config.presets.critical,
+        text = debug.traceback("Overrides is " .. tostring(overrides)),
+      }
     end
   end
 

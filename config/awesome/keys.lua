@@ -91,6 +91,7 @@ keys.awesome_chord = which_keys.new_chord("Awesome", {
     which_keys.key_nested("o", "open", {
       which_keys.key("w", "wiki", actions.spawn "open-wiki"),
       which_keys.key("p", "project", actions.spawn "open-project"),
+      which_keys.key("d", "dotfile", actions.spawn { "dotfiles", "edit" }),
     }),
 
     which_keys.key_nested("c", "client", {
