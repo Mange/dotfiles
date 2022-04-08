@@ -1,6 +1,3 @@
-local cmd = vim.cmd
-local opt = vim.o
-
 local catppuccin = require "catppuccin"
 
 local theme = {}
@@ -18,6 +15,19 @@ local function theme_overrides()
     sign define DiagnosticSignInfo text= texthl=DiagnosticSignInfo linehl= numhl=DiagnosticLineNrInfo
     sign define DiagnosticSignHint text= texthl=DiagnosticSignHint linehl= numhl=DiagnosticLineNrHint
   ]]
+
+  -- Use background colors to highlight in vimdiff
+  vim.cmd [[
+    highlight DiffAdd guifg=NONE guibg=#384047
+    highlight DiffChange guifg=NONE guibg=#463f47
+
+    " Changed text inside of a line (DiffChange)
+    highlight DiffText guifg=#FAE3B0 guibg=NONE gui=bold
+
+    " DiffDelete uses a conceal character that spans the entire line. Highlight
+    " that character instead of the background behind it.
+    highlight DiffDelete guifg=#F28FAD guibg=NONE
+  ]]
 end
 
 function theme.reload()
@@ -25,7 +35,7 @@ function theme.reload()
   require("mange.theme").setup()
 end
 function theme.setup()
-  opt.termguicolors = true
+  vim.o.termguicolors = true
 
   vim.diagnostic.config {
     -- virtual_text = {
@@ -96,7 +106,7 @@ function theme.setup()
     },
   }
 
-  cmd [[silent! colorscheme catppuccin]]
+  vim.cmd [[silent! colorscheme catppuccin]]
 
   theme_overrides()
 end
