@@ -87,17 +87,17 @@ return {
     },
     {
       mods = "CTRL|SHIFT",
-      key = "-",
+      key = "phys:Minus", -- Ctrl+Shift+[-]
       action = "DecreaseFontSize",
     },
     {
       mods = "CTRL|SHIFT",
-      key = "=",
+      key = "phys:Equal", -- Ctrl+Shift+[+]
       action = "IncreaseFontSize",
     },
     {
       mods = "CTRL|SHIFT",
-      key = "0",
+      key = "phys:0", -- Ctrl+Shift+0
       action = "ResetFontSize",
     },
     {
