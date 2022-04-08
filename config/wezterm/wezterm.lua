@@ -39,6 +39,11 @@ return {
   -- Super annoying when looking at binary output
   warn_about_missing_glyphs = false,
 
+  -- Don't do animations. Distracting and makes things feel slower.
+  animation_fps = 1,
+  cursor_blink_ease_in = "Constant",
+  cursor_blink_ease_out = "Constant",
+
   disable_default_key_bindings = true,
   keys = {
     { mods = "CTRL|SHIFT", key = "z", action = "QuickSelect" },
