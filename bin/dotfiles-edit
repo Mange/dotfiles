@@ -8,6 +8,11 @@ if [ "$1" = "--help" ]; then
   exit 0
 fi
 
+if [ -z "${DOTFILES_PATH:-}" ]; then
+  eval "$(dotfiles --env)"
+fi
+cd "${DOTFILES_PATH:?}"
+
 file="$(fd | finder)"
 editor=${VISUAL:-${EDITOR:-vi}}
 
