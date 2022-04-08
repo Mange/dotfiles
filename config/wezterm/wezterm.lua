@@ -33,6 +33,9 @@ return {
   hide_tab_bar_if_only_one_tab = true,
   window_background_opacity = 0.8,
 
+  -- Makes font resizing work better in tiling window managers.
+  adjust_window_size_when_changing_font_size = false,
+
   -- Super annoying when looking at binary output
   warn_about_missing_glyphs = false,
 
