@@ -293,6 +293,8 @@ require("packer").startup(function(use)
   }
 
   use "jose-elias-alvarez/null-ls.nvim"
+  use "lukas-reineke/lsp-format.nvim"
+
   use {
     "liuchengxu/vista.vim",
     setup = function()

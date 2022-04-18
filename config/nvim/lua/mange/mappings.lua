@@ -413,10 +413,12 @@ local function setup()
         C = { "<cmd>ColorizerToggle<cr>", "Colorizer" },
 
         f = {
-          function()
-            require("mange.utils").buf_toggle_autoformat()
-          end,
-          "Autoformatting",
+          "<cmd>FormatToggle &ft<cr>",
+          "Autoformatting (filetype)",
+        },
+        F = {
+          "<cmd>FormatToggle<cr>",
+          "Autoformatting (global)",
         },
 
         l = { "<cmd>set list! | set list?<cr>", "listchars" },

@@ -24,26 +24,24 @@ local function unique_autocmd(name, cmd)
 end
 
 local function on_attach(client, bufnr)
+  if_require("lsp-format", function(lspformat)
+    lspformat.on_attach(client)
+  end)
   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
-
-  unique_autocmd(
-    "MaybeAutoformat",
-    "autocmd BufWritePre <buffer> lua require('mange.utils').maybe_autoformat()"
-  )
 
   unique_autocmd(
     "DiagnosticHover",
     "autocmd CursorHold <buffer> lua require('mange.utils').show_diagnostic_float()"
   )
 
-  if client.resolved_capabilities.signature_help then
+  if client.server_capabilities.signatureHelpProvider then
     unique_autocmd(
       "SignatureHelp",
       "autocmd CursorHoldI <buffer> lua require('mange.utils').show_signature_help()"
     )
   end
 
-  if client.resolved_capabilities.document_highlight then
+  if client.server_capabilities.documentHighlightProvider then
     vim.cmd [[
       hi LspReferenceRead guibg=#5f5840
       hi LspReferenceText guibg=#504945
@@ -60,6 +58,21 @@ local function on_attach(client, bufnr)
 end
 
 if_require("lspconfig", function(lspconfig)
+  if_require("lsp-format", function(lspformat)
+    lspformat.setup {
+      typescript = {
+        exclude = { "tsserver" },
+      },
+      lua = {
+        exclude = { "sumneko_lua" },
+      },
+    }
+
+    lspformat.disable "markdown"
+    lspformat.disable "vimwiki"
+    lspformat.disable "eruby" -- completely breaks in most formatters
+  end)
+
   -- Lua
   -- Try to configure this to work both in Neovim and in AwesomeWM
   -- environments. This does not seem to be possible to do well, so try to
@@ -125,15 +138,10 @@ if_require("lspconfig", function(lspconfig)
     capabilities = capabilities(),
     on_attach = function(client, bufnr)
       if_require("nvim-lsp-ts-utils", function(ts_utils)
-        -- disable tsserver formatting; format using null-ls instead
-        client.resolved_capabilities.document_formatting = false
-        client.resolved_capabilities.document_range_formatting = false
-
         ts_utils.setup {
           enable_import_on_completion = true,
           enable_formatting = true,
         }
-
         ts_utils.setup_client(client)
       end)
 
@@ -194,10 +202,6 @@ if_require("null-ls", function(null_ls)
         extra_args = { "-i", "2" },
       },
       null_ls.builtins.formatting.stylelint,
-
-      -- Not used because I want to trim whitespace even when I'm not using LSP
-      -- on a buffer or if I disable autoformatting for some other reason.
-      -- null_ls.builtins.formatting.trim_whitespace,
 
       null_ls.builtins.formatting.stylua,
 
