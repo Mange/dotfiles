@@ -23,10 +23,7 @@ local function unique_autocmd(name, cmd)
   vim.cmd "augroup END"
 end
 
-local function on_attach(client, bufnr)
-  if_require("lsp-format", function(lspformat)
-    lspformat.on_attach(client)
-  end)
+local function on_attach_without_formatting(client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
   unique_autocmd(
@@ -57,6 +54,14 @@ local function on_attach(client, bufnr)
   require("mange.mappings").attach_lsp(bufnr)
 end
 
+local function on_attach(client, bufnr)
+  if_require("lsp-format", function(lspformat)
+    lspformat.on_attach(client)
+  end)
+
+  on_attach_without_formatting(client, bufnr)
+end
+
 if_require("lspconfig", function(lspconfig)
   if_require("lsp-format", function(lspformat)
     lspformat.setup {
@@ -65,6 +70,10 @@ if_require("lspconfig", function(lspconfig)
       },
       lua = {
         exclude = { "sumneko_lua" },
+      },
+      ruby = {
+        -- Use standardrb via null-ls instead.
+        exclude = { "solargraph" },
       },
     }
 
@@ -80,7 +89,7 @@ if_require("lspconfig", function(lspconfig)
   lspconfig.sumneko_lua.setup {
     cmd = { "lua-language-server" },
     capabilities = capabilities(),
-    on_attach = on_attach,
+    on_attach = on_attach_without_formatting,
     settings = {
       Lua = {
         -- Neovim runs LuaJIT
@@ -105,13 +114,13 @@ if_require("lspconfig", function(lspconfig)
         },
       },
     },
-    prefix = "null",
+    prefix = "lua",
   }
 
   --  Ruby / Solargraph
   lspconfig.solargraph.setup {
     capabilities = capabilities(),
-    on_attach = on_attach,
+    on_attach = on_attach_without_formatting,
     prefix = "solargraph",
     init_options = {
       -- Uses hardcoded Rubocop; I will use Standardrb through null-ls instead.
@@ -140,12 +149,12 @@ if_require("lspconfig", function(lspconfig)
       if_require("nvim-lsp-ts-utils", function(ts_utils)
         ts_utils.setup {
           enable_import_on_completion = true,
-          enable_formatting = true,
+          enable_formatting = false,
         }
         ts_utils.setup_client(client)
       end)
 
-      on_attach(client, bufnr)
+      on_attach_without_formatting(client, bufnr)
     end,
   }
 
