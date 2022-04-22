@@ -296,6 +296,13 @@ require("packer").startup(function(use)
   use "lukas-reineke/lsp-format.nvim"
 
   use {
+    "onsails/lspkind-nvim",
+    config = function()
+      require("lspkind").init()
+    end,
+  }
+
+  use {
     "liuchengxu/vista.vim",
     setup = function()
       vim.g.vista_sidebar_keepalt = 1
@@ -351,10 +358,11 @@ require("packer").startup(function(use)
   -- Snippets collection. Might replace with my own later when I have time.
   use "honza/vim-snippets"
 
+  -- Use when first setting up your device
   use {
-    "onsails/lspkind-nvim",
+    "github/copilot.vim",
     config = function()
-      require("lspkind").init()
+      require "mange.copilot"
     end,
   }
 
