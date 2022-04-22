@@ -33,6 +33,9 @@ return {
   hide_tab_bar_if_only_one_tab = true,
   window_background_opacity = 0.8,
 
+  -- Don't accidentally select stuff when I click on a window and accidentally move a few pixels
+  swallow_mouse_click_on_window_focus = true,
+
   -- Makes font resizing work better in tiling window managers.
   adjust_window_size_when_changing_font_size = false,
 
