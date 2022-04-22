@@ -1,5 +1,3 @@
-local cmd = vim.cmd
-
 if_require("autocmd-lua", function(autocmd)
   -- Enable folds in my Neovim config files.
   autocmd.augroup {

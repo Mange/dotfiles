@@ -9,6 +9,7 @@ require("filetype").setup {
     },
     complex = {
       ["Dockerfile.*"] = "dockerfile",
+      [".*chart/templates/.*.yml"] = "helm",
     },
   },
 }
