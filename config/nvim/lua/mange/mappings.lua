@@ -223,7 +223,7 @@ local function setup()
       --- {{{ Leader +code
       ["c"] = {
         name = "Code",
-        ["="] = { "<cmd>lua vim.lsp.buf.formatting()<cr>", "Format" },
+        ["="] = { "<cmd>Format<cr>", "Format" },
         r = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" },
         g = {
           name = "Go to",
