@@ -1,3 +1,5 @@
+local lspformat = require "lsp-format"
+
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
   vim.lsp.handlers.signature_help,
   {
@@ -54,33 +56,27 @@ local function on_attach_without_formatting(client, bufnr)
   require("mange.mappings").attach_lsp(bufnr)
 end
 
-local function on_attach(client, bufnr)
-  if_require("lsp-format", function(lspformat)
-    lspformat.on_attach(client)
-  end)
-
-  on_attach_without_formatting(client, bufnr)
+local function on_attach(...)
+  lspformat.on_attach(...)
+  on_attach_without_formatting(...)
 end
 
 if_require("lspconfig", function(lspconfig)
-  if_require("lsp-format", function(lspformat)
-    lspformat.setup {
-      typescript = {
-        exclude = { "tsserver" },
-      },
-      lua = {
-        exclude = { "sumneko_lua" },
-      },
-      ruby = {
-        -- Use standardrb via null-ls instead.
-        exclude = { "solargraph" },
-      },
-    }
-
-    lspformat.disable { args = "markdown" }
-    lspformat.disable { args = "vimwiki" }
-    lspformat.disable { args = "eruby" } -- completely breaks in most formatters
-  end)
+  lspformat.setup {
+    typescript = {
+      exclude = { "tsserver" },
+    },
+    lua = {
+      exclude = { "sumneko_lua" },
+    },
+    ruby = {
+      -- Use standardrb via null-ls instead.
+      exclude = { "solargraph" },
+    },
+  }
+  lspformat.disable { args = { "markdown" } }
+  lspformat.disable { args = { "vimwiki" } }
+  lspformat.disable { args = { "eruby" } } -- completely breaks in most formatters
 
   -- Lua
   -- Try to configure this to work both in Neovim and in AwesomeWM
@@ -204,6 +200,7 @@ if_require("null-ls", function(null_ls)
     should_attach = function(bufnr)
       return not vim.api.nvim_buf_get_name(bufnr):match "%.env$"
     end,
+    on_attach = on_attach,
     sources = {
       null_ls.builtins.formatting.prettier,
       null_ls.builtins.formatting.shfmt.with {
