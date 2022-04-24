@@ -245,7 +245,7 @@ local function setup()
             "Type definition",
           },
         },
-        d = { "<cmd>Telescope lsp_document_diagnostics<cr>", "Diagnostics" },
+        d = { "<cmd>Telescope diagnostics<cr>", "Diagnostics" },
         s = { "<cmd>Telescope lsp_document_symbols<cr>", "Symbols" },
         w = {
           name = "Workspace",
@@ -374,7 +374,7 @@ local function setup()
       --
       ["p"] = {
         name = "Project",
-        d = { "<cmd>Telescope lsp_workspace_diagnostics<cr>", "Diagnostics" },
+        d = { "<cmd>Telescope diagnostics<cr>", "Diagnostics" },
         f = { "<cmd>Telescope find_files<cr>", "Find files" },
         i = { "<cmd>SplitOrFocus .git/neovim.lua<cr>", "Project vimrc (lua)" },
         I = {
