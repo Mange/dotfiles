@@ -14,11 +14,15 @@
 -- is loaded.
 -- For this to work, all config is wrapped in a function.
 
---- {{{ Lua imports
+--
+-- Lua imports
+--
 local cmd = vim.cmd
 local fn = vim.fn
---- }}}
---- {{{ Require helper
+
+--
+-- Require helper
+--
 -- Require and execute passed function with the loaded module, if it
 -- successfully loaded.
 _G.if_require = function(module, block, errblock)
@@ -32,7 +36,6 @@ _G.if_require = function(module, block, errblock)
     return nil
   end
 end
---- }}}
 
 _G.load_config = function()
   require "mange.options"
@@ -47,7 +50,9 @@ _G.load_config = function()
   require "mange.autocommands"
 end
 
---- {{{ Startup (and bootstapping)
+--
+-- Startup (and bootstapping)
+--
 -- Bootstrap Packer if not installed already
 do
   local install_path = fn.stdpath "data"
@@ -68,4 +73,3 @@ do
     load_config()
   end
 end
---- }}}

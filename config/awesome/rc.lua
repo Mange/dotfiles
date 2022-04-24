@@ -14,7 +14,9 @@ os.setlocale(os.getenv "LANG")
 
 require "awful.autofocus"
 
--- {{{ Error handling
+--
+-- Error handling
+--
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
 if awesome.startup_errors then
@@ -43,11 +45,12 @@ do
     in_error = false
   end)
 end
--- }}}
 
--- {{{ Theme
+--
+-- Theme
+--
 beautiful.init(require "theme")
--- }}}
+
 --
 utils = require "utils"
 keys = require "keys"
@@ -66,7 +69,9 @@ function reload(name)
   return require(name)
 end
 
--- {{{ Picom
+--
+-- Picom
+--
 utils.on_first_start(function()
   awful.spawn.once {
     "picom",
@@ -75,22 +80,24 @@ utils.on_first_start(function()
     "--experimental-backends",
   }
 end)
--- }}}
 
 require "configuration.screens"
 require "layout"
 local tags = require("configuration.tags").tags
 
--- {{{ Mouse bindings
+--
+-- Mouse bindings
+--
 root.buttons(
   gears.table.join(
     awful.button({}, keys.scroll_up, awful.tag.viewnext),
     awful.button({}, keys.scroll_down, awful.tag.viewprev)
   )
 )
--- }}}
 
--- {{{ Key bindings
+--
+-- Key bindings
+--
 
 clientbuttons = gears.table.join(
   awful.button({}, keys.left_click, function(c)
@@ -108,9 +115,10 @@ clientbuttons = gears.table.join(
 
 -- Set keys
 root.keys(keys.global)
--- }}}
 
--- {{{ Notifications
+--
+-- Notifications
+--
 naughty.config.defaults.timeout = 10
 
 naughty.config.notify_callback = function(args)
@@ -120,9 +128,10 @@ naughty.config.notify_callback = function(args)
     return nil
   end
 end
--- }}}
 
--- {{{ Rules
+--
+-- Rules
+--
 -- Rules to apply to new clients (through the "manage" signal).
 awful.rules.rules = {
   -- All clients will match this rule.
@@ -250,14 +259,16 @@ awful.rules.rules = {
   },
 }
 dropdown.add_rules(awful.rules.rules)
--- }}}
 
--- {{{ Daemons
+--
+-- Daemons
+--
 -- Start daemons
 require "daemons"
--- }}}
 
--- {{{ Signals
+--
+-- Signals
+--
 -- Signal function to execute when a new client appears.
 client.connect_signal("manage", function(c)
   -- Set the windows at the slave,
@@ -293,12 +304,12 @@ end)
 client.connect_signal("unfocus", function(c)
   c.border_color = beautiful.border_normal
 end)
--- }}}
 
--- {{{ Startup apps
+--
+-- Startup apps
+--
 utils.on_first_start(function()
   awful.spawn.once "dynamic-startup"
 end)
--- }}}
 
 require "module.tag-toast"

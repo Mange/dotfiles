@@ -8,7 +8,9 @@
 --     ░░░  ░░  ░░  ░░░░░░░░ ░░      ░░      ░░ ░░░   ░░  ░░░░░  ░░░░░░
 --
 
---- {{{ Helpers
+--
+-- Helpers
+--
 local g = vim.g
 local api = vim.api
 local utils = require "mange.utils"
@@ -38,8 +40,10 @@ local function reload_mappings()
   require("plenary.reload").reload_module "mange.mappings"
   require("mange.mappings").setup()
 end
---- }}}
---- {{{ Actions
+
+--
+-- Actions
+--
 local function telescope_cword()
   local word = vim.fn.expand "<cword>"
   utils.set_search_word(word)
@@ -85,10 +89,11 @@ local function delete_all_buffers()
     vim.cmd(string.format("bd %d", buf))
   end
 end
---- }}}
 
 local function setup()
-  --- {{{ Root
+  --
+  -- Root
+  --
   -- Unmap Q
   -- I'll use it for context-sensitive actions depending on filetype
   map("", "Q", "", { expr = true })
@@ -152,7 +157,7 @@ local function setup()
       'copilot#Accept("\\<CR>")',
       "Accept copilot suggestion",
       expr = true,
-    }
+    },
   }, {
     mode = "i",
   })
@@ -169,8 +174,9 @@ local function setup()
     })
   end
 
-  --- }}}
-  --- {{{ Command mode
+  --
+  -- Command mode
+  --
 
   map("c", "%%", "<C-R>=expand('%')<cr>", { silent = false }) -- Full path
   map("c", "$$", "<C-R>=expand('%:h').'/'<cr>", { silent = false }) -- Dirname
@@ -183,11 +189,11 @@ local function setup()
     mode = "c",
   })
 
-  --- }}}
-  --- {{{ Visual mode
+  --
+  -- Visual mode
+  --
   map("v", "<C-j>", ":m '>+1<CR>gv=gvzz", { silent = false }) -- Move line down
   map("v", "<C-k>", ":m '<-2<CR>gv=gvzz", { silent = false }) -- Move line down
-  --- }}}
 
   -- Setup leader key to space
   g.mapleader = " "
@@ -195,18 +201,21 @@ local function setup()
 
   wk_register {
     ["<leader>"] = {
-      --- {{{ Leader root
+      --
+      -- Leader root
+      --
       [":"] = { "<cmd>Telescope commands<cr>", "Commands" },
       N = { "<cmd>Telescope resume<cr>", "Telescope resume" },
       j = { "<cmd>SplitjoinSplit<cr>", "Split line" },
       k = { "<cmd>SplitjoinJoin<cr>", "Join line" },
-      --- }}}
 
-      --- {{{ Leader visual
+      --
+      -- Leader visual
+      --
 
-      --- }}}
-
-      --- {{{ Leader +buffer
+      --
+      -- Leader +buffer
+      --
       ["b"] = {
         name = "Buffers",
         D = { delete_all_buffers, "Delete all buffers" },
@@ -218,9 +227,10 @@ local function setup()
         a = { "<cmd>A<cr>", "Alternative" },
         A = { "<cmd>AS<cr>", "Alternative (split)" },
       },
-      --- }}}
 
-      --- {{{ Leader +code
+      --
+      -- Leader +code
+      --
       ["c"] = {
         name = "Code",
         ["="] = { "<cmd>Format<cr>", "Format" },
@@ -253,9 +263,10 @@ local function setup()
           },
         },
       },
-      --- }}}
 
-      --- {{{ Leader +file/fold
+      --
+      -- Leader +file/fold
+      --
       ["f"] = {
         name = "File/Fold",
         r = { ":Rename <C-R>=expand('%:t')<cr>", "Rename", silent = false },
@@ -279,9 +290,10 @@ local function setup()
         ["8"] = { "<cmd>set foldlevel=8<cr>", "Foldlevel 8" },
         ["9"] = { "<cmd>set foldlevel=9<cr>", "Foldlevel 9" },
       },
-      --- }}}
 
-      --- {{{ Leader +git
+      --
+      -- Leader +git
+      --
       ["g"] = {
         name = "Git",
 
@@ -307,9 +319,10 @@ local function setup()
           "Commit",
         },
       },
-      --- }}}
 
-      --- {{{ Leader +help/vim
+      --
+      -- Leader +help/vim
+      --
       ["h"] = {
         name = "Help/Neovim",
         ["?"] = { "<cmd>Telescope keymaps", "Keymaps" },
@@ -342,9 +355,10 @@ local function setup()
           },
         },
       },
-      --- }}}
 
-      --- {{{ Leader +notes
+      --
+      -- Leader +notes
+      --
       ["n"] = {
         name = "Notes",
         n = { "<cmd>SplitOrFocus notes.local<cr>", "Local notes" },
@@ -354,9 +368,10 @@ local function setup()
           "Find wiki page",
         },
       },
-      --- }}}
 
-      --- {{{ Leader +project
+      --
+      -- Leader +project
+      --
       ["p"] = {
         name = "Project",
         d = { "<cmd>Telescope lsp_workspace_diagnostics<cr>", "Diagnostics" },
@@ -371,9 +386,10 @@ local function setup()
         t = { "<cmd>SmartSplit +terminal<cr>", "Terminal" },
         T = { telescope_todos, "Todo comments" },
       },
-      --- }}}
 
-      --- {{{ Leader +search
+      --
+      -- Leader +search
+      --
       ["s"] = {
         name = "Search",
         W = { telescope_cWORD, "WORD under cursor" },
@@ -389,17 +405,19 @@ local function setup()
         t = { "<cmd>Telescope lsp_workspace_symbols<cr>", "Symbols" },
         w = { telescope_cword, "Word under cursor" },
       },
-      --- }}}
 
-      --- {{{ Leader +Session
+      --
+      -- Leader +Session
+      --
       ["S"] = {
         name = "Session",
         l = { "<cmd>SessionLoad<cr>", "Load last session" },
         s = { "<cmd>SessionSave<cr>", "Save session" },
       },
-      --- }}}
 
-      --- {{{ Leader +toggle
+      --
+      -- Leader +toggle
+      --
       ["t"] = {
         name = "Toggle",
         -- Not actually a *toggle*, more like a "Toggle off". Just pressing n/N
@@ -434,9 +452,10 @@ local function setup()
         q = { "<cmd>ClistToggle<cr>", "Quickfix list" },
         v = { "<cmd>Vista!!<cr>", "Vista" },
       },
-      --- }}}
 
-      --- {{{ Leader +window
+      --
+      -- Leader +window
+      --
       ["w"] = {
         name = "Window",
         h = { "<C-w>h", "Left" },
@@ -447,11 +466,12 @@ local function setup()
         v = { "<C-w>v", "Split vertical" },
         q = { "<C-w>q", "Close" },
       },
-      --- }}}
     },
   }
 
-  --- {{{ Leader (visual)
+  --
+  -- Leader (visual)
+  --
   wk_register({
     ["<leader>"] = {
       s = {
@@ -474,10 +494,11 @@ local function setup()
   }, {
     mode = "v",
   })
-  --- }}}
 end
 
---- {{{ LSP
+--
+-- LSP
+--
 local function attach_lsp(bufnr)
   local modifiable = vim.bo[bufnr].modifiable
 
@@ -543,9 +564,10 @@ local function attach_lsp(bufnr)
     mode = "i",
   })
 end
---- }}}
 
---- {{{ Vimwiki
+--
+-- Vimwiki
+--
 local function attach_vimwiki(bufnr)
   wk_register({
     ["<CR>"] = { "<Plug>VimwikiFollowLink", "Follow link" },
@@ -592,7 +614,6 @@ local function attach_vimwiki(bufnr)
     { buffer = bufnr, noremap = false }
   )
 end
---- }}}
 
 return {
   setup = setup,

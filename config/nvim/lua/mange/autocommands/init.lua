@@ -1,20 +1,4 @@
 if_require("autocmd-lua", function(autocmd)
-  -- Enable folds in my Neovim config files.
-  autocmd.augroup {
-    group = "mange_vim_folds",
-    autocmds = {
-      {
-        event = "BufRead",
-        pattern = "*/nvim/*.lua,*/bin/*.vim",
-        cmd = function()
-          vim.wo.foldenable = true
-          vim.wo.foldmethod = "marker"
-          vim.wo.foldlevel = 0
-        end,
-      },
-    },
-  }
-
   autocmd.augroup {
     group = "mange_packer_plugins",
     autocmds = {
