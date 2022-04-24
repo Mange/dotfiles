@@ -205,7 +205,7 @@ awful.rules.rules = {
   -- Web clients
   {
     rule_any = {
-      class = { "Firefox" },
+      class = { "Firefox", "Brave" },
     },
     properties = { tag = tags[3] },
   },

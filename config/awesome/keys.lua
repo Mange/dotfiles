@@ -412,8 +412,8 @@ keys.global = gears.table.join(
     { modkey },
     "w",
     actions.run_or_raise(
-      { "firefox-developer-edition" },
-      { class = "firefoxdeveloperedition" }
+      { "brave-browser-beta" },
+      { class = "Brave" }
     ),
     { description = "Focus browser", group = "Apps" }
   ),
@@ -421,7 +421,7 @@ keys.global = gears.table.join(
   awful.key(
     { modkey, "Shift" },
     "w",
-    actions.focus_tag_client { class = "firefoxdeveloperedition" },
+    actions.focus_tag_client { class = "Brave" },
     { description = "Focus-tag browser", group = "Apps" }
   ),
 
