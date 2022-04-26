@@ -46,15 +46,20 @@ else
   export DOTFILES_PATH="$dir"
 fi
 
-command="dotfiles-$1"
-shift
+if [ "$#" -gt 0 ]; then
+  command="dotfiles-$1"
+  shift
 
-if hash "$command" >/dev/null 2>/dev/null; then
-  exec "$command" "$@"
-elif [ -x "${DOTFILES_PATH}/bin/${command}" ]; then
-  exec "${DOTFILES_PATH}/bin/${command}" "$@"
+  if hash "$command" >/dev/null 2>/dev/null; then
+    exec "$command" "$@"
+  elif [ -x "${DOTFILES_PATH}/bin/${command}" ]; then
+    exec "${DOTFILES_PATH}/bin/${command}" "$@"
+  else
+    echo "Cannot find command \"${command}\"." >&2
+    usage >&2
+    exit 127
+  fi
 else
-  echo "Cannot find command \"${command}\"." >&2
   usage >&2
-  exit 127
+  exit 1
 fi
