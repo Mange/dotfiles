@@ -74,9 +74,9 @@ if_require("lspconfig", function(lspconfig)
       exclude = { "solargraph" },
     },
   }
-  lspformat.disable { args = { "markdown" } }
-  lspformat.disable { args = { "vimwiki" } }
-  lspformat.disable { args = { "eruby" } } -- completely breaks in most formatters
+  lspformat.disable { args = "markdown" }
+  lspformat.disable { args = "vimwiki" }
+  lspformat.disable { args = "eruby" } -- completely breaks in most formatters
 
   -- Lua
   -- Try to configure this to work both in Neovim and in AwesomeWM
