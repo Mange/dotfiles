@@ -122,8 +122,18 @@ local function setup()
     },
 
     -- Next/previous quickfix
-    ["]q"] = { ":cn<CR>", "Quickfix next" },
-    ["[q"] = { ":cp<CR>", "Quickfix previous" },
+    ["]q"] = {
+      function()
+        require("trouble").next { skip_groups = true, jump = true }
+      end,
+      "Trouble next",
+    },
+    ["[q"] = {
+      function()
+        require("trouble").previous { skip_groups = true, jump = true }
+      end,
+      "Trouble previous",
+    },
 
     ["<BS>"] = { "<Plug>(Switch)", "Switch" },
 
@@ -237,16 +247,16 @@ local function setup()
         r = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" },
         g = {
           name = "Go to",
-          d = { "<cmd>Telescope lsp_definitions<cr>", "Definitions" },
-          r = { "<cmd>Telescope lsp_references<cr>", "References" },
-          i = { "<cmd>Telescope lsp_implementations<cr>", "Implementations" },
+          d = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
+          r = { "<cmd>Trouble lsp_references<cr>", "References" },
+          i = { "<cmd>Trouble lsp_implementations<cr>", "Implementations" },
           t = {
-            "<cmd>lua vim.lsp.buf.type_definition()<cr>",
+            "<cmd>Trouble lsp_type_definitions<cr>",
             "Type definition",
           },
         },
-        d = { "<cmd>Telescope diagnostics<cr>", "Diagnostics" },
-        s = { "<cmd>Telescope lsp_document_symbols<cr>", "Symbols" },
+        d = { "<cmd>Trouble workspace_diagnostics<cr>", "Diagnostics" },
+        s = { "<cmd>Trouble lsp_document_symbols<cr>", "Symbols" },
         w = {
           name = "Workspace",
           a = {
@@ -449,7 +459,9 @@ local function setup()
         n = { "<cmd>set number! | set number?<cr>", "number" },
         w = { "<cmd>set wrap! | set wrap?<cr>", "wrap" },
         s = { "<cmd>set spell! | set spell?<cr>", "spell" },
-        q = { "<cmd>ClistToggle<cr>", "Quickfix list" },
+        t = { "<cmd>TroubleToggle<cr>", "Trouble" },
+        d = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "Diagnostics" },
+        q = { "<cmd>TroubleToggle quickfix<cr>", "Quickfix list" },
         v = { "<cmd>Vista!!<cr>", "Vista" },
       },
 
@@ -539,7 +551,7 @@ local function attach_lsp(bufnr)
       "<cmd>lua require('mange.utils').show_diagnostic_float({force = true})<CR>",
       "Show diagnostics on line",
     },
-    ["<C-]>"] = { "<cmd>Telescope lsp_definitions<cr>", "Definitions" },
+    ["<C-]>"] = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
 
     ["[e"] = {
       "<cmd>lua vim.diagnostic.goto_prev()<CR>",
