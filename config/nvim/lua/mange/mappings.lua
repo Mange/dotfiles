@@ -141,14 +141,24 @@ local function setup()
     -- Gitsigns
     --
     ["]c"] = {
-      "&diff ? ']c' : '<cmd>lua require(\"gitsigns.actions\").next_hunk()<CR>'",
+      function()
+        if vim.o.diff then
+          vim.normal "]c"
+        else
+          require("gitsigns.actions").next_hunk()
+        end
+      end,
       "Next hunk",
-      expr = true,
     },
     ["[c"] = {
-      "&diff ? '[c' : '<cmd>lua require(\"gitsigns.actions\").prev_hunk()<CR>'",
+      function()
+        if vim.o.diff then
+          vim.normal "[c"
+        else
+          require("gitsigns.actions").prev_hunk()
+        end
+      end,
       "Previous hunk",
-      expr = true,
     },
 
     ["<C-s>"] = { ":silent! wall<cr>", "Save all" },
@@ -176,7 +186,7 @@ local function setup()
   for _, mode in pairs { "o", "x" } do
     wk_register({
       ["ih"] = {
-        ':<C-U>lua require("gitsigns.actions").select_hunk()<CR>',
+        require("gitsigns.actions").select_hunk,
         "Inner hunk",
       },
     }, {
@@ -244,7 +254,7 @@ local function setup()
       ["c"] = {
         name = "Code",
         ["="] = { "<cmd>Format<cr>", "Format" },
-        r = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" },
+        r = { vim.lsp.buf.rename, "Rename" },
         g = {
           name = "Go to",
           d = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
@@ -260,15 +270,17 @@ local function setup()
         w = {
           name = "Workspace",
           a = {
-            "<cmd>lua vim.lsp.buf.add_workspace_folder()<cr>",
+            vim.lsp.buf.add_workspace_folder,
             "Add folder…",
           },
           r = {
-            "<cmd>lua vim.lsp.buf.remove_workspace_folder()<cr>",
+            vim.lsp.buf.remove_workspace_folder,
             "Remove folder…",
           },
           w = {
-            "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<cr>",
+            function()
+              print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+            end,
             "List folders",
           },
         },
@@ -435,9 +447,7 @@ local function setup()
         h = { "<cmd>nohl<cr>", "Search highlights" },
 
         c = {
-          function()
-            require("mange.cursorline").toggle()
-          end,
+          require("mange.cursorline").toggle,
           "Cursorline",
         },
         B = {
@@ -517,7 +527,7 @@ local function attach_lsp(bufnr)
   if modifiable then
     wk_register({
       ["<leader><CR>"] = {
-        ":lua vim.lsp.buf.code_action()<cr>",
+        vim.lsp.buf.code_action,
         "Code action",
       },
     }, {
@@ -526,12 +536,12 @@ local function attach_lsp(bufnr)
 
     wk_register({
       ["<leader><CR>"] = {
-        ":lua vim.lsp.buf.range_code_action()<cr>",
+        vim.lsp.buf.range_code_action,
         "Code action",
       },
-      ["="] = { "<cmd>lua vim.lsp.buf.range_formatting()<cr>", "Format" },
+      ["="] = { vim.lsp.buf.range_formatting, "Format" },
       ["<leader>="] = {
-        "<cmd>lua vim.lsp.buf.range_formatting()<cr>",
+        vim.lsp.buf.range_formatting,
         "Format",
       },
     }, {
@@ -542,23 +552,25 @@ local function attach_lsp(bufnr)
 
   -- Normal mode mappings
   wk_register({
-    ["K"] = { "<Cmd>lua vim.lsp.buf.hover()<CR>", "Hover documentation" },
+    ["K"] = { vim.lsp.buf.hover, "Hover documentation" },
     ["gK"] = {
-      "<cmd>lua require('mange.utils').show_signature_help()<CR>",
+      require("mange.utils").show_signature_help,
       "Signature help",
     },
     ["gd"] = {
-      "<cmd>lua require('mange.utils').show_diagnostic_float({force = true})<CR>",
+      function()
+        require("mange.utils").show_diagnostic_float { force = true }
+      end,
       "Show diagnostics on line",
     },
     ["<C-]>"] = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
 
     ["[e"] = {
-      "<cmd>lua vim.diagnostic.goto_prev()<CR>",
+      vim.diagnostic.goto_prev,
       "Previous diagnostic",
     },
     ["]e"] = {
-      "<cmd>lua vim.diagnostic.goto_next()<CR>",
+      vim.diagnostic.goto_next,
       "Next diagnostic",
     },
   }, {
@@ -568,7 +580,9 @@ local function attach_lsp(bufnr)
   -- Insert mode mappings
   wk_register({
     ["<C-k>"] = {
-      "<cmd>lua require('mange.utils').show_signature_help({force = true})<CR>",
+      function()
+        require("mange.utils").show_signature_help { force = true }
+      end,
       "Signature help",
     },
   }, {
