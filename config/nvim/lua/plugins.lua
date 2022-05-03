@@ -303,15 +303,39 @@ require("packer").startup(function(use)
   }
 
   use {
-    "liuchengxu/vista.vim",
+    "simrat39/symbols-outline.nvim",
     setup = function()
-      vim.g.vista_sidebar_keepalt = 1
-      vim.g.vista_echo_cursor_strategy = "floating_win"
-      vim.g.vista_default_executive = "nvim_lsp"
-      vim.g.vista_executive_for = {
-        vimwiki = "markdown",
-        pandoc = "markdown",
-        markdown = "toc",
+      vim.g.symbols_outline = {
+        lsp_blacklist = {},
+        symbol_blacklist = {
+          -- 'File',
+          -- 'Module',
+          -- 'Namespace',
+          -- 'Package',
+          -- 'Class',
+          -- 'Method',
+          -- 'Property',
+          -- 'Field',
+          -- 'Constructor',
+          -- 'Enum',
+          -- 'Interface',
+          -- 'Function',
+          -- 'Variable',
+          -- 'Constant',
+          -- 'String',
+          -- 'Number',
+          -- 'Boolean',
+          -- 'Array',
+          -- 'Object',
+          -- 'Key',
+          -- 'Null',
+          -- 'EnumMember',
+          -- 'Struct',
+          -- 'Event',
+          -- 'Operator',
+          -- 'TypeParameter',
+        },
+        winblend = 20,
       }
     end,
   }
