@@ -282,7 +282,7 @@ local function setup()
         r = { ":Rename <C-R>=expand('%:t')<cr>", "Rename", silent = false },
         D = { ":Remove<CR>", "Delete", silent = false },
         m = { ":Move <C-R>=expand('%:h')<cr>", "Move", silent = false },
-        c = { ":saveas <C-R>=expand('%')<cr>", "Copy", silent = false },
+        c = { ":Copy <C-R>=expand('%')<cr>", "Copy", silent = false },
         h = { "<cmd>Telescope oldfiles<cr>", "History" },
         s = { "<cmd>write<cr>", "Save file" },
         a = { "<cmd>silent! wall<cr>", "Save all" },
