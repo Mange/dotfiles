@@ -42,6 +42,7 @@
           - prettyping
           - procs # Modern replacement for ps(1)
           - ripgrep
+          - fd # Simple, fast and user-friendly alternative to find
 
           # Git and VCS
           - git
