@@ -7,6 +7,7 @@
 # Known types:
 #   current (default) - Uncommitted changes.
 #   branch - Changed between master and current tree.
+#   staged - Changes staged right now.
 #
 # Any unknown type specified will be passed on to rspec as an option.
 
@@ -23,8 +24,8 @@ case "$1"; in
     command+=(current)
     [[ "$#" -gt 0 ]] && shift
     ;;
-  branch)
-    command+=(branch)
+  branch | staged)
+    command+=("$1")
     shift
     ;;
   "--")
