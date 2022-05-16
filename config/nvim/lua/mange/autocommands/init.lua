@@ -31,7 +31,7 @@ if_require("autocmd-lua", function(autocmd)
       -- No visible line numbers
       {
         event = "FileType",
-        pattern = "vimwiki,markdown,text",
+        pattern = "markdown,text",
         cmd = "setlocal nonumber",
       },
     },
@@ -45,20 +45,6 @@ if_require("autocmd-lua", function(autocmd)
         event = "VimResized",
         pattern = "*",
         cmd = "wincmd =",
-      },
-    },
-  }
-
-  autocmd.augroup {
-    group = "mange_vimwiki",
-    autocmds = {
-      -- Attach my mappings to vimwiki buffers
-      {
-        event = "Filetype",
-        pattern = "vimwiki",
-        cmd = function()
-          require("mange.mappings").attach_vimwiki(0)
-        end,
       },
     },
   }

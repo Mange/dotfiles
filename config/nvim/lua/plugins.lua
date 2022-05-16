@@ -122,7 +122,6 @@ require("packer").startup(function(use)
           "man",
           "markdown",
           "text",
-          "vimwiki",
         },
         context_patterns = {
           "^if",
@@ -492,64 +491,6 @@ require("packer").startup(function(use)
         -- https://github.com/steelsojka/headwind.nvim/blob/main/lua/headwind.lua#L308
       }
     end,
-  }
-
-  ---
-  --- Vimwiki and Taskwarrior
-  ---
-  use {
-    "vimwiki/vimwiki",
-    setup = function()
-      vim.g.vimwiki_global_ext = 0
-
-      vim.g.vimwiki_key_mappings = {
-        all_maps = 1,
-        global = 0,
-        headers = 1,
-        text_objs = 1,
-        table_format = 1,
-        table_mappings = 1,
-        lists = 1,
-        links = 0, -- contains some <leader> mappings
-        html = 0,
-        mouse = 0,
-      }
-
-      vim.g.vimwiki_list = {
-        {
-          syntax = "markdown",
-          ext = ".md",
-          path = "~/Documents/Wiki/",
-          template_path = "~/Documents/Wiki/templates/",
-          html_template = "~/Documents/Wiki/html/",
-          auto_tags = 1,
-          auto_generate_links = 1,
-          auto_generate_tags = 1,
-          auto_toc = 1,
-        },
-      }
-
-      -- Not supported by taskwiki
-      -- https://github.com/tbabej/taskwiki/issues/119
-      -- vim.g.vimwiki_listsyms = " ○◐●"
-    end,
-  }
-  use {
-    "blindFS/vim-taskwarrior",
-    setup = function()
-      vim.g.taskwiki_taskrc_location = "~/.config/taskwarrior/config"
-      -- Will override my localleader unless disabled
-      -- See https://github.com/tools-life/taskwiki/issues/362
-      vim.g.taskwiki_suppress_mappings = true
-    end,
-  }
-  use {
-    "tbabej/taskwiki",
-    requires = {
-      "vimwiki/vimwiki",
-      "tbabej/vim-taskwarrior",
-    },
-    run = "pip3 install --user --upgrade -r requirements.txt",
   }
 
   ---

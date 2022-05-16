@@ -50,9 +50,13 @@
           - git-delta # Better diff tool for Git
           - hub
 
-          # Task keeping
+          # Task and note keeping
           - task # Taskwarrior
           - vit # Taskwarrior TUI
+          # A powerful knowledge base that works on top of a local folder of
+          # plain text Markdown files. WARNING: Not Free Software or Open
+          # Source.
+          - obsidian
 
           # Calculator
           - libqalculate

@@ -4,8 +4,8 @@ require("filetype").setup {
       rasi = "css.rasi",
     },
     literal = {
-      ["notes.local"] = "vimwiki",
-      [".notes.local"] = "vimwiki",
+      ["notes.local"] = "markdown",
+      [".notes.local"] = "markdown",
     },
     complex = {
       ["Dockerfile.*"] = "dockerfile",

@@ -27,23 +27,6 @@ pages:
                 echo "Aborted"
               fi
 
-          - shortcut: s
-            title: Vimwiki
-            command: open-wiki
-            mode: background
-
-          - shortcut: t
-            title: Show next 5 tasks
-            return: true
-            command: clear; task next limit:5
-            mode: wait
-
-          - shortcut: T
-            title: Start vit
-            shortcut_color: red
-            mode: exec
-            command: vit
-
           - shortcut: r
             title: Edit reminder
             mode: exec

@@ -8,14 +8,10 @@ selected_filename=$(
     finder --numeric-reversed
 )
 
-path="${wikipath}${selected_filename}"
+path="$(readlink -f "${wikipath}${selected_filename}")"
 
 if [[ -f "$path" ]]; then
-  if [[ -t 1 ]]; then
-    exec nvim "$path"
-  else
-    wezterm start -- nvim "$path"
-  fi
+  xdg-open "obsidian://$path" 2>/dev/null >/dev/null &
 else
   smart-notification \
     --urgency=critical \

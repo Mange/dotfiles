@@ -384,11 +384,6 @@ local function setup()
       ["n"] = {
         name = "Notes",
         n = { "<cmd>SplitOrFocus notes.local<cr>", "Local notes" },
-        w = { "<cmd>VimwikiTabIndex<cr>", "Wiki" },
-        ["/"] = {
-          "<cmd>Telescope find_files cwd=~/Documents/Wiki<cr>",
-          "Find wiki page",
-        },
       },
 
       --
@@ -591,60 +586,9 @@ local function attach_lsp(bufnr)
   })
 end
 
---
--- Vimwiki
---
-local function attach_vimwiki(bufnr)
-  wk_register({
-    ["<CR>"] = { "<Plug>VimwikiFollowLink", "Follow link" },
-    ["<S-CR>"] = { "<Plug>VimwikiSplitLink", "Split link" },
-    ["<BS>"] = { "<Plug>VimwikiGoBackLink", "Go back" },
-    ["<C-Space>"] = { "<Plug>VimwikiToggleListItem", "Toggle list item" },
-    ["+"] = { "<Plug>VimwikiNormalizeLink", "Normalize link" },
-    ["<LocalLeader>"] = {
-      name = "+localleader",
-      n = { "<Plug>VimwikiNextTask", "Next task" },
-      g = { "<Plug>VimwikiGoto", "Goto (new)" },
-      d = { "<Plug>VimwikiDeleteFile", "Delete current" },
-      r = { "<Plug>VimwikiRenameFile", "Rename current" },
-      l = {
-        name = "+lists",
-        d = { "<Plug>VimwikiRemoveSingleCB", "Remove checkbox" },
-        D = { "<Plug>VimwikiRemoveCBInList", "Remove nested checkboxes" },
-        n = { "<Plug>VimwikiIncrementListItem", "Increase done state" },
-        l = { "<Plug>VimwikiIncreaseLvlSingleItem", "Increase level" },
-        L = { "<Plug>VimwikiIncreaseLvlWholeItem", "Increase level whole" },
-        H = { "<Plug>VimwikiDecreaseLvlWholeItem", "Decrease level whole" },
-        h = { "<Plug>VimwikiDecreaseLvlSingleItem", "Decrease level" },
-        r = { "<Plug>VimwikiRenumberList", "Renumber list" },
-        R = { "<Plug>VimwikiRenumberAllLists", "Renumber all" },
-        x = { "<Plug>VimwikiToggleRejectedListItem", "Reject item" },
-      },
-    },
-  }, { buffer = bufnr, mode = "n" })
-
-  wk_register({
-    ["+"] = { "<Plug>VimwikiNormalizeLinkVisual", "Normalize link" },
-  }, { buffer = bufnr, mode = "v" })
-
-  map(
-    "i",
-    ">>",
-    "<C-o><Plug>VimwikiIncreaseLvlSingleItem",
-    { buffer = bufnr, noremap = false }
-  )
-  map(
-    "i",
-    "<<",
-    "<C-o><Plug>VimwikiDecreaseLvlSingleItem",
-    { buffer = bufnr, noremap = false }
-  )
-end
-
 return {
   setup = setup,
   attach_lsp = attach_lsp,
-  attach_vimwiki = attach_vimwiki,
   reload = reload_mappings,
   wk_register = wk_register,
 }

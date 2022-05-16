@@ -75,7 +75,6 @@ if_require("lspconfig", function(lspconfig)
     },
   }
   lspformat.disable { args = "markdown" }
-  lspformat.disable { args = "vimwiki" }
   lspformat.disable { args = "eruby" } -- completely breaks in most formatters
 
   -- Lua
