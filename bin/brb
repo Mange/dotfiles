@@ -1,0 +1,14 @@
+#!/bin/sh
+set -e
+
+msg="$*"
+[ -z "$msg" ] && msg="brb lol"
+
+s=0
+
+while true; do
+  s=$((s + 6))
+  clear
+  banner "$msg" | dotacat -S "$s"
+  sleep 1
+done
