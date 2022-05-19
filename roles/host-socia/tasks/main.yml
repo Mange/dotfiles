@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-tasks.json
+- block:
+    - name: Install Socia packages
+      when: ansible_os_family == "Archlinux"
+      kewlfft.aur.aur:
+        state: present
+        name:
+          - shotwell # Photo manager
+          # Moonlander keyboard
+          - zsa-wally # Keyboard flashing
+          - zsa-wally-cli # …but I'm a nerd
+          # Misc
+          # TODO: deezloader replacement
+
+    - include_tasks: grub_theme.yml
