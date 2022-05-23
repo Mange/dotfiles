@@ -5,7 +5,7 @@ xmodmap "${config_dir}/custom_keyboard"
 programmable_keyboard=no
 
 case "$(hostname)" in
-morbidus | socia)
+socia)
   programmable_keyboard=yes
   ;;
 krista) ;;
@@ -45,7 +45,7 @@ krista)
   setup_touchpad "SynPS/2 Synaptics TouchPad"
   ;;
 
-morbidus | socia) ;;
+socia) ;;
 
 *) ;;
 

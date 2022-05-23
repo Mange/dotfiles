@@ -38,7 +38,7 @@ krista)
   wm-start slack
   ;;
 
-morbidus | socia)
+socia)
   wm-start discord
   wm-start slack
 

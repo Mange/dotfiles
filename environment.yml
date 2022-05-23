@@ -33,11 +33,6 @@
 
     - { role: host-socia, tags: [system], when: 'ansible_hostname == "socia"' }
     - {
-        role: host-morbidus,
-        tags: [system],
-        when: 'ansible_hostname == "morbidus"',
-      }
-    - {
         role: host-krista,
         tags: [system],
         when: 'ansible_hostname == "krista"',
