@@ -2,6 +2,8 @@
 - block:
     - name: Install LaTeX packages
       when: ansible_os_family == "Archlinux"
+      # Nothing here is super duper required
+      ignore_errors: true
       kewlfft.aur.aur:
         state: present
         name:

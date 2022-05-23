@@ -38,7 +38,8 @@
           - mpv
           - pavucontrol # Pulseaudio settings gui
           - playerctl
-          - pulseaudio # Audio server
+          - pipewire
+          # - pulseaudio # Audio server
           - pulsemixer # Pulseaudio TUI mixer
           - spotify # A proprietary music streaming service
           - vlc

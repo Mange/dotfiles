@@ -20,7 +20,7 @@
           - rust-analyzer
           - shfmt
           - shellcheck
-          - stylua-bin
+          - stylua
           - yaml-language-server
           - bash-language-server
           - bash-completion # dependency of bash-language-server

@@ -22,7 +22,7 @@
           # Files and directories
           - fzf
           - tree
-          - vimv # Batch-rename files using Vim
+          # - vimv # Batch-rename files using Vim
           - fd # Simple, fast and user-friendly alternative to find
 
           # Docs and references
@@ -73,10 +73,8 @@
           # Misc developer tooling
           - postgresql
           - postgresql-libs
-          - jiq # interactive jq
           - jq
           - watchexec
-          - gron-bin # transforms JSON into discrete assignments to make it easier to grep.
           - parallel
           - pastel
 
@@ -94,7 +92,6 @@
 
           # Misc
           - duplicity # Backup tool
-          - tydra
 
     - name: Install workstation PIP packages
       become: true

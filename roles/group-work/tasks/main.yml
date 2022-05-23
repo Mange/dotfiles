@@ -18,8 +18,9 @@
       kewlfft.aur.aur:
         state: present
         name:
-          - toggldesktop-git
+          - toggldesktop-bin
           - google-cloud-sdk
+          - kubectl
 
     - name: Install toggl-cli
       become: true
