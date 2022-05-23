@@ -18,6 +18,9 @@
 [github]
 	user = Mange
 
+[interactive]
+	diffFilter = delta --color-only
+
 # Custom colors, pagers, etc.
 [color "branch"]
 	remote = blue
@@ -46,6 +49,7 @@
 [diff]
 	tool = vimdiff
 	compactionHeuristic = true
+	colorMoved = default
 
 [mergetool]
 	prompt = true
