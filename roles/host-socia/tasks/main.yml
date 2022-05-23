@@ -11,5 +11,3 @@
           - zsa-wally-cli # …but I'm a nerd
           # Misc
           # TODO: deezloader replacement
-
-    - include_tasks: grub_theme.yml
