@@ -175,7 +175,7 @@ if_require("lspconfig", function(lspconfig)
 
   lspconfig.graphql.setup {
     capabilities = capabilities(),
-    on_attach = on_attach,
+    on_attach = on_attach_without_formatting,
   }
 
   lspconfig.yamlls.setup {
