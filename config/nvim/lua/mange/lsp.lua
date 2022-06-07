@@ -194,7 +194,9 @@ if_require("lspconfig", function(lspconfig)
 end)
 
 if_require("rust-tools", function(rustTools)
-  rustTools.setup {}
+  rustTools.setup {
+    server = { on_attach = on_attach },
+  }
 end)
 
 if_require("null-ls", function(null_ls)
