@@ -3,3 +3,6 @@ dependencies:
   - role: group-laptop
   - role: group-work
   - role: system76
+  # Krista uses encrypted drives, so you are already prompted for a password on
+  # boot.
+  - role: autologin

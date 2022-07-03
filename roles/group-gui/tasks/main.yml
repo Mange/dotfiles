@@ -7,9 +7,6 @@
         state: present
         name:
           # Graphical environment
-          - lightdm
-          - lightdm-gtk-greeter
-          - lightdm-gtk-greeter-settings
           - xorg
           - adapta-gtk-theme # gtk theme
           # GUI tools
@@ -128,15 +125,6 @@
         group: root
         mode: u=rwX,g=rX,o=rX
 
-    - name: Install lightdm config
-      become: true
-      copy:
-        src: lightdm-gtk-greeter.conf
-        dest: /etc/lightdm/lightdm-gtk-greeter.conf
-        group: root
-        owner: root
-        mode: u=rw,g=r,o=r
-
     - name: Install udiskie polkit config
       become: true
       copy:
@@ -154,7 +142,6 @@
         enabled: true
         state: started
       loop:
-        - lightdm
         - pcscd # smartcard daemon, for Yubikey, etc.
 
     - name: "Enable user services"

@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-tasks.json
+- tags: autologin
+  block:
+    - name: Install systemd units
+      become: true
+      copy:
+        src: systemd/
+        dest: /etc/systemd/system/
+        group: root
+        owner: root
+        mode: u=rw,g=r,o=r
+      register: systemd_units
+
+    - name: Reload systemd
+      become: true
+      when: not inside_docker
+      systemd:
+        daemon_reload: true
