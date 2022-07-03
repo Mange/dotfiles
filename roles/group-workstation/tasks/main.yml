@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-tasks.json
-- block:
+- tags: group-workstation
+  block:
     - name: Add mange to video and input groups
       become: true
       user:

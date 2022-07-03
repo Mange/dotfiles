@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-tasks.json
-- block:
+- tags: dockers
+  block:
     - when: ansible_os_family == "Archlinux"
       block:
         - name: Install docker (Arch)

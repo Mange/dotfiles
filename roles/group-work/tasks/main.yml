@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-tasks.json
-- block:
+- tags: group-work
+  block:
     - name: Install Work packages
       when: ansible_os_family == "Archlinux"
       kewlfft.aur.aur:

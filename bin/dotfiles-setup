@@ -14,8 +14,8 @@ Examples:
   dotfiles setup -t dotfiles
     Only setup actual dotfiles, don't do most system stuff.
 
-  dotfiles setup --skip-tags base
-    Setup dotfiles and machine-specific stuff only.
+  dotfiles setup --skip-tags install-updates
+    Skip installing updates, where possible to skip.
 EOF
   exit 0
 fi

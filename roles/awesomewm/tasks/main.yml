@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-tasks.json
-- block:
+- tags: awesomewm
+  block:
     - name: Install AwesomeWM and dependencies
       when: ansible_os_family == "Archlinux"
       kewlfft.aur.aur:

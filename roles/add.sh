@@ -14,7 +14,8 @@ group-* | host-*)
   mkdir -pv "$name/tasks"
   cat >"$name/tasks/main.yml" <<EOF
 # yaml-language-server: \$schema=https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-tasks.json
-- block:
+- tags: $name
+  block:
 EOF
   ;;
 esac

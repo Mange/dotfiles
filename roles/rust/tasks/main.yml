@@ -1,5 +1,7 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-tasks.json
-- block:
+- name: Rust
+  tags: rust
+  block:
     - name: Install rustup
       become: true
       package:
@@ -24,4 +26,8 @@
         cargo install cargo-update
         cargo install cargo-edit
         cargo install cargo-watch
+
+    - name: Installing Rust updates
+      tags: install-updates
+      shell: |
         cargo install-update --all

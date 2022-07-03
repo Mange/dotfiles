@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-tasks.json
-- block:
+- tags: group-base
+  block:
     - name: Configure pacman
       become: true
       lineinfile:
@@ -43,6 +44,7 @@
         state: present
 
     - name: Upgrade pacman
+      tags: install-updates
       become: true
       pacman:
         update_cache: false
