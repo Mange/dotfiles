@@ -8,8 +8,12 @@ vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
   }
 )
 
-local function capabilities()
+local function capabilities(func)
   local caps = vim.lsp.protocol.make_client_capabilities()
+
+  if func then
+    caps = func(caps)
+  end
 
   if_require("cmp_nvim_lsp", function(cmp)
     return cmp.update_capabilities(caps)
@@ -159,7 +163,10 @@ if_require("lspconfig", function(lspconfig)
   }
 
   lspconfig.ccls.setup {
-    capabilities = capabilities(),
+    capabilities = capabilities(function(caps)
+      caps.offsetEncoding = { "utf-16" }
+      return caps
+    end),
     on_attach = on_attach,
   }
 
