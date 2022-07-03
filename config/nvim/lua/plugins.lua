@@ -389,13 +389,12 @@ require("packer").startup(function(use)
   -- Snippets collection. Might replace with my own later when I have time.
   use "honza/vim-snippets"
 
-  -- Use when first setting up your device
-  use {
-    "github/copilot.vim",
-    config = function()
-      require "mange.copilot"
-    end,
-  }
+  -- use {
+  --   "github/copilot.vim",
+  --   config = function()
+  --     require "mange.copilot"
+  --   end,
+  -- }
 
   use {
     "hrsh7th/nvim-cmp",
