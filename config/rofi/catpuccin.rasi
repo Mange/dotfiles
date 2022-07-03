@@ -5,6 +5,7 @@
   border-col: #1E1D2F77;
   selected-col: #1E1D2F;
   blue: #7aa2f7;
+  blue-transparent: #7aa2f733;
   fg-col: #D9E0EE;
   fg-col2: #F28FAD;
   grey: #D9E0EE;
@@ -30,7 +31,27 @@ window {
 
 mainbox {
   background-color: @transparent;
-  children: [mode-switcher, inputbar, message, listview];
+  children: [mode-switcher, message, inputbar, listview];
+}
+
+mode-switcher {
+  spacing: 0;
+}
+
+button selected {
+  background-color: @blue;
+  text-color: @selected-col;
+}
+
+message {
+  background-color: @blue-transparent;
+  padding: 16px 0px 20px;
+}
+textbox {
+  /* left-padding = 25px + 5px. 25px is the icon size. */
+  padding: 5px 5px 5px 30px;
+  background-color: @transparent;
+  text-color: @fg-col;
 }
 
 inputbar {
@@ -64,7 +85,7 @@ listview {
   border: 0px 0px 0px;
   padding: 6px 0px 0px;
   margin: 10px 0px 0px 20px;
-  columns: 2;
+  columns: 1;
   background-color: @transparent;
 }
 
@@ -83,19 +104,10 @@ element selected {
   text-color: @fg-col2  ;
 }
 
-mode-switcher {
-  spacing: 0;
-}
-
 button {
   padding: 10px;
   background-color: @transparent;
   text-color: @grey;
   vertical-align: 0.5;
   horizontal-align: 0.5;
-}
-
-button selected {
-  background-color: @blue;
-  text-color: @selected-col;
 }
