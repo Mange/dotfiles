@@ -1,5 +1,5 @@
 #!/bin/sh
-# Must be in POSIX sh mode, not in Bash, since it is sources inside a /bin/sh
+# Must be in POSIX sh mode, not in Bash, since it is sourced inside a /bin/sh
 # process.
 #
 
