@@ -469,28 +469,28 @@ require("packer").startup(function(use)
   --- HTML, CSS, JS, TS, Webdev, etc.
   ---
   -- Automatically sort Tailwindcss classes.
-  use {
-    "steelsojka/headwind.nvim",
-    config = function()
-      require("headwind").setup {
-        -- Using treesitter is a great idea, but it breaks in CSS using Postcss
-        -- (@apply) and in ERB files (since it does not have an eruby
-        -- treesitter config as of yet).
-        -- Better to emulate the old stupid OG headwind way with a regexp for now.
-        use_treesitter = false,
-        class_regex = {
-          eruby = {
-            "class%s*[=:]%s*['\"]([_a-zA-Z0-9%s%-:/]+)['\"]",
-            "class_names%s*[=:]%s*['\"]([_a-zA-Z0-9%s%-:/]+)['\"]",
-            "class_name%s*[=:]%s*['\"]([_a-zA-Z0-9%s%-:/]+)['\"]",
-            "classes%s*[=:]%s*['\"]([_a-zA-Z0-9%s%-:/]+)['\"]",
-          },
-        },
-        -- TODO: Fork upstream to allow multiple places to look for the file in.
-        -- https://github.com/steelsojka/headwind.nvim/blob/main/lua/headwind.lua#L308
-      }
-    end,
-  }
+  -- use {
+  --   "steelsojka/headwind.nvim",
+  --   config = function()
+  --     require("headwind").setup {
+  --       -- Using treesitter is a great idea, but it breaks in CSS using Postcss
+  --       -- (@apply) and in ERB files (since it does not have an eruby
+  --       -- treesitter config as of yet).
+  --       -- Better to emulate the old stupid OG headwind way with a regexp for now.
+  --       use_treesitter = false,
+  --       class_regex = {
+  --         eruby = {
+  --           "class%s*[=:]%s*['\"]([_a-zA-Z0-9%s%-:/]+)['\"]",
+  --           "class_names%s*[=:]%s*['\"]([_a-zA-Z0-9%s%-:/]+)['\"]",
+  --           "class_name%s*[=:]%s*['\"]([_a-zA-Z0-9%s%-:/]+)['\"]",
+  --           "classes%s*[=:]%s*['\"]([_a-zA-Z0-9%s%-:/]+)['\"]",
+  --         },
+  --       },
+  --       -- TODO: Fork upstream to allow multiple places to look for the file in.
+  --       -- https://github.com/steelsojka/headwind.nvim/blob/main/lua/headwind.lua#L308
+  --     }
+  --   end,
+  -- }
 
   ---
   --- Others
