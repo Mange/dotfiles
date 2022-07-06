@@ -19,7 +19,7 @@
       kewlfft.aur.aur:
         state: present
         name:
-          - toggldesktop-bin
+          - toggldesktop
           - google-cloud-sdk
           - kubectl
 
