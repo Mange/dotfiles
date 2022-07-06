@@ -3,3 +3,4 @@ dependencies:
   - role: group-base
   - role: group-gui
   - role: docker
+  - role: tailscale
