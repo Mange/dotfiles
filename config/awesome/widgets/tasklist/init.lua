@@ -133,21 +133,26 @@ local function list_update(w, buttons, label, data, objects)
       tbm:set_margins(0)
     else
       -- Truncate when title is too long
-      local text_only = text:match ">(.-)<"
-      if utf8.len(text_only) > 24 then
+      local text_only = gears.string.xml_unescape(text:match ">(.-)<")
+      if utf8.len(text_only) > 30 then
         text = text:gsub(
           ">(.-)<",
           ">"
-            .. string.sub(text_only, 1, utf8.offset(text_only, 22) - 1)
-            .. "...<"
+            .. gears.string.xml_escape(
+              string.sub(text_only, 1, utf8.offset(text_only, 30) - 1)
+            )
+            .. "…<"
         )
         tt:set_text(text_only)
         tt:add_to_object(tb)
       else
         tt:remove_from_object(tb)
       end
+
       if not tb:set_markup_silently(text) then
-        tb:set_markup "<i>&lt;Invalid text&gt;</i>"
+        if not tb:set_markup_silently(gears.string.xml_escape(text)) then
+          tb:set_markup "<i>&lt;Invalid text&gt;</i>"
+        end
       end
     end
     bgb:set_bg(bg)
