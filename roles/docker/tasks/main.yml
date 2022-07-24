@@ -11,15 +11,6 @@
               - docker-credential-secretservice
               - docker-compose
 
-    - when: is_centos
-      block:
-        - name: Install docker (Centos)
-          become: true
-          package:
-            state: present
-            name:
-              - docker-ce
-
     - name: Ensure docker group
       become: true
       group:

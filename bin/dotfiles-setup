@@ -38,20 +38,6 @@ setup_arch() {
   fi
 }
 
-setup_centos() {
-  ANSIBLE_PLAYBOOK="$HOME/.local/bin/ansible-playbook"
-  ANSIBLE_GALAXY="$HOME/.local/bin/ansible-galaxy"
-
-  if missing_command pip3; then
-    sudo yum install --assumeyes python3
-    sudo pip3 install --upgrade pip
-  fi
-
-  if [ ! -f "$ANSIBLE_PLAYBOOK" ]; then
-    pip3 install ansible
-  fi
-}
-
 case "$(uname -s)" in
 Linux)
   if [ -f /etc/os-release ]; then
@@ -59,9 +45,6 @@ Linux)
     case "$dist" in
     arch*)
       setup_arch
-      ;;
-    clearos | centos)
-      setup_centos
       ;;
     *)
       echo "Not a supported dist: $dist"

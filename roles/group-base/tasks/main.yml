@@ -6,13 +6,7 @@
       tags:
         - arch
 
-    - include_tasks: centos.yml
-      when: is_centos
-      tags:
-        - centos
-
     - name: Install base packages (all)
-      # when: is_centos
       become: true
       package:
         state: present
@@ -65,7 +59,7 @@
       loop:
         - sshd
 
-    - when: not inside_docker and not is_centos
+    - when: not inside_docker
       block:
         - name: Check timedatectl
           command: timedatectl show

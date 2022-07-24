@@ -13,7 +13,6 @@ Test the setup of <platform> using Docker.
 
 Known platforms:
   - arch
-  - centos7
 
 Options:
   --rebuild
@@ -40,7 +39,7 @@ while [ "$#" -gt 0 ]; do
     hostname="$1"
     shift
     ;;
-  arch | centos7)
+  arch)
     platform="$1"
     shift
     ;;
