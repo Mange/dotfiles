@@ -175,7 +175,7 @@ require("packer").startup(function(use)
   }
 
   -- Colortheme
-  use { "catppuccin/nvim", as = "catppuccin" }
+  use { "catppuccin/nvim", as = "catppuccin", run = ":CatppuccinCompile" }
 
   -- Show keybinds while waiting for the next key. Allows more complicated
   -- keybinds to be remembered.

@@ -2,40 +2,14 @@ local catppuccin = require "catppuccin"
 
 local theme = {}
 
-local function theme_overrides()
-  -- Highlight line number instead of showing a sign on lines with diagnostics
-  vim.cmd [[
-    highlight DiagnosticLineNrError guibg=#51202A guifg=#FF0000 gui=bold
-    highlight DiagnosticLineNrWarn guibg=#51412A guifg=#FFA500 gui=bold
-    highlight DiagnosticLineNrInfo guibg=#1E535D guifg=#00FFFF gui=bold
-    highlight DiagnosticLineNrHint guibg=#1E205D guifg=#0000FF gui=bold
-
-    sign define DiagnosticSignError text= texthl=DiagnosticSignError linehl= numhl=DiagnosticLineNrError
-    sign define DiagnosticSignWarn text= texthl=DiagnosticSignWarn linehl= numhl=DiagnosticLineNrWarn
-    sign define DiagnosticSignInfo text= texthl=DiagnosticSignInfo linehl= numhl=DiagnosticLineNrInfo
-    sign define DiagnosticSignHint text= texthl=DiagnosticSignHint linehl= numhl=DiagnosticLineNrHint
-  ]]
-
-  -- Use background colors to highlight in vimdiff
-  vim.cmd [[
-    highlight DiffAdd guifg=NONE guibg=#384047
-    highlight DiffChange guifg=NONE guibg=#463f47
-
-    " Changed text inside of a line (DiffChange)
-    highlight DiffText guifg=#FAE3B0 guibg=NONE gui=bold
-
-    " DiffDelete uses a conceal character that spans the entire line. Highlight
-    " that character instead of the background behind it.
-    highlight DiffDelete guifg=#F28FAD guibg=NONE
-  ]]
-end
-
 function theme.reload()
   require("plenary.reload").reload_module "mange.theme"
   require("mange.theme").setup()
 end
 function theme.setup()
   vim.o.termguicolors = true
+
+  local colors = require("catppuccin.palettes").get_palette()
 
   vim.diagnostic.config {
     -- virtual_text = {
@@ -51,47 +25,82 @@ function theme.setup()
     severity_sort = true,
     update_in_insert = false,
   }
+  local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+  for type, icon in pairs(signs) do
+    local hl = "DiagnosticSign" .. type
+    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+  end
 
+  vim.g.catppuccin_flavour = "mocha"
   catppuccin.setup {
+    dim_inactive = {
+      enabled = false,
+      shade = "dark",
+      percentage = 0.15,
+    },
     transparent_background = true,
     term_colors = true,
+    compile = {
+      enabled = false,
+      path = vim.fn.stdpath "cache" .. "/catppuccin",
+    },
     styles = {
-      comments = "NONE",
-      functions = "NONE",
-      keywords = "bold,italic",
-      strings = "NONE",
-      variables = "NONE",
+      comments = {},
+      conditionals = {},
+      loops = {},
+      functions = {},
+      keywords = { "bold", "italic" },
+      strings = {},
+      variables = {},
+      numbers = {},
+      booleans = {},
+      properties = {},
+      types = {},
+      operators = {},
     },
     integrations = {
       treesitter = true,
       native_lsp = {
         enabled = true,
         virtual_text = {
-          errors = "NONE",
-          hints = "NONE",
-          warnings = "NONE",
-          information = "NONE",
+          errors = {},
+          hints = {},
+          warnings = {},
+          information = {},
         },
         underlines = {
-          errors = "underline",
-          hints = "underline",
-          warnings = "underline",
-          information = "underline",
+          errors = { "underline" },
+          hints = {},
+          warnings = { "underline" },
+          information = {},
         },
       },
-      lsp_trouble = false,
+      coc_nvim = false,
+      lsp_trouble = true,
+      cmp = true,
       lsp_saga = false,
       gitgutter = false,
       gitsigns = true,
+      leap = false,
       telescope = true,
       nvimtree = {
         enabled = false,
-        show_root = false,
+        show_root = true,
+        transparent_panel = false,
+      },
+      neotree = {
+        enabled = false,
+        show_root = true,
+        transparent_panel = false,
+      },
+      dap = {
+        enabled = false,
+        enable_ui = false,
       },
       which_key = true,
       indent_blankline = {
         enabled = true,
-        colored_indent_levels = true,
+        colored_indent_levels = false,
       },
       dashboard = true,
       neogit = true,
@@ -103,12 +112,29 @@ function theme.setup()
       lightspeed = false,
       ts_rainbow = false,
       hop = false,
+      notify = true,
+      telekasten = false,
+      symbols_outline = true,
+      mini = false,
+      aerial = false,
+      vimwiki = false,
+      beacon = false,
+    },
+    color_overrides = {},
+    custom_highlights = {
+      DiffAdd = { bg = "#384047" },
+      DiffChange = { bg = "#463f47" },
+
+      -- Changed text inside of a line (DiffChange)
+      DiffText = { fg = "#FAE3B0", style = { "bold" } },
+
+      -- DiffDelete uses a conceal character that spans the entire line. Highlight
+      -- that character instead of the background behind it.
+      DiffDelete = { fg = "#F28FAD" },
     },
   }
 
-  vim.cmd [[silent! colorscheme catppuccin]]
-
-  theme_overrides()
+  vim.cmd [[colorscheme catppuccin]]
 end
 
 return theme
