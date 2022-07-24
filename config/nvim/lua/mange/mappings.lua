@@ -554,7 +554,10 @@ local function attach_lsp(bufnr)
     },
     ["gd"] = {
       function()
-        require("mange.utils").show_diagnostic_float { force = true }
+        require("mange.utils").show_diagnostic_float {
+          force = true,
+          scope = "line",
+        }
       end,
       "Show diagnostics on line",
     },

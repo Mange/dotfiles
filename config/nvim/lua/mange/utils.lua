@@ -43,14 +43,17 @@ function utils.show_signature_help(options)
 end
 
 function utils.show_diagnostic_float(options)
-  local opts = options or {}
-  local force = opts.force or false
+  local opts = vim.tbl_extend("force", {
+    force = false,
+    source = "always",
+    scope = "cursor",
+  }, options or {})
 
-  if force then
-    vim.diagnostic.open_float()
+  if opts.force then
+    vim.diagnostic.open_float(opts)
   else
     utils.unless_floating_window(function()
-      vim.diagnostic.open_float { focus = false }
+      vim.diagnostic.open_float(opts)
     end)
   end
 end
