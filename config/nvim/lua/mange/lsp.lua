@@ -1,9 +1,13 @@
 local lspformat = require "lsp-format"
 
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+  border = "rounded",
+  focus = false,
+})
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
   vim.lsp.handlers.signature_help,
   {
-    border = "single",
+    border = "rounded",
     focus = false,
   }
 )

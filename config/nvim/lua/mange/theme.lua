@@ -21,6 +21,7 @@ function theme.setup()
     underline = true,
     float = {
       source = "always",
+      border = "rounded",
     },
     severity_sort = true,
     update_in_insert = false,
