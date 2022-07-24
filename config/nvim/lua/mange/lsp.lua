@@ -207,7 +207,24 @@ end)
 
 if_require("rust-tools", function(rustTools)
   rustTools.setup {
-    server = { on_attach = on_attach },
+    server = {
+      on_attach = on_attach,
+      settings = {
+        ["rust-analyzer"] = {
+          checkOnSave = {
+            allFeatures = true,
+            overrideCommand = {
+              "cargo",
+              "clippy",
+              "--workspace",
+              "--message-format=json",
+              "--all-targets",
+              "--all-features",
+            },
+          },
+        },
+      },
+    },
   }
 end)
 
