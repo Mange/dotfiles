@@ -22,26 +22,31 @@ local function capabilities(func)
   end)
 end
 
-local function unique_autocmd(name, cmd)
-  vim.cmd("augroup Lsp" .. name)
-  vim.cmd "  autocmd! * <buffer>"
-  vim.cmd(cmd)
-  vim.cmd "augroup END"
+local function buffer_autocmd(bufnr, group_name, event, callback)
+  local group = vim.api.nvim_create_augroup(group_name, { clear = false })
+  vim.api.nvim_clear_autocmds {
+    group = group,
+    event = event,
+    buffer = bufnr,
+  }
+  vim.api.nvim_create_autocmd(event, {
+    group = group,
+    buffer = bufnr,
+    callback = callback,
+  })
 end
 
 local function on_attach_without_formatting(client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
-  unique_autocmd(
-    "DiagnosticHover",
-    "autocmd CursorHold <buffer> lua require('mange.utils').show_diagnostic_float()"
-  )
+  buffer_autocmd(bufnr, "LspDiagnosticHover", "CursorHold", function()
+    require("mange.utils").show_diagnostic_float()
+  end)
 
   if client.server_capabilities.signatureHelpProvider then
-    unique_autocmd(
-      "SignatureHelp",
-      "autocmd CursorHoldI <buffer> lua require('mange.utils').show_signature_help()"
-    )
+    buffer_autocmd(bufnr, "LspSignatureHelp", "CursorHoldI", function()
+      require("mange.utils").show_signature_help()
+    end)
   end
 
   if client.server_capabilities.documentHighlightProvider then

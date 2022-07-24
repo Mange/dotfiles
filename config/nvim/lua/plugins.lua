@@ -23,6 +23,8 @@ require("packer").startup(function(use)
   use "tpope/vim-abolish" -- Smart S/re/repl/
   use "tommcdo/vim-exchange"
 
+  use { "antoinemadec/FixCursorHold.nvim" }
+
   use {
     "nathom/filetype.nvim",
     config = function()
