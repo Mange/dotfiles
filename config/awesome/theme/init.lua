@@ -74,7 +74,7 @@ theme.border_radius = dpi(9)
 
 -- Decorations
 theme.useless_gap = 8
-theme.gap_single_client = false
+theme.gap_single_client = true
 theme.client_shape_rectangle = gears.shape.rectangle
 theme.client_shape_rounded = function(cr, width, height)
   gears.shape.rounded_rect(cr, width, height, dpi(9))
