@@ -271,9 +271,10 @@ require "daemons"
 --
 -- Signal function to execute when a new client appears.
 client.connect_signal("manage", function(c)
-  -- Set the windows at the slave,
-  -- i.e. put it at the end of others instead of setting it master.
-  -- if not awesome.startup then awful.client.setslave(c) end
+  -- New windows should be made into slaves, not the new master.
+  if not awesome.startup then
+    awful.client.setslave(c)
+  end
 
   -- Some clients, most notably Spotify, will not set a class at startup and
   -- will instead assign it later. Detect when new clients are missing a
