@@ -25,6 +25,10 @@ export GDK_SCALE=1
 echo Xft.dpi: 96 | xrdb -merge
 xrandr --dpi 96
 
+# Set icon theme
+# (Custom env variable I use in some scripts)
+export ICON_THEME_NAME=Tela
+
 # Try to fix the screen setup before starting WM
 # This might help set sane defaults for programs starting up. Generally, I
 # might have a single HiDPI display connected but it might be turned off. That

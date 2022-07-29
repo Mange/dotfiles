@@ -1,0 +1,245 @@
+#!/bin/bash
+shopt -s extglob
+set -e
+
+usage() {
+  cat <<EOF
+    Usage: $0 [options] APP_NAME
+
+    Looks for an icon file for "app_name" and prints the path to the icon file
+    to stdout if one is found. If none is found, then nothing is printed and
+    the command exits with status code 3.
+
+    Options:
+      -t THEME, --theme THEME (default: \$ICON_THEME_NAME, "hicolor")
+        The name of the icon theme to use.
+
+      -d, --debug
+        Show debug output on STDERR.
+
+    Example:
+      $0 -t Tela spotify
+EOF
+}
+
+if [[ $# -eq 0 ]]; then
+  usage >&2
+  exit 1
+fi
+
+if ! TEMP=$(
+  getopt \
+    -o 't:d' \
+    --long 'theme::,debug,help' \
+    -- "$@"
+); then
+  echo "Failed to parse arguments…" >&2
+  exit 1
+fi
+eval set -- "$TEMP"
+unset TEMP
+
+DEBUG=0
+THEME_NAME="${ICON_THEME_NAME:-hicolor}"
+
+while true; do
+  case "$1" in
+  '--help')
+    shift
+    usage
+    exit 0
+    ;;
+  '-d' | '--debug')
+    shift
+    DEBUG=1
+    ;;
+  '-t' | '--theme')
+    shift
+    THEME_NAME="$1"
+    shift
+    ;;
+  '--')
+    shift
+    break
+    ;;
+  *)
+    echo "Unknown option $1" >&2
+    exit 1
+    ;;
+  esac
+done
+
+APP_NAME="$1"
+
+debug_message() {
+  if [[ "$DEBUG" = "1" ]]; then
+    echo "$@" >&2
+  fi
+}
+
+# Look for it in all the usual places.
+# https://specifications.freedesktop.org/icon-theme-spec/icon-theme-spec-latest.html
+EXTENSIONS=(png svg xpm)
+
+# https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
+if [[ -z "$XDG_DATA_DIRS" ]]; then
+  XDG_DATA_DIRS="/usr/local/share/:/usr/share/"
+fi
+IFS=":" read -r -a xdg_data_dirs <<<"$XDG_DATA_DIRS"
+
+LOCATIONS=()
+
+add_location() {
+  # Subsitute "//", "///", "////", etc. with "/"
+  # Hard to read with escaping but here's what's written:
+  # ${1//search/replace} - // mode meaning "all matches" of "search"
+  # search = "/+(/)" = same as regexp "//+"
+  # replace = "/"
+  # search must have all "/" escaped to not stop searching atom
+  # (requires extglob to be enabled)
+  local path="${1//\/\///}"
+  if [[ -d "$path" ]]; then
+    LOCATIONS+=("$path")
+  fi
+}
+
+add_location "$HOME/.icons"
+for data_dir in "${xdg_data_dirs[@]}"; do
+  add_location "$data_dir/icons"
+done
+add_location "/usr/share/pixmaps"
+
+# find_theme_index(theme_name)
+find_theme_index() {
+  local name="$1"
+  for dir in "${LOCATIONS[@]}"; do
+    if [[ -f "$dir/$name/index.theme" ]]; then
+      echo "$dir/$name/index.theme"
+      return
+    fi
+  done
+}
+
+# theme_directories(index_file, ref directories)
+# writes directories inside index_file to directories reference array variable.
+theme_directories() {
+  local index_file="$1"
+  local -n directories="$2"
+
+  local setting
+  setting=$(grep -E "Directories ?=" "$index_file" | cut -d "=" -f 2)
+
+  if [[ -z "$setting" ]]; then
+    echo "Theme file $index_file did not have any Directories= statement!" >&2
+    exit 1
+  fi
+
+  # shellcheck disable=SC2034
+  IFS="," read -r -a directories <<<"$setting"
+}
+
+# theme_parent(index_file)
+theme_parent() {
+  local index_file="$1"
+  local setting
+  if setting=$(grep -E "Inherits ?=" "$index_file" | cut -d "=" -f 2); then
+    if [[ -n "$setting" ]]; then
+      echo "$setting"
+    fi
+  fi
+}
+
+look_in_dir() {
+  local dir="$1"
+
+  for ext in "${EXTENSIONS[@]}"; do
+    path="${dir}/${APP_NAME}.${ext}"
+    if [[ -f "${path}" ]]; then
+      echo "$path"
+      return 0
+    fi
+  done
+
+  return 1
+}
+
+# look_in_theme(index_file)
+look_in_theme() {
+  local index_file="$1"
+  local match
+
+  if [[ -n "$index_file" ]]; then
+    local theme_path
+    theme_path="$(dirname "$index_file")"
+
+    local -a dirs=()
+    theme_directories "$index_file" dirs
+    for dir in "${dirs[@]}"; do
+      local directory="$theme_path/$dir"
+      if match=$(look_in_dir "$directory"); then
+        echo "$match"
+        return 0
+      else
+        debug_message "No match in ${directory}"
+      fi
+    done
+  fi
+
+  debug_message "No match in theme ${theme_path}"
+  return 1
+}
+
+find_icon_in_theme() {
+  local theme="$1"
+  local index_file
+  local icon
+
+  while true; do
+    index_file="$(find_theme_index "$theme")"
+    if [[ -z "$index_file" ]] || [[ ! -f "$index_file" ]]; then
+      break
+    fi
+
+    debug_message ">> theme $theme"
+    if icon=$(look_in_theme "$index_file"); then
+      echo "$icon"
+      exit 0
+    fi
+
+    # Look in parent theme
+    theme="$(theme_parent "$index_file")"
+    if [[ -z "$theme" ]]; then
+      debug_message "Theme had no parent"
+      break
+    else
+      debug_message "Theme parent: $theme"
+    fi
+  done
+
+  return 1
+}
+
+icon_lookup() {
+  local match
+
+  debug_message "Looking at theme $THEME_NAME"
+  if match=$(find_icon_in_theme "$THEME_NAME"); then
+    echo "$match"
+    exit 0
+  fi
+
+  debug_message "Not found in theme, looking for themeless icon instead"
+
+  for location in "${LOCATIONS[@]}"; do
+    debug_message "Looking in ${location}"
+    if match=$(look_in_dir "$location"); then
+      echo "$match"
+      exit 0
+    fi
+  done
+
+  debug_message "No icon found at all."
+  exit 3
+}
+
+icon_lookup
