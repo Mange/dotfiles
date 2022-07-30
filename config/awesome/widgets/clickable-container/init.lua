@@ -18,7 +18,8 @@ local clickable_container = function(widget, options)
     local wibox = mouse.current_wibox
     if wibox then
       old_cursor, old_wibox = wibox.cursor, wibox
-      wibox.cursor = "hand1"
+      -- cursor names: https://awesomewm.org/doc/api/libraries/root.html#cursor
+      wibox.cursor = "hand2" -- pointing hand
     end
     on_mouse_enter()
   end)
