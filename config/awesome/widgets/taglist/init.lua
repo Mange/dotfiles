@@ -87,7 +87,9 @@ local function list_update(w, buttons, label, data, objects)
       l = wibox.layout.fixed.horizontal()
       bg_clickable = clickable_container(nil, {
         on_mouse_enter = function()
-          bling_tag_preview_show(tag, tag.screen)
+          if #tag:clients() >= 1 then
+            bling_tag_preview_show(tag, tag.screen)
+          end
         end,
         on_mouse_leave = function()
           bling_tag_preview_hide(tag.screen)
