@@ -2,8 +2,9 @@ local screen_layout = require "configuration.screens.layout"
 local awful = require "awful"
 local sharedtags = require "sharedtags"
 local icons = require "theme.icons"
+local bling = require "vendor.bling"
 
-local default_layout = awful.layout.suit.tile
+local default_layout = bling.layout.centered
 
 local function tagdef(tag_definition)
   -- Find screen it should be on
@@ -34,6 +35,7 @@ local tags = sharedtags {
     short_name = "CODE",
     icon = icons.text_editor,
     icon_text = "",
+    layout = awful.layout.suit.tile,
   },
   tagdef {
     name = "Browse",
@@ -48,6 +50,7 @@ local tags = sharedtags {
     icon = icons.terminal,
     icon_text = "",
     screen_type = "comms",
+    layout = awful.layout.fair,
   },
   tagdef {
     name = "Mail",

@@ -2,10 +2,12 @@ local gears = require "gears"
 local awful = require "awful"
 local beautiful = require "beautiful"
 local hotkeys_popup = require "awful.hotkeys_popup"
+local bling = require "vendor.bling"
 
 local constants = require "module.constants"
 local actions = require "actions"
 local which_keys = require "module.which_keys"
+local wk = which_keys.key
 local media_mode = require "media_mode"
 
 -- Settings
@@ -29,10 +31,10 @@ keys.modkey = modkey
 
 keys.awesome_chord = which_keys.new_chord("Awesome", {
   keybindings = {
-    which_keys.key("w", "window-select", actions.select_window()),
-    which_keys.key("e", "emoji-selector", actions.emoji_selector()),
-    which_keys.key("P", "passwords", actions.passwords_menu()),
-    which_keys.key(
+    wk("w", "window-select", actions.select_window()),
+    wk("e", "emoji-selector", actions.emoji_selector()),
+    wk("P", "passwords", actions.passwords_menu()),
+    wk(
       "m",
       "+media",
       media_mode.enter,
@@ -40,32 +42,32 @@ keys.awesome_chord = which_keys.new_chord("Awesome", {
     ),
 
     which_keys.key_nested("a", "awesome", {
-      which_keys.key("r", "restart", awesome.restart),
-      which_keys.key("q", "quit/logout", actions.log_out()),
-      which_keys.key(
+      wk("r", "restart", awesome.restart),
+      wk("q", "quit/logout", actions.log_out()),
+      wk(
         "e",
         "edit-config",
         actions.edit_file(gears.filesystem.get_configuration_dir() .. "rc.lua")
       ),
-      which_keys.key(
+      wk(
         "k",
         "edit-keys",
         actions.edit_file(
           gears.filesystem.get_configuration_dir() .. "keys.lua"
         )
       ),
-      -- TODO -- which_keys.key("a", "toggle-aesthetics-mode", function() end),
+      -- TODO -- wk("a", "toggle-aesthetics-mode", function() end),
     }),
 
     which_keys.key_nested("t", "toggle", {
-      which_keys.key("d", "calendar-popup", actions.toggle_calendar_popup()),
-      which_keys.key("c", "control-center", actions.toggle_control_center()),
-      which_keys.key("s", "systray", actions.toggle_systray()),
-      which_keys.key("f", "toggle-focus-mode", actions.toggle_focus_tag()),
+      wk("d", "calendar-popup", actions.toggle_calendar_popup()),
+      wk("c", "control-center", actions.toggle_control_center()),
+      wk("s", "systray", actions.toggle_systray()),
+      wk("f", "toggle-focus-mode", actions.toggle_focus_tag()),
     }),
 
     which_keys.key_nested("p", "power", {
-      which_keys.key(
+      wk(
         "s",
         "suspend",
         actions.spawn {
@@ -74,7 +76,7 @@ keys.awesome_chord = which_keys.new_chord("Awesome", {
           "udiskie-umount --all && systemctl suspend-then-hibernate",
         }
       ),
-      which_keys.key(
+      wk(
         "h",
         "hibernate",
         actions.spawn {
@@ -83,49 +85,37 @@ keys.awesome_chord = which_keys.new_chord("Awesome", {
           "udiskie-umount --all && systemctl hibernate",
         }
       ),
-      which_keys.key("R", "reboot", actions.log_out("reboot", "--force")),
-      which_keys.key("Q", "power-off", actions.log_out("poweroff", "--force")),
-      which_keys.key("l", "log-out", actions.log_out("logout", "--force")),
+      wk("R", "reboot", actions.log_out("reboot", "--force")),
+      wk("Q", "power-off", actions.log_out("poweroff", "--force")),
+      wk("l", "log-out", actions.log_out("logout", "--force")),
     }),
 
     which_keys.key_nested("o", "open", {
-      which_keys.key("w", "wiki", actions.spawn "open-wiki"),
-      which_keys.key("p", "project", actions.spawn "open-project"),
-      which_keys.key("d", "dotfile", actions.spawn { "dotfiles", "edit" }),
+      wk("w", "wiki", actions.spawn "open-wiki"),
+      wk("p", "project", actions.spawn "open-project"),
+      wk("d", "dotfile", actions.spawn { "dotfiles", "edit" }),
     }),
 
     which_keys.key_nested("c", "client", {
-      which_keys.key(
-        "r",
-        "restore",
-        actions.on_focused_client(actions.client_restore)
-      ),
-      which_keys.key(
-        "n",
-        "minimize",
-        actions.on_focused_client(actions.client_minimize)
-      ),
-      which_keys.key(
+      wk("r", "restore", actions.on_focused_client(actions.client_restore)),
+      wk("n", "minimize", actions.on_focused_client(actions.client_minimize)),
+      wk(
         "s",
         "sticky-toggle",
         actions.on_focused_client(actions.client_toggle_sticky)
       ),
-      which_keys.key(
+      wk(
         "t",
         "ontop-toggle",
         actions.on_focused_client(actions.client_toggle_ontop)
       ),
-      which_keys.key(
+      wk(
         "f",
         "fullscreen-toggle",
         actions.on_focused_client(actions.client_toggle_fullscreen)
       ),
-      which_keys.key(
-        "q",
-        "close",
-        actions.on_focused_client(actions.client_close)
-      ),
-      which_keys.key(
+      wk("q", "close", actions.on_focused_client(actions.client_close)),
+      wk(
         "o",
         "move-other-screen",
         actions.on_focused_client(actions.client_move_other_screen)
@@ -135,110 +125,53 @@ keys.awesome_chord = which_keys.new_chord("Awesome", {
     }),
 
     which_keys.key_nested("l", "layout", {
-      which_keys.key(
+      wk(
         "[",
         "previous",
         actions.previous_layout(),
         { which_key_sticky = true }
       ),
-      which_keys.key(
-        "]",
-        "next",
-        actions.next_layout(),
-        { which_key_sticky = true }
-      ),
+      wk("]", "next", actions.next_layout(), { which_key_sticky = true }),
 
-      which_keys.key(
-        "f",
-        "floating",
-        actions.set_layout(awful.layout.suit.floating)
-      ),
-      which_keys.key("l", "tile", actions.set_layout(awful.layout.suit.tile)),
-      which_keys.key(
-        "h",
-        "tile-left",
-        actions.set_layout(awful.layout.suit.tile.left)
-      ),
-      which_keys.key(
-        "j",
-        "tile-bottom",
-        actions.set_layout(awful.layout.suit.tile.bottom)
-      ),
-      which_keys.key(
-        "k",
-        "tile-top",
-        actions.set_layout(awful.layout.suit.tile.top)
-      ),
-      which_keys.key("n", "fair", actions.set_layout(awful.layout.suit.fair)),
-      which_keys.key(
+      wk("f", "floating", actions.set_layout(awful.layout.suit.floating)),
+      wk("c", "centered", actions.set_layout(bling.layout.centered)),
+      wk("d", "deck", actions.set_layout(bling.layout.deck)),
+      wk("t", "tabbed", actions.set_layout(bling.layout.mstab)),
+      wk("l", "master-right", actions.set_layout(awful.layout.suit.tile.left)),
+      wk("h", "master-left", actions.set_layout(awful.layout.suit.tile)),
+      wk("j", "master-up", actions.set_layout(awful.layout.suit.tile.bottom)),
+      wk("k", "master-down", actions.set_layout(awful.layout.suit.tile.top)),
+      wk("=", "equal-area", actions.set_layout(bling.layout.equalarea)),
+      wk("n", "fair", actions.set_layout(awful.layout.suit.fair)),
+      wk(
         "m",
         "fair-horiz",
         actions.set_layout(awful.layout.suit.fair.horizontal)
       ),
-      which_keys.key(
-        "u",
-        "spiral",
-        actions.set_layout(awful.layout.suit.spiral)
-      ),
-      which_keys.key(
-        "b",
-        "bsp",
-        actions.set_layout(awful.layout.suit.spiral.dwindle)
-      ),
-      which_keys.key("i", "max", actions.set_layout(awful.layout.suit.max)),
-      which_keys.key(
+      wk("u", "spiral", actions.set_layout(awful.layout.suit.spiral)),
+      wk("b", "bsp", actions.set_layout(awful.layout.suit.spiral.dwindle)),
+      wk("i", "max", actions.set_layout(awful.layout.suit.max)),
+      wk(
         "I",
         "max-fullscreen",
         actions.set_layout(awful.layout.suit.max.fullscreen)
       ),
-      which_keys.key(
-        "o",
-        "magnifier",
-        actions.set_layout(awful.layout.suit.magnifier)
-      ),
-      which_keys.key(
-        "w",
-        "corner-nw",
-        actions.set_layout(awful.layout.suit.corner.nw)
-      ),
-      which_keys.key(
-        "W",
-        "corner-sw",
-        actions.set_layout(awful.layout.suit.corner.sw)
-      ),
-      which_keys.key(
-        "e",
-        "corner-ne",
-        actions.set_layout(awful.layout.suit.corner.ne)
-      ),
-      which_keys.key(
-        "E",
-        "corner-se",
-        actions.set_layout(awful.layout.suit.corner.se)
-      ),
+      wk("o", "magnifier", actions.set_layout(awful.layout.suit.magnifier)),
+      wk("w", "corner-nw", actions.set_layout(awful.layout.suit.corner.nw)),
+      wk("W", "corner-sw", actions.set_layout(awful.layout.suit.corner.sw)),
+      wk("e", "corner-ne", actions.set_layout(awful.layout.suit.corner.ne)),
+      wk("E", "corner-se", actions.set_layout(awful.layout.suit.corner.se)),
     }),
 
     which_keys.key_nested("s", "screenshot", {
-      which_keys.key("s", "specific-area", actions.flameshot "gui"),
-      which_keys.key("a", "all-screen", actions.flameshot "screen"),
-      which_keys.key("f", "full-screen", actions.flameshot "desktop"),
+      wk("s", "specific-area", actions.flameshot "gui"),
+      wk("a", "all-screen", actions.flameshot "screen"),
+      wk("f", "full-screen", actions.flameshot "desktop"),
 
       which_keys.key_nested("d", "delayed", {
-        which_keys.key(
-          "s",
-          "specific-area",
-          actions.flameshot("gui", "--delay", "5000")
-        ),
-        which_keys.key(
-          "a",
-          "all-screen",
-          actions.flameshot("screen", "--delay", "5000")
-        ),
-        which_keys.key(
-          "d",
-          "all-desktop",
-          actions.flameshot("desktop", "--delay", "5000")
-        ),
+        wk("s", "specific-area", actions.flameshot("gui", "--delay", "5000")),
+        wk("a", "all-screen", actions.flameshot("screen", "--delay", "5000")),
+        wk("d", "all-desktop", actions.flameshot("desktop", "--delay", "5000")),
       }),
     }),
   },
@@ -411,10 +344,7 @@ keys.global = gears.table.join(
   awful.key(
     { modkey },
     "w",
-    actions.run_or_raise(
-      { "brave-browser-beta" },
-      { class = "Brave" }
-    ),
+    actions.run_or_raise({ "brave-browser-beta" }, { class = "Brave" }),
     { description = "Focus browser", group = "Apps" }
   ),
 
@@ -629,10 +559,6 @@ keys.clientkeys = gears.table.join(
 
 keys.mouse_click = function(modifier, button, action)
   return gears.table.join(awful.button(modifier, button, nil, action))
-end
-
-if utils.is_test() then
-  keys.awesome_chord.show_popup()
 end
 
 return keys

@@ -15,6 +15,7 @@
 -- This file looks at the screens and points my different roles to the best
 -- available screen.
 
+local bling = require "vendor.bling"
 local utils = require "utils"
 
 local function is_portrait(s)
@@ -82,12 +83,14 @@ function screen_layout.layout_rotation(layout, screen)
     awful.layout.suit.tile,
     awful.layout.suit.tile.left,
     awful.layout.suit.fair,
+    bling.layout.vertical,
   }
 
   local portraits = {
     awful.layout.suit.tile.bottom,
     awful.layout.suit.tile.top,
     awful.layout.suit.fair.horizontal,
+    bling.layout.horizontal,
   }
 
   if is_portrait(screen) then
