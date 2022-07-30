@@ -57,6 +57,7 @@ keys = require "keys"
 actions = require "actions"
 local dropdown = require "dropdown"
 local handle_notification = require("module.notification_rules").handle
+local fix_missing_icon = require "module.fix_missing_icon"
 
 -- Patch some things in AwesomeWM to make it easier to build things.
 require "module.patches"
@@ -276,16 +277,19 @@ client.connect_signal("manage", function(c)
     awful.client.setslave(c)
   end
 
-  -- Some clients, most notably Spotify, will not set a class at startup and
-  -- will instead assign it later. Detect when new clients are missing a
-  -- class and set up an event listener to them to react when a class is
-  -- later assigned. Minimize the client initially to prevent screen flashes
-  -- until it is ready.
-  if c.class == nil then
+  if c.class ~= nil then
+    fix_missing_icon(c)
+  else
+    -- Some clients, most notably Spotify, will not set a class at startup and
+    -- will instead assign it later. Detect when new clients are missing a
+    -- class and set up an event listener to them to react when a class is
+    -- later assigned. Minimize the client initially to prevent screen flashes
+    -- until it is ready.
     c.minimized = true
     c:connect_signal("property::class", function()
       c.minimized = false
       awful.rules.apply(c)
+      fix_missing_icon(c)
     end)
   end
 

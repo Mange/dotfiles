@@ -34,6 +34,19 @@ function utils.clamp(min, current, max)
   end
 end
 
+function utils.uniq(table)
+  local seen = {}
+  local new = {}
+  for _, item in ipairs(table) do
+    if not seen[item] then
+      seen[item] = true
+      new[#new + 1] = item
+    end
+  end
+
+  return new
+end
+
 --- Splits a path like "/path/to/file.txt" into "/path/to" and "file.txt".
 --- If only a filename is given ("file"), then nil and "file" is returned.
 --- @param path string
@@ -45,6 +58,23 @@ function utils.path_split(path)
   else
     return dir, file
   end
+end
+
+--- @generic T
+--- @param list T[]
+--- @param callback fun(index:number,item:T,continue:fun())
+function utils.async_foreach(list, callback)
+  local items = gears.table.clone(list)
+  local index = 0
+  local combinator = function(myself)
+    index = index + 1
+    if #items >= index then
+      callback(index, items[index], function()
+        myself(myself)
+      end)
+    end
+  end
+  combinator(combinator)
 end
 
 function utils.run_or_raise(cmd, matchers)

@@ -11,5 +11,6 @@ package.path = package.path
 TestClass = require "tests.module.test_class"
 TestWhichKeysBind = require "tests.module.test_which_keys_bind"
 TestNotifcationRules = require "tests.module.test_notification_rules"
+TestUtils = require "tests.test_utils"
 
 os.exit(luaunit.LuaUnit.run())

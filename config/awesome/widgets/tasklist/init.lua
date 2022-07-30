@@ -36,7 +36,7 @@ end
 local function list_update(w, buttons, label, data, objects)
   -- Update the widgets, creating them if needed
   w:reset()
-  for i, o in ipairs(objects) do
+  for _, o in ipairs(objects) do
     local cache = data[o]
     local ib, cb, tb, cbm, bgb, tbm, ibm, tt, l, ll, bg_clickable
     if cache then
@@ -156,15 +156,9 @@ local function list_update(w, buttons, label, data, objects)
       end
     end
     bgb:set_bg(bg)
-    if type(bg_image) == "function" then
-      -- TODO: Why does this pass nil as an argument?
-      bg_image = bg_image(tb, o, nil, objects, i)
-    end
     bgb:set_bgimage(bg_image)
     if icon then
       ib.image = gears.surface(icon)
-    else
-      ibm:set_margins(0)
     end
 
     bgb.shape = args.shape
