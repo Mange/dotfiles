@@ -68,9 +68,12 @@ theme.bg_urgent = "#3f3f3f"
 -- Borders
 theme.border_focus = opacity("#563238", "ff")
 theme.border_normal = opacity("#29353b", "00")
+theme.tag_preview_client_border_color = "#29353b"
 theme.border_marked = "#cc9393"
 theme.border_width = dpi(2)
 theme.border_radius = dpi(9)
+theme.tag_preview_client_border_width = dpi(2)
+theme.tag_preview_widget_border_width = dpi(2)
 
 -- Decorations
 theme.useless_gap = 8

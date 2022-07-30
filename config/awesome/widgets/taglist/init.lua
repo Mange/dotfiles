@@ -3,6 +3,31 @@ local wibox = require "wibox"
 local dpi = require("beautiful").xresources.apply_dpi
 local clickable_container = require "widgets.clickable-container"
 local keys = require "keys"
+local bling = require "vendor.bling"
+
+bling.widget.tag_preview.enable {
+  show_client_content = true,
+  x = 10,
+  y = dpi(48 + 2),
+  scale = 0.25, -- The scale of the previews compared to the screen
+  honor_padding = false, -- Honor padding when creating widget size
+  honor_workarea = false, -- Honor work area when creating widget size
+  background_widget = wibox.widget { -- Set a background image (like a wallpaper) for the widget
+    image = beautiful.wallpaper,
+    horizontal_fit_policy = "fit",
+    vertical_fit_policy = "fit",
+    widget = wibox.widget.imagebox,
+  },
+}
+
+local function bling_tag_preview_show(t, s)
+  awesome.emit_signal("bling::tag_preview::update", t)
+  awesome.emit_signal("bling::tag_preview::visibility", s, true)
+end
+
+local function bling_tag_preview_hide(s)
+  awesome.emit_signal("bling::tag_preview::visibility", s, false)
+end
 
 --- Common method to create buttons.
 -- @tab buttons
@@ -35,8 +60,8 @@ end
 local function list_update(w, buttons, label, data, objects)
   -- update the widgets, creating them if needed
   w:reset()
-  for i, o in ipairs(objects) do
-    local cache = data[o]
+  for i, tag in ipairs(objects) do
+    local cache = data[tag]
     local ib, tb, bgb, tbm, ibm, l, bg_clickable
     if cache then
       ib = cache.ib
@@ -60,7 +85,14 @@ local function list_update(w, buttons, label, data, objects)
         widget = wibox.container.margin,
       }
       l = wibox.layout.fixed.horizontal()
-      bg_clickable = clickable_container()
+      bg_clickable = clickable_container(nil, {
+        on_mouse_enter = function()
+          bling_tag_preview_show(tag, tag.screen)
+        end,
+        on_mouse_leave = function()
+          bling_tag_preview_hide(tag.screen)
+        end,
+      })
 
       -- All of this is added in a fixed widget
       l:fill_space(true)
@@ -71,9 +103,9 @@ local function list_update(w, buttons, label, data, objects)
       -- And all of this gets a background
       bgb:set_widget(bg_clickable)
 
-      bgb:buttons(create_buttons(buttons, o))
+      bgb:buttons(create_buttons(buttons, tag))
 
-      data[o] = {
+      data[tag] = {
         ib = ib,
         tb = tb,
         bgb = bgb,
@@ -82,10 +114,10 @@ local function list_update(w, buttons, label, data, objects)
       }
     end
 
-    local text, bg, bg_image, icon, args = label(o, tb)
+    local text, bg, bg_image, icon, args = label(tag, tb)
 
     -- Custom icon text
-    text = o.icon_text or o.short_name or text
+    text = tag.icon_text or tag.short_name or text
 
     args = args or {}
 
@@ -93,7 +125,7 @@ local function list_update(w, buttons, label, data, objects)
 
     if type(bg_image) == "function" then
       -- TODO: Why does this pass nil as an argument?
-      bg_image = bg_image(tb, o, nil, objects, i)
+      bg_image = bg_image(tb, tag, nil, objects, i)
     end
 
     bgb:set_bgimage(bg_image)

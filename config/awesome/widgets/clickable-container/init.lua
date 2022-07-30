@@ -1,11 +1,14 @@
 local wibox = require "wibox"
 local beautiful = require "beautiful"
 
-local clickable_container = function(widget)
+local clickable_container = function(widget, options)
   local container = wibox.widget {
     widget = wibox.container.background,
     widget,
   }
+  options = options or {}
+  local on_mouse_enter = options.on_mouse_enter or function() end
+  local on_mouse_leave = options.on_mouse_leave or function() end
 
   -- Store references from mouse::enter for mouse::leave to be able to clean everything up.
   local old_cursor, old_wibox
@@ -17,6 +20,7 @@ local clickable_container = function(widget)
       old_cursor, old_wibox = wibox.cursor, wibox
       wibox.cursor = "hand1"
     end
+    on_mouse_enter()
   end)
 
   container:connect_signal("mouse::leave", function()
@@ -25,6 +29,7 @@ local clickable_container = function(widget)
       old_wibox.cursor = old_cursor
       old_wibox = nil
     end
+    on_mouse_leave()
   end)
 
   container:connect_signal("button::press", function()
