@@ -1,61 +1,30 @@
--- I try to support most screen layouts I could be using and place tags and
--- workspaces dynamically.
+-- This file tries to dynamically figure out my multiscreen layout and place
+-- tags and things that makes the most sense in it.
 --
--- Generally I try to have the largest screen as primary, then other screens
--- around it.
+-- I have some general rules of thumbs that I try to follow, and this file
+-- tries to maintain them. They are as follows:
 --
--- Most common layouts:
---  * H layout (two portraits around a central wide - which is primary)
---  * Twin layout (two wide)
---  * Single screen layout
---  * ┤ or ├ layouts (one portrait next to primary wide)
+--   1. Primary screen in the middle.
+--   2. If more than one screen, then place references and communications
+--      around the primary.
+--   3. If three screens, then reference to the left and comms to the right.
 --
--- This module tries to detect which configuration I'm running and return
--- standardized destinations for tags, clients, etc. to be used in the other
--- parts of this config.
+-- I also use portrait monitors sometimes, which affects wallpaper selection
+-- among other things.
+--
+-- This file looks at the screens and points my different roles to the best
+-- available screen.
 
 local utils = require "utils"
-
-local function single_layout()
-  return {
-    name = "single",
-    main = screen.primary,
-    reference = screen.primary,
-    comms = screen.primary,
-  }
-end
-
-local function twin_layout()
-  return {
-    name = "twin",
-    main = screen[1],
-    reference = screen[2],
-    comms = screen[2],
-  }
-end
-
-local function find_rest(primary)
-  local rest = {}
-  local i = 1
-
-  for s in screen do
-    if not (s == primary) then
-      rest[i] = s
-      i = i + 1
-    end
-  end
-
-  return rest
-end
 
 local function is_portrait(s)
   return s.geometry.height > s.geometry.width
 end
 
-local function left(screens)
-  local most_left = screens[1]
+local function left_of(of)
+  local most_left = of
 
-  for _, s in ipairs(screens) do
+  for s in screen do
     if s.geometry.x < most_left.geometry.x then
       most_left = s
     end
@@ -64,10 +33,10 @@ local function left(screens)
   return most_left
 end
 
-local function right(screens)
-  local most_right = screens[1]
+local function right_of(of)
+  local most_right = of
 
-  for _, s in ipairs(screens) do
+  for s in screen do
     if s.geometry.x > most_right.geometry.x then
       most_right = s
     end
@@ -76,37 +45,16 @@ local function right(screens)
   return most_right
 end
 
-local screen_layout = {
-  current = nil,
-}
+local screen_layout = {}
 
 function screen_layout.get_layout()
-  local count = screen.count()
-
-  if count < 2 then
-    return single_layout()
-  elseif count == 2 then
-    return twin_layout()
-  end
-
-  local primary = screen.primary
-  local rest = find_rest(primary)
-
-  -- Detect H layout
-  if count == 3 and is_portrait(rest[1]) and is_portrait(rest[2]) then
-    return {
-      name = "H",
-      main = primary,
-      reference = rest[1],
-      comms = rest[2],
-    }
-  end
+  -- Handle xrandr edge case of no screen being the primary one
+  local primary = screen.primary or screen[1]
 
   return {
-    name = "generic",
     main = primary,
-    reference = left(rest),
-    comms = right(rest),
+    reference = left_of(primary),
+    comms = right_of(primary),
   }
 end
 
@@ -114,25 +62,22 @@ function screen_layout.is_portrait(s)
   return is_portrait(s)
 end
 
-function screen_layout.apply_wallpaper_overrides(layout)
-  local main_portrait = utils.wallpaper_path "wallhaven-eyq6zr.jpg"
+function screen_layout.apply_wallpaper_overrides()
+  local current = screen_layout.current
 
-  for s in screen do
-    if is_portrait(s) then
-      s.wallpaper_override = main_portrait
-    else
-      s.wallpaper_override = nil
-    end
-  end
+  for _, type in ipairs { "main", "reference", "comms" } do
+    local s = current[type]
+    local layout = is_portrait(s) and "portrait" or "landscape"
 
-  -- If H layout, comms have a different portrait wallpaper
-  if layout.name == "H" then
-    layout.comms.wallpaper_override =
-      utils.wallpaper_path "wallhaven-r21q37.jpg"
+    s.wallpaper_override = utils.first_wallpaper_path {
+      type .. "_" .. layout .. ".jpg",
+      type .. ".jpg",
+      layout .. ".jpg",
+    }
   end
 end
 
-function screen_layout.tag_layout_rotation(t)
+function screen_layout.layout_rotation(layout, screen)
   local landscapes = {
     awful.layout.suit.tile,
     awful.layout.suit.tile.left,
@@ -140,35 +85,34 @@ function screen_layout.tag_layout_rotation(t)
   }
 
   local portraits = {
-    awful.layout.suit.tile.top,
     awful.layout.suit.tile.bottom,
+    awful.layout.suit.tile.top,
     awful.layout.suit.fair.horizontal,
   }
 
-  if is_portrait(t.screen) then
+  if is_portrait(screen) then
     -- Find layouts that only make sense for landscape and rotate them
-    for i, layout in ipairs(landscapes) do
-      if t.layout == layout then
-        t.layout = portraits[i]
-        break
+    for i, landscape in ipairs(landscapes) do
+      if layout == landscape then
+        return portraits[i]
       end
     end
   else
     -- Find layouts that only make sense for portrait and rotate them
-    for i, layout in ipairs(portraits) do
-      if t.layout == layout then
-        t.layout = landscapes[i]
-        break
+    for i, portrait in ipairs(portraits) do
+      if layout == portrait then
+        return landscapes[i]
       end
     end
   end
+
+  return layout
 end
 
 function screen_layout.refresh()
   screen_layout.current = screen_layout.get_layout()
-  screen_layout.apply_wallpaper_overrides(screen_layout.current)
+  screen_layout.apply_wallpaper_overrides()
 end
 
 screen_layout.refresh()
-
 return screen_layout

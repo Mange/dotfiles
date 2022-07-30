@@ -137,6 +137,17 @@ function utils.wallpaper_path(name)
   return gears.filesystem.get_xdg_data_home() .. "wallpapers/" .. name
 end
 
+function utils.first_wallpaper_path(names)
+  for _, name in ipairs(names) do
+    local path = utils.wallpaper_path(name)
+    if gears.filesystem.file_readable(path) then
+      return path
+    end
+  end
+
+  return utils.wallpaper_path "landscape.jpg"
+end
+
 function utils.reload_wallpaper(s)
   gears.wallpaper.maximized(
     s.wallpaper_override or beautiful.wallpaper,

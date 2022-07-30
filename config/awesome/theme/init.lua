@@ -136,7 +136,7 @@ theme.layout_floating = theme.icons .. "layouts/floating.svg"
 -- Taglist
 theme.taglist_bg_empty = opacity(theme.background, "00")
 theme.taglist_bg_occupied = opacity(white, "1a")
-theme.taglist_bg_urgent = opacity("#E91E63", 99)
+theme.taglist_bg_urgent = opacity("#E91E63", "99")
 theme.taglist_bg_focus = theme.background
 theme.taglist_spacing = dpi(0)
 
@@ -218,6 +218,6 @@ theme.systray_icon_spacing = dpi(16)
 
 -- Wallpaper
 theme.wallpaper = gears.filesystem.get_xdg_data_home()
-  .. "wallpapers/current.jpg"
+  .. "wallpapers/landscape.jpg"
 
 return theme
