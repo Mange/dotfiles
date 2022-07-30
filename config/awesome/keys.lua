@@ -41,6 +41,9 @@ keys.awesome_chord = which_keys.new_chord("Awesome", {
       { which_key_colors = beautiful.which_key.nested }
     ),
 
+    wk("n", "minimize", actions.on_focused_client(actions.client_minimize)),
+    wk("N", "unminimize-random", actions.unminimize_random()),
+
     which_keys.key_nested("a", "awesome", {
       wk("r", "restart", awesome.restart),
       wk("q", "quit/logout", actions.log_out()),
@@ -98,7 +101,14 @@ keys.awesome_chord = which_keys.new_chord("Awesome", {
 
     which_keys.key_nested("c", "client", {
       wk("r", "restore", actions.on_focused_client(actions.client_restore)),
-      wk("n", "minimize", actions.on_focused_client(actions.client_minimize)),
+      wk("m", "minimize", actions.on_focused_client(actions.client_minimize)),
+      wk("n", "next", actions.focus_by_index(1), { which_key_sticky = true }),
+      wk(
+        "p",
+        "previous",
+        actions.focus_by_index(-1),
+        { which_key_sticky = true }
+      ),
       wk(
         "s",
         "sticky-toggle",
@@ -245,21 +255,29 @@ keys.global = gears.table.join(
   ),
 
   -- Group: Client
-  -- awful.key({modkey}, "h", focus("left"), {description = "Focus ←", group = "Client"}),
-  -- awful.key({modkey}, "j", focus("down"), {description = "Focus ↓", group = "Client"}),
-  -- awful.key({modkey}, "k", focus("up"), {description = "Focus ↑", group = "Client"}),
-  -- awful.key({modkey}, "l", focus("right"), {description = "Focus →", group = "Client"}),
+  awful.key(
+    { modkey },
+    "h",
+    actions.focus "left",
+    { description = "Focus ←", group = "Client" }
+  ),
   awful.key(
     { modkey },
     "j",
-    actions.focus_by_index(1),
-    { description = "Focus next", group = "Client" }
+    actions.focus "down",
+    { description = "Focus ↓", group = "Client" }
   ),
   awful.key(
     { modkey },
     "k",
-    actions.focus_by_index(-1),
-    { description = "Focus previous", group = "Client" }
+    actions.focus "up",
+    { description = "Focus ↑", group = "Client" }
+  ),
+  awful.key(
+    { modkey },
+    "l",
+    actions.focus "right",
+    { description = "Focus →", group = "Client" }
   ),
   awful.key(
     { modkey, "Shift" },
@@ -279,12 +297,6 @@ keys.global = gears.table.join(
     awful.client.urgent.jumpto,
     { description = "Jump to urgent", group = "Client" }
   ),
-  awful.key(
-    { modkey, "Shift" },
-    "n",
-    actions.unminimize_random(),
-    { description = "Unminimize some client", group = "Client" }
-  ),
 
   -- Group: Screen
   awful.key(
@@ -295,13 +307,13 @@ keys.global = gears.table.join(
   ),
   awful.key(
     { modkey },
-    "h",
+    ";",
     actions.focus_screen_dir "left",
     { description = "← Screen", group = "Screen" }
   ),
   awful.key(
     { modkey },
-    "l",
+    "'",
     actions.focus_screen_dir "right",
     { description = "Screen →", group = "Screen" }
   ),
@@ -333,12 +345,6 @@ keys.global = gears.table.join(
     "Return",
     actions.spawn(terminal),
     { description = "Terminal", group = "Apps" }
-  ),
-  awful.key(
-    { modkey },
-    "p",
-    actions.passwords_menu(),
-    { description = "Passwords", group = "Apps" }
   ),
 
   awful.key(
@@ -517,8 +523,14 @@ keys.clientkeys = gears.table.join(
   awful.key(
     { modkey },
     "n",
-    actions.client_minimize,
-    { description = "Minimize client", group = "Client" }
+    actions.focus_by_index(1),
+    { description = "Next client", group = "Client" }
+  ),
+  awful.key(
+    { modkey },
+    "p",
+    actions.focus_by_index(-1),
+    { description = "Previous client", group = "Client" }
   ),
 
   -- Toggles

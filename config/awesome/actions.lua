@@ -36,6 +36,12 @@ function actions.compose(...)
   end
 end
 
+function actions.focus(direction)
+  return function()
+    awful.client.focus.global_bydirection(direction, nil, true)
+  end
+end
+
 function actions.focus_by_index(offset)
   return function()
     awful.client.focus.byidx(offset)
