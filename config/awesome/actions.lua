@@ -1,5 +1,6 @@
 local awful = require "awful"
 local naughty = require "naughty"
+local bling = require "vendor.bling"
 
 local dropdown = require "dropdown"
 local sharedtags = require "sharedtags"
@@ -36,9 +37,55 @@ function actions.compose(...)
   end
 end
 
+local function focus_on_index(current_index, target_index)
+  return awful.client.focus.byidx(target_index - current_index)
+end
+
+-- When layout is mstab, then direction should mean something else:
+-- left = go to master
+-- right = to to slaves
+local function focus_mstab(direction, c, t)
+  if not utils.is_master(c) then
+    -- focus is inside the tablist
+    local my_index = utils.client_index(c)
+    local total_clients = #c.screen.clients
+    local master_clients = t.master_count
+
+    if direction == "left" then
+      -- Move to last master.
+      return focus_on_index(my_index, master_clients)
+    elseif direction == "down" then
+      -- Focus next slave, wrapping around without getting to the first master again.
+      if my_index == total_clients then
+        return focus_on_index(my_index, master_clients + 1)
+      else
+        return awful.client.focus.byidx(1)
+      end
+    elseif direction == "up" then
+      -- Focus previous slave, wrapping around without getting to the last master again.
+      if my_index == master_clients + 1 then
+        return focus_on_index(my_index, total_clients)
+      else
+        return awful.client.focus.byidx(-1)
+      end
+    end
+  end
+
+  -- Eh, just use default behavior…
+  return awful.client.focus.global_bydirection(direction, c, true)
+end
+
 function actions.focus(direction)
   return function()
-    awful.client.focus.global_bydirection(direction, nil, true)
+    local c = client.focus
+    if c then
+      local tag = c.screen.selected_tag
+      if tag.layout == bling.layout.mstab then
+        focus_mstab(direction, c, tag)
+      else
+        awful.client.focus.global_bydirection(direction, c, true)
+      end
+    end
   end
 end
 

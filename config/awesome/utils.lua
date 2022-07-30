@@ -192,4 +192,36 @@ function utils.placement_downright(scale)
   end
 end
 
+function utils.client_index(c)
+  local index = 0
+
+  local filter = function(clnt)
+    return not (
+        c.hidden
+        or c.type == "splash"
+        or c.type == "dock"
+        or c.type == "desktop"
+      ) and awful.widget.tasklist.filter.currenttags(clnt, c.screen)
+  end
+
+  for _, other in ipairs(client.get()) do
+    if filter(other) then
+      index = index + 1
+    end
+
+    if other == c then
+      return index
+    end
+  end
+
+  -- Client isn't visible on the screen, assume placed last. Could happen if
+  -- invisible, for example…
+  return index + 1
+end
+
+function utils.is_master(c)
+  local index = utils.client_index(c)
+  return index <= c.screen.selected_tag.master_count
+end
+
 return utils

@@ -220,4 +220,10 @@ theme.systray_icon_spacing = dpi(16)
 theme.wallpaper = gears.filesystem.get_xdg_data_home()
   .. "wallpapers/landscape.jpg"
 
+-- Bling layouts
+theme.mstab_dont_resize_slaves = true
+theme.mstab_tabbar_style = "default"
+theme.mstab_bar_padding = 0
+theme.mstab_border_radius = 0
+
 return theme
