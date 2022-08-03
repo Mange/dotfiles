@@ -41,6 +41,10 @@ local function focus_on_index(current_index, target_index)
   return awful.client.focus.byidx(target_index - current_index)
 end
 
+local function focus_direction(direction, c)
+  awful.client.focus.global_bydirection(direction, c, true)
+end
+
 -- When layout is mstab, then direction should mean something else:
 -- left = go to master
 -- right = to to slaves
@@ -72,18 +76,41 @@ local function focus_mstab(direction, c, t)
   end
 
   -- Eh, just use default behavior…
-  return awful.client.focus.global_bydirection(direction, c, true)
+  return focus_direction(direction, c)
+end
+
+local function focus_max(direction, c)
+  -- Fullscreen windows means that I usually use "down/up" for next/right and
+  -- keep left/right for next/previous screen.
+  if direction == "down" then
+    return awful.client.focus.byidx(1)
+  elseif direction == "up" then
+    return awful.client.focus.byidx(-1)
+  else
+    focus_direction(direction, c)
+  end
 end
 
 function actions.focus(direction)
   return function()
     local c = client.focus
     if c then
+      -- No matter which layout that is in use on the screen, if the client
+      -- itself is floating then go by direction.
+      if c.floating then
+        return focus_direction(direction, c)
+      end
+
       local tag = c.screen.selected_tag
       if tag.layout == bling.layout.mstab then
         focus_mstab(direction, c, tag)
+      elseif
+        tag.layout == awful.layout.suit.max
+        or tag.layout == awful.layout.suit.max.fullscreen
+      then
+        focus_max(direction, c)
       else
-        awful.client.focus.global_bydirection(direction, c, true)
+        focus_direction(direction, c)
       end
     end
   end
