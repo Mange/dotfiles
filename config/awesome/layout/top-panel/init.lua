@@ -67,6 +67,7 @@ local top_panel = function(s)
 
   -- local add_button     = build_widget(require('widget.open-default-app')(s))
   -- s.search_apps      = build_widget(require('widget.search-apps')())
+  s.chord_start = build_widget(require "widgets.chord-start")
   s.control_center_toggle = build_widget(
     require "widgets.control-center-toggle"(s)
   )
@@ -90,6 +91,7 @@ local top_panel = function(s)
         layout = wibox.layout.fixed.horizontal,
         spacing = dpi(5),
         -- s.search_apps,
+        s.chord_start,
         s.control_center_toggle,
         -- s.global_search,
         build_widget(taglist(s)),

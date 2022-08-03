@@ -21,6 +21,7 @@ return {
   playlist = taglist .. "playlist.svg",
 
   -- Others/System UI
+  circle_dot = dir .. "circle-dot.svg",
   close = dir .. "close.svg",
   logout = dir .. "logout.svg",
   sleep = dir .. "power-sleep.svg",
