@@ -120,6 +120,11 @@ keys.awesome_chord = which_keys.new_chord("Awesome", {
         actions.on_focused_client(actions.client_toggle_ontop)
       ),
       wk(
+        "q",
+        "titlebar-toggle",
+        actions.on_focused_client(actions.client_toggle_titlebar)
+      ),
+      wk(
         "f",
         "fullscreen-toggle",
         actions.on_focused_client(actions.client_toggle_fullscreen)

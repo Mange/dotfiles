@@ -50,6 +50,8 @@ end
 -- Theme
 --
 beautiful.init(require "theme")
+require "vendor.bling"
+require "module.titlebars"
 
 --
 utils = require "utils"
@@ -210,21 +212,6 @@ awful.rules.rules = {
       above = true,
       opacity = 0.7,
     },
-  },
-
-  -- Web clients
-  {
-    rule_any = {
-      class = { "Firefox", "Brave" },
-    },
-    properties = { tag = tags[3] },
-  },
-
-  {
-    rule_any = {
-      role = { "AlarmWindow" },
-    },
-    properties = { sticky = true },
   },
 
   -- Media clients

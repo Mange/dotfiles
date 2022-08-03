@@ -1,3 +1,7 @@
 [submodule "config/awesome/vendor/bling"]
 	path = config/awesome/vendor/bling
 	url = https://github.com/BlingCorp/bling.git
+[submodule "config/awesome/vendor/nice"]
+	path = config/awesome/vendor/nice
+	url = https://github.com/Mange/awesome-wm-nice.git
+	branch = master

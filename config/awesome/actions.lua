@@ -1,6 +1,7 @@
 local awful = require "awful"
 local naughty = require "naughty"
 local bling = require "vendor.bling"
+local unpack = unpack or table.unpack
 
 local dropdown = require "dropdown"
 local sharedtags = require "sharedtags"
@@ -31,7 +32,7 @@ function actions.compose(...)
   return function(...)
     local result = { ... }
     for _, fn in ipairs(funcs) do
-      result = { fn(table.unpack(result)) }
+      result = { fn(unpack(result)) }
     end
     return result
   end
@@ -168,10 +169,11 @@ function actions.set_layout(layout)
   end
 end
 
-function actions.on_focused_client(action)
+function actions.on_focused_client(action, ...)
+  local extra = table.pack(...)
   return function()
     if client.focus then
-      action(client.focus)
+      action(client.focus, unpack(extra))
     end
   end
 end
@@ -208,6 +210,18 @@ end
 
 function actions.client_toggle_floating(_)
   awful.client.floating.toggle()
+end
+
+function actions.client_set_titlebar(c, show)
+  if show then
+    awful.titlebar.show(c)
+  else
+    awful.titlebar.hide(c)
+  end
+end
+
+function actions.client_toggle_titlebar(c)
+  awful.titlebar.toggle(c)
 end
 
 function actions.client_move_other_screen(c)
