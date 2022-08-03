@@ -112,6 +112,9 @@ function actions.focus(direction)
       else
         focus_direction(direction, c)
       end
+    else
+      -- No client? Maybe we closed the last one on the screen…?
+      focus_direction(direction, nil)
     end
   end
 end
