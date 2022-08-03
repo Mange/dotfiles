@@ -89,16 +89,6 @@ require "layout"
 local tags = require("configuration.tags").tags
 
 --
--- Mouse bindings
---
-root.buttons(
-  gears.table.join(
-    awful.button({}, keys.scroll_up, awful.tag.viewnext),
-    awful.button({}, keys.scroll_down, awful.tag.viewprev)
-  )
-)
-
---
 -- Key bindings
 --
 
