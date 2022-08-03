@@ -37,19 +37,19 @@ local top_panel = function(s)
 
   local build_widget = function(widget)
     return wibox.widget {
+      widget = wibox.container.margin,
+      top = dpi(9),
+      bottom = dpi(9),
       {
-        widget,
+        widget = wibox.container.background,
         border_width = dpi(1),
         border_color = beautiful.groups.title_bg,
         bg = beautiful.transparent,
         shape = function(cr, w, h)
           gears.shape.rounded_rect(cr, w, h, dpi(12))
         end,
-        widget = wibox.container.background,
+        widget,
       },
-      top = dpi(9),
-      bottom = dpi(9),
-      widget = wibox.container.margin,
     }
   end
 
