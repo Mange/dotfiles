@@ -1,9 +1,13 @@
 local awful = require "awful"
 local wibox = require "wibox"
-local dpi = require("beautiful").xresources.apply_dpi
+local beautiful = require "beautiful"
+
+local bling = require "vendor.bling"
+
 local clickable_container = require "widgets.clickable-container"
 local keys = require "keys"
-local bling = require "vendor.bling"
+local theme = require "theme"
+local dpi = beautiful.xresources.apply_dpi
 
 bling.widget.tag_preview.enable {
   show_client_content = true,
@@ -118,8 +122,8 @@ local function list_update(w, buttons, label, data, objects)
 
     local text, bg, bg_image, icon, args = label(tag, tb)
 
-    -- Custom icon text
-    text = tag.icon_text or tag.short_name or text
+    -- Custom text
+    text = tag.short_name or text
 
     args = args or {}
 
@@ -133,7 +137,14 @@ local function list_update(w, buttons, label, data, objects)
     bgb:set_bgimage(bg_image)
 
     if icon then
-      ib.image = icon
+      local icon_color = tag.icon_color or theme.taglist_fg_normal
+      if tag.selected then
+        icon_color = tag.selected_icon_color
+          or theme.taglist_fg_focus
+          or icon_color
+      end
+
+      ib.image = gears.color.recolor_image(icon, icon_color)
       tbm:set_margins(0) -- Hide text when showing icon
     else
       -- The text might be invalid, so use pcall.
@@ -172,8 +183,8 @@ local taglist = function(s)
       end),
       awful.button({}, keys.right_click, awful.tag.viewtoggle),
       awful.button({ keys.modkey }, keys.right_click, function(t)
-        if _G.client.focus then
-          _G.client.focus:toggle_tag(t)
+        if client.focus then
+          client.focus:toggle_tag(t)
         end
       end),
       awful.button({}, keys.scroll_up, function(t)

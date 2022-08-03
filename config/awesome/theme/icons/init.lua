@@ -1,26 +1,24 @@
+-- Most icons come from https://tabler-icons.io/
+
 -- Icons directory
 local dir = os.getenv "HOME" .. "/.config/awesome/theme/icons/"
+
+local taglist = dir .. "tag-list/"
 
 return {
   dir = dir,
 
   -- Action Bar
-  system = dir .. "tag-list/" .. "archlinux.svg",
-  web_browser = dir .. "tag-list/" .. "web-browser.svg",
-  text_editor = dir .. "tag-list/" .. "neovim.svg",
-  social = dir .. "tag-list/" .. "social.svg",
-  file_manager = dir .. "tag-list/" .. "file-manager.svg",
-  multimedia = dir .. "tag-list/" .. "multimedia.svg",
-  mail = dir .. "tag-list/" .. "gmail.svg",
-  games = dir .. "tag-list/" .. "games.svg",
-  development = dir .. "tag-list/" .. "development.svg",
-  sandbox = dir .. "tag-list/" .. "sandbox.svg",
-  gear = dir .. "tag-list/" .. "applications-system.svg",
-  extensions = dir .. "tag-list/" .. "extensions.svg",
-  terminal = dir .. "tag-list/" .. "terminal.svg",
-  graphics = dir .. "tag-list/" .. "graphics.svg",
-  menu = dir .. "tag-list/" .. "menu.svg",
-  close_small = dir .. "tag-list/" .. "close-small.svg",
+  device_desktop = taglist .. "device-desktop.svg",
+  code = taglist .. "code.svg",
+  terminal_2 = taglist .. "terminal-2.svg",
+  world = taglist .. "world.svg",
+  notebook = taglist .. "notebook.svg",
+  square_6 = taglist .. "square-6.svg",
+  square_7 = taglist .. "square-7.svg",
+  brand_steam = taglist .. "brand-steam.svg",
+  brand_telegram = taglist .. "brand-telegram.svg",
+  playlist = taglist .. "playlist.svg",
 
   -- Others/System UI
   close = dir .. "close.svg",

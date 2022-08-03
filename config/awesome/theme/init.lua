@@ -89,7 +89,7 @@ theme.groups = {
   title_bg = opacity(white, "15"),
   radius = dpi(9),
   shape = function(cr, width, height)
-    gears.shape.rounded_rect(cr, width, height, beautiful.groups.radius)
+    gears.shape.rounded_rect(cr, width, height, theme.groups.radius)
   end,
 }
 
@@ -134,6 +134,8 @@ theme.layout_dwindle = theme.icons .. "layouts/dwindle.svg"
 theme.layout_floating = theme.icons .. "layouts/floating.svg"
 
 -- Taglist
+theme.taglist_fg_normal = white
+theme.taglist_fg_focus = theme.accent
 theme.taglist_bg_empty = opacity(theme.background, "00")
 theme.taglist_bg_occupied = opacity(white, "1a")
 theme.taglist_bg_urgent = opacity("#E91E63", "99")

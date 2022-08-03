@@ -6,7 +6,7 @@ pcall(require, "luarocks.loader")
 -- Standard awesome library
 gears = require "gears"
 awful = require "awful"
-beautiful = require "beautiful"
+local beautiful = require "beautiful"
 naughty = require "naughty"
 
 -- Make AwesomeWM / Lua use the configured locale

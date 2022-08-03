@@ -18,7 +18,6 @@ local function setup(c)
     99, -- Should be placing this tag list in all lists
     {
       name = focus_client.tag_name,
-      icon_text = "🙉",
       layout = awful.layout.suit.max,
       gap = utils.dpi(30),
       gap_single_client = true,
