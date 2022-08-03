@@ -204,6 +204,14 @@ awful.rules.rules = {
     },
   },
 
+  -- Notes
+  {
+    rule_any = {
+      class = { "obsidian" },
+    },
+    properties = { tag = tags[5] },
+  },
+
   -- Media clients
   {
     rule_any = {

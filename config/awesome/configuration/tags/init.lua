@@ -53,10 +53,8 @@ local tags = sharedtags {
     layout = awful.layout.fair,
   },
   tagdef {
-    name = "Mail",
-    short_name = "MAIL",
-    icon = icons.mail,
-    icon_text = "",
+    name = "Notes",
+    short_name = "NOTE",
   },
   tagdef {
     name = "Six",
