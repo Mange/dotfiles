@@ -89,7 +89,12 @@ local function list_update(w, buttons, label, data, objects)
         widget = wibox.container.margin,
       }
       l = wibox.layout.fixed.horizontal()
-      bg_clickable = clickable_container(nil, {
+      bg_clickable = clickable_container({
+        widget = wibox.container.margin,
+        left = dpi(2),
+        right = dpi(2),
+        l,
+      }, {
         on_mouse_enter = function()
           if #tag:clients() >= 1 then
             bling_tag_preview_show(tag, tag.screen)
@@ -104,7 +109,6 @@ local function list_update(w, buttons, label, data, objects)
       l:fill_space(true)
       l:add(ibm)
       l:add(tbm)
-      bg_clickable:set_widget(l)
 
       -- And all of this gets a background
       bgb:set_widget(bg_clickable)
