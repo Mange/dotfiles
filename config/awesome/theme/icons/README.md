@@ -1,1 +1,1 @@
-Most of these icons are based on the Tela icon pack.
+Most of these icons are from https://tabler-icons.io/

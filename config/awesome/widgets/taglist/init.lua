@@ -141,14 +141,16 @@ local function list_update(w, buttons, label, data, objects)
     bgb:set_bgimage(bg_image)
 
     if icon then
-      local icon_color = tag.icon_color or theme.taglist_fg_normal
+      local icon_color = nil
       if tag.selected then
-        icon_color = tag.selected_icon_color
-          or theme.taglist_fg_focus
-          or icon_color
+        icon_color = theme.taglist_fg_focus or icon_color
       end
 
-      ib.image = gears.color.recolor_image(icon, icon_color)
+      if icon_color then
+        ib.image = gears.color.recolor_image(icon, icon_color)
+      else
+        ib.image = icon
+      end
       tbm:set_margins(0) -- Hide text when showing icon
     else
       -- The text might be invalid, so use pcall.
