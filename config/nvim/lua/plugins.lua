@@ -112,6 +112,33 @@ require("packer").startup(function(use)
     end,
   }
 
+  -- Focus mode
+  use {
+    "Pocco81/true-zen.nvim",
+    config = function()
+      -- https://github.com/Pocco81/true-zen.nvim/issues/91
+      local lualine = require "lualine"
+      require("true-zen").setup {
+        modes = {
+          narrow = {
+            folds_style = "invisible",
+          },
+          minimalist = {
+            options = {
+              list = false, -- hide listchars
+            },
+            open_callback = function()
+              lualine.hide()
+            end,
+            close_callback = function()
+              lualine.hide { unhide = true }
+            end,
+          },
+        },
+      }
+    end,
+  }
+
   use {
     "lukas-reineke/indent-blankline.nvim",
     config = function()

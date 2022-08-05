@@ -477,7 +477,8 @@ local function setup()
         d = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "Diagnostics" },
         q = { "<cmd>TroubleToggle quickfix<cr>", "Quickfix list" },
         o = { "<cmd>SymbolsOutline<cr>", "Symbol outline" },
-        z = { require("lsp_lines").toggle, "LSP lines" },
+        x = { require("lsp_lines").toggle, "LSP lines" },
+        z = { ":TZNarrow<CR>", "Zen" },
       },
 
       --
@@ -492,6 +493,7 @@ local function setup()
         s = { "<C-w>s", "Split horizontal" },
         v = { "<C-w>v", "Split vertical" },
         q = { "<C-w>q", "Close" },
+        o = { "<cmd>TZFocus<CR>", "Only this window" },
       },
     },
   }
@@ -511,6 +513,7 @@ local function setup()
         name = "Into",
         ["6"] = { ':<C-u>call base64#v("encode")<cr>', "Base64" },
       },
+      z = { ":'<,'>TZNarrow<CR>", "Zen" },
       -- Cannot use "<" here right now.
       -- https://github.com/folke/which-key.nvim/issues/173
       f = {
