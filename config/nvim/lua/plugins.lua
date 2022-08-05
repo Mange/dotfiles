@@ -18,10 +18,18 @@ require("packer").startup(function(use)
   use "DataWraith/auto_mkdir"
   use "tpope/vim-repeat"
   use "tpope/vim-speeddating"
-  use "tpope/vim-surround"
   use "tpope/vim-eunuch" -- Adds things like :Move, :Rename, :SudoWrite, etc.
   use "tpope/vim-abolish" -- Smart S/re/repl/
   use "tommcdo/vim-exchange"
+
+  use {
+    "kylechui/nvim-surround",
+    config = function()
+      require("nvim-surround").setup {
+        -- Configuration here, or leave empty to use defaults
+      }
+    end,
+  }
 
   use { "antoinemadec/FixCursorHold.nvim" }
 
