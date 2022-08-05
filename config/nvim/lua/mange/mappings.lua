@@ -477,6 +477,7 @@ local function setup()
         d = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "Diagnostics" },
         q = { "<cmd>TroubleToggle quickfix<cr>", "Quickfix list" },
         o = { "<cmd>SymbolsOutline<cr>", "Symbol outline" },
+        z = { require("lsp_lines").toggle, "LSP lines" },
       },
 
       --

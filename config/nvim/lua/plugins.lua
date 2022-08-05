@@ -315,6 +315,13 @@ require("packer").startup(function(use)
   }
 
   use {
+    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+    config = function()
+      require("lsp_lines").setup()
+    end,
+  }
+
+  use {
     "onsails/lspkind-nvim",
     config = function()
       require("lspkind").init()
