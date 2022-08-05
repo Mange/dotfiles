@@ -1,4 +1,5 @@
 local lspformat = require "lsp-format"
+local inlayhints = require "lsp-inlayhints"
 
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
   border = "rounded",
@@ -65,6 +66,8 @@ local function on_attach_without_formatting(client, bufnr)
       augroup END
     ]]
   end
+
+  inlayhints.on_attach(bufnr, client)
 
   require("mange.mappings").attach_lsp(bufnr)
 end
@@ -153,15 +156,31 @@ if_require("lspconfig", function(lspconfig)
   --  Typescript / tsserver
   lspconfig.tsserver.setup {
     capabilities = capabilities(),
+    settings = {
+      typescript = {
+        inlayHints = {
+          includeInlayParameterNameHints = "all",
+          includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+          includeInlayFunctionParameterTypeHints = true,
+          includeInlayVariableTypeHints = true,
+          includeInlayPropertyDeclarationTypeHints = true,
+          includeInlayFunctionLikeReturnTypeHints = true,
+          includeInlayEnumMemberValueHints = true,
+        },
+      },
+      javascript = {
+        inlayHints = {
+          includeInlayParameterNameHints = "all",
+          includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+          includeInlayFunctionParameterTypeHints = true,
+          includeInlayVariableTypeHints = true,
+          includeInlayPropertyDeclarationTypeHints = true,
+          includeInlayFunctionLikeReturnTypeHints = true,
+          includeInlayEnumMemberValueHints = true,
+        },
+      },
+    },
     on_attach = function(client, bufnr)
-      if_require("nvim-lsp-ts-utils", function(ts_utils)
-        ts_utils.setup {
-          enable_import_on_completion = true,
-          enable_formatting = false,
-        }
-        ts_utils.setup_client(client)
-      end)
-
       on_attach_without_formatting(client, bufnr)
     end,
   }

@@ -297,6 +297,24 @@ require("packer").startup(function(use)
   use "lukas-reineke/lsp-format.nvim"
 
   use {
+    "lvimuser/lsp-inlayhints.nvim",
+    config = function()
+      require("lsp-inlayhints").setup {
+        inlay_hints = {
+          type_hints = {
+            prefix = "  ",
+            remove_colon_start = true,
+          },
+          parameter_hints = {
+            prefix = "",
+          },
+        },
+        labels_separator = "",
+      }
+    end,
+  }
+
+  use {
     "onsails/lspkind-nvim",
     config = function()
       require("lspkind").init()
@@ -347,15 +365,6 @@ require("packer").startup(function(use)
     config = function()
       require("trouble").setup {}
     end,
-  }
-
-  use {
-    "jose-elias-alvarez/nvim-lsp-ts-utils",
-    requires = {
-      "neovim/nvim-lspconfig",
-      "nvim-lua/plenary.nvim",
-      "jose-elias-alvarez/null-ls.nvim",
-    },
   }
 
   use {
@@ -465,6 +474,15 @@ require("packer").startup(function(use)
   use {
     "simrat39/rust-tools.nvim",
     requires = { "nvim-lua/plenary.nvim" },
+    config = function()
+      require("rust-tools").setup {
+        tools = {
+          autoSetHints = false, -- handled using lsp-inlayhints plugin instead
+          -- doesn't seem to disable anything for me…? I can live with double
+          -- inline hints until I run :RustDisableInlayHints for now.
+        },
+      }
+    end,
   }
 
   ---
