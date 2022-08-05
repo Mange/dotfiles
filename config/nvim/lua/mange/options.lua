@@ -23,7 +23,7 @@ opt.shiftwidth = 2
 
 -- Show hidden characters
 opt.list = true
-opt.listchars = "tab:→ ,eol:¬,nbsp:•"
+opt.listchars = "tab:→ ,nbsp:•"
 
 -- Search options
 opt.ignorecase = true
