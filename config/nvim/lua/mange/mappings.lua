@@ -227,7 +227,16 @@ local function setup()
       [":"] = { "<cmd>Telescope commands<cr>", "Commands" },
       N = { "<cmd>Telescope resume<cr>", "Telescope resume" },
       j = { "<cmd>SplitjoinSplit<cr>", "Split line" },
-      k = { "<cmd>SplitjoinJoin<cr>", "Join line" },
+      k = {
+        function()
+          if vim.bo.ft == "rust" then
+            require("rust-tools.join_lines").join_lines()
+          else
+            vim.cmd [[SplitjoinJoin]]
+          end
+        end,
+        "Join line",
+      },
 
       --
       -- Leader visual
