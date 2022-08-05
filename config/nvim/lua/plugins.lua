@@ -89,17 +89,8 @@ require("packer").startup(function(use)
   -- Dashboard screen on Neovim boot
   use {
     "glepnir/dashboard-nvim",
-    setup = function()
-      vim.g.dashboard_default_executive = "telescope"
-      vim.g.dashboard_custom_shortcut = {
-        book_marks = "SPC h b",
-        change_colorscheme = "SPC h c",
-        find_file = "SPC s f",
-        find_history = "SPC f h",
-        find_word = "SPC s t",
-        last_session = "SPC S l",
-        new_file = "SPC b n",
-      }
+    config = function()
+      require "mange.dashboard"
     end,
   }
 

@@ -252,7 +252,7 @@ local function setup()
         d = { ":bd<cr>", "Delete buffer" },
         f = { "<cmd>Telescope filetypes<cr>", "Set filetype" },
         l = { ":b #<cr>", "Goto last" },
-        n = { ":enew<cr>", "New" },
+        n = { "<cmd>DashboardNewFile<cr>", "New" },
         a = { "<cmd>A<cr>", "Alternative" },
         A = { "<cmd>AS<cr>", "Alternative (split)" },
       },
