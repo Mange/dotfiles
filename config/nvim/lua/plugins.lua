@@ -107,9 +107,10 @@ require("packer").startup(function(use)
   use {
     "Pocco81/true-zen.nvim",
     config = function()
-      -- https://github.com/Pocco81/true-zen.nvim/issues/91
-      local lualine = require "lualine"
       require("true-zen").setup {
+        integrations = {
+          lualine = true,
+        },
         modes = {
           narrow = {
             folds_style = "invisible",
@@ -118,12 +119,6 @@ require("packer").startup(function(use)
             options = {
               list = false, -- hide listchars
             },
-            open_callback = function()
-              lualine.hide()
-            end,
-            close_callback = function()
-              lualine.hide { unhide = true }
-            end,
           },
         },
       }
