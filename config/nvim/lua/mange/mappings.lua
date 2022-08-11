@@ -478,7 +478,8 @@ local function setup()
         q = { "<cmd>TroubleToggle quickfix<cr>", "Quickfix list" },
         o = { "<cmd>SymbolsOutline<cr>", "Symbol outline" },
         x = { require("lsp_lines").toggle, "LSP lines" },
-        z = { ":TZNarrow<CR>", "Zen" },
+        z = { ":TZAtaraxis<CR>", "Zen" },
+        Z = { ":TZNarrow<CR>", "Zen lines" },
       },
 
       --
@@ -513,7 +514,7 @@ local function setup()
         name = "Into",
         ["6"] = { ':<C-u>call base64#v("encode")<cr>', "Base64" },
       },
-      z = { ":'<,'>TZNarrow<CR>", "Zen" },
+      z = { ":'<,'>TZNarrow<CR>", "Zen lines" },
       -- Cannot use "<" here right now.
       -- https://github.com/folke/which-key.nvim/issues/173
       f = {
