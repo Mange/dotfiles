@@ -192,6 +192,13 @@ awful.rules.rules = {
     },
   },
 
+  {
+    rule = { class = "Workrave" },
+    properties = {
+      titlebars_enabled = false,
+    },
+  },
+
   -- Keyboard viewer
   {
     rule_any = {
