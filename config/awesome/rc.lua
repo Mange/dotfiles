@@ -163,6 +163,9 @@ awful.rules.rules = {
         "Wpa_gui",
         "veromix",
         "xtightvncviewer",
+        -- Pop behaves super crazy; better to start out floating always and then
+        -- manually fixing it when it's placed where I want it.
+        "Pop",
       },
 
       -- Note that the name property shown in xprop might be set slightly after creation of the client
