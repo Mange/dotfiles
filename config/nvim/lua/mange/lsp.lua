@@ -67,7 +67,7 @@ local function on_attach_without_formatting(client, bufnr)
     ]]
   end
 
-  inlayhints.on_attach(bufnr, client)
+  inlayhints.on_attach(client, bufnr)
 
   require("mange.mappings").attach_lsp(bufnr)
 end
@@ -230,6 +230,9 @@ end)
 
 if_require("rust-tools", function(rustTools)
   rustTools.setup {
+    tools = {
+      inlay_hints = { auto = false },
+    },
     server = {
       on_attach = on_attach,
       settings = {
