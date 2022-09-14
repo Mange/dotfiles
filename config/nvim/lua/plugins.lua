@@ -103,12 +103,10 @@ require("packer").startup(function(use)
 
   -- Focus mode
   use {
-    "Pocco81/true-zen.nvim",
+    -- "Pocco81/true-zen.nvim",
+    "loqusion/true-zen.nvim",
     config = function()
       require("true-zen").setup {
-        integrations = {
-          lualine = true,
-        },
         modes = {
           narrow = {
             folds_style = "invisible",
