@@ -5,13 +5,11 @@ vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
   border = "rounded",
   focus = false,
 })
-vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
-  vim.lsp.handlers.signature_help,
-  {
+vim.lsp.handlers["textDocument/signatureHelp"] =
+  vim.lsp.with(vim.lsp.handlers.signature_help, {
     border = "rounded",
     focus = false,
-  }
-)
+  })
 
 local function capabilities(func)
   local caps = vim.lsp.protocol.make_client_capabilities()
@@ -274,7 +272,7 @@ if_require("null-ls", function(null_ls)
 
       null_ls.builtins.formatting.standardrb,
       -- null_ls.builtins.formatting.rubocop,
-      null_ls.builtins.diagnostics.standardrb,
+      -- null_ls.builtins.diagnostics.standardrb,
       -- null_ls.builtins.diagnostics.rubocop,
 
       -- null_ls.builtins.diagnostics.markdownlint,
