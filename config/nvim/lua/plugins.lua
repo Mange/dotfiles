@@ -25,9 +25,7 @@ require("packer").startup(function(use)
   use {
     "kylechui/nvim-surround",
     config = function()
-      require("nvim-surround").setup {
-        -- Configuration here, or leave empty to use defaults
-      }
+      require("nvim-surround").setup()
     end,
   }
 
@@ -198,7 +196,7 @@ require("packer").startup(function(use)
   }
 
   -- Colortheme
-  use { "catppuccin/nvim", as = "catppuccin", run = ":CatppuccinCompile" }
+  use { "catppuccin/nvim", as = "catppuccin" }
 
   -- Show keybinds while waiting for the next key. Allows more complicated
   -- keybinds to be remembered.
@@ -351,8 +349,8 @@ require("packer").startup(function(use)
 
   use {
     "simrat39/symbols-outline.nvim",
-    setup = function()
-      vim.g.symbols_outline = {
+    config = function()
+      require("symbols-outline").setup {
         lsp_blacklist = {},
         symbol_blacklist = {
           -- 'File',
