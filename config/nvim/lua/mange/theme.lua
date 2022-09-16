@@ -8,6 +8,7 @@ function theme.reload()
 end
 function theme.setup()
   vim.o.termguicolors = true
+  vim.g.catppuccin_flavour = "mocha"
 
   local colors = require("catppuccin.palettes").get_palette()
 
@@ -32,7 +33,6 @@ function theme.setup()
     vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
   end
 
-  vim.g.catppuccin_flavour = "mocha"
   catppuccin.setup {
     dim_inactive = {
       enabled = false,
@@ -132,6 +132,9 @@ function theme.setup()
       -- DiffDelete uses a conceal character that spans the entire line. Highlight
       -- that character instead of the background behind it.
       DiffDelete = { fg = "#F28FAD" },
+
+      Folded = { bg = colors.surface0 },
+      FoldedInfo = { fg = colors.subtext0 },
     },
   }
 

@@ -97,6 +97,7 @@ local function setup()
   -- Unmap Q
   -- I'll use it for context-sensitive actions depending on filetype
   map("", "Q", "", { expr = true })
+  vim.keymap.set("n", "<tab>", "za", { desc = "Toggle fold" })
 
   wk_register {
     -- Shift-H and Shift-L to switch tabs

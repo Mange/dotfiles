@@ -1,6 +1,9 @@
 local lspformat = require "lsp-format"
 local inlayhints = require "lsp-inlayhints"
 
+local _, no_ufo = pcall(require, "ufo")
+local has_ufo = not no_ufo
+
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
   border = "rounded",
   focus = false,
@@ -13,6 +16,13 @@ vim.lsp.handlers["textDocument/signatureHelp"] =
 
 local function capabilities(func)
   local caps = vim.lsp.protocol.make_client_capabilities()
+
+  if has_ufo then
+    caps.textDocument.foldingRange = {
+      dynamicRegistration = false,
+      lineFoldingOnly = true,
+    }
+  end
 
   if func then
     caps = func(caps)
@@ -261,23 +271,34 @@ if_require("null-ls", function(null_ls)
     end,
     on_attach = on_attach,
     sources = {
+      --
+      -- Formatting --
+      --
       null_ls.builtins.formatting.prettier,
       null_ls.builtins.formatting.shfmt.with {
         -- Use two spaces for indentation
         extra_args = { "-i", "2" },
       },
       null_ls.builtins.formatting.stylelint,
-
       null_ls.builtins.formatting.stylua,
-
       null_ls.builtins.formatting.standardrb,
-      -- null_ls.builtins.formatting.rubocop,
-      -- null_ls.builtins.diagnostics.standardrb,
-      -- null_ls.builtins.diagnostics.rubocop,
 
-      -- null_ls.builtins.diagnostics.markdownlint,
+      --
+      -- Diagnostics --
+      --
       null_ls.builtins.diagnostics.shellcheck,
-      -- null_ls.builtins.diagnostics.write_good,
+      null_ls.builtins.diagnostics.ansiblelint,
+      null_ls.builtins.diagnostics.checkmake,
+      null_ls.builtins.diagnostics.erb_lint,
+      null_ls.builtins.diagnostics.eslint,
+
+      --
+      -- Code actions --
+      --
+      null_ls.builtins.code_actions.eslint,
+      null_ls.builtins.code_actions.gitrebase,
+      null_ls.builtins.code_actions.refactoring,
+      null_ls.builtins.code_actions.shellcheck,
     },
   }
 end)

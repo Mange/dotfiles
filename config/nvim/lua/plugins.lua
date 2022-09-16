@@ -81,6 +81,16 @@ require("packer").startup(function(use)
     before = { "neovim/nvim-lspconfig" },
   }
 
+  -- Better folds
+  use {
+    "kevinhwang91/nvim-ufo",
+    requires = "kevinhwang91/promise-async",
+    before = { "neovim/nvim-lspconfig" },
+    config = function()
+      require "mange.plugin.folds"
+    end,
+  }
+
   ---
   --- UI plugins
   ---

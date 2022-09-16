@@ -41,10 +41,10 @@ opt.splitright = true
 -- entry.
 opt.wildmode = { "list:longest", "full" }
 
--- Nicer characters in "hole" areas of diffs.
--- NOTE: Theme will set a different FG color to not make this character look
+-- Nicer characters in "hole" areas of diffs and for folds.
+-- NOTE: theme.lua will set a different FG color to not make the diff character look
 -- terrible.
-opt.fillchars = "diff:╱"
+opt.fillchars = [[diff:╱,fold: ,foldopen:,foldsep: ,foldclose:]]
 
 -- Use ripgrep for :grep.
 opt.grepprg = "rg --vimgrep --no-heading --smart-case"
