@@ -2,33 +2,49 @@ local spawn = require "awful.spawn"
 local timer = require "gears.timer"
 local utils = require "utils"
 
+--- @param url string
+--- @return string
 local function repair_spotify_broken_art_url(url)
   if url then
-    return string.gsub(
+    local result = string.gsub(
       url,
       "https://open.spotify.com/image/",
       "https://i.scdn.co/image/"
     )
+    return result
   else
     return url
   end
 end
 
--- Index metadata on {player -> {key -> value}}
--- TODO: Implement a LRU cache here to limit to max 3 players at a time…
-local all_metadata = {}
+--- @alias PlayerStatus "playing" | "paused" | "stopped"
 
--- Index status as {player -> status}
--- TODO: Implement a LRU cache here to limit to max 3 players at a time…
-local all_statuses = {}
+--- @class PlayerMetadata
+--- @field track_id string?
+--- @field length string?
+--- @field art_url string?
+--- @field album_name string?
+--- @field album_artist string?
+--- @field artist string?
+--- @field auto_rating string?
+--- @field disc_number string?
+--- @field title string?
+--- @field track_number string?
+--- @field url string?
 
+--- @class Player
+--- @field name string
+--- @field status PlayerStatus
+--- @field metadata PlayerMetadata
+
+--- @type {[string]: Player}
+local players = {}
+
+--- @class Playerctl
 local playerctl = {
+  ---@type string?
   current_player = nil,
-  current_status = nil,
-  current_metadata = {},
-
-  metadata = all_metadata,
-  statuses = all_statuses,
+  players = players,
 }
 
 local metadata_map = {
@@ -45,43 +61,48 @@ local metadata_map = {
   ["xesam:url"] = "url",
 }
 
-local function metadata_get_all(playername)
-  local data = all_metadata[playername]
-  if data == nil then
-    data = {}
-    all_metadata[playername] = data
+--- @param playername string
+local function get_player(playername)
+  if not players[playername] then
+    players[playername] = {
+      name = playername,
+      status = "stopped",
+      metadata = {},
+    }
   end
-  return data
+  return players[playername]
 end
 
--- Update metadata for a player
+--- Update metadata for a player
+--- @param playername string
+--- @param metadata_name string
+--- @param value string
 local function metadata_set(playername, metadata_name, value)
-  local data = metadata_get_all(playername)
+  local player = get_player(playername)
+  local data = player.metadata
+
   local key = metadata_map[metadata_name] or metadata_name
+
   if key == "art_url" then
     value = repair_spotify_broken_art_url(value)
   end
+
   data[key] = value
 end
 
-local function set_current_player(playername)
-  playerctl.current_player = playername
-  playerctl.current_status = all_statuses[playername] or "stopped"
-  playerctl.current_metadata = metadata_get_all(playername)
-end
-
+---@param playername string
+---@param status PlayerStatus
 local function status_set(playername, status)
-  local old_status = all_statuses[playername]
-  all_statuses[playername] = status
+  local player = get_player(playername)
 
-  if playerctl.current_player == playername then
-    playerctl.current_status = status
-  elseif status == "playing" then
-    set_current_player(playername)
-  end
+  local old_status = player.status
+  player.status = status
 
-  if old_status ~= status then
-    awesome.emit_signal("mange:playerctl:update", playerctl:current())
+  if playerctl.current_player ~= playername and status == "playing" then
+    playerctl.current_player = playername
+    awesome.emit_signal("mange:playerctl:update", player)
+  elseif old_status ~= status then
+    awesome.emit_signal("mange:playerctl:update", player)
   end
 end
 
@@ -100,24 +121,33 @@ local metadata_debounce = timer {
 -- playerctl outputs this each time a metadata key changes:
 -- <playername> <metadataname>         <value>
 -- There is variable whitespace between metadata name and the value.
+--- @param line string
 local function handle_metadata_change(line)
-  local playername, metadataname, value = string.match(
-    line,
-    "(%S+)%s+(%S+)%s+(.+)"
-  )
-  metadata_set(playername, metadataname, value)
-  -- Since this player just changed, make it the current player
-  set_current_player(playername)
+  local playername, metadataname, value =
+    string.match(line, "(%S+)%s+(%S+)%s+(.+)")
 
-  metadata_debounce:again()
+  if playername and metadataname and value then
+    metadata_set(playername, metadataname, value)
+
+    -- Since this player just changed, make it the current player
+    playerctl.current_player = playername
+
+    metadata_debounce:again()
+  end
 end
 
 -- playerctl outputs this each time status changes:
 -- <playername>	<status>
 -- The whitespace is a tab character
+--- @param line string
 local function handle_status_change(line)
   local playername, status = string.match(line, "([^\t]+)\t([^\t]+)")
-  status_set(playername, status)
+  if playername and status then
+    status_set(
+      playername, --[[@as string]]
+      status --[[@as PlayerStatus]]
+    )
+  end
 end
 
 local function spawn_status_watcher()
@@ -139,25 +169,29 @@ local function spawn_metadata_watcher()
   )
 end
 
+--- @return Player?
 function playerctl:current()
-  return {
-    playername = self.current_player,
-    status = self.current_status,
-    metadata = self.current_metadata,
-  }
+  if self.current_player then
+    return get_player(self.current_player)
+  else
+    return nil
+  end
 end
 
+---@param func fun(player: Player?)
 function playerctl:on_update(func)
   awesome.connect_signal("mange:playerctl:update", func)
 end
 
+---@param command string
 local function spawn_playerctl(command)
+  ---@type string[]
   local cmdline = { "playerctl" }
-  local player = playerctl.current_player
+  local playername = playerctl.current_player
 
-  if player then
+  if playername then
     table.insert(cmdline, "-p")
-    table.insert(cmdline, player)
+    table.insert(cmdline, playername)
   end
 
   table.insert(cmdline, command)

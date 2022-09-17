@@ -10,7 +10,7 @@ local utils = require "utils"
 local keys = require "keys"
 local actions = require "actions"
 local dpi = utils.dpi
-local playerctl = require "daemons.playerctl"
+local playerctl = require "daemons.playerctl" --[[@as Playerctl]]
 
 local media_info = wibox.widget {
   layout = wibox.layout.align.horizontal,
@@ -30,7 +30,10 @@ local media_info = wibox.widget {
   },
 }
 
+--- @type string?
 local current_album_art_url = nil
+
+--- @param art_url string?
 local function update_album_art(art_url)
   -- Early exit if album art is the same
   if current_album_art_url == art_url then
@@ -53,27 +56,25 @@ local function update_album_art(art_url)
   end
 end
 
-local function update_song_info(status, metadata)
+---@param player Player
+local function update_song_info(player)
   local title_text = song_info.music_title:get_children_by_id("title")[1]
   local artist_text = song_info.music_artist:get_children_by_id("artist")[1]
 
-  if status == "playing" then
-    title_text:set_text(metadata.title or "Untitled media")
-    artist_text:set_text(metadata.artist or "No artist")
+  if player.status == "playing" then
+    title_text:set_text(player.metadata.title or "Untitled media")
+    artist_text:set_text(player.metadata.artist or "No artist")
   else
-    title_text:set_text(metadata.title or "Play some media")
-    artist_text:set_text(metadata.artist or "")
+    title_text:set_text(player.metadata.title or "Play some media")
+    artist_text:set_text(player.metadata.artist or "")
   end
 end
 
-playerctl:on_update(
-  ---@diagnostic disable-next-line: unused-local
-  function(info)
-    update_album_art(info.metadata.art_url)
-    update_song_info(info.status, info.metadata)
-    media_buttons.update_status(info.status)
-  end
-)
+playerctl:on_update(function(player)
+  update_album_art(player.metadata.art_url)
+  update_song_info(player)
+  media_buttons.update_status(player.status)
+end)
 
 media_buttons.prev_button:buttons(
   keys.mouse_click({}, keys.left_click, actions.playerctl_previous())

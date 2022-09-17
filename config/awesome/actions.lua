@@ -9,7 +9,7 @@ local focus_client = require "focus_client"
 local utils = require "utils"
 local tags = require("configuration.tags").tags
 
-local playerctl = require "daemons.playerctl"
+local playerctl = require "daemons.playerctl" --[[@as Playerctl]]
 local brightness = require "daemons.brightness"
 
 local actions = {}
