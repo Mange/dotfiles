@@ -27,8 +27,15 @@ configuration {
   kb-mode-complete: "";
 
   kb-remove-word-back: "Control+w";
+
+  /* Tab should switch mode */
+  kb-element-next: "";
   kb-mode-next: "Tab";
+
+  /* Shift-tab should switch mode back */
+  kb-element-prev: "";
   kb-mode-previous: "Shift+Tab,ISO_Left_Tab";
+
   kb-row-up: "Up";
   kb-row-tab: "";
 
