@@ -5,6 +5,12 @@ local ui_content = require "widgets.media-info.content"
 local utils = require "utils"
 local dpi = utils.dpi
 
+-- TODO:
+--   * Add support for "Next player" / "Previous player"
+--     Should pause current player, then switch to the next one in the list of
+--     players. Also fetch list of players from playerctl and remove dead
+--     players.
+
 local media_mode = which_keys.new_chord("Media", {
   widget_top = wibox.widget {
     widget = wibox.container.margin,
