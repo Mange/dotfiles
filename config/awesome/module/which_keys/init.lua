@@ -51,6 +51,13 @@ local aliases_to_keys = {
 ---@field stop function()
 ---@field show_popup function()
 ---@field hide_popup function()
+---@field widget_top Widget?
+
+---@class ChordOptions
+---@field keybindings Keybind[]
+---@field timeout number?
+---@field stop_key string[]?
+---@field widget_top Widget?
 
 ---@alias Widget table
 
@@ -95,6 +102,7 @@ local function group_binds_into_columns(binds, num_columns)
   return columns
 end
 
+---@class WhichKeys
 local which_keys = {}
 
 -- Generate pango markup to change foreground color for the given text.
@@ -263,8 +271,7 @@ local function generate_popup(instance, s)
   -- Place binds in columns
   local columns = group_binds_into_columns(instance.binds, num_columns)
 
-  -- TODO: Add support for a custom widget between title and columns (injected
-  -- in options)
+  local widget_top = instance.widget_top
 
   -- Generate popup widget tree from columns and their binds
   return awful.popup {
@@ -276,6 +283,7 @@ local function generate_popup(instance, s)
     visible = true,
     bg = beautiful.which_key.bg,
     widget = vertical(
+      widget_top,
       align_horizontal(
         nil,
         margin(dpi(10), title_widget(instance.title)),
@@ -317,18 +325,19 @@ local function new(instance)
   return instance
 end
 
---- Create a new which_key chord with a given title. The keygrabber_args
---- will be passed to awful.keygrabber.
+--- Create a new which_key chord with a given title.
+---
 --- A chord will exit when a non-sticky key is pressed.
 ---@param title string
----@param keygrabber_args any
+---@param options ChordOptions
 ---@return Chord
-function which_keys.new_chord(title, keygrabber_args)
+function which_keys.new_chord(title, options)
+  ---@type Chord
   local instance = {}
   local keybindings = {}
   local binds = {}
 
-  for i, binding in ipairs(keygrabber_args.keybindings) do
+  for i, binding in ipairs(options.keybindings) do
     local is_sticky = false
     local desc = binding[#binding]
     if type(desc) == "table" then
@@ -353,8 +362,9 @@ function which_keys.new_chord(title, keygrabber_args)
     binds[i] = Bind.new(table.unpack(decorated_binding))
   end
 
-  instance.grabber = awful.keygrabber(gears.table.join(keygrabber_args, {
+  instance.grabber = awful.keygrabber {
     keybindings = keybindings,
+    timeout = options.timeout,
     timeout_callback = function()
       instance.hide_popup()
     end,
@@ -365,10 +375,12 @@ function which_keys.new_chord(title, keygrabber_args)
     -- Does not work. :(
     -- allowed_keys = {},
     stop_event = "release",
-    stop_key = { "Escape" },
-  }))
+    stop_key = options.stop_key or { "Escape" },
+  }
   instance.title = title
   instance.binds = binds
+
+  instance.widget_top = options.widget_top
 
   return new(instance)
 end
@@ -460,12 +472,13 @@ end
 --- @param combo string | Combo
 --- @param name string
 --- @param keybinds Keybind[]
---- @returns Keybind
+--- @return Keybind keybind The keybind that can be used in a menu
 function which_keys.key_nested(combo, name, keybinds)
   local modifiers, key = split_combo(combo)
   local chord = which_keys.new_chord(name, { keybindings = keybinds })
 
-  return {
+  --- @type Keybind
+  local keybind = {
     modifiers,
     key,
     chord.enter,
@@ -474,6 +487,8 @@ function which_keys.key_nested(combo, name, keybinds)
       which_key_colors = beautiful.which_key.nested,
     },
   }
+
+  return keybind
 end
 
 return which_keys

@@ -1,4 +1,4 @@
-local which_keys = require "module.which_keys"
+local which_keys = require "module.which_keys" --[[@as WhichKeys]]
 local actions = require "actions"
 
 local media_mode = which_keys.new_chord("media", {
@@ -63,10 +63,6 @@ local media_mode = which_keys.new_chord("media", {
     ),
   },
   stop_key = { "Escape", "Enter", "Space", "q" },
-  -- Does not work as it will react to me releasing the triggering keybinds
-  -- allowed_keys = {"h", "j", "k", "l"},
-  start_callback = function() end,
-  stop_callback = function() end,
 })
 
 return media_mode
