@@ -179,8 +179,13 @@ function playerctl:current()
 end
 
 ---@param func fun(player: Player?)
+---@return fun() cancel A function to cancel the subscription
 function playerctl:on_update(func)
   awesome.connect_signal("mange:playerctl:update", func)
+
+  return function()
+    awesome.disconnect_signal("mange:playerctl:update", func)
+  end
 end
 
 ---@param command string
