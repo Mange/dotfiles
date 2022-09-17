@@ -12,3 +12,4 @@
           - zsa-wally-cli # …but I'm a nerd
           # Misc
           # TODO: deezloader replacement
+          - cifs-utils
