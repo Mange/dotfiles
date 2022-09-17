@@ -379,7 +379,7 @@ alias gl="git log --no-show-signature --graph -n 1000 --format='tformat:$git_log
 alias s="git status --short --branch"
 alias gs="git show --show-signature"
 alias gd="git diff"
-alias gdw="git diff --color-words"
+alias gds="git diff | delta --side-by-side"
 alias staged="gd --cached"
 
 unset -v git_log_format
