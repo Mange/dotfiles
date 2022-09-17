@@ -1,3 +1,4 @@
+local awful = require "awful"
 local top_panel = require "layout.top-panel"
 local control_center = require "layout.control-center"
 
@@ -9,13 +10,13 @@ end)
 --
 -- Hide top panel when apps go fullscreen
 --
-function update_panel_visibility()
+local function update_panel_visibility()
   for s in screen do
     if s.selected_tag then
       local is_fullscreen = (
-          s.selected_tag.fullscreen_mode
-          or s.selected_tag.layout == awful.layout.suit.max.fullscreen
-        )
+        s.selected_tag.fullscreen_mode
+        or s.selected_tag.layout == awful.layout.suit.max.fullscreen
+      )
 
       s.top_panel.visible = not is_fullscreen
     end

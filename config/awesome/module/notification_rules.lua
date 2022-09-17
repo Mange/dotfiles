@@ -1,3 +1,5 @@
+local utils = require "utils"
+
 local function handle(args)
   if
     args.appname == "Brave"

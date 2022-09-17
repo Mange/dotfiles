@@ -1,12 +1,11 @@
 local naughty = require "naughty"
+local gears = require "gears"
+
 local theme = require "theme"
-local icons = require "theme.icons"
 
 local notification = nil
-local last_screen = nil
 
 local show_tag_toast = function(s)
-  last_screen = s.index
   local tags = s.selected_tags
   local first_tag = tags[1]
   if first_tag then

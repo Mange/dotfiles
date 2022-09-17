@@ -1,3 +1,4 @@
+local awful = require "awful"
 local nice = require "vendor.nice"
 
 nice {

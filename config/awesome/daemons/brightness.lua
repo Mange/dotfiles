@@ -1,5 +1,6 @@
 local timer = require "gears.timer"
-local spawn = require "awful.spawn"
+local awful = require "awful"
+local spawn = awful.spawn
 
 ---@class BrightnessInfo
 local brightness = {
@@ -11,16 +12,14 @@ local brightness = {
 
 local function handle_brightness_output(stdout)
   -- Output: "intel_backlight,backlight,24000,40%,60000"
-  local current, percent, max = string.match(
-    stdout,
-    "[%w_]+,[%w_]+,(%d+),(%d+)%%,(%d+)"
-  )
+  local current, percent, max =
+    string.match(stdout, "[%w_]+,[%w_]+,(%d+),(%d+)%%,(%d+)")
   -- If command fails, don't emit signal.
   if max ~= nil then
     brightness.is_controllable = true
-    brightness.current = tonumber(current)
-    brightness.max = tonumber(max)
-    brightness.percent = tonumber(percent)
+    brightness.current = tonumber(current) or 100
+    brightness.max = tonumber(max) or 100
+    brightness.percent = tonumber(percent) or 100
   else
     brightness.is_controllable = false
     brightness.current = 0

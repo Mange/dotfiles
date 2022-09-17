@@ -25,6 +25,7 @@ local awful = require "awful"
 local wibox = require "wibox"
 local gears = require "gears"
 local beautiful = require "beautiful"
+local naughty = require "naughty"
 
 local keys = require "module.constants.keys"
 local clickable_container = require "widgets.clickable-container"
@@ -53,11 +54,13 @@ local aliases_to_keys = {
 
 ---@alias Widget table
 
+---@alias Combo {[1]: string[], [2]: string}
+
 ---@class Keybind
----@field 1 table<number,modifier> | '"none"' -- Modifiers for this keybind.
----@field 2 string -- The actual key, ex. '"a"'.
----@field 3 function() -- Function to trigger on this keybind.
----@field 4 KeybindDetails? -- Extra details about the keybind.
+---@field [1] table<number,modifier> | '"none"' -- Modifiers for this keybind.
+---@field [2] string -- The actual key, ex. '"a"'.
+---@field [3] function() -- Function to trigger on this keybind.
+---@field [4] KeybindDetails? -- Extra details about the keybind.
 
 ---@param binds Bind[]
 ---@param num_columns number
@@ -253,10 +256,9 @@ local function calculate_columns(width)
   return num_cols, math.floor(width / num_cols)
 end
 
----@param s awesome.screen
 ---@param instance Chord
 local function generate_popup(instance, s)
-  local num_columns, column_width = calculate_columns(s.workarea.width)
+  local num_columns = calculate_columns(s.workarea.width)
 
   -- Place binds in columns
   local columns = group_binds_into_columns(instance.binds, num_columns)
@@ -315,9 +317,11 @@ local function new(instance)
   return instance
 end
 
--- Create a new which_key chord with a given title. The keygrabber_args
--- will be passed to awful.keygrabber.
--- A chord will exit when a non-sticky key is pressed.
+--- Create a new which_key chord with a given title. The keygrabber_args
+--- will be passed to awful.keygrabber.
+--- A chord will exit when a non-sticky key is pressed.
+---@param title string
+---@param keygrabber_args any
 ---@return Chord
 function which_keys.new_chord(title, keygrabber_args)
   local instance = {}
@@ -369,6 +373,15 @@ function which_keys.new_chord(title, keygrabber_args)
   return new(instance)
 end
 
+--- Split a keycombination string into a table of modifiers and the key. If a
+--- table is passed, then the first two elements will be returned. This means
+--- that you can use functions that accepts combinations as either strings or
+--- tables.
+---
+--- For example:
+---   "Mod4+Shift+Return" -> { "Mod4", "Shift" }, "Return"
+---@param combo string | { [1]: string[], [2]: string }
+---@return string[], string
 local function split_combo(combo)
   if type(combo) == "table" then
     return combo[1], combo[2]
@@ -384,8 +397,12 @@ local function split_combo(combo)
   return elems, key
 end
 
--- Helper method to generate proper keygrabber keybind parameters from
--- something a bit more compact.
+--- Generate a new keybind entry for `which_key`.
+---
+--- @param combo string | Combo
+--- @param name string
+--- @param action fun()
+--- @return Keybind
 --
 -- Examples:
 --  ("a", "foo", func)
@@ -440,9 +457,13 @@ function which_keys.key(combo, name, action, overrides)
   return { modifiers, key, action, desc }
 end
 
-function which_keys.key_nested(combo, name, keys)
+--- @param combo string | Combo
+--- @param name string
+--- @param keybinds Keybind[]
+--- @returns Keybind
+function which_keys.key_nested(combo, name, keybinds)
   local modifiers, key = split_combo(combo)
-  local chord = which_keys.new_chord(name, { keybindings = keys })
+  local chord = which_keys.new_chord(name, { keybindings = keybinds })
 
   return {
     modifiers,

@@ -1,6 +1,7 @@
 -- Try to detect screen "focus" change.
 -- https://github.com/awesomeWM/awesome/pull/2219
 -- Monkey patch to detect when explicitly changing focus to a different screen.
+local awful = require "awful"
 local original_method = awful.screen.focus
 awful.screen.focus = function(...)
   local old_screen = awful.screen.focused()

@@ -1,8 +1,12 @@
+local awful = require "awful"
+local gears = require "gears"
+
 local utils = require "utils"
 
 local function find_icon(app_name, callback)
   awful.spawn.easy_async(
     { "find-icon-file", app_name },
+    ---@diagnostic disable-next-line: unused-local
     function(stdout, stderr, exitreason, exitcode)
       if exitcode == 0 then
         local path = utils.strip(stdout)

@@ -4,10 +4,10 @@
 pcall(require, "luarocks.loader")
 
 -- Standard awesome library
-gears = require "gears"
-awful = require "awful"
+local gears = require "gears"
+local awful = require "awful"
 local beautiful = require "beautiful"
-naughty = require "naughty"
+local naughty = require "naughty"
 
 -- Make AwesomeWM / Lua use the configured locale
 os.setlocale(os.getenv "LANG")
@@ -54,9 +54,8 @@ require "vendor.bling"
 require "module.titlebars"
 
 --
-utils = require "utils"
-keys = require "keys"
-actions = require "actions"
+local utils = require "utils"
+local keys = require "keys"
 local dropdown = require "dropdown"
 local handle_notification = require("module.notification_rules").handle
 local fix_missing_icon = require "module.fix_missing_icon"
@@ -67,7 +66,7 @@ require "module.patches"
 -- A `require` that reloads the module if it was already loaded.
 -- Useful in REPL to be able to test changes to your module without restarting
 -- Awesome.
-function reload(name)
+function _G.reload(name)
   package.loaded[name] = nil
   return require(name)
 end
@@ -92,7 +91,7 @@ local tags = require("configuration.tags").tags
 -- Key bindings
 --
 
-clientbuttons = gears.table.join(
+local clientbuttons = gears.table.join(
   awful.button({}, keys.left_click, function(c)
     c:emit_signal("request::activate", "mouse_click", { raise = true })
   end),

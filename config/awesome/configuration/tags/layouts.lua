@@ -1,3 +1,4 @@
+local awful = require "awful"
 local bling = require "vendor.bling"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.

@@ -1,3 +1,5 @@
+local awful = require "awful"
+local gears = require "gears"
 local beautiful = require "beautiful"
 local wibox = require "wibox"
 

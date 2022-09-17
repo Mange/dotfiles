@@ -17,6 +17,7 @@
 
 local bling = require "vendor.bling"
 local utils = require "utils"
+local awful = require "awful"
 
 local function is_portrait(s)
   return s.geometry.height > s.geometry.width
