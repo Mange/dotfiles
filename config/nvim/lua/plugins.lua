@@ -445,7 +445,9 @@ require("packer").startup(function(use)
   use {
     "github/copilot.vim",
     config = function()
-      require "mange.copilot"
+      vim.g.copilot_no_tab_map = true
+      vim.g.copilot_filetypes = { eruby = false }
+      -- Mapping set up in mappings.lua
     end,
   }
 
