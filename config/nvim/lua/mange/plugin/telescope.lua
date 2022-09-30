@@ -20,4 +20,14 @@ require("telescope").setup {
       },
     },
   },
+
+  extensions = {
+    file_browser = {
+      mappings = {
+        ["i"] = {
+          ["<C-w>"] = {"<c-s-w>", type = "command" },
+        },
+      },
+    },
+  },
 }
