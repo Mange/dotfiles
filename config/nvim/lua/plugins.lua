@@ -179,24 +179,16 @@ require("packer").startup(function(use)
   use {
     "nvim-telescope/telescope.nvim",
     as = "telescope",
-    requires = { plenary },
+    requires = {
+      plenary,
+      "nvim-telescope/telescope-file-browser.nvim",
+      {
+        "nvim-telescope/telescope-fzf-native.nvim",
+        run = "make",
+      }
+    },
     config = function()
       require "mange.plugin.telescope"
-    end,
-  }
-  use {
-    "nvim-telescope/telescope-file-browser.nvim",
-    after = { "telescope" },
-    config = function()
-      require("telescope").load_extension "file_browser"
-    end,
-  }
-  use {
-    "nvim-telescope/telescope-fzf-native.nvim",
-    run = "make",
-    after = { "telescope" },
-    config = function()
-      require("telescope").load_extension "fzf"
     end,
   }
 
