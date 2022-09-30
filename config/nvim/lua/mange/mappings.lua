@@ -112,7 +112,7 @@ local function setup()
 
     -- Open file browser in current file's directory
     ["-"] = {
-      ':Telescope file_browser cwd=<C-R>=expand("%:h")<cr><cr>',
+      ':Telescope file_browser cwd=<C-R>=expand("%:p:h")<cr><cr>',
       "Browse file directory",
     },
 
