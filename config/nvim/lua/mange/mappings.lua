@@ -112,13 +112,13 @@ local function setup()
 
     -- Open file browser in current file's directory
     ["-"] = {
-      ':Telescope file_browser cwd=<C-R>=expand("%:p:h")<cr><cr>',
+      ':Telescope file_browser cwd=<C-R>=fnameescape(expand("%:p:h"))<cr><cr>',
       "Browse file directory",
     },
 
     -- Asterisk * should only set the current search, not jump to the next match.
     ["*"] = {
-      ":let @/ = '\\<<C-R>=expand('<cword>')<CR>\\>'<CR>",
+      ":let @/ = '\\<<C-R>=fnameescape(expand('<cword>'))<CR>\\>'<CR>",
       "Search word under cursor",
     },
 
@@ -201,9 +201,9 @@ local function setup()
   -- Command mode
   --
 
-  map("c", "%%", "<C-R>=expand('%')<cr>", { silent = false }) -- Full path
-  map("c", "$$", "<C-R>=expand('%:h').'/'<cr>", { silent = false }) -- Dirname
-  map("c", "^^", "<C-R>=expand('%:t')<cr>", { silent = false }) -- Basename
+  map("c", "%%", "<C-R>=fnameescape(expand('%'))<cr>", { silent = false }) -- Full path
+  map("c", "$$", "<C-R>=fnameescape(expand('%:h').'/')<cr>", { silent = false }) -- Dirname
+  map("c", "^^", "<C-R>=fnameescape(expand('%:t'))<cr>", { silent = false }) -- Basename
   wk_register({
     ["%%"] = "which_key_ignore",
     ["$$"] = "which_key_ignore",
@@ -303,10 +303,10 @@ local function setup()
       --
       ["f"] = {
         name = "File/Fold",
-        r = { ":Rename <C-R>=expand('%:t')<cr>", "Rename", silent = false },
+        r = { ":Rename <C-R>=fnameescape(expand('%:t'))<cr>", "Rename", silent = false },
         D = { ":Remove<CR>", "Delete", silent = false },
-        m = { ":Move <C-R>=expand('%:h')<cr>", "Move", silent = false },
-        c = { ":Copy <C-R>=expand('%')<cr>", "Copy", silent = false },
+        m = { ":Move <C-R>=fnameescape(expand('%:h'))<cr>", "Move", silent = false },
+        c = { ":Copy <C-R>=fnameescape(expand('%'))<cr>", "Copy", silent = false },
         h = { "<cmd>Telescope oldfiles<cr>", "History" },
         s = { "<cmd>write<cr>", "Save file" },
         a = { "<cmd>silent! wall<cr>", "Save all" },
