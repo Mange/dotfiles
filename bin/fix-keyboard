@@ -1,21 +1,43 @@
 #!/bin/sh
 config_dir="${XDG_CONFIG_HOME}/xmodmap"
 
-xmodmap "${config_dir}/custom_keyboard"
-programmable_keyboard=no
+usage() {
+  echo "$0 [--programmable yes|no]"
+  echo ""
+  echo "Fix keyboard config. Will assume programmable setting from hostname."
+  echo ""
+  echo "Defaults:"
+  echo "--programmable yes"
+}
 
-case "$(hostname)" in
-socia)
-  programmable_keyboard=yes
-  ;;
-krista) ;;
-*)
-  # Do nothing extra
-  ;;
-esac
+if [ "$(hostname)" = "socia" ]; then
+  programmable=yes
+fi
+
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+  --help)
+    usage
+    exit 0
+    ;;
+  --programmable)
+    shift
+    programmable="$1"
+    shift
+    ;;
+  *)
+    echo "Unknown option $1" >&2
+    usage >&2
+    exit 1
+    ;;
+  esac
+done
+
+xmodmap "${config_dir}/custom_keyboard"
+programmable=no
 
 # Some keyboards cannot be reprogrammed in hardware.
-if [ "$programmable_keyboard" = "no" ]; then
+if [ "$programmable" = "no" ]; then
   xmodmap "${config_dir}/caps_is_super"
 fi
 
