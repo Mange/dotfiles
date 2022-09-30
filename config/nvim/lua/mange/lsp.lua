@@ -302,3 +302,15 @@ if_require("null-ls", function(null_ls)
     },
   }
 end)
+
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(args)
+    -- Don't use LSP (mostly null-ls) to format lines with `gqq`. Most
+    -- formatters and LSP servers either don't support it, care about long
+    -- lines, or touch comments at all. I mainly use this to opt-in to wrap
+    -- longer lines, mostly in comments and prose, which will never work well
+    -- here. Formatting code in a standardized fasion is something I do on save
+    -- anyway.
+    vim.bo[args.buf].formatexpr = nil
+  end,
+})
