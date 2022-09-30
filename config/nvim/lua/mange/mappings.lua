@@ -187,7 +187,9 @@ local function setup()
   for _, mode in pairs { "o", "x" } do
     wk_register({
       ["ih"] = {
-        require("gitsigns.actions").select_hunk,
+        function()
+          require("gitsigns.actions").select_hunk()
+        end,
         "Inner hunk",
       },
     }, {
@@ -478,7 +480,12 @@ local function setup()
         d = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "Diagnostics" },
         q = { "<cmd>TroubleToggle quickfix<cr>", "Quickfix list" },
         o = { "<cmd>SymbolsOutline<cr>", "Symbol outline" },
-        x = { require("lsp_lines").toggle, "LSP lines" },
+        x = {
+          function()
+            require("lsp_lines").toggle()
+          end,
+          "LSP lines",
+        },
         z = { ":TZAtaraxis<CR>", "Zen" },
         Z = { ":TZNarrow<CR>", "Zen lines" },
       },

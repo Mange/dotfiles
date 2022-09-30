@@ -10,6 +10,9 @@
 --
 
 require("packer").startup(function(use)
+  local plenary = "nvim-lua/plenary.nvim"
+  local devicons = "kyazdani42/nvim-web-devicons"
+
   ---
   --- Basics
   ---
@@ -65,9 +68,9 @@ require("packer").startup(function(use)
 
   use {
     "windwp/nvim-autopairs",
-    requires = {
+    after = {
       -- Wants to hook into <CR> mappings set by cmp
-      "hrsh7th/nvim-cmp",
+      "cmp",
     },
     config = function()
       require "mange.plugin.autopairs"
@@ -78,14 +81,14 @@ require("packer").startup(function(use)
   -- it's executed real early.
   use {
     "axelf4/vim-strip-trailing-whitespace",
-    before = { "neovim/nvim-lspconfig" },
+    before = { "lspconfig" },
   }
 
   -- Better folds
   use {
     "kevinhwang91/nvim-ufo",
     requires = "kevinhwang91/promise-async",
-    before = { "neovim/nvim-lspconfig" },
+    before = { "lspconfig" },
     config = function()
       require "mange.plugin.folds"
     end,
@@ -105,7 +108,7 @@ require("packer").startup(function(use)
   -- Statusline
   use {
     "hoob3rt/lualine.nvim",
-    requires = { "kyazdani42/nvim-web-devicons", opt = true },
+    requires = { { devicons, opt = true } },
     config = function()
       require "mange.statusline"
     end,
@@ -175,14 +178,15 @@ require("packer").startup(function(use)
   -- Finder
   use {
     "nvim-telescope/telescope.nvim",
-    requires = { "nvim-lua/plenary.nvim" },
+    as = "telescope",
+    requires = { plenary },
     config = function()
       require "mange.plugin.telescope"
     end,
   }
   use {
     "nvim-telescope/telescope-file-browser.nvim",
-    requires = { "nvim-telescope/telescope.nvim" },
+    after = { "telescope" },
     config = function()
       require("telescope").load_extension "file_browser"
     end,
@@ -190,7 +194,7 @@ require("packer").startup(function(use)
   use {
     "nvim-telescope/telescope-fzf-native.nvim",
     run = "make",
-    requires = { "nvim-telescope/telescope.nvim" },
+    after = { "telescope" },
     config = function()
       require("telescope").load_extension "fzf"
     end,
@@ -215,9 +219,6 @@ require("packer").startup(function(use)
     end,
   }
 
-  -- Icons; used by some other plugins
-  use "kyazdani42/nvim-web-devicons"
-
   -- Show color previews
   -- Fork of norcalli/nvim-colorizer.lua
   -- See: https://github.com/norcalli/nvim-colorizer.lua/pull/55
@@ -233,7 +234,7 @@ require("packer").startup(function(use)
 
   use {
     "kosayoda/nvim-lightbulb",
-    requires = "antoinemadec/FixCursorHold.nvim",
+    requires = { "antoinemadec/FixCursorHold.nvim" },
     config = function()
       require("nvim-lightbulb").setup { autocmd = { enabled = true } }
     end,
@@ -244,10 +245,10 @@ require("packer").startup(function(use)
   ---
   use {
     "TimUntersberger/neogit",
-    requires = {
-      { "nvim-lua/plenary.nvim" },
-      { "sindrets/diffview.nvim" },
-    },
+    as = "neogit",
+    requires = { plenary },
+    before = { "diffview" },
+
     config = function()
       require("neogit").setup {
         -- I know what I'm doing
@@ -278,10 +279,8 @@ require("packer").startup(function(use)
 
   use {
     "lewis6991/gitsigns.nvim",
-    requires = {
-      "nvim-lua/plenary.nvim",
-      "TimUntersberger/neogit",
-    },
+    requires = { plenary },
+    after = { "neogit" },
     config = function()
       require("gitsigns").setup {
         signs = {
@@ -297,9 +296,8 @@ require("packer").startup(function(use)
 
   use {
     "sindrets/diffview.nvim",
-    requires = {
-      { "nvim-lua/plenary.nvim" },
-    },
+    as = "diffview",
+    requires = { plenary },
     config = function()
       require("diffview").setup {
         key_bindings = {
@@ -322,17 +320,25 @@ require("packer").startup(function(use)
   ---
   use {
     "neovim/nvim-lspconfig",
-    requires = { "jose-elias-alvarez/null-ls.nvim" },
+    as = "lspconfig",
     config = function()
       require "mange.lsp"
     end,
   }
 
-  use "jose-elias-alvarez/null-ls.nvim"
-  use "lukas-reineke/lsp-format.nvim"
+  use {
+    "jose-elias-alvarez/null-ls.nvim",
+    as = "null-ls",
+    before = { "lspconfig" },
+  }
+  use {
+    "lukas-reineke/lsp-format.nvim",
+    before = { "lspconfig" },
+  }
 
   use {
     "lvimuser/lsp-inlayhints.nvim",
+    before = { "lspconfig" },
     config = function()
       require("lsp-inlayhints").setup {
         inlay_hints = {
@@ -351,6 +357,7 @@ require("packer").startup(function(use)
 
   use {
     "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+    after = { "lspconfig" },
     config = function()
       require("lsp_lines").setup()
     end,
@@ -403,7 +410,7 @@ require("packer").startup(function(use)
 
   use {
     "folke/trouble.nvim",
-    requires = "kyazdani42/nvim-web-devicons",
+    requires = { devicons },
     config = function()
       require("trouble").setup {}
     end,
@@ -411,10 +418,8 @@ require("packer").startup(function(use)
 
   use {
     "nvim-treesitter/nvim-treesitter",
+    as = "treesitter",
     run = ":TSUpdate",
-    requires = {
-      { "JoosepAlviste/nvim-ts-context-commentstring" },
-    },
     config = function()
       require "mange.treesitter"
     end,
@@ -422,7 +427,7 @@ require("packer").startup(function(use)
 
   use {
     "narutoxy/dim.lua",
-    requires = { "nvim-treesitter/nvim-treesitter", "neovim/nvim-lspconfig" },
+    after = { "treesitter", "lspconfig" },
     config = function()
       require("dim").setup {}
     end,
@@ -433,7 +438,7 @@ require("packer").startup(function(use)
   ---
   use {
     "dcampos/nvim-snippy",
-    before = "hrsh7th/nvim-cmp",
+    before = { "cmp", "dcampos/cmp-snippy" },
     config = function()
       require("snippy").setup {}
     end,
@@ -453,6 +458,7 @@ require("packer").startup(function(use)
 
   use {
     "hrsh7th/nvim-cmp",
+    as = "cmp",
     requires = {
       "Saecki/crates.nvim",
       "dmitmel/cmp-cmdline-history",
@@ -474,13 +480,14 @@ require("packer").startup(function(use)
   ---
   --- Coding
   ---
-  use "JoosepAlviste/nvim-ts-context-commentstring"
+  use { "JoosepAlviste/nvim-ts-context-commentstring", after = { "treesitter" } }
   use "junegunn/vim-easy-align"
 
   -- Insert closing </tags> automatically in HTML-like filetypes.
   -- (Also handles renames of opening tag)
   use {
     "windwp/nvim-ts-autotag",
+    after = { "lspconfig", "treesitter" },
     config = function()
       require("nvim-ts-autotag").setup()
     end,
@@ -513,11 +520,12 @@ require("packer").startup(function(use)
   ---
   --- Rust
   ---
-  use { "Saecki/crates.nvim", requires = { "nvim-lua/plenary.nvim" } }
+  use { "Saecki/crates.nvim", requires = { plenary } }
 
   use {
     "simrat39/rust-tools.nvim",
-    requires = { "nvim-lua/plenary.nvim" },
+    requires = { plenary },
+    before = { "lvimuser/lsp-inlayhints.nvim" },
     config = function()
       require("rust-tools").setup {
         tools = {
