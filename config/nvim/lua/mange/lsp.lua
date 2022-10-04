@@ -1,8 +1,8 @@
 local lspformat = require "lsp-format"
 local inlayhints = require "lsp-inlayhints"
 
-local _, no_ufo = pcall(require, "ufo")
-local has_ufo = not no_ufo
+local has_ufo, _ = pcall(require, "ufo")
+local has_cmp, cmp = pcall(require, "cmp_nvim_lsp")
 
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
   border = "rounded",
@@ -17,6 +17,10 @@ vim.lsp.handlers["textDocument/signatureHelp"] =
 local function capabilities(func)
   local caps = vim.lsp.protocol.make_client_capabilities()
 
+  if has_cmp then
+    caps = cmp.update_capabilities(caps)
+  end
+
   if has_ufo then
     caps.textDocument.foldingRange = {
       dynamicRegistration = false,
@@ -25,14 +29,10 @@ local function capabilities(func)
   end
 
   if func then
-    caps = func(caps)
+    func(caps)
   end
 
-  if_require("cmp_nvim_lsp", function(cmp)
-    return cmp.update_capabilities(caps)
-  end, function()
-    return caps
-  end)
+  return caps
 end
 
 local function buffer_autocmd(bufnr, group_name, event, callback)
@@ -201,7 +201,6 @@ if_require("lspconfig", function(lspconfig)
   lspconfig.ccls.setup {
     capabilities = capabilities(function(caps)
       caps.offsetEncoding = { "utf-16" }
-      return caps
     end),
     on_attach = on_attach,
   }
