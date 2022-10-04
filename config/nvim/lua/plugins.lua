@@ -108,7 +108,7 @@ require("packer").startup(function(use)
   -- Statusline
   use {
     "hoob3rt/lualine.nvim",
-    requires = { { devicons, opt = true } },
+    requires = { devicons },
     config = function()
       require "mange.statusline"
     end,
@@ -185,7 +185,7 @@ require("packer").startup(function(use)
       {
         "nvim-telescope/telescope-fzf-native.nvim",
         run = "make",
-      }
+      },
     },
     config = function()
       require "mange.plugin.telescope"
