@@ -18,9 +18,6 @@ local dropdown = require "dropdown"
 local handle_notification = require("module.notification_rules").handle
 local fix_missing_icon = require "module.fix_missing_icon"
 
--- Patch some things in AwesomeWM to make it easier to build things.
-require "module.patches"
-
 require "configuration.screens"
 require "layout"
 local tags = require("configuration.tags").tags

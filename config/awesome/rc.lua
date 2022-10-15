@@ -19,6 +19,9 @@
 require "bootstrap"
 require "stdlib"
 
+-- Patch some things in AwesomeWM to make it easier to build things.
+setup_module "module.patches"
+
 local autostart = require "configuration.autostart"
 autostart.early()
 
