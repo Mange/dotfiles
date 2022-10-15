@@ -36,6 +36,9 @@ end
 --- @module "configuration.client_rules"
 require_module "configuration.client_rules"
 
+--- @module "module.wallpaper"
+require_module "module.wallpaper"
+
 --- @module "module.titlebars"
 require_module "module.titlebars"
 require "vendor.bling"

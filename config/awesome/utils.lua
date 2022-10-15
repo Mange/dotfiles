@@ -134,20 +134,6 @@ function utils.first_wallpaper_path(names)
   return utils.wallpaper_path "landscape.jpg"
 end
 
-function utils.reload_wallpaper(s)
-  gears.wallpaper.maximized(
-    s.wallpaper_override or beautiful.wallpaper,
-    s,
-    false
-  )
-end
-
-function utils.reload_wallpapers()
-  for s in screen do
-    utils.reload_wallpaper(s)
-  end
-end
-
 function utils.client_has_tag(c, t)
   for _, tag in ipairs(c:tags()) do
     if tag == t or tag.name == t or tag.index == t then
