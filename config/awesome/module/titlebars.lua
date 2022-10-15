@@ -9,7 +9,7 @@ nice {
   },
 }
 
-client.connect_signal("property::floating", function(c)
+local function on_floating_toggle(c)
   -- maximized or fullscreen is technically floating, but we don't want titlebars on them
   if c.maximized or c.fullscreen then
     awful.titlebar.hide(c, "top")
@@ -18,4 +18,15 @@ client.connect_signal("property::floating", function(c)
   else
     awful.titlebar.hide(c, "top")
   end
-end)
+end
+
+return {
+  -- @type ModuleInitializerFunction
+  initialize = function()
+    client.connect_signal("property::floating", on_floating_toggle)
+
+    return function()
+      client.disconnect_signal("property::floating", on_floating_toggle)
+    end
+  end,
+}
