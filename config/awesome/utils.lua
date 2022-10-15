@@ -3,15 +3,6 @@ local gears = require "gears"
 local beautiful = require "beautiful"
 local xresources = require "beautiful.xresources"
 
--- xproperties are persisted on Awesome restarts, which means we can put a
--- value here on startup and then all restarts will be able to read it out.
-awesome.register_xproperty("awesome_restart_check", "boolean")
-local restart_detected = awesome.get_xproperty "awesome_restart_check" ~= nil
-awesome.set_xproperty("awesome_restart_check", true)
-
--- Check if running inside awmtt (using the test.sh script)
-local awmtt_detected = (os.getenv "IN_AWMTT" == "yes")
-
 local utils = {
   dpi = xresources.apply_dpi,
 }
@@ -103,14 +94,9 @@ function utils.find_client(matchers)
   end
 end
 
-function utils.on_first_start(func)
-  if not restart_detected and not awmtt_detected then
-    func()
-  end
-end
-
+--- @deprecated Use global `is_test_mode()` instead
 function utils.is_test()
-  return awmtt_detected or _G.is_test == true
+  return is_test_mode()
 end
 
 -- Uses gears.debug.dump_return to log a complex value to a log file.

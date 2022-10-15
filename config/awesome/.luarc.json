@@ -1,0 +1,18 @@
+{
+  "$schema": "https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json",
+  "Lua.diagnostics.globals": [
+    "describe",
+    "it",
+    "before_each",
+    "after_each",
+    "awesome",
+    "theme",
+    "client",
+    "P",
+    "screen",
+    "root",
+    "tag",
+    "utf8",
+    "mouse"
+  ]
+}
