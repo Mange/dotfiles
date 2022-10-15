@@ -98,6 +98,13 @@ local function setup()
   -- I'll use it for context-sensitive actions depending on filetype
   map("", "Q", "", { expr = true })
   vim.keymap.set("n", "<tab>", "za", { desc = "Toggle fold" })
+  -- Restore <C-i> after <tab> is taken. See :help tui-input
+  vim.keymap.set(
+    "n",
+    "<C-i>",
+    "<C-i>",
+    { desc = "Jump forward", remap = false }
+  )
 
   wk_register {
     -- Shift-H and Shift-L to switch tabs
@@ -201,16 +208,24 @@ local function setup()
   -- Command mode
   --
 
-  map("c", "%%", "<C-R>=fnameescape(expand('%'))<cr>", { silent = false }) -- Full path
-  map("c", "$$", "<C-R>=fnameescape(expand('%:h').'/')<cr>", { silent = false }) -- Dirname
-  map("c", "^^", "<C-R>=fnameescape(expand('%:t'))<cr>", { silent = false }) -- Basename
-  wk_register({
-    ["%%"] = "which_key_ignore",
-    ["$$"] = "which_key_ignore",
-    ["^^"] = "which_key_ignore",
-  }, {
-    mode = "c",
-  })
+  map(
+    "c",
+    "%%",
+    "<C-R>=fnameescape(expand('%'))<cr>",
+    { silent = false, desc = "Buffer path" }
+  ) -- Full path
+  map(
+    "c",
+    "$$",
+    "<C-R>=fnameescape(expand('%:h').'/')<cr>",
+    { silent = false, desc = "Buffer dirname" }
+  ) -- Dirname
+  map(
+    "c",
+    "^^",
+    "<C-R>=fnameescape(expand('%:t'))<cr>",
+    { silent = false, desc = "Buffer basename" }
+  ) -- Basename
 
   --
   -- Visual mode
@@ -303,10 +318,22 @@ local function setup()
       --
       ["f"] = {
         name = "File/Fold",
-        r = { ":Rename <C-R>=fnameescape(expand('%:t'))<cr>", "Rename", silent = false },
+        r = {
+          ":Rename <C-R>=fnameescape(expand('%:t'))<cr>",
+          "Rename",
+          silent = false,
+        },
         D = { ":Remove<CR>", "Delete", silent = false },
-        m = { ":Move <C-R>=fnameescape(expand('%:h'))<cr>", "Move", silent = false },
-        c = { ":Copy <C-R>=fnameescape(expand('%'))<cr>", "Copy", silent = false },
+        m = {
+          ":Move <C-R>=fnameescape(expand('%:h'))<cr>",
+          "Move",
+          silent = false,
+        },
+        c = {
+          ":Copy <C-R>=fnameescape(expand('%'))<cr>",
+          "Copy",
+          silent = false,
+        },
         h = { "<cmd>Telescope oldfiles<cr>", "History" },
         s = { "<cmd>write<cr>", "Save file" },
         a = { "<cmd>silent! wall<cr>", "Save all" },

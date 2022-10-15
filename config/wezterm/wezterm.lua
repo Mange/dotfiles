@@ -47,6 +47,13 @@ return {
   cursor_blink_ease_in = "Constant",
   cursor_blink_ease_out = "Constant",
 
+  -- Kitty encoding breaks some of my vim bindings. I should
+  -- perhaps debug that at some later time.
+  -- Example keybind that breaks: Anything involving $ and ?.
+  -- Example: cmap $$, Neogit's $ and ? mapping in Status.
+  -- enable_kitty_keyboard = true,
+  enable_csi_u_key_encoding = true,
+
   disable_default_key_bindings = true,
   keys = {
     { mods = "CTRL|SHIFT", key = "z", action = "QuickSelect" },
