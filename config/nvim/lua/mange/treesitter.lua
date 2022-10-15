@@ -2,6 +2,13 @@ require("nvim-treesitter.configs").setup {
   ensure_installed = "all",
   highlight = {
     enable = true,
+    ---@diagnostic disable-next-line: unused-local
+    disable = function(lang, buf)
+      -- erb files keep crashing with treesitter.
+      if string.match(vim.api.nvim_buf_get_name(buf), ".html.erb$") then
+        return true
+      end
+    end,
   },
   incremental_selection = {
     enable = true,
