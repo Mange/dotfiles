@@ -12,7 +12,7 @@ local theme = {}
 gears.table.crush(theme, default_theme)
 
 ---@param base string
----@param opacity string
+---@param opacity_hex string
 ---@return string
 local function opacity(base, opacity_hex)
   if string.len(base) > 7 then

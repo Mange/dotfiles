@@ -7,7 +7,9 @@ local dropdown = require "dropdown"
 local sharedtags = require "sharedtags"
 local focus_client = require "focus_client"
 local utils = require "utils"
-local tags = require("configuration.tags").tags
+
+--- @module "module.tags"
+local tags = require_module("module.tags").tags
 
 local playerctl = require "daemons.playerctl" --[[@as Playerctl]]
 local brightness = require "daemons.brightness"

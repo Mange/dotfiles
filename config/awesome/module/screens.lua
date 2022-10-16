@@ -1,4 +1,4 @@
--- This file tries to dynamically figure out my multiscreen layout and place
+-- This module tries to dynamically figure out my multiscreen layout and place
 -- tags and things that makes the most sense in it.
 --
 -- I have some general rules of thumbs that I try to follow, and this file
@@ -15,9 +15,10 @@
 -- This file looks at the screens and points my different roles to the best
 -- available screen.
 
-local bling = require "vendor.bling"
 local utils = require "utils"
 local awful = require "awful"
+
+--- @alias ScreenType "main" | "reference" | "comms"
 
 local function is_portrait(s)
   return s.geometry.height > s.geometry.width
@@ -47,9 +48,9 @@ local function right_of(of)
   return most_right
 end
 
-local screen_layout = {}
+local M = {}
 
-function screen_layout.get_layout()
+function M.get_layout()
   -- Handle xrandr edge case of no screen being the primary one
   local primary = screen.primary or screen[1]
 
@@ -60,12 +61,12 @@ function screen_layout.get_layout()
   }
 end
 
-function screen_layout.is_portrait(s)
+function M.is_portrait(s)
   return is_portrait(s)
 end
 
-function screen_layout.apply_wallpaper_overrides()
-  local current = screen_layout.current
+function M.apply_wallpaper_overrides()
+  local current = M.current
 
   for _, type in ipairs { "main", "reference", "comms" } do
     local s = current[type]
@@ -79,44 +80,29 @@ function screen_layout.apply_wallpaper_overrides()
   end
 end
 
-function screen_layout.layout_rotation(layout, screen)
-  local landscapes = {
-    awful.layout.suit.tile,
-    awful.layout.suit.tile.left,
-    awful.layout.suit.fair,
-    bling.layout.vertical,
-  }
+--- @param type ScreenType
+function M.find_screen(type)
+  return M.current[type] or M.current.main
+end
 
-  local portraits = {
-    awful.layout.suit.tile.bottom,
-    awful.layout.suit.tile.top,
-    awful.layout.suit.fair.horizontal,
-    bling.layout.horizontal,
-  }
-
-  if is_portrait(screen) then
-    -- Find layouts that only make sense for landscape and rotate them
-    for i, landscape in ipairs(landscapes) do
-      if layout == landscape then
-        return portraits[i]
-      end
-    end
-  else
-    -- Find layouts that only make sense for portrait and rotate them
-    for i, portrait in ipairs(portraits) do
-      if layout == portrait then
-        return landscapes[i]
-      end
-    end
+--- @type ModuleInitializerFunction
+function M.initialize()
+  local refresh_layout = function()
+    M.current = M.get_layout()
+    M.apply_wallpaper_overrides()
   end
 
-  return layout
+  -- When a screen is added, and for all currently added screens
+  awful.screen.connect_for_each_screen(refresh_layout)
+  -- When a screen changes geometry
+  screen.connect_signal("property::geometry", refresh_layout)
+
+  refresh_layout()
+
+  return function()
+    screen.disconnect_signal("property::geometry", refresh_layout)
+    awful.screen.disconnect_for_each_screen(refresh_layout)
+  end
 end
 
-function screen_layout.refresh()
-  screen_layout.current = screen_layout.get_layout()
-  screen_layout.apply_wallpaper_overrides()
-end
-
-screen_layout.refresh()
-return screen_layout
+return M

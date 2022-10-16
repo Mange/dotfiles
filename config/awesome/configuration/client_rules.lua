@@ -4,7 +4,9 @@ local gears = require "gears"
 
 local keys = require "keys"
 local utils = require "utils"
-local tags = require("configuration.tags").tags
+
+--- @module "module.tags"
+local tags = require_module("module.tags").tags
 
 local clientbuttons = gears.table.join(
   awful.button({}, keys.left_click, function(c)
@@ -20,7 +22,7 @@ local clientbuttons = gears.table.join(
   end)
 )
 
-local rules = {
+return {
   -- All clients will match this rule.
   {
     rule = {},
@@ -147,16 +149,4 @@ local rules = {
     },
     properties = { tag = tags[10] },
   },
-}
-
-return {
-  --- @type ModuleInitializerFunction
-  initialize = function()
-    local old_rules = awful.rules.rules
-    awful.rules.rules = rules
-
-    return function()
-      awful.rules.rules = old_rules
-    end
-  end,
 }

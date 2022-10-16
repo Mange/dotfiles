@@ -14,7 +14,6 @@ local dropdown = require "dropdown"
 local handle_notification = require("module.notification_rules").handle
 local fix_missing_icon = require "module.fix_missing_icon"
 
-require "configuration.screens"
 require "layout"
 
 --
