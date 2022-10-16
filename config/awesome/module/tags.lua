@@ -29,6 +29,12 @@ local function setup_tags()
   local configs = reload "configuration.tags"
   local tags = gears.table.map(create_tag, configs)
 
+  -- Remove all the current tags so this becomes a new clean slate.
+  local old_tags = root.tags()
+  for _, tag in ipairs(old_tags) do
+    tag:delete()
+  end
+
   return sharedtags(tags)
 end
 
@@ -67,15 +73,14 @@ local M = {
 
 --- @type ModuleInitializerFunction
 function M.initialize()
-  M.tags = setup_tags()
-  tag.connect_signal("request::default_layouts", setup_layouts)
-
   -- If restarting, then the request::default_layouts have already been
   -- processed. Manually override directly.
   if is_awesome_restart() then
     setup_layouts()
+    M.tags = setup_tags()
   end
 
+  tag.connect_signal("request::default_layouts", setup_layouts)
   return function()
     tag.disconnect_signal("request::default_layouts", setup_layouts)
   end

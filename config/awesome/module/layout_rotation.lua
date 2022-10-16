@@ -7,6 +7,10 @@ local bling = require "vendor.bling"
 local awful = require "awful"
 
 local function is_portrait(s)
+  if not s then
+    return false
+  end
+
   return s.geometry.height > s.geometry.width
 end
 
@@ -53,7 +57,7 @@ return {
 
     local perform = true
     local apply_rotation = function(t)
-      if perform then
+      if perform and t.layout and t.screen then
         t.layout = rotate_layout(t.layout, t.screen)
       end
     end

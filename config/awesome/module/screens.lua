@@ -21,6 +21,9 @@ local awful = require "awful"
 --- @alias ScreenType "main" | "reference" | "comms"
 
 local function is_portrait(s)
+  if not s then
+    return false
+  end
   return s.geometry.height > s.geometry.width
 end
 
@@ -61,22 +64,20 @@ function M.get_layout()
   }
 end
 
-function M.is_portrait(s)
-  return is_portrait(s)
-end
-
 function M.apply_wallpaper_overrides()
   local current = M.current
 
   for _, type in ipairs { "main", "reference", "comms" } do
     local s = current[type]
-    local layout = is_portrait(s) and "portrait" or "landscape"
+    if s then
+      local layout = is_portrait(s) and "portrait" or "landscape"
 
-    s.wallpaper_override = utils.first_wallpaper_path {
-      type .. "_" .. layout .. ".jpg",
-      type .. ".jpg",
-      layout .. ".jpg",
-    }
+      s.wallpaper_override = utils.first_wallpaper_path {
+        type .. "_" .. layout .. ".jpg",
+        type .. ".jpg",
+        layout .. ".jpg",
+      }
+    end
   end
 end
 
