@@ -1,9 +1,13 @@
 local which_keys = require "module.which_keys" --[[@as WhichKeys]]
 local actions = require "actions"
 local wibox = require "wibox"
-local ui_content = require "widgets.media-info.content"
 local utils = require "utils"
 local dpi = utils.dpi
+
+local ui_content = nil
+if not is_test_mode() then
+  ui_content = require "widgets.media-info.content"
+end
 
 -- TODO:
 --   * Add support for "Next player" / "Previous player"
@@ -22,8 +26,8 @@ local media_mode = which_keys.new_chord("Media", {
       layout = wibox.layout.fixed.horizontal,
       spacing = dpi(10),
       forced_height = dpi(96),
-      ui_content.album_cover.widget,
-      ui_content.song_info.music_info,
+      ui_content and ui_content.album_cover.widget,
+      ui_content and ui_content.song_info.music_info,
     },
   },
   keybindings = {

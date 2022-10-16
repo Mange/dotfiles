@@ -43,4 +43,8 @@ require_module "module.wallpaper"
 require_module "module.titlebars"
 require_module "module.client_rules"
 
+if is_test_mode() then
+  require_module "module.hud"
+end
+
 autostart.late()

@@ -1,7 +1,21 @@
 --- @alias ModuleInitializerFunction fun(): CleanupFunction | nil
 --- @alias CleanupFunction fun()
 
+--- @class screen
+--- @field geometry {x: number, y: number, width: number, height: number}
+--- @field bar widget
+
+--- @class widget
+
 local gears = require "gears"
+local xresources = require "beautiful.xresources"
+
+--- Returns a pixel value scaled for the current screen DPI.
+--- @param px number Size in pixels
+--- @return number Size in pixels scaled for the current DPI
+function _G.dpi(px)
+  return xresources.apply_dpi(px)
+end
 
 --- Returns true if running in "test mode". Test mode is both for unit tests
 --- and when running inside AWMTT.
@@ -35,16 +49,19 @@ local module_order = {}
 
 --- @param name string
 --- @return boolean
-local function cleanup_module(name)
+function _G.cleanup_module(name)
   if loaded_modules[name] then
     local cleanup = loaded_modules[name].cleanup
     if cleanup then
       cleanup()
     end
     loaded_modules[name] = nil
+    package.loaded[name] = nil
+
     return true
   end
 
+  package.loaded[name] = nil
   return false
 end
 

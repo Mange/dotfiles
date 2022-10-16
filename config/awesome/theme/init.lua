@@ -3,9 +3,8 @@ local gruvbox = require("../colors").gruvbox
 local dpi = require("utils").dpi
 local icons = require "theme.icons"
 
-local default_theme = assert(
-  loadfile(gears.filesystem.get_themes_dir() .. "default/theme.lua")
-)()
+local default_theme =
+  assert(loadfile(gears.filesystem.get_themes_dir() .. "default/theme.lua"))()
 
 local theme = {}
 
