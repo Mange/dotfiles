@@ -56,6 +56,14 @@ return {
 
   disable_default_key_bindings = true,
   keys = {
+    {
+      mods = "CTRL|SHIFT",
+      key = "u",
+      action = wezterm.action.CharSelect {
+        copy_on_select = true,
+        copy_to = "ClipboardAndPrimarySelection",
+      },
+    },
     { mods = "CTRL|SHIFT", key = "z", action = "QuickSelect" },
     {
       mods = "CTRL|SHIFT",
