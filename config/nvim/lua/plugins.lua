@@ -217,8 +217,9 @@ require("packer").startup(function(use)
   use {
     "DarwinSenior/nvim-colorizer.lua",
     config = function()
-      -- Enable for all files and render as virtualtext
-      require("colorizer").setup({ "*" }, {
+      -- Enable for all files not covered by color-capable LSPs and render as
+      -- virtualtext.
+      require("colorizer").setup({ "*", "!tsx", "!css", "!html" }, {
         mode = "virtualtext",
       })
     end,
@@ -343,6 +344,16 @@ require("packer").startup(function(use)
           },
         },
         labels_separator = "",
+      }
+    end,
+  }
+
+  use {
+    "mrshmllow/document-color.nvim",
+    before = { "lspconfig" },
+    config = function()
+      require("document-color").setup {
+        mode = "foreground",
       }
     end,
   }
