@@ -39,16 +39,16 @@ local default_theme =
 
 local theme = gears.table.clone(default_theme)
 
----@param base string
----@param opacity_hex string
----@return string
-local function opacity(base, opacity_hex)
-  if string.len(base) > 7 then
-    return base:sub(1, 7) .. opacity_hex
-  else
-    return base .. opacity_hex
-  end
-end
+--@param base string
+--@param opacity_hex string
+--@return string
+-- local function opacity(color, opacity_hex)
+--   if string.len(color) > 7 then
+--     return color:sub(1, 7) .. opacity_hex
+--   else
+--     return color .. opacity_hex
+--   end
+-- end
 
 --- Return a multiple of a standard spacing.
 ---
@@ -112,6 +112,25 @@ theme.mantle = mantle
 theme.crust = crust
 
 theme.background = mantle
+
+theme.rainbow_colors = {
+  lavender,
+  blue,
+  sapphire,
+  sky,
+  teal,
+  green,
+  yellow,
+  peach,
+  maroon,
+  red,
+}
+
+--- @param index number
+--- @return string
+theme.rainbow = function(index)
+  return theme.rainbow_colors[index % #theme.rainbow_colors + 1]
+end
 
 -- Wallpaper
 theme.wallpaper = gears.filesystem.get_xdg_data_home()

@@ -4,6 +4,8 @@ local M = {
   right_click = 3,
   scroll_up = 4,
   scroll_down = 5,
+
+  modkey = "Mod4", -- Super
 }
 
 return M

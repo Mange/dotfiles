@@ -6,6 +6,9 @@
 --- @field bar widget
 
 --- @class widget
+--- @field get_children_by_id(string): widget[]
+--- @field connect_signal(string)
+--- @field disconnect_signal(string)
 
 local gears = require "gears"
 local xresources = require "beautiful.xresources"

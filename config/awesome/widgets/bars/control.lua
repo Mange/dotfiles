@@ -1,4 +1,5 @@
 local ui = require "widgets.ui"
+local tag_list = require_module "widgets.tag_list"
 
 local M = {}
 
@@ -6,10 +7,11 @@ function M.initialize()
   return function() end
 end
 
-function M.build()
+--- @param s screen
+function M.build(s)
   return ui.panel {
     children = {
-      ui.placeholder("#002200", "control"),
+      tag_list.build(s),
     },
   }
 end
