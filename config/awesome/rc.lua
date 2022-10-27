@@ -45,6 +45,10 @@ require_module "module.client_rules"
 
 if is_test_mode() then
   require_module "module.hud"
+  if not is_awesome_restart() then
+    local awful = require "awful"
+    awful.spawn.once "wezterm"
+  end
 end
 
 autostart.late()
