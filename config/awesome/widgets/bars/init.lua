@@ -56,7 +56,7 @@ function M.create(s)
     top = height,
   }
 
-  box:setup(ui.margin(theme.spacing(2)) {
+  box:setup(ui.margin(theme.spacing(1)) {
     layout = wibox.layout.align.horizontal,
     expand = "none", -- Center widget will get the most space
 
@@ -64,23 +64,23 @@ function M.create(s)
       spacing = theme.spacing(4),
       bg = theme.transparent,
       children = {
-        control_bar.build(),
-        media_bar.build(),
+        control_bar.build(s),
+        media_bar.build(s),
       },
     },
     ui.horizontal {
       spacing = theme.spacing(4),
       bg = theme.transparent,
       children = {
-        window_bar.build(),
+        window_bar.build(s),
       },
     },
     ui.horizontal {
       spacing = theme.spacing(4),
       bg = theme.transparent,
       children = {
-        status_bar.build(),
-        state_bar.build(),
+        status_bar.build(s),
+        state_bar.build(s),
       },
     },
   })

@@ -1,58 +1,50 @@
 local wibox = require "wibox"
 local awful = require "awful"
 local gears = require "gears"
-local beautiful = require "beautiful"
-local dpi = require("utils").dpi
-local clickable_container = require "widgets.clickable-container"
+
+local theme = require_module "module.theme"
+local ui = require "widgets.ui"
+
+local clock_format = '<span font="'
+  .. theme.font_bold
+  .. '">%-d/%-m %H:%M</span>'
+
+local M = {}
+
+function M.initialize()
+  return function() end
+end
 
 --- @param s screen
-local create_clock = function(s)
-  local clock_format = '<span font="'
-    .. beautiful.font_bold
-    .. '">%-d/%-m %H:%M</span>'
-
-  local clock = wibox.widget.textclock(clock_format, 1)
-
-  local clock_widget = wibox.widget {
-    {
-      clock,
-      margins = dpi(7),
-      widget = wibox.container.margin,
-    },
-    widget = clickable_container,
+function M.build(s)
+  local clock = wibox.widget {
+    widget = wibox.widget.textclock,
+    format = clock_format,
   }
 
   local clock_tooltip = awful.tooltip {
-    objects = { clock_widget },
     mode = "outside",
     delay_show = 1,
     preferred_positions = { "right", "left", "top", "bottom" },
     preferred_alignments = { "middle", "front", "back" },
-    margin_leftright = dpi(8),
-    margin_topbottom = dpi(8),
+    margin_leftright = theme.spacing(2),
+    margin_topbottom = theme.spacing(2),
     timer_function = function()
       return os.date "Idag är det <b>%A</b> den <b>%d %B</b> (v<b>%V</b>)"
     end,
   }
 
-  clock_widget:connect_signal("button::press", function(_, _, _, button)
-    -- Hide the tooltip when you press the clock widget
-    if clock_tooltip.visible and button == 1 then
-      clock_tooltip.visible = false
-    end
-  end)
-
   local month_calendar = awful.widget.calendar_popup.month {
     start_sunday = false,
     week_numbers = true,
     spacing = dpi(5),
-    font = beautiful.font_size(10),
+    font = theme.font_size(10),
     long_weekdays = true,
     margin = dpi(5),
     screen = s,
     style_month = {
       border_width = dpi(0),
-      bg_color = beautiful.background,
+      bg_color = theme.background,
       padding = dpi(20),
       shape = function(cr, width, height)
         gears.shape.partially_rounded_rect(
@@ -63,30 +55,30 @@ local create_clock = function(s)
           true,
           true,
           true,
-          beautiful.groups.radius
+          dpi(7)
         )
       end,
     },
     style_header = {
       border_width = 0,
-      bg_color = beautiful.transparent,
+      bg_color = theme.transparent,
     },
     style_weeknumber = {
       border_width = 0,
-      bg_color = beautiful.transparent,
+      bg_color = theme.transparent,
     },
     style_weekday = {
       border_width = 0,
-      bg_color = beautiful.transparent,
+      bg_color = theme.transparent,
     },
     style_normal = {
       border_width = 0,
-      bg_color = beautiful.transparent,
+      bg_color = theme.transparent,
     },
     style_focus = {
       border_width = dpi(0),
-      border_color = beautiful.fg_normal,
-      bg_color = beautiful.accent,
+      border_color = theme.fg_normal,
+      bg_color = theme.accent,
       shape = function(cr, width, height)
         gears.shape.partially_rounded_rect(
           cr,
@@ -102,11 +94,19 @@ local create_clock = function(s)
     },
   }
 
-  month_calendar:attach(clock_widget, "tr", {
+  local button = ui.button {
+    on_left_click = function()
+      clock_tooltip.visible = false
+    end,
+    child = ui.margin(0, theme.spacing(0.5))(clock),
+  }
+
+  clock_tooltip:add_to_object(button)
+  month_calendar:attach(button, "tr", {
     on_hover = false,
   })
 
-  return clock_widget
+  return button
 end
 
-return create_clock
+return M

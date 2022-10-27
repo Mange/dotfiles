@@ -1,15 +1,20 @@
 local ui = require "widgets.ui"
 
+local clock = require_module "widgets.bars.clock"
+
 local M = {}
 
 function M.initialize()
-  return function() end
+  return function()
+    cleanup_module "widgets.bars.clock"
+  end
 end
 
-function M.build()
+--- @param s screen
+function M.build(s)
   return ui.panel {
     children = {
-      ui.placeholder("#220000", "state"),
+      clock.build(s),
     },
   }
 end

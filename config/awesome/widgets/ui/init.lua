@@ -95,12 +95,6 @@ function M.panel(options)
   }
 end
 
---- @class ButtonOptions
---- @field text string
---- @field on_click function
-
---- @param options ButtonOptions
---- @return widget
-function M.button(options) end
+M.button = require_module("widgets.ui.button").button
 
 return M
