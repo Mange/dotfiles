@@ -65,7 +65,7 @@ function M.create(s)
       bg = theme.transparent,
       children = {
         control_bar.build(s),
-        media_bar.build(s),
+        awful.widget.only_on_screen(media_bar.build(s), "primary"),
       },
     },
     ui.horizontal {

@@ -1,6 +1,5 @@
 local spawn = require "awful.spawn"
 local timer = require "gears.timer"
-local utils = require "utils"
 
 --- @param url string
 --- @return string
@@ -179,6 +178,7 @@ end
 ---@return fun() cancel A function to cancel the subscription
 function playerctl:on_update(func)
   awesome.connect_signal("mange:playerctl:update", func)
+  func(self:current())
 
   return function()
     awesome.disconnect_signal("mange:playerctl:update", func)

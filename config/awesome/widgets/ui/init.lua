@@ -28,14 +28,14 @@ function M.margin(top, right, bottom, left)
   local b = bottom or top -- bottom or vertical or margin
   local l = left or right or top -- left or horizontal or margin
 
-  return function(child)
+  return function(...)
     return {
       widget = wibox.container.margin,
       top = t,
       right = r,
       bottom = b,
       left = l,
-      child,
+      ...,
     }
   end
 end
@@ -75,26 +75,75 @@ function M.horizontal(options)
   }
 end
 
---- @class PanelOptions
+--- @class VerticalOptions
 --- @field children widget[]
 --- @field spacing number | nil
 --- @field bg string | nil
 
+--- @param options VerticalOptions
+--- @return widget
+function M.vertical(options)
+  return {
+    layout = wibox.layout.fixed.vertical,
+    spacing = options.spacing or theme.spacing(1),
+    bg = options.bg or theme.transparent,
+    table.unpack(options.children),
+  }
+end
+
+function M.justify_between_col(top, bottom)
+  return {
+    layout = wibox.layout.align.vertical,
+    expand = "none",
+    top,
+    nil,
+    bottom,
+  }
+end
+
+function M.align_right(widget)
+  return {
+    layout = wibox.layout.align.horizontal,
+    expand = "none",
+    nil,
+    nil,
+    widget,
+  }
+end
+
+--- @class PanelOptions
+--- @field children widget[]
+--- @field bg string | nil
+--- @field layout "horizontal" | "vertical" | nil
+--- @field margin function(widget): widget | nil
+
 --- @param options PanelOptions
 --- @return widget
 function M.panel(options)
+  local child
+  if options.layout == "horizontal" then
+    child = M.horizontal { children = options.children }
+  elseif options.layout == "vertical" then
+    child = M.vertical { children = options.children }
+  else
+    -- Deprecated. Require a layout to be specified later!
+    child = M.horizontal { children = options.children }
+  end
+
+  local margin = options.margin or M.margin(2, 4)
+
   return {
     widget = wibox.container.background,
     bg = options.bg or theme.background,
     shape = function(cr, w, h)
       gears.shape.rounded_rect(cr, w, h, dpi(7))
     end,
-    M.margin(2, 4)(M.horizontal {
-      children = options.children,
-    }),
+    margin(child),
   }
 end
 
-M.button = require_module("widgets.ui.button").button
+--- @module "widgets.ui.button"
+local button_module = require_module "widgets.ui.button"
+M.button = button_module.button
 
 return M

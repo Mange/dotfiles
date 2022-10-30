@@ -50,6 +50,14 @@ function utils.path_split(path)
   end
 end
 
+--- Capitalize the first letter of the string. Like "hello world" -> "Hello
+--- world".
+--- @param str string
+--- @return string
+function utils.capitalize(str)
+  return (str:gsub("^%l", string.upper))
+end
+
 --- @generic T
 --- @param list T[]
 --- @param callback fun(index:number,item:T,continue:fun())

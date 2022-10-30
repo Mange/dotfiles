@@ -79,6 +79,7 @@ theme.font_mono = theme.font_mono_size(11)
 
 -- Icons
 theme.icons = icons.dir
+theme.icon = icons
 theme.awesome_icon = theme.icons .. "awesome.svg"
 theme.icon_theme = "Tela"
 

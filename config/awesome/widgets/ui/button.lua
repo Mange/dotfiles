@@ -11,9 +11,9 @@ local M = {}
 --- @field bg string | nil
 --- @field bg_hover string | nil
 --- @field bg_click string | nil
---- @field on_left_click function | nil
---- @field on_mouse_enter function | nil
---- @field on_mouse_leave function | nil
+--- @field on_left_click function(widget) | nil
+--- @field on_mouse_enter function(widget) | nil
+--- @field on_mouse_leave function(widget) | nil
 
 --- @param options ButtonOptions
 --- @return widget

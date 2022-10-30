@@ -8,6 +8,9 @@ local taglist = dir .. "tag-list/"
 return {
   dir = dir,
 
+  -- Rice 3
+  spotify = dir .. "spotify.svg",
+
   -- Action Bar
   device_desktop = taglist .. "device-desktop.svg",
   code = taglist .. "code.svg",
