@@ -43,12 +43,6 @@ end
 dropdown.add_rules(awful.rules.rules)
 
 --
--- Daemons
---
--- Start daemons
-require "daemons"
-
---
 -- Signals
 --
 -- Signal function to execute when a new client appears.

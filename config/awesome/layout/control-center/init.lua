@@ -4,7 +4,7 @@ local beautiful = require "beautiful"
 local wibox = require "wibox"
 
 local dpi = require("utils").dpi
-local brightness = require "daemons.brightness"
+local brightness = require "module.daemons.brightness"
 
 local format_item = function(widget)
   return wibox.widget {

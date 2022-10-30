@@ -143,10 +143,7 @@ end
 local function handle_status_change(line)
   local playername, status = string.match(line, "([^\t]+)\t([^\t]+)")
   if playername and status then
-    status_set(
-      playername, --[[@as string]]
-      status --[[@as PlayerStatus]]
-    )
+    status_set(playername, --[[@as string]] status --[[@as PlayerStatus]])
   end
 end
 
@@ -215,7 +212,26 @@ function playerctl:next()
   spawn_playerctl "next"
 end
 
-utils.kill_on_exit(spawn_status_watcher())
-utils.kill_on_exit(spawn_metadata_watcher())
+local function kill(pid)
+  -- Negative pid means "Send signal to all processes in this group"
+  awesome.kill(-pid, awesome.unix_signal["SIGTERM"])
+end
+
+function playerctl.initialize()
+  local status_pid = spawn_status_watcher()
+  local metadata_pid = spawn_metadata_watcher()
+
+  local function cleanup()
+    kill(status_pid)
+    kill(metadata_pid)
+  end
+
+  awesome.connect_signal("exit", cleanup)
+
+  return function()
+    cleanup()
+    awesome.disconnect_signal("exit", cleanup)
+  end
+end
 
 return playerctl

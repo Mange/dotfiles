@@ -36,6 +36,8 @@ end
 -- modules want to use some of the functionality.
 require "vendor.bling"
 
+require_module "module.daemons"
+
 require_module "module.layout_rotation"
 require_module "module.screens"
 require_module "module.tags"

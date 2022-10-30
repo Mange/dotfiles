@@ -7,7 +7,7 @@ local clickable_container = require "widgets.clickable-container"
 local utils = require "utils"
 local dpi = utils.dpi
 local icons = require "theme.icons"
-local volume = require "daemons.volume"
+local volume = require "module.daemons.volume"
 local actions = require "actions"
 local keys = require "keys"
 

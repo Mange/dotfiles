@@ -4,7 +4,7 @@ local gears = require "gears"
 local beautiful = require "beautiful"
 
 local clickable_container = require "widgets.clickable-container"
-local battery = require "daemons.battery"
+local battery = require "module.daemons.battery"
 local dpi = require("utils").dpi
 
 local widget_icon_dir = gears.filesystem.get_configuration_dir()

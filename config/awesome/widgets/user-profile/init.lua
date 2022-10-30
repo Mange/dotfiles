@@ -5,7 +5,7 @@ local beautiful = require "beautiful"
 
 local dpi = require("utils").dpi
 local keys = require "keys"
-local profile = require "daemons.profile"
+local profile = require "module.daemons.profile"
 
 local create_profile = function()
   local profile_imagebox = wibox.widget {
@@ -47,14 +47,16 @@ local create_profile = function()
   end
   profile:on_update(refresh)
 
-  profile_imagebox:buttons(gears.table.join(
-    awful.button({}, keys.left_click, nil, function()
-      awful.spawn.single_instance "mugshot"
-    end),
-    awful.button({}, keys.right_click, nil, function()
-      profile:refresh()
-    end)
-  ))
+  profile_imagebox:buttons(
+    gears.table.join(
+      awful.button({}, keys.left_click, nil, function()
+        awful.spawn.single_instance "mugshot"
+      end),
+      awful.button({}, keys.right_click, nil, function()
+        profile:refresh()
+      end)
+    )
+  )
 
   return user_profile
 end

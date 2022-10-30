@@ -11,8 +11,10 @@ local utils = require "utils"
 --- @module "module.tags"
 local tags = require_module("module.tags").tags
 
-local playerctl = require "daemons.playerctl" --[[@as Playerctl]]
-local brightness = require "daemons.brightness"
+--- @module "module.daemons.playerctl"
+local playerctl = require_module "module.daemons.playerctl"
+
+local brightness = require "module.daemons.brightness"
 
 local actions = {}
 

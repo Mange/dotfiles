@@ -7,7 +7,7 @@ local clickable_container = require "widgets.clickable-container"
 local utils = require "utils"
 local dpi = utils.dpi
 local icons = require "theme.icons"
-local picom = require "daemons.picom"
+local picom = require "module.daemons.picom"
 local actions = require "actions"
 local keys = require "keys"
 
@@ -69,14 +69,16 @@ local slider = wibox.widget {
 
 local blur_slider = slider.blur_strength_slider
 
-blur_slider:buttons(gears.table.join(
-  awful.button({}, keys.scroll_up, nil, function()
-    picom:change_blur_strength(1)
-  end),
-  awful.button({}, keys.scroll_down, nil, function()
-    picom:change_blur_strength(-1)
-  end)
-))
+blur_slider:buttons(
+  gears.table.join(
+    awful.button({}, keys.scroll_up, nil, function()
+      picom:change_blur_strength(1)
+    end),
+    awful.button({}, keys.scroll_down, nil, function()
+      picom:change_blur_strength(-1)
+    end)
+  )
+)
 
 -- Triggered both when dragging on the component, and when value is set
 -- programmatically.
