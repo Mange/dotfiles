@@ -1,5 +1,4 @@
 local wibox = require "wibox"
-local spawn = require "awful.spawn"
 
 local ui_content = require "widgets.media-info.content"
 local album_cover = ui_content.album_cover
@@ -32,29 +31,12 @@ local media_info = wibox.widget {
   },
 }
 
---- @type string?
-local current_album_art_url = nil
-
---- @param art_url string?
-local function update_album_art(art_url)
-  -- Early exit if album art is the same
-  if current_album_art_url == art_url then
-    return
-  end
-  current_album_art_url = art_url
-
-  -- Start by switching to generic "no album" art, download the image, and then
-  -- switch to the cached copy.
-  album_cover.set_default()
-  if art_url and string.len(art_url) > 5 then
-    spawn.easy_async({ "coverart-cache", art_url }, function(stdout)
-      if stdout then
-        local path = utils.strip(stdout)
-        if string.len(path) > 10 then
-          album_cover.set_image(path)
-        end
-      end
-    end)
+--- @param path string?
+local function update_album_art(path)
+  if path then
+    album_cover.set_image(path)
+  else
+    album_cover.set_default()
   end
 end
 
@@ -63,7 +45,10 @@ local function update_song_info(player)
   local title_text = song_info.music_title:get_children_by_id("title")[1]
   local artist_text = song_info.music_artist:get_children_by_id("artist")[1]
 
-  if player.status == "playing" then
+  if not player then
+    title_text:set_text "Play some media"
+    artist_text:set_text ""
+  elseif player.status == "playing" then
     title_text:set_text(player.metadata.title or "Untitled media")
     artist_text:set_text(player.metadata.artist or "No artist")
   else
@@ -73,9 +58,15 @@ local function update_song_info(player)
 end
 
 playerctl:on_update(function(player)
-  update_album_art(player.metadata.art_url)
-  update_song_info(player)
-  media_buttons.update_status(player.status)
+  if player then
+    update_album_art(player.metadata.art_path)
+    update_song_info(player)
+    media_buttons.update_status(player.status)
+  else
+    update_album_art(nil)
+    update_song_info(player)
+    media_buttons.update_status "stopped"
+  end
 end)
 
 media_buttons.prev_button:buttons(

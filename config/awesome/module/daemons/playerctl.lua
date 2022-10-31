@@ -1,6 +1,8 @@
 local spawn = require "awful.spawn"
 local timer = require "gears.timer"
 
+local utils = require "utils"
+
 --- @param url string
 --- @return string
 local function repair_spotify_broken_art_url(url)
@@ -16,12 +18,38 @@ local function repair_spotify_broken_art_url(url)
   end
 end
 
+--- @type string?
+local last_art_url = nil
+
+--- @param art_url string?
+--- @param func function(string)
+local function download_album_art(art_url, func)
+  -- Don't download again if last download was the same URL
+  if last_art_url == art_url or not art_url then
+    return
+  end
+
+  last_art_url = art_url
+
+  if art_url and string.len(art_url) > 5 then
+    spawn.easy_async({ "coverart-cache", art_url }, function(stdout)
+      if stdout then
+        local path = utils.strip(stdout)
+        if string.len(path) > 10 then
+          func(path)
+        end
+      end
+    end)
+  end
+end
+
 --- @alias PlayerStatus "playing" | "paused" | "stopped"
 
 --- @class PlayerMetadata
 --- @field track_id string?
 --- @field length string?
 --- @field art_url string?
+--- @field art_path string?
 --- @field album_name string?
 --- @field album_artist string?
 --- @field artist string?
@@ -60,6 +88,18 @@ local metadata_map = {
   ["xesam:url"] = "url",
 }
 
+-- Since a lot of metadata will update almost at the same time, debounce
+-- sending out the event until it has quieted down a bit again.
+local metadata_debounce = timer {
+  timeout = 0.2,
+  call_now = false,
+  autostart = false,
+  single_shot = true,
+  callback = function()
+    awesome.emit_signal("mange:playerctl:update", playerctl:current())
+  end,
+}
+
 --- @param playername string
 local function get_player(playername)
   if not players[playername] then
@@ -70,6 +110,16 @@ local function get_player(playername)
     }
   end
   return players[playername]
+end
+
+local function handle_album_art_path(playername, art_url, path)
+  local player = get_player(playername)
+  -- Only update art_path if the resulting path matches the current art_url.
+  -- The metadata could've changed before the album art was downloaded.
+  if player.metadata.art_url == art_url then
+    player.metadata.art_path = path
+    metadata_debounce:again()
+  end
 end
 
 --- Update metadata for a player
@@ -84,6 +134,9 @@ local function metadata_set(playername, metadata_name, value)
 
   if key == "art_url" then
     value = repair_spotify_broken_art_url(value)
+    download_album_art(value, function(path)
+      handle_album_art_path(playername, value, path)
+    end)
   end
 
   data[key] = value
@@ -104,18 +157,6 @@ local function status_set(playername, status)
     awesome.emit_signal("mange:playerctl:update", player)
   end
 end
-
--- Since a lot of metadata will update almost at the same time, debounce
--- sending out the event until it has quieted down a bit again.
-local metadata_debounce = timer {
-  timeout = 0.2,
-  call_now = false,
-  autostart = false,
-  single_shot = true,
-  callback = function()
-    awesome.emit_signal("mange:playerctl:update", playerctl:current())
-  end,
-}
 
 -- playerctl outputs this each time a metadata key changes:
 -- <playername> <metadataname>         <value>
