@@ -560,6 +560,11 @@ local function setup()
   }, {
     mode = "v",
   })
+
+  -- Leap
+  if_require("leap", function(leap)
+    leap.add_default_mappings()
+  end)
 end
 
 --

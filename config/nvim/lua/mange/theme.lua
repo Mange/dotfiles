@@ -82,7 +82,7 @@ function theme.setup()
       lsp_saga = false,
       gitgutter = false,
       gitsigns = true,
-      leap = false,
+      leap = true,
       telescope = true,
       nvimtree = {
         enabled = false,

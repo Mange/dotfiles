@@ -24,6 +24,7 @@ require("packer").startup(function(use)
   use "tpope/vim-eunuch" -- Adds things like :Move, :Rename, :SudoWrite, etc.
   use "tpope/vim-abolish" -- Smart S/re/repl/
   use "tommcdo/vim-exchange"
+  use "ggandor/leap.nvim"
 
   use {
     "kylechui/nvim-surround",
