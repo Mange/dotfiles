@@ -89,6 +89,10 @@ function theme.setup()
         show_root = true,
         transparent_panel = false,
       },
+      navic = {
+        enabled = true,
+        custom_ng = "NONE",
+      },
       neotree = {
         enabled = false,
         show_root = true,

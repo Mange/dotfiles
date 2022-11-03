@@ -360,6 +360,14 @@ require("packer").startup(function(use)
   }
 
   use {
+    "SmiteshP/nvim-navic",
+    before = { "lspconfig" },
+    config = function()
+      require "mange.winbar"
+    end,
+  }
+
+  use {
     "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
     after = { "lspconfig" },
     config = function()

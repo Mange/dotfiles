@@ -4,6 +4,7 @@ local inlayhints = require "lsp-inlayhints"
 local has_ufo, _ = pcall(require, "ufo")
 local has_cmp, cmp = pcall(require, "cmp_nvim_lsp")
 local has_document_color, document_color = pcall(require, "document-color")
+local has_navic, navic = pcall(require, "nvim-navic")
 
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
   border = "rounded",
@@ -88,6 +89,10 @@ local function on_attach_without_formatting(client, bufnr)
   end
 
   inlayhints.on_attach(client, bufnr)
+
+  if has_navic and client.server_capabilities.documentSymbolProvider then
+    navic.attach(client, bufnr)
+  end
 
   require("mange.mappings").attach_lsp(bufnr)
 end
