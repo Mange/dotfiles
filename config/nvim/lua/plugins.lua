@@ -353,7 +353,7 @@ require("packer").startup(function(use)
     before = { "lspconfig" },
     config = function()
       require("document-color").setup {
-        mode = "foreground",
+        mode = "single",
       }
     end,
   }
