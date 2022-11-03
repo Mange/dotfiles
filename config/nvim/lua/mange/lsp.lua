@@ -16,10 +16,11 @@ vim.lsp.handlers["textDocument/signatureHelp"] =
   })
 
 local function capabilities(func)
-  local caps = vim.lsp.protocol.make_client_capabilities()
-
+  local caps
   if has_cmp then
-    caps = cmp.update_capabilities(caps)
+    caps = cmp.default_capabilities()
+  else
+    caps = vim.lsp.protocol.make_client_capabilities()
   end
 
   if has_ufo then
