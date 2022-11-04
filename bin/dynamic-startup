@@ -41,7 +41,6 @@ krista)
 socia)
   wm-start discord
   wm-start slack
-  wm-start obinskit
 
   # Start steam
   # wm-start gtk-launch steam
