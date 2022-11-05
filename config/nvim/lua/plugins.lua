@@ -540,16 +540,7 @@ require("packer").startup(function(use)
   use {
     "simrat39/rust-tools.nvim",
     requires = { plenary },
-    before = { "lvimuser/lsp-inlayhints.nvim" },
-    config = function()
-      require("rust-tools").setup {
-        tools = {
-          autoSetHints = false, -- handled using lsp-inlayhints plugin instead
-          -- doesn't seem to disable anything for me…? I can live with double
-          -- inline hints until I run :RustDisableInlayHints for now.
-        },
-      }
-    end,
+    before = { "lvimuser/lsp-inlayhints.nvim", "lspconfig" },
   }
 
   ---
