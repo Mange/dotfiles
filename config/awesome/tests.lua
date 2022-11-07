@@ -10,6 +10,7 @@ package.path = package.path
 
 require "stdlib"
 TestClass = require "tests.module.test_class"
+TestKeysLib = require "tests.module.keys.test_lib"
 TestWhichKeysBind = require "tests.module.test_which_keys_bind"
 TestNotifcationRules = require "tests.module.test_notification_rules"
 TestWidgetsUi = require "tests.widgets.test_ui"

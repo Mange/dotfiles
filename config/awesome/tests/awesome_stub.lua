@@ -1,3 +1,4 @@
+---@diagnostic disable: unused-vararg
 local stubs = {}
 
 local function awesome_base_object(name, object)
@@ -13,7 +14,7 @@ local function awesome_base_object(name, object)
   return object
 end
 
-local awesome = awesome_base_object("awesome", {
+awesome_base_object("awesome", {
   register_xproperty = function(...) end,
   get_xproperty = function(...) end,
   set_xproperty = function(...) end,
@@ -22,24 +23,24 @@ local awesome = awesome_base_object("awesome", {
   icon_path = "/usr/share/awesome/icons",
 })
 
-local client = awesome_base_object("client", {
+awesome_base_object("client", {
   get = function(...)
     return {}
   end,
 })
 
-local screen = awesome_base_object("screen", {})
-local tag = awesome_base_object("tag", {})
-local key = awesome_base_object("key", {})
-local drawin = awesome_base_object("drawin", {})
+awesome_base_object("screen", {})
+awesome_base_object("tag", {})
+awesome_base_object("key", {})
+awesome_base_object("drawin", {})
 
-local mouse = awesome_base_object("mouse", {
+awesome_base_object("mouse", {
   coords = function()
     return 0, 0
   end,
 })
 
-local root = awesome_base_object("root", {
+awesome_base_object("root", {
   size = function(...)
     return 1920, 1080
   end,

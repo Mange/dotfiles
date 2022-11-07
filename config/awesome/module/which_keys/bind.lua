@@ -1,12 +1,6 @@
 local class = require "module.class"
 local theme = require("theme").which_key
 
----@alias modifier
----| '"Shift"' # Shift
----| '"Control"' # Ctrl
----| '"Mod1"' # Alt
----| '"Mod4"' # Super
-
 ---@class BindColor
 ---@field key_bg string
 ---@field key_fg string
