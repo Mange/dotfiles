@@ -91,7 +91,7 @@ function theme.setup()
       },
       navic = {
         enabled = true,
-        custom_ng = "NONE",
+        custom_bg = "NONE",
       },
       neotree = {
         enabled = false,
@@ -139,6 +139,8 @@ function theme.setup()
 
       Folded = { bg = colors.surface0 },
       FoldedInfo = { fg = colors.subtext0 },
+
+      WinBarSeparator = { fg = colors.lavender },
     },
   }
 

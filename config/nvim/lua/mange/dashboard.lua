@@ -8,6 +8,9 @@ local db = require "dashboard"
 -- db.image_width_pixel = 80
 -- db.image_height_pixel = 12
 
+-- This is not properly restored…
+db.hide_winbar = false
+
 db.custom_center = {
   {
     icon = "  ",

@@ -44,6 +44,7 @@ _G.load_config = function()
   require("mange.mappings").setup()
 
   require("mange.cursorline").setup()
+  require("mange.winbar").setup()
   require("mange.yank_highlight").setup()
   require("mange.vimdiff").setup()
 

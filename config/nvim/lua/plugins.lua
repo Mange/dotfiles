@@ -363,7 +363,38 @@ require("packer").startup(function(use)
     "SmiteshP/nvim-navic",
     before = { "lspconfig" },
     config = function()
-      require "mange.winbar"
+      require("nvim-navic").setup {
+        highlight = true,
+        separator = "  ",
+        icons = {
+          File = " ",
+          Module = " ",
+          Namespace = " ",
+          Package = " ",
+          Class = " ",
+          Method = " ",
+          Property = " ",
+          Field = " ",
+          Constructor = " ",
+          Enum = " ",
+          Interface = " ",
+          Function = " ",
+          Variable = " ",
+          Constant = " ",
+          String = " ",
+          Number = " ",
+          Boolean = " ",
+          Array = " ",
+          Object = " ",
+          Key = " ",
+          Null = " ",
+          EnumMember = " ",
+          Struct = " ",
+          Event = " ",
+          Operator = " ",
+          TypeParameter = " ",
+        },
+      }
     end,
   }
 
