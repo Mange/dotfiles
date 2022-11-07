@@ -48,24 +48,21 @@ local function rotate_layout(layout, screen)
   return layout
 end
 
-return {
-  --- @type ModuleInitializerFunction
-  initialize = function()
-    -- There's no attached_disconnect_signal, so no clean up is possible.
-    -- We'll handle this by updating a variable to make the function become a
-    -- no-op after cleanup.
+local M = {}
 
-    local perform = true
-    local apply_rotation = function(t)
-      if perform and t.layout and t.screen then
-        t.layout = rotate_layout(t.layout, t.screen)
-      end
+function M.module_initialize(is_reload)
+  local apply_rotation = function(t)
+    if t.layout and t.screen then
+      t.layout = rotate_layout(t.layout, t.screen)
     end
+  end
 
+  -- Theres' no attached_disconnect_signal so don't clean this up. On the other
+  -- hand, it's no problem to not support cleanup of this module and require a
+  -- full restart instead.
+  if not is_reload then
     awful.tag.attached_connect_signal(nil, "property::screen", apply_rotation)
+  end
+end
 
-    return function()
-      perform = false
-    end
-  end,
-}
+return M

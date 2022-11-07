@@ -58,11 +58,3 @@ awesome.set_xproperty("awesome_initialized", true)
 function _G.is_awesome_restart()
   return restart_detected
 end
-
--- Unload modules when Awesome is restarted. This makes sure that modules that
--- spawn processes and whatnot also can restart properly.
-awesome.connect_signal("exit", function(is_restart)
-  if is_restart then
-    cleanup_modules()
-  end
-end)

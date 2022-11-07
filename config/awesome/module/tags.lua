@@ -2,9 +2,7 @@ local awful = require "awful"
 local gears = require "gears"
 local sharedtags = require "sharedtags"
 local bling = require "vendor.bling"
-
---- @module "module.screens"
-local screen_layout = require_module "module.screens"
+local screen_layout = require "module.screens"
 
 --- @param config TagConfig
 local function create_tag(config)
@@ -71,11 +69,10 @@ local M = {
   tags = setup_tags(),
 }
 
---- @type ModuleInitializerFunction
-function M.initialize()
+function M.module_initialize(is_reload)
   -- If restarting, then the request::default_layouts have already been
   -- processed. Manually override directly.
-  if is_awesome_restart() then
+  if is_reload then
     setup_layouts()
     M.tags = setup_tags()
   end

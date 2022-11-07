@@ -1,8 +1,7 @@
 local wibox = require "wibox"
 
-local theme = require_module "module.theme"
---- @module "widgets.ui.effects"
-local ui_effects = require_module "widgets.ui.effects"
+local theme = require "module.theme"
+local ui_effects = require "widgets.ui.effects"
 
 local M = {}
 

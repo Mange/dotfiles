@@ -10,17 +10,18 @@ local function reload_wallpaper(s)
   gears.wallpaper.maximized(s.wallpaper_override or beautiful.wallpaper, s)
 end
 
-return {
-  --- @type ModuleInitializerFunction
-  initialize = function()
-    -- When a screen is added, and for all currently added screens
-    awful.screen.connect_for_each_screen(reload_wallpaper)
-    -- When a screen changes geometry
-    screen.connect_signal("property::geometry", reload_wallpaper)
+local M = {}
 
-    return function()
-      screen.disconnect_signal("property::geometry", reload_wallpaper)
-      awful.screen.disconnect_for_each_screen(reload_wallpaper)
-    end
-  end,
-}
+function M.module_initialize()
+  -- When a screen is added, and for all currently added screens
+  awful.screen.connect_for_each_screen(reload_wallpaper)
+  -- When a screen changes geometry
+  screen.connect_signal("property::geometry", reload_wallpaper)
+
+  return function()
+    screen.disconnect_signal("property::geometry", reload_wallpaper)
+    awful.screen.disconnect_for_each_screen(reload_wallpaper)
+  end
+end
+
+return M

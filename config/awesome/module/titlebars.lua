@@ -20,13 +20,14 @@ local function on_floating_toggle(c)
   end
 end
 
-return {
-  -- @type ModuleInitializerFunction
-  initialize = function()
-    client.connect_signal("property::floating", on_floating_toggle)
+local M = {}
 
-    return function()
-      client.disconnect_signal("property::floating", on_floating_toggle)
-    end
-  end,
-}
+function M.module_initialize()
+  client.connect_signal("property::floating", on_floating_toggle)
+
+  return function()
+    client.disconnect_signal("property::floating", on_floating_toggle)
+  end
+end
+
+return M

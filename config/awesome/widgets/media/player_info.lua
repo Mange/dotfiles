@@ -1,8 +1,8 @@
 local wibox = require "wibox"
 
 local utils = require "utils"
---- @module "module.theme"
-local theme = require_module "module.theme"
+local theme = require "module.theme"
+local playerctl = require "module.daemons.playerctl"
 
 local M = {}
 
@@ -33,21 +33,17 @@ M.widget = wibox.widget {
   M.player_name,
 }
 
-function M.initialize()
-  --- @module "module.daemons.playerctl"
-  local playerctl = require_module "module.daemons.playerctl"
-
-  return playerctl:on_update(function(player)
-    if player then
-      M.player_name:set_text(utils.capitalize(player.name or "No player"))
-      M.spotify_logo.visible = player.name == "spotify"
-      M.widget.visible = true
-    else
-      M.player_name:set_text "No player"
-      M.spotify_logo.visible = false
-      M.widget.visible = false
-    end
-  end)
-end
+local cleanup = playerctl:on_update(function(player)
+  if player then
+    M.player_name:set_text(utils.capitalize(player.name or "No player"))
+    M.spotify_logo.visible = player.name == "spotify"
+    M.widget.visible = true
+  else
+    M.player_name:set_text "No player"
+    M.spotify_logo.visible = false
+    M.widget.visible = false
+  end
+end)
+on_module_cleanup(M, cleanup)
 
 return M

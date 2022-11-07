@@ -1,4 +1,4 @@
---- @alias ModuleInitializerFunction fun(): CleanupFunction | nil
+--- @alias ModuleInitializerFunction fun(is_reload: boolean): CleanupFunction | nil
 --- @alias CleanupFunction fun()
 
 --- @class screen
@@ -12,6 +12,29 @@
 
 local gears = require "gears"
 local xresources = require "beautiful.xresources"
+
+--- Keep track of all cleanups that have been registered and in which order so
+--we can run them globally.
+--- @type table[]
+local modules_to_clean_up = {}
+
+--- @param cleanups unknown
+local function run_cleanups(cleanups)
+  if type(cleanups) == "table" then
+    -- Run cleanup functions in reverse order
+    for i = #cleanups, 1, -1 do
+      if type(cleanups[i]) == "function" then
+        cleanups[i]()
+      end
+    end
+  end
+end
+
+--- @param mod table
+local function cleanup_module(mod)
+  run_cleanups(mod["__module_cleanups"])
+  mod["__module_cleanups"] = nil
+end
 
 --- Returns a pixel value scaled for the current screen DPI.
 --- @param px number Size in pixels
@@ -41,90 +64,48 @@ function _G.inspect(val, tag, depth)
   return gears.debug.dump_return(val, tag, depth)
 end
 
---- @class LoadedModule
---- @field initialized boolean
---- @field cleanup CleanupFunction | nil
-
---- @type table<string, LoadedModule>
-local loaded_modules = {}
---- @type string[]
-local module_order = {}
-
---- @param name string
---- @return boolean
-function _G.cleanup_module(name)
-  if loaded_modules[name] then
-    local cleanup = loaded_modules[name].cleanup
-    if cleanup then
-      cleanup()
-    end
-    loaded_modules[name] = nil
-    package.loaded[name] = nil
-
-    return true
-  end
-
-  package.loaded[name] = nil
-  return false
-end
-
---- Require and set up a module. If called multiple times, the module will
---- still only be set up once.
----
---- The module must export a `initialize` function that may return a cleanup
---- function. This cleanup function will be called if the module is reloaded.
----
---- @param name string -- Module name
---- @return unknown
-function _G.require_module(name)
-  local module = require(name)
-
+--- @generic M : table
+--- @param module M
+--- @param is_reload? boolean
+--- @return M
+function _G.initialize_module(module, is_reload)
   if type(module) ~= "table" then
-    gears.debug.print_error("Module " .. name .. " did not return a module!")
-    return module
+    error "Module is not a table!"
   end
 
-  if loaded_modules[name] then
-    return module
+  if type(module["module_initialize"]) == "function" then
+    local cleanup = module["module_initialize"](is_reload or false)
+    if type(cleanup) == "function" then
+      on_module_cleanup(module, cleanup)
+    end
   end
-
-  local loaded = {
-    initialized = false,
-    cleanup = nil,
-  }
-  loaded_modules[name] = loaded
-  module_order[#module_order + 1] = name
-
-  if type(module.initialize) == "function" then
-    loaded.initialized = true
-    loaded.cleanup = module.initialize()
-  end
-
   return module
 end
 
-function _G.reload_modules()
-  local modules = module_order
-  module_order = {}
-
-  -- Unload modules in reverse order…
-  for i = #modules, 1, -1 do
-    cleanup_module(modules[i])
+--- @generic M : table
+--- @param module M
+--- @param cleanup_function fun()
+function _G.on_module_cleanup(module, cleanup_function)
+  if module["__module_cleanups"] == nil then
+    module["__module_cleanups"] = {}
   end
 
-  -- …and read them again in normal order
-  for i = 1, #modules do
-    reload(modules[i])
-  end
+  table.insert(module["__module_cleanups"], cleanup_function)
+  table.insert(modules_to_clean_up, module)
 end
 
-function _G.cleanup_modules()
-  -- Unload modules in reverse order…
-  for i = #module_order, 1, -1 do
-    cleanup_module(module_order[i])
+--- Remove a module from the list of loaded modules. The next time it is
+--- required it will be loaded from disk again.
+---
+--- @param name string -- Module name
+function _G.unload(name)
+  local mod = package.loaded[name]
+
+  if mod then
+    cleanup_module(mod)
   end
 
-  module_order = {}
+  package.loaded[name] = nil
 end
 
 --- A `require` that reloads the module if it was already loaded.
@@ -134,12 +115,18 @@ end
 --- @param name string -- Module name
 --- @return unknown
 function _G.reload(name)
-  local was_module = cleanup_module(name)
-  package.loaded[name] = nil
-
-  if was_module then
-    return require_module(name)
-  else
-    return require(name)
-  end
+  unload(name)
+  return initialize_module(require(name))
 end
+
+-- Unload modules when Awesome is restarted. This makes sure that modules that
+-- spawn processes and whatnot also can restart properly.
+awesome.connect_signal("exit", function(is_restart)
+  if is_restart then
+    for i = #modules_to_clean_up, 1, -1 do
+      cleanup_module(modules_to_clean_up[i])
+      modules_to_clean_up[i] = nil
+    end
+    modules_to_clean_up = {}
+  end
+end)

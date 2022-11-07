@@ -15,13 +15,14 @@ local function patched_focus(...)
   return result
 end
 
-return {
-  --- @type ModuleInitializerFunction
-  initialize = function()
-    awful.screen.focus = patched_focus
+local M = {}
 
-    return function()
-      awful.screen.focus = original_method
-    end
-  end,
-}
+function M.module_initialize()
+  awful.screen.focus = patched_focus
+
+  return function()
+    awful.screen.focus = original_method
+  end
+end
+
+return M

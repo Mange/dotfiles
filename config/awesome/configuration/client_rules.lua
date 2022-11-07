@@ -4,9 +4,7 @@ local gears = require "gears"
 
 local keys = require "keys"
 local utils = require "utils"
-
---- @module "module.tags"
-local tags = require_module("module.tags").tags
+local tags = require("module.tags").tags
 
 local clientbuttons = gears.table.join(
   awful.button({}, keys.left_click, function(c)

@@ -39,7 +39,7 @@ local function handle(args)
   -- Log unhandled notifications so I have a chance of adding them to my rules here.
   -- Logging with depth 3+ will log binary icon data inside the log, which
   -- makes it hard to work with.
-  if not utils.is_test() then
+  if not is_test_mode() then
     utils.log("notifications", args, "unmatched notification", 2)
     utils.log("notifications", "")
     utils.log("notifications", "message:")

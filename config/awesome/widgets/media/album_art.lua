@@ -36,17 +36,15 @@ local function update_album_art(path)
   end
 end
 
-function M.initialize()
-  --- @module "module.daemons.playerctl"
-  local playerctl = require_module "module.daemons.playerctl"
+local playerctl = require "module.daemons.playerctl"
+local cleanup = playerctl:on_update(function(player)
+  if player then
+    update_album_art(player.metadata.art_path)
+  else
+    update_album_art(nil)
+  end
+end)
 
-  return playerctl:on_update(function(player)
-    if player then
-      update_album_art(player.metadata.art_path)
-    else
-      update_album_art(nil)
-    end
-  end)
-end
+on_module_cleanup(M, cleanup)
 
 return M

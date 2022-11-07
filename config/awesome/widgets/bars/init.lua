@@ -1,28 +1,14 @@
 local wibox = require "wibox"
 local awful = require "awful"
 
---- @module "module.theme"
-local theme = require_module "module.theme"
+local theme = require "module.theme"
 local ui = require "widgets.ui"
 
---- @module "widgets.bars.tag_list"
-local tag_list = require_module "widgets.bars.tag_list"
---- @module "widgets.bars.media"
-local media = require_module "widgets.bars.media"
-
---- @module "widgets.bars.clock"
-local clock = require_module "widgets.bars.clock"
+local tag_list = require "widgets.bars.tag_list"
+local media = require "widgets.bars.media"
+local clock = require "widgets.bars.clock"
 
 local M = {}
-
-function M.initialize()
-  return function()
-    cleanup_module "module.theme"
-    cleanup_module "widgets.bars.tag_list"
-    cleanup_module "widgets.bars.media"
-    cleanup_module "widgets.bars.clock"
-  end
-end
 
 -- Layout of the bar:
 --[ LEFT ]                   [CENTER]                          [RIGHT]

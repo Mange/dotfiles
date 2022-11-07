@@ -5,14 +5,10 @@ local gears = require "gears"
 
 local bling = require "vendor.bling"
 
---- @module "module.theme"
-local theme = require_module "module.theme"
-
+local theme = require "module.theme"
 local ui = require "widgets.ui"
 local ui_constants = require "widgets.ui.constants"
-
---- @module "widgets.ui.effects"
-local ui_effects = require_module "widgets.ui.effects"
+local ui_effects = require "widgets.ui.effects"
 
 local M = {}
 

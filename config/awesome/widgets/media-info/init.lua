@@ -10,8 +10,7 @@ local keys = require "keys"
 local actions = require "actions"
 local dpi = utils.dpi
 
---- @module "module.daemons.playerctl"
-local playerctl = require_module "module.daemons.playerctl"
+local playerctl = require "module.daemons.playerctl"
 
 local media_info = wibox.widget {
   layout = wibox.layout.align.horizontal,

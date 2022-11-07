@@ -171,7 +171,7 @@ theme.which_key = {
   },
 }
 
-function theme.initialize()
+function theme.module_initialize()
   beautiful.init(theme)
 end
 

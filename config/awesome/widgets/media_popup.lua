@@ -2,34 +2,14 @@ local awful = require "awful"
 local wibox = require "wibox"
 local ui = require "widgets.ui"
 
---- @module "module.theme"
-local theme = require_module "module.theme"
---- @module "widgets.media.album_art"
-local album_art = require_module "widgets.media.album_art"
---- @module "widgets.media.title"
-local title = require_module "widgets.media.title"
---- @module "widgets.media.artist"
-local artist = require_module "widgets.media.artist"
---- @module "widgets.media.player_info"
-local player_info = require_module "widgets.media.player_info"
+local theme = require "module.theme"
+local album_art = require "widgets.media.album_art"
+local title = require "widgets.media.title"
+local artist = require "widgets.media.artist"
+local player_info = require "widgets.media.player_info"
+local playerctl = require "module.daemons.playerctl"
 
-local M = {
-  cleanups_functions = {},
-}
-
-local function cleanup_on_reload(func)
-  M.cleanups_functions[#M.cleanups_functions + 1] = func
-end
-
-function M.initialize()
-  M.cleanups_functions = {}
-
-  return function()
-    for _, cleanup in ipairs(M.cleanups_functions) do
-      cleanup()
-    end
-  end
-end
+local M = {}
 
 local function find_panel_geometry_from_hover(panel)
   -- If hovering a widget that is a child of the panel, then the panel will be
@@ -121,9 +101,6 @@ function M.new(s)
     self.widget.visible = false
   end
 
-  --- @module "module.daemons.playerctl"
-  local playerctl = require_module "module.daemons.playerctl"
-
   --- @param player Player | nil
   local function update(player)
     if player and player.metadata.art_path then
@@ -134,7 +111,8 @@ function M.new(s)
   end
 
   update(playerctl:current())
-  cleanup_on_reload(playerctl:on_update(update))
+  local cleanup = playerctl:on_update(update)
+  on_module_cleanup(M, cleanup)
 
   return popup
 end

@@ -86,8 +86,7 @@ function M.find_screen(type)
   return M.current[type] or M.current.main
 end
 
---- @type ModuleInitializerFunction
-function M.initialize()
+function M.module_initialize()
   local refresh_layout = function()
     M.current = M.get_layout()
     M.apply_wallpaper_overrides()

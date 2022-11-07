@@ -1,7 +1,7 @@
 local wibox = require "wibox"
 local gears = require "gears"
 
-local theme = require_module "module.theme"
+local theme = require "module.theme"
 
 local M = {}
 
@@ -142,8 +142,7 @@ function M.panel(options)
   }
 end
 
---- @module "widgets.ui.button"
-local button_module = require_module "widgets.ui.button"
+local button_module = require "widgets.ui.button"
 M.button = button_module.button
 
 return M

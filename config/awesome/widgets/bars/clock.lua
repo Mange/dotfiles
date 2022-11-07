@@ -2,9 +2,7 @@ local wibox = require "wibox"
 local awful = require "awful"
 local gears = require "gears"
 
---- @module "module.theme"
-local theme = require_module "module.theme"
-
+local theme = require "module.theme"
 local ui = require "widgets.ui"
 
 local clock_format = '<span font="'

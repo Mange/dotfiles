@@ -1,15 +1,11 @@
 local wibox = require "wibox"
+
 local ui = require "widgets.ui"
+local theme = require "module.theme"
 
---- @module "module.daemons.playerctl"
-local playerctl = require_module "module.daemons.playerctl"
---- @module "module.theme"
-local theme = require_module "module.theme"
-
---- @module "widgets.media_popup"
-local media_popup = require_module "widgets.media_popup"
---- @module "widgets.media.player_info"
-local player_info = require_module "widgets.media.player_info"
+local playerctl = require "module.daemons.playerctl"
+local media_popup = require "widgets.media_popup"
+local player_info = require "widgets.media.player_info"
 
 local M = {
   cleanups_functions = {},

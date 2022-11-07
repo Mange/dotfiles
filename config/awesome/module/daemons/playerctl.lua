@@ -258,7 +258,7 @@ local function kill(pid)
   awesome.kill(-pid, awesome.unix_signal["SIGTERM"])
 end
 
-function playerctl.initialize()
+function playerctl.module_initialize()
   local status_pid = spawn_status_watcher()
   local metadata_pid = spawn_metadata_watcher()
 
