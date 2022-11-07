@@ -6,7 +6,7 @@ local M = {}
 --- @param is_reload boolean
 function M.module_initialize(is_reload)
   if is_reload then
-    reload "configuration.client_rules"
+    unload "configuration.client_rules"
   end
 
   local rules = require "configuration.client_rules"
