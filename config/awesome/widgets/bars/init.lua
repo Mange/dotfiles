@@ -5,34 +5,32 @@ local awful = require "awful"
 local theme = require_module "module.theme"
 local ui = require "widgets.ui"
 
-local control_bar = require_module "widgets.bars.control"
-local media_bar = require_module "widgets.bars.media"
-local window_bar = require_module "widgets.bars.window"
-local status_bar = require_module "widgets.bars.status"
-local state_bar = require_module "widgets.bars.state"
+--- @module "widgets.bars.tag_list"
+local tag_list = require_module "widgets.bars.tag_list"
+--- @module "widgets.bars.media"
+local media = require_module "widgets.bars.media"
+
+--- @module "widgets.bars.clock"
+local clock = require_module "widgets.bars.clock"
 
 local M = {}
 
 function M.initialize()
   return function()
     cleanup_module "module.theme"
-    cleanup_module "widgets.bars.control"
+    cleanup_module "widgets.bars.tag_list"
     cleanup_module "widgets.bars.media"
-    cleanup_module "widgets.bars.window"
-    cleanup_module "widgets.bars.status"
-    cleanup_module "widgets.bars.state"
+    cleanup_module "widgets.bars.clock"
   end
 end
 
 -- Layout of the bar:
---              [ LEFT ]                [CENTER]                 [RIGHT]
---┌────────────────────────────────────────────────────────────────────────────┐
---│ ┌───────────┐  ┌─────────┐      ┌──────────┐     ┌──────────┐  ┌─────────┐ │
---│ │  CONTROL  │  │  MEDIA  │      │  WINDOW  │     │  STATUS  │  │  STATE  │ │
---│ └───────────┘  └─────────┘      └──────────┘     └──────────┘  └─────────┘ │
---└────────────────────────────────────────────────────────────────────────────┘
--- Outer box is transparent and just a layout container. The layout has three
--- sections, each one containing 1-2 visible bars.
+--[ LEFT ]                   [CENTER]                          [RIGHT]
+--┌──────────────────────────────────────────────────────────────────┐
+--│┌────┐┌───────┐                             ┌─────┐┌──────┐┌─────┐│
+--││TAGS││WINDOWS│                             │MEDIA││STATUS││CLOCK││
+--│└────┘└───────┘                             └─────┘└──────┘└─────┘│
+--└──────────────────────────────────────────────────────────────────┘
 
 --- @param s screen
 function M.create(s)
@@ -49,41 +47,35 @@ function M.create(s)
     y = s.geometry.y,
     stretch = true,
     visible = true,
-    bg = theme.transparent,
+    bg = theme.background,
   }
 
   box:struts {
     top = height,
   }
 
-  box:setup(ui.margin(theme.spacing(1)) {
+  box:setup {
     layout = wibox.layout.align.horizontal,
-    expand = "none", -- Center widget will get the most space
 
     ui.horizontal {
       spacing = theme.spacing(4),
       bg = theme.transparent,
       children = {
-        control_bar.build(s),
-        awful.widget.only_on_screen(media_bar.build(s), "primary"),
+        tag_list.build(s),
+        ui.placeholder(theme.crust, "windows"),
       },
     },
+    nil,
     ui.horizontal {
       spacing = theme.spacing(4),
       bg = theme.transparent,
       children = {
-        window_bar.build(s),
+        awful.widget.only_on_screen(media.build(s), "primary"),
+        ui.placeholder(theme.crust, "statuses"),
+        clock.build(s),
       },
     },
-    ui.horizontal {
-      spacing = theme.spacing(4),
-      bg = theme.transparent,
-      children = {
-        status_bar.build(s),
-        state_bar.build(s),
-      },
-    },
-  })
+  }
 
   return box
 end

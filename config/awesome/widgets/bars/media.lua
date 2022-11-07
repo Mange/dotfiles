@@ -67,39 +67,35 @@ function M.build(s)
 
   local popup = media_popup.new(s)
 
-  local panel
-  panel = wibox.widget(ui.panel {
-    children = {
-      ui.button {
-        bg = theme.transparent,
-        on_mouse_enter = function()
-          popup:show_at(panel)
-        end,
-        on_mouse_leave = function()
-          popup:hide()
-        end,
-        on_left_click = function()
-          playerctl:play_pause()
-        end,
-        child = ui.margin(0, theme.spacing(2)) {
-          layout = wibox.layout.fixed.horizontal,
-          spacing = theme.spacing(2),
-          ui.margin(theme.spacing(2), 0)(player_info.spotify_logo),
-          play_button,
-          {
-            layout = wibox.container.constraint,
-            width = theme.spacing(22),
-            title_widget,
-          },
-        },
+  local button
+  button = ui.button {
+    bg = theme.transparent,
+    on_mouse_enter = function()
+      popup:show_at(button)
+    end,
+    on_mouse_leave = function()
+      popup:hide()
+    end,
+    on_left_click = function()
+      playerctl:play_pause()
+    end,
+    child = ui.margin(0, theme.spacing(2)) {
+      layout = wibox.layout.fixed.horizontal,
+      spacing = theme.spacing(2),
+      ui.margin(theme.spacing(4), 0)(player_info.spotify_logo),
+      play_button,
+      {
+        layout = wibox.container.constraint,
+        width = theme.spacing(44),
+        title_widget,
       },
     },
-  })
+  }
 
   --- @param player Player | nil
   local function update(player)
     if player then
-      panel.visible = true
+      button.visible = true
       local title = generate_title(player)
       title_widget:set_markup(title)
 
@@ -111,14 +107,14 @@ function M.build(s)
         play_button.set_text " "
       end
     else
-      panel.visible = false
+      button.visible = false
     end
   end
 
   update(playerctl:current())
   cleanup_on_reload(playerctl:on_update(update))
 
-  return panel
+  return button
 end
 
 return M

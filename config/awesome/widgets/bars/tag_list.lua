@@ -123,7 +123,7 @@ function M.build(s)
         setup_signals(self, t)
       end,
       update_callback = update_widget,
-      ui.margin(2, 1) {
+      ui.margin(2, 2) {
         widget = wibox.container.background,
         shape = gears.shape.circle,
         id = "circle_background",
@@ -135,8 +135,8 @@ function M.build(s)
           valign = "center",
           halign = "center",
           font = theme.font_bold_size(12),
-          forced_width = theme.spacing(8),
-          forced_height = theme.spacing(8),
+          forced_width = theme.spacing(6),
+          forced_height = theme.spacing(6),
         },
       },
     },

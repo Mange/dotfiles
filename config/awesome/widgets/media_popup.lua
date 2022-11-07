@@ -105,7 +105,7 @@ function M.new(s)
     ontop = true,
     preferred_anchors = { "front", "middle" },
     preferred_positions = { "bottom" },
-    visible = is_test_mode(),
+    visible = false,
     offset = {
       y = theme.spacing(2),
     },

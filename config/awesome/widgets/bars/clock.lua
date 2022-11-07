@@ -2,12 +2,14 @@ local wibox = require "wibox"
 local awful = require "awful"
 local gears = require "gears"
 
+--- @module "module.theme"
 local theme = require_module "module.theme"
+
 local ui = require "widgets.ui"
 
 local clock_format = '<span font="'
   .. theme.font_bold
-  .. '">%-d/%-m %H:%M</span>'
+  .. '">%-d %b %H:%M</span>'
 
 local M = {}
 
@@ -95,10 +97,11 @@ function M.build(s)
   }
 
   local button = ui.button {
+    bg = theme.transparent,
     on_left_click = function()
       clock_tooltip.visible = false
     end,
-    child = ui.margin(0, theme.spacing(0.5))(clock),
+    child = ui.margin(0, theme.spacing(2))(clock),
   }
 
   clock_tooltip:add_to_object(button)
