@@ -1,6 +1,11 @@
 {
   "$schema": "https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json",
-  "Lua.runtime.path": ["?.lua", "?/init.lua"],
+  "Lua.runtime.path": [
+    "?.lua",
+    "?/init.lua",
+    "/usr/share/awesome/lib/?.lua",
+    "/usr/share/awesome/lib/?/init.lua"
+  ],
   "Lua.diagnostics.globals": [
     "describe",
     "it",
