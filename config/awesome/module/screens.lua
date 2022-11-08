@@ -92,12 +92,12 @@ function M.module_initialize()
     M.apply_wallpaper_overrides()
   end
 
+  refresh_layout()
+
   -- When a screen is added, and for all currently added screens
   awful.screen.connect_for_each_screen(refresh_layout)
   -- When a screen changes geometry
   screen.connect_signal("property::geometry", refresh_layout)
-
-  refresh_layout()
 
   return function()
     screen.disconnect_signal("property::geometry", refresh_layout)

@@ -4,11 +4,6 @@ local beautiful = require "beautiful"
 local naughty = require "naughty"
 
 --
--- Theme
---
-beautiful.init(require "theme")
-
---
 local keys = require "keys"
 local dropdown = require "dropdown"
 local handle_notification = require("module.notification_rules").handle

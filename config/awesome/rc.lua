@@ -30,7 +30,8 @@ autostart.early()
 -- Set up theme variables since other modules will use them
 --
 if not is_test_mode() then
-  require "oldrc"
+  local beautiful = require "beautiful"
+  beautiful.init(require "theme")
 else
   initialize_module(require "module.theme")
 end
@@ -48,6 +49,10 @@ initialize_module(require "module.layout_rotation")
 initialize_module(require "module.screens")
 initialize_module(require "module.tags")
 initialize_module(require "module.client_rules")
+
+if not is_test_mode() then
+  require "oldrc"
+end
 
 --
 -- HUD, UI, and widgets

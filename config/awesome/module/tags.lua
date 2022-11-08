@@ -66,15 +66,16 @@ local function setup_layouts()
 end
 
 local M = {
-  tags = setup_tags(),
+  tags = {},
 }
 
 function M.module_initialize(is_reload)
+  M.tags = setup_tags()
+
   -- If restarting, then the request::default_layouts have already been
   -- processed. Manually override directly.
   if is_reload then
     setup_layouts()
-    M.tags = setup_tags()
   end
 
   tag.connect_signal("request::default_layouts", setup_layouts)
