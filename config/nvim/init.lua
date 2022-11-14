@@ -48,6 +48,7 @@ _G.load_config = function()
   require("mange.yank_highlight").setup()
   require("mange.vimdiff").setup()
 
+  require "mange.filetypes"
   require "mange.autocommands"
 end
 

@@ -36,13 +36,6 @@ require("packer").startup(function(use)
   use { "antoinemadec/FixCursorHold.nvim" }
 
   use {
-    "nathom/filetype.nvim",
-    config = function()
-      require "mange.plugin.filetypes"
-    end,
-  }
-
-  use {
     "AndrewRadev/switch.vim",
     setup = function()
       vim.g.switch_mapping = "" -- Setup in mange.mappings
