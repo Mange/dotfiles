@@ -57,18 +57,6 @@ bindkey -d # Delete all existing keybinds
 bindkey -v # Use vimkeys by default
 KEYTIMEOUT=1 # 10ms delay for Escape key
 
-# Delete EMACS-like bindings to retrain my muscle memory
-# See info about how this works here: https://unix.stackexchange.com/a/320432
-bindkey -s '^[OC' '\a' # → ?
-bindkey -s '^[OD' '\a' # ← ?
-bindkey -s '^[[C' '\a' # →
-bindkey -s '^[[D' '\a' # ←
-bindkey -s '^[OA' '\a' # Up ?
-bindkey -s '^[OB' '\a' # Down ?
-bindkey -s '^[[A' '\a' # Up
-bindkey -s '^[[B' '\a' # Down
-bindkey -s '^A' '\a'
-
 # New line
 bindkey -M viins '^J' self-insert
 
