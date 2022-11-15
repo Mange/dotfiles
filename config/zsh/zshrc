@@ -84,6 +84,13 @@ autoload edit-command-line
 zle -N edit-command-line
 bindkey -M vicmd 'v' edit-command-line
 
+# Shift-Space with Extended Keys should insert space in insert mode and do
+# nothing in command mode.
+# (Default is to delete everything on the line without adding to killring or
+# make it possible to undo.)
+bindkey -M viins -s '^[[32;2u' ' '
+bindkey -M vicmd -s '^[[32;2u' ' '
+
 # See extra bindkey calls under the Plugins section
 
 if [ -f /usr/share/fzf/key-bindings.zsh ]; then
