@@ -1,10 +1,19 @@
 local gears = require "gears"
-local awful = require "awful"
 
 local M = {}
 
 -- Overridable for tests
-M.awful_key = awful.key
+if _G.is_test then
+  -- awful.key returns a table of the binds in all possible combinations of
+  -- modifiers that are ignored. Like NumLock and ScrollLock.
+  -- Emulate by wrapping the single table in a table.
+  M.awful_key = function(...)
+    return { { ... } }
+  end
+else
+  local awful = require "awful"
+  M.awful_key = awful.key
+end
 
 ---@alias modifier
 ---| '"Shift"' # Shift
