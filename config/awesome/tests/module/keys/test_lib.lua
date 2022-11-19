@@ -15,10 +15,10 @@ function tests:test_parse_bind()
     { { "Mod4", "Shift" }, "n" }
   )
 
-  luaunit.assert_equals(keys_lib.parse_bind "CTRL+c", { { "Ctrl" }, "c" })
+  luaunit.assert_equals(keys_lib.parse_bind "CTRL+c", { { "Control" }, "c" })
   luaunit.assert_equals(
     keys_lib.parse_bind "cTRl+C",
-    { { "Ctrl", "Shift" }, "c" }
+    { { "Control", "Shift" }, "c" }
   )
 end
 

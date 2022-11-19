@@ -35,7 +35,16 @@ end
 M.aliases = {
   mod = "Mod4",
   shift = "Shift",
-  ctrl = "Ctrl",
+  ctrl = "Control",
+  control = "Control",
+
+  left = "Left",
+  right = "Right",
+  up = "Up",
+  down = "Down",
+  tab = "Tab",
+  backspace = "BackSpace",
+  ["return"] = "Return",
 
   plus = "+",
 }

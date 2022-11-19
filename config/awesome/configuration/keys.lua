@@ -35,16 +35,40 @@ M.global = {
 
   ["mod+a"] = {},
   ["mod+s"] = {},
-  ["mod+d"] = {},
+  ["mod+d"] = { actions.rofi(), "Rofi", group = "Apps" },
   ["mod+f"] = {},
-  ["mod+g"] = {},
+  ["mod+g"] = {
+    actions.dropdown_toggle(
+      { "samedirwezterm", "start", "--class", "dropdown_terminal" },
+      { class = "dropdown_terminal" }
+    ),
+    "Terminal dropdown",
+    groups = "Apps",
+  },
+  ["mod+G"] = {
+    actions.dropdown_toggle(
+      { "wezterm", "start", "--class", "dropdown_calc", "--", "qalc" },
+      { class = "dropdown_calc" }
+    ),
+    "Calculator dropdown",
+    groups = "Apps",
+  },
   ["mod+h"] = { actions.focus "left", "Focus ←", group = "Client" },
   ["mod+j"] = { actions.focus "down", "Focus ↓", group = "Client" },
   ["mod+k"] = { actions.focus "up", "Focus ↑", group = "Client" },
   ["mod+l"] = { actions.focus "right", "Focus →", group = "Client" },
   ["mod+;"] = {},
   ["mod+'"] = {},
-  ["mod+return"] = {},
+  ["mod+return"] = {
+    actions.spawn { "samedirwezterm" },
+    "Terminal (samedir)",
+    group = "Apps",
+  },
+  ["mod+shift+return"] = {
+    actions.spawn { "wezterm" },
+    "Terminal (~)",
+    group = "Apps",
+  },
 
   ["mod+z"] = {},
   ["mod+x"] = {},

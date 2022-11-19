@@ -48,6 +48,9 @@ initialize_module(require "module.daemons")
 initialize_module(require "module.layout_rotation")
 initialize_module(require "module.screens")
 initialize_module(require "module.tags")
+if is_test_mode() then
+  initialize_module(require "module.keys")
+end
 initialize_module(require "module.client_rules")
 
 if not is_test_mode() then

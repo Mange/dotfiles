@@ -1,4 +1,4 @@
-local lib = require "keys.lib"
+local lib = require "module.keys.lib"
 
 local M = {}
 
@@ -8,10 +8,10 @@ function M.module_initialize(is_reload)
     unload "configuration.keys"
   end
 
-  local keys = require "configuration.keys"
+  local config = require "configuration.keys"
+  local global = lib.build_awful_keys(config.global)
 
-  inspect(keys.global)
-  -- root.keys(keys.global)
+  root.keys(global)
 
   return function() end
 end
