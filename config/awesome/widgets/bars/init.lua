@@ -5,6 +5,7 @@ local theme = require "module.theme"
 local ui = require "widgets.ui"
 
 local tag_list = require "widgets.bars.tag_list"
+local current_window = require "widgets.bars.current_window"
 local media = require "widgets.bars.media"
 local clock = require "widgets.bars.clock"
 
@@ -50,7 +51,7 @@ function M.create(s)
         tag_list.build(s),
       },
     },
-    ui.margin(0, theme.spacing(4))(ui.placeholder(theme.crust, "window")),
+    ui.margin(0, theme.spacing(4))(current_window.build(s)),
     ui.horizontal {
       spacing = theme.spacing(4),
       bg = theme.transparent,

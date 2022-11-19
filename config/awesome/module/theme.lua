@@ -171,6 +171,20 @@ theme.which_key = {
   },
 }
 
+-- Tasklist
+theme.tasklist_plain_task_name = true -- Disable icons for floating, minimized, etc.
+
+theme.tasklist_fg_normal = theme.subtext0
+theme.tasklist_bg_normal = theme.transparent
+
+theme.tasklist_fg_focus = theme.rosewater
+theme.tasklist_bg_focus = theme.transparent
+
+theme.tasklist_fg_urgent = theme.peach
+theme.tasklist_bg_urgent = theme.surface0
+
+-------------------
+
 function theme.module_initialize()
   beautiful.init(theme)
 end
