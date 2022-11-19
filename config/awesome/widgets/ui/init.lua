@@ -49,6 +49,7 @@ function M.placeholder(color, text)
     text_widget = {
       widget = wibox.widget.textbox,
       text = text,
+      align = "center",
     }
   end
 

@@ -12,11 +12,11 @@ local M = {}
 
 -- Layout of the bar:
 --[ LEFT ]                   [CENTER]                          [RIGHT]
---┌──────────────────────────────────────────────────────────────────┐
---│┌────┐┌───────┐                             ┌─────┐┌──────┐┌─────┐│
---││TAGS││WINDOWS│                             │MEDIA││STATUS││CLOCK││
---│└────┘└───────┘                             └─────┘└──────┘└─────┘│
---└──────────────────────────────────────────────────────────────────┘
+--┌─────────────────────────────────────────────────────────────────┐
+--│┌────┐                    ┌──────┐         ┌─────┐┌──────┐┌─────┐│
+--││TAGS│                    │WINDOW│         │MEDIA││STATUS││CLOCK││
+--│└────┘                    └──────┘         └─────┘└──────┘└─────┘│
+--└─────────────────────────────────────────────────────────────────┘
 
 --- @param s screen
 function M.create(s)
@@ -48,10 +48,9 @@ function M.create(s)
       bg = theme.transparent,
       children = {
         tag_list.build(s),
-        ui.placeholder(theme.crust, "windows"),
       },
     },
-    nil,
+    ui.margin(0, theme.spacing(4))(ui.placeholder(theme.crust, "window")),
     ui.horizontal {
       spacing = theme.spacing(4),
       bg = theme.transparent,
