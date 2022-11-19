@@ -27,8 +27,10 @@ elif [[ $# -le 0 ]]; then
   exit 1
 elif [[ $# -eq 1 ]] && [[ $1 == "--print" ]]; then
   mode=print
+  shift
 elif [[ $# -eq 1 ]] && [[ $1 == "--debug" ]]; then
   mode=debug
+  shift
 fi
 
 # Find PID of active window

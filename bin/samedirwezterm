@@ -3,10 +3,14 @@
 wezterm_args=()
 original_args=()
 
+cwd="$(samedir --print)"
+# Fall back to HOME if samedir cannot be determined…
+cwd="${cwd:-$HOME}"
+
 # Started with no arguments should just start wezterm in the same dir (like
 # "wezterm" with no argument is the same as "wezterm start").
 if [[ $# -eq 0 ]]; then
-  wezterm_args+=("start" "--cwd" "$(samedir --print)")
+  wezterm_args+=("start" "--cwd" "$cwd")
 fi
 
 while [[ $# -gt 0 ]]; do
@@ -18,7 +22,7 @@ while [[ $# -gt 0 ]]; do
     exec wezterm "${original_args[@]}" "$@"
   elif [[ "$1" == start ]]; then
     # Add it right after "wezterm start"
-    wezterm_args+=("$1" "--cwd" "$(samedir --print)")
+    wezterm_args+=("$1" "--cwd" "$cwd")
     shift
   else
     wezterm_args+=("$1")
