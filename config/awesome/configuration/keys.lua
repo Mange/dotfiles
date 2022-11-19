@@ -38,18 +38,12 @@ M.global = {
   ["mod+d"] = { actions.rofi(), "Rofi", group = "Apps" },
   ["mod+f"] = {},
   ["mod+g"] = {
-    actions.dropdown_toggle(
-      { "samedirwezterm", "start", "--class", "dropdown_terminal" },
-      { class = "dropdown_terminal" }
-    ),
+    actions.dropdown_terminal(),
     "Terminal dropdown",
     groups = "Apps",
   },
   ["mod+G"] = {
-    actions.dropdown_toggle(
-      { "wezterm", "start", "--class", "dropdown_calc", "--", "qalc" },
-      { class = "dropdown_calc" }
-    ),
+    actions.dropdown_calculator(),
     "Calculator dropdown",
     groups = "Apps",
   },

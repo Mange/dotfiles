@@ -389,20 +389,14 @@ keys.global = gears.table.join(
   awful.key(
     { modkey },
     "g",
-    actions.dropdown_toggle(
-      { "samedirwezterm", "start", "--class", "dropdown_terminal" },
-      { class = "dropdown_terminal" }
-    ),
+    actions.dropdown_terminal(),
     { description = "Terminal dropdown", group = "Apps" }
   ),
 
   awful.key(
     { modkey, "Shift" },
     "g",
-    actions.dropdown_toggle(
-      { "wezterm", "start", "--class", "dropdown_calc", "--", "qalc" },
-      { class = "dropdown_calc" }
-    ),
+    actions.dropdown_calculator(),
     { description = "Calculator dropdown", group = "Apps" }
   ),
 

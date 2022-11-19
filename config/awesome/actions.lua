@@ -282,6 +282,20 @@ function actions.dropdown_toggle(cmd, rule)
   end
 end
 
+function actions.dropdown_terminal()
+  return actions.dropdown_toggle(
+    { "samedirwezterm", "start", "--class", "dropdown_terminal" },
+    { class = "dropdown_terminal" }
+  )
+end
+
+function actions.dropdown_calculator()
+  return actions.dropdown_toggle(
+    { "wezterm", "start", "--class", "dropdown_calc", "--", "qalc" },
+    { class = "dropdown_calc" }
+  )
+end
+
 function actions.goto_tag(index)
   return function()
     local tag = tags[index]
