@@ -52,4 +52,13 @@ function tests:test_build_awful_keys()
   )
 end
 
+function tests:test_build_awful_keys_skips_empty()
+  luaunit.assert_items_equals(
+    keys_lib.build_awful_keys {
+      ["mod+n"] = {},
+    },
+    {}
+  )
+end
+
 return tests

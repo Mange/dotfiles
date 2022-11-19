@@ -87,14 +87,16 @@ function M.build_awful_keys(mappings)
   local keys = {}
 
   for bind, opts in pairs(mappings) do
-    local key = M.parse_bind(bind)
     local action = opts[1]
-    local description = opts[2]
-    opts.description = description
-    opts[1] = nil
-    opts[2] = nil
+    if action ~= nil then
+      local key = M.parse_bind(bind)
+      local description = opts[2]
+      opts.description = description
+      opts[1] = nil
+      opts[2] = nil
 
-    keys = gears.table.join(keys, M.awful_key(key[1], key[2], action, opts))
+      keys = gears.table.join(keys, M.awful_key(key[1], key[2], action, opts))
+    end
   end
 
   return keys
