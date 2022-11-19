@@ -33,7 +33,6 @@ keys.awesome_chord = which_keys.new_chord("Awesome", {
   keybindings = {
     wk("w", "window-select", actions.select_window()),
     wk("e", "emoji-selector", actions.emoji_selector()),
-    wk("P", "passwords", actions.passwords_menu()),
     wk(
       "m",
       "+media",
@@ -306,12 +305,6 @@ keys.global = gears.table.join(
   -- Group: Screen
   awful.key(
     { modkey },
-    "Escape",
-    actions.focus_screen(1),
-    { description = "Next screen", group = "Screen" }
-  ),
-  awful.key(
-    { modkey },
     ";",
     actions.focus_screen_dir "left",
     { description = "← Screen", group = "Screen" }
@@ -321,14 +314,6 @@ keys.global = gears.table.join(
     "'",
     actions.focus_screen_dir "right",
     { description = "Screen →", group = "Screen" }
-  ),
-
-  -- Group: Layout
-  awful.key(
-    { modkey },
-    "q",
-    actions.next_layout(),
-    { description = "Next layout", group = "Layout" }
   ),
 
   -- Group: Apps
@@ -354,40 +339,6 @@ keys.global = gears.table.join(
 
   awful.key(
     { modkey },
-    "w",
-    actions.run_or_raise({ "brave-browser-beta" }, { class = "Brave" }),
-    { description = "Focus browser", group = "Apps" }
-  ),
-
-  awful.key(
-    { modkey, "Shift" },
-    "w",
-    actions.focus_tag_client { class = "Brave" },
-    { description = "Focus-tag browser", group = "Apps" }
-  ),
-
-  awful.key(
-    { modkey },
-    "e",
-    actions.run_or_raise(
-      { "samedirwezterm", "start", "--", "nvim" },
-      { class = "org.wezfurlong.wezterm", name = "NVIM$" }
-    ),
-    { description = "Focus editor", group = "Apps" }
-  ),
-
-  awful.key(
-    { modkey, "Shift" },
-    "e",
-    actions.focus_tag_client {
-      class = "org.wezfurlong.wezterm",
-      name = "NVIM$",
-    },
-    { description = "Focus-tag editor", group = "Apps" }
-  ),
-
-  awful.key(
-    { modkey },
     "g",
     actions.dropdown_terminal(),
     { description = "Terminal dropdown", group = "Apps" }
@@ -398,16 +349,6 @@ keys.global = gears.table.join(
     "g",
     actions.dropdown_calculator(),
     { description = "Calculator dropdown", group = "Apps" }
-  ),
-
-  awful.key(
-    { modkey },
-    "t",
-    actions.dropdown_toggle(
-      { "wezterm", "start", "--class", "dropdown_vit", "--", "vit" },
-      { class = "dropdown_vit" }
-    ),
-    { description = "Tasks dropdown", group = "Apps" }
   ),
 
   -- Group: Tag
@@ -430,20 +371,6 @@ keys.global = gears.table.join(
   -- Vanilla; to be moved and sorted
   --
 
-  -- Layout manipulation
-  awful.key({ modkey }, "Tab", function()
-    awful.client.focus.history.previous()
-    if client.focus then
-      client.focus:raise()
-    end
-  end, { description = "go back", group = "client" }),
-
-  -- Standard program
-
-  -- {{}, "l",     function () awful.tag.incmwfact( 0.05)          end,
-  -- {description = "increase master width factor", group = "layout"}},
-  -- {{}, "h",     function () awful.tag.incmwfact(-0.05)          end,
-  -- {description = "decrease master width factor", group = "layout"}},
   awful.key(
     { modkey, "Shift" },
     "h",
@@ -545,12 +472,6 @@ keys.clientkeys = gears.table.join(
     actions.client_toggle_floating,
     { description = "Floating toggle", group = "Client" }
   ),
-  awful.key(
-    { modkey, "Shift" },
-    "s",
-    actions.client_toggle_sticky,
-    { description = "Sticky toggle", group = "Client" }
-  ),
 
   -- Screen
   awful.key(
@@ -558,14 +479,7 @@ keys.clientkeys = gears.table.join(
     "o",
     actions.client_move_other_screen,
     { description = "Move client to other screen", group = "Client" }
-  ),
-
-  --
-  -- Vanilla; to be moved and sorted
-  --
-  awful.key({ modkey, "Control" }, "Return", function(c)
-    c:swap(awful.client.getmaster())
-  end, { description = "move to master", group = "client" })
+  )
 )
 
 keys.mouse_click = function(modifier, button, action)
