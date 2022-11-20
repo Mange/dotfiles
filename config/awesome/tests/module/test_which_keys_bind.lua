@@ -1,6 +1,6 @@
 local luaunit = require "luaunit"
 
-local Bind = require "module.which_keys.bind"
+local Bind = require "module.which_keys_old.bind"
 local which_key_theme = require("theme").which_key
 
 local identity = function(x)
@@ -58,11 +58,8 @@ function TestWhichKeysBind:testKeyLabel()
   luaunit.assertEquals(sc_tab.key_label, "SC-Tab")
   luaunit.assertEquals(sc_tab.sort_key, "z9tab3")
 
-  local super_sac_lt = Bind.new(
-    { "Mod4", "Mod1", "Control", "Shift" },
-    "<",
-    identity
-  )
+  local super_sac_lt =
+    Bind.new({ "Mod4", "Mod1", "Control", "Shift" }, "<", identity)
   luaunit.assertEquals(super_sac_lt.key_label, "SCA-<")
   luaunit.assertEquals(super_sac_lt.sort_key, "z9<3")
 end

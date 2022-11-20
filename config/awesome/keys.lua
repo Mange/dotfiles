@@ -6,7 +6,7 @@ local bling = require "vendor.bling"
 
 local constants = require "module.constants"
 local actions = require "actions"
-local which_keys = require "module.which_keys" --[[@as WhichKeys]]
+local which_keys = require "module.which_keys_old"
 local wk = which_keys.key
 local media_mode = require "media_mode"
 

@@ -1,4 +1,4 @@
-local which_keys = require "module.which_keys" --[[@as WhichKeys]]
+local which_keys = require "module.which_keys_old"
 local actions = require "actions"
 local wibox = require "wibox"
 local utils = require "utils"

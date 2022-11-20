@@ -31,7 +31,7 @@ local keys = require "module.constants.keys"
 local clickable_container = require "widgets.clickable-container"
 local icons = require "theme.icons"
 local dpi = require("utils").dpi
-local Bind = require "module.which_keys.bind"
+local Bind = require "module.which_keys_old.bind"
 
 local style = {
   font_header = beautiful.font_bold_size(18),
