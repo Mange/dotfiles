@@ -20,6 +20,7 @@ M.global = {
 
   ["mod+tab"] = {},
   ["mod+q"] = {},
+  -- ["mod+Q"] = {}, -- Used by clients
   ["mod+w"] = {},
   ["mod+e"] = {},
   ["mod+r"] = {},
@@ -27,8 +28,12 @@ M.global = {
   ["mod+y"] = {},
   ["mod+u"] = {},
   ["mod+i"] = {},
-  ["mod+o"] = {},
-  ["mod+p"] = {},
+  -- ["mod+o"] = {}, -- Used by clients
+  ["mod+p"] = {
+    actions.focus_by_index(-1),
+    "Previous client",
+    group = "Client",
+  },
   ["mod+["] = {},
   ["mod+]"] = {},
   ["mod+\\"] = {},
@@ -36,7 +41,8 @@ M.global = {
   ["mod+a"] = {},
   ["mod+s"] = {},
   ["mod+d"] = { actions.rofi(), "Rofi", group = "Apps" },
-  ["mod+f"] = {},
+  -- ["mod+f"] = {}, -- Used by clients
+  -- ["mod+F"] = {}, -- Used by clients
   ["mod+g"] = {
     actions.dropdown_terminal(),
     "Terminal dropdown",
@@ -69,7 +75,7 @@ M.global = {
   ["mod+c"] = {},
   ["mod+v"] = {},
   ["mod+b"] = {},
-  ["mod+n"] = {},
+  ["mod+n"] = { actions.focus_by_index(1), "Next client", group = "Client" },
   ["mod+m"] = {},
   ["mod+,"] = {},
   ["mod+."] = {},
@@ -80,6 +86,25 @@ M.global = {
   ["mod+up"] = {},
   ["mod+down"] = {},
   ["mod+right"] = {},
+}
+
+M.clients = {
+  ["mod+Q"] = { actions.client_close, "Kill client", group = "Client" },
+  ["mod+f"] = {
+    actions.client_toggle_fullscreen,
+    "Fullscreen toggle",
+    group = "Client",
+  },
+  ["mod+F"] = {
+    actions.client_toggle_floating,
+    "Floating toggle",
+    group = "Client",
+  },
+  ["mod+o"] = {
+    actions.client_move_other_screen,
+    "To other screen",
+    group = "Client",
+  },
 }
 
 return M

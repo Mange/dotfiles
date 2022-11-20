@@ -33,6 +33,7 @@ end
 --- @field [2] string Key
 
 M.aliases = {
+  super = "Mod4",
   mod = "Mod4",
   shift = "Shift",
   ctrl = "Control",

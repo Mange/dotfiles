@@ -86,11 +86,19 @@ function _G.initialize_module(module, is_reload)
   end
 
   if type(module["module_initialize"]) == "function" then
-    local cleanup = module["module_initialize"](is_reload or false)
-    if type(cleanup) == "function" then
-      on_module_cleanup(module, cleanup)
+    if not module["__initialized"] then
+      module["__initialized"] = true
+
+      local cleanup = module["module_initialize"](is_reload or false)
+      on_module_cleanup(module, function()
+        module["__initialized"] = nil
+        if type(cleanup) == "function" then
+          cleanup()
+        end
+      end)
     end
   end
+
   return module
 end
 

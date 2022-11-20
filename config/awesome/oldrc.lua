@@ -16,6 +16,8 @@ require "layout"
 --
 
 -- Set keys
+-- (Will overwrite the config set by the new config in rc.lua, but that must
+-- happen for now.)
 root.keys(keys.global)
 
 --
