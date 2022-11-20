@@ -7,14 +7,14 @@ local utils = require "utils"
 local tags = require("module.tags").tags
 
 local clientbuttons = gears.table.join(
-  awful.button({}, keys.left_click, function(c)
+  awful.button({}, Mouse.left_click, function(c)
     c:emit_signal("request::activate", "mouse_click", { raise = true })
   end),
-  awful.button({ keys.modkey }, keys.left_click, function(c)
+  awful.button({ Key.super }, Mouse.left_click, function(c)
     c:emit_signal("request::activate", "mouse_click", { raise = true })
     awful.mouse.client.move(c)
   end),
-  awful.button({ keys.modkey }, keys.right_click, function(c)
+  awful.button({ Key.super }, Mouse.right_click, function(c)
     c:emit_signal("request::activate", "mouse_click", { raise = true })
     awful.mouse.client.resize(c)
   end)

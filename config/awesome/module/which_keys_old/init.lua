@@ -27,7 +27,6 @@ local gears = require "gears"
 local beautiful = require "beautiful"
 local naughty = require "naughty"
 
-local keys = require "module.constants.keys"
 local clickable_container = require "widgets.clickable-container"
 local icons = require "theme.icons"
 local dpi = require("utils").dpi
@@ -205,7 +204,7 @@ local function entry_widget(bind)
       },
     },
   }
-  widget:add_button(awful.button({}, keys.left_click, nil, bind.action))
+  widget:add_button(awful.button({}, Mouse.left_click, nil, bind.action))
   return widget
 end
 
@@ -235,7 +234,7 @@ local function close_button(instance)
     }),
   }
 
-  button:add_button(awful.button({}, keys.left_click, nil, instance.stop))
+  button:add_button(awful.button({}, Mouse.left_click, nil, instance.stop))
 
   return button
 end

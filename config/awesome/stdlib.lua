@@ -13,6 +13,18 @@
 local gears = require "gears"
 local xresources = require "beautiful.xresources"
 
+_G.Mouse = {
+  left_click = 1,
+  middle_click = 2,
+  right_click = 3,
+  scroll_up = 4,
+  scroll_down = 5,
+}
+
+_G.Key = {
+  super = "Mod4",
+}
+
 --- Keep track of all cleanups that have been registered and in which order so
 --we can run them globally.
 --- @type table[]

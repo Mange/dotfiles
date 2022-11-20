@@ -4,14 +4,13 @@ local beautiful = require "beautiful"
 local hotkeys_popup = require "awful.hotkeys_popup"
 local bling = require "vendor.bling"
 
-local constants = require "module.constants"
 local actions = require "actions"
 local which_keys = require "module.which_keys_old"
 local wk = which_keys.key
 local media_mode = require "media_mode"
 
 -- Settings
-local modkey = constants.keys.modkey
+local modkey = Key.super
 -- Terminal cmdline; note that this is repeated in this file some times because
 -- of non-standard CLI arguments, etc.
 local terminal = "wezterm"

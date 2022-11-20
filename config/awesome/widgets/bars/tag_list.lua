@@ -7,7 +7,6 @@ local bling = require "vendor.bling"
 
 local theme = require "module.theme"
 local ui = require "widgets.ui"
-local ui_constants = require "widgets.ui.constants"
 local ui_effects = require "widgets.ui.effects"
 
 local M = {}
@@ -84,22 +83,22 @@ end
 
 local taglist_buttons = awful.util.table.join(
   -- Left mouse click: View only this tag
-  awful.button({}, ui_constants.left_click, function(t)
+  awful.button({}, Mouse.left_click, function(t)
     t:view_only()
   end),
   -- Super + Left mouse click: Move client to this tag and show only this tag
-  awful.button({ ui_constants.modkey }, ui_constants.left_click, function(t)
+  awful.button({ Key.super }, Mouse.left_click, function(t)
     if client.focus then
       client.focus:move_to_tag(t)
       t:view_only()
     end
   end),
   -- Right mouse click: Toggle tag
-  awful.button({}, ui_constants.right_click, function(t)
+  awful.button({}, Mouse.right_click, function(t)
     awful.tag.viewtoggle(t)
   end),
   -- Super + Right mouse click: Toggle focused client on tag
-  awful.button({ ui_constants.modkey }, ui_constants.right_click, function(t)
+  awful.button({ Key.super }, Mouse.right_click, function(t)
     if client.focus then
       client.focus:toggle_tag(t)
     end

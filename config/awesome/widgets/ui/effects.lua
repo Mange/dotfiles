@@ -1,5 +1,3 @@
-local ui_constants = require "widgets.ui.constants"
-
 local M = {}
 
 function M.initialize()
@@ -87,9 +85,9 @@ function M.use_clickable(widget, options)
   local function button_press(_, _, _, mbutton)
     button_down = true
     update_bg()
-    if mbutton == ui_constants.left_click then
+    if mbutton == Mouse.left_click then
       on_left_click(widget)
-    elseif mbutton == ui_constants.right_click then
+    elseif mbutton == Mouse.right_click then
       on_right_click(widget)
     end
   end
