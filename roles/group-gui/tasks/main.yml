@@ -88,7 +88,7 @@
         state: present
         name:
           # Graphical environment
-          - picom-ibhagwan-git # Fork of picom with better blurring and rounded corners
+          - picom-animations-git # Fork of picom with animations
           # Terminal
           - wezterm-git
 
