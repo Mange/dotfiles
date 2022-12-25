@@ -9,6 +9,7 @@ local current_window = require "widgets.bars.current_window"
 local layout_indicator = require "widgets.bars.layout_indicator"
 local media = require "widgets.bars.media"
 local tag_list = require "widgets.bars.tag_list"
+local tray = require "widgets.bars.tray"
 
 local M = {}
 
@@ -58,6 +59,7 @@ function M.create(s)
       bg = theme.transparent,
       children = {
         awful.widget.only_on_screen(media.build(s), "primary"),
+        awful.widget.only_on_screen(tray.build(s), "primary"),
         clock.build(s),
         layout_indicator.build(s),
       },
