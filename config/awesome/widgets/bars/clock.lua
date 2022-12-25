@@ -5,9 +5,7 @@ local gears = require "gears"
 local theme = require "module.theme"
 local ui = require "widgets.ui"
 
-local clock_format = '<span font="'
-  .. theme.font_bold
-  .. '">%-d %b %H:%M</span>'
+local clock_format = "<b>%M:%M</b>\n%-d %b"
 
 local M = {}
 
@@ -20,6 +18,7 @@ function M.build(s)
   local clock = wibox.widget {
     widget = wibox.widget.textclock,
     format = clock_format,
+    halign = "right",
   }
 
   local clock_tooltip = awful.tooltip {
