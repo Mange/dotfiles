@@ -144,6 +144,12 @@ function actions.move_focused_client(offset)
   end
 end
 
+function actions.focus_urgent_client()
+  return function()
+    awful.client.urget.jumpto()
+  end
+end
+
 ---@param cmdline string[] | string
 function actions.spawn(cmdline)
   return function()

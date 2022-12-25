@@ -1,19 +1,39 @@
+local gears = require "gears"
 local actions = require "actions"
 
 local M = {}
 
-M.global = {
-  ["mod+`"] = {},
-  ["mod+1"] = {},
-  ["mod+2"] = {},
-  ["mod+3"] = {},
-  ["mod+4"] = {},
-  ["mod+5"] = {},
-  ["mod+6"] = {},
-  ["mod+7"] = {},
-  ["mod+8"] = {},
-  ["mod+9"] = {},
-  ["mod+0"] = {},
+-- Generate keybindings for 0-9 keys
+M.global = {}
+for i = 0, 10 do
+  local num = i % 10 -- 10th key is "0" on the keyboard
+
+  M.global["mod+" .. num] =
+    { actions.goto_tag(i), "Go to tag " .. num, group = "Tag" }
+  M.global["mod+shift+" .. num] =
+    { actions.move_to_tag(i), "Move to tag " .. num, group = "Tag" }
+  M.global["mod+ctrl+" .. num] =
+    { actions.toggle_tag(i), "Toggle tag " .. num, group = "Tag" }
+  M.global["mod+shift+ctrl+" .. num] =
+    { actions.toggle_client_tag(i), "Toggle client tag " .. num, group = "Tag" }
+end
+
+M.global = gears.table.join(M.global, {
+  ["mod+`"] = {
+    actions.focus_urgent_client(),
+    "Focus urgent",
+    group = "Client",
+  },
+  -- ["mod+1"] = {}, -- See loop above
+  -- ["mod+2"] = {},
+  -- ["mod+3"] = {},
+  -- ["mod+4"] = {},
+  -- ["mod+5"] = {},
+  -- ["mod+6"] = {},
+  -- ["mod+7"] = {},
+  -- ["mod+8"] = {},
+  -- ["mod+9"] = {},
+  -- ["mod+0"] = {},
   ["mod+-"] = {},
   ["mod+plus"] = {},
   ["mod+backspace"] = {},
@@ -21,8 +41,8 @@ M.global = {
   ["mod+tab"] = {},
   ["mod+q"] = {},
   -- ["mod+Q"] = {}, -- Used by clients
-  ["mod+w"] = {},
-  ["mod+e"] = {},
+  ["mod+w"] = { actions.select_window(), "Windows", group = "Apps" },
+  ["mod+e"] = { actions.emoji_selector(), "Emojis", group = "Apps" },
   ["mod+r"] = {},
   ["mod+t"] = {},
   ["mod+y"] = {},
@@ -86,7 +106,7 @@ M.global = {
   ["mod+up"] = {},
   ["mod+down"] = {},
   ["mod+right"] = {},
-}
+})
 
 M.clients = {
   ["mod+Q"] = { actions.client_close, "Kill client", group = "Client" },
