@@ -4,10 +4,11 @@ local awful = require "awful"
 local theme = require "module.theme"
 local ui = require "widgets.ui"
 
-local tag_list = require "widgets.bars.tag_list"
-local current_window = require "widgets.bars.current_window"
-local media = require "widgets.bars.media"
 local clock = require "widgets.bars.clock"
+local current_window = require "widgets.bars.current_window"
+local layout_indicator = require "widgets.bars.layout_indicator"
+local media = require "widgets.bars.media"
+local tag_list = require "widgets.bars.tag_list"
 
 local M = {}
 
@@ -57,8 +58,8 @@ function M.create(s)
       bg = theme.transparent,
       children = {
         awful.widget.only_on_screen(media.build(s), "primary"),
-        ui.placeholder(theme.crust, "statuses"),
         clock.build(s),
+        layout_indicator.build(s),
       },
     },
   }
