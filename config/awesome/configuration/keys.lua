@@ -1,5 +1,6 @@
 local gears = require "gears"
 local actions = require "actions"
+local which_keys = require "module.which_keys"
 
 local M = {}
 
@@ -124,6 +125,29 @@ M.clients = {
     actions.client_move_other_screen,
     "To other screen",
     group = "Client",
+  },
+}
+
+M.leader = which_keys.create {
+  name = "leader",
+  keys = {
+    ["t"] = {
+      function()
+        print "Test!"
+        M.leader:start()
+      end,
+      "test",
+    },
+    ["e"] = { actions.emoji_selector(), "emojis" },
+    ["c"] = {
+      name = "client",
+      keys = {
+        ["s"] = {
+          actions.on_focused_client(actions.client_toggle_sticky),
+          "sticky-toggle",
+        },
+      },
+    },
   },
 }
 

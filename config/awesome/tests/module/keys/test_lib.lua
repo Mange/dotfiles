@@ -61,4 +61,22 @@ function tests:test_build_awful_keys_skips_empty()
   )
 end
 
+function tests:test_stringify_binds()
+  local function test(input, expected)
+    local bind = keys_lib.parse_bind(input)
+    luaunit.assert_equals(keys_lib.stringify_bind(bind), expected)
+  end
+
+  test("n", "n")
+  test("N", "N")
+  test("shift+n", "N")
+
+  test("ctrl+shift+x", "C-X")
+  test("mod+space", "M-Space")
+  test("mod+ctrl+backspace", "M-C-BS")
+
+  test("shift+plus", "S-Plus")
+  test("ctrl+shift+-", "C-S-Minus")
+end
+
 return tests

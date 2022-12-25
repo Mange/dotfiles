@@ -9,6 +9,7 @@ package.path = package.path
   .. ";/usr/share/awesome/lib/?.lua;/usr/share/awesome/lib/?/init.lua"
 
 require "stdlib"
+TestStdLib = require "tests.test_stdlib"
 TestKeysLib = require "tests.module.keys.test_lib"
 TestWidgetsUi = require "tests.widgets.test_ui"
 

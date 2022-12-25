@@ -60,10 +60,10 @@ end
 --
 if is_test_mode() then
   initialize_module(require "module.hud")
-  if not is_awesome_restart() then
-    local awful = require "awful"
-    awful.spawn.once "wezterm"
-  end
+
+  -- Example stuff to make it easier to develop
+  local keys = require "configuration.keys"
+  keys.leader:start()
 end
 
 --

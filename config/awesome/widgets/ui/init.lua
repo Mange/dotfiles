@@ -2,6 +2,7 @@ local wibox = require "wibox"
 local gears = require "gears"
 
 local theme = require "module.theme"
+local unpack = unpack or table.unpack
 
 local M = {}
 
@@ -63,23 +64,26 @@ end
 --- @class HorizontalOptions
 --- @field children widget[]
 --- @field spacing number | nil
---- @field bg string | nil
+--- @field flex boolean | nil
 
 --- @param options HorizontalOptions
 --- @return widget
 function M.horizontal(options)
+  local layout = wibox.layout.fixed.horizontal
+  if options.flex then
+    layout = wibox.layout.flex.horizontal
+  end
+
   return {
-    layout = wibox.layout.fixed.horizontal,
+    layout = layout,
     spacing = options.spacing or theme.spacing(1),
-    bg = options.bg or theme.transparent,
-    table.unpack(options.children),
+    unpack(options.children),
   }
 end
 
 --- @class VerticalOptions
 --- @field children widget[]
 --- @field spacing number | nil
---- @field bg string | nil
 
 --- @param options VerticalOptions
 --- @return widget
@@ -87,8 +91,22 @@ function M.vertical(options)
   return {
     layout = wibox.layout.fixed.vertical,
     spacing = options.spacing or theme.spacing(1),
+    unpack(options.children),
+  }
+end
+
+--- @param options { bg: string, fg: string?, margin: number[], child: widget}
+function M.background(options)
+  local child = options.child
+  if options.margin then
+    child = M.margin(unpack(options.margin))(child)
+  end
+
+  return {
+    widget = wibox.container.background,
     bg = options.bg or theme.transparent,
-    table.unpack(options.children),
+    fg = options.fg,
+    child,
   }
 end
 

@@ -32,6 +32,21 @@ end
 --- @field [1] string[] Modifier keys
 --- @field [2] string Key
 
+local byte_a = 97
+local byte_z = 122
+local byte_A = 65
+local byte_Z = 90
+
+local function is_letter(s)
+  if type(s) == "string" and string.len(s) == 1 then
+    local byte = string.byte(s)
+    return (byte >= byte_a and byte <= byte_z)
+      or (byte >= byte_A and byte <= byte_Z)
+  else
+    return false
+  end
+end
+
 M.aliases = {
   super = "Mod4",
   mod = "Mod4",
@@ -50,14 +65,26 @@ M.aliases = {
   plus = "+",
 }
 
+M.display_aliases = {
+  mod4 = "M",
+  shift = "S",
+  control = "C",
+  backspace = "BS",
+  space = "Space",
+  ["+"] = "Plus",
+  ["-"] = "Minus",
+}
+
 --- @param strings string[]
+--- @param aliases table<string, string>
 --- @return string[]
-local function replace_aliases(strings)
+local function replace_aliases(strings, aliases)
   local mapped = {}
 
   for _, str in ipairs(strings) do
-    if M.aliases[string.lower(str)] then
-      table.insert(mapped, M.aliases[string.lower(str)])
+    local lower = string.lower(str)
+    if aliases[lower] then
+      table.insert(mapped, aliases[lower])
     else
       table.insert(mapped, str)
     end
@@ -69,18 +96,40 @@ end
 --- @param bind string
 --- @return KeyBind
 function M.parse_bind(bind)
-  local parts = replace_aliases(gears.string.split(bind, "+"))
+  local parts = replace_aliases(gears.string.split(bind, "+"), M.aliases)
   local key = table.remove(parts, #parts)
   local modifiers = parts
 
-  -- Since non-letters (like 1 and +) are the same in lower and uppercase,
-  -- don't react on them here as an implied Shift key.
-  if key == string.upper(key) and string.lower(key) ~= string.upper(key) then
+  -- Capitalized letters implies shift ("ctrl+S" => "ctrl+shift+s")
+  if is_letter(key) and key == string.upper(key) then
     table.insert(modifiers, "Shift")
     key = string.lower(key)
   end
 
   return { parts, key }
+end
+
+--- @param bind KeyBind
+--- @return string
+function M.stringify_bind(bind)
+  local modifiers = bind[1]
+  local key = bind[2]
+
+  local parts = {}
+
+  for _, modifier in ipairs(modifiers) do
+    -- If modifier is shift and key is a letter, then uppercase the letter
+    -- instead.
+    if modifier == "Shift" and is_letter(key) then
+      key = string.upper(key)
+    else
+      table.insert(parts, modifier)
+    end
+  end
+
+  table.insert(parts, key)
+
+  return table.concat(replace_aliases(parts, M.display_aliases), "-")
 end
 
 --- @param mappings Mappings

@@ -55,6 +55,17 @@ function _G.dpi(px)
   return xresources.apply_dpi(px)
 end
 
+--- Round a number to the nearest integer.
+--- @param num number
+--- @return number
+function _G.round(num)
+  if num > 0 then
+    return math.floor(num + 0.5)
+  else
+    return math.ceil(num - 0.5)
+  end
+end
+
 --- Returns true if running in "test mode". Test mode is both for unit tests
 --- and when running inside AWMTT.
 ---
