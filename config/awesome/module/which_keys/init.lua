@@ -1,5 +1,6 @@
 local wibox = require "wibox"
 local awful = require "awful"
+local gears = require "gears"
 
 local keylib = require "module.keys.lib"
 local theme = require "module.theme"
@@ -271,6 +272,22 @@ local function build_title_widget(title)
   }
 end
 
+--- @param items WhichKeyItem[]
+local function build_keybindings(items)
+  local keybindings = {}
+
+  for _, item in ipairs(items) do
+    table.insert(keybindings, {
+      item.bind[1],
+      item.bind[2],
+      item.action,
+      { description = item.name },
+    })
+  end
+
+  return keybindings
+end
+
 --- @param opts WhichKeyOpts
 --- @return WhichKeyInstance
 function M.create(opts)
@@ -285,13 +302,24 @@ function M.create(opts)
   instance.items = parse_items(keys, instance)
   instance.item_widgets = build_item_widgets(instance.items)
 
+  instance.grabber = awful.keygrabber {
+    keybindings = build_keybindings(instance.items),
+    stop_callback = function()
+      close_menu(instance)
+    end,
+    mask_modkeys = true,
+    stop_event = "release",
+    stop_key = "Escape",
+  }
+
   function instance.start(self, s)
+    self.grabber:start()
     -- TODO: Show after a timeout instead of right away
     render_menu(self, s or awful.screen.focused())
   end
 
   function instance.stop(self)
-    close_menu(self)
+    self.grabber:stop()
   end
 
   return instance
