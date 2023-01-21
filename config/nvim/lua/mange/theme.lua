@@ -11,6 +11,7 @@ function theme.setup()
   vim.g.catppuccin_flavour = "mocha"
 
   local colors = require("catppuccin.palettes").get_palette()
+  local U = require "catppuccin.utils.colors"
 
   vim.diagnostic.config {
     -- virtual_text = {
@@ -127,6 +128,9 @@ function theme.setup()
     },
     color_overrides = {},
     custom_highlights = {
+      -- Disabled by transparent_background for some reason.
+      CursorLine = { bg = U.darken(colors.surface0, 0.64, colors.base) },
+
       DiffAdd = { bg = "#384047" },
       DiffChange = { bg = "#463f47" },
 
