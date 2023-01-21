@@ -91,14 +91,6 @@ require("packer").startup(function(use)
   ---
   --- UI plugins
   ---
-  -- Dashboard screen on Neovim boot
-  use {
-    "glepnir/dashboard-nvim",
-    config = function()
-      require "mange.dashboard"
-    end,
-  }
-
   -- Statusline
   use {
     "hoob3rt/lualine.nvim",
@@ -491,6 +483,8 @@ require("packer").startup(function(use)
   use {
     "github/copilot.vim",
     config = function()
+      vim.g.copilot_node_command =
+        "/home/mange/.local/share/nvm/versions/node/v16.19.0/bin/node"
       vim.g.copilot_no_tab_map = true
       vim.g.copilot_filetypes = { eruby = false }
       -- Mapping set up in mappings.lua
