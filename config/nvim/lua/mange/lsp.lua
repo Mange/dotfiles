@@ -315,14 +315,14 @@ if_require("null-ls", function(null_ls)
       null_ls.builtins.diagnostics.ansiblelint,
       null_ls.builtins.diagnostics.checkmake,
       null_ls.builtins.diagnostics.erb_lint,
-      null_ls.builtins.diagnostics.eslint,
+      -- null_ls.builtins.diagnostics.eslint,
 
       --
       -- Code actions --
       --
-      null_ls.builtins.code_actions.eslint,
+      -- null_ls.builtins.code_actions.eslint,
       null_ls.builtins.code_actions.gitrebase,
-      null_ls.builtins.code_actions.refactoring,
+      -- null_ls.builtins.code_actions.refactoring,
       null_ls.builtins.code_actions.shellcheck,
     },
   }
