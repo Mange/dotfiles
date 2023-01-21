@@ -11,7 +11,7 @@
 
 require("packer").startup(function(use)
   local plenary = "nvim-lua/plenary.nvim"
-  local devicons = "kyazdani42/nvim-web-devicons"
+  local devicons = "nvim-tree/nvim-web-devicons"
 
   ---
   --- Basics
