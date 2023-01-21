@@ -8,10 +8,6 @@
         name:
           - gnu-free-fonts # FreeMono; monospaced Unicode font. Popular in Kaomoji, etc.
           - noto-fonts # Android
-          - otf-fira-mono
-          - ttf-fira-code
-          - ttf-fira-mono
-          - ttf-fira-sans
       register: font_install_req
 
     - name: Install optional fonts
@@ -21,18 +17,16 @@
       kewlfft.aur.aur:
         state: present
         name:
-          - ttf-victor-mono
+          - ttf-jetbrains-mono
+          - otf-overpass
+          - ttf-nerd-fonts-symbols-1000-em-mono
           - noto-fonts-emoji # Emoji
           - noto-fonts-extra # etc.
-          - otf-fira-mono
           - ttf-ancient-fonts # Just because it is cool
           - ttf-dejavu
           - ttf-droid # Android
-          - ttf-hack
-          - ttf-inconsolata
           - ttf-liberation # Arial, Times New Roman, etc.
           - ttf-monaco
-          - ttf-nerd-fonts-symbols-1000-em-mono
           - ttf-roboto # Android
           # Eastern fonts, for Kaomoji, when opening Japanese websites, etc.
           - otf-ipafont # Japanese

@@ -39,7 +39,7 @@ configuration {
   kb-row-up: "Up";
   kb-row-tab: "";
 
-  font: "Fira Sans Condensed 10";
+  font: "Overpass Light 10";
   show-icons: true;
   icon-theme: "Tela";
   fullscreen: false;

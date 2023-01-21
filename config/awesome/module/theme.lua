@@ -60,17 +60,17 @@ end
 
 ---@param size integer
 theme.font_size = function(size)
-  return "Fira Sans Regular " .. size
+  return "Overpass " .. size
 end
 
 ---@param size integer
 theme.font_bold_size = function(size)
-  return "Fira Sans Extra Bold " .. size
+  return "Overpass ExtraBold " .. size
 end
 
 ---@param size integer
 theme.font_mono_size = function(size)
-  return "Fira Code " .. size
+  return "Jetbrains Mono " .. size
 end
 
 theme.rm = function(ratio)
