@@ -71,13 +71,6 @@ require("packer").startup(function(use)
     end,
   }
 
-  -- Strip trailing whitespace from modified lines only. Load before LSP so
-  -- it's executed real early.
-  use {
-    "axelf4/vim-strip-trailing-whitespace",
-    before = { "lspconfig" },
-  }
-
   -- Better folds
   use {
     "kevinhwang91/nvim-ufo",
