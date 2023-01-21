@@ -1,15 +1,6 @@
-local ufo = require "ufo"
+-- This requires enough setup to warrant its own plugin file
 
-vim.o.foldcolumn = "1"
-vim.o.foldlevel = 99 -- Using ufo provider need a large value
-vim.o.foldlevelstart = 99
-vim.o.foldenable = true
-
--- Using ufo provider need remap `zR` and `zM`.
-vim.keymap.set("n", "zR", ufo.openAllFolds, { desc = "Open all folds" })
-vim.keymap.set("n", "zM", ufo.closeAllFolds, { desc = "Close all folds" })
-
-local virtual_text_handler = function(virtText, lnum, endLnum, width, truncate)
+local function virtual_text_handler(virtText, lnum, endLnum, width, truncate)
   local newVirtText = {}
   local suffix = ("  %d "):format(endLnum - lnum)
   local sufWidth = vim.fn.strdisplaywidth(suffix)
@@ -37,11 +28,32 @@ local virtual_text_handler = function(virtText, lnum, endLnum, width, truncate)
   return newVirtText
 end
 
-require("ufo").setup {
-  close_fold_kinds = {
-    "imports",
-    -- 'comment',
-    -- 'region'
+local function config()
+  local ufo = require "ufo"
+
+  vim.o.foldcolumn = "1"
+  vim.o.foldlevel = 99 -- Using ufo provider need a large value
+  vim.o.foldlevelstart = 99
+  vim.o.foldenable = true
+
+  -- Using ufo provider need remap `zR` and `zM`.
+  vim.keymap.set("n", "zR", ufo.openAllFolds, { desc = "Open all folds" })
+  vim.keymap.set("n", "zM", ufo.closeAllFolds, { desc = "Close all folds" })
+
+  require("ufo").setup {
+    close_fold_kinds = {
+      "imports",
+      -- 'comment',
+      -- 'region'
+    },
+    fold_virt_text_handler = virtual_text_handler,
+  }
+end
+
+return {
+  {
+    "kevinhwang91/nvim-ufo",
+    dependencies = { "kevinhwang91/promise-async" },
+    config = config,
   },
-  fold_virt_text_handler = virtual_text_handler,
 }

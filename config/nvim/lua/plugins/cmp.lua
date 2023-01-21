@@ -1,5 +1,3 @@
-local plugin = {}
-
 local function has_words_before()
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
   return col ~= 0
@@ -10,7 +8,7 @@ local function has_words_before()
       == nil
 end
 
-function plugin.setup()
+local function config()
   ---@diagnostic disable-next-line: different-requires
   local cmp = require "cmp"
   local snippy = require "snippy"
@@ -80,30 +78,23 @@ function plugin.setup()
       { name = "crates" },
     },
   }
-
-  cmp.setup.cmdline("/", {
-    max_item_count = 12,
-    sources = {
-      { name = "buffer", max_item_count = 10 },
-      { name = "cmdline_history" },
-    },
-  })
-
-  cmp.setup.cmdline("?", {
-    max_item_count = 12,
-    sources = {
-      { name = "buffer", max_item_count = 10 },
-      { name = "cmdline_history" },
-    },
-  })
-
-  cmp.setup.cmdline("=", {
-    sources = { { name = "cmdline_history" } },
-  })
-
-  cmp.setup.cmdline("@", {
-    sources = { { name = "cmdline_history" } },
-  })
 end
 
-return plugin
+return {
+  {
+    "hrsh7th/nvim-cmp",
+    event = "InsertEnter",
+    dependencies = {
+      "Saecki/crates.nvim",
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-nvim-lua",
+      "hrsh7th/cmp-path",
+      "onsails/lspkind-nvim",
+      "ray-x/cmp-treesitter",
+      "dcampos/cmp-snippy",
+      "simrat39/rust-tools.nvim",
+    },
+    config = config,
+  },
+}

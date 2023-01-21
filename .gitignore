@@ -7,7 +7,6 @@ config/user-dirs.dirs
 # Some apps will create cache/data inside the config
 config/nvim/.netrwhist
 config/nvim/spell
-config/nvim/plugin/packer_compiled.lua
 config/beets/state*
 
 # Project files

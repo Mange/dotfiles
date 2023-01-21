@@ -233,10 +233,6 @@ local function setup()
   map("v", "<C-j>", ":m '>+1<CR>gv=gvzz", { silent = false }) -- Move line down
   map("v", "<C-k>", ":m '<-2<CR>gv=gvzz", { silent = false }) -- Move line down
 
-  -- Setup leader key to space
-  g.mapleader = " "
-  g.maplocalleader = "\\"
-
   wk_register {
     ["<leader>"] = {
       --
@@ -507,12 +503,6 @@ local function setup()
         d = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "Diagnostics" },
         q = { "<cmd>TroubleToggle quickfix<cr>", "Quickfix list" },
         o = { "<cmd>SymbolsOutline<cr>", "Symbol outline" },
-        x = {
-          function()
-            require("lsp_lines").toggle()
-          end,
-          "LSP lines",
-        },
         z = { ":TZAtaraxis<CR>", "Zen" },
         Z = { ":TZNarrow<CR>", "Zen lines" },
       },
