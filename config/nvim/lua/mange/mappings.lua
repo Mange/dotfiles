@@ -251,6 +251,12 @@ local function setup()
         end,
         "Join line",
       },
+      q = {
+        function()
+          require("notify").dismiss { silent = true, pending = true }
+        end,
+        "Close notifications",
+      },
 
       --
       -- Leader visual
@@ -384,6 +390,7 @@ local function setup()
         name = "Help/Neovim",
         ["?"] = { "<cmd>Telescope keymaps", "Keymaps" },
         H = { "<cmd>Telescope highlights<cr>", "Vim highlights" },
+        n = { "<cmd>Telescope notify<cr>", "Notification history" },
         b = { "<cmd>Telescope marks<cr>", "Vim bookmarks" },
         c = { "<cmd>Telescope colorscheme<cr>", "Vim colorschemes" },
         h = { "<cmd>Telescope help_tags<cr>", "Search help tags" },

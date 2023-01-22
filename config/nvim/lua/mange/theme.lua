@@ -88,7 +88,9 @@ catppuccin.setup {
     Folded = { bg = colors.surface0 },
     FoldedInfo = { fg = colors.subtext0 },
 
-    WinBarSeparator = { fg = colors.lavender },
+    -- Not set by the notify integration?
+    -- Causes a warning if not set, so let's set it ourselves.
+    NotifyBackground = { bg = colors.surface0 },
   },
 }
 
