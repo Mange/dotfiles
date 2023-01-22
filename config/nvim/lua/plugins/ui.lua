@@ -1,3 +1,5 @@
+local icons = require "config.icons"
+
 return {
   -- Show keybinds while waiting for the next key. Allows more complicated
   -- keybinds to be remembered.
@@ -6,6 +8,11 @@ return {
     config = function()
       require("which-key").setup()
     end,
+  },
+
+  -- Support for icons
+  {
+    { "nvim-tree/nvim-web-devicons", lazy = true },
   },
 
   -- Nicer UIs
@@ -105,65 +112,129 @@ return {
 
   {
     "hoob3rt/lualine.nvim",
-    opts = {
-      options = {
-        icons_enabled = true,
-        theme = "catppuccin",
+    opts = function(_)
+      local function fg(name)
+        return function()
+          ---@type {foreground?:number}?
+          local hl = vim.api.nvim_get_hl_by_name(name, true)
+          return hl
+            and hl.foreground
+            and { fg = string.format("#%06x", hl.foreground) }
+        end
+      end
 
-        -- component_separators = { "", "" },
-        -- section_separators = { "", "" },
-
-        component_separators = "|",
-        -- section_separators = { left = "", right = "" },
-
-        disabled_filetypes = {},
-      },
-      sections = {
-        lualine_a = {
-          {
-            "mode",
-            separator = { right = "" },
-            padding = { left = 1, right = 1 },
+      return {
+        options = {
+          theme = "catppuccin",
+          icons_enabled = true,
+          globalstatus = true,
+          disabled_filetypes = { statusline = { "lazy" } },
+          component_separators = { left = "", right = "" },
+          section_separators = { left = "", right = "" },
+        },
+        sections = {
+          lualine_a = { "mode" },
+          lualine_b = {
+            {
+              function()
+                return require("nvim-navic").get_location()
+              end,
+              cond = function()
+                return package.loaded["nvim-navic"]
+                  and require("nvim-navic").is_available()
+              end,
+            },
+          },
+          lualine_c = {},
+          lualine_x = {},
+          lualine_y = {
+            "searchcount",
+          },
+          lualine_z = {
+            {
+              "progress",
+              separator = "",
+            },
+            {
+              "location",
+            },
+            {
+              require("lazy.status").updates,
+              cond = require("lazy.status").has_updates,
+              color = fg "Special",
+            },
           },
         },
-        lualine_b = {
-          {
-            "filetype",
-            icon_only = true,
-            separator = "",
-            padding = { left = 1 },
+        winbar = {
+          lualine_a = {
+            {
+              "filetype",
+              icon_only = true,
+              padding = { left = 1, right = 1 },
+            },
           },
-          { "filename", padding = 1, separator = "" },
-        },
-        lualine_c = {},
-        lualine_x = {},
-        lualine_y = {
-          "diff",
-          "diagnostics",
-        },
-        lualine_z = {
-          {
-            "progress",
-            separator = { left = "" },
+          lualine_b = {
+            {
+              "filename",
+              path = 0,
+              symbols = { modified = "  ", readonly = "  ", unnamed = "" },
+            },
           },
-          {
-            "location",
-            padding = { right = 1, left = 2 },
+          lualine_c = {},
+          lualine_x = {
+            "diagnostics",
           },
+          lualine_y = {
+            {
+              "diff",
+              symbols = {
+                added = icons.git.added,
+                modified = icons.git.modified,
+                removed = icons.git.removed,
+              },
+            },
+          },
+          lualine_z = {},
         },
-      },
-      inactive_sections = {
-        lualine_a = {},
-        lualine_b = { "filename" },
-        lualine_c = {},
-        lualine_x = {},
-        lualine_y = { "location" },
-        lualine_z = {},
-      },
-      extensions = {
-        "quickfix",
-      },
-    },
+        inactive_winbar = {
+          lualine_a = {
+            {
+              "filetype",
+              icon_only = true,
+              padding = { left = 1, right = 1 },
+            },
+          },
+          lualine_b = {
+            {
+              "filename",
+              path = 0,
+              symbols = { modified = "  ", readonly = "  ", unnamed = "" },
+            },
+          },
+          lualine_c = {},
+          lualine_x = {
+            "diagnostics",
+          },
+          lualine_y = {
+            {
+              "diff",
+              symbols = {
+                added = icons.git.added,
+                modified = icons.git.modified,
+                removed = icons.git.removed,
+              },
+            },
+          },
+          lualine_z = {},
+        },
+        extensions = {
+          "man",
+          "nvim-dap-ui",
+          "quickfix",
+          "symbols-outline",
+        },
+      }
+    end,
   },
 
   {
