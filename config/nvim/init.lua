@@ -33,11 +33,7 @@ local function load_plugins()
   require("lazy").setup("plugins", {
     dev = { path = "~/Projects" },
     install = {
-      colorscheme = {
-        function()
-          require "mange.theme"
-        end,
-      },
+      colorscheme = { "catppuccin" },
     },
     diff = { cmd = "diffview.nvim" },
     checker = {
@@ -57,21 +53,6 @@ local function load_plugins()
   })
 end
 
-local function load_config()
-  require "mange.options"
-
-  require("mange.theme").setup()
-  require("mange.mappings").setup()
-
-  require("mange.cursorline").setup()
-  require("mange.winbar").setup()
-  require("mange.yank_highlight").setup()
-  require("mange.vimdiff").setup()
-
-  require "mange.filetypes"
-  require "mange.autocommands"
-end
-
 -- Require helper
 --
 -- Require and execute passed function with the loaded module, if it
@@ -89,5 +70,15 @@ _G.if_require = function(module, block, errblock)
 end
 
 bootstrap_plugin_system()
+require "mange.options"
+
 load_plugins()
-load_config()
+require "mange.theme"
+require "mange.filetypes"
+require "mange.autocommands"
+
+require("mange.mappings").setup()
+require("mange.cursorline").setup()
+require("mange.winbar").setup()
+require("mange.yank_highlight").setup()
+require("mange.vimdiff").setup()

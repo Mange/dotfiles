@@ -1,5 +1,7 @@
 local opt = vim.opt
 
+opt.termguicolors = true
+
 -- Interaction options
 opt.timeoutlen = 400
 opt.updatetime = 1000

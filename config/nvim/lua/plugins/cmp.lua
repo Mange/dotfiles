@@ -12,14 +12,16 @@ local function config()
   ---@diagnostic disable-next-line: different-requires
   local cmp = require "cmp"
   local snippy = require "snippy"
-  local lspkind = require "lspkind"
+  local icons = require("config.icons").kinds
 
   cmp.setup {
     formatting = {
-      format = lspkind.cmp_format {
-        with_text = false,
-        maxwidth = 50,
-      },
+      format = function(_, item)
+        if icons[item.kind] then
+          item.kind = icons[item.kind] .. item.kind
+        end
+        return item
+      end,
     },
     snippet = {
       expand = function(args)
@@ -90,7 +92,6 @@ return {
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-nvim-lua",
       "hrsh7th/cmp-path",
-      "onsails/lspkind-nvim",
       "ray-x/cmp-treesitter",
       "dcampos/cmp-snippy",
       "simrat39/rust-tools.nvim",
