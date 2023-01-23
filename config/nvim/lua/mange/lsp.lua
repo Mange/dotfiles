@@ -91,7 +91,10 @@ local function on_attach_without_formatting(client, bufnr)
   inlayhints.on_attach(client, bufnr)
 
   if has_navic and client.server_capabilities.documentSymbolProvider then
-    navic.attach(client, bufnr)
+    -- Work around navic being pissy about attaching multiple clients on the same buffer
+    if not vim.b.navic_client_id then
+      navic.attach(client, bufnr)
+    end
   end
 
   require("mange.mappings").attach_lsp(bufnr)
