@@ -8,7 +8,7 @@ return {
   { "tpope/vim-repeat", event = "VeryLazy" },
   { "tpope/vim-speeddating", event = "VeryLazy" }, -- Replace with dial.nvim?
   { "tpope/vim-eunuch", event = "VeryLazy" }, -- Adds things like :Move, :Rename, :SudoWrite, etc.
-  { "tpope/vim-abolish", cmd = "S" }, -- Smart S/re/repl/
+  { "tpope/vim-abolish", cmd = "S", keys = { "cr" } }, -- Smart S/re/repl/
   { "tommcdo/vim-exchange", event = "VeryLazy" },
 
   { "ggandor/leap.nvim" },
