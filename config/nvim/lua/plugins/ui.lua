@@ -57,23 +57,24 @@ return {
   -- Dim unused variables
   { "narutoxy/dim.lua", opts = {} },
 
-  -- Show color previews
-  -- Fork of norcalli/nvim-colorizer.lua
-  -- See: https://github.com/norcalli/nvim-colorizer.lua/pull/55
+  -- Color picker
   {
-    "DarwinSenior/nvim-colorizer.lua",
-    config = function()
+    "uga-rosa/ccc.nvim",
+    lazy = false,
+    opts = {
+      bar_char = "█",
+      point_char = "▓",
+      highlighter = {
+        auto_enable = true,
+      },
+    },
+    config = function(_, opts)
       -- Must be set for this plugin to work. Will also be set by
       -- "mange.theme", but load order is not as strict. Also, if "mange.theme"
       -- fails for some reason, this plugin can still work with this config
       -- set.
       vim.o.termguicolors = true
-
-      -- Enable for all files not covered by color-capable LSPs and render as
-      -- virtualtext.
-      require("colorizer").setup({ "*", "!tsx", "!css", "!html" }, {
-        mode = "virtualtext",
-      })
+      require("ccc").setup(opts)
     end,
   },
 

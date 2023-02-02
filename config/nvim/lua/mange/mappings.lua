@@ -480,10 +480,10 @@ local function setup()
       },
 
       --
-      -- Leader +toggle
+      -- Leader +toggle/open
       --
       ["t"] = {
-        name = "Toggle",
+        name = "Toggle/Open",
         -- Not actually a *toggle*, more like a "Toggle off". Just pressing n/N
         -- will enable the highlights again anyway.
         h = { "<cmd>nohl<cr>", "Search highlights" },
@@ -496,7 +496,7 @@ local function setup()
           "<cmd>Gitsigns toggle_current_line_blame<cr>",
           "Toggle line blame",
         },
-        C = { "<cmd>ColorizerToggle<cr>", "Colorizer" },
+        C = { "<cmd>CccHighlighterToggle<cr>", "Color highlights" },
 
         f = {
           "<cmd>FormatToggle &ft<cr>",
@@ -515,6 +515,7 @@ local function setup()
         d = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "Diagnostics" },
         q = { "<cmd>TroubleToggle quickfix<cr>", "Quickfix list" },
         o = { "<cmd>SymbolsOutline<cr>", "Symbol outline" },
+        p = { ":CccPick<cr>", "Color picker" },
         z = { ":TZAtaraxis<CR>", "Zen" },
         Z = { ":TZNarrow<CR>", "Zen lines" },
       },

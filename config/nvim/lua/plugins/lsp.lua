@@ -17,12 +17,6 @@ return {
     },
   },
   {
-    "mrshmllow/document-color.nvim",
-    opts = {
-      mode = "single",
-    },
-  },
-  {
     "neovim/nvim-lspconfig",
     config = function()
       require "mange.lsp"

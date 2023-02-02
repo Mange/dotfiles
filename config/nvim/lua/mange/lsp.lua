@@ -3,7 +3,6 @@ local inlayhints = require "lsp-inlayhints"
 
 local has_ufo, _ = pcall(require, "ufo")
 local has_cmp, cmp = pcall(require, "cmp_nvim_lsp")
-local has_document_color, document_color = pcall(require, "document-color")
 local has_navic, navic = pcall(require, "nvim-navic")
 
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
@@ -28,12 +27,6 @@ local function capabilities(func)
     caps.textDocument.foldingRange = {
       dynamicRegistration = false,
       lineFoldingOnly = true,
-    }
-  end
-
-  if has_document_color then
-    caps.textDocument.colorProvider = {
-      dynamicRegistration = true,
     }
   end
 
@@ -69,10 +62,6 @@ local function on_attach_without_formatting(client, bufnr)
     buffer_autocmd(bufnr, "LspSignatureHelp", "CursorHoldI", function()
       require("mange.utils").show_signature_help()
     end)
-  end
-
-  if client.server_capabilities.colorProvider then
-    document_color.buf_attach(bufnr)
   end
 
   if client.server_capabilities.documentHighlightProvider then
