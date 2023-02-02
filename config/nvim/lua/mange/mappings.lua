@@ -143,7 +143,12 @@ local function setup()
       "Trouble previous",
     },
 
-    ["<BS>"] = { "<Plug>(Switch)", "Switch" },
+    ["<BS>"] = {
+      function()
+        vim.notify("Use <C-A> instead!", vim.log.levels.INFO)
+      end,
+      "Deprecated",
+    },
 
     --
     -- Gitsigns

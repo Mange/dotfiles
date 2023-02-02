@@ -5,15 +5,6 @@ return {
     event = "InsertEnter",
   },
 
-  -- Replace with dial.nvim? https://github.com/monaqa/dial.nvim
-  -- Also replaces vim-speeddating
-  {
-    "AndrewRadev/switch.vim",
-    init = function()
-      vim.g.switch_mapping = "" -- Setup in mange.mappings
-    end,
-  },
-
   -- Replace with a lua implementation?
   {
     "AndrewRadev/splitjoin.vim",
