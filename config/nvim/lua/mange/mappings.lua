@@ -398,9 +398,9 @@ local function setup()
         m = { "<cmd>Telescope man_pages<cr>", "Search man pages" },
         o = { "<cmd>Telescope vim_options<cr>", "Vim options" },
         p = {
-          name = "Packer",
-          c = { "<cmd>PackerCompile<cr>", "Compile" },
-          s = { "<cmd>PackerSync<cr>", "Sync" },
+          name = "Packages",
+          p = { "<cmd>Lazy<cr>", "Lazy" },
+          s = { "<cmd>Lazy sync<cr>", "Sync" },
         },
         r = {
           name = "Reload",
