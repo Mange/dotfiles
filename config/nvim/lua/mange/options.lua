@@ -38,11 +38,6 @@ opt.modeline = true
 opt.splitbelow = true
 opt.splitright = true
 
--- When tabcompleting in cmdline, complete to the longest common string and
--- show the list. Then on the second tab press, complete to the first full
--- entry.
-opt.wildmode = { "list:longest", "full" }
-
 -- Nicer characters in "hole" areas of diffs and for folds.
 -- NOTE: theme.lua will set a different FG color to not make the diff character look
 -- terrible.
