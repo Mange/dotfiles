@@ -1,6 +1,7 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
+    lazy = false,
     build = ":TSUpdate",
     opts = {
       ensure_installed = "all",
@@ -35,5 +36,18 @@ return {
     config = function(_, opts)
       require("nvim-treesitter.configs").setup(opts)
     end,
+  },
+
+  {
+    "JoosepAlviste/nvim-ts-context-commentstring",
+    lazy = false,
+  },
+
+  -- Insert closing </tags> automatically in HTML-like filetypes.
+  -- (Also handles renames of opening tag)
+  {
+    "windwp/nvim-ts-autotag",
+    opts = {},
+    lazy = false,
   },
 }
