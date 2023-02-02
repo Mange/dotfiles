@@ -269,11 +269,7 @@ return {
   },
 
   {
-    -- Use fork with this PR implemented:
-    --   https://github.com/simrat39/symbols-outline.nvim/pull/169
-    -- "simrat39/symbols-outline.nvim",
-    "mxsdev/symbols-outline.nvim",
-    branch = "merge-jsx-tree",
+    "simrat39/symbols-outline.nvim",
     opts = {
       lsp_blacklist = {},
       symbol_blacklist = {
