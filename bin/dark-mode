@@ -1,0 +1,18 @@
+#!/bin/sh
+
+case "$1" in
+--help)
+  echo "Usage: $0 <on|off>"
+  exit 0
+  ;;
+on)
+  gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+  ;;
+off)
+  gsettings set org.gnome.desktop.interface color-scheme 'prefer-light'
+  ;;
+*)
+  echo "Unknown option $1"
+  exit 1
+  ;;
+esac
