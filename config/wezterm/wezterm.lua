@@ -8,6 +8,7 @@ local function font(name, params)
 end
 
 return {
+  term = "wezterm", -- Requires terminfo to be installed
   check_for_updates = false,
   color_scheme = "Catppuccin",
   font = font "Jetbrains Mono",
