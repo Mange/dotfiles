@@ -56,4 +56,14 @@ return {
     dependencies = { "kevinhwang91/promise-async" },
     config = config,
   },
+
+  {
+    "luukvbaal/statuscol.nvim",
+    lazy = false,
+    opts = {
+      foldfunc = "builtin",
+      -- order = "SNsFs", -- Symbol, Number, Fold, separator
+      setopt = true,
+    },
+  },
 }
