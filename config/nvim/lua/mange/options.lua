@@ -49,3 +49,6 @@ opt.grepformat = "%f:%l:%c:%m,%f:%l:%m"
 
 -- Set terminal title
 opt.title = true
+
+-- Better diff options
+opt.diffopt = [[internal,filler,closeoff,linematch:50]]
