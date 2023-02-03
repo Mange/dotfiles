@@ -10,6 +10,7 @@
           - xorg
           - adapta-gtk-theme # gtk theme
           - x11-ssh-askpass
+          - xdg-desktop-portal-gtk
           # GUI tools
           - autorandr # xrandr config for screen combinations
           - feh # image viewer and background setter
