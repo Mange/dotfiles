@@ -15,10 +15,8 @@
           - autorandr # xrandr config for screen combinations
           - feh # image viewer and background setter
           - flameshot # Screenshot app
-          - gucharmap # character lookup gui, good for icon fonts
           - lxappearance # dunno lol
           - lxrandr # gui for xrandr
-          - mugshot # Customize user avatar
           - mugshot # Customize user avatar (used in my AwesomeWM theme)
           - network-manager-applet
           - parcellite # Clipboard manager
@@ -39,7 +37,6 @@
           - pavucontrol # Pulseaudio settings gui
           - playerctl
           - pipewire
-          # - pulseaudio # Audio server
           - pulsemixer # Pulseaudio TUI mixer
           - spotify # A proprietary music streaming service
           - vlc
@@ -52,8 +49,6 @@
           - telegram-desktop # chat
           - discord # All-in-one voice and text chat for gamers that's free and secure.
           # Password manager, encryption, etc.
-          - bitwarden-cli # CLI for password manager
-          - bitwarden-rofi # Bitwarden in Rofi
           - keybase
           - keybase-gui
           # Yubikey
