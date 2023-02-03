@@ -7,13 +7,13 @@ local function font(name, params)
   )
 end
 
-local color_scheme = "Catppuccin Latte"
-local env_scheme = "light"
+local color_scheme = "Catppuccin Mocha"
+local env_scheme = "dark"
 
 local appearance = wezterm.gui.get_appearance()
 if appearance:find "Light" then
-  color_scheme = "Catppuccin Mocha"
-  env_scheme = "dark"
+  color_scheme = "Catppuccin Latte"
+  env_scheme = "light"
 end
 
 return {
