@@ -10,7 +10,7 @@ if [[ -n $BASH_VERSION || -n $ZSH_VERSION ]]; then
     if [[ -n "$BASH_VERSION" ]]; then
       # Bash does not automatically have a $path array like ZSH; create it
       # manualy by splitting existing PATH variable.
-      IFS=: read -r -a path <<< "$PATH"
+      IFS=: read -r -a path <<<"$PATH"
     fi
 
     path=(
@@ -19,8 +19,8 @@ if [[ -n $BASH_VERSION || -n $ZSH_VERSION ]]; then
       "${CARGO_HOME:-$HOME/.cargo}/bin"
       "$HOME/.rvm/bin"
       "$XDG_DATA_HOME/npm/packages/bin"
-
       "$HOME/.yarn/bin"
+      "${ANDROID_HOME:-$HOME/Android/Sdk}/platform-tools"
 
       "${path[@]}"
     )
@@ -35,7 +35,10 @@ if [[ -n $BASH_VERSION || -n $ZSH_VERSION ]]; then
       export -U path
     else
       # Bash cannot filter out duplicated entries in an easy way like that... :(
-      PATH="$(IFS=:; echo "${path[*]}")"
+      PATH="$(
+        IFS=:
+        echo "${path[*]}"
+      )"
       export PATH
       # Remove this temporary variable
       unset path
