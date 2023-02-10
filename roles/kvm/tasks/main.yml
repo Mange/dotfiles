@@ -1,0 +1,33 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-tasks.json
+- tags: kvm
+  block:
+    - name: Install kvm
+      kewlfft.aur.aur:
+        state: present
+        name:
+          - qemu
+          - virt-manager
+          - dmidecode
+          - dnsmasq
+          - vde2
+
+    - name: Ensure kvm group
+      become: true
+      group:
+        name: kvm
+        state: present
+
+    - name: Add mange to kvm group
+      become: true
+      user:
+        name: mange
+        groups: kvm
+        append: true
+
+    - name: Enable libvirtd service
+      become: true
+      when: not inside_docker
+      systemd:
+        name: libvirtd
+        enabled: true
+        state: started
