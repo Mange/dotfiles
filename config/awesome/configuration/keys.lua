@@ -4,6 +4,35 @@ local which_keys = require "module.which_keys"
 
 local M = {}
 
+M.leader = which_keys.create {
+  name = "leader",
+  keys = {
+    ["t"] = {
+      function()
+        print "Test!"
+        M.leader:start()
+      end,
+      "test",
+    },
+    ["e"] = { actions.emoji_selector(), "emojis" },
+    ["c"] = {
+      name = "client",
+      keys = {
+        ["s"] = {
+          actions.on_focused_client(actions.client_toggle_sticky),
+          "sticky-toggle",
+        },
+      },
+    },
+  },
+}
+
+local function start_leader_chord()
+  return function()
+    M.leader:start()
+  end
+end
+
 -- Generate keybindings for 0-9 keys
 M.global = {}
 for i = 0, 10 do
@@ -102,7 +131,7 @@ M.global = gears.table.join(M.global, {
   ["mod+."] = {},
   ["mod+/"] = {},
 
-  ["mod+space"] = {},
+  ["mod+space"] = { start_leader_chord(), "Chord", group = "Awesome" },
   ["mod+left"] = {},
   ["mod+up"] = {},
   ["mod+down"] = {},
@@ -125,29 +154,6 @@ M.clients = {
     actions.client_move_other_screen,
     "To other screen",
     group = "Client",
-  },
-}
-
-M.leader = which_keys.create {
-  name = "leader",
-  keys = {
-    ["t"] = {
-      function()
-        print "Test!"
-        M.leader:start()
-      end,
-      "test",
-    },
-    ["e"] = { actions.emoji_selector(), "emojis" },
-    ["c"] = {
-      name = "client",
-      keys = {
-        ["s"] = {
-          actions.on_focused_client(actions.client_toggle_sticky),
-          "sticky-toggle",
-        },
-      },
-    },
   },
 }
 
