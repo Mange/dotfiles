@@ -19,8 +19,10 @@ local function menu_item(bind, opts, menu)
     type = "menu",
     menu = child_menu,
     action = function()
+      local popup_visible = menu:is_popup_visible()
+
       menu:stop()
-      child_menu:start()
+      child_menu:start { skip_timeout = popup_visible }
     end,
   }
 end

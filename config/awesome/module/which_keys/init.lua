@@ -1,4 +1,5 @@
 local awful = require "awful"
+local gears = require "gears"
 
 local Widgets = require "module.which_keys.widgets"
 local Items = require "module.which_keys.items"
@@ -6,7 +7,7 @@ local Items = require "module.which_keys.items"
 local M = {}
 
 --- @alias WhichKeyType "menu" | "action"
---- @alias WhichKeyOpts {name: string, keys: table<string, table>}
+--- @alias WhichKeyOpts {name: string, keys: table<string, table>, timeout?: number}
 
 --- @class WhichKeyInstance
 --- @field name string
@@ -14,6 +15,8 @@ local M = {}
 --- @field stop function()
 
 local function hide_popup(menu)
+  menu.popup_timeout:stop()
+
   if menu.popup then
     menu.popup.visible = false
     menu.popup = nil
@@ -41,6 +44,7 @@ end
 function M.create(opts)
   local name = opts.name
   local keys = opts.keys
+  local timeout = opts.timeout or 0.5
 
   local instance = {
     name = name,
@@ -68,10 +72,35 @@ function M.create(opts)
     stop_key = "Escape",
   }
 
-  function instance.start(self, s)
+  function instance.show_popup(self, s)
+    self.popup = Widgets.create_popup(self, s or awful.screen.focused())
+  end
+
+  function instance.is_popup_visible(self)
+    return self.popup and self.popup.visible or false
+  end
+
+  instance.popup_timeout = gears.timer {
+    single_shot = true,
+    timeout = timeout,
+    autostart = false,
+    callback = function()
+      instance:show_popup()
+    end,
+  }
+
+  --- @param opts {s?: screen, skip_timeout?: boolean}
+  function instance.start(self, opts)
+    local skip_timeout = opts and opts.skip_timeout or false
+    local s = opts and opts.s
+
     self.grabber:start()
-    -- TODO: Show after a timeout instead of right away
-    instance.popup = Widgets.create_popup(self, s or awful.screen.focused())
+
+    if skip_timeout then
+      self:show_popup(s)
+    else
+      self.popup_timeout:start()
+    end
   end
 
   function instance.stop(self)
