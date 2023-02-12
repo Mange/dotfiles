@@ -11,6 +11,7 @@
           - adapta-gtk-theme # gtk theme
           - x11-ssh-askpass
           - xdg-desktop-portal-gtk
+          - picom
           # GUI tools
           - autorandr # xrandr config for screen combinations
           - feh # image viewer and background setter
@@ -84,7 +85,7 @@
         state: present
         name:
           # Graphical environment
-          - picom-animations-git # Fork of picom with animations
+          # - picom-animations-git # Fork of picom with animations
           # Terminal
           - wezterm-git
 

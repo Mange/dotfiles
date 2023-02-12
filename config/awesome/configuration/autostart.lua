@@ -16,7 +16,6 @@ function M.early()
     "picom",
     "--config",
     os.getenv "HOME" .. "/.config/picom/picom.conf",
-    "--experimental-backends",
   }
 end
 
