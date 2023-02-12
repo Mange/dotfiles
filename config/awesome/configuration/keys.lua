@@ -10,9 +10,9 @@ M.leader = which_keys.create {
     ["t"] = {
       function()
         print "Test!"
-        M.leader:start()
       end,
       "test",
+      sticky = true,
     },
     ["e"] = { actions.emoji_selector(), "emojis" },
     ["c"] = {

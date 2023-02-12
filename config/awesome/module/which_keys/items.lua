@@ -4,6 +4,7 @@ local keylib = require "module.keys.lib"
 --- @field bind KeyBind
 --- @field name string
 --- @field type WhichKeyType
+--- @field sticky boolean
 --- @field action function()
 
 local M = {}
@@ -30,13 +31,21 @@ end
 local function action_item(bind, opts, menu)
   local action = opts[1]
   local name = opts[2]
+  local sticky = opts.sticky or false
 
   return {
     bind = bind,
     name = name,
     type = "action",
+    sticky = sticky,
     action = function()
-      menu:stop()
+      if sticky then
+        if menu.popup_timeout.started then
+          menu.popup_timeout:again()
+        end
+      else
+        menu:stop()
+      end
       action()
     end,
   }
