@@ -8,11 +8,14 @@ end
 --- @field bg string | nil
 --- @field bg_hover string | nil
 --- @field bg_click string | nil
---- @field bg_widget widget | nil
+--- @field fg string | nil
+--- @field fg_hover string | nil
+--- @field fg_click string | nil
 --- @field on_left_click function(widget) | nil
 --- @field on_right_click function(widget) | nil
 --- @field on_mouse_enter function(widget) | nil
 --- @field on_mouse_leave function(widget) | nil
+--- @field bg_widget widget | nil
 
 --- @param widget widget
 --- @param options UseClickableOptions | nil
@@ -28,27 +31,45 @@ function M.use_clickable(widget, options)
 
   local hovering = false
   local button_down = false
-  -- Original bg could be nil, so use extra sentinel to tell if the nil is
+  -- Original colors could be nil, so use extra sentinel to tell if the nil is
   -- "don't change" or "set to nil".
   local original_bg_set = false
+  local original_fg_set = false
   local original_bg = bg_widget.bg
+  local original_fg = bg_widget.fg
 
-  local function update_bg()
+  local function update_colors()
     if not original_bg_set then
       original_bg_set = true
       original_bg = bg_widget.bg
     end
 
+    if not original_fg_set then
+      original_fg_set = true
+      original_fg = bg_widget.fg
+    end
+
     if button_down and opts.bg_click then
       bg_widget.bg = opts.bg_click
+      bg_widget.fg = opts.fg_click
     elseif hovering and opts.bg_hover then
       bg_widget.bg = opts.bg_hover
+      bg_widget.fg = opts.fg_hover
     elseif opts.bg then
       bg_widget.bg = opts.bg
-    elseif original_bg_set then
-      bg_widget.bg = original_bg
-      original_bg = nil
-      original_bg_set = false
+      bg_widget.fg = opts.fg
+    else
+      if original_bg_set then
+        bg_widget.bg = original_bg
+        original_bg = nil
+        original_bg_set = false
+      end
+
+      if original_fg_set then
+        bg_widget.fg = original_fg
+        original_fg = nil
+        original_fg_set = false
+      end
     end
   end
 
@@ -67,7 +88,7 @@ function M.use_clickable(widget, options)
       pre_hover_cursor = current.cursor
       current.cursor = "hand2" -- pointing finger
     end
-    update_bg()
+    update_colors()
     on_mouse_enter(widget)
   end
 
@@ -78,13 +99,13 @@ function M.use_clickable(widget, options)
       pre_hover_wibox = nil
       pre_hover_cursor = nil
     end
-    update_bg()
+    update_colors()
     on_mouse_leave(widget)
   end
 
   local function button_press(_, _, _, mbutton)
     button_down = true
-    update_bg()
+    update_colors()
     if mbutton == Mouse.left_click then
       on_left_click(widget)
     elseif mbutton == Mouse.right_click then
@@ -94,7 +115,7 @@ function M.use_clickable(widget, options)
 
   local function button_release()
     button_down = false
-    update_bg()
+    update_colors()
   end
 
   widget:connect_signal("mouse::enter", mouse_enter)

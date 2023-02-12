@@ -120,21 +120,31 @@ end
 
 --- @param item WhichKeyItem
 function M.build_item_widget(item)
-  local fg = theme.text
+  local text_fg = theme.text
+  local text_bg = theme.transparent
+  local box_fg = theme.text
+  local box_bg = theme.surface1
+
   if item.type == "menu" then
-    fg = theme.green
+    text_fg = theme.green
+    box_fg = theme.mantle
+    box_bg = theme.green
+  elseif item.sticky then
+    text_fg = theme.mauve
+    box_fg = theme.mantle
+    box_bg = theme.mauve
   end
 
   local widget = wibox.widget {
     widget = wibox.container.background,
-    bg = theme.transparent,
-    fg = fg,
+    bg = text_bg,
+    fg = text_fg,
     ui.horizontal {
       spacing = 0,
       children = {
         ui.background {
-          bg = theme.surface1,
-          fg = theme.text,
+          bg = box_bg,
+          fg = box_fg,
           margin = { 0, theme.spacing(1) },
           child = {
             widget = wibox.widget.textbox,
@@ -156,8 +166,9 @@ function M.build_item_widget(item)
   }
 
   ui_effects.use_clickable(widget, {
-    bg = theme.transparent,
-    bg_hover = theme.surface1,
+    bg = text_bg,
+    bg_hover = box_bg,
+    fg_hover = box_fg,
     on_left_click = function()
       item.action()
     end,

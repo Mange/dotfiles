@@ -16,7 +16,7 @@ local function menu_item(bind, opts, menu)
 
   return {
     bind = bind,
-    name = menu.name,
+    name = "+" .. menu.name,
     type = "menu",
     menu = child_menu,
     action = function()
@@ -33,9 +33,14 @@ local function action_item(bind, opts, menu)
   local name = opts[2]
   local sticky = opts.sticky or false
 
+  local label = name
+  if sticky then
+    label = "@" .. label
+  end
+
   return {
     bind = bind,
-    name = name,
+    name = label,
     type = "action",
     sticky = sticky,
     action = function()
