@@ -73,6 +73,11 @@ theme.font_mono_size = function(size)
   return "Jetbrains Mono " .. size
 end
 
+---@param size integer
+theme.font_mono_bold_size = function(size)
+  return "Jetbrains Mono Bold " .. size
+end
+
 theme.rm = function(ratio)
   return round(ratio * 11)
 end
@@ -80,6 +85,7 @@ end
 theme.font = theme.font_size(theme.rm(1))
 theme.font_bold = theme.font_bold_size(theme.rm(1))
 theme.font_mono = theme.font_mono_size(theme.rm(1))
+theme.font_mono_bold = theme.font_mono_bold_size(theme.rm(1))
 
 -- Icons
 theme.icons = icons.dir

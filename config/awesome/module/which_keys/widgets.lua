@@ -151,7 +151,7 @@ function M.build_item_widget(item)
             text = keylib.stringify_bind(item.bind),
             align = "center",
             ellipsize = "start",
-            font = theme.font_mono,
+            font = theme.font_mono_bold_size(theme.rm(1.4)),
           },
         },
         ui.margin(0, theme.spacing(1)) {
@@ -159,7 +159,7 @@ function M.build_item_widget(item)
           text = item.name,
           align = "left",
           ellipsize = "end",
-          font = theme.font,
+          font = theme.font_size(theme.rm(1.4)),
         },
       },
     },
@@ -197,7 +197,7 @@ function M.build_title_widget(title)
     {
       widget = wibox.widget.textbox,
       markup = string.upper(title),
-      font = theme.font_size(theme.rm(1.2)),
+      font = theme.font_size(theme.rm(1.8)),
       align = "center",
     },
   }
