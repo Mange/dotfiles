@@ -100,7 +100,7 @@ if_require("lspconfig", function(lspconfig)
       exclude = { "tsserver" },
     },
     lua = {
-      exclude = { "sumneko_lua" },
+      exclude = { "lua_ls" },
     },
     ruby = {
       -- Use standardrb via null-ls instead.
@@ -114,7 +114,7 @@ if_require("lspconfig", function(lspconfig)
   -- Try to configure this to work both in Neovim and in AwesomeWM
   -- environments. This does not seem to be possible to do well, so try to
   -- configure the union of these environments.
-  lspconfig.sumneko_lua.setup {
+  lspconfig.lua_ls.setup {
     cmd = { "lua-language-server" },
     capabilities = capabilities(),
     on_attach = on_attach_without_formatting,

@@ -28,7 +28,7 @@ return {
         return math.floor(vim.o.columns * 0.75)
       end,
     },
-    init = function()
+    config = function()
       vim.notify = require("notify").notify
     end,
   },
@@ -88,7 +88,6 @@ return {
   -- Show lightbulbs when code actions are available on the current line
   {
     "kosayoda/nvim-lightbulb",
-    dependencies = { "antoinemadec/FixCursorHold.nvim" },
     opts = { autocmd = { enabled = true } },
   },
 
