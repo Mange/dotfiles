@@ -7,14 +7,9 @@ local M = {}
 M.leader = which_keys.create {
   name = "leader",
   keys = {
-    ["t"] = {
-      function()
-        print "Test!"
-      end,
-      "test",
-      sticky = true,
-    },
+    ["w"] = { actions.select_window(), "windows" },
     ["e"] = { actions.emoji_selector(), "emojis" },
+    ["n"] = { actions.on_focused_client(actions.client_minimize), "minimize" },
     ["c"] = {
       name = "client",
       keys = {
@@ -23,6 +18,11 @@ M.leader = which_keys.create {
           "sticky-toggle",
         },
       },
+    },
+    ["m"] = {
+      name = "media",
+      -- TODO
+      keys = {},
     },
   },
 }
