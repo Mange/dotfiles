@@ -42,7 +42,6 @@ return {
   {
     rule_any = {
       instance = {
-        "DTA", -- Firefox addon DownThemAll.
         "copyq", -- Includes session name in class.
         "pinentry",
       },
@@ -54,9 +53,6 @@ return {
         "MessageWin", -- kalarm.
         "Sxiv",
         "Tor Browser", -- Needs a fixed window size to avoid fingerprinting by screen size.
-        "Wpa_gui",
-        "veromix",
-        "xtightvncviewer",
         -- Pop behaves super crazy; better to start out floating always and then
         -- manually fixing it when it's placed where I want it.
         "Pop",
@@ -77,6 +73,20 @@ return {
       },
     },
     properties = { floating = true, size_hints_honor = true },
+  },
+
+  {
+    rule_any = {
+      class = "^echidna$",
+    },
+    properties = {
+      floating = true,
+      size_hints_honor = true,
+      titlebars_enabled = false,
+      titlebars_forbidden = true,
+      border_width = 0,
+      placement = awful.placement.bottom + awful.placement.no_offscreen,
+    },
   },
 
   {
