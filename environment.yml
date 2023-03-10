@@ -31,9 +31,3 @@
     - { role: gpg-config, tags: [gpg] }
 
     - { role: host-socia, tags: [system], when: 'ansible_hostname == "socia"' }
-    - {
-        role: host-krista,
-        tags: [system],
-        when: 'ansible_hostname == "krista"',
-      }
-    - { role: host-knas, tags: [system], when: 'ansible_hostname == "knas"' }
