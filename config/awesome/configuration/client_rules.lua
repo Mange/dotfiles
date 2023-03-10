@@ -80,6 +80,23 @@ return {
   },
 
   {
+    rule_any = {
+      name = {
+        "^Android Emulator -",
+        "^Emulator$",
+      },
+    },
+    properties = {
+      floating = true,
+      size_hints_honor = true,
+      titlebars_enabled = false,
+      titlebars_forbidden = true,
+      border_width = 0,
+      placement = awful.placement.top_right + awful.placement.no_offscreen,
+    },
+  },
+
+  {
     rule = { role = "GtkFileChooserDialog" },
     properties = {
       placement = utils.placement_centered(0.4),
