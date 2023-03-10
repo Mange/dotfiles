@@ -1,0 +1,25 @@
+xkb_symbols "custom" {
+    // right alt = mode shift
+    include "level3(ralt_switch)"
+
+    // åäö on ordinary Swedish layout while alt is held
+    key <AD11> { [ bracketleft, braceleft, aring, Aring ] };
+    key <AC10> { [ semicolon, colon, odiaeresis, Odiaeresis ] };
+    key <AC11> { [ apostrophe, quotedbl, adiaeresis, Adiaeresis ] };
+
+    // nbsp on alt+space
+    key <SPCE> { [ space, space, nobreakspace, nobreakspace ] };
+
+    // Extra letters
+    key <AD03> {[ e, E, eacute, Eacute ]};
+
+    // Ellipsis …
+    key <AB09> {[ period, greater, U2026, U2026 ]};
+    // Vertical ellipsis ⋮ on comma
+    key <AB08> {[ comma, less, U22EE, U22EE ]};
+
+    // Rebind right Super (windows key) into a Compose key
+    key <RWIN> {[ Multi_key ]};
+    // Same with "Menu" key (the one that opens the Right Click menu)
+    key <MENU> {[ Multi_key ]};
+};
