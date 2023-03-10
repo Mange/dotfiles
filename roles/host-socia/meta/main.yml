@@ -8,6 +8,3 @@ dependencies:
   - role: nvidia
   - role: latex
   - role: kvm
-  # Socia uses encrypted drives, so you are already prompted for a password on
-  # boot.
-  - role: autologin
