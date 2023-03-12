@@ -33,12 +33,26 @@ elif [[ $# -eq 1 ]] && [[ $1 == "--debug" ]]; then
   shift
 fi
 
-# Find PID of active window
-PID=$(
+function x11() {
   xprop -id "$(xprop -root | awk '/_NET_ACTIVE_WINDOW\(WINDOW\)/{print $NF}')" |
     grep -m 1 PID |
     cut -d " " -f 3
-)
+}
+
+function hyprland() {
+  hyprctl activewindow | grep 'pid:' | cut -d " " -f 2
+}
+
+function detect_pid() {
+  if [[ "$XDG_CURRENT_DESKTOP" == "Hyprland" ]]; then
+    hyprland
+  else
+    x11
+  fi
+}
+
+# Find PID of active window
+PID=$(detect_pid)
 
 # List all pids running in this window; for example a terminal might be running
 # a shell that is running an editor.
