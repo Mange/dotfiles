@@ -5,28 +5,31 @@ if [[ "$1" == "--help" ]]; then
 Usage: wm-start [command…]
 
 Spawns a command from the current window manager. This command has
-support for both Awesome and i3.
+support for Awesome, Hyprland, and i3.
 
-The DESKTOP_SESSION env variable must be set in order for this to
-work.
+The DESKTOP_SESSION or XDG_CURRENT_DESKTOP env variables must be set in order
+for this to work.
 EOF
 fi
 
-case "${DESKTOP_SESSION}" in
-  i3)
-    i3-msg exec "$*"
-    ;;
-  awesome)
-    escaped="$(
-      printf '"%q", ' "$@" |
-        sed 's/\\ / /; s/, $//'
-    )"
-    awesome-client "awesome.spawn { ${escaped} }"
-    ;;
-  *)
-    # shrug… I guess we'll just try to start it in the background
-    # instead.
-    nohup "$@" 2>/dev/null >/dev/null &
-    disown
-    ;;
+case "${DESKTOP_SESSION:-${XDG_CURRENT_DESKTOP}}" in
+i3)
+  i3-msg exec "$*"
+  ;;
+awesome)
+  escaped="$(
+    printf '"%q", ' "$@" |
+      sed 's/\\ / /; s/, $//'
+  )"
+  awesome-client "awesome.spawn { ${escaped} }"
+  ;;
+Hyprland)
+  hyprctl dispatch exec "$@"
+  ;;
+*)
+  # shrug… I guess we'll just try to start it in the background
+  # instead.
+  nohup "$@" 2>/dev/null >/dev/null &
+  disown
+  ;;
 esac
