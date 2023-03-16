@@ -10,11 +10,11 @@ end
 local color_scheme = "Catppuccin Mocha"
 local env_scheme = "dark"
 
-local appearance = wezterm.gui.get_appearance()
-if appearance:find "Light" then
-  color_scheme = "Catppuccin Latte"
-  env_scheme = "light"
-end
+-- local appearance = wezterm.gui.get_appearance()
+-- if appearance:find "Light" then
+--   color_scheme = "Catppuccin Latte"
+--   env_scheme = "light"
+-- end
 
 return {
   term = "wezterm", -- Requires terminfo to be installed
@@ -26,6 +26,10 @@ return {
   font = font "Jetbrains Mono",
   hide_tab_bar_if_only_one_tab = true,
   window_background_opacity = 0.8,
+
+  -- Wrong colors and does not work with key repeats, micro-freezing
+  -- Probably because of Nvidia.
+  enable_wayland = false,
 
   -- Don't accidentally select stuff when I click on a window and accidentally move a few pixels
   swallow_mouse_click_on_window_focus = true,
