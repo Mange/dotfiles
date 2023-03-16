@@ -63,7 +63,7 @@ return {
     lazy = false,
     opts = {
       bar_char = "█",
-      point_char = "▓",
+      point_char = "▍",
       highlighter = {
         auto_enable = true,
       },
