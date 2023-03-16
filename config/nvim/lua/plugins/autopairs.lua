@@ -3,6 +3,7 @@ local function config()
 
   npairs.setup {
     disable_filetype = { "TelescopePrompt" },
+    ignored_next_char = "%S", -- Only act if the next character is whitespace.
   }
 
   -- Add endwise-like things (auto "end", "endfunction", etc.)
