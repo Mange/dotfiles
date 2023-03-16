@@ -8,7 +8,10 @@
         name:
           # Graphical environment
           - xorg
-          - adapta-gtk-theme # gtk theme
+          - catppuccin-gtk-theme-mocha
+          - catppuccin-gtk-theme-macchiato
+          - catppuccin-gtk-theme-frappe
+          - catppuccin-gtk-theme-latte
           - x11-ssh-askpass
           - xdg-desktop-portal-gtk
           - picom
