@@ -37,17 +37,17 @@ local function load_plugins()
     },
     diff = { cmd = "diffview.nvim" },
     checker = {
-      enabled = true,
+      enabled = false,
       concurrency = 1, -- To check very slowly
       frequency = 60 * 60 * 24, -- Check once a day
-      rtp = {
-        disabled_plugins = {
-          "netrwPlugin",
-          "tarPlugin",
-          "tohtml",
-          "tutor",
-          "zipPlugin",
-        },
+    },
+    rtp = {
+      disabled_plugins = {
+        "netrwPlugin",
+        "tarPlugin",
+        "tohtml",
+        "tutor",
+        "zipPlugin",
       },
     },
   })
