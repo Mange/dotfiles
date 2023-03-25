@@ -134,6 +134,31 @@ keys.awesome_chord = which_keys.new_chord("Awesome", {
         actions.on_focused_client(actions.client_move_other_screen)
       ),
 
+      wk(
+        "Down",
+        "move-down",
+        actions.on_focused_client(actions.client_move, "down"),
+        { which_key_sticky = true }
+      ),
+      wk(
+        "Left",
+        "move-left",
+        actions.on_focused_client(actions.client_move, "left"),
+        { which_key_sticky = true }
+      ),
+      wk(
+        "Up",
+        "move-up",
+        actions.on_focused_client(actions.client_move, "up"),
+        { which_key_sticky = true }
+      ),
+      wk(
+        "Right",
+        "move-right",
+        actions.on_focused_client(actions.client_move, "right"),
+        { which_key_sticky = true }
+      ),
+
       -- TODO: Keys to move to tags 1-9
     }),
 

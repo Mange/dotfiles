@@ -1,6 +1,7 @@
 local awful = require "awful"
 local naughty = require "naughty"
 local bling = require "vendor.bling"
+local pack = pack or table.pack
 local unpack = unpack or table.unpack
 
 local dropdown = require "dropdown"
@@ -176,7 +177,7 @@ function actions.set_layout(layout)
 end
 
 function actions.on_focused_client(action, ...)
-  local extra = table.pack(...)
+  local extra = pack(...)
   return function()
     if client.focus then
       action(client.focus, unpack(extra))
@@ -232,6 +233,18 @@ end
 
 function actions.client_move_other_screen(c)
   c:move_to_screen()
+end
+
+function actions.client_move(c, direction, amount)
+  local n = amount or dpi(5)
+  local x_offset = 0
+    + (direction == "right" and n or 0)
+    + (direction == "left" and -n or 0)
+  local y_offset = 0
+    + (direction == "down" and n or 0)
+    + (direction == "up" and -n or 0)
+
+  c:relative_move(x_offset, y_offset, 0, 0)
 end
 
 -- Minimized clients cannot be focused, so not possible to bind a key to
