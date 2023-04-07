@@ -202,6 +202,11 @@ if_require("lspconfig", function(lspconfig)
     end,
   }
 
+  lspconfig.eslint.setup {
+    capabilities = capabilities(),
+    on_attach = on_attach,
+  }
+
   lspconfig.bashls.setup {
     capabilities = capabilities(),
     on_attach = on_attach,
@@ -305,8 +310,8 @@ if_require("null-ls", function(null_ls)
       --
       null_ls.builtins.diagnostics.shellcheck,
       null_ls.builtins.diagnostics.ansiblelint,
-      null_ls.builtins.diagnostics.checkmake,
-      null_ls.builtins.diagnostics.erb_lint,
+      -- null_ls.builtins.diagnostics.checkmake,
+      -- null_ls.builtins.diagnostics.erb_lint,
       -- null_ls.builtins.diagnostics.eslint,
 
       --
