@@ -7,6 +7,7 @@ return {
         "/home/mange/.local/share/nvm/versions/node/v16.19.0/bin/node"
       vim.g.copilot_no_tab_map = true
       vim.g.copilot_filetypes = { eruby = false }
+      vim.g.copilot_assume_mapped = true
       -- Mapping set up in mappings.lua
     end,
   },

@@ -186,8 +186,8 @@ local function setup()
     -- Digraph (replaces C-k, which I use for LSP signature help in insert mode)
     ["<C-l>"] = { "<C-k>", "Enter digraph" },
 
-    ["<M-CR>"] = {
-      'copilot#Accept("\\<CR>")',
+    ["<C-A>"] = {
+      'copilot#Accept("")',
       "Accept copilot suggestion",
       expr = true,
     },

@@ -58,11 +58,11 @@ local function on_attach_without_formatting(client, bufnr)
     require("mange.utils").show_diagnostic_float()
   end)
 
-  if client.server_capabilities.signatureHelpProvider then
-    buffer_autocmd(bufnr, "LspSignatureHelp", "CursorHoldI", function()
-      require("mange.utils").show_signature_help()
-    end)
-  end
+  -- if client.server_capabilities.signatureHelpProvider then
+  --   buffer_autocmd(bufnr, "LspSignatureHelp", "CursorHoldI", function()
+  --     require("mange.utils").show_signature_help()
+  --   end)
+  -- end
 
   if client.server_capabilities.documentHighlightProvider then
     vim.cmd [[

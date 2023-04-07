@@ -34,6 +34,14 @@ local function config()
       ["<C-Space>"] = cmp.mapping.complete(),
       ["<C-e>"] = cmp.mapping.close(),
       ["<C-y>"] = cmp.config.disable,
+      ["<C-a>"] = function(fallback)
+        local copilot_keys = vim.fn["copilot#Accept"]()
+        if copilot_keys ~= "" then
+          vim.api.nvim_feedkeys(copilot_keys, "i", true)
+        else
+          fallback()
+        end
+      end,
       ["<CR>"] = cmp.mapping.confirm {
         behavior = cmp.ConfirmBehavior.Replace,
         select = false, -- Only confirm selection if already selected.
