@@ -420,7 +420,7 @@ for gem in guard rspec rails rubocop rake standardrb yarn; do
   alias $gem="bundle-exec $gem"
 done
 
-alias wer="watchexec -ce rb,yml,erb --no-shell --"
+alias wer="watchexec -c -e rb,yml,erb --no-shell --"
 
 # }}}
 # {{{ Color shortcuts and magic
