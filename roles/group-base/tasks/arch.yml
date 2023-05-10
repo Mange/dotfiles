@@ -12,7 +12,8 @@
         - { line: "Color", regexp: "#Color", backrefs: false }
         - { line: "CheckSpace", regexp: "#CheckSpace", backrefs: false }
         - {
-            line: "IgnorePkg = kglobalaccel",
+            # line: "IgnorePkg = kglobalaccel",
+            line: "# IgnorePkg = kglobalaccel",
             regexp: "IgnorePkg",
             backrefs: false,
           }
