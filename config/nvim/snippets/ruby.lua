@@ -43,8 +43,24 @@ return {
 
   s("req", require_custom "some_file"),
 
+  -- TODO: Initializer with automatic instance variable assignment from
+  -- positional and keyword arguments.
+
+  --- Rails snippets
+
+  -- TODO: Model with suggested name by looking at filename
+  --   (ignore "app/*/", "lib/")
+  --   TIP: Look at text-case.nvim
+
+  -- TODO: Controller with suggested name and inheritance by looking at filename
+  --   (ignore "app/*/", "lib/")
+
   --- RSpec snippets
 
+  -- TODO: Insert suggested SUT by looking at filename
+  --   (ignore "spec/*/")
+  -- TODO: Offer to toggle filename into a string
+  --  (ex. "Admin::FooController" -> "Admin: Foo controller")
   s({
     trig = "rdesc",
     name = "RSpec file",
