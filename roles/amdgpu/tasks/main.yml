@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-tasks.json
+- tags: amdgpu
+  block:
+    - name: Install AMD GPU drivers
+      when: ansible_os_family == "Archlinux"
+      become: true
+      kewlfft.aur.aur:
+        name:
+          - mesa
+          - lib32-mesa
+          - vulkan-radeon
+          - lib32-vulkan-radeon
+          - libva-mesa-driver
+          - mesa-vdpau
