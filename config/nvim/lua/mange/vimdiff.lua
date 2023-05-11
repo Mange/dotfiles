@@ -10,6 +10,9 @@ function vimdiff.setup()
     -- Start with current search to search for conflicts.
     utils.set_search "<<<<<"
 
+    -- Commands like diffget does not work well with `linematch` set.
+    vim.opt.diffopt = [[internal,filler,closeoff]]
+
     mappings.wk_register {
       ["<leader>"] = {
         ["1"] = { "<cmd>diffget LOCAL<cr>", "Take local" },
