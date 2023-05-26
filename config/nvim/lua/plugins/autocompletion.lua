@@ -137,13 +137,13 @@ return {
         },
         sources = {
           { name = "path" },
-
           { name = "nvim_lsp" },
-          { name = "treesitter", max_item_count = 10, keyword_length = 5 },
-          { name = "luasnip" },
 
           { name = "nvim_lua" },
           { name = "crates" },
+
+          { name = "luasnip" },
+          { name = "treesitter", priority = 0.2, keyword_length = 5 },
         },
       }
     end,
