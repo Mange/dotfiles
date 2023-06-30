@@ -88,12 +88,6 @@ catppuccin.setup {
     Folded = { bg = colors.surface0 },
     FoldedInfo = { fg = colors.subtext0 },
 
-    -- Inlay hints should be almost invisible to not get distracting
-    LspInlayHint = {
-      bg = colors.mantle,
-      fg = colors.surface1,
-    },
-
     -- Not set by the notify integration?
     -- Causes a warning if not set, so let's set it ourselves.
     NotifyBackground = { bg = colors.surface0 },

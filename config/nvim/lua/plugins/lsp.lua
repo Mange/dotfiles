@@ -3,18 +3,9 @@ return {
   { "lukas-reineke/lsp-format.nvim" },
   {
     "lvimuser/lsp-inlayhints.nvim",
-    opts = {
-      inlay_hints = {
-        type_hints = {
-          prefix = "  ",
-          remove_colon_start = true,
-        },
-        parameter_hints = {
-          prefix = "",
-        },
-      },
-      labels_separator = "",
-    },
+    event = "LspAttach",
+    branch = "anticonceal",
+    opts = {},
   },
   {
     "neovim/nvim-lspconfig",
