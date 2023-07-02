@@ -68,9 +68,12 @@ graceful-shutdown \
 
 case "$action" in
 logout)
-  case "${DESKTOP_SESSION}" in
+  case "${DESKTOP_SESSION:-${XDG_CURRENT_DESKTOP}}" in
   awesome)
     awesome-client "awesome.quit()"
+    ;;
+  Hyprland)
+    hyprctl dispatch exit
     ;;
   *)
     notify-send \
