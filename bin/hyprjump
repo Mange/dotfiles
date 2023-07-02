@@ -16,6 +16,8 @@ STARTCMD:
 FOCUSEDCMD:
   Optional command to run if window was found and was currently focused.
   Will be executed with /bin/sh.
+  You can use the word "toggle" for this preset command:
+    hyprctl dispatch movetoworkspacesilent special
 EOF
 }
 
@@ -57,6 +59,10 @@ main() {
   if [[ -z "$start_cmd" ]]; then
     echo "No start command specified" >&2
     exit 1
+  fi
+
+  if [[ "$focused_cmd" == "toggle" ]]; then
+    focused_cmd="hyprctl dispatch movetoworkspacesilent special"
   fi
 
   window=$(find_window)
