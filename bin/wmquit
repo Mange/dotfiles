@@ -5,29 +5,30 @@ action=
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    logout)
-      action="logout"
-      shift
-      ;;
-    poweroff)
-      action="poweroff"
-      shift
-      ;;
-    reboot)
-      action="reboot"
-      shift
-      ;;
-    --force)
-      force=yes
-      shift
-      ;;
-    --help)
-      echo "USAGE: $0 [logout|poweroff|reboot] [--force]"
-      exit 0
-      ;;
-    *)
-      echo "Unknown argument(s): $*" >&2
-      exit 1
+  logout)
+    action="logout"
+    shift
+    ;;
+  poweroff)
+    action="poweroff"
+    shift
+    ;;
+  reboot)
+    action="reboot"
+    shift
+    ;;
+  --force)
+    force=yes
+    shift
+    ;;
+  --help)
+    echo "USAGE: $0 [logout|poweroff|reboot] [--force]"
+    exit 0
+    ;;
+  *)
+    echo "Unknown argument(s): $*" >&2
+    exit 1
+    ;;
   esac
 done
 
@@ -63,27 +64,28 @@ wmctrl -c firefox
 # Shut down all my apps
 graceful-shutdown \
   --mine --whole-command --wait-time 15.0 \
-  < "$XDG_CONFIG_HOME/graceful-shutdown/logout"
+  <"$XDG_CONFIG_HOME/graceful-shutdown/logout"
 
 case "$action" in
-  logout)
-    case "${DESKTOP_SESSION}" in
-      awesome)
-        awesome-client "awesome.quit()"
-        ;;
-      *)
-        notify-send \
-          --app-name System \
-          --icon /usr/share/icons/gnome/256x256/actions/system-log-out.png \
-          --urgency critical \
-          "Quitting" \
-          "Desktop session is unsupported: \"${DESKTOP_SESSION}\""
-    esac
+logout)
+  case "${DESKTOP_SESSION}" in
+  awesome)
+    awesome-client "awesome.quit()"
     ;;
-  poweroff)
-    exec systemctl poweroff
+  *)
+    notify-send \
+      --app-name System \
+      --icon /usr/share/icons/gnome/256x256/actions/system-log-out.png \
+      --urgency critical \
+      "Quitting" \
+      "Desktop session is unsupported: \"${DESKTOP_SESSION}\""
     ;;
-  reboot)
-    exec systemctl reboot
-    ;;
+  esac
+  ;;
+poweroff)
+  exec systemctl poweroff
+  ;;
+reboot)
+  exec systemctl reboot
+  ;;
 esac
