@@ -1,0 +1,74 @@
+#!/bin/bash
+set -e
+
+usage() {
+  cat <<EOF
+Usage: hyprscreenshot [--help] [--edit] [select|window]
+
+Takes a screenshot and copies it to the clipboard.
+
+Options:
+  --edit:
+    Open the screenshot in ksnip for editing.
+
+Modes:
+  select (default): Select area of screen to capture.
+  window: Capture the currently focused window in Hyprland.
+EOF
+}
+
+mode="select"
+edit=no
+
+while [[ "$#" -gt 0 ]]; do
+  case "$1" in
+  --help)
+    usage
+    exit 0
+    ;;
+  --edit)
+    edit=yes
+    shift
+    ;;
+  select)
+    mode="select"
+    shift
+    ;;
+  window)
+    mode="window"
+    shift
+    ;;
+  --)
+    break
+    ;;
+  *)
+    echo "Unknown option: $1" >&2
+    exit 1
+    ;;
+  esac
+done
+
+file="${HOME:-/home/$USER/}/Media/Pictures/Screenshot_$(date +%Y-%m-%d_%H-%M-%S).png"
+geometry=""
+
+case "$mode" in
+select)
+  geometry="$(slurp)"
+  ;;
+window)
+  geometry=$(hyprctl activewindow -j | jq --raw-output '"\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])"')
+  ;;
+esac
+
+if [[ -z "$geometry" ]]; then
+  echo "No geometry specified" >&2
+  exit 1
+fi
+
+grim -t png -g "$geometry" "$file"
+
+wl-copy <"$file"
+
+if [[ "$edit" = "yes" ]]; then
+  ksnip "$file"
+fi
