@@ -54,10 +54,13 @@ format=<b>%s</b>\n%b
 
 # My own toasts should be quick to hide and centered
 [category=x-mange.toast]
-default-timeout=2000
+default-timeout=1000
 anchor=center
 background-color=#313244CC
-border-color=#313244CC
+progress-color=source #b4befeCC
+border-color=#b4befeCC
+[category=x-mange.toast summary~=Volume:]
+on-notify=exec mpv /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga
 
 # Do-not-Disturb mode
 [mode=dnd]

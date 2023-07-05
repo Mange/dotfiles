@@ -1,0 +1,31 @@
+#!/bin/sh
+set -e
+
+raw_volume=$(pulsemixer --get-volume | cut -d ' ' -f 1)
+if [ "$raw_volume" -gt 100 ]; then
+  volume=100
+else
+  volume="$raw_volume"
+fi
+
+last_id_file="${XDG_RUNTIME_DIR}/volume-toast-last-id"
+last_id=$(
+  set +e
+  cat "$last_id_file" 2>/dev/null
+  true
+)
+
+new_id=$(
+  notify-send \
+    --urgency=low --transient \
+    --print-id \
+    ${last_id:+"--replace-id=${last_id}"} \
+    --category=x-mange.toast \
+    --hint=int:value:"${volume}" \
+    "Volume: ${raw_volume}%"
+)
+
+(
+  set +e
+  echo "$new_id" >"$last_id_file"
+)

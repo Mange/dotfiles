@@ -1,0 +1,51 @@
+#!/bin/sh
+set -e
+
+usage() {
+  cat <<EOF
+Usage: $0 [--toast] <MODIFIER>
+
+MODIFIER is either + or - with a number after it.
+
+The --toast option will cause a toast to be shown.
+
+Example:
+  $0 +5
+  $0 --toast -10
+EOF
+}
+
+toast=false
+modifier=+0
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+  --toast)
+    toast=true
+    ;;
+  -h | --help)
+    usage
+    exit 0
+    ;;
+
+  +[0-9]* | -[0-9]*)
+    modifier="$1"
+    ;;
+
+  *)
+    echo "Unknown option: $1" >&2
+    usage >&2
+    exit 1
+    ;;
+  esac
+  shift
+done
+
+if [ $# -ne 0 ]; then
+  echo "Expected exactly one argument" >&2
+  usage >&2
+  exit 1
+fi
+
+pulsemixer --change-volume "$modifier"
+[ "$toast" = true ] && volume-toast
