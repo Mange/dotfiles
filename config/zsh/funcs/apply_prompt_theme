@@ -131,13 +131,13 @@ function module_color {
     echo default
     ;;
   1)
-    echo $theme_black_3
+    echo $theme_surface0
     ;;
   2)
-    echo $theme_black_4
+    echo $theme_surface1
     ;;
   3)
-    echo $theme_gray_0
+    echo $theme_surface2
     ;;
   *)
     echo $section
