@@ -95,6 +95,6 @@
     },
     "on-click": "pulsemixer --toggle-mute",
     "scroll-step": 5,
-    "on-click-right": "pavucontrol"
+    "on-click-right": "pavucontrol --name=pavucontrol-popup"
   }
 }
