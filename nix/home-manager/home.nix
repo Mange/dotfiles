@@ -89,7 +89,46 @@
 
     # Gaming
     steam
+
+    # Fonts
+    (
+      nerdfonts.override {
+        fonts = [
+          "JetBrainsMono"
+          "Overpass"
+          "NerdFontsSymbolsOnly"
+        ];
+      }
+    )
+
+    jetbrains-mono
+    overpass
+
+    noto-fonts-emoji # Emoji
+    noto-fonts-extra # etc.
+    dejavu_fonts
+    liberation_ttf # Arial, Times New Roman, etc.
+    roboto # Android
+    # Eastern fonts, for Kaomoji, when opening Japanese websites, etc.
+    ipafont # Japanese
+    arphic-uming # Chinese
+    baekmuk-ttf # Korean
+    lohit-fonts.kannada # Indic; includes ಠ_ಠ
+
+    # ancient fonts - Just because it is cool
+    # https://dn-works.com/ufas/
+    aegan
+    aegyptus
+    symbola
+    unidings
+    eemusic
+    textfonts
+    assyrian
+    akkadian
+    maya
   ];
+
+  fonts.fontconfig.enable = true;
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   home.stateVersion = "23.05";
