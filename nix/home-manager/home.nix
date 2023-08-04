@@ -57,6 +57,27 @@
 
   # wayland.windowManager.hyprland.enable = true;
 
+  # Keyring, SSH, GPG stuff
+  services.gnome-keyring.enable = true;
+  programs.gpg = {
+    enable = true;
+    homedir = "${config.xdg.dataHome}/gnupg";
+    settings = {
+      keyserver = "hkp://keys.gnupg.net";
+      use-agent = true;
+      keyserver-options = "auto-key-retrieve";
+      default-key = "DB2D6BB84D8E0309";
+    };
+  };
+  services.gpg-agent = {
+    enable = true;
+    enableScDaemon = true;
+    enableSshSupport = true;
+    enableBashIntegration = true;
+    enableZshIntegration = true;
+    pinentryFlavor = "tty";
+  };
+
   # Add stuff for your user as you see fit:
   # programs.neovim.enable = true;
   home.packages = with pkgs; [
