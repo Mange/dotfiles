@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 
 if ! fetch_url=$(LC_LANG=C LANG=C git config --get remote.origin.url); then
