@@ -9,6 +9,8 @@
 
     # Or modules exported from other flakes (such as nix-colors):
     # inputs.nix-colors.homeManagerModules.default
+    # TODO: Move config over to home manager instead of manual config?
+    # inputs.hyprland.homeManagerModules.default
 
     # You can also split up your configuration and import pieces of it here:
     # ./nvim.nix
@@ -41,22 +43,53 @@
     };
   };
 
-  # TODO: Set your username
   home = {
-    username = "your-username";
-    homeDirectory = "/home/your-username";
+    username = "mange";
+    homeDirectory = "/home/mange";
   };
-
-  # Add stuff for your user as you see fit:
-  # programs.neovim.enable = true;
-  # home.packages = with pkgs; [ steam ];
 
   # Enable home-manager and git
   programs.home-manager.enable = true;
-  programs.git.enable = true;
+  # programs.git.enable = true;
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
+
+  # wayland.windowManager.hyprland.enable = true;
+
+  # Add stuff for your user as you see fit:
+  # programs.neovim.enable = true;
+  home.packages = with pkgs; [
+    # CLI
+    bat
+    curl
+    exa
+    fd
+    htop
+    neovim
+    pinentry
+    pulsemixer
+    ripgrep
+    tree
+    wget
+    zsh
+
+    # Dev
+    git
+
+    # GUI
+    brave
+    hyprland
+    pavucontrol
+    rofi
+    rofi-emoji
+    waybar
+    wezterm
+    swww
+
+    # Gaming
+    steam
+  ];
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   home.stateVersion = "23.05";
