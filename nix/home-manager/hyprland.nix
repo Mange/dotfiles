@@ -1,9 +1,11 @@
 { inputs, pkgs, config, ... }: let
   utils = import ./utils.nix { inherit config pkgs; };
+  hy3 = inputs.hy3;
 in 
 {
   wayland.windowManager.hyprland = {
     enable = true;
+    plugins = [hy3.packages.x86_64-linux.hy3];
     extraConfig = ''
       source = ./config/base.conf
     '';
