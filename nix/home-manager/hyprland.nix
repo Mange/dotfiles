@@ -13,4 +13,10 @@ in
 
   # Set up symlinks for all the config files.
   xdg.configFile."hypr/config".source = utils.linkConfig "hypr/config";
+
+  home.packages = with pkgs; [
+    waybar
+    pavucontrol
+    swww
+  ];
 }

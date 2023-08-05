@@ -79,31 +79,72 @@
   # Add stuff for your user as you see fit:
   # programs.neovim.enable = true;
   home.packages = with pkgs; [
-    # CLI
-    bat
+    # Bluetooth
+    bluez
+    bluez-tools
+    blueman
+
+    # Network
     curl
+    httpie
+    nmap
+    rsync
+
+    # Modern UNIX replacements
+    bat
     exa
     fd
     htop
+    prettyping
+    procs
+    ripgrep
+
+    # CLI
+    fzf
     neovim
     pulsemixer
-    ripgrep
     tree
     wget
     zsh
+    libqalculate
+    gnuplot
+    duplicity
 
     # Dev
+    delta
     git
+    github-cli
+    hub
+    jq
+    parallel
+    pastel
+    watchexec
 
     # GUI
     brave
-    pavucontrol
-    waybar
     wezterm
-    swww
+    obsidian
+
+    # Archives
+    atool
+    p7zip
+    unrar
+    unzip
+    xz
+    zip
 
     # Gaming
     steam
+
+    # Toys
+    dotacat
+    figlet
+
+    # Media
+    mediainfo
+    youtube-dl
+    imagemagick
+    ghostscript
 
     # Fonts
     (
