@@ -14,6 +14,7 @@
 
     # You can also split up your configuration and import pieces of it here:
     # ./nvim.nix
+    ./rofi.nix
   ];
 
   nixpkgs = {
@@ -88,7 +89,6 @@
     fd
     htop
     neovim
-    pinentry
     pulsemixer
     ripgrep
     tree
@@ -102,8 +102,6 @@
     brave
     hyprland
     pavucontrol
-    rofi
-    rofi-emoji
     waybar
     wezterm
     swww
