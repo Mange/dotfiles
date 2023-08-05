@@ -69,6 +69,7 @@
           pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
           extraSpecialArgs = { inherit inputs outputs; };
           modules = [
+            inputs.hyprland.homeManagerModules.default
             ./home-manager/home.nix
           ];
         };

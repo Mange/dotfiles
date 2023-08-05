@@ -9,11 +9,10 @@
 
     # Or modules exported from other flakes (such as nix-colors):
     # inputs.nix-colors.homeManagerModules.default
-    # TODO: Move config over to home manager instead of manual config?
-    # inputs.hyprland.homeManagerModules.default
 
     # You can also split up your configuration and import pieces of it here:
     # ./nvim.nix
+    ./hyprland.nix
     ./rofi.nix
   ];
 
@@ -55,8 +54,6 @@
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
-
-  # wayland.windowManager.hyprland.enable = true;
 
   # Keyring, SSH, GPG stuff
   services.gnome-keyring.enable = true;
@@ -100,7 +97,6 @@
 
     # GUI
     brave
-    hyprland
     pavucontrol
     waybar
     wezterm
