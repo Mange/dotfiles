@@ -62,6 +62,8 @@
         socia = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
           modules = [
+            inputs.hyprland.nixosModules.default
+            {programs.hyprland.enable = true;}
             ./nixos/socia/configuration.nix
           ];
         };

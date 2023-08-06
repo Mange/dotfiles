@@ -20,6 +20,11 @@ in {
       fpath=("''${XDG_CONFIG_HOME}/zsh/completion" $fpath)
     '';
 
+    envExtra = ''
+      source "''${XDG_CONFIG_HOME:-''${HOME}/.config}/shells/common"
+      source "''${HOME}/.config/zsh/zshenv"
+    '';
+
     initExtra = ''
       source "''${HOME}/.config/zsh/zshrc"
     '';
