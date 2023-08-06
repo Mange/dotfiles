@@ -14,6 +14,7 @@
     # ./nvim.nix
     ./hyprland.nix
     ./rofi.nix
+    ./zsh.nix
   ];
 
   nixpkgs = {
@@ -54,6 +55,10 @@
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
+
+  # Environment variables
+  systemd.user.sessionVariables = {
+  };
 
   # Keyring, SSH, GPG stuff
   services.gnome-keyring.enable = true;
@@ -105,10 +110,11 @@
     pulsemixer
     tree
     wget
-    zsh
     libqalculate
     gnuplot
     duplicity
+    lsof
+    tmux
 
     # Dev
     delta

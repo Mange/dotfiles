@@ -100,10 +100,17 @@
     pulse.enable = true;
   };
 
+  environment.pathsToLink = [
+    "/share/zsh"
+  ];
+
+  programs.zsh.enable = true;
+
   users.users.mange = {
     initialPassword = "mange";
     isNormalUser = true;
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    shell = pkgs.zsh;
     openssh.authorizedKeys.keys = [
       # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
     ];

@@ -165,19 +165,6 @@ export VISUAL=$EDITOR
 unset -f try-editor
 # }}}
 # {{{ Completions
-# Activate completion system and do some basic settings
-
-zmodload zsh/complist
-
-# Use my custom completions too
-fpath=("${XDG_CONFIG_HOME}/zsh/completion" $fpath)
-
-autoload -U compinit && compinit -d "${XDG_CACHE_HOME}/zcompdump"
-
-# Add AWS completions if aws is installed
-if [[ -f ~/.local/bin/aws_zsh_completer.sh ]]; then
-  source ~/.local/bin/aws_zsh_completer.sh
-fi
 
 # Find out what an alias stands for and complete like if it was the original command
 # This gives me git completion for my git aliases, for example
@@ -272,32 +259,7 @@ chpwd() {
   update_osc7
 }
 # }}}
-# {{{ History
-export HISTSIZE=5000
-export SAVEHIST=5000
-export HISTFILE="${XDG_DATA_HOME}/zsh/history"
-
-# don't replace history when process exits
-setopt append_history
-# remove old dups when added again
-setopt hist_ignore_all_dups
-# verify ! expansions
-setopt hist_verify
-# skip history entry if command starts with a space
-setopt hist_ignore_space
-
-# }}}
 # {{{ Pager, man, and bat
-# Pager settings (less, man, etc.)
-
-# This makes man pages look cooler
-export LESS_TERMCAP_mb=$'\E[01;31m'
-export LESS_TERMCAP_md=$'\E[01;31m'
-export LESS_TERMCAP_me=$'\E[0m'
-export LESS_TERMCAP_se=$'\E[0m'
-export LESS_TERMCAP_so=$'\E[01;44;33m'
-export LESS_TERMCAP_ue=$'\E[0m'
-export LESS_TERMCAP_us=$'\E[01;32m'
 
 # Default less(1) options
 # --Raw-control-chars :: Support ANSI color control chars
