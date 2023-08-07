@@ -15,7 +15,6 @@ in
   xdg.configFile."hypr/config".source = utils.linkConfig "hypr/config";
 
   home.packages = with pkgs; [
-    waybar # Bar
     bibata-cursors # Cursor theme
     cava # Music visualizer
     ksnip # Screenshots + annotations
@@ -28,5 +27,11 @@ in
     swww # Wallpaper
     udiskie # Device manager
     wl-clipboard # Clipboard
+
+    (waybar.override {
+      hyprlandSupport = true;
+      runTests = false;
+      cavaSupport = true;
+    })
   ];
 }
