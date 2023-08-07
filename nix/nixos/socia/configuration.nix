@@ -106,6 +106,15 @@
 
   programs.zsh.enable = true;
 
+  programs.thunar = {
+    enable = true;
+    plugins = with pkgs.xfce; [
+      thunar-archive-plugin
+    ];
+  };
+  services.gvfs.enable = true; # Mount, trash, and other functionalities
+  services.tumbler.enable = true; # Thumbnail support for images
+
   users.users.mange = {
     initialPassword = "mange";
     isNormalUser = true;

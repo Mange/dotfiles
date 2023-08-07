@@ -15,8 +15,9 @@ in
   xdg.configFile."hypr/config".source = utils.linkConfig "hypr/config";
 
   home.packages = with pkgs; [
-    waybar
-    pavucontrol
-    swww
+    waybar # Bar
+    pavucontrol # Volume control
+    swww # Wallpaper
+    mako # Notifications
   ];
 }

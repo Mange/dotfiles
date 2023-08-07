@@ -83,6 +83,7 @@
 
   # Add stuff for your user as you see fit:
   # programs.neovim.enable = true;
+
   home.packages = with pkgs; [
     # Bluetooth
     bluez
@@ -128,8 +129,15 @@
 
     # GUI
     brave
-    wezterm
+    discord
+    firefox
+    google-chrome
     obsidian
+    slack
+    spotify
+    tela-icon-theme
+    telegram-desktop
+    wezterm
 
     # Archives
     atool
