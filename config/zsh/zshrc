@@ -8,18 +8,6 @@ autoload -Uz add-zsh-hook
 # Chain with true to avoid $? being false
 [ -f "${XDG_CONFIG_HOME}/zsh/zshrc.before.local" ] && source "${XDG_CONFIG_HOME}/zsh/zshrc.before.local" || true
 
-# {{{ Helper functions
-alias-if-exist() {
-  local old_command=$1
-  shift
-  local new_command=$1
-
-  if command-exist $new_command; then
-    alias $old_command="$*"
-  fi
-}
-
-# }}}
 # {{{ Autoload functions
 
 autoload zmv
@@ -36,11 +24,6 @@ autoload apply_prompt_theme
 umask 002
 # }}}
 # {{{ ZLE, vi mode
-# Default:        *?_-.[]~=/&;!#$%^(){}<>
-export WORDCHARS='*?[]~&;!#$%^(){}'
-
-# Vim keys in shell
-KEYTIMEOUT=1 # 10ms delay for Escape key
 
 # New line
 bindkey -M viins '^J' self-insert
@@ -107,34 +90,6 @@ eval $(dircolors -b)
 export LS_COLORS="$LS_COLORS:*.nfo=90:*.sfv=90:*.srt=90:*.sub=90"
 export ZLS_COLORS="${LS_COLORS}"
 
-alias ls='ls --color=auto'
-alias l='ls -l'
-
-# Replace l with exa if exa is installed
-if command-exist exa; then
-  alias ls='exa --group-directories-first'
-  alias l='exa --group-directories-first --long --color-scale --git'
-fi
-
-# }}}
-# {{{ EDITOR
-try-editor() {
-  while [[ "$#" -gt 0 ]]; do
-    local full_command="$1"
-    local base="${full_command%% *}"
-
-    if command-exist $base; then
-      EDITOR=$full_command
-      return
-    fi
-    shift
-  done
-}
-
-try-editor nvim vim vi emacs nano
-export VISUAL=$EDITOR
-
-unset -f try-editor
 # }}}
 # {{{ Completions
 
@@ -188,12 +143,6 @@ fi
 setopt auto_pushd
 setopt pushd_ignore_dups
 
-alias tree='tree -AC -I ".svn|.git|node_modules|bower_components"'
-alias t='tree -L 3 --filelimit 50'
-
-# Sort files by size and show human readable
-alias fusage='ls -Ssrh'
-
 # Enhanced cd:
 #   * cd <path>/<file> go to <path>
 cd () {
@@ -233,84 +182,9 @@ chpwd() {
 # }}}
 # {{{ Pager, man, and bat
 
-# Default less(1) options
-# --Raw-control-chars :: Support ANSI color control chars
-# --ignore-case       :: Smart case search (Ignore-case is normal case insensitive search)
-export LESS="--Raw-control-chars --quit-if-one-screen --ignore-case"
-
-# Neovim makes a better manpager than less.
-if command-exist nvim; then
-  export MANPAGER='nvim +Man!'
-fi
-
-export BAT_THEME=base16
-# }}}
-# {{{ Copy/Paste
-if command-exist pbcopy; then
-  alias copy=pbcopy
-  alias paste=pbcopy
-else
-  alias copy='xsel --clipboard --input'
-  alias paste='xsel --clipboard --output'
-
-  # Hard to break some habits
-  alias pbcopy=copy
-  alias pbpaste=paste
-fi
-
-# cat foo.txt bar.txt CP
-alias -g CP='| copy'
 # }}}
 # {{{ Command replacements / aliases for commands with non-standard names
-# Colordiff
-alias-if-exist diff colordiff
-alias-if-exist ping prettyping --nolegend
-# }}}
-# {{{ Git settings and shortcuts
-git_log_format='%C(bold blue)%h%Creset %C(bold)%s%Creset%C(auto)%d%n%C(dim white)%ad %C(nodim green)(%ar)%Creset - %an%C(yellow)%+N%n%Creset'
-
-alias-if-exist git hub
-
-alias checkout='git checkout'
-alias master="git checkout master"
-
-alias gadd='git add'
-alias gco='git commit -v'
-alias gpu='git push'
-alias gb="git branch -v"
-alias gba="git branch -va"
-alias gbm="git branch -v --merged"
-
-alias gm='git merge --no-ff'
-alias gmo='git merge --no-ff @{upstream}'
-alias gmm='git merge --no-ff master'
-
-alias fixup='gco --fixup "$(git fshow)"'
-alias gro='git rebase @{upstream}'
-alias grm='git rebase master'
-alias gri='git rebase -i'
-alias grim='git rebase -i master'
-alias grio='git rebase -i @{upstream}'
-
-alias gf='git fetch --prune'
-alias ff='git merge --ff-only'
-alias ffm='git merge --ff-only master'
-alias ffo='git merge --ff-only @{upstream}'
-alias gup='gf && ffo'
-
-alias gl="git log --no-show-signature --graph -n 1000 --format='tformat:$git_log_format'"
-
-alias s="git status --short --branch"
-alias gs="git show --show-signature"
-alias gd="git diff"
-alias gds="git diff | delta --side-by-side"
-alias staged="gd --cached"
-
-unset -v git_log_format
-# }}}
 # {{{ Job control aliases and hacks
-alias j='jobs -l'
-
 setopt auto_continue # CONT any disowned commands
 setopt auto_resume   # "man" automatically resumes "man command" if in background ("man other" does not)
 setopt check_jobs    # print job statuses on exit, and cancel exiting the first time
@@ -351,14 +225,6 @@ done
 
 alias wer="watchexec -c -e rb,yml,erb --no-shell --"
 
-# }}}
-# {{{ Color shortcuts and magic
-autoload colors
-colors
-
-function colortest() {
-  msgcat --color=test
-}
 # }}}
 # {{{ Prompt settings and configuration
 
@@ -451,5 +317,3 @@ apply_prompt_theme
 # shellcheck source=/dev/null
 source "${XDG_CONFIG_HOME}/shells/enable-rvm"
 # }}}
-
-unset -f alias-if-exist
