@@ -3,15 +3,12 @@
 
 setopt extendedglob
 zmodload zsh/datetime
-autoload is-at-least
 autoload -Uz add-zsh-hook
 
 # Chain with true to avoid $? being false
 [ -f "${XDG_CONFIG_HOME}/zsh/zshrc.before.local" ] && source "${XDG_CONFIG_HOME}/zsh/zshrc.before.local" || true
 
 # {{{ Helper functions
-command-exist() { whence $1 > /dev/null; }
-
 alias-if-exist() {
   local old_command=$1
   shift
@@ -19,16 +16,6 @@ alias-if-exist() {
 
   if command-exist $new_command; then
     alias $old_command="$*"
-  fi
-}
-
-try-source-plugin() {
-  local path="/usr/share/zsh/plugins/${1}/${1}.zsh"
-  if [[ -f "${path}" ]]; then
-    source "${path}"
-    return 0
-  else
-    return 1
   fi
 }
 
@@ -48,13 +35,11 @@ autoload apply_prompt_theme
 # Why wouldn't I?
 umask 002
 # }}}
-# {{{ ZLE, vi mode, and fzf
+# {{{ ZLE, vi mode
 # Default:        *?_-.[]~=/&;!#$%^(){}<>
 export WORDCHARS='*?[]~&;!#$%^(){}'
 
 # Vim keys in shell
-bindkey -d # Delete all existing keybinds
-bindkey -v # Use vimkeys by default
 KEYTIMEOUT=1 # 10ms delay for Escape key
 
 # New line
@@ -92,19 +77,6 @@ bindkey -M viins -s '^[[32;2u' ' '
 bindkey -M vicmd -s '^[[32;2u' ' '
 
 # See extra bindkey calls under the Plugins section
-
-if [ -f /usr/share/fzf/key-bindings.zsh ]; then
-  source /usr/share/fzf/completion.zsh
-  source /usr/share/fzf/key-bindings.zsh
-
-  bindkey -M vicmd "/" fzf-history-widget
-  bindkey "^P" fzf-file-widget
-fi
-
-# Use ripgrep to populate fzf
-if command-exist rg; then
-  export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
-fi
 
 # Outputs $1 when on insert mode and outputs $2 when on command mode.
 # zle_mode_output "when insert" "when command"
@@ -269,11 +241,6 @@ export LESS="--Raw-control-chars --quit-if-one-screen --ignore-case"
 # Neovim makes a better manpager than less.
 if command-exist nvim; then
   export MANPAGER='nvim +Man!'
-fi
-
-# Use highlight to preview FZF files under CTRL+T
-if command-exist bat; then
-  export FZF_CTRL_T_OPTS="--preview '(bat --style=numbers --color=always {} || cat {} || tree -C {}) 2> /dev/null | head -200'"
 fi
 
 export BAT_THEME=base16
@@ -483,37 +450,6 @@ apply_prompt_theme
 # {{{ RVM
 # shellcheck source=/dev/null
 source "${XDG_CONFIG_HOME}/shells/enable-rvm"
-# }}}
-
-# {{{ Plugins
-if is-at-least 5.8; then
-  try-source-plugin zsh-syntax-highlighting || true
-
-  if try-source-plugin zsh-history-substring-search; then
-    bindkey -M viins '^N' history-substring-search-up
-    bindkey -M viins '^P' history-substring-search-down
-    bindkey -M vicmd '^N' history-substring-search-up
-    bindkey -M vicmd '^P' history-substring-search-down
-  fi
-
-  if command-exist fzf && [[ -f ~/.config/zsh/fzf-tab/fzf-tab.plugin.zsh ]]; then
-    source ~/.config/zsh/fzf-tab/fzf-tab.plugin.zsh
-
-    zstyle ":completion:*:git-checkout:*" sort false
-    zstyle ':completion:*:descriptions' format '[%d]'
-    zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-
-    # give a preview when completing `kill`
-    zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm,cmd -w -w"
-    zstyle ':fzf-tab:complete:kill:argument-rest' extra-opts '--preview=echo $(<{f})' --preview-window=down:3:wrap
-
-    if command-exist exa; then
-      zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
-    else
-      zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls -1 --color=always $realpath'
-    fi
-  fi
-fi
 # }}}
 
 unset -f alias-if-exist
