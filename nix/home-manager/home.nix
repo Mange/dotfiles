@@ -106,16 +106,17 @@
     ripgrep
 
     # CLI
+    duplicity
     fzf
+    gnuplot
+    killall
+    libqalculate
+    lsof
     neovim
     pulsemixer
+    tmux
     tree
     wget
-    libqalculate
-    gnuplot
-    duplicity
-    lsof
-    tmux
 
     # Dev
     delta

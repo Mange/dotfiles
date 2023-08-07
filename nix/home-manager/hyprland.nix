@@ -16,8 +16,17 @@ in
 
   home.packages = with pkgs; [
     waybar # Bar
-    pavucontrol # Volume control
-    swww # Wallpaper
+    bibata-cursors # Cursor theme
+    cava # Music visualizer
+    ksnip # Screenshots + annotations
     mako # Notifications
+    pavucontrol # Volume control
+    playerctl # MPRIS control
+    rsibreak # Work breaks
+    swayidle # Trigger stuff when idle
+    swaylock-effects # Lockscreen
+    swww # Wallpaper
+    udiskie # Device manager
+    wl-clipboard # Clipboard
   ];
 }
