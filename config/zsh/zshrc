@@ -28,6 +28,10 @@ umask 002
 # New line
 bindkey -M viins '^J' self-insert
 
+### FZF stuff
+bindkey -M vicmd "/" fzf-history-widget
+bindkey "^P" fzf-file-widget
+
 # Vim-like bindings
 # Stolen from https://github.com/sharat87/zsh-vim-mode/blob/master/zsh-vim-mode.plugin.zsh
 
@@ -114,6 +118,36 @@ compdef run-changed-specs=rspec
 
 # Show completion group names
 zstyle ':completion:*:descriptions' format "%d"
+
+### fzf-tab
+zstyle ":completion:*:git-checkout:*" sort false
+zstyle ':completion:*:descriptions' format '[%d]'
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+
+# give a preview when completing `kill`
+zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm,cmd -w -w"
+zstyle ':fzf-tab:complete:kill:argument-rest' fzf-flags '--preview=echo $(<{f})' --preview-window=down:3:wrap
+
+zstyle ':fzf-tab:complete:systemctl-*:*' fzf-preview 'SYSTEMD_COLORS=1 systemctl status $word'
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
+zstyle ':fzf-tab:complete:(-command-|-parameter-|-brace-parameter-|export|unset|expand):*' fzf-preview 'echo ${(P)word}'
+
+# Git previews
+zstyle ':fzf-tab:complete:git-(add|diff|restore):*' fzf-preview 'git diff $word | delta'
+zstyle ':fzf-tab:complete:git-log:*' fzf-preview 'git log --color=always $word'
+zstyle ':fzf-tab:complete:git-help:*' fzf-preview 'git help $word | bat -plman --color=always'
+zstyle ':fzf-tab:complete:git-show:*' fzf-preview \
+  'case "$group" in
+  "commit tag") git show --color=always $word ;;
+  *) git show --color=always $word | delta ;;
+  esac'
+zstyle ':fzf-tab:complete:git-checkout:*' fzf-preview \
+  'case "$group" in
+  "modified file") git diff $word | delta ;;
+  "recent commit object name") git show --color=always $word | delta ;;
+  *) git log --color=always -n 20 $word ;;
+  esac'
+ 
 # }}}
 # {{{ Named Directories
 # Make certain paths into named directories ("~name" instead of "/path/to/name")
@@ -158,17 +192,11 @@ cd () {
 }
 
 # Display contents of current directory when changing directories
-if command-exist exa; then
-  showdir() { exa --group-directories-first }
-else
-  showdir() { ls --group-directories-first }
-fi
+showdir() { exa --group-directories-first }
 
 # Tell terminal what the current directory is
 update_osc7() {
-  if command-exist wezterm; then
-    wezterm set-working-directory 2>/dev/null && return 0
-  fi
+  wezterm set-working-directory 2>/dev/null && return 0
 
   # In case wezterm is not installed, or if it failed do a naive manual try
   printf "\033]7;file://%s%s\033\\" "${HOSTNAME}" "${PWD}"
