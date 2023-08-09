@@ -105,6 +105,7 @@
 
     # CLI
     duplicity
+    file
     gnuplot
     killall
     libqalculate
