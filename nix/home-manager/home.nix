@@ -17,6 +17,7 @@ in {
     ./hyprland.nix
     ./rofi.nix
     ./zsh.nix
+    ./neovim.nix
   ];
 
   nixpkgs = {
@@ -83,9 +84,6 @@ in {
     pinentryFlavor = "tty";
   };
 
-  # Add stuff for your user as you see fit:
-  # programs.neovim.enable = true;
-
   home.packages = with pkgs; [
     # Bluetooth
     bluez
@@ -113,7 +111,6 @@ in {
     killall
     libqalculate
     lsof
-    neovim
     psmisc # better pstree command
     pulsemixer
     tmux
@@ -126,8 +123,10 @@ in {
     github-cli
     hub
     jq
+    nodejs
     parallel
     pastel
+    ruby
     watchexec
 
     # GUI

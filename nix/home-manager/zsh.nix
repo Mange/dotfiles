@@ -48,7 +48,6 @@ in {
       # Default:   *?_-.[]~=/&;!#$%^(){}<>
       WORDCHARS = "*?[]~&;!#$%^(){}";
 
-      EDITOR = "nvim";
       VISUAL = "nvim";
 
       # Default less(1) options
