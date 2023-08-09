@@ -114,6 +114,7 @@ in {
     libqalculate
     lsof
     neovim
+    psmisc # better pstree command
     pulsemixer
     tmux
     tree
