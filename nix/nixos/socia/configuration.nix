@@ -8,11 +8,11 @@
     # outputs.nixosModules.example
 
     # Or modules from other flakes (such as nixos-hardware):
+    inputs.hardware.nixosModules.common-pc
+    inputs.hardware.nixosModules.common-pc-ssd
     inputs.hardware.nixosModules.common-cpu-amd
     inputs.hardware.nixosModules.common-cpu-amd-pstate
     inputs.hardware.nixosModules.common-gpu-amd
-    inputs.hardware.nixosModules.common-pc
-    inputs.hardware.nixosModules.common-pc-ssd
 
     # You can also split up your configuration and import pieces of it here:
     # ./users.nix
@@ -20,6 +20,11 @@
     # Import your generated (nixos-generate-config) hardware configuration
     ./hardware-configuration.nix
   ];
+
+  # AMD RX 7900 XT works better with newer kernels…
+  boot.kernelPackages = pkgs.linuxPackages_6_4;
+
+  hardware.amdgpu.opencl = true;
 
   nixpkgs = {
     # You can add overlays here
