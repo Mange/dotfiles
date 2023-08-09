@@ -226,6 +226,11 @@ if_require("lspconfig", function(lspconfig)
     on_attach = on_attach,
   }
 
+  lspconfig.nil_ls.setup {
+    capabilities = capabilities(),
+    on_attach = on_attach,
+  }
+
   lspconfig.dockerls.setup {
     capabilities = capabilities(),
     on_attach = on_attach,

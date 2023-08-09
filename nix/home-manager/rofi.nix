@@ -1,7 +1,7 @@
 { pkgs, config, ... }: let
   utils = import ./utils.nix { inherit config pkgs; };
   themeFile = utils.linkConfig "rofi/catpuccin.rasi";
-  inherit (config.lib.formats.rasi) mkLiteral;
+  # inherit (config.lib.formats.rasi) mkLiteral;
 in {
   xdg.configFile."rofi/catpuccin.rasi".source = themeFile;
 
