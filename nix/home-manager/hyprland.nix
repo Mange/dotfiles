@@ -17,11 +17,13 @@ in
   home.packages = with pkgs; [
     bibata-cursors # Cursor theme
     cava # Music visualizer
+    grim # Screenshot tool
     ksnip # Screenshots + annotations
     mako # Notifications
     pavucontrol # Volume control
     playerctl # MPRIS control
     rsibreak # Work breaks
+    slurp # Screenshot tool
     swayidle # Trigger stuff when idle
     swaylock-effects # Lockscreen
     swww # Wallpaper
