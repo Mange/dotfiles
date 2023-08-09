@@ -105,20 +105,10 @@
     pulse.enable = true;
   };
 
+  programs.zsh.enable = true;
   environment.pathsToLink = [
     "/share/zsh"
   ];
-
-  programs.zsh.enable = true;
-
-  programs.thunar = {
-    enable = true;
-    plugins = with pkgs.xfce; [
-      thunar-archive-plugin
-    ];
-  };
-  services.gvfs.enable = true; # Mount, trash, and other functionalities
-  services.tumbler.enable = true; # Thumbnail support for images
 
   users.users.mange = {
     initialPassword = "mange";
@@ -140,6 +130,27 @@
       # Use keys only. Remove if you want to SSH using password (not recommended)
       PasswordAuthentication = false;
     };
+  };
+
+  # Thunar must be enabled on the system instead of in home manager. I don't
+  # know why, but it might relate to a bunch of services that are needed.
+  programs.thunar = {
+    enable = true;
+    plugins = with pkgs.xfce; [
+      thunar-archive-plugin
+    ];
+  };
+  services.gvfs.enable = true; # Mount, trash, and other functionalities
+  services.tumbler.enable = true; # Thumbnail support for images
+
+  # Enable Tailscale
+  services.tailscale.enable = true;
+
+  # Swaylock should have access to passwords, etc.
+  security.pam.services.swaylock = {
+    text = ''
+      auth include login
+    '';
   };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
