@@ -131,7 +131,6 @@ in {
 
     # GUI
     brave
-    discord
     firefox
     google-chrome
     obsidian
@@ -140,6 +139,12 @@ in {
     tela-icon-theme
     telegram-desktop
     wezterm
+    xdg-utils
+
+    (discord.override {
+      withOpenASAR = true;
+      withVencord = true;
+    })
 
     # Archives
     atool
