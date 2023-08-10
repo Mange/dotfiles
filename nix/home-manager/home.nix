@@ -50,6 +50,8 @@
     homeDirectory = "/home/mange";
   };
 
+  home.file.".face".source = ./face.jpg;
+
   # Enable home-manager and git
   programs.home-manager.enable = true;
   # programs.git.enable = true;
