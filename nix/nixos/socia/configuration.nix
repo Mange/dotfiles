@@ -96,6 +96,13 @@
   #   useXkbConfig = true; # use xkbOptions in tty.
   # };
 
+  security.polkit.enable = true;
+  security.sudo.enable = true;
+
+  # Login
+  services.xserver.enable = true;
+  services.xserver.displayManager.gdm.enable = true;
+
   # Enable sound.
   security.rtkit.enable = true;
   services.pipewire = {
