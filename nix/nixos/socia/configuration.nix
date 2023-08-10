@@ -83,12 +83,7 @@
 
   # Select internationalisation properties.
   i18n.supportedLocales = [ "C.UTF-8/UTF-8" "en_US.UTF-8/UTF-8" "sv_SE.UTF-8/UTF-8" ];
-  i18n.defaultLocale = "sv_SE.UTF-8";
-  i18n.extraLocaleSettings = {
-    LC_COLLATE = "sv_SE.UTF-8";
-    LC_TIME = "sv_SE.UTF-8";
-    LC_MESSAGES = "en_US.UTF-8";
-  };
+  i18n.defaultLocale = "en_US.UTF-8";
 
   # console = {
   #   # font = "Lat2-Terminus16";

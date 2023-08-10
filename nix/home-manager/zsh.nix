@@ -45,15 +45,10 @@ in {
       # Default:   *?_-.[]~=/&;!#$%^(){}<>
       WORDCHARS = "*?[]~&;!#$%^(){}";
 
-      VISUAL = "nvim";
-
       # Default less(1) options
       # --Raw-control-chars :: Support ANSI color control chars
       # --ignore-case       :: Smart case search (Ignore-case is normal case insensitive search)
       LESS = "--Raw-control-chars --quit-if-one-screen --ignore-case";
-
-      MANPAGER = "nvim +Man!"; # Neovim makes a better manpager than less.
-      BAT_THEME = "base16";
     };
 
     shellAliases = {

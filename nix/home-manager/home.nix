@@ -48,6 +48,15 @@
   home = {
     username = "mange";
     homeDirectory = "/home/mange";
+    language.base = "sv_SE.UTF-8";
+    sessionVariables = {
+      VISUAL = "nvim";
+      MANPAGER = "nvim +Man!"; # Neovim makes a better manpager than less.
+      BAT_THEME = "base16";
+    };
+    sessionPath = [
+      "$HOME/.local/bin"
+    ];
   };
 
   home.file.".face".source = ./face.jpg;
