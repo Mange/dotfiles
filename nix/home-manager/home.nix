@@ -132,10 +132,10 @@
     brave
     firefox
     google-chrome
+    libnotify
     obsidian
     slack
     spotify
-    tela-icon-theme
     telegram-desktop
     wezterm
     xdg-utils

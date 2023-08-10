@@ -15,7 +15,6 @@ in
   xdg.configFile."hypr/config".source = utils.linkConfig "hypr/config";
 
   home.packages = with pkgs; [
-    bibata-cursors # Cursor theme
     cava # Music visualizer
     grim # Screenshot tool
     ksnip # Screenshots + annotations
@@ -35,5 +34,41 @@ in
       runTests = false;
       cavaSupport = true;
     })
+
+
+    (catppuccin-kde.override {
+      flavour = [ "mocha" ];
+      accents = [ "mauve" ];
+      winDecStyles = [ "modern" ];
+    })
   ];
+
+  gtk = {
+    enable = true;
+    font = {
+      name = "Overpass";
+      size = 12;
+      package = pkgs.overpass;
+    };
+    theme = {
+      name = "Catppuccin-Mocha-Compact-Mauve-Dark";
+      package = (pkgs.catppuccin-gtk.override {
+        accents = [ "mauve" ];
+        size = "compact";
+        tweaks = []; # You can also specify multiple tweaks here
+        variant = "mocha";
+      });
+    };
+    iconTheme = {
+      name = "Papirus-Dark";
+      package = (pkgs.catppuccin-papirus-folders.override {
+        flavor = "mocha";
+        accent = "mauve";
+      });
+    };
+    cursorTheme = {
+      package = pkgs.catppuccin-cursors.mochaDark;
+      name = "Catppuccino-Mocha-Dark-Cursors";
+    };
+  };
 }

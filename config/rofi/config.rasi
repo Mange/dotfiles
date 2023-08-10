@@ -41,7 +41,7 @@ configuration {
 
   font: "Overpass Light 10";
   show-icons: true;
-  icon-theme: "Tela";
+  icon-theme: "Papirus-Dark";
   fullscreen: false;
   window-thumbnail: true;
 }

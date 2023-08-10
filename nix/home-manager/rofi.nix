@@ -47,7 +47,7 @@ in {
       kb-row-tab = "";
     
       show-icons = true;
-      icon-theme = "Tela";
+      icon-theme = "Papirus-Dark";
       fullscreen = false;
       window-thumbnail = true;
     };
