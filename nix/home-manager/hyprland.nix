@@ -6,7 +6,19 @@ in
   wayland.windowManager.hyprland = {
     enable = true;
     plugins = [hy3.packages.x86_64-linux.hy3];
+
+    # The automatic systemd integration does not load PATH and some other
+    # variables I want, so I manually replace it below.
+    # See https://github.com/hyprwm/Hyprland/issues/2800
+    systemdIntegration = false;
+
+    # Combined settings will be:
+    #  1. SystemD integration
+    #  2. Plugins
+    #  3. `extraConfig`
     extraConfig = ''
+      env = PATH,$HOME/.local/bin:$PATH
+      exec-once = "${pkgs.dbus}/bin/dbus-update-activation-environment --systemd --all";
       source = ./config/base.conf
     '';
   };

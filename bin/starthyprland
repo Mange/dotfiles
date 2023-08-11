@@ -1,7 +1,0 @@
-#!/bin/sh
-
-export XDG_SESSION_TYPE=wayland
-# shellcheck disable=SC2046
-export $(gnome-keyring-daemon --start)
-
-exec Hyprland
