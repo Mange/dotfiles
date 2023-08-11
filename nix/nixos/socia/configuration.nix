@@ -19,6 +19,9 @@
 
     # Import your generated (nixos-generate-config) hardware configuration
     ./hardware-configuration.nix
+
+    # Use catppuccin theme
+    ../catppuccin.nix
   ];
 
   # AMD RX 7900 XT works better with newer kernels…
@@ -108,33 +111,6 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-  };
-
-  # Theme
-  environment.systemPackages = with pkgs; [
-    catppuccin-cursors.mochaDark
-
-    (catppuccin-gtk.override {
-      accents = [ "mauve" ];
-      size = "compact";
-      tweaks = []; # You can also specify multiple tweaks here
-      variant = "mocha";
-    })
-
-    (catppuccin-papirus-folders.override {
-      flavor = "mocha";
-      accent = "mauve";
-    })
-  ];
-
-  boot.plymouth = {
-    enable = true;
-    themePackages = [
-      (pkgs.catppuccin-plymouth.override {
-        variant = "mocha";
-      })
-    ];
-    theme = "catppuccino-mocha";
   };
 
   programs.zsh.enable = true;
