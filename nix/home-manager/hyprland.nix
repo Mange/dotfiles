@@ -6,16 +6,14 @@ in
   wayland.windowManager.hyprland = {
     enable = true;
     plugins = [hy3.packages.x86_64-linux.hy3];
+    systemdIntegration = true;
 
-    # The automatic systemd integration does not load PATH and some other
-    # variables I want, so I manually replace it below.
+    # Systemd integration does not import all environment variables, when I
+    # prefer it to import everything.
     # See https://github.com/hyprwm/Hyprland/issues/2800
-    systemdIntegration = false;
-
-    # Combined settings will be:
-    #  1. SystemD integration
-    #  2. Plugins
-    #  3. `extraConfig`
+    #
+    # Also manually set up PATH so it works when using GDM, which does not run
+    # a full shell when loading Hyprland.
     extraConfig = ''
       env = PATH,$HOME/.local/bin:$PATH
       exec-once = "${pkgs.dbus}/bin/dbus-update-activation-environment --systemd --all";
