@@ -21,6 +21,9 @@ in
     '';
   };
 
+  # Work breaks
+  services.safeeyes.enable = true;
+
   # Set up symlinks for all the config files.
   xdg.configFile."hypr/config".source = utils.linkConfig "hypr/config";
 
@@ -31,7 +34,6 @@ in
     mako # Notifications
     pavucontrol # Volume control
     playerctl # MPRIS control
-    rsibreak # Work breaks
     slurp # Screenshot tool
     swayidle # Trigger stuff when idle
     swaylock-effects # Lockscreen
