@@ -340,8 +340,3 @@ apply_prompt_theme
 
 # Chain with true to avoid $? being false
 [ -f "${XDG_CONFIG_HOME}/zsh/zshrc.after.local" ] && source "${XDG_CONFIG_HOME}/zsh/zshrc.after.local" || true
-
-# {{{ RVM
-# shellcheck source=/dev/null
-source "${XDG_CONFIG_HOME}/shells/enable-rvm"
-# }}}

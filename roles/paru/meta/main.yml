@@ -4,4 +4,3 @@
 # me then having to clean that up afterward.
 dependencies:
   - role: rust
-  - role: ruby

@@ -3,13 +3,6 @@
 # shellcheck source=/dev/null
 source "${XDG_CONFIG_HOME:-${HOME}/.config}/shells/common"
 
-# Non-interactive shells should still get a hold of rvm
-# Vim runs zsh with -c; a tty is present but it still isn't interactive
-if [ ! -t ] || [[ $VIM != "" ]]; then
-  # shellcheck source=/dev/null
-  source "${XDG_CONFIG_HOME}/shells/enable-rvm"
-fi
-
 # Use an askpass program for sudo password prompts when
 # terminal is not available.
 if [[ -z $SUDO_ASKPASS ]] && [[ -f /usr/lib/ssh/x11-ssh-askpass ]]; then
