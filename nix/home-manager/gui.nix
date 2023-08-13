@@ -76,6 +76,11 @@ in
       accents = [ "mauve" ];
       winDecStyles = [ "modern" ];
     })
+
+    (catppuccin-kvantum.override {
+      variant = "Mocha";
+      accent = "Mauve";
+    })
   ];
 
   gtk = {
@@ -105,5 +110,11 @@ in
       package = pkgs.catppuccin-cursors.mochaDark;
       name = "Catppuccin-Mocha-Dark-Cursors";
     };
+  };
+
+  qt = {
+    enable = true;
+    platformTheme = "gtk";
+    style.name = "kvantum";
   };
 }
