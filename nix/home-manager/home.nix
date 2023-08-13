@@ -12,8 +12,7 @@
 
     # You can also split up your configuration and import pieces of it here:
     # ./nvim.nix
-    ./gui.nix
-    ./rofi.nix
+    ./gui
     ./zsh.nix
     ./neovim.nix
   ];
@@ -130,7 +129,6 @@
     libqalculate
     lsof
     psmisc # better pstree command
-    pulsemixer
     tmux
     tree
     wget
@@ -140,32 +138,21 @@
     git
     git-absorb
     github-cli
+    gnome.zenity
+    http-prompt
     hub
     jq
     nodejs
     parallel
     pastel
+    pgcli
     ruby
+    rustup
     watchexec
 
-    # GUI
-    brave
-    firefox
-    google-chrome
-    jellyfin-media-player
-    libnotify
-    mpv
-    obsidian
-    slack
-    spotify
-    telegram-desktop
-    wezterm
-    xdg-utils
-
-    (discord.override {
-      withOpenASAR = true;
-      withVencord = true;
-    })
+    cargo-update
+    cargo-edit
+    cargo-watch
 
     # Archives
     atool
@@ -185,8 +172,8 @@
     # Media
     mediainfo
     youtube-dl
-    imagemagick
-    ghostscript
+    imagemagick # for image previews, etc.
+    ghostscript # imagemagick optional dependency for PDF support
 
     # Fonts
     (

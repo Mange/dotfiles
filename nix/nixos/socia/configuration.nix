@@ -22,6 +22,7 @@
 
     # Use catppuccin theme
     ../catppuccin.nix
+    ../wacom.nix
   ];
 
   # AMD RX 7900 XT works better with newer kernels…
@@ -124,10 +125,24 @@
     "/share/zsh"
   ];
 
+  environment.systemPackages = with pkgs; [
+    # Filesystem support
+    btrfs-progs
+    cifs-utils
+    exfat
+    nfs-utils
+    ntfs3g
+  ];
+
   users.users.mange = {
     initialPassword = "mange";
     isNormalUser = true;
-    extraGroups = [ "wheel" "docker" ];
+    extraGroups = [
+      "wheel"
+      "docker"
+      "video" # Control brightness
+      "input" # Control LEDs
+    ];
     shell = pkgs.zsh;
     openssh.authorizedKeys.keys = [
       # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
@@ -169,6 +184,17 @@
 
   # Docker
   virtualisation.docker.enable = true;
+
+  # Home network
+  services.avahi = {
+    enable = true;
+    nssmdns = true;
+    openFirewall = true;
+  };
+  services.printing = {
+    enable = true;
+    drivers = [ pkgs.brlaser ];
+  };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.11";

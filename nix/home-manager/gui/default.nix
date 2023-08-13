@@ -1,8 +1,12 @@
 { inputs, pkgs, config, ... }: let
-  utils = import ./utils.nix { inherit config pkgs; };
+  utils = import ../utils.nix { inherit config pkgs; };
   hy3 = inputs.hy3;
 in 
 {
+  imports = [
+    ./rofi.nix
+  ];
+
   wayland.windowManager.hyprland = {
     enable = true;
     plugins = [hy3.packages.x86_64-linux.hy3];
@@ -49,21 +53,72 @@ in
     longitude = 17.8;
   };
 
+  # PDF and comics
+  programs.zathura = {
+    enable = true;
+    extraConfig = ''
+      include catppuccin-mocha
+    '';
+  };
+  xdg.configFile."zathura/catppuccin-mocha".source = ./zathura/catppuccin-mocha;
+
+  # Keybase
+  services.kbfs.enable = true;
+  services.keybase.enable = true;
+
+  # Syncthing
+  services.syncthing.enable = true;
+  services.syncthing.tray.enable = true;
+
   # Other packages
   home.packages = with pkgs; [
+    # Browsers
+    brave
+    firefox
+    google-chrome
+
+    # Media
     cava # Music visualizer
-    cliphist # Clipboard history
-    grim # Screenshot tool
-    ksnip # Screenshots + annotations
-    mako # Notifications
+    jellyfin-media-player
+    krita
+    mpv
     pavucontrol # Volume control
     playerctl # MPRIS control
-    slurp # Screenshot tool
+    pulsemixer
+    shotwell
+
+    # Chat and comms
+    slack
+    spotify
+    telegram-desktop
+
+    (discord.override {
+      withOpenASAR = true;
+      withVencord = true;
+    })
+
+    # Other apps
+    ksnip # Screenshots + annotations
+    obsidian
+    wezterm
+    yubikey-manager
+    yubikey-manager-qt
+    transmission-remote-gtk
+
+    # Screenshotting
+    grim
+    slurp
+
+    # Utils / libraries / daemons / theme support
+    cliphist # Clipboard history
+    libnotify
+    mako # Notifications
     swayidle # Trigger stuff when idle
     swaylock-effects # Lockscreen
     swww # Wallpaper
     udiskie # to get access to CLI tools not enabled through services.udiskie
     wl-clipboard # Clipboard control
+    xdg-utils
 
     (waybar.override {
       hyprlandSupport = true;
@@ -71,6 +126,7 @@ in
       cavaSupport = true;
     })
 
+    # Themes
     (catppuccin-kde.override {
       flavour = [ "mocha" ];
       accents = [ "mauve" ];
@@ -116,5 +172,31 @@ in
     enable = true;
     platformTheme = "gtk";
     style.name = "kvantum";
+  };
+
+  xdg.mime.enable = true;
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+      "inode/directory" = "thunar.desktop";
+
+      "text/html" = "brave-browser.desktop";
+      "x-scheme-handler/http" = "brave-browser.desktop";
+      "x-scheme-handler/https" = "brave-browser.desktop";
+      "x-scheme-handler/mailto" = "brave-browser.desktop";
+      "x-scheme-handler/webcal" = "brave-browser.desktop";
+      "x-scheme-handler/unknown" = "brave-browser.desktop";
+
+      "x-scheme-handler/tg" = "org.telegram.desktop.desktop";
+
+      "video/mp4" = "mpv.desktop";
+      "video/quicktime" = "mpv.desktop";
+      "video/x-matroska" = "mpv.desktop";
+      "audio/mpeg" = "mpv.desktop";
+      "audio/ogg" = "mpv.desktop";
+
+      "application/pdf" = "org.pwmt.zathura.desktop";
+      "application/vnd.comicbook+zip" = "org.pwmt.zathura-djvu.desktop";
+    };
   };
 }

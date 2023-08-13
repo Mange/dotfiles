@@ -1,6 +1,0 @@
----
-dependencies:
-  - role: awesomewm
-  - role: fonts
-  - role: neovim
-  - role: redshift
