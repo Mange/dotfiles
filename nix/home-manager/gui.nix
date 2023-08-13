@@ -20,12 +20,18 @@ in
       source = ./config/base.conf
     '';
   };
+  # Set up symlinks for all the config files.
+  xdg.configFile."hypr/config".source = utils.linkConfig "hypr/config";
 
   # Work breaks
   services.safeeyes.enable = true;
 
-  # Set up symlinks for all the config files.
-  xdg.configFile."hypr/config".source = utils.linkConfig "hypr/config";
+  # Device manager
+  services.udiskie = {
+    enable = true;
+    automount = false;
+    tray = "auto"; # Smart tray icon; only show when a device is connected
+  };
 
   # Night light
   services.gammastep = {
@@ -56,8 +62,8 @@ in
     swayidle # Trigger stuff when idle
     swaylock-effects # Lockscreen
     swww # Wallpaper
-    udiskie # Device manager
-    wl-clipboard # Clipboard
+    udiskie # to get access to CLI tools not enabled through services.udiskie
+    wl-clipboard # Clipboard control
 
     (waybar.override {
       hyprlandSupport = true;
