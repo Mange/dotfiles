@@ -27,6 +27,23 @@ in
   # Set up symlinks for all the config files.
   xdg.configFile."hypr/config".source = utils.linkConfig "hypr/config";
 
+  # Night light
+  services.gammastep = {
+    enable = true;
+    tray = true;
+    temperature.night = 3600;
+    settings = {
+      general = {
+        adjustment-method = "wayland";
+      };
+    };
+    # Sweden/Stockholm
+    provider = "manual";
+    latitude = 59.3;
+    longitude = 17.8;
+  };
+
+  # Other packages
   home.packages = with pkgs; [
     cava # Music visualizer
     grim # Screenshot tool
@@ -46,7 +63,6 @@ in
       runTests = false;
       cavaSupport = true;
     })
-
 
     (catppuccin-kde.override {
       flavour = [ "mocha" ];
