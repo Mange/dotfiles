@@ -152,7 +152,9 @@
     brave
     firefox
     google-chrome
+    jellyfin-media-player
     libnotify
+    mpv
     obsidian
     slack
     spotify
