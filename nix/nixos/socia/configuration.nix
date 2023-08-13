@@ -20,9 +20,9 @@
     # Import your generated (nixos-generate-config) hardware configuration
     ./hardware-configuration.nix
 
-    # Use catppuccin theme
     ../catppuccin.nix
     ../wacom.nix
+    ../android-dev.nix
   ];
 
   # AMD RX 7900 XT works better with newer kernels…

@@ -19,7 +19,6 @@ if [[ -n $BASH_VERSION || -n $ZSH_VERSION ]]; then
       "${CARGO_HOME:-$HOME/.cargo}/bin"
       "$XDG_DATA_HOME/npm/packages/bin"
       "$HOME/.yarn/bin"
-      "${ANDROID_HOME:-$HOME/Android/Sdk}/platform-tools"
 
       "${path[@]}"
     )
