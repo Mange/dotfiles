@@ -1,6 +1,0 @@
-#!/bin/sh
-# This file is loaded by some software, so it's an excellent place to load XDG
-# zealotry so all following programs understand XDG.
-
-# shellcheck source=/dev/null
-. "${XDG_CONFIG_HOME:-${HOME}/.config}/shells/common"
