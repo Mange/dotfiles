@@ -138,6 +138,7 @@
     # Dev
     delta
     git
+    git-absorb
     github-cli
     hub
     jq
