@@ -46,6 +46,7 @@ in
   # Other packages
   home.packages = with pkgs; [
     cava # Music visualizer
+    cliphist # Clipboard history
     grim # Screenshot tool
     ksnip # Screenshots + annotations
     mako # Notifications
