@@ -52,6 +52,7 @@ in
       nodePackages_latest.yaml-language-server
       prettierd
       rust-analyzer
+      terraform-ls
     ];
   };
 }
