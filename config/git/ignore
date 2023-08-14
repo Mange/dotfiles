@@ -21,3 +21,7 @@ notes.local
 *@neomake*
 .*.rs.rustfmt
 .#*
+
+#-- direnv --
+.envrc
+.direnv
