@@ -28,6 +28,6 @@
   environment.variables = {
     ICON_THEME_NAME = "Papirus-Dark";
     XCURSOR_THEME = "Catppuccin-Mocha-Dark-Cursors";
-    XCURSOR_SIZE = "24";
+    XCURSOR_SIZE = "32";
   };
 }
