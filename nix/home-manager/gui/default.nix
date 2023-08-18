@@ -7,6 +7,16 @@ in
     ./rofi.nix
   ];
 
+  # tray.target is only created when X11 is enabled, so manually create it so
+  # that other services can properly depend on it.
+  # See https://github.com/nix-community/home-manager/issues/2064
+  systemd.user.targets.tray = {
+    Unit = {
+      Description = "Home Manager System Tray";
+      Requires = [ "graphical-session-pre.target" ];
+    };
+  };
+
   wayland.windowManager.hyprland = {
     enable = true;
     plugins = [hy3.packages.x86_64-linux.hy3];
