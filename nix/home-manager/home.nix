@@ -87,18 +87,9 @@
       default-key = "DB2D6BB84D8E0309";
     };
   };
-  services.gpg-agent = {
-    enable = true;
-    enableScDaemon = true;
-    enableSshSupport = true;
-    enableBashIntegration = true;
-    enableZshIntegration = true;
-    pinentryFlavor = "tty";
-  };
 
   home.packages = with pkgs; [
-    # Basics
-    stdenv # Compile C things (includes `make` and similar)
+    # Building software common dependencies
     shared-mime-info
 
     # Bluetooth
@@ -146,7 +137,6 @@
     parallel
     pastel
     pgcli
-    ruby
     rustup
     watchexec
 
@@ -168,6 +158,8 @@
     # Toys
     dotacat
     figlet
+    charasay
+    ponysay
 
     # Media
     mediainfo

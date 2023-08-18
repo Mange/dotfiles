@@ -2,9 +2,3 @@
 #
 # shellcheck source=/dev/null
 source "${XDG_CONFIG_HOME:-${HOME}/.config}/shells/common"
-
-# Use an askpass program for sudo password prompts when
-# terminal is not available.
-if [[ -z $SUDO_ASKPASS ]] && [[ -f /usr/lib/ssh/x11-ssh-askpass ]]; then
-  export SUDO_ASKPASS=/usr/lib/ssh/x11-ssh-askpass
-fi
