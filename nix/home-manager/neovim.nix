@@ -19,9 +19,8 @@ in
       gcc
       clang
 
-      # Ruby
-      rubocop
-      rubyPackages.solargraph
+      # Ruby should be installed manually inside of the Ruby version used for
+      # projects.
 
       # Shell
       bash-completion
