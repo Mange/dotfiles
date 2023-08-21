@@ -148,6 +148,7 @@ if_require("lspconfig", function(lspconfig)
   --  Ruby / Solargraph
   lspconfig.solargraph.setup {
     capabilities = capabilities(),
+    cmd = { "bundle", "exec", "solargraph", "stdio" },
     on_attach = on_attach_without_formatting,
     prefix = "solargraph",
     init_options = {
