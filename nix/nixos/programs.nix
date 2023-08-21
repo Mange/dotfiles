@@ -1,10 +1,14 @@
 { pkgs, ... }: {
   # Login, security, keyring, etc.
-  services.xserver.enable = true;
-  services.xserver.displayManager.gdm.enable = true;
-  services.gnome.gnome-keyring.enable = true;
+  programs.gnupg.agent.enable = true;
+  programs.gnupg.agent.pinentryFlavor = "gnome3";
   programs.seahorse.enable = true;
   programs.ssh.enableAskPassword = true;
+  security.pam.services.gdm.enableGnomeKeyring = true;
+  services.gnome.gnome-keyring.enable = true;
+  services.pcscd.enable = true;
+  services.xserver.displayManager.gdm.enable = true;
+  services.xserver.enable = true;
 
   programs.zsh.enable = true;
   environment.pathsToLink = [
