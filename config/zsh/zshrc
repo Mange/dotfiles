@@ -1,5 +1,4 @@
 #!/bin/zsh
-# vim: fdm=marker:
 
 setopt extendedglob
 zmodload zsh/datetime
@@ -9,14 +8,12 @@ autoload -Uz add-zsh-hook
 [ -f "${XDG_CONFIG_HOME}/zsh/zshrc.before.local" ] && source "${XDG_CONFIG_HOME}/zsh/zshrc.before.local" || true
 
 # {{{ Autoload functions
-
+# upstream
 autoload zmv
 
-fpath=("${XDG_CONFIG_HOME}/zsh/funcs" $fpath)
-
+# my own
 autoload seconds-to-human
 autoload apply_prompt_theme
-
 # }}}
 # {{{ umask
 # I want my primary group to write to my files

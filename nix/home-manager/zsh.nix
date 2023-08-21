@@ -99,20 +99,31 @@ in {
       staged="gd --cached";
     };
 
-    # Don't care about world/group writable files (`compinit -u`). It's too
-    # annoying to deal with, and I don't think this is going to the *the*
-    # vector that infects me.
-    completionInit = "autoload -U compinit && compinit -u";
+    completionInit = "recomp";
 
     initExtraBeforeCompInit = /* zsh */ ''
       zmodload zsh/complist
-      # Use my custom completions too
-      fpath=("''${XDG_CONFIG_HOME}/zsh/completion" $fpath)
+      autoload -U compinit
+
+      function recomp() {
+        fpath+=(
+          "''${XDG_CONFIG_HOME}/zsh/funcs"
+          "''${XDG_CONFIG_HOME}/zsh/completion"
+
+          # Auto-discover ZSH directories from used Nix packages (like nix-shell,
+          # flakes, etc.)
+          ''${^''${(M)path:#/nix/store/*}}/../share/zsh/{site-functions,$ZSH_VERSION/functions,vendor-completions}(N-/)
+          ''${^''${(z)NIX_PROFILES}}/share/zsh/{site-functions,$ZSH_VERSION/functions,vendor-completions}(N-/)
+        )
+        # Don't care about world/group writable files (`compinit -u`). It's too
+        # annoying to deal with, and I don't think this is going to the *the*
+        # vector that infects me.
+        compinit -u
+      }
     '';
 
     envExtra = /* zsh */ ''
       source "''${XDG_CONFIG_HOME:-''${HOME}/.config}/shells/common"
-      source "''${HOME}/.config/zsh/zshenv"
     '';
 
     initExtra = /* zsh */ ''
