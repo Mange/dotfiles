@@ -102,10 +102,6 @@ if_require("lspconfig", function(lspconfig)
     lua = {
       exclude = { "lua_ls" },
     },
-    ruby = {
-      -- Use standardrb via null-ls instead.
-      exclude = { "solargraph" },
-    },
   }
   lspformat.disable { args = "markdown" }
   lspformat.disable { args = "eruby" } -- completely breaks in most formatters
@@ -149,13 +145,8 @@ if_require("lspconfig", function(lspconfig)
   lspconfig.solargraph.setup {
     capabilities = capabilities(),
     cmd = { "bundle", "exec", "solargraph", "stdio" },
-    on_attach = on_attach_without_formatting,
+    on_attach = on_attach,
     prefix = "solargraph",
-    init_options = {
-      -- Uses hardcoded Rubocop; I will use Standardrb through null-ls instead.
-      formatting = false,
-      diagnostics = false,
-    },
   }
 
   --  HTML
@@ -311,7 +302,6 @@ if_require("null-ls", function(null_ls)
       },
       null_ls.builtins.formatting.stylelint,
       null_ls.builtins.formatting.stylua,
-      null_ls.builtins.formatting.standardrb,
 
       --
       -- Diagnostics --
