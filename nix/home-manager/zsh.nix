@@ -68,6 +68,8 @@ in {
       ping = "prettyping --nolegend";
       j = "jobs -l";
 
+      wer = "watchexec --debounce 500 -c -e rb,yml,erb --no-shell --";
+
       git = "hub";
       checkout = "git checkout";
       master = "git checkout master";
