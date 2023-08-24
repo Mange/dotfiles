@@ -1,7 +1,7 @@
 # This is your home-manager configuration file
 # Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
 
-{ outputs, config, pkgs, ... }: {
+{ outputs, config, pkgs, inputs, ... }: {
   # You can import other home-manager modules here
   imports = [
     # If you want to use modules your own flake exports (from modules/home-manager):
@@ -9,12 +9,14 @@
 
     # Or modules exported from other flakes (such as nix-colors):
     # inputs.nix-colors.homeManagerModules.default
+    inputs.android-nixpkgs.hmModule
 
     # You can also split up your configuration and import pieces of it here:
     # ./nvim.nix
     ./gui
     ./zsh.nix
     ./neovim.nix
+    ./android-dev.nix
   ];
 
   nixpkgs = {
@@ -27,6 +29,7 @@
 
       # You can also add overlays exported from other flakes:
       # neovim-nightly-overlay.overlays.default
+      inputs.android-nixpkgs.overlays.default
 
       # Or define it inline, for example:
       # (final: prev: {
@@ -126,6 +129,9 @@
 
       # Gaming
       steam
+
+      # Mobile integration
+      scrcpy
 
       # Toys
       dotacat

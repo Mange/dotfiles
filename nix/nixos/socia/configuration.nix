@@ -10,7 +10,6 @@
     ../programs.nix
     ../catppuccin.nix
     ../wacom.nix
-    ../android-dev.nix
   ];
 
   # AMD RX 7900 XT works better with newer kernels…

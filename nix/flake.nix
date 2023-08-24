@@ -20,6 +20,11 @@
       url = "github:outfoxxed/hy3";
       inputs.hyprland.follows = "hyprland";
     };
+
+    android-nixpkgs = {
+      url = "github:Mange/android-nixpkgs/fix-env-variables";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs:
@@ -33,7 +38,7 @@
         "x86_64-darwin"
       ];
     in
-    rec {
+    {
       # Your custom packages
       # Acessible through 'nix build', 'nix shell', etc
       packages = forAllSystems (system:
