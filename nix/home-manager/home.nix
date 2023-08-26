@@ -132,6 +132,7 @@
 
       # Mobile integration
       scrcpy
+      android-file-transfer
 
       # Toys
       dotacat
