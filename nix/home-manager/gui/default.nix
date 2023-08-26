@@ -110,10 +110,11 @@ in
     # Other apps
     ksnip # Screenshots + annotations
     obsidian
+    ripdrag # drag-n-drop
+    transmission-remote-gtk
     wezterm
     yubikey-manager
     yubikey-manager-qt
-    transmission-remote-gtk
 
     # Screenshotting
     grim
