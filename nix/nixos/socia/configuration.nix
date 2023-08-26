@@ -17,6 +17,9 @@
 
   hardware.amdgpu.opencl = true;
 
+  # No, thanks…
+  networking.firewall.enable = false;
+
   nixpkgs = {
     overlays = [
       outputs.overlays.additions
