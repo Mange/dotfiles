@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -e
+
+# Stop already running recording (so this script turns into a toggle)
+if pkill --euid "$USER" --signal SIGINT wf-recorder; then
+  exit
+fi
+
+save_path="$HOME/Media/Pictures/Screenrecording $(date '+%Y-%m-%d %H:%M:%S').mp4"
+geometry="$(slurp)" || exit
+
+# Automatically stop recording after 10 minutes; it's likely I forgot to close it…
+timeout 600 wf-recorder -g "$geometry" -f "$save_path"
+
+notify-send "wfrecord" "Screen recording saved to $save_path"

@@ -80,6 +80,12 @@ in
   services.syncthing.enable = true;
   services.syncthing.tray.enable = true;
 
+
+  home.file.".local/bin" = {
+    source = ./bin;
+    recursive = true;
+  };
+
   # Other packages
   home.packages = with pkgs; [
     # Browsers
@@ -116,9 +122,10 @@ in
     yubikey-manager
     yubikey-manager-qt
 
-    # Screenshotting
+    # Screenshotting, screen recording, etc.
     grim
     slurp
+    wf-recorder
 
     # Utils / libraries / daemons / theme support
     cliphist # Clipboard history
