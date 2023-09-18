@@ -376,7 +376,7 @@ local function setup()
         b = { "<cmd>Gitsigns blame_line<cr>", "Blame line" },
         B = { "<cmd>Gitsigns blame_line true<cr>", "Blame line (full)" },
 
-        f = { "<cmd>DiffviewFileHistory<cr>", "File history" },
+        f = { "<cmd>DiffviewFileHistory %<cr>", "File history" },
         d = { "<cmd>DiffviewOpen<cr>", "Show working diff" },
         m = { "<cmd>DiffviewOpen master<cr>", "Show master diff" },
 
