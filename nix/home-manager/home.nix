@@ -13,10 +13,11 @@
 
     # You can also split up your configuration and import pieces of it here:
     # ./nvim.nix
-    ./gui
-    ./zsh.nix
-    ./neovim.nix
     ./android-dev.nix
+    ./gui
+    ./neovim.nix
+    ./toys.nix
+    ./zsh.nix
   ];
 
   nixpkgs = {
@@ -133,12 +134,6 @@
       # Mobile integration
       scrcpy
       android-file-transfer
-
-      # Toys
-      dotacat
-      figlet
-      charasay
-      ponysay
 
       # Media
       mediainfo
