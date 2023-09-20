@@ -5,6 +5,11 @@
 in {
   xdg.configFile."rofi/catpuccin.rasi".source = themeFile;
 
+  home.packages = with pkgs; [
+    wtype
+    wl-clipboard
+  ];
+
   programs.rofi = {
     enable = true;
     plugins = [pkgs.rofi-emoji];
