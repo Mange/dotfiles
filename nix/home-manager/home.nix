@@ -12,12 +12,15 @@
     inputs.android-nixpkgs.hmModule
 
     # You can also split up your configuration and import pieces of it here:
-    # ./nvim.nix
+
+    ./xdg.nix
+
     ./android-dev.nix
-    ./gui
     ./neovim.nix
     ./toys.nix
     ./zsh.nix
+
+    ./gui
   ];
 
   nixpkgs = {
