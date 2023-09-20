@@ -6,9 +6,13 @@ msg="$*"
 
 s=0
 
+# go to alternative screen, and back again on exit.
+tput smcup
+trap 'tput rmcup' EXIT
+
 while true; do
   s=$((s + 6))
-  clear
+  tput cup 0 0
   banner "$msg" | dotacat -S "$s"
   sleep 1
 done
