@@ -15,10 +15,11 @@ USAGE
   exit 0
 fi
 
-commands=("-exec" "gio" "trash" "{}" ";")
 if [[ $1 == "--dry-run" ]]; then
-  commands=("-exec" "ls" "-lh" "{}" ";")
   shift
+  commands=("du" "-h" "{}" ";")
+else
+  commands=("gio" "trash" "{}" ";")
 fi
 
 if [[ $# -gt 0 ]]; then
@@ -26,5 +27,11 @@ if [[ $# -gt 0 ]]; then
   exit 1
 fi
 
-find "$dir" -maxdepth 1 -iname 'Screenshot*.png' -mtime "+${max_days}" "${commands[@]}"
-find "$dir" -maxdepth 1 -iname 'Skärmbild*.png' -mtime "+${max_days}" "${commands[@]}"
+pattern='(Screenshot|Skärmbild).*\.(png|jpg)'
+
+fd "$pattern" \
+  --max-depth 1 \
+  --type file \
+  --change-older-than "${max_days}days" \
+  --exec-batch "${commands[@]}" \
+  "$dir"

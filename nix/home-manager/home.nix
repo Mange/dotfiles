@@ -91,6 +91,7 @@
       # CLI
       duplicity
       file
+      glib # for "gio trash", etc.
       gnuplot
       killall
       libqalculate
