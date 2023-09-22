@@ -8,6 +8,7 @@
     ./hardware-configuration.nix
 
     ../programs.nix
+    ../keybase.nix
     ../catppuccin.nix
     ../wacom.nix
   ];

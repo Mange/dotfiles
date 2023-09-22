@@ -203,6 +203,10 @@
     enable = true;
     pinentryFlavor = "gnome3";
   };
+  services.kbfs = {
+    enable = true;
+    mountPoint = "Keybase";
+  };
   programs.gpg = {
     enable = true;
     homedir = "${config.xdg.dataHome}/gnupg";
