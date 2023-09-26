@@ -48,6 +48,15 @@ local function config()
     },
     fold_virt_text_handler = virtual_text_handler,
   }
+
+  vim.api.nvim_create_autocmd("FileType", {
+    pattern = { "NeogitPopup", "Outline", "Trouble" },
+    callback = function()
+      require("ufo").detach()
+      vim.opt_local.foldenable = false
+      vim.wo.foldcolumn = "0"
+    end,
+  })
 end
 
 return {
