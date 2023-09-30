@@ -3,6 +3,19 @@
 in {
   xdg.configFile."zsh".source = utils.linkConfig "zsh";
 
+  programs.eza = {
+    enable = true;
+    # Sets up aliases: `ls`, `ll`, `la`, `lla`, `lt`.
+    enableAliases = true;
+    icons = true;
+    git = true;
+    extraOptions = [
+      "--group-directories-first"
+      "--hyperlink" 
+      "--color-scale"
+    ];
+  };
+
   programs.fzf = {
     enable = true;
     enableZshIntegration = true;
@@ -58,13 +71,10 @@ in {
     };
 
     shellAliases = {
-      ls = "eza --group-directories-first";
-      l = "eza --group-directories-first --long --color-scale --git";
-      tree = "tree -AC -I '.svn|.git|node_modules|bower_components'";
-      t = "tree -L 3 --filelimit 50";
-      fusage = "ls -Ssrh"; # Sort files by size and show human readable
-      copy = "xsel --clipboard --input";
-      paste = "xsel --clipboard --output";
+      l = "ll"; # Set up by eza aliases.
+      t = "lt --level=3"; # Set up by eza aliases.
+      tree = "lt"; # Set up by eza aliases.
+
       ping = "prettyping --nolegend";
       j = "jobs -l";
 

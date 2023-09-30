@@ -84,7 +84,6 @@
 
       # Modern UNIX replacements
       bat
-      eza
       fd
       htop
       prettyping
@@ -101,7 +100,6 @@
       lsof
       psmisc # better pstree command
       tmux
-      tree
       wget
 
       # Dev
