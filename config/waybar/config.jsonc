@@ -28,7 +28,7 @@
 
   "hyprland/workspaces": {
     "active-only": false,
-    "all-outputs": true,
+    "all-outputs": false,
     "disable-scroll": true,
     "format": "{name}",
     "on-click": "activate",
