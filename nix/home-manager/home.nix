@@ -18,8 +18,8 @@
     ./android-dev.nix
     ./neovim.nix
     ./toys.nix
-    ./zsh.nix
 
+    ./shell.nix
     ./gui
   ];
 
