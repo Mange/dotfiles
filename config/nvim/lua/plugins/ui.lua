@@ -114,40 +114,14 @@ return {
   -- Indentation guides
   {
     "lukas-reineke/indent-blankline.nvim",
+    main = "ibl",
     opts = {
-      space_char_blankline = " ",
-      show_current_context = true,
-      buftype_exclude = {
-        "terminal",
-        "prompt",
-        "quickfix",
-        "nofile",
-        "help",
+      indent = {
+        char = "▏",
       },
-      filetype_exclude = {
-        "TelescopePrompt",
-        "dashboard",
-        "help",
-        "man",
-        "markdown",
-        "text",
+      scope = {
+        char = "┇",
       },
-      context_patterns = {
-        "^if",
-        "^table",
-        "block",
-        "class",
-        "for",
-        "function",
-        "if_statement",
-        "list_literal",
-        "method",
-        "selector",
-        "while",
-      },
-      show_first_indent_level = false,
-      show_end_of_line = false,
-      use_treesitter = true,
     },
   },
 
