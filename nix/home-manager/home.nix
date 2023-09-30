@@ -84,7 +84,7 @@
 
       # Modern UNIX replacements
       bat
-      exa
+      eza
       fd
       htop
       prettyping

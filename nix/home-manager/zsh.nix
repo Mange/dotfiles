@@ -58,8 +58,8 @@ in {
     };
 
     shellAliases = {
-      ls = "exa --group-directories-first";
-      l = "exa --group-directories-first --long --color-scale --git";
+      ls = "eza --group-directories-first";
+      l = "eza --group-directories-first --long --color-scale --git";
       tree = "tree -AC -I '.svn|.git|node_modules|bower_components'";
       t = "tree -L 3 --filelimit 50";
       fusage = "ls -Ssrh"; # Sort files by size and show human readable
