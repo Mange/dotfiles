@@ -72,12 +72,28 @@
             ./nixos/socia/configuration.nix
           ];
         };
+        vera = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+          modules = [
+            inputs.hyprland.nixosModules.default
+            {programs.hyprland.enable = true;}
+            ./nixos/vera/configuration.nix
+          ];
+        };
       };
 
       # Standalone home-manager configuration entrypoint
       # Available through 'home-manager --flake .#your-username@your-hostname'
       homeConfigurations = {
         "mange@socia" = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
+          extraSpecialArgs = { inherit inputs outputs; };
+          modules = [
+            inputs.hyprland.homeManagerModules.default
+            ./home-manager/home.nix
+          ];
+        };
+        "mange@vera" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
           extraSpecialArgs = { inherit inputs outputs; };
           modules = [
