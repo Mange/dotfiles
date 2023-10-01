@@ -1,4 +1,10 @@
 { pkgs, ... }: {
+  # Should be able to run home-manager after initial install.
+  environment.systemPackages = with pkgs; [
+    git
+    home-manager
+  ];
+
   # Login, security, keyring, etc.
   programs.gnupg.agent.enable = true;
   programs.gnupg.agent.pinentryFlavor = "gnome3";
