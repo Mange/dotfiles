@@ -86,6 +86,12 @@ in
     recursive = true;
   };
 
+  # Other configs
+  xdg.configFile."wezterm" = {
+    source = ./wezterm;
+    recursive = true;
+  };
+
   # Other packages
   home.packages = with pkgs; [
     # Browsers
