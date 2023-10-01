@@ -11,6 +11,13 @@
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
+  # Might help with slow PTYs with AMD GPU.
+  # Should be fixed in Kernel 6.6?
+  # See https://gitlab.freedesktop.org/drm/amd/-/issues/2519
+  boot.kernelParams = [
+    "drm.vblankoffdelay=0"
+  ];
+
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/c3645fb2-e588-4b48-8c4c-d3e1e6cf4d50";
       fsType = "btrfs";
