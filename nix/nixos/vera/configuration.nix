@@ -8,9 +8,9 @@
     inputs.hardware.nixosModules.system76-darp6
       ./hardware-configuration.nix
 
-    ../programs.nix
-    ../keybase.nix
-    ../catppuccin.nix
+      ../programs.nix
+      ../keybase.nix
+      ../catppuccin.nix
     ];
 
   # No, thanks…
@@ -147,6 +147,17 @@
     enable = true;
     drivers = [ pkgs.brlaser ];
   };
+
+  hardware.bluetooth = {
+    enable = true;
+    # Enable A2DP Sink
+    settings = {
+      General = {
+        Enable = "Source,Sink,Media,Socket";
+      };
+    };
+  };
+  services.blueman.enable = true;
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.11";
