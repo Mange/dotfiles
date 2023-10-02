@@ -43,7 +43,7 @@
       # Acessible through 'nix build', 'nix shell', etc
       packages = forAllSystems (system:
         let pkgs = nixpkgs.legacyPackages.${system};
-        in import ./pkgs { inherit pkgs; }
+        in import ./nix/pkgs { inherit pkgs; }
       );
       # Devshell for bootstrapping
       # Acessible through 'nix develop' or 'nix-shell' (legacy)
@@ -53,13 +53,13 @@
       );
 
       # Your custom packages and modifications, exported as overlays
-      overlays = import ./overlays { inherit inputs; };
+      overlays = import ./nix/overlays { inherit inputs; };
       # Reusable nixos modules you might want to export
       # These are usually stuff you would upstream into nixpkgs
-      nixosModules = import ./modules/nixos;
+      nixosModules = import ./nix/modules/nixos;
       # Reusable home-manager modules you might want to export
       # These are usually stuff you would upstream into home-manager
-      homeManagerModules = import ./modules/home-manager;
+      homeManagerModules = import ./nix/modules/home-manager;
 
       # NixOS configuration entrypoint
       # Available through 'nixos-rebuild switch --flake .#your-hostname'
@@ -69,7 +69,7 @@
           modules = [
             inputs.hyprland.nixosModules.default
             {programs.hyprland.enable = true;}
-            ./nixos/socia/configuration.nix
+            ./systems/socia/configuration.nix
           ];
         };
         vera = nixpkgs.lib.nixosSystem {
@@ -77,7 +77,7 @@
           modules = [
             inputs.hyprland.nixosModules.default
             {programs.hyprland.enable = true;}
-            ./nixos/vera/configuration.nix
+            ./systems/vera/configuration.nix
           ];
         };
       };
@@ -90,7 +90,7 @@
           extraSpecialArgs = { inherit inputs outputs; };
           modules = [
             inputs.hyprland.homeManagerModules.default
-            ./home-manager/home.nix
+            ./home/default.nix
           ];
         };
         "mange@vera" = home-manager.lib.homeManagerConfiguration {
@@ -98,7 +98,7 @@
           extraSpecialArgs = { inherit inputs outputs; };
           modules = [
             inputs.hyprland.homeManagerModules.default
-            ./home-manager/home.nix
+            ./home/default.nix
           ];
         };
       };

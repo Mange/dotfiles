@@ -7,10 +7,10 @@
     inputs.hardware.nixosModules.common-gpu-amd
     ./hardware-configuration.nix
 
-    ../programs.nix
-    ../keybase.nix
-    ../catppuccin.nix
-    ../wacom.nix
+    ../shared/programs.nix
+    ../shared/keybase.nix
+    ../shared/catppuccin.nix
+    ../shared/wacom.nix
   ];
 
   # AMD RX 7900 XT works better with newer kernels…

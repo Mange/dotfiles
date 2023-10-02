@@ -7,9 +7,9 @@
     inputs.hardware.nixosModules.system76-darp6
     ./hardware-configuration.nix
 
-    ../programs.nix
-    ../keybase.nix
-    ../catppuccin.nix
+    ../shared/programs.nix
+    ../shared/keybase.nix
+    ../shared/catppuccin.nix
   ];
 
   hardware.system76.darp6.soundVendorId = "0x10ec0293";
