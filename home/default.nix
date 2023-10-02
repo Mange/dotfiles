@@ -66,6 +66,7 @@
     ];
 
     file.".face".source = ./face.jpg;
+    file.".local/bin" = {source = ../bin; recursive = true; };
 
     packages = with pkgs; [
       # Building software common dependencies

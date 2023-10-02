@@ -80,11 +80,8 @@ in
   services.syncthing.enable = true;
   services.syncthing.tray.enable = true;
 
-
-  home.file.".local/bin" = {
-    source = ./bin;
-    recursive = true;
-  };
+  # GUI-based utilities
+  home.file.".local/bin/wfrecord".source = ./bin/wfrecord;
 
   # Other configs
   xdg.configFile."wezterm" = {
