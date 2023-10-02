@@ -1,7 +1,9 @@
 # This is your home-manager configuration file
 # Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
 
-{ outputs, config, pkgs, inputs, ... }: {
+{ outputs, config, pkgs, inputs, lib, ... }: let
+  utils = import ./utils.nix { inherit config pkgs; };
+in {
   # You can import other home-manager modules here
   imports = [
     # If you want to use modules your own flake exports (from modules/home-manager):
@@ -65,6 +67,7 @@
       "$HOME/.local/bin"
     ];
 
+    # Setup symlinks.
     file.".face".source = ./face.jpg;
     file.".local/bin" = {source = ../bin; recursive = true; };
 
@@ -182,6 +185,37 @@
       maya
     ];
   };
+
+  # config/ directory
+  # xdg.configFile = lib.pipe (utils.filesIn ../config) [
+  #   (builtins.map (f: {
+  #     "${f}".source = (utils.linkConfig f);
+  #   }))
+  #   (utils.mergeAttrs)
+  # ];
+  xdg.configFile = {
+    "mako".source = utils.linkConfig "mako";
+    "pgcli".source = utils.linkConfig "pgcli";
+    "procs".source = utils.linkConfig "procs";
+    # "rofi".source = utils.linkConfig "rofi";
+    "rspec".source = utils.linkConfig "rspec";
+    "ruby".source = utils.linkConfig "ruby";
+    "shells".source = utils.linkConfig "shells";
+    "swayidle".source = utils.linkConfig "swayidle";
+    "tmux".source = utils.linkConfig "tmux";
+    "waybar".source = utils.linkConfig "waybar";
+    "xkb".source = utils.linkConfig "xkb";
+
+    "locale.conf".source = ../config/locale.conf;
+    "user-dirs.dirs".source = ../config/user-dirs.dirs.template;
+  };
+
+  xdg.dataFile = lib.pipe (utils.filesIn ../data) [
+    (builtins.map (f: {
+      "${f}" = { source = ../data/. + ("/" + f); recursive = true; };
+    }))
+    (utils.mergeAttrs)
+  ];
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
