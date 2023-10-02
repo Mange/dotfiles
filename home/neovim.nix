@@ -19,6 +19,9 @@ in
       gcc
       clang
 
+      # telescope-fzf-native
+      gnumake
+
       # Ruby should be installed manually inside of the Ruby version used for
       # projects.
 
