@@ -3,15 +3,17 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { inputs, outputs, lib, config, pkgs, ... }: {
-  imports =
-    [
+  imports = [
     inputs.hardware.nixosModules.system76-darp6
-      ./hardware-configuration.nix
+    ./hardware-configuration.nix
 
-      ../programs.nix
-      ../keybase.nix
-      ../catppuccin.nix
-    ];
+    ../programs.nix
+    ../keybase.nix
+    ../catppuccin.nix
+  ];
+
+  hardware.system76.darp6.soundVendorId = "0x10ec0293";
+  hardware.system76.darp6.soundSubsystemId = "0x15581404";
 
   # No, thanks…
   networking.firewall.enable = false;
