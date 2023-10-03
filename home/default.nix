@@ -194,6 +194,7 @@ in {
   #   (utils.mergeAttrs)
   # ];
   xdg.configFile = {
+    "git".source = utils.linkConfig "git";
     "mako".source = utils.linkConfig "mako";
     "pgcli".source = utils.linkConfig "pgcli";
     "procs".source = utils.linkConfig "procs";

@@ -1,8 +1,6 @@
 # vim:ft=gitconfig
 
-# Use global hooks
 [core]
-	hooksPath = ~/.config/git/hooks
 	pager = delta-wrapper
 
 [init]
