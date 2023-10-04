@@ -119,6 +119,7 @@
       "docker"
       "video" # Control brightness
       "input" # Control LEDs
+      "networkmanager"
     ];
     shell = pkgs.zsh;
     openssh.authorizedKeys.keys = [
