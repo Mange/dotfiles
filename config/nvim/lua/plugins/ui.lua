@@ -121,6 +121,7 @@ return {
       },
       scope = {
         char = "┇",
+        show_start = false,
       },
     },
   },
