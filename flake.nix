@@ -66,19 +66,11 @@
       nixosConfigurations = {
         socia = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
-          modules = [
-            inputs.hyprland.nixosModules.default
-            {programs.hyprland.enable = true;}
-            ./systems/socia/configuration.nix
-          ];
+          modules = [./systems/socia/configuration.nix];
         };
         vera = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
-          modules = [
-            inputs.hyprland.nixosModules.default
-            {programs.hyprland.enable = true;}
-            ./systems/vera/configuration.nix
-          ];
+          modules = [./systems/vera/configuration.nix];
         };
       };
 

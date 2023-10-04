@@ -16,7 +16,6 @@
   ];
 
   boot.plymouth = {
-    enable = true;
     themePackages = [
       (pkgs.catppuccin-plymouth.override {
         variant = "mocha";
@@ -24,7 +23,6 @@
     ];
     theme = "catppuccin-mocha";
   };
-  boot.kernelParams = ["quiet" "udev.log_level=3"];
 
   environment.variables = {
     ICON_THEME_NAME = "Papirus-Dark";

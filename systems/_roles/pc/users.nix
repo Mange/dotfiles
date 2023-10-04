@@ -1,14 +1,15 @@
 { pkgs, ... }: {
+  security.polkit.enable = true;
+  security.sudo.enable = true;
+
   users.users.mange = {
     initialPassword = "mange";
     isNormalUser = true;
     description = "Magnus Bergmark";
     extraGroups = [
       "wheel"
-      "docker"
       "video" # Control brightness
       "input" # Control LEDs
-      "networkmanager"
     ];
     shell = pkgs.zsh;
     openssh.authorizedKeys.keys = [

@@ -1,9 +1,18 @@
 { pkgs, ... }: {
-  # Should be able to run home-manager after initial install.
   environment.systemPackages = with pkgs; [
+    # Should be able to run home-manager after initial install.
     git
     home-manager
+
+    # Filesystem support
+    btrfs-progs
+    cifs-utils
+    exfat
+    nfs-utils
+    ntfs3g
   ];
+
+  programs.hyprland.enable = true;
 
   # Login, security, keyring, etc.
   programs.gnupg.agent.enable = true;
@@ -41,4 +50,5 @@
 
   # Docker
   virtualisation.docker.enable = true;
+  users.users.mange.extraGroups = ["docker"];
 }
