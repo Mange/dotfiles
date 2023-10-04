@@ -8,7 +8,15 @@
   "margin-right": 20,
   "modules-left": ["hyprland/workspaces", "custom/media"],
   "modules-center": ["hyprland/window"],
-  "modules-right": ["tray", "cpu", "memory", "disk", "pulseaudio", "clock"],
+  "modules-right": [
+    "tray",
+    "cpu",
+    "memory",
+    "disk",
+    "pulseaudio",
+    "battery",
+    "clock"
+  ],
 
   "clock": {
     "format": " {:%R %d %b (v.%V)}",
@@ -92,5 +100,7 @@
     "on-click": "pulsemixer --toggle-mute",
     "scroll-step": 5,
     "on-click-right": "pavucontrol --name=pavucontrol-popup"
-  }
+  },
+
+  "battery": {}
 }
