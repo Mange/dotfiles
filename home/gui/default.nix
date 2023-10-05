@@ -73,8 +73,11 @@ in
   xdg.configFile."zathura/catppuccin-mocha".source = ./zathura/catppuccin-mocha;
 
   # Keybase
-  services.kbfs.enable = true;
   services.keybase.enable = true;
+  services.kbfs = {
+    enable = true;
+    mountPoint = "Keybase";
+  };
 
   # Syncthing
   services.syncthing.enable = true;
@@ -117,6 +120,7 @@ in
     })
 
     # Other apps
+    keybase-gui
     ksnip # Screenshots + annotations
     obsidian
     ripdrag # drag-n-drop

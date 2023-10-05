@@ -232,14 +232,11 @@ in {
   programs.home-manager.enable = true;
 
   # Keyring, SSH, GPG stuff
+  # (Keybase is set up in GUI)
   services.gnome-keyring.enable = true;
   services.gpg-agent = {
     enable = true;
     pinentryFlavor = "gnome3";
-  };
-  services.kbfs = {
-    enable = true;
-    mountPoint = "Keybase";
   };
   programs.gpg = {
     enable = true;

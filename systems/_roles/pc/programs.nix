@@ -12,8 +12,6 @@
     ntfs3g
   ];
 
-  programs.hyprland.enable = true;
-
   # Login, security, keyring, etc.
   programs.gnupg.agent.enable = true;
   programs.gnupg.agent.pinentryFlavor = "gnome3";
@@ -22,9 +20,22 @@
   security.pam.services.gdm.enableGnomeKeyring = true;
   services.gnome.gnome-keyring.enable = true;
   services.pcscd.enable = true;
+  # Note that kbfs is set up inside of home manager instead of here.
+  services.keybase.enable = true;
+
+  # Graphical
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.enable = true;
+  programs.hyprland.enable = true;
 
+  # Swaylock should have access to passwords, etc.
+  security.pam.services.swaylock = {
+    text = ''
+      auth include login
+    '';
+  };
+
+  # Shell
   programs.zsh.enable = true;
   environment.pathsToLink = [
     "/share/zsh"
@@ -40,13 +51,6 @@
   };
   services.gvfs.enable = true; # Mount, trash, and other functionalities
   services.tumbler.enable = true; # Thumbnail support for images
-
-  # Swaylock should have access to passwords, etc.
-  security.pam.services.swaylock = {
-    text = ''
-      auth include login
-    '';
-  };
 
   # Docker
   virtualisation.docker.enable = true;

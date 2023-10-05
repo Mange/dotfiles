@@ -10,7 +10,6 @@
     inputs.hyprland.nixosModules.default
 
     ./catppuccin.nix
-    ./keybase.nix
     ./networking.nix
     ./programs.nix
     ./sound.nix
