@@ -27,6 +27,10 @@
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.11";
 
+  # headsetcontrol requires udev rules to work without root.
+  environment.systemPackages = [ pkgs.headsetcontrol ];
+  services.udev.packages = [ pkgs.headsetcontrol ];
+
   #
   # ▖▖     ▌
   # ▙▌▀▌▛▘▛▌▌▌▌▀▌▛▘█▌
