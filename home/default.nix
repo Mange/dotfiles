@@ -86,6 +86,9 @@ in {
       nmap
       rsync
 
+      # Other hardware
+      lm_sensors
+
       # Modern UNIX replacements
       bat
       fd
