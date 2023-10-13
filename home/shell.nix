@@ -78,6 +78,9 @@ in {
       ping = "prettyping --nolegend";
       j = "jobs -l";
 
+      # Look for store path of some package. Autocomplete works in ZSH.
+      nix-locate = "nix-build --no-out-link '<nixpkgs>' -A";
+
       wer = "watchexec --debounce 500 -c -e rb,yml,erb --no-shell --";
 
       git = "hub";
