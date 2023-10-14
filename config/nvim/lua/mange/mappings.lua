@@ -78,11 +78,13 @@ end
 -- don't care about unlisted buffers, just the listed ones. (These are usually
 -- floating windows' buffers from autocompletions and other similar plugins)
 --
--- This function will only delete all buffers that are loaded and listed and
--- leave the rest alone.
+-- This function will only delete all buffers that are loaded, listed, and not
+-- modified and leave the rest alone.
 local function delete_all_buffers()
   local buffers = vim.tbl_filter(function(buf)
-    return vim.api.nvim_buf_is_loaded(buf) and vim.bo[buf].buflisted
+    return vim.api.nvim_buf_is_loaded(buf)
+      and vim.bo[buf].buflisted
+      and not vim.bo[buf].modified
   end, vim.api.nvim_list_bufs())
 
   for _, buf in ipairs(buffers) do
