@@ -14,6 +14,14 @@ while [[ $# -gt 0 ]]; do
     action="poweroff"
     shift
     ;;
+  suspend)
+    action="suspend"
+    shift
+    ;;
+  hibernate)
+    action="hibernate"
+    shift
+    ;;
   reboot)
     action="reboot"
     shift
@@ -23,7 +31,7 @@ while [[ $# -gt 0 ]]; do
     shift
     ;;
   --help)
-    echo "USAGE: $0 [logout|poweroff|reboot] [--force]"
+    echo "USAGE: $0 [logout|poweroff|reboot|suspend|hibernate] [--force]"
     exit 0
     ;;
   *)
@@ -35,7 +43,7 @@ done
 
 if [[ -z "$action" ]]; then
   force=yes
-  action=$(echo -e "logout\\npoweroff\\nreboot\\ncancel" | rofi -dmenu -p "Quit?" -i -no-custom || true)
+  action=$(echo -e "logout\\npoweroff\\nreboot\\nsuspend\\nhibernate\\ncancel" | rofi -dmenu -p "Quit?" -i -no-custom || true)
   if [[ $action == cancel ]] || [[ -z "$action" ]]; then
     exit 0
   fi
@@ -47,6 +55,15 @@ if [[ $force == no ]]; then
     exit 0
   fi
 fi
+
+case "$action" in
+suspend)
+  exec systemctl suspend
+  ;;
+hibernate)
+  exec systemctl hibernate
+  ;;
+esac
 
 notify_opts=(--app-name System --urgency critical)
 
