@@ -122,6 +122,7 @@ in
     # Other apps
     keybase-gui
     ksnip # Screenshots + annotations
+    monero-gui
     obsidian
     ripdrag # drag-n-drop
     transmission-remote-gtk

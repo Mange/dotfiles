@@ -150,6 +150,9 @@ in {
       imagemagick # for image previews, etc.
       ghostscript # imagemagick optional dependency for PDF support
 
+      # Other
+      monero
+
       # Fonts
       (
         nerdfonts.override {
