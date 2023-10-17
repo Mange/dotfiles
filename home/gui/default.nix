@@ -1,4 +1,4 @@
-{ inputs, pkgs, config, ... }: let
+{ inputs, pkgs, config, lib, ... }: let
   utils = import ../utils.nix { inherit config pkgs; };
   hy3 = inputs.hy3;
 in 
@@ -32,10 +32,15 @@ in
       env = PATH,$HOME/.local/bin:$PATH
       exec-once = "${pkgs.dbus}/bin/dbus-update-activation-environment --systemd --all";
       source = ./config/base.conf
+      source = ./config/local.conf
     '';
   };
-  # Set up symlinks for all the config files.
+  # Set up symlinks for all the config files, and also create a mutable
+  # `local.conf` for local config that you don't want committed to the repo.
   xdg.configFile."hypr/config".source = utils.linkConfig "hypr/config";
+  home.activation.localHyprConfig = lib.hm.dag.entryAfter ["writeBoundary"] ''
+     $DRY_RUN_CMD touch $VERBOSE_ARG "''${XDG_CONFIG_HOME:-$HOME/.config}/hypr/config/local.conf"
+  '';
 
   # Work breaks
   services.safeeyes.enable = true;
