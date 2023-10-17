@@ -40,3 +40,7 @@ Source: https://wallhaven.cc/w/eyq6zr
 ## `cozy_autumn_rain.mp4`
 
 Source: Cozy Autumn Rain, Jeff Östberg x Genevieve Lacroix, Digital, 2019
+
+## `sunset-smoke.png`
+
+Source: Unknown, might be Sam Does Art.
