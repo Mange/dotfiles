@@ -197,7 +197,7 @@ in
 
   qt = {
     enable = true;
-    platformTheme = "gtk";
+    platformTheme = "kde";
     style.name = "kvantum";
   };
 

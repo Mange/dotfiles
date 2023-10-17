@@ -29,4 +29,10 @@
     XCURSOR_THEME = "Catppuccin-Mocha-Dark-Cursors";
     XCURSOR_SIZE = "32";
   };
+
+  qt = {
+    enable = true;
+    platformTheme = "kde";
+    style.name = "kvantum";
+  };
 }
