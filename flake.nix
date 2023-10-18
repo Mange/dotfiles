@@ -83,6 +83,7 @@
           modules = [
             inputs.hyprland.homeManagerModules.default
             ./home/default.nix
+            ./home/extra/vm.nix
           ];
         };
         "mange@vera" = home-manager.lib.homeManagerConfiguration {

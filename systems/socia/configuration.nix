@@ -19,6 +19,7 @@
     ./hardware-configuration.nix
 
     ../_roles/workstation
+    ../_topics/vm-host.nix
     ../_topics/wacom.nix
   ];
 
