@@ -1,6 +1,16 @@
-{ config, pkgs, ... }: let
+{ config, pkgs, inputs, ... }: let
   sdkPath = "${config.xdg.dataHome}/android";
 in {
+  imports = [
+    inputs.android-nixpkgs.hmModule
+  ];
+
+  nixpkgs = {
+    overlays = [
+      inputs.android-nixpkgs.overlays.default
+    ];
+  };
+
   home.packages = [
     pkgs.jdk
   ];

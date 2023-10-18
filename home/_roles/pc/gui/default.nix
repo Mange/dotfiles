@@ -1,5 +1,5 @@
 { inputs, pkgs, config, lib, ... }: let
-  utils = import ../utils.nix { inherit config pkgs; };
+  utils = import ../../../utils.nix { inherit config pkgs; };
   hy3 = inputs.hy3;
 in 
 {

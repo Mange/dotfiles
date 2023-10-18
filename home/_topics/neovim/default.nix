@@ -1,5 +1,5 @@
 { pkgs, config, ... }: let
-  utils = import ./utils.nix { inherit config pkgs; };
+  utils = import ../../utils.nix { inherit config pkgs; };
   dotfiles = utils.linkConfig "nvim";
 in 
 {

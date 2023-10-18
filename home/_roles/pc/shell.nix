@@ -1,5 +1,5 @@
 { pkgs, config, ... }: let
-  utils = import ./utils.nix { inherit config pkgs; };
+  utils = import ../../utils.nix { inherit config pkgs; };
 in {
   xdg.configFile."zsh".source = utils.linkConfig "zsh";
 

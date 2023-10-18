@@ -76,22 +76,25 @@
 
       # Standalone home-manager configuration entrypoint
       # Available through 'home-manager --flake .#your-username@your-hostname'
-      homeConfigurations = {
-        "mange@socia" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
-          extraSpecialArgs = { inherit inputs outputs; };
+      homeConfigurations = let
+        homeConfig = home-manager.lib.homeManagerConfiguration;
+        hyprlandModule = inputs.hyprland.homeManagerModules.default;
+        extraSpecialArgs = { inherit inputs outputs; };
+      in {
+        "mange@socia" = homeConfig {
+          inherit extraSpecialArgs;
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
           modules = [
-            inputs.hyprland.homeManagerModules.default
-            ./home/default.nix
-            ./home/extra/vm.nix
+            hyprlandModule
+            ./home/socia
           ];
         };
-        "mange@vera" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
-          extraSpecialArgs = { inherit inputs outputs; };
+        "mange@vera" = homeConfig {
+          inherit extraSpecialArgs;
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
           modules = [
-            inputs.hyprland.homeManagerModules.default
-            ./home/default.nix
+            hyprlandModule
+            ./home/vera
           ];
         };
       };
