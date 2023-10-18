@@ -5,6 +5,11 @@ in
 {
   xdg.configFile."nvim".source = dotfiles;
 
+  home.sessionVariables = {
+    VISUAL = "nvim";
+    MANPAGER = "nvim +Man!"; # Neovim makes a better manpager than less.
+  };
+
   programs.neovim = {
     enable = true;
     defaultEditor = true;

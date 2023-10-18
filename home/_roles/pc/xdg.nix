@@ -22,10 +22,6 @@
     # XDG base directory exports for special snowflakes
     #
 
-    # Ruby
-    GEMRC="${XDG_CONFIG_HOME}/ruby/gemrc";
-    IRBRC="${XDG_CONFIG_HOME}/ruby/irbrc";
-
     # Rust
     CARGO_HOME="${XDG_DATA_HOME}/cargo";
     RUSTUP_HOME="${XDG_DATA_HOME}/rustup";
@@ -50,9 +46,6 @@
     # Docker, Kubernetes, etc.
     DOCKER_CONFIG="${XDG_CONFIG_HOME}/docker";
     KUBECONFIG="${XDG_CONFIG_HOME}/kube/config";
-
-    # tmux
-    TMUX_TMPDIR="\${XDG_RUNTIME_DIR:-/tmp/mange-tmux}";
   };
 in {
   xdg.enable = true;

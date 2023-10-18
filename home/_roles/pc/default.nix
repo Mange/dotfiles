@@ -2,24 +2,24 @@
   utils = import ../../utils.nix { inherit config pkgs; };
 in {
   imports = [
+    # Old
     ./xdg.nix
-
     ./shell.nix
     ./gui
 
+    # New
+    ./catppuccin.nix
+    ./cli.nix
+    ./security.nix
+
     ../../_topics/fonts
     ../../_topics/neovim
+    ../../_topics/ruby
     ../../_topics/toys.nix
   ];
 
   home = {
     language.base = "sv_SE.UTF-8";
-    sessionVariables = {
-      SSH_AUTH_SOCK = "$XDG_RUNTIME_DIR/keyring/ssh"; # gnome-keyring
-      VISUAL = "nvim";
-      MANPAGER = "nvim +Man!"; # Neovim makes a better manpager than less.
-      BAT_THEME = "base16";
-    };
 
     # Setup symlinks.
     file.".face".source = ./face.jpg;
@@ -59,7 +59,6 @@ in {
       libqalculate
       lsof
       psmisc # better pstree command
-      tmux
       wget
 
       # Dev
@@ -121,11 +120,8 @@ in {
     "pgcli".source = utils.linkConfig "pgcli";
     "procs".source = utils.linkConfig "procs";
     # "rofi".source = utils.linkConfig "rofi";
-    "rspec".source = utils.linkConfig "rspec";
-    "ruby".source = utils.linkConfig "ruby";
     "shells".source = utils.linkConfig "shells";
     "swayidle".source = utils.linkConfig "swayidle";
-    "tmux".source = utils.linkConfig "tmux";
     "waybar".source = utils.linkConfig "waybar";
     "xkb".source = utils.linkConfig "xkb";
 
@@ -136,31 +132,5 @@ in {
   xdg.dataFile."wallpapers" = {
     source = ./wallpapers;
     recursive = true;
-  };
-
-  # Environment variables
-  systemd.user.sessionVariables = {
-    # To allow gem mimemagic to be installed.
-    # https://github.com/mimemagicrb/mimemagic/issues/160
-    # https://github.com/mimemagicrb/mimemagic/pull/163
-    FREEDESKTOP_MIME_TYPES_PATH = "${pkgs.shared-mime-info}/share/mime/packages/freedesktop.org.xml";
-  };
-
-  # Keyring, SSH, GPG stuff
-  # (Keybase is set up in GUI)
-  services.gnome-keyring.enable = true;
-  services.gpg-agent = {
-    enable = true;
-    pinentryFlavor = "gnome3";
-  };
-  programs.gpg = {
-    enable = true;
-    homedir = "${config.xdg.dataHome}/gnupg";
-    settings = {
-      keyserver = "hkp://keys.gnupg.net";
-      use-agent = true;
-      keyserver-options = "auto-key-retrieve";
-      default-key = "DB2D6BB84D8E0309";
-    };
   };
 }
