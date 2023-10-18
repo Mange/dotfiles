@@ -142,6 +142,7 @@ in
 
     # Utils / libraries / daemons / theme support
     cliphist # Clipboard history
+    gsettings-desktop-schemas
     libnotify
     mako # Notifications
     swayidle # Trigger stuff when idle
