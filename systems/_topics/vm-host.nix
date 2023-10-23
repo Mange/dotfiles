@@ -3,7 +3,10 @@
   virtualisation.spiceUSBRedirection.enable = true;
 
   programs.dconf.enable = true;
-  environment.systemPackages = [ pkgs.virt-manager ];
+  environment.systemPackages = with pkgs; [
+    virt-manager
+    virtiofsd
+  ];
 
   users.users.mange.extraGroups = ["libvirtd"];
 }
