@@ -1,4 +1,4 @@
-{ ... }: {
+{ pkgs, ... }: {
   programs.bat = {
     enable = true;
     config = {
@@ -24,4 +24,9 @@
     # Auto-spawn session when attaching a session that does not exist.
     newSession = true;
   };
+
+  home.packages = with pkgs; [
+    # A fast documentation searcher for Nix
+    manix
+  ];
 }
