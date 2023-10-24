@@ -21,6 +21,8 @@
     ../_roles/workstation
     ../_topics/vm-host.nix
     ../_topics/wacom.nix
+
+    ./mounts.nix
   ];
 
   networking.hostName = "socia";

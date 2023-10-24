@@ -3,6 +3,7 @@
   security.sudo.enable = true;
 
   users.users.mange = {
+    uid = 1000;
     initialPassword = "mange";
     isNormalUser = true;
     description = "Magnus Bergmark";
