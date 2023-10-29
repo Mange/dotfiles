@@ -1,11 +1,8 @@
 # Keyring, SSH, GPG stuff
-# (Keybase is set up in GUI)
-{ config, ... }: {
-  home.sessionVariables = {
-    SSH_AUTH_SOCK = "$XDG_RUNTIME_DIR/keyring/ssh"; # gnome-keyring
-  };
-
+{ config, pkgs, ... }: {
+  # Keyring and gpg agent
   services.gnome-keyring.enable = true;
+  home.sessionVariables.SSH_AUTH_SOCK = "$XDG_RUNTIME_DIR/keyring/ssh"; # gnome-keyring
   services.gpg-agent = {
     enable = true;
     pinentryFlavor = "gnome3";
@@ -20,4 +17,19 @@
       default-key = "DB2D6BB84D8E0309";
     };
   };
+
+  # Keybase
+  services.keybase.enable = true;
+  services.kbfs = {
+    enable = true;
+    mountPoint = "Keybase";
+  };
+
+  home.packages = with pkgs; [
+    keybase-gui
+    monero
+    monero-gui
+    yubikey-manager
+    yubikey-manager-qt
+  ];
 }

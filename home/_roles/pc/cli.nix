@@ -55,10 +55,40 @@
   };
 
   home.packages = with pkgs; [
-    # A fast documentation searcher for Nix
-    manix
+    # Modern UNIX replacements
+    bat
+    fd
+    htop
+    prettyping
+    procs
+    ripgrep
 
-    # Pair-programming through tmux
-    tmate
+    # Basics
+    file
+    watchexec
+    psmisc # better pstree command
+    lsof
+
+    # Network tools
+    curl
+    nmap
+    rsync
+    wget
+
+    # Hardware commands
+    lm_sensors
+
+    # Archive commands and support
+    atool
+    p7zip
+    unrar
+    unzip
+    xz
+    zip
+
+    # Misc development
+    manix # A fast documentation searcher for Nix
+    tmate # Pair-programming through tmux
+    parallel
   ];
 }

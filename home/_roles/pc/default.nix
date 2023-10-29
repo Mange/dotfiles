@@ -2,22 +2,31 @@
   utils = import ../../utils.nix { inherit config pkgs; };
 in {
   imports = [
-    # Old
-    ./gui
-
-    # New
-    ./catppuccin.nix
+    ./chat.nix
     ./cli.nix
+    ./fonts.nix
     ./git.nix
+    ./hyprland.nix
+    ./mako.nix
+    ./media.nix
+    ./rofi.nix
     ./security.nix
+    ./syncthing.nix
     ./timers.nix
+    ./udiskie.nix
+    ./wallpapers.nix
+    ./wayland.nix
+    ./wezterm.nix
     ./xdg.nix
+    ./zathura.nix
     ./zsh.nix
 
-    ../../_topics/fonts
+    ../../_topics/catppuccin
     ../../_topics/neovim
     ../../_topics/ruby
+    ../../_topics/rust
     ../../_topics/toys.nix
+    ../../_topics/webdev
   ];
 
   home.language = {
@@ -28,82 +37,32 @@ in {
 
   # Setup symlinks.
   home.file.".face".source = ./face.jpg;
-  xdg.dataFile."wallpapers" = {
-    source = ./wallpapers;
-    recursive = true;
-  };
+
+  gtk.enable = true;
+  qt.enable = true;
 
   home.packages = with pkgs; [
-    # Bluetooth
-    bluez
-    bluez-tools
-    blueman
-
-    # Network
-    curl
-    httpie
-    nmap
-    rsync
-
-    # Other hardware
-    lm_sensors
-
-    # Modern UNIX replacements
-    bat
-    fd
-    htop
-    prettyping
-    procs
-    ripgrep
-
-    # CLI
-    duplicity
-    file
-    gnuplot
-    killall
-    libqalculate
-    lsof
-    psmisc # better pstree command
-    wget
-
-    # Dev
-    gnome.zenity
-    http-prompt
-    jq
-    nodejs
-    parallel
-    pastel
-    pgcli
-    rustup
-    watchexec
-
-    cargo-update
-    cargo-edit
-    cargo-watch
-
-    # Archives
-    atool
-    p7zip
-    unrar
-    unzip
-    xz
-    zip
-
-    # Gaming
-    steam
+    # Standard computing
+    brave
+    firefox
+    shotwell
+    obsidian
+    transmission-remote-gtk
+    pavucontrol # Volume control
+    xdg-utils
 
     # Mobile integration
     scrcpy
     android-file-transfer
 
     # Media
-    mediainfo
-    youtube-dl
     imagemagick # for image previews, etc.
     ghostscript # imagemagick optional dependency for PDF support
 
-    # Other
-    monero
+    # Misc
+    gnome.zenity
+    gnuplot
+    libqalculate
   ];
 
   # config/ directory
@@ -114,15 +73,27 @@ in {
   #   (utils.mergeAttrs)
   # ];
   xdg.configFile = {
-    "mako".source = utils.linkConfig "mako";
-    "pgcli".source = utils.linkConfig "pgcli";
     "procs".source = utils.linkConfig "procs";
-    # "rofi".source = utils.linkConfig "rofi";
     "shells".source = utils.linkConfig "shells";
-    "swayidle".source = utils.linkConfig "swayidle";
-    "waybar".source = utils.linkConfig "waybar";
     "xkb".source = utils.linkConfig "xkb";
 
-    "user-dirs.dirs".source = ../../../config/user-dirs.dirs.template;
+    "user-dirs.dirs".source = ./user-dirs.dirs;
+  };
+
+  xdg.mime.enable = true;
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+      # Thunar as my default GUI file manager
+      "inode/directory" = "thunar.desktop";
+
+      # Brave as my default browser
+      "text/html" = "brave-browser.desktop";
+      "x-scheme-handler/http" = "brave-browser.desktop";
+      "x-scheme-handler/https" = "brave-browser.desktop";
+      "x-scheme-handler/mailto" = "brave-browser.desktop";
+      "x-scheme-handler/webcal" = "brave-browser.desktop";
+      "x-scheme-handler/unknown" = "brave-browser.desktop";
+    };
   };
 }

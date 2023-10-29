@@ -1,6 +1,14 @@
 { pkgs, ... }: {
   fonts.fontconfig.enable = true;
 
+  gtk.font = {
+    name = "Overpass";
+    size = 12;
+    package = pkgs.overpass;
+  };
+
+  programs.rofi.font = "Overpass Light 10";
+
   home.packages = with pkgs; [
     # Main fonts
     jetbrains-mono
@@ -8,13 +16,13 @@
 
     # Symbols
     (
-     nerdfonts.override {
-     fonts = [
-     "JetBrainsMono"
-     "Overpass"
-     "NerdFontsSymbolsOnly"
-     ];
-     }
+      nerdfonts.override {
+        fonts = [
+          "JetBrainsMono"
+          "Overpass"
+          "NerdFontsSymbolsOnly"
+        ];
+      }
     )
     noto-fonts-emoji # Emoji
     noto-fonts-extra # etc.
@@ -43,3 +51,4 @@
     maya
   ];
 }
+

@@ -1,9 +1,4 @@
-{ pkgs, config, ... }: let
-  utils = import ../../../utils.nix { inherit config pkgs; };
-  themeFile = utils.linkConfig "rofi/catpuccin.rasi";
-  # inherit (config.lib.formats.rasi) mkLiteral;
-in {
-  xdg.configFile."rofi/catpuccin.rasi".source = themeFile;
+{ pkgs, ... }: {
 
   home.packages = with pkgs; [
     wtype
@@ -13,13 +8,8 @@ in {
   programs.rofi = {
     enable = true;
     plugins = [pkgs.rofi-emoji];
-    theme = "catpuccin.rasi";
-    font = "Overpass Light 10";
-    terminal = "wezterm";
 
     extraConfig = {
-      ssh-command = "{terminal} start -- {ssh-client} {host} [-p {port}]";
-      run-shell-command = "{terminal} start -- {cmd}";
       dpi = 1;
       drun-display-format = "{name}";
       threads = 0;
@@ -52,7 +42,6 @@ in {
       kb-row-tab = "";
     
       show-icons = true;
-      icon-theme = "Papirus-Dark";
       fullscreen = false;
       window-thumbnail = true;
     };

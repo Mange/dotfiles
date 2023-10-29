@@ -17,6 +17,8 @@ in {
     figlet
     charasay
     ponysay
+
+    cava # Music visualizer
   ];
 
   home.file = {

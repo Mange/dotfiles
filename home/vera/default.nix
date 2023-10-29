@@ -13,6 +13,7 @@
     ../_roles/base.nix
     ../_roles/laptop
 
+    ../_topics/bluetooth.nix
     ../_topics/android-dev.nix
   ];
 }
