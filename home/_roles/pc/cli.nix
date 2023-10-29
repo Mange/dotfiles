@@ -6,6 +6,35 @@
     };
   };
 
+  programs.direnv = {
+    enable = true;
+    enableZshIntegration = true;
+    nix-direnv.enable = true;
+  };
+
+  programs.eza = {
+    enable = true;
+    # Sets up aliases: `ls`, `ll`, `la`, `lla`, `lt`.
+    enableAliases = true;
+    icons = true;
+    git = true;
+    extraOptions = [
+      "--group-directories-first"
+      "--hyperlink" 
+      "--color-scale"
+    ];
+  };
+
+  programs.fzf = {
+    enable = true;
+    enableZshIntegration = true;
+    defaultCommand = "fd --type f";
+    changeDirWidgetCommand = "fd --type d";
+    changeDirWidgetOptions = [
+      "--preview 'tree -C {} | head -200'"
+    ];
+  };
+
   programs.tmux = {
     enable = true;
     keyMode = "vi";
