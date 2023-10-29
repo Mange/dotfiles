@@ -1,4 +1,4 @@
-{ pkgs, ... }: let
+{ pkgs, config, ... }: let
 removeOldScreenshots = pkgs.writeShellApplication {
   name = "remove-old-screenshots";
   runtimeInputs = with pkgs; [
@@ -12,7 +12,7 @@ removeOldScreenshots = pkgs.writeShellApplication {
       --type file \
       --change-older-than "4days" \
       --exec-batch "gio" "trash" "{}" ";" \
-      "$HOME/Media/Pictures"
+      "${config.xdg.userDirs.pictures}"
   '';
 };
 in {

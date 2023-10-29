@@ -76,8 +76,20 @@ in {
     "procs".source = utils.linkConfig "procs";
     "shells".source = utils.linkConfig "shells";
     "xkb".source = utils.linkConfig "xkb";
+  };
 
-    "user-dirs.dirs".source = ./user-dirs.dirs;
+  xdg.userDirs = {
+    enable = true;
+    createDirectories = true;
+
+    desktop = "${config.home.homeDirectory}/Desktop";
+    documents = "${config.home.homeDirectory}/Documents";
+    download = "${config.home.homeDirectory}/Downloads";
+    music = "${config.home.homeDirectory}/Media/Music";
+    pictures = "${config.home.homeDirectory}/Media/Pictures";
+    publicShare = "${config.home.homeDirectory}/Public";
+    templates = "${config.home.homeDirectory}/Documents/Templates";
+    videos = "${config.home.homeDirectory}/Media/Videos";
   };
 
   xdg.mime.enable = true;
