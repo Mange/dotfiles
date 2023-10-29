@@ -3,7 +3,6 @@
 in {
   imports = [
     # Old
-    ./xdg.nix
     ./shell.nix
     ./gui
 
@@ -13,6 +12,7 @@ in {
     ./git.nix
     ./security.nix
     ./timers.nix
+    ./xdg.nix
 
     ../../_topics/fonts
     ../../_topics/neovim

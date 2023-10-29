@@ -28,5 +28,8 @@
   home.packages = with pkgs; [
     # A fast documentation searcher for Nix
     manix
+
+    # Pair-programming through tmux
+    tmate
   ];
 }

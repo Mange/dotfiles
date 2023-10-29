@@ -52,9 +52,4 @@ in {
 
   home.sessionVariables = variables;
   systemd.user.sessionVariables = variables;
-
-  home.shellAliases = {
-    tmux = "tmux -f \"${XDG_CONFIG_HOME}/tmux/tmux.conf\"";
-    tmate = "tmate -f \"${XDG_CONFIG_HOME}/tmux/tmux.conf\"";
-  };
 }
