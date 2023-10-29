@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # http://blog.z3bra.org/2014/01/images-in-terminal.html
 # z3bra -- 2014-01-21

@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-root="$(dirname "$0")"
-
-if [[ $(systemctl is-active --user redshift) == "active" ]]; then
-  "$root/module" red "" "On"
-else
-  "$root/module" orange "" "Off"
-fi

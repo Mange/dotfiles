@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -e
 
 force=no
 action=
@@ -13,6 +14,14 @@ while [[ $# -gt 0 ]]; do
     action="poweroff"
     shift
     ;;
+  suspend)
+    action="suspend"
+    shift
+    ;;
+  hibernate)
+    action="hibernate"
+    shift
+    ;;
   reboot)
     action="reboot"
     shift
@@ -22,7 +31,7 @@ while [[ $# -gt 0 ]]; do
     shift
     ;;
   --help)
-    echo "USAGE: $0 [logout|poweroff|reboot] [--force]"
+    echo "USAGE: $0 [logout|poweroff|reboot|suspend|hibernate] [--force]"
     exit 0
     ;;
   *)
@@ -34,7 +43,7 @@ done
 
 if [[ -z "$action" ]]; then
   force=yes
-  action=$(echo -e "logout\\npoweroff\\nreboot\\ncancel" | rofi -dmenu -p "Quit?" -i -no-custom || true)
+  action=$(echo -e "logout\\npoweroff\\nreboot\\nsuspend\\nhibernate\\ncancel" | rofi -dmenu -p "Quit?" -i -no-custom || true)
   if [[ $action == cancel ]] || [[ -z "$action" ]]; then
     exit 0
   fi
@@ -47,24 +56,36 @@ if [[ $force == no ]]; then
   fi
 fi
 
+case "$action" in
+suspend)
+  exec systemctl suspend
+  ;;
+hibernate)
+  exec systemctl hibernate
+  ;;
+esac
+
+notify_opts=(--app-name System --urgency critical)
+
+if icon=$(find-icon-file system-log-out); then
+  notify_opts+=(--icon "$icon")
+fi
+
 # Show notification so user knows that the system is shutting down...
-notify-send \
-  --app-name System \
-  --icon /usr/share/icons/gnome/256x256/actions/system-log-out.png \
-  --urgency critical \
-  "Quitting" \
+notify-send "${notify_opts[@]}" "Quitting" \
   "Currently shutting down apps and logging out."
 
 # Unmount all removable storage
 udiskie-umount --all
 
 # Shut down Firefox without using signals as it does not properly support them yet
-wmctrl -c firefox
+hash wmctrl 2>/dev/null >/dev/null && wmctrl -c firefox
 
 # Shut down all my apps
-graceful-shutdown \
-  --mine --whole-command --wait-time 15.0 \
-  <"$XDG_CONFIG_HOME/graceful-shutdown/logout"
+hash graceful-shutdown 2>/dev/null >/dev/null &&
+  graceful-shutdown \
+    --mine --whole-command --wait-time 15.0 \
+    <"$XDG_CONFIG_HOME/graceful-shutdown/logout"
 
 case "$action" in
 logout)
@@ -76,11 +97,7 @@ logout)
     hyprctl dispatch exit
     ;;
   *)
-    notify-send \
-      --app-name System \
-      --icon /usr/share/icons/gnome/256x256/actions/system-log-out.png \
-      --urgency critical \
-      "Quitting" \
+    notify-send "${notify_opts[@]}" "Quitting" \
       "Desktop session is unsupported: \"${DESKTOP_SESSION}\""
     ;;
   esac

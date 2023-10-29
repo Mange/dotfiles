@@ -102,10 +102,6 @@ if_require("lspconfig", function(lspconfig)
     lua = {
       exclude = { "lua_ls" },
     },
-    ruby = {
-      -- Use standardrb via null-ls instead.
-      exclude = { "solargraph" },
-    },
   }
   lspformat.disable { args = "markdown" }
   lspformat.disable { args = "eruby" } -- completely breaks in most formatters
@@ -148,23 +144,21 @@ if_require("lspconfig", function(lspconfig)
   --  Ruby / Solargraph
   lspconfig.solargraph.setup {
     capabilities = capabilities(),
-    on_attach = on_attach_without_formatting,
+    cmd = { "bundle", "exec", "solargraph", "stdio" },
+    on_attach = on_attach,
     prefix = "solargraph",
-    init_options = {
-      -- Uses hardcoded Rubocop; I will use Standardrb through null-ls instead.
-      formatting = false,
-      diagnostics = false,
-    },
   }
 
-  --  HTML
+  --  HTML, CSS, Tailwind, etc.
   lspconfig.html.setup {
     capabilities = capabilities(),
     on_attach = on_attach,
     filetypes = { "html", "eruby" },
   }
-
-  --  Tailwindcss
+  lspconfig.cssls.setup {
+    capabilities = capabilities(),
+    on_attach = on_attach,
+  }
   lspconfig.tailwindcss.setup {
     capabilities = capabilities(),
     on_attach = on_attach,
@@ -226,6 +220,11 @@ if_require("lspconfig", function(lspconfig)
     on_attach = on_attach,
   }
 
+  lspconfig.nil_ls.setup {
+    capabilities = capabilities(),
+    on_attach = on_attach,
+  }
+
   lspconfig.dockerls.setup {
     capabilities = capabilities(),
     on_attach = on_attach,
@@ -256,7 +255,6 @@ if_require("lspconfig", function(lspconfig)
   }
 
   -- TODO:
-  -- CSS
   -- SQL
 end)
 
@@ -303,9 +301,8 @@ if_require("null-ls", function(null_ls)
         -- Use two spaces for indentation
         extra_args = { "-i", "2" },
       },
-      null_ls.builtins.formatting.stylelint,
+      -- null_ls.builtins.formatting.stylelint,
       null_ls.builtins.formatting.stylua,
-      null_ls.builtins.formatting.standardrb,
 
       --
       -- Diagnostics --

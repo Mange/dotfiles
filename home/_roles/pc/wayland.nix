@@ -1,0 +1,57 @@
+{ config, pkgs, ... }: let
+  utils = import ../../utils.nix { inherit config pkgs; };
+in {
+  # Work breaks
+  services.safeeyes.enable = true;
+
+  # Night light
+  services.gammastep = {
+    enable = true;
+    tray = true;
+    temperature.night = 3600;
+    settings = {
+      general = {
+        adjustment-method = "wayland";
+      };
+    };
+    # Sweden/Stockholm
+    provider = "manual";
+    latitude = 59.3;
+    longitude = 17.8;
+  };
+
+  # Utilities for wayland
+  home.packages = with pkgs; [
+    # Screenshotting, screen recording, etc.
+    grim
+    slurp
+    wf-recorder
+    ksnip # Screenshots + annotations
+
+    # Screen and session
+    swayidle # Trigger stuff when idle
+    swaylock-effects # Lockscreen
+
+    # CLipboard control
+    wl-clipboard
+    cliphist # Clipboard history
+
+    # Other
+    ripdrag # drag-n-drop
+
+    # Deprecated
+    (waybar.override {
+      hyprlandSupport = true;
+      runTests = false;
+      cavaSupport = true;
+    })
+  ];
+
+  # Custom commands
+  home.file.".local/bin/wfrecord".source = ./bin/wfrecord;
+
+  xdg.configFile = {
+    "swayidle".source = utils.linkConfig "swayidle";
+    "waybar".source = utils.linkConfig "waybar";
+  };
+}

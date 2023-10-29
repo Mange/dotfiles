@@ -18,9 +18,6 @@ fi
 # shellcheck source=/dev/null
 source "${XDG_CONFIG_HOME:-${HOME}/.config}/shells/paths"
 
-# shellcheck source=/dev/null
-source "${XDG_CONFIG_HOME:-${HOME}/.config}/shells/xdg_zealotry"
-
 # Have current hostname in ENV for easy reference in config files, etc.
 # Don't use either $HOST or $HOSTNAME as those are set automatically by zsh /
 # bash.

@@ -1,9 +1,0 @@
-#!/bin/sh
-#
-# Check if running inside of a container. This is a best-effort guess only.
-#
-
-[ -n "$INSIDE_DOCKER" ] ||
-  [ -e /.dockerenv ] ||
-  grep -q "docker\|lxc" /proc/1/cgroup ||
-  [ -e /run/.containerenv ]

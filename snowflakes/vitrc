@@ -1,6 +1,0 @@
-# Shortcut for starting and stopping tasks
-map s=:!rw task %TASKID start<Return>
-map S=:!rw task %TASKID stop<Return>
-
-# Append TASKID too
-map t=:!rw task %TASKID<Space>

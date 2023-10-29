@@ -1,5 +1,4 @@
 # shellcheck source=/dev/null
-source "$HOME/.config/shells/xdg_zealotry"
 
 die() {
   echo "$*"

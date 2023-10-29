@@ -5,6 +5,9 @@ return {
       -- I know what I'm doing
       disable_commit_confirmation = true,
 
+      -- I want to start in insert mode on empty commit messages.
+      disable_insert_on_commit = false,
+
       -- Nicer characters
       signs = {
         section = { "▶", "▼" },
@@ -12,16 +15,8 @@ return {
         hunk = { "▶", "▼" },
       },
 
-      mappings = {
-        status = {
-          -- I use L to go to next tab; use "M" as in "commit MESSAGES"
-          -- instead.
-          ["L"] = "",
-          ["m"] = "LogPopup",
-        },
-      },
-
       integrations = {
+        telescope = true,
         diffview = true,
       },
     },

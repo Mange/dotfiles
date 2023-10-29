@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-# Just a lazy shortcut for me since I keep forgetting.
-
-exec pacman -Sl custom

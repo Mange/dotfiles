@@ -1,6 +1,0 @@
-#!/bin/sh
-if [ $# -gt 0 ] && [ "$1" = "--version" ]; then
-  exec elm "$@"
-else
-  exec elm make "$@"
-fi

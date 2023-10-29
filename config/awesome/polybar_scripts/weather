@@ -1,8 +1,0 @@
-#!/usr/bin/bash
-set -e
-
-root="$(dirname "$0")"
-
-read -ra weather < <(weather --oneline)
-
-"$root/module" yellow "${weather[@]}"

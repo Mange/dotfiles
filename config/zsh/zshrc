@@ -1,64 +1,33 @@
 #!/bin/zsh
-# vim: fdm=marker:
 
 setopt extendedglob
 zmodload zsh/datetime
-autoload is-at-least
 autoload -Uz add-zsh-hook
 
 # Chain with true to avoid $? being false
 [ -f "${XDG_CONFIG_HOME}/zsh/zshrc.before.local" ] && source "${XDG_CONFIG_HOME}/zsh/zshrc.before.local" || true
 
-# {{{ Helper functions
-command-exist() { whence $1 > /dev/null; }
-
-alias-if-exist() {
-  local old_command=$1
-  shift
-  local new_command=$1
-
-  if command-exist $new_command; then
-    alias $old_command="$*"
-  fi
-}
-
-try-source-plugin() {
-  local path="/usr/share/zsh/plugins/${1}/${1}.zsh"
-  if [[ -f "${path}" ]]; then
-    source "${path}"
-    return 0
-  else
-    return 1
-  fi
-}
-
-# }}}
 # {{{ Autoload functions
-
+# upstream
 autoload zmv
 
-fpath=("${XDG_CONFIG_HOME}/zsh/funcs" $fpath)
-
+# my own
 autoload seconds-to-human
 autoload apply_prompt_theme
-
 # }}}
 # {{{ umask
 # I want my primary group to write to my files
 # Why wouldn't I?
 umask 002
 # }}}
-# {{{ ZLE, vi mode, and fzf
-# Default:        *?_-.[]~=/&;!#$%^(){}<>
-export WORDCHARS='*?[]~&;!#$%^(){}'
-
-# Vim keys in shell
-bindkey -d # Delete all existing keybinds
-bindkey -v # Use vimkeys by default
-KEYTIMEOUT=1 # 10ms delay for Escape key
+# {{{ ZLE, vi mode
 
 # New line
 bindkey -M viins '^J' self-insert
+
+### FZF stuff
+bindkey -M vicmd "/" fzf-history-widget
+bindkey "^P" fzf-file-widget
 
 # Vim-like bindings
 # Stolen from https://github.com/sharat87/zsh-vim-mode/blob/master/zsh-vim-mode.plugin.zsh
@@ -93,19 +62,6 @@ bindkey -M vicmd -s '^[[32;2u' ' '
 
 # See extra bindkey calls under the Plugins section
 
-if [ -f /usr/share/fzf/key-bindings.zsh ]; then
-  source /usr/share/fzf/completion.zsh
-  source /usr/share/fzf/key-bindings.zsh
-
-  bindkey -M vicmd "/" fzf-history-widget
-  bindkey "^P" fzf-file-widget
-fi
-
-# Use ripgrep to populate fzf
-if command-exist rg; then
-  export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
-fi
-
 # Outputs $1 when on insert mode and outputs $2 when on command mode.
 # zle_mode_output "when insert" "when command"
 function zle_mode_output {
@@ -135,49 +91,8 @@ eval $(dircolors -b)
 export LS_COLORS="$LS_COLORS:*.nfo=90:*.sfv=90:*.srt=90:*.sub=90"
 export ZLS_COLORS="${LS_COLORS}"
 
-alias ls='ls --color=auto'
-alias l='ls -l'
-
-# Replace l with exa if exa is installed
-if command-exist exa; then
-  alias ls='exa --group-directories-first'
-  alias l='exa --group-directories-first --long --color-scale --git'
-fi
-
-# }}}
-# {{{ EDITOR
-try-editor() {
-  while [[ "$#" -gt 0 ]]; do
-    local full_command="$1"
-    local base="${full_command%% *}"
-
-    if command-exist $base; then
-      EDITOR=$full_command
-      return
-    fi
-    shift
-  done
-}
-
-try-editor nvim vim vi emacs nano
-export VISUAL=$EDITOR
-
-unset -f try-editor
 # }}}
 # {{{ Completions
-# Activate completion system and do some basic settings
-
-zmodload zsh/complist
-
-# Use my custom completions too
-fpath=("${XDG_CONFIG_HOME}/zsh/completion" $fpath)
-
-autoload -U compinit && compinit -d "${XDG_CACHE_HOME}/zcompdump"
-
-# Add AWS completions if aws is installed
-if [[ -f ~/.local/bin/aws_zsh_completer.sh ]]; then
-  source ~/.local/bin/aws_zsh_completer.sh
-fi
 
 # Find out what an alias stands for and complete like if it was the original command
 # This gives me git completion for my git aliases, for example
@@ -200,6 +115,36 @@ compdef run-changed-specs=rspec
 
 # Show completion group names
 zstyle ':completion:*:descriptions' format "%d"
+
+### fzf-tab
+zstyle ":completion:*:git-checkout:*" sort false
+zstyle ':completion:*:descriptions' format '[%d]'
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+
+# give a preview when completing `kill`
+zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm,cmd -w -w"
+zstyle ':fzf-tab:complete:kill:argument-rest' fzf-flags '--preview=echo $(<{f})' --preview-window=down:3:wrap
+
+zstyle ':fzf-tab:complete:systemctl-*:*' fzf-preview 'SYSTEMD_COLORS=1 systemctl status $word'
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
+zstyle ':fzf-tab:complete:(-command-|-parameter-|-brace-parameter-|export|unset|expand):*' fzf-preview 'echo ${(P)word}'
+
+# Git previews
+zstyle ':fzf-tab:complete:git-(add|diff|restore):*' fzf-preview 'git diff $word | delta'
+zstyle ':fzf-tab:complete:git-log:*' fzf-preview 'git log --color=always $word'
+zstyle ':fzf-tab:complete:git-help:*' fzf-preview 'git help $word | bat -plman --color=always'
+zstyle ':fzf-tab:complete:git-show:*' fzf-preview \
+  'case "$group" in
+  "commit tag") git show --color=always $word ;;
+  *) git show --color=always $word | delta ;;
+  esac'
+zstyle ':fzf-tab:complete:git-checkout:*' fzf-preview \
+  'case "$group" in
+  "modified file") git diff $word | delta ;;
+  "recent commit object name") git show --color=always $word | delta ;;
+  *) git log --color=always -n 20 $word ;;
+  esac'
+ 
 # }}}
 # {{{ Named Directories
 # Make certain paths into named directories ("~name" instead of "/path/to/name")
@@ -229,12 +174,6 @@ fi
 setopt auto_pushd
 setopt pushd_ignore_dups
 
-alias tree='tree -AC -I ".svn|.git|node_modules|bower_components"'
-alias t='tree -L 3 --filelimit 50'
-
-# Sort files by size and show human readable
-alias fusage='ls -Ssrh'
-
 # Enhanced cd:
 #   * cd <path>/<file> go to <path>
 cd () {
@@ -250,17 +189,11 @@ cd () {
 }
 
 # Display contents of current directory when changing directories
-if command-exist exa; then
-  showdir() { exa --group-directories-first }
-else
-  showdir() { ls --group-directories-first }
-fi
+showdir() { exa --group-directories-first }
 
 # Tell terminal what the current directory is
 update_osc7() {
-  if command-exist wezterm; then
-    wezterm set-working-directory 2>/dev/null && return 0
-  fi
+  wezterm set-working-directory 2>/dev/null && return 0
 
   # In case wezterm is not installed, or if it failed do a naive manual try
   printf "\033]7;file://%s%s\033\\" "${HOSTNAME}" "${PWD}"
@@ -272,116 +205,11 @@ chpwd() {
   update_osc7
 }
 # }}}
-# {{{ History
-export HISTSIZE=5000
-export SAVEHIST=5000
-export HISTFILE="${XDG_DATA_HOME}/zsh/history"
-
-# don't replace history when process exits
-setopt append_history
-# remove old dups when added again
-setopt hist_ignore_all_dups
-# verify ! expansions
-setopt hist_verify
-# skip history entry if command starts with a space
-setopt hist_ignore_space
-
-# }}}
 # {{{ Pager, man, and bat
-# Pager settings (less, man, etc.)
 
-# This makes man pages look cooler
-export LESS_TERMCAP_mb=$'\E[01;31m'
-export LESS_TERMCAP_md=$'\E[01;31m'
-export LESS_TERMCAP_me=$'\E[0m'
-export LESS_TERMCAP_se=$'\E[0m'
-export LESS_TERMCAP_so=$'\E[01;44;33m'
-export LESS_TERMCAP_ue=$'\E[0m'
-export LESS_TERMCAP_us=$'\E[01;32m'
-
-# Default less(1) options
-# --Raw-control-chars :: Support ANSI color control chars
-# --ignore-case       :: Smart case search (Ignore-case is normal case insensitive search)
-export LESS="--Raw-control-chars --quit-if-one-screen --ignore-case"
-
-# Neovim makes a better manpager than less.
-if command-exist nvim; then
-  export MANPAGER='nvim +Man!'
-fi
-
-# Use highlight to preview FZF files under CTRL+T
-if command-exist bat; then
-  export FZF_CTRL_T_OPTS="--preview '(bat --style=numbers --color=always {} || cat {} || tree -C {}) 2> /dev/null | head -200'"
-fi
-
-export BAT_THEME=base16
-# }}}
-# {{{ Copy/Paste
-if command-exist pbcopy; then
-  alias copy=pbcopy
-  alias paste=pbcopy
-else
-  alias copy='xsel --clipboard --input'
-  alias paste='xsel --clipboard --output'
-
-  # Hard to break some habits
-  alias pbcopy=copy
-  alias pbpaste=paste
-fi
-
-# cat foo.txt bar.txt CP
-alias -g CP='| copy'
 # }}}
 # {{{ Command replacements / aliases for commands with non-standard names
-# Colordiff
-alias-if-exist diff colordiff
-alias-if-exist ping prettyping --nolegend
-# }}}
-# {{{ Git settings and shortcuts
-git_log_format='%C(bold blue)%h%Creset %C(bold)%s%Creset%C(auto)%d%n%C(dim white)%ad %C(nodim green)(%ar)%Creset - %an%C(yellow)%+N%n%Creset'
-
-alias-if-exist git hub
-
-alias checkout='git checkout'
-alias master="git checkout master"
-
-alias gadd='git add'
-alias gco='git commit -v'
-alias gpu='git push'
-alias gb="git branch -v"
-alias gba="git branch -va"
-alias gbm="git branch -v --merged"
-
-alias gm='git merge --no-ff'
-alias gmo='git merge --no-ff @{upstream}'
-alias gmm='git merge --no-ff master'
-
-alias fixup='gco --fixup "$(git fshow)"'
-alias gro='git rebase @{upstream}'
-alias grm='git rebase master'
-alias gri='git rebase -i'
-alias grim='git rebase -i master'
-alias grio='git rebase -i @{upstream}'
-
-alias gf='git fetch --prune'
-alias ff='git merge --ff-only'
-alias ffm='git merge --ff-only master'
-alias ffo='git merge --ff-only @{upstream}'
-alias gup='gf && ffo'
-
-alias gl="git log --no-show-signature --graph -n 1000 --format='tformat:$git_log_format'"
-
-alias s="git status --short --branch"
-alias gs="git show --show-signature"
-alias gd="git diff"
-alias gds="git diff | delta --side-by-side"
-alias staged="gd --cached"
-
-unset -v git_log_format
-# }}}
 # {{{ Job control aliases and hacks
-alias j='jobs -l'
-
 setopt auto_continue # CONT any disowned commands
 setopt auto_resume   # "man" automatically resumes "man command" if in background ("man other" does not)
 setopt check_jobs    # print job statuses on exit, and cancel exiting the first time
@@ -415,21 +243,10 @@ binstub-exec() {
 }
 
 alias bundle="binstub-exec bundle"
-
 for gem in guard rspec rails rubocop rake standardrb yarn; do
   alias $gem="bundle-exec $gem"
 done
 
-alias wer="watchexec -c -e rb,yml,erb --no-shell --"
-
-# }}}
-# {{{ Color shortcuts and magic
-autoload colors
-colors
-
-function colortest() {
-  msgcat --color=test
-}
 # }}}
 # {{{ Prompt settings and configuration
 
@@ -517,41 +334,3 @@ apply_prompt_theme
 
 # Chain with true to avoid $? being false
 [ -f "${XDG_CONFIG_HOME}/zsh/zshrc.after.local" ] && source "${XDG_CONFIG_HOME}/zsh/zshrc.after.local" || true
-
-# {{{ RVM
-# shellcheck source=/dev/null
-source "${XDG_CONFIG_HOME}/shells/enable-rvm"
-# }}}
-
-# {{{ Plugins
-if is-at-least 5.8; then
-  try-source-plugin zsh-syntax-highlighting || true
-
-  if try-source-plugin zsh-history-substring-search; then
-    bindkey -M viins '^N' history-substring-search-up
-    bindkey -M viins '^P' history-substring-search-down
-    bindkey -M vicmd '^N' history-substring-search-up
-    bindkey -M vicmd '^P' history-substring-search-down
-  fi
-
-  if command-exist fzf && [[ -f ~/.config/zsh/fzf-tab/fzf-tab.plugin.zsh ]]; then
-    source ~/.config/zsh/fzf-tab/fzf-tab.plugin.zsh
-
-    zstyle ":completion:*:git-checkout:*" sort false
-    zstyle ':completion:*:descriptions' format '[%d]'
-    zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-
-    # give a preview when completing `kill`
-    zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm,cmd -w -w"
-    zstyle ':fzf-tab:complete:kill:argument-rest' extra-opts '--preview=echo $(<{f})' --preview-window=down:3:wrap
-
-    if command-exist exa; then
-      zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
-    else
-      zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls -1 --color=always $realpath'
-    fi
-  fi
-fi
-# }}}
-
-unset -f alias-if-exist

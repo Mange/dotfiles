@@ -6,9 +6,17 @@
   "margin-bottom": 0,
   "margin-left": 20,
   "margin-right": 20,
-  "modules-left": ["wlr/workspaces", "cava", "custom/media"],
+  "modules-left": ["hyprland/workspaces", "custom/media"],
   "modules-center": ["hyprland/window"],
-  "modules-right": ["tray", "cpu", "memory", "disk", "pulseaudio", "clock"],
+  "modules-right": [
+    "tray",
+    "cpu",
+    "memory",
+    "disk",
+    "pulseaudio",
+    "battery",
+    "clock"
+  ],
 
   "clock": {
     "format": " {:%R %d %b (v.%V)}",
@@ -26,17 +34,13 @@
     }
   },
 
-  "wlr/workspaces": {
+  "hyprland/workspaces": {
     "active-only": false,
     "all-outputs": false,
-    "disable-scroll": false,
+    "disable-scroll": true,
     "format": "{name}",
     "on-click": "activate",
     "sort-by-number": true
-  },
-
-  "cava": {
-    "method": "pipewire"
   },
 
   "custom/media": {
@@ -71,7 +75,7 @@
     "format": "󰋊 {}%",
     "format-alt": "󰋊 {used}/{total} GiB",
     "interval": 5,
-    "path": "/mnt/Datos"
+    "path": "/home"
   },
 
   "tray": {
@@ -96,5 +100,7 @@
     "on-click": "pulsemixer --toggle-mute",
     "scroll-step": 5,
     "on-click-right": "pavucontrol --name=pavucontrol-popup"
-  }
+  },
+
+  "battery": {}
 }

@@ -1,3 +1,0 @@
----
-dependencies:
-  - role: gpg-config # In order to install RVM

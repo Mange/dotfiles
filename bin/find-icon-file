@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 shopt -s extglob
 set -e
 
@@ -18,7 +18,7 @@ usage() {
         Show debug output on STDERR.
 
     Example:
-      $0 -t Tela spotify
+      $0 -t Papirus-Dark spotify
 EOF
 }
 
