@@ -28,6 +28,15 @@
     })
   ];
 
+  home.pointerCursor = {
+    package = pkgs.catppuccin-cursors.mochaDark;
+    name = "Catppuccin-Mocha-Dark-Cursors";
+    size = 32;
+
+    gtk.enable = true;
+    x11.enable = true;
+  };
+
   gtk = {
     theme = {
       name = "Catppuccin-Mocha-Compact-Mauve-Dark";
@@ -44,11 +53,6 @@
         flavor = "mocha";
         accent = "mauve";
       });
-    };
-    cursorTheme = {
-      package = pkgs.catppuccin-cursors.mochaDark;
-      name = "Catppuccin-Mocha-Dark-Cursors";
-      size = 32;
     };
   };
 
