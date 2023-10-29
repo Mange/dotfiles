@@ -22,7 +22,7 @@
     };
 
     android-nixpkgs = {
-      url = "github:Mange/android-nixpkgs/fix-env-variables";
+      url = "github:tadfisher/android-nixpkgs";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

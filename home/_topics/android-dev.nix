@@ -23,12 +23,11 @@ in {
       emulator
       ndk-bundle
       platform-tools
-      platforms-android-32
-      tools
 
+      platforms-android-32
       system-images-android-32-google-apis-playstore-x86-64
 
-      # Must be after "tools"
+      # Must be after "tools", if specified.
       # https://github.com/tadfisher/android-nixpkgs/issues/58
       cmdline-tools-latest
     ];
