@@ -1,14 +1,18 @@
 { pkgs, ... }: {
+  programs.firefox.enable = true;
+
+  programs.jq = {
+    enable = true;
+  };
+
   home.packages = with pkgs; [
     # Browsers
     brave
-    firefox
     google-chrome
 
     # Others
     http-prompt
     httpie
-    jq
     nodejs
     pastel
     pgcli

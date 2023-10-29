@@ -3,6 +3,13 @@
 in {
   xdg.configFile."zsh".source = utils.linkConfig "zsh";
 
+  programs.dircolors.enableZshIntegration = true;
+  programs.direnv.enableZshIntegration = true;
+  programs.fzf.enableZshIntegration = true;
+
+  # Wezterm is not configured through home-manager. See wezterm.nix.
+  # programs.wezterm.enableZshIntegration = true;
+
   programs.zsh = {
     enable = true;
     defaultKeymap = "viins";

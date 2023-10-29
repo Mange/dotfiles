@@ -17,9 +17,10 @@ in {
     figlet
     charasay
     ponysay
-
-    cava # Music visualizer
   ];
+
+  # Music visualizer
+  programs.cava.enable = true;
 
   home.file = {
     ".local/bin/banner" = mkScript ''

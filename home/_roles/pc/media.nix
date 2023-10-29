@@ -1,8 +1,11 @@
 { pkgs, ... }: {
+  programs.mpv = {
+    enable = true;
+  };
+
   home.packages = with pkgs; [
     jellyfin-media-player
     krita
-    mpv
 
     mediainfo
     youtube-dl

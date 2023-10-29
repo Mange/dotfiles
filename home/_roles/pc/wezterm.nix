@@ -5,6 +5,8 @@
   };
 
   home.packages = with pkgs; [
+    # Wezterm configuration through home-manager is still too limited. Use
+    # normal lua file and package.
     wezterm
   ];
 

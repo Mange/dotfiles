@@ -6,9 +6,19 @@
     };
   };
 
+  programs.dircolors = {
+    enable = true;
+    settings = {
+      # Files that I don't have to pay attention to
+      ".nfo" = "90";
+      ".sfv" = "90";
+      ".srt" = "90";
+      ".sub" = "90";
+    };
+  };
+
   programs.direnv = {
     enable = true;
-    enableZshIntegration = true;
     nix-direnv.enable = true;
   };
 
@@ -27,7 +37,6 @@
 
   programs.fzf = {
     enable = true;
-    enableZshIntegration = true;
     defaultCommand = "fd --type f";
     changeDirWidgetCommand = "fd --type d";
     changeDirWidgetOptions = [
@@ -35,6 +44,15 @@
     ];
   };
 
+  programs.htop = {
+    enable = true;
+  };
+
+  programs.ripgrep = {
+    enable = true;
+  };
+
+  programs.tmate.enable = true;
   programs.tmux = {
     enable = true;
     keyMode = "vi";
@@ -58,10 +76,8 @@
     # Modern UNIX replacements
     bat
     fd
-    htop
     prettyping
     procs
-    ripgrep
 
     # Basics
     file
@@ -88,7 +104,6 @@
 
     # Misc development
     manix # A fast documentation searcher for Nix
-    tmate # Pair-programming through tmux
     parallel
   ];
 }

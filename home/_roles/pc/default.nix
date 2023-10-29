@@ -41,10 +41,13 @@ in {
   gtk.enable = true;
   qt.enable = true;
 
+  programs.firefox = {
+    enable = true;
+  };
+
   home.packages = with pkgs; [
     # Standard computing
     brave
-    firefox
     shotwell
     obsidian
     transmission-remote-gtk

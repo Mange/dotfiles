@@ -84,14 +84,6 @@ zle -N zle-line-init
 zle -N zle-keymap-select
 
 # }}}
-# {{{ ls (Colors, etc.)
-eval $(dircolors -b)
-
-# Files that I don't have to pay attention to
-export LS_COLORS="$LS_COLORS:*.nfo=90:*.sfv=90:*.srt=90:*.sub=90"
-export ZLS_COLORS="${LS_COLORS}"
-
-# }}}
 # {{{ Completions
 
 # Find out what an alias stands for and complete like if it was the original command
