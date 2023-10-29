@@ -149,14 +149,16 @@ if_require("lspconfig", function(lspconfig)
     prefix = "solargraph",
   }
 
-  --  HTML
+  --  HTML, CSS, Tailwind, etc.
   lspconfig.html.setup {
     capabilities = capabilities(),
     on_attach = on_attach,
     filetypes = { "html", "eruby" },
   }
-
-  --  Tailwindcss
+  lspconfig.cssls.setup {
+    capabilities = capabilities(),
+    on_attach = on_attach,
+  }
   lspconfig.tailwindcss.setup {
     capabilities = capabilities(),
     on_attach = on_attach,
@@ -253,7 +255,6 @@ if_require("lspconfig", function(lspconfig)
   }
 
   -- TODO:
-  -- CSS
   -- SQL
 end)
 
@@ -300,7 +301,7 @@ if_require("null-ls", function(null_ls)
         -- Use two spaces for indentation
         extra_args = { "-i", "2" },
       },
-      null_ls.builtins.formatting.stylelint,
+      -- null_ls.builtins.formatting.stylelint,
       null_ls.builtins.formatting.stylua,
 
       --
