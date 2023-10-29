@@ -12,6 +12,7 @@ in {
     ./cli.nix
     ./git.nix
     ./security.nix
+    ./timers.nix
 
     ../../_topics/fonts
     ../../_topics/neovim
@@ -58,7 +59,6 @@ in {
     # CLI
     duplicity
     file
-    glib # for "gio trash", etc.
     gnuplot
     killall
     libqalculate
