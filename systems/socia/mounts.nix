@@ -22,6 +22,7 @@
     description = "Consessor ${name} automount";
     requires = [ "network-online.target" "tailscaled.service" ];
     where = "/mnt/consessor/${name}";
+    wantedBy = ["multi-user.target"];
     # Automatically unmount after 30 minutes of inactivity.
     automountConfig = {
       TimeoutIdleSec = "30min";
