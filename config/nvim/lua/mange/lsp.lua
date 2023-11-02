@@ -235,24 +235,27 @@ if_require("lspconfig", function(lspconfig)
     on_attach = on_attach_without_formatting,
   }
 
-  lspconfig.yamlls.setup {
-    capabilities = capabilities(),
-    on_attach = function(client, buffer)
-      -- https://github.com/redhat-developer/yaml-language-server/issues/486
-      client.server_capabilities.documentFormattingProvider = true
-      on_attach(client, buffer)
-    end,
-    settings = {
-      format = {
-        enable = true,
-        proseWrap = "always",
-        printWidth = 100,
-      },
-      redhat = {
-        telemetry = { enabled = false },
-      },
-    },
-  }
+  -- lspconfig.yamlls.setup {
+  --   capabilities = capabilities(),
+  --   on_attach = function(client, buffer)
+  --     -- https://github.com/redhat-developer/yaml-language-server/issues/486
+  --     client.server_capabilities.documentFormattingProvider = true
+  --     on_attach(client, buffer)
+  --   end,
+  --   settings = {
+  --     yaml = {
+  --       customTags = {},
+  --     },
+  --     format = {
+  --       enable = true,
+  --       proseWrap = "always",
+  --       printWidth = 100,
+  --     },
+  --     redhat = {
+  --       telemetry = { enabled = false },
+  --     },
+  --   },
+  -- }
 
   -- TODO:
   -- SQL
