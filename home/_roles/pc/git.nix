@@ -65,7 +65,7 @@
 
       #-- Crap and metadata --
       ".DS_Store"
-      "*~"
+      "?*~"
 
       #-- Project-specific things --
       ".*.local"
