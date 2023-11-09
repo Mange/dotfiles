@@ -12,6 +12,10 @@
 
     playerctl # MPRIS control
     pulsemixer # TUI volume mixer
+    pavucontrol # Volume control
+
+    imagemagick # for image previews, etc.
+    ghostscript # imagemagick optional dependency for PDF support
   ];
 
   xdg.mimeApps.defaultApplications = {

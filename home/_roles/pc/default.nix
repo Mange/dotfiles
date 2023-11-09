@@ -4,6 +4,7 @@ in {
   imports = [
     ./chat.nix
     ./cli.nix
+    ./desktop.nix
     ./fonts.nix
     ./git.nix
     ./hyprland.nix
@@ -41,33 +42,6 @@ in {
   gtk.enable = true;
   qt.enable = true;
 
-  programs.firefox = {
-    enable = true;
-  };
-
-  home.packages = with pkgs; [
-    # Standard computing
-    brave
-    shotwell
-    obsidian
-    transmission-remote-gtk
-    pavucontrol # Volume control
-    xdg-utils
-
-    # Mobile integration
-    scrcpy
-    android-file-transfer
-
-    # Media
-    imagemagick # for image previews, etc.
-    ghostscript # imagemagick optional dependency for PDF support
-
-    # Misc
-    gnome.zenity
-    gnuplot
-    libqalculate
-  ];
-
   # config/ directory
   # xdg.configFile = lib.pipe (utils.filesIn ../config) [
   #   (builtins.map (f: {
@@ -96,19 +70,9 @@ in {
   };
 
   xdg.mime.enable = true;
-  xdg.mimeApps = {
-    enable = true;
-    defaultApplications = {
-      # Thunar as my default GUI file manager
-      "inode/directory" = "thunar.desktop";
-
-      # Brave as my default browser
-      "text/html" = "brave-browser.desktop";
-      "x-scheme-handler/http" = "brave-browser.desktop";
-      "x-scheme-handler/https" = "brave-browser.desktop";
-      "x-scheme-handler/mailto" = "brave-browser.desktop";
-      "x-scheme-handler/webcal" = "brave-browser.desktop";
-      "x-scheme-handler/unknown" = "brave-browser.desktop";
-    };
-  };
+  xdg.mimeApps.enable = true;
+  # Desktops replace this symlink with a file sometimes,
+  # which will cause HM activation to fail.
+  # Tell HM it's fine to replace this file.
+  xdg.configFile."mimeapps.list".force = true;
 }
