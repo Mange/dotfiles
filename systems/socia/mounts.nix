@@ -14,7 +14,7 @@
     bindsTo = [ "tailscaled.service" ];
     description = "Consessor ${name}";
     type = "cifs";
-    what = "//consessor.i.hehu.se/${name}";
+    what = "//consessor/${name}";
     where = "/mnt/consessor/${name}";
     options = "workgroup=Samba,credentials=/etc/samba/credentials/consessor,uid=${uid}";
   };
