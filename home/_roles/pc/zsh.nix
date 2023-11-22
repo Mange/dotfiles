@@ -96,7 +96,7 @@ in {
 
     initExtraBeforeCompInit = /* zsh */ ''
       zmodload zsh/complist
-      autoload -U compinit
+      autoload -U compinit add-zsh-hook
 
       function recomp() {
         fpath+=(
@@ -109,10 +109,20 @@ in {
           ''${^''${(z)NIX_PROFILES}}/share/zsh/{site-functions,$ZSH_VERSION/functions,vendor-completions}(N-/)
         )
         # Don't care about world/group writable files (`compinit -u`). It's too
-        # annoying to deal with, and I don't think this is going to the *the*
+        # annoying to deal with, and I don't think this is going to be *the*
         # vector that infects me.
         compinit -u
       }
+
+      local _auto_recomp_xdg_data_dirs="$XDG_DATA_DIRS"
+      function _auto_recomp() {
+        if [[ "$_auto_recomp_xdg_data_dirs" != "$XDG_DATA_DIRS" ]]; then
+          _auto_recomp_xdg_data_dirs="$XDG_DATA_DIRS"
+          recomp
+        fi
+      }
+
+      add-zsh-hook precmd recomp
     '';
 
     envExtra = /* zsh */ ''
