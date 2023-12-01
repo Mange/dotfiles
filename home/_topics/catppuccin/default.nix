@@ -57,7 +57,7 @@
   };
 
   qt = {
-    platformTheme = "kde";
+    platformTheme = "qtct";
     style.name = "kvantum";
   };
 }

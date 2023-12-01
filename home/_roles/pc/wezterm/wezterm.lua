@@ -27,7 +27,10 @@ return {
   hide_tab_bar_if_only_one_tab = true,
   window_background_opacity = 0.8,
 
-  enable_wayland = true,
+  -- Disabled until Wayland support can be remade to work in Hyprland.
+  -- https://github.com/wez/wezterm/issues/4483
+  enable_wayland = false,
+  audible_bell = "Disabled", -- Disabled on Wayland, not on X11
 
   -- Don't accidentally select stuff when I click on a window and accidentally move a few pixels
   swallow_mouse_click_on_window_focus = true,
