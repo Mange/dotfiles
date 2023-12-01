@@ -27,11 +27,6 @@ return {
       indent = {
         enable = true,
       },
-      -- Setup nvim-ts-context-commentstring; second setup is with nvim-comment
-      context_commentstring = {
-        enable = true,
-        enable_autocmd = false,
-      },
     },
     config = function(_, opts)
       require("nvim-treesitter.configs").setup(opts)
