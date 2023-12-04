@@ -3,13 +3,16 @@ set -e
 
 usage() {
   cat <<EOF
-Usage: hyprscreenshot [--help] [--edit] [select|window]
+Usage: hyprscreenshot [--help] [--edit] [--delay SEC] [select|window]
 
 Takes a screenshot and copies it to the clipboard.
 
 Options:
   --edit:
     Open the screenshot in ksnip for editing.
+
+  --delay SEC:
+    Wait SEC seconds before taking the screenshot.
 
 Modes:
   select (default): Select area of screen to capture.
@@ -19,6 +22,7 @@ EOF
 
 mode="select"
 edit=no
+delay=0
 
 while [[ "$#" -gt 0 ]]; do
   case "$1" in
@@ -29,6 +33,10 @@ while [[ "$#" -gt 0 ]]; do
   --edit)
     edit=yes
     shift
+    ;;
+  --delay)
+    delay="$2"
+    shift 2
     ;;
   select)
     mode="select"
@@ -63,6 +71,10 @@ esac
 if [[ -z "$geometry" ]]; then
   echo "No geometry specified" >&2
   exit 1
+fi
+
+if [[ "$delay" -gt 0 ]]; then
+  sleep "$delay"
 fi
 
 grim -t png -g "$geometry" "$file"
