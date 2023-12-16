@@ -4,9 +4,6 @@ return {
     event = { "BufRead Cargo.toml" },
     dependencies = { "nvim-lua/plenary.nvim" },
     opts = {
-      null_ls = {
-        enabled = true,
-      },
       src = {
         cmp = {
           enabled = true,

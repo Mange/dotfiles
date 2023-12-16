@@ -64,9 +64,6 @@ return {
     end,
   },
 
-  -- Dim unused variables
-  { "narutoxy/dim.lua", opts = {} },
-
   -- Color picker
   {
     "uga-rosa/ccc.nvim",

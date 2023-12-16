@@ -1,4 +1,3 @@
-local lspformat = require "lsp-format"
 local inlayhints = require "lsp-inlayhints"
 
 local has_ufo, _ = pcall(require, "ufo")
@@ -90,22 +89,10 @@ local function on_attach_without_formatting(client, bufnr)
 end
 
 local function on_attach(...)
-  lspformat.on_attach(...)
   on_attach_without_formatting(...)
 end
 
 if_require("lspconfig", function(lspconfig)
-  lspformat.setup {
-    typescript = {
-      exclude = { "tsserver" },
-    },
-    lua = {
-      exclude = { "lua_ls" },
-    },
-  }
-  lspformat.disable { args = "markdown" }
-  lspformat.disable { args = "eruby" } -- completely breaks in most formatters
-
   -- Lua
   -- Try to configure this to work both in Neovim and in AwesomeWM
   -- environments. This does not seem to be possible to do well, so try to
@@ -286,55 +273,3 @@ if_require("rust-tools", function(rustTools)
     },
   }
 end)
-
-if_require("null-ls", function(null_ls)
-  null_ls.setup {
-    debug = false,
-    diagnostics_format = "#{m} (#{s} [#{c}])",
-    should_attach = function(bufnr)
-      return not vim.api.nvim_buf_get_name(bufnr):match "%.env$"
-    end,
-    on_attach = on_attach,
-    sources = {
-      --
-      -- Formatting --
-      --
-      null_ls.builtins.formatting.prettier,
-      null_ls.builtins.formatting.shfmt.with {
-        -- Use two spaces for indentation
-        extra_args = { "-i", "2" },
-      },
-      -- null_ls.builtins.formatting.stylelint,
-      null_ls.builtins.formatting.stylua,
-
-      --
-      -- Diagnostics --
-      --
-      null_ls.builtins.diagnostics.shellcheck,
-      null_ls.builtins.diagnostics.ansiblelint,
-      -- null_ls.builtins.diagnostics.checkmake,
-      -- null_ls.builtins.diagnostics.erb_lint,
-      -- null_ls.builtins.diagnostics.eslint,
-
-      --
-      -- Code actions --
-      --
-      -- null_ls.builtins.code_actions.eslint,
-      null_ls.builtins.code_actions.gitrebase,
-      -- null_ls.builtins.code_actions.refactoring,
-      null_ls.builtins.code_actions.shellcheck,
-    },
-  }
-end)
-
-vim.api.nvim_create_autocmd("LspAttach", {
-  callback = function(args)
-    -- Don't use LSP (mostly null-ls) to format lines with `gqq`. Most
-    -- formatters and LSP servers either don't support it, care about long
-    -- lines, or touch comments at all. I mainly use this to opt-in to wrap
-    -- longer lines, mostly in comments and prose, which will never work well
-    -- here. Formatting code in a standardized fasion is something I do on save
-    -- anyway.
-    vim.bo[args.buf].formatexpr = nil
-  end,
-})

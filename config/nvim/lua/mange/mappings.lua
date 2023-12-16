@@ -291,7 +291,12 @@ local function setup()
       --
       ["c"] = {
         name = "Code",
-        ["="] = { "<cmd>Format<cr>", "Format" },
+        ["="] = {
+          function()
+            require("conform").format { async = true, lsp_fallback = true }
+          end,
+          "Format",
+        },
         r = { vim.lsp.buf.rename, "Rename" },
         g = {
           name = "Go to",
@@ -491,11 +496,11 @@ local function setup()
         C = { "<cmd>CccHighlighterToggle<cr>", "Color highlights" },
 
         f = {
-          "<cmd>FormatToggle &ft<cr>",
+          "<cmd>FormatToggle<cr>",
           "Autoformatting (filetype)",
         },
         F = {
-          "<cmd>FormatToggle<cr>",
+          "<cmd>FormatToggle!<cr>",
           "Autoformatting (global)",
         },
 
@@ -582,6 +587,10 @@ end
 local function attach_lsp(bufnr)
   local modifiable = vim.bo[bufnr].modifiable
 
+  local format = function()
+    require("conform").format { async = true, lsp_fallback = true }
+  end
+
   if modifiable then
     wk_register({
       ["<leader><CR>"] = {
@@ -597,11 +606,8 @@ local function attach_lsp(bufnr)
         vim.lsp.buf.range_code_action,
         "Code action",
       },
-      ["="] = { vim.lsp.buf.range_formatting, "Format" },
-      ["<leader>="] = {
-        vim.lsp.buf.range_formatting,
-        "Format",
-      },
+      ["="] = { format, "Format" },
+      ["<leader>="] = { format, "Format" },
     }, {
       buffer = bufnr,
       mode = "v",

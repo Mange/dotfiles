@@ -75,6 +75,7 @@ require "mange.options"
 load_plugins()
 require "mange.theme"
 require "mange.filetypes"
+require "mange.commands"
 require "mange.autocommands"
 
 require("mange.mappings").setup()
