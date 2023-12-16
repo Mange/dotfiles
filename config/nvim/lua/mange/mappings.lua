@@ -15,6 +15,8 @@ local g = vim.g
 local api = vim.api
 local utils = require "mange.utils"
 
+local genghis = require "genghis"
+
 local function map(mode, key, command, options)
   options = vim.tbl_extend("force", { noremap = true, silent = true }, options)
   local buffer = options.buffer
@@ -327,22 +329,10 @@ local function setup()
       --
       ["f"] = {
         name = "File/Fold",
-        r = {
-          ":Rename <C-R>=fnameescape(expand('%:t'))<cr>",
-          "Rename",
-          silent = false,
-        },
-        D = { ":Remove<CR>", "Delete", silent = false },
-        m = {
-          ":Move <C-R>=fnameescape(expand('%:h'))<cr>",
-          "Move",
-          silent = false,
-        },
-        c = {
-          ":Copy <C-R>=fnameescape(expand('%'))<cr>",
-          "Copy",
-          silent = false,
-        },
+        r = { genghis.renameFile, "Rename" },
+        D = { genghis.trashFile, "Delete" },
+        m = { genghis.moveAndRenameFile, "Move" },
+        c = { genghis.duplicateFile, "Copy" },
         h = { "<cmd>Telescope oldfiles<cr>", "History" },
         s = { "<cmd>write<cr>", "Save file" },
         a = { "<cmd>silent! wall<cr>", "Save all" },
@@ -540,7 +530,7 @@ local function setup()
   }
 
   --
-  -- Leader (visual)
+  -- Leader (visual & select)
   --
   wk_register({
     ["<leader>"] = {
@@ -551,19 +541,33 @@ local function setup()
         r = { ":'<,'>sort!<cr>", "Reverse" },
       },
       i = {
-        name = "Into",
+        name = "Into…",
         ["6"] = { ':<C-u>call base64#v("encode")<cr>', "Base64" },
       },
       z = { ":'<,'>TZNarrow<CR>", "Zen lines" },
       -- Cannot use "<" here right now.
       -- https://github.com/folke/which-key.nvim/issues/173
       f = {
-        name = "From",
+        name = "From…",
         ["6"] = { ':<C-u>call base64#v("decode")<cr>', "Base64" },
       },
     },
   }, {
     mode = "v",
+  })
+
+  --
+  -- Leader (visual)
+  --
+  wk_register({
+    ["<leader>"] = {
+      x = {
+        name = "Extract…",
+        f = { genghis.moveSelectionToNewFile, "…to file" },
+      },
+    },
+  }, {
+    mode = "x",
   })
 
   -- Leap
