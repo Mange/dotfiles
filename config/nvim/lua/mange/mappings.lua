@@ -11,7 +11,6 @@
 --
 -- Helpers
 --
-local g = vim.g
 local api = vim.api
 local utils = require "mange.utils"
 
@@ -484,6 +483,12 @@ local function setup()
         -- Not actually a *toggle*, more like a "Toggle off". Just pressing n/N
         -- will enable the highlights again anyway.
         h = { "<cmd>nohl<cr>", "Search highlights" },
+        i = {
+          function()
+            vim.lsp.inlay_hint.enable(nil, not vim.lsp.inlay_hint.is_enabled())
+          end,
+          "Inline hints",
+        },
 
         c = {
           require("mange.cursorline").toggle,

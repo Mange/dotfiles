@@ -1,11 +1,5 @@
 return {
   {
-    "lvimuser/lsp-inlayhints.nvim",
-    event = "LspAttach",
-    branch = "anticonceal",
-    opts = {},
-  },
-  {
     "neovim/nvim-lspconfig",
     config = function()
       require "mange.lsp"

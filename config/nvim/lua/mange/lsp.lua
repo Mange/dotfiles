@@ -1,5 +1,3 @@
-local inlayhints = require "lsp-inlayhints"
-
 local has_ufo, _ = pcall(require, "ufo")
 local has_cmp, cmp = pcall(require, "cmp_nvim_lsp")
 local has_navic, navic = pcall(require, "nvim-navic")
@@ -75,8 +73,6 @@ local function on_attach_without_formatting(client, bufnr)
       augroup END
     ]]
   end
-
-  inlayhints.on_attach(client, bufnr)
 
   if has_navic and client.server_capabilities.documentSymbolProvider then
     -- Work around navic being pissy about attaching multiple clients on the same buffer
@@ -220,6 +216,7 @@ end)
 if_require("rust-tools", function(rustTools)
   rustTools.setup {
     tools = {
+      -- Use native inline hints instead of custom ones from this plugin.
       inlay_hints = { auto = false },
     },
     server = {
