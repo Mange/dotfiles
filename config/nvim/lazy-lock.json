@@ -51,6 +51,7 @@
   "telescope.nvim": { "branch": "master", "commit": "6213322ab56eb27356fdc09a5078e41e3ea7f3bc" },
   "trouble.nvim": { "branch": "main", "commit": "f1168feada93c0154ede4d1fe9183bf69bac54ea" },
   "true-zen.nvim": { "branch": "main", "commit": "10390b9ce05a461d771013d888afd07d5db90ce0" },
+  "typescript-tools.nvim": { "branch": "master", "commit": "cbc454075741cd942a5ba92d64613533782f37c7" },
   "vim-abolish": { "branch": "master", "commit": "dcbfe065297d31823561ba787f51056c147aa682" },
   "vim-easy-align": { "branch": "master", "commit": "12dd6316974f71ce333e360c0260b4e1f81169c3" },
   "vim-exchange": { "branch": "master", "commit": "784d63083ad7d613aa96f00021cd0dfb126a781a" },
