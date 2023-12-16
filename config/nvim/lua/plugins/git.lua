@@ -2,9 +2,6 @@ return {
   {
     "TimUntersberger/neogit",
     opts = {
-      -- I know what I'm doing
-      disable_commit_confirmation = true,
-
       -- I want to start in insert mode on empty commit messages.
       disable_insert_on_commit = false,
 
