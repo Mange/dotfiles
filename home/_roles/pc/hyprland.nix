@@ -16,7 +16,7 @@ in
   wayland.windowManager.hyprland = {
     enable = true;
     plugins = [hy3.packages.x86_64-linux.hy3];
-    systemdIntegration = true;
+    systemd.enable = true;
 
     # Systemd integration does not import all environment variables, when I
     # prefer it to import everything.
