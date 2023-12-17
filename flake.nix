@@ -15,6 +15,8 @@
 
     hardware.url = "github:nixos/nixos-hardware";
 
+    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+
     hyprland.url = "github:hyprwm/Hyprland";
     hy3 = {
       url = "github:outfoxxed/hy3";
@@ -31,11 +33,7 @@
     let
       inherit (self) outputs;
       forAllSystems = nixpkgs.lib.genAttrs [
-        "aarch64-linux"
-        "i686-linux"
         "x86_64-linux"
-        "aarch64-darwin"
-        "x86_64-darwin"
       ];
     in
     {

@@ -1,8 +1,12 @@
-{ pkgs, config, ... }: let
+{ inputs, pkgs, config, ... }: let
   utils = import ../../utils.nix { inherit config pkgs; };
   dotfiles = utils.linkConfig "nvim";
 in 
 {
+  nixpkgs.overlays = [
+    inputs.neovim-nightly-overlay.overlay
+  ];
+
   xdg.configFile."nvim".source = dotfiles;
 
   home.sessionVariables = {
@@ -12,6 +16,7 @@ in
 
   programs.neovim = {
     enable = true;
+    package = pkgs.neovim-nightly;
     defaultEditor = true;
     viAlias = true;
     vimAlias = true;
