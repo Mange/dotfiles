@@ -22,6 +22,7 @@
       url = "github:outfoxxed/hy3";
       inputs.hyprland.follows = "hyprland";
     };
+    ags.url = "github:Aylur/ags";
 
     android-nixpkgs = {
       url = "github:tadfisher/android-nixpkgs";
@@ -77,6 +78,7 @@
       homeConfigurations = let
         homeConfig = home-manager.lib.homeManagerConfiguration;
         hyprlandModule = inputs.hyprland.homeManagerModules.default;
+        agsModule = inputs.ags.homeManagerModules.default;
         extraSpecialArgs = { inherit inputs outputs; };
       in {
         "mange@socia" = homeConfig {
@@ -84,6 +86,7 @@
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           modules = [
             hyprlandModule
+            agsModule
             ./home/socia
           ];
         };
@@ -92,6 +95,7 @@
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           modules = [
             hyprlandModule
+            agsModule
             ./home/vera
           ];
         };
