@@ -39,6 +39,11 @@ return {
           return false
         end
 
+        -- Never try to format erb files. It's funny how bad it becomes.
+        if vim.bo[bufnr].filetype == "eruby" then
+          return false
+        end
+
         -- Ignore format on save in common directories for installed or generated files.
         local bufname = vim.api.nvim_buf_get_name(bufnr)
         if
