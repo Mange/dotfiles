@@ -124,7 +124,6 @@ return {
             "remove_unused_imports",
             "organize_imports",
           },
-          complete_function_calls = true,
           tsserver_file_preferences = {
             includeInlayParameterNameHints = "literals",
             includeCompletionsForModuleExports = true,
