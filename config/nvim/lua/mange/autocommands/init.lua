@@ -16,3 +16,16 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt_local.number = false
   end,
 })
+
+-- Typescript / Javascript formatting shortcut
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "javascript", "typescript", "javascriptreact", "typescriptreact" },
+  callback = function()
+    vim.keymap.set(
+      "n",
+      "Q",
+      "<cmd>EslintFixAll<cr>",
+      { buffer = true, desc = "eslint-fix-all", silent = true }
+    )
+  end,
+})
