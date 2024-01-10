@@ -15,22 +15,22 @@ return {
         sh = { "shfmt" },
         ruby = { { "standardrb", "rubocop" } },
         -- Prettier
-        ["markdown.mdx"] = { { "prettierd", "prettier" } },
-        css = { { "prettierd", "prettier" } },
-        graphql = { { "prettierd", "prettier" } },
-        handlebars = { { "prettierd", "prettier" } },
-        html = { { "prettierd", "prettier" } },
-        javascript = { { "prettierd", "prettier" } },
-        javascriptreact = { { "prettierd", "prettier" } },
-        json = { { "prettierd", "prettier" } },
-        jsonc = { { "prettierd", "prettier" } },
-        less = { { "prettierd", "prettier" } },
-        markdown = { { "prettierd", "prettier" } },
-        scss = { { "prettierd", "prettier" } },
-        typescript = { { "prettierd", "prettier" } },
-        typescriptreact = { { "prettierd", "prettier" } },
-        vue = { { "prettierd", "prettier" } },
-        yaml = { { "prettierd", "prettier" } },
+        ["markdown.mdx"] = { "prettier" },
+        css = { "prettier" },
+        graphql = { "prettier" },
+        handlebars = { "prettier" },
+        html = { "prettier" },
+        javascript = { "prettier" },
+        javascriptreact = { "prettier" },
+        json = { "prettier" },
+        jsonc = { "prettier" },
+        less = { "prettier" },
+        markdown = { "prettier" },
+        scss = { "prettier" },
+        typescript = { "prettier" },
+        typescriptreact = { "prettier" },
+        vue = { "prettier" },
+        yaml = { "prettier" },
       },
       -- Set up format-on-save
       format_on_save = function(bufnr)
@@ -64,6 +64,17 @@ return {
         },
       },
     },
+    init = function(opts)
+      local conform = require "conform"
+      conform.setup(opts)
+      conform.formatters.prettier = {
+        options = {
+          -- Handle markdown files without markdown extension
+          -- (like `notes.local` and Firenvim buffers)
+          ft_parsers = { markdown = "markdown" },
+        },
+      }
+    end,
   },
 
   -- Dim unused variables
