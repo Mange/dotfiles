@@ -4,7 +4,7 @@
     mako
   ];
 
-  xdg.configFile."mako/config".text = ''
+  xdg.configFile."mako/config".text = /*ini*/ ''
     layer=overlay
     max-history=10
     # Oldest on top

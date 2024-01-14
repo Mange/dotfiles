@@ -73,7 +73,7 @@ in {
       gm = "git merge --no-ff";
       gmo = "git merge --no-ff @{upstream}";
       gmm = "git merge --no-ff master";
-      fixup = ''gco --fixup "$(git fshow)"'';
+      fixup = /*sh*/ ''gco --fixup "$(git fshow)"'';
       gro = "git rebase @{upstream}";
       grm = "git rebase master";
       gri = "git rebase -i";

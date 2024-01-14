@@ -24,7 +24,7 @@ in
     #
     # Also manually set up PATH so it works when using GDM, which does not run
     # a full shell when loading Hyprland.
-    extraConfig = ''
+    extraConfig = /*sh*/ ''
       env = PATH,$HOME/.local/bin:$PATH
       exec-once = "${pkgs.dbus}/bin/dbus-update-activation-environment --systemd --all";
       source = ./config/base.conf

@@ -1,5 +1,5 @@
 { pkgs, ... }: {
-  xdg.configFile."rspec/options".text = ''
+  xdg.configFile."rspec/options".text = /*text*/ ''
     --color
     --format documentation
   '';

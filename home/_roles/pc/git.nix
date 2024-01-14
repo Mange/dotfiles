@@ -31,7 +31,7 @@
         prompt = true;
         keepBackup = false;
         vimdiff = {
-          cmd = ''nvim -d "$LOCAL" "$BASE" "$REMOTE" "$MERGED" -c "\$wincmd w" -c "wincmd J" -c "windo set wrap"'';
+          cmd = /*sh*/ ''nvim -d "$LOCAL" "$BASE" "$REMOTE" "$MERGED" -c "\$wincmd w" -c "wincmd J" -c "windo set wrap"'';
         };
       };
 

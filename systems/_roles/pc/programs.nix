@@ -31,7 +31,7 @@
 
   # Swaylock should have access to passwords, etc.
   security.pam.services.swaylock = {
-    text = ''
+    text = /*pamconf*/ ''
       auth include login
     '';
   };

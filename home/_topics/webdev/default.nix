@@ -18,12 +18,13 @@
     pgcli
   ];
 
-  xdg.configFile."pgcli/config".text = ''
+  xdg.configFile."pgcli/config".text = /*ini*/ ''
     [main]
     # Only execute query on Return when it ends with a semicolon
     multi_line = True
 
-    vi = True # fo' life!
+    # fo' life!
+    vi = True 
 
     # Warn on things like "DROP TABLE".
     destructive_warning = True
