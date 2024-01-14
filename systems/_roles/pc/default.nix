@@ -19,7 +19,7 @@
   # Literally doxxing myself
   time.timeZone = "Europe/Stockholm";
   i18n.supportedLocales = [ "C.UTF-8/UTF-8" "en_US.UTF-8/UTF-8" "sv_SE.UTF-8/UTF-8" ];
-  i18n.defaultLocale = "en_US.UTF-8";
+  i18n.defaultLocale = "sv_SE.UTF-8";
 
   # Setup nice looking boot screen.
   boot.plymouth.enable = true;
