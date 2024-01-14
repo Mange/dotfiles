@@ -1,6 +1,7 @@
 { pkgs, ... }: {
   security.polkit.enable = true;
   security.sudo.enable = true;
+  services.accounts-daemon.enable = true;
 
   users.users.mange = {
     uid = 1000;
