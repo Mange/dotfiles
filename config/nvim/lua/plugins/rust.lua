@@ -41,6 +41,15 @@ return {
               ["async-recursion"] = { "async_recursion" },
             },
           },
+          completion = {
+            callable = {
+              -- Locked into snippets forever after accepting a function call is really uncomfortable.
+              -- Does not seem to work, however…?
+              snippets = "none",
+            },
+          },
+          -- Allow Treesitter embedded highlights inside strings.
+          semanticHighlighting = { strings = { enable = false } },
         },
       },
     },
