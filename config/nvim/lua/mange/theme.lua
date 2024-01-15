@@ -91,6 +91,10 @@ catppuccin.setup {
     -- Not set by the notify integration?
     -- Causes a warning if not set, so let's set it ourselves.
     NotifyBackground = { bg = colors.surface0 },
+
+    LspReferenceRead = { bg = "#5f5840" },
+    LspReferenceText = { bg = "#504945" },
+    LspReferenceWrite = { bg = "#6c473e" },
   },
 }
 

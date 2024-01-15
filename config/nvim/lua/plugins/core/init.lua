@@ -1,9 +1,9 @@
 -- Basic plugins I wish was part of the default editor. No real GUI or anything...
 return {
-  { "DataWraith/auto_mkdir", lazy = false },
-
   { "nvim-lua/plenary.nvim" },
-  { "direnv/direnv.vim" },
+  { "nvim-tree/nvim-web-devicons", lazy = true },
 
   { "chrisgrieser/nvim-genghis" }, -- Convenience file operations
+  { "direnv/direnv.vim" },
+  { "DataWraith/auto_mkdir", lazy = false },
 }

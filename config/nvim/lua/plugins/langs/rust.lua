@@ -1,5 +1,14 @@
 return {
   {
+    "nvim-treesitter/nvim-treesitter",
+    opts = function(_, opts)
+      vim.list_extend(opts.ensure_installed, {
+        "rust",
+        "toml",
+      })
+    end,
+  },
+  {
     "Saecki/crates.nvim",
     event = { "BufRead Cargo.toml" },
     dependencies = { "nvim-lua/plenary.nvim" },
@@ -54,9 +63,7 @@ return {
       },
     },
     config = function(_, opts)
-      vim.g.rustaceanvim = vim.tbl_deep_extend(
-        "force", {}, opts
-      )
-    end
+      vim.g.rustaceanvim = vim.tbl_deep_extend("force", {}, opts)
+    end,
   },
 }

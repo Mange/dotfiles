@@ -30,6 +30,7 @@ in
       clang
 
       # telescope-fzf-native
+      fzf
       gnumake
 
       # Ruby should be installed manually inside of the Ruby version used for
@@ -58,8 +59,8 @@ in
       ccls # C
 
       # Others
+      marksman # Markdown
       nil # Nix
-      fzf
       nodePackages_latest.dockerfile-language-server-nodejs
       nodePackages_latest.prettier
       nodePackages_latest.yaml-language-server

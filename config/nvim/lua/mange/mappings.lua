@@ -589,7 +589,7 @@ end
 --
 -- LSP
 --
-local function attach_lsp(bufnr)
+local function attach_lsp(_, bufnr)
   local modifiable = vim.bo[bufnr].modifiable
 
   local format = function()
