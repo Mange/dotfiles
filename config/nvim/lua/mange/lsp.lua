@@ -213,29 +213,7 @@ if_require("lspconfig", function(lspconfig)
   -- SQL
 end)
 
-if_require("rust-tools", function(rustTools)
-  rustTools.setup {
-    tools = {
-      -- Use native inline hints instead of custom ones from this plugin.
-      inlay_hints = { auto = false },
-    },
-    server = {
-      on_attach = on_attach,
-      settings = {
-        ["rust-analyzer"] = {
-          checkOnSave = {
-            allFeatures = true,
-            overrideCommand = {
-              "cargo",
-              "clippy",
-              "--workspace",
-              "--message-format=json",
-              "--all-targets",
-              "--all-features",
-            },
-          },
-        },
-      },
-    },
-  }
-end)
+return {
+  on_attach = on_attach,
+  capabilities = capabilities,
+}

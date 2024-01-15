@@ -252,7 +252,7 @@ local function setup()
       k = {
         function()
           if vim.bo.ft == "rust" then
-            require("rust-tools.join_lines").join_lines()
+            vim.cmd.RustLsp("joinLines")
           else
             vim.cmd [[SplitjoinJoin]]
           end
