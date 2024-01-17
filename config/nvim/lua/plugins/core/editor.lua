@@ -40,24 +40,16 @@ return {
   -- Dim unused variables
   { "narutoxy/dim.lua", opts = {} },
 
-  -- Replace with a lua implementation?
   {
-    "AndrewRadev/splitjoin.vim",
-    event = "InsertEnter",
-    init = function()
-      vim.g.splitjoin_ruby_curly_braces = 0
-      vim.g.splitjoin_ruby_hanging_args = 0 -- I am not insane
-      vim.g.splitjoin_ruby_options_as_arguments = 1
-
-      vim.g.splitjoin_ruby_trailing_comma = 0 -- standardrb does not like
-      vim.g.splitjoin_trailing_comma = 1 -- …but I do
-
-      vim.g.splitjoin_html_attributes_bracket_on_new_line = 1
-
-      -- Setup in mange.mappings
-      vim.g.splitjoin_split_mapping = ""
-      vim.g.splitjoin_join_mapping = ""
-    end,
+    "Wansmer/treesj",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    opts = {
+      use_default_keymaps = false,
+      check_syntax_error = true,
+      max_join_length = 1000,
+      cursor_behavior = "hold",
+      notify = true, -- notify on errors
+    },
   },
 
   {

@@ -248,13 +248,18 @@ local function setup()
       --
       [":"] = { "<cmd>Telescope commands<cr>", "Commands" },
       N = { "<cmd>Telescope resume<cr>", "Telescope resume" },
-      j = { "<cmd>SplitjoinSplit<cr>", "Split line" },
+      j = {
+        function()
+          require("treesj").split()
+        end,
+        "Split line",
+      },
       k = {
         function()
           if vim.bo.ft == "rust" then
-            vim.cmd.RustLsp("joinLines")
+            vim.cmd.RustLsp "joinLines"
           else
-            vim.cmd [[SplitjoinJoin]]
+            require("treesj").join()
           end
         end,
         "Join line",
