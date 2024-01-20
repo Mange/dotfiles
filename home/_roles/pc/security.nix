@@ -1,5 +1,5 @@
 # Keyring, SSH, GPG stuff
-{ config, pkgs, ... }: {
+{ config, pkgs, lib, ... }: {
   # Keyring and gpg agent
   services.gnome-keyring.enable = true;
   home.sessionVariables.SSH_AUTH_SOCK = "$XDG_RUNTIME_DIR/keyring/ssh"; # gnome-keyring
@@ -24,6 +24,9 @@
     enable = true;
     mountPoint = "Keybase";
   };
+
+  # https://github.com/nix-community/home-manager/issues/4722
+  systemd.user.services.kbfs.Service.PrivateTmp = lib.mkForce false;
 
   home.packages = with pkgs; [
     keybase-gui
