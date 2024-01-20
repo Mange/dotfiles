@@ -7,7 +7,7 @@
   "margin-left": 20,
   "margin-right": 20,
   "modules-left": ["hyprland/workspaces", "custom/media"],
-  "modules-center": ["hyprland/window"],
+  "modules-center": ["wlr/taskbar"],
   "modules-right": [
     "tray",
     "cpu",
@@ -38,9 +38,25 @@
     "active-only": false,
     "all-outputs": false,
     "disable-scroll": true,
-    "format": "{name}",
+    "format": "{name} {windows}",
     "on-click": "activate",
-    "sort-by-number": true
+    "sort-by-number": true,
+    "format-window-separator": " ",
+    "window-rewrite-default": "",
+    "window-rewrite": {
+      "title<.*youtube.*>": "",
+      "title<.*github.*>": "",
+      "class<org.wezfurlong.wezterm> title<- NVIM>": "",
+      "class<firefox>": "",
+      "class<brave-browser>": "",
+      "class<org.wezfurlong.wezterm>": "",
+      "class<spotify>": "",
+      "class<org.telegram.desktop>": "",
+      "class<discord>": "󰙯",
+      "class<keybase>": "󰭹",
+      "class<obsidian>": "󰙏",
+      "class<Slack>": ""
+    }
   },
 
   "custom/media": {
@@ -57,6 +73,22 @@
 
   "hyprland/window": {
     "separate-outputs": true
+  },
+
+  "wlr/taskbar": {
+    "icon-size": 16,
+    "format": "{icon} {title:.25}",
+    "tooltip-format": "{name}: {title}",
+    "on-click": "activate",
+    "on-click-middle": "close",
+    "on-click-right": "minimize",
+    // None of these seem to work for some reason. Leaving them here for now;
+    // maybe I can make them work later.
+    "rewrite": {
+      "Spotify Premium": "Spotify",
+      "^(.*) - NVIM$": "Neovim - $1",
+      "Brave Web Browser: (.*)": "Brave: $1"
+    }
   },
 
   "memory": {

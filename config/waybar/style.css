@@ -10,11 +10,15 @@ window#waybar {
   background: transparent;
 }
 
-#workspaces,
+#taskbar {
+  background: transparent;
+}
+
 #custom-media,
-.modules-center,
-.modules-right {
-  background: alpha(#1e1e2e, 0.8);
+.modules-right,
+#taskbar button,
+#workspaces button {
+  background: alpha(#313244, 0.8);
   padding: 0 0.6rem;
   border-radius: 1rem;
 }
@@ -27,6 +31,7 @@ window#waybar {
 #memory,
 #disk,
 #pulseaudio,
+#taskbar,
 #clock {
   padding: 0 0.4rem;
 }
@@ -39,7 +44,6 @@ window#waybar {
 
 #workspaces {
   padding: 0;
-  border-radius: 1rem;
 }
 
 #clock {
@@ -50,8 +54,23 @@ window#waybar {
   margin-right: 10px;
 }
 
+#taskbar button.active {
+  background: alpha(#cba6f7, 0.8);
+  color: #000;
+}
+
+#taskbar button + button {
+  margin-left: 0.5rem;
+}
+
 #workspaces button {
   min-width: 24px;
+  padding: 0 0.4rem;
+  border-radius: 1rem;
+}
+
+#workspaces button + button {
+  margin-left: 0.5rem;
 }
 
 #workspaces button.urgent {
@@ -61,23 +80,9 @@ window#waybar {
 #workspaces button.active {
   background: #a6e3a1;
   color: #181825;
-  border-radius: 0;
 }
 
 /* Workspace colors */
-
-#workspaces button:first-child {
-  border-radius: 1rem 0 0 1rem;
-  padding-left: 0.4rem;
-}
-
-#workspaces button:last-child {
-  border-radius: 0 1rem 1rem 0;
-  padding-right: 0.4rem;
-}
-#workspaces button:first-child:last-child {
-  border-radius: 1rem;
-}
 
 #workspaces button:nth-child(5n) {
   color: #a6e3a1;
