@@ -1,7 +1,9 @@
 -- Resize windows when vim was resized
 vim.api.nvim_create_autocmd("VimResized", {
   callback = function()
-    vim.cmd "tabdo wincmd ="
+    local currentTab = vim.fn.tabpagenr()
+    vim.cmd.tabdo { args = { "wincmd", "=" } }
+    vim.cmd.tabnext { args = { currentTab } }
   end,
 })
 
