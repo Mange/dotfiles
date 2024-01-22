@@ -32,7 +32,5 @@
     keybase-gui
     monero
     monero-gui
-    yubikey-manager
-    yubikey-manager-qt
   ];
 }

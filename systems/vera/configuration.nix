@@ -15,6 +15,7 @@
     ./hardware-configuration.nix
 
     ../_roles/laptop
+    ../_topics/yubikey
   ];
 
   networking.hostName = "vera";

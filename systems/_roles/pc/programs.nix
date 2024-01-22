@@ -19,7 +19,6 @@
   programs.ssh.enableAskPassword = true;
   security.pam.services.gdm.enableGnomeKeyring = true;
   services.gnome.gnome-keyring.enable = true;
-  services.pcscd.enable = true;
   # Note that kbfs is set up inside of home manager instead of here.
   services.keybase.enable = true;
 

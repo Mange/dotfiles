@@ -22,6 +22,7 @@
     ../_topics/mullvad.nix
     ../_topics/vm-host.nix
     ../_topics/wacom.nix
+    ../_topics/yubikey.nix
 
     ./mounts.nix
   ];
