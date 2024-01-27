@@ -24,12 +24,6 @@ return {
     "mrcjkb/rustaceanvim",
     ft = { "rust" },
     opts = {
-      server = {
-        on_attach = function(client, bufnr, ...)
-          local lsp = require "mange.lsp"
-          lsp.on_attach(client, bufnr, ...)
-        end,
-      },
       settings = {
         ["rust-analyzer"] = {
           cargo = {
