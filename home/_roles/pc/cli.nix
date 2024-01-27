@@ -84,6 +84,7 @@
     watchexec
     psmisc # better pstree command
     lsof
+    glib # "gio trash", etc.
 
     # Network tools
     curl

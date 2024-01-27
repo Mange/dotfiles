@@ -339,7 +339,12 @@ local function setup()
       ["f"] = {
         name = "File/Fold",
         r = { genghis.renameFile, "Rename" },
-        D = { genghis.trashFile, "Delete" },
+        D = {
+          function()
+            genghis.trashFile { trashCmd = "gio trash" }
+          end,
+          "Delete",
+        },
         m = { genghis.moveAndRenameFile, "Move" },
         c = { genghis.duplicateFile, "Copy" },
         h = { "<cmd>Telescope oldfiles<cr>", "History" },
