@@ -10,6 +10,7 @@
     # File management
     gnome.file-roller
     gnome.gnome-font-viewer
+    cinnamon.nemo-with-extensions
 
     # Remote desktop and hardware management
     gnome.vinagre
@@ -36,8 +37,8 @@
   ];
 
   xdg.mimeApps.defaultApplications = {
-    # Thunar as my default GUI file manager
-    "inode/directory" = "thunar.desktop";
+    # Nemo as my default GUI file manager
+    "inode/directory" = "nemo.desktop";
 
     # Brave as my default browser
     "text/html" = "brave-browser.desktop";
