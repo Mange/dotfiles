@@ -24,7 +24,6 @@
     enable = true;
     mountPoint = "Keybase";
   };
-
   # https://github.com/nix-community/home-manager/issues/4722
   systemd.user.services.kbfs.Service.PrivateTmp = lib.mkForce false;
 
@@ -32,5 +31,26 @@
     keybase-gui
     monero
     monero-gui
+    polkit_gnome
   ];
+
+  systemd.user.services.polkit-gnome-authentication-agent-1 = {
+    Unit = {
+      Description = "polkit-gnome-authentication-agent-1";
+      Wants = [ "graphical-session.target" ];
+      After = [ "graphical-session.target" ];
+    };
+
+    Service = {
+      Type = "simple";
+      ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
+      Restart = "on-failure";
+      RestartSec = 1;
+      TimeoutStopSec = 10;
+    };
+
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
+  };
 }
