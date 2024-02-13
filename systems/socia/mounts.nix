@@ -3,6 +3,8 @@
   consessorShares = [
     "Anime"
     "Audiobooks"
+    "Books"
+    "Comics"
     "Downloads"
     "Kids"
     "Mange"
