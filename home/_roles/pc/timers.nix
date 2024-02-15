@@ -20,10 +20,12 @@ in {
     timers = {
       remove-old-screenshots = {
         Unit.Description = "Delete old screenshots";
+        Install.WantedBy = [ "timers.target" ];
         Timer = {
           WakeSystem = false;
           OnStartupSec = "30min";
           OnUnitInactiveSec = "6h";
+          Unit = "remove-old-screenshots.service";
         };
       };
     };
