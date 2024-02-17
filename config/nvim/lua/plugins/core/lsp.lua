@@ -51,6 +51,15 @@ return {
         end
       end)
 
+      -- Inlay hints
+      if vim.lsp.inlay_hint then
+        utils.on_lsp_attach(function(client, bufnr)
+          if client.server_capabilities.inlayHintProvider then
+            vim.lsp.inlay_hint.enable(bufnr, true)
+          end
+        end)
+      end
+
       --
       -- Set up all the configured servers
       --
