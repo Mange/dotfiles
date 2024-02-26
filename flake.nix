@@ -71,6 +71,10 @@
           specialArgs = { inherit inputs outputs; };
           modules = [./systems/vera/configuration.nix];
         };
+        porto = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+          modules = [./systems/porto/configuration.nix];
+        };
       };
 
       # Standalone home-manager configuration entrypoint
@@ -97,6 +101,15 @@
             hyprlandModule
             agsModule
             ./home/vera
+          ];
+        };
+        "mange@porto" = homeConfig {
+          inherit extraSpecialArgs;
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          modules = [
+            hyprlandModule
+            agsModule
+            ./home/porto
           ];
         };
       };
