@@ -18,5 +18,10 @@
 
   home.packages = with pkgs; [
     insomnia
+
+    kubectl
+    google-cloud-sdk
+    terraform
+    tailscale
   ];
 }
