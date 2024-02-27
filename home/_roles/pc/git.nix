@@ -76,6 +76,7 @@
       "*.swp"
       ".vimrc"
       ".nvimrc"
+      ".nvim.lua"
       ".*.rs.rustfmt"
       ".#*"
 
