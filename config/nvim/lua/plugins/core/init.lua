@@ -6,4 +6,12 @@ return {
   { "chrisgrieser/nvim-genghis" }, -- Convenience file operations
   { "direnv/direnv.vim" },
   { "DataWraith/auto_mkdir", lazy = false },
+
+  {
+    "klen/nvim-config-local",
+    lazy = false,
+    opts = {
+      lookup_parents = true,
+    },
+  },
 }
