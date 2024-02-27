@@ -1,0 +1,24 @@
+#!/bin/sh
+
+usage() {
+  echo "Usage: $0 [YYYY-MM-DD]"
+  echo ""
+  echo "Prints ISO Week number of current or specified date."
+}
+
+if [ "$1" = "--help" ]; then
+  usage
+  exit 0
+fi
+
+if [ "$#" -gt 1 ]; then
+  usage >&2
+  exit 1
+fi
+
+date_opts=""
+
+[ -n "$1" ] && date_opts="$date_opts -d ${1}"
+
+# shellcheck disable=SC2086
+date $date_opts "+%V"
