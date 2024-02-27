@@ -8,7 +8,7 @@
     krita
 
     mediainfo
-    youtube-dl
+    yt-dlp
 
     playerctl # MPRIS control
     pulsemixer # TUI volume mixer
@@ -17,6 +17,8 @@
     imagemagick # for image previews, etc.
     ghostscript # imagemagick optional dependency for PDF support
   ];
+
+  programs.zsh.shellAliases.youtube-dl = "yt-dlp";
 
   xdg.mimeApps.defaultApplications = {
     "video/mp4" = "mpv.desktop";
