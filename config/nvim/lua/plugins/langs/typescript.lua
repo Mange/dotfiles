@@ -36,6 +36,10 @@ return {
           -- Ignore 'This may be converted to an async function' diagnostics.
           ["textDocument/publishDiagnostics"] = api.filter_diagnostics { 80006 },
         },
+        on_attach = function(client)
+          client.server_capabilities.documentFormattingProvider = false
+          client.server_capabilities.documentRangeFormattingProvider = false
+        end,
         settings = {
           publish_diagnostic_on = "insert_leave",
           expose_as_code_action = {
