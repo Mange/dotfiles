@@ -1,4 +1,6 @@
-{ pkgs, ... }: {
+{ config, pkgs, ... }: let
+  username = "mange";
+in {
   # No, thanks…
   # I build too many apps and stuff that I want to expose on the network. I
   # always put my machines behind NATs and trust the local networks.
@@ -11,7 +13,10 @@
   users.users.mange.extraGroups = ["networkmanager"];
 
   # Enable Tailscale
-  services.tailscale.enable = true;
+  services.tailscale = {
+    enable = true;
+    extraUpFlags = "--operator=${username}";
+  };
 
   # OpenSSH server
   services.openssh = {
