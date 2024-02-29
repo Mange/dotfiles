@@ -15,7 +15,10 @@ in {
   # Enable Tailscale
   services.tailscale = {
     enable = true;
-    extraUpFlags = "--operator=${username}";
+    extraUpFlags = [
+      "--operator=${username}"
+      "--accept-routes=true"
+    ];
   };
 
   # OpenSSH server
