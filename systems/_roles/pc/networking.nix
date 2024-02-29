@@ -1,12 +1,7 @@
-{ config, pkgs, ... }: let
+{ ... }: let
   username = "mange";
 in {
-  # No, thanks…
-  # I build too many apps and stuff that I want to expose on the network. I
-  # always put my machines behind NATs and trust the local networks.
-  # Perhaps this will change in the future when I have a laptop, but only when
-  # more of my config is over inside Nix.
-  networking.firewall.enable = false;
+  networking.firewall.allowPing = true;
 
   # NetworkManager
   networking.networkmanager.enable = true;
@@ -31,17 +26,5 @@ in {
       PasswordAuthentication = false;
     };
   };
-
-  # Avahi
-  services.avahi = {
-    enable = true;
-    nssmdns4 = true;
-    openFirewall = true;
-  };
-
-  # Home network devices
-  services.printing = {
-    enable = true;
-    drivers = [ pkgs.brlaser ];
-  };
+  networking.firewall.allowedTCPPorts = [22];
 }
