@@ -21,5 +21,6 @@
 
   home.packages = [
     pkgs.duplicity
+    pkgs.thunderbird
   ];
 }
