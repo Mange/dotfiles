@@ -11,7 +11,7 @@
 { inputs, ... }: {
   imports = [
     # Hardware config
-    inputs.hardware.nixosModules.lenovo-thinkpad-x13-yoga
+    inputs.hardware.nixosModules.lenovo-thinkpad-t14s
     ./hardware-configuration.nix
 
     ../_roles/laptop
