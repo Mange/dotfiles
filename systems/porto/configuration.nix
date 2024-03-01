@@ -40,6 +40,6 @@
   };
 
   # Enable swap on luks
-  boot.initrd.luks.devices."luks-85296862-3c53-4f66-a680-d1e0590a220c".device = "/dev/disk/by-uuid/85296862-3c53-4f66-a680-d1e0590a220c";
-  boot.initrd.luks.devices."luks-85296862-3c53-4f66-a680-d1e0590a220c".keyFile = "/crypto_keyfile.bin";
+  boot.initrd.luks.devices."luks-f5daa918-0b21-4bbd-b1b9-b5f3fc2db563".device = "/dev/disk/by-uuid/f5daa918-0b21-4bbd-b1b9-b5f3fc2db563";
+  boot.initrd.luks.devices."luks-f5daa918-0b21-4bbd-b1b9-b5f3fc2db563".keyFile = "/crypto_keyfile.bin";
 }
