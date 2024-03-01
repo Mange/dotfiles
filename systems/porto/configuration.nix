@@ -16,6 +16,7 @@
 
     ../_roles/laptop
     ../_topics/yubikey.nix
+    ../_topics/annepro.nix
   ];
 
   networking.hostName = "porto";
