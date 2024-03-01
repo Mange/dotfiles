@@ -22,15 +22,15 @@ function icon() {
 
   icon=$(echo "$info" | grep "Icon" | awk '{ print $2 }')
   case "$icon" in
-    phone)
-      echo ""
-      ;;
-    audio-card)
-      echo "蓼"
-      ;;
-    *)
-      echo ""
-      ;;
+  phone)
+    echo ""
+    ;;
+  audio-card)
+    echo "蓼"
+    ;;
+  *)
+    echo ""
+    ;;
   esac
 }
 
@@ -55,7 +55,7 @@ choices=()
 index=0
 
 mapfile -t devices < <(
-  echo "paired-devices" | bluetoothctl | grep "Device " | sort
+  echo "devices Paired" | bluetoothctl | grep "Device " | sort
 )
 
 # bluetoothctl emits other junk on stdout; grep for lines we want
@@ -74,11 +74,11 @@ for device in "${devices[@]}"; do
   ids+=("$id")
   names+=("$name")
   choices+=("$title")
-  index=$((index+1))
+  index=$((index + 1))
 done
 
 selected_index=$(
-  printf '%s\n' "${choices[@]}" | \
+  printf '%s\n' "${choices[@]}" |
     rofi -dmenu -p "Select device" -i -no-custom -format i "${selection_options[@]}"
 )
 
