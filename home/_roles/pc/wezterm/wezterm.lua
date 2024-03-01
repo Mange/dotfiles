@@ -145,5 +145,15 @@ return {
       key = "DownArrow",
       action = wezterm.action { ScrollToPrompt = 1 },
     },
+    -- Shift Escape -> ~
+    -- This is mainly for using 60% keyboards where I cannot reprogram escape to
+    -- default to [`~] and having Escape on the Fn layer.
+    -- Without this the behavior is to delete the entire line, which is awful with
+    -- my muscle memory of Shift+<Key before 1>.
+    {
+      mods = "SHIFT",
+      key = "Escape",
+      action = wezterm.action { SendString = "~" },
+    },
   },
 }

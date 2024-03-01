@@ -60,6 +60,14 @@ bindkey -M vicmd 'v' edit-command-line
 bindkey -M viins -s '^[[32;2u' ' '
 bindkey -M vicmd -s '^[[32;2u' ' '
 
+# Shift Escape -> ~
+# This is mainly for using 60% keyboards where I cannot reprogram escape to
+# default to [`~] and having Escape on the Fn layer.
+# Without this the behavior is to delete the entire line, which is awful with
+# my muscle memory of Shift+<Key before 1>.
+bindkey -M viins -s '^[[27;2u' '~'
+bindkey -M vicmd -s '^[[27;2u' '~'
+
 # See extra bindkey calls under the Plugins section
 
 # Outputs $1 when on insert mode and outputs $2 when on command mode.
