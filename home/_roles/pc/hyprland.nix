@@ -34,6 +34,7 @@ in
   # Set up symlinks for all the config files, and also create a mutable
   # `local.conf` for local config that you don't want committed to the repo.
   xdg.configFile."hypr/config".source = utils.linkConfig "hypr/config";
+  xdg.configFile."hypr/screens.conf".source = lib.mkDefault ( utils.linkConfig "hypr/default_screens.conf" );
   home.activation.localHyprConfig = lib.hm.dag.entryAfter ["writeBoundary"] ''
      $DRY_RUN_CMD touch $VERBOSE_ARG "''${XDG_CONFIG_HOME:-$HOME/.config}/hypr/config/local.conf"
   '';

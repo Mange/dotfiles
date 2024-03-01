@@ -23,4 +23,6 @@
     pkgs.duplicity
     pkgs.thunderbird
   ];
+
+  xdg.configFile."hypr/screens.conf".source = ./hyprland/screens.conf;
 }
