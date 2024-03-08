@@ -1,23 +1,15 @@
-{ outputs, ... }: {
+{ outputs, ... }: let 
+  nixConfig = ./nixpkgs-config.nix;
+in {
   nixpkgs = {
     # You can add overlays here
     overlays = [
       outputs.overlays.additions
       outputs.overlays.modifications
     ];
-
-    config = {
-      allowUnfree = true;
-      # Workaround for https://github.com/nix-community/home-manager/issues/2942
-      allowUnfreePredicate = (_: true);
-
-      # Used by Obsidian
-      # https://forum.obsidian.md/t/electron-25-is-now-eol-please-upgrade-to-a-newer-version/72878
-      permittedInsecurePackages = [
-        "electron-25.9.0"
-      ];
-    };
   };
+  nixpkgs.config = import nixConfig;
+  xdg.configFile."nixpkgs/config.nix".source = nixConfig;
 
   programs.home-manager.enable = true;
 
