@@ -2,7 +2,6 @@
   utils = import ../../utils.nix { inherit config pkgs; };
 in {
   imports = [
-    ./ags.nix
     ./chat.nix
     ./cli.nix
     ./desktop.nix
