@@ -23,6 +23,7 @@
     google-cloud-sdk
     terraform
     tailscale
+    mongodb-compass
   ];
 
   xdg.configFile."hypr/screens.conf".source = ./hyprland/screens.conf;
