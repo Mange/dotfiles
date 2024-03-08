@@ -33,6 +33,9 @@ in
       fzf
       gnumake
 
+      # LuaSnip
+      luajitPackages.luasnip
+
       # Ruby should be installed manually inside of the Ruby version used for
       # projects.
 
