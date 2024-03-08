@@ -32,6 +32,7 @@
     monero
     monero-gui
     polkit_gnome
+    libsecret
   ];
 
   systemd.user.services.polkit-gnome-authentication-agent-1 = {
