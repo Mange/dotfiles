@@ -14,7 +14,7 @@
 
   # Login, security, keyring, etc.
   programs.gnupg.agent.enable = true;
-  programs.gnupg.agent.pinentryFlavor = "gnome3";
+  programs.gnupg.agent.pinentryPackage = pkgs.pinentry-gnome3;
   programs.seahorse.enable = true;
   programs.ssh.enableAskPassword = true;
   security.pam.services.gdm.enableGnomeKeyring = true;

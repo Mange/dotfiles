@@ -23,9 +23,8 @@
   };
 
   programs.eza = {
+    # Sets up aliases: `ls`, `ll`, `la`, `lla`, `lt` by default.
     enable = true;
-    # Sets up aliases: `ls`, `ll`, `la`, `lla`, `lt`.
-    enableAliases = true;
     icons = true;
     git = true;
     extraOptions = [
