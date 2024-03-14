@@ -22,6 +22,8 @@
   home.packages = [
     pkgs.duplicity
     pkgs.thunderbird
+
+    pkgs.mongodb-compass
   ];
 
   xdg.configFile."hypr/screens.conf".source = ./hyprland/screens.conf;
