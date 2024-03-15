@@ -61,6 +61,10 @@ in
       bear # tool to generate compilation database for clang tooling
       ccls # C
 
+      # Java & Kotlin
+      jdt-language-server # eclipse.jdt.ls
+      kotlin-language-server
+
       # Others
       marksman # Markdown
       nil # Nix
