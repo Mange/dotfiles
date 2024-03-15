@@ -19,7 +19,22 @@ return {
   -- Show lightbulbs when code actions are available on the current line
   {
     "kosayoda/nvim-lightbulb",
-    opts = { autocmd = { enabled = true } },
+    opts = {
+      autocmd = { enabled = true },
+      hide_in_unfocused_buffer = true,
+      sign = { enabled = false },
+      virtual_text = { enabled = true, text = "  " },
+      action_kinds = {
+        "quickfix",
+        "refactor",
+        "refactor.extract",
+        "refactor.inline",
+        "refactor.rewrite",
+        -- "source",
+        -- "source.organizeImports",
+        -- "source.fixAll",
+      },
+    },
   },
 
   -- Indentation guides

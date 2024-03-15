@@ -69,6 +69,8 @@ return {
           LspReferenceRead = { bg = "#5f5840" },
           LspReferenceText = { bg = "#504945" },
           LspReferenceWrite = { bg = "#6c473e" },
+
+          LightBulbVirtualText = { fg = colors.yellow },
         },
       }
 
