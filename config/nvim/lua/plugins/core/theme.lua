@@ -13,7 +13,13 @@ return {
         transparent_background = true,
         term_colors = true,
         integrations = {
-          treesitter = true,
+          cmp = true,
+          dap = { enabled = false, enable_ui = false },
+          gitsigns = true,
+          indent_blankline = { enabled = true, colored_indent_levels = false },
+          leap = true,
+          lsp_trouble = true,
+          markdown = true,
           native_lsp = {
             enabled = true,
             virtual_text = {
@@ -29,28 +35,14 @@ return {
               information = {},
             },
           },
-          lsp_trouble = true,
-          cmp = true,
-          gitsigns = true,
-          leap = true,
-          telescope = true,
-          navic = {
-            enabled = true,
-            custom_bg = "NONE",
-          },
-          dap = {
-            enabled = false,
-            enable_ui = false,
-          },
-          which_key = true,
-          indent_blankline = {
-            enabled = true,
-            colored_indent_levels = false,
-          },
+          navic = { enabled = true, custom_bg = "NONE" },
           neogit = true,
-          markdown = true,
           notify = true,
           symbols_outline = true,
+          telescope = true,
+          treesitter = true,
+          ufo = true,
+          which_key = true,
         },
         color_overrides = {},
         custom_highlights = {
