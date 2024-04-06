@@ -68,14 +68,21 @@ in
       jdt-language-server # eclipse.jdt.ls
       kotlin-language-server
 
+      # Rust
+      rust-analyzer
+      cargo-nextest # Won't be found; also installed globally.
+
       # Others
       marksman # Markdown
       nil # Nix
       nodePackages_latest.dockerfile-language-server-nodejs
       nodePackages_latest.prettier
       nodePackages_latest.yaml-language-server
-      rust-analyzer
       terraform-ls
     ];
   };
+
+  home.packages = with pkgs; [
+    cargo-nextest
+  ];
 }

@@ -100,7 +100,25 @@ local function setup()
   -- Unmap Q
   -- I'll use it for context-sensitive actions depending on filetype
   map("", "Q", "", { expr = true })
+
   vim.keymap.set("n", "<tab>", "za", { desc = "Toggle fold" })
+
+  vim.keymap.set("n", "[t", function()
+    require("neotest").jump.prev()
+  end, { desc = "Previous test" })
+
+  vim.keymap.set("n", "]t", function()
+    require("neotest").jump.next()
+  end, { desc = "Next test" })
+
+  vim.keymap.set("n", "[T", function()
+    require("neotest").jump.prev { status = "failed" }
+  end, { desc = "Previous failing test" })
+
+  vim.keymap.set("n", "]T", function()
+    require("neotest").jump.next { status = "failed" }
+  end, { desc = "Next failing test" })
+
   -- Restore <C-i> after <tab> is taken. See :help tui-input
   vim.keymap.set(
     "n",
@@ -486,10 +504,80 @@ local function setup()
       },
 
       --
-      -- Leader +toggle/open
+      -- Leader +test
       --
       ["t"] = {
-        name = "Toggle/Open",
+        name = "Test",
+
+        t = {
+          function()
+            require("neotest").run.run()
+          end,
+          "Nearest",
+        },
+
+        a = {
+          function()
+            require("neotest").run.run { suite = true }
+          end,
+          "All",
+        },
+
+        f = {
+          function()
+            require("neotest").run.run(vim.fn.expand "%")
+          end,
+          "File",
+        },
+
+        d = {
+          function()
+            require("neotest").run.run(vim.uv.cwd())
+          end,
+          "CWD",
+        },
+
+        l = {
+          function()
+            require("neotest").run.run_last()
+          end,
+          "Last",
+        },
+
+        s = {
+          function()
+            require("neotest").run.stop()
+          end,
+          "Stop",
+        },
+
+        o = {
+          function()
+            require("neotest").output.open { enter = true, auto_close = true }
+          end,
+          "Show output",
+        },
+
+        O = {
+          function()
+            require("neotest").output_panel.toggle()
+          end,
+          "Toggle output panel",
+        },
+
+        A = {
+          function()
+            require("neotest").run.attach()
+          end,
+          "Attach",
+        },
+      },
+
+      --
+      -- Leader +toggle
+      --
+      ["T"] = {
+        name = "Toggle",
         -- Not actually a *toggle*, more like a "Toggle off". Just pressing n/N
         -- will enable the highlights again anyway.
         h = { "<cmd>nohl<cr>", "Search highlights" },
@@ -527,9 +615,23 @@ local function setup()
         d = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "Diagnostics" },
         q = { "<cmd>TroubleToggle quickfix<cr>", "Quickfix list" },
         o = { "<cmd>SymbolsOutline<cr>", "Symbol outline" },
-        p = { ":CccPick<cr>", "Color picker" },
         z = { ":TZAtaraxis<CR>", "Zen" },
         Z = { ":TZNarrow<CR>", "Zen lines" },
+      },
+
+      --
+      -- Leader +open
+      --
+      ["o"] = {
+        name = "Open",
+        p = { ":CccPick<cr>", "Color picker" },
+
+        t = {
+          function()
+            require("neotest").summary.toggle()
+          end,
+          "Test sumary",
+        },
       },
 
       --

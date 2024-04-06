@@ -60,4 +60,13 @@ return {
       vim.g.rustaceanvim = vim.tbl_deep_extend("force", {}, opts)
     end,
   },
+
+  {
+    "nvim-neotest/neotest",
+    opts = function(_, opts)
+      vim.list_extend(opts.adapters, {
+        require "rustaceanvim.neotest",
+      })
+    end,
+  },
 }
