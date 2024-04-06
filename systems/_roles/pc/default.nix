@@ -29,4 +29,11 @@
     font = "Lat2-Terminus16";
     keyMap = "us";
   };
+
+  # Let me watch a shitton amount of things.
+  # (Related to fswatch / Neovim)
+  boot.kernel.sysctl = {
+    "fs.inotify.max_user_watches" = 100000;
+    "fs.inotify.max_queued_events" = 100000;
+  };
 }

@@ -36,6 +36,9 @@ in
       # LuaSnip
       luajitPackages.luasnip
 
+      # "libuv-watchdirs has known performance issues. Consider installing fswatch."
+      fswatch
+
       # Ruby should be installed manually inside of the Ruby version used for
       # projects.
 
