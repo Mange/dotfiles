@@ -14,6 +14,5 @@
     ../_roles/laptop
 
     ../_topics/bluetooth.nix
-    ../_topics/android-dev.nix
   ];
 }
