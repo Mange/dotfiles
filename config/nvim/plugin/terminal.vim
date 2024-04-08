@@ -9,5 +9,6 @@ augroup terminal_stuff
 
   " Start in insert mode, because I usually only open a terminal to
   " immediately do something in it.
-  au TermOpen * startinsert
+  " (Only do this if the terminal buffer is also the one that has the focus.)
+  au TermOpen * lua if vim.startswith(vim.api.nvim_buf_get_name(0), "term://") then vim.cmd("startinsert") end
 augroup END
