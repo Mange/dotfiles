@@ -84,5 +84,6 @@ in
 
   home.packages = with pkgs; [
     cargo-nextest
+    neovide
   ];
 }
