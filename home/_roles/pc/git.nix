@@ -39,8 +39,9 @@
         conflictstyle = "diff3";
         tool = "vimdiff";
       };
-
       diff.tool = "vimdiff";
+
+      rerere.enabled = true;
 
       rebase = {
         autosquash = true;
