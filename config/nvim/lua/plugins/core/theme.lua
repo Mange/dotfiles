@@ -10,7 +10,11 @@ return {
 
       local opts = {
         flavour = "mocha",
-        transparent_background = true,
+
+        -- Terminal handles transparent background differently from Neovide.
+        -- Neovide should not use transparent background in the theme.
+        transparent_background = not vim.g.neovide,
+
         term_colors = true,
         integrations = {
           cmp = true,
@@ -77,6 +81,14 @@ return {
 
       require("catppuccin").setup(opts)
       vim.cmd.colorscheme "catppuccin"
+
+      -- Neovim theme stuff
+      vim.o.guifont = "Jetbrains Mono"
+      vim.g.neovide_transparency = 0.8
+      vim.g.neovide_theme = "dark"
+      vim.g.neovide_background_color = colors.base
+      vim.g.neovide_floating_blur_amount_x = 2.0
+      vim.g.neovide_floating_blur_amount_y = 2.0
     end,
   },
 }
