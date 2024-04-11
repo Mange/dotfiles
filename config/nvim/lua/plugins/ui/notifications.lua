@@ -13,11 +13,14 @@ return {
       end,
     },
     config = function()
-      local banned_messages = { "No information available" }
+      local banned_messages = {
+        vim.regex "^No information available$",
+        vim.regex "^fswatch:",
+      }
 
       vim.notify = function(msg, ...)
         for _, banned in ipairs(banned_messages) do
-          if msg == banned then
+          if banned:match_str(msg) then
             return
           end
         end
