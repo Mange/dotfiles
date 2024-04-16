@@ -103,6 +103,9 @@ local function setup()
 
   vim.keymap.set("n", "<tab>", "za", { desc = "Toggle fold" })
 
+  --
+  -- Navigation: [ and ]
+  --
   vim.keymap.set("n", "[t", function()
     require("neotest").jump.prev()
   end, { desc = "Previous test" })
@@ -118,6 +121,58 @@ local function setup()
   vim.keymap.set("n", "]T", function()
     require("neotest").jump.next { status = "failed" }
   end, { desc = "Next failing test" })
+
+  --
+  -- Substitute
+  --
+  vim.keymap.set(
+    "n",
+    "s",
+    require("substitute").operator,
+    { noremap = true, desc = "Substitute" }
+  )
+  vim.keymap.set(
+    "n",
+    "ss",
+    require("substitute").line,
+    { noremap = true, desc = "Line" }
+  )
+  vim.keymap.set(
+    "n",
+    "S",
+    require("substitute").eol,
+    { noremap = true, desc = "Substitute EOL" }
+  )
+  vim.keymap.set(
+    "x",
+    "s",
+    require("substitute").visual,
+    { noremap = true, desc = "Substitute" }
+  )
+  vim.keymap.set(
+    "n",
+    "sx",
+    require("substitute.exchange").operator,
+    { noremap = true, desc = "Exchange" }
+  )
+  vim.keymap.set(
+    "n",
+    "sxx",
+    require("substitute.exchange").line,
+    { noremap = true, desc = "Line" }
+  )
+  vim.keymap.set(
+    "x",
+    "X",
+    require("substitute.exchange").visual,
+    { noremap = true, desc = "Exchange" }
+  )
+  vim.keymap.set(
+    "n",
+    "sxc",
+    require("substitute.exchange").cancel,
+    { noremap = true, desc = "Cancel" }
+  )
 
   -- Restore <C-i> after <tab> is taken. See :help tui-input
   vim.keymap.set(
