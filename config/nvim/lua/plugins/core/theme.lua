@@ -11,9 +11,10 @@ return {
       local opts = {
         flavour = "mocha",
 
-        -- Terminal handles transparent background differently from Neovide.
-        -- Neovide should not use transparent background in the theme.
-        transparent_background = not vim.g.neovide,
+        -- Does not work like I want it to. It removes *all* backgrounds, not
+        -- just the Normal background. See overrides below.
+        -- transparent_background = not vim.g.neovide,
+        dim_inactive = { enabled = false },
 
         term_colors = true,
         integrations = {
@@ -48,8 +49,17 @@ return {
           ufo = true,
           which_key = true,
         },
-        color_overrides = {},
         custom_highlights = {
+          -- Setup transparent background for normal backgrounds. Using
+          -- catppuccin's `transparent_background` setting removes all
+          -- backgrounds from all plugins, which is not what I want.
+          --
+          -- Neovide does not have a "default background" color to fall back
+          -- to, so use normal theme.
+          Normal = vim.g.neovide and {} or { bg = "NONE" },
+          NormalNC = vim.g.neovide and {} or { bg = "NONE" },
+          TelescopeNormal = vim.g.neovide and {} or { bg = colors.base },
+
           -- Disabled by transparent_background for some reason.
           CursorLine = { bg = U.darken(colors.surface0, 0.64, colors.base) },
 
@@ -65,10 +75,6 @@ return {
 
           Folded = { bg = colors.surface0 },
           FoldedInfo = { fg = colors.subtext0 },
-
-          -- Not set by the notify integration?
-          -- Causes a warning if not set, so let's set it ourselves.
-          NotifyBackground = { bg = colors.surface0 },
 
           LspReferenceRead = { bg = "#5f5840" },
           LspReferenceText = { bg = "#504945" },
