@@ -226,6 +226,11 @@ local function setup()
       "Deprecated",
     },
 
+    ["cr"] = {
+      name = "Coerce",
+      ["r"] = { "<cmd>TextCaseOpenTelescope<CR>", "Telescope" },
+    },
+
     --
     -- Gitsigns
     --

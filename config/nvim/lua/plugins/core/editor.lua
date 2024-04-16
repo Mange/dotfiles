@@ -7,8 +7,22 @@ return {
 
   { "ggandor/leap.nvim" },
   { "tpope/vim-repeat", event = "VeryLazy" },
-  { "tpope/vim-abolish", cmd = "S", keys = { "cr" } }, -- Smart S/re/repl/
   { "gbprod/substitute.nvim", opts = {} },
+
+  {
+    "johmsalas/text-case.nvim",
+    dependencies = { "nvim-telescope/telescope.nvim" },
+    opts = {
+      default_keymappings_enabled = true,
+      -- From tpope/vim-abolish; since it's hard to retrain muscle memory.
+      prefix = "cr", -- mnemonic "coerce"
+      substitude_command_name = "S",
+    },
+    config = function(_, opts)
+      require("textcase").setup(opts)
+      require("telescope").load_extension "textcase"
+    end,
+  },
 
   {
     "junegunn/vim-easy-align",
