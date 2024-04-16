@@ -39,7 +39,6 @@ return {
               information = {},
             },
           },
-          navic = { enabled = true, custom_bg = "NONE" },
           neogit = true,
           neotest = true,
           notify = true,

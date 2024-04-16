@@ -4,16 +4,6 @@ return {
   {
     "hoob3rt/lualine.nvim",
     opts = function(_)
-      local function fg(name)
-        return function()
-          ---@type {foreground?:number}?
-          local hl = vim.api.nvim_get_hl_by_name(name, true)
-          return hl
-            and hl.foreground
-            and { fg = string.format("#%06x", hl.foreground) }
-        end
-      end
-
       return {
         options = {
           theme = "catppuccin",
@@ -32,17 +22,10 @@ return {
             "searchcount",
           },
           lualine_z = {
+            "location",
             {
               "progress",
               separator = "",
-            },
-            {
-              "location",
-            },
-            {
-              require("lazy.status").updates,
-              cond = require("lazy.status").has_updates,
-              color = fg "Special",
             },
           },
         },
