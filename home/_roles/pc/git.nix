@@ -4,6 +4,7 @@
     git-absorb
     github-cli
     hub # mostly for `git sync`; I should migrate away
+    tig
   ];
 
   programs.git = {
