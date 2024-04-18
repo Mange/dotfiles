@@ -60,36 +60,6 @@ in {
       nix-locate = "nix-build --no-out-link '<nixpkgs>' -A";
 
       wer = "watchexec --debounce 500 -c -e rb,yml,erb --no-shell --";
-
-      git = "hub";
-      checkout = "git checkout";
-      master = "git checkout master";
-      gadd = "git add";
-      gco = "git commit -v";
-      gpu = "git push";
-      gb = "git branch -v";
-      gba = "git branch -va";
-      gbm = "git branch -v --merged";
-      gm = "git merge --no-ff";
-      gmo = "git merge --no-ff @{upstream}";
-      gmm = "git merge --no-ff master";
-      fixup = /*sh*/ ''gco --fixup "$(git fshow)"'';
-      gro = "git rebase @{upstream}";
-      grm = "git rebase master";
-      gri = "git rebase -i";
-      grim = "git rebase -i master";
-      grio = "git rebase -i @{upstream}";
-      gf = "git fetch --prune";
-      ff = "git merge --ff-only";
-      ffm = "git merge --ff-only master";
-      ffo = "git merge --ff-only @{upstream}";
-      gup = "gf && ffo";
-      gl="git log --no-show-signature --graph -n 1000 --format='tformat:%C(bold blue)%h%Creset %C(bold)%s%Creset%C(auto)%d%n%C(dim white)%ad %C(nodim green)(%ar)%Creset - %an%C(yellow)%+N%n%Creset'";
-      s="git status --short --branch";
-      gs="git show --show-signature";
-      gd="git diff";
-      gds="git diff | delta --side-by-side";
-      staged="gd --cached";
     };
 
     completionInit = "recomp";
