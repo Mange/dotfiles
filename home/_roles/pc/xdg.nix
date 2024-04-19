@@ -46,6 +46,14 @@
     # Docker, Kubernetes, etc.
     DOCKER_CONFIG="${XDG_CONFIG_HOME}/docker";
     KUBECONFIG="${XDG_CONFIG_HOME}/kube/config";
+
+    # Awscli
+    # See https://github.com/aws/aws-sdk/issues/30
+    AWS_CONFIG_FILE="${XDG_CONFIG_HOME}/aws/config";
+    AWS_CLI_HISTORY_FILE="${XDG_DATA_HOME}/aws/history";
+    AWS_CREDENTIALS_FILE="${XDG_DATA_HOME}/aws/credentials";
+    AWS_WEB_IDENTITY_TOKEN_FILE="${XDG_DATA_HOME}/aws/token";
+    AWS_SHARED_CREDENTIALS_FILE="${XDG_DATA_HOME}/aws/shared-credentials";
   };
 in {
   xdg.enable = true;

@@ -15,9 +15,13 @@
     ]))
     google-cloud-sql-proxy
 
+    # Old cloud env
+    awscli2
+
     # Common DB and misc tooling
     gnumake
     mongodb-compass
     postgresql
+    mysql
   ];
 }
