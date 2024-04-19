@@ -9,6 +9,20 @@
     };
   };
 
+  environment.systemPackages = with pkgs; [
+    cachix
+
+    nix-output-monitor # Wrapped in nh, but we might want to use it manually too
+    nvd # Diff Nix builds
+  ];
+
+  programs.nh = {
+    enable = true;
+    clean.enable = true;
+    clean.extraArgs = "--keep-since 14d --keep 3";
+    flake = "/home/mange/Projects/dotfiles";
+  };
+
   nix = {
     # This will add each flake input as a registry
     # To make nix3 commands consistent with your flake
@@ -37,12 +51,9 @@
     };
 
     gc = {
-      automatic = true;
+      automatic = false; # Replaced by programs.nh.clean
       dates = "weekly";
       options = "--delete-older-than 14d";
     };
   };
-
-  # Set up cachix
-  environment.systemPackages = [ pkgs.cachix ];
 }
