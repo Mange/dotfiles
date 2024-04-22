@@ -317,6 +317,7 @@ local function setup()
       -- Leader root
       --
       [":"] = { "<cmd>Telescope commands<cr>", "Commands" },
+      ["/"] = { "<cmd>nohl<cr>", "nohl" },
       N = { "<cmd>Telescope resume<cr>", "Telescope resume" },
       j = {
         function()
@@ -340,10 +341,6 @@ local function setup()
         end,
         "Close notifications",
       },
-
-      --
-      -- Leader visual
-      --
 
       --
       -- Leader +buffer
