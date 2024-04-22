@@ -218,13 +218,6 @@ local function setup()
       "Trouble previous",
     },
 
-    ["<BS>"] = {
-      function()
-        vim.notify("Use <C-A> instead!", vim.log.levels.INFO)
-      end,
-      "Deprecated",
-    },
-
     ["cr"] = {
       name = "Coerce",
       ["r"] = { "<cmd>TextCaseOpenTelescope<CR>", "Telescope" },
