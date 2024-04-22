@@ -136,14 +136,14 @@ return {
           keyword_length = 4,
         },
         sources = {
-          { name = "path" },
-          { name = "nvim_lsp" },
+          { name = "path", group_index = 1 },
+          { name = "nvim_lsp", group_index = 1 },
 
-          { name = "nvim_lua" },
-          { name = "crates" },
+          { name = "nvim_lua", group_index = 2 },
+          { name = "crates", group_index = 2 },
 
-          { name = "luasnip" },
-          { name = "treesitter", priority = 0.2, keyword_length = 5 },
+          { name = "luasnip", group_index = 1 },
+          { name = "treesitter", group_index = 3, keyword_length = 5 },
         },
       }
     end,
