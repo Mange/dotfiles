@@ -460,7 +460,7 @@ local function setup()
 
         c = {
           function()
-            require("neogit.popups.commit").create()
+            require("neogit").open { "commit" }
           end,
           "Commit",
         },
