@@ -8,6 +8,7 @@ return {
   { "ggandor/leap.nvim" },
   { "tpope/vim-repeat", event = "VeryLazy" },
   { "gbprod/substitute.nvim", opts = {} },
+  { "echasnovski/mini.bufremove", opts = {}, lazy = false },
 
   {
     "johmsalas/text-case.nvim",

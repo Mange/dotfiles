@@ -89,7 +89,7 @@ local function delete_all_buffers()
   end, vim.api.nvim_list_bufs())
 
   for _, buf in ipairs(buffers) do
-    vim.cmd(string.format("bd %d", buf))
+    require("mini.bufremove").delete(buf)
   end
 end
 
@@ -360,7 +360,12 @@ local function setup()
         name = "Buffers",
         D = { delete_all_buffers, "Delete all buffers" },
         b = { "<cmd>Telescope buffers<cr>", "Search buffers" },
-        d = { ":bd<cr>", "Delete buffer" },
+        d = {
+          function()
+            require("mini.bufremove").delete()
+          end,
+          "Delete buffer",
+        },
         f = { "<cmd>Telescope filetypes<cr>", "Set filetype" },
         l = { ":b #<cr>", "Goto last" },
         n = { "<cmd>DashboardNewFile<cr>", "New" },
