@@ -1,4 +1,7 @@
 { ... }: {
-  services.syncthing.enable = true;
-  services.syncthing.tray.enable = true;
+  services.syncthing = {
+    enable = true;
+    tray.enable = true;
+    tray.command = "syncthingtray --wait"; # Add --wait
+  };
 }
