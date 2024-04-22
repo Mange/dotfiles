@@ -42,15 +42,6 @@ return {
       highlight = {
         enable = true,
       },
-      incremental_selection = {
-        enable = true,
-        keymaps = {
-          init_selection = "<CR>",
-          node_incremental = "<CR>",
-          scope_incremental = "<TAB>",
-          node_decremental = "<S-TAB>",
-        },
-      },
       indent = {
         enable = true,
       },

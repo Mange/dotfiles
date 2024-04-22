@@ -111,6 +111,25 @@ local function setup()
   )
 
   --
+  -- Flash
+  --
+  vim.keymap.set({ "n", "x", "o" }, "<cr>", function()
+    require("flash").jump()
+  end, { desc = "Flash" })
+
+  vim.keymap.set({ "n", "x", "o" }, "<bs>", function()
+    require("flash").treesitter()
+  end, { desc = "Flash Treesitter" })
+
+  vim.keymap.set("o", "r", function()
+    require("flash").remote()
+  end, { desc = "Remote Flash" })
+
+  vim.keymap.set({ "o", "x" }, "R", function()
+    require("flash").treesitter_search()
+  end, { desc = "Treesitter Search" })
+
+  --
   -- Navigation: [ and ]
   --
   vim.keymap.set("n", "[t", function()
@@ -732,11 +751,6 @@ local function setup()
   }, {
     mode = "x",
   })
-
-  -- Leap
-  if_require("leap", function(leap)
-    leap.add_default_mappings()
-  end)
 end
 
 --

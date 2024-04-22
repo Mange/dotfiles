@@ -5,10 +5,10 @@ return {
     event = "InsertEnter",
   },
 
-  { "ggandor/leap.nvim" },
-  { "tpope/vim-repeat", event = "VeryLazy" },
   { "gbprod/substitute.nvim", opts = {} },
   { "echasnovski/mini.bufremove", opts = {}, lazy = false },
+
+  { "folke/flash.nvim", event = "VeryLazy", opts = {} },
 
   {
     "johmsalas/text-case.nvim",

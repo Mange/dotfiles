@@ -20,9 +20,9 @@ return {
         integrations = {
           cmp = true,
           dap = { enabled = false, enable_ui = false },
+          flash = true,
           gitsigns = true,
           indent_blankline = { enabled = true, colored_indent_levels = false },
-          leap = true,
           lsp_trouble = true,
           markdown = true,
           native_lsp = {
