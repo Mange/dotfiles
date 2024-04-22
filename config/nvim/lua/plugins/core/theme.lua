@@ -46,6 +46,7 @@ return {
           symbols_outline = true,
           telescope = true,
           treesitter = true,
+          treesitter_context = true,
           ufo = true,
           which_key = true,
         },
