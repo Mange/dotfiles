@@ -357,7 +357,7 @@ local function setup()
         },
         f = { "<cmd>Telescope filetypes<cr>", "Set filetype" },
         l = { ":b #<cr>", "Goto last" },
-        n = { "<cmd>DashboardNewFile<cr>", "New" },
+        n = { "<cmd>enew<cr>", "New" },
         a = { "<cmd>A<cr>", "Alternative" },
         A = { "<cmd>AS<cr>", "Alternative (split)" },
       },
