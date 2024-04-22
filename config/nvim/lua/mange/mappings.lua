@@ -102,6 +102,13 @@ local function setup()
   map("", "Q", "", { expr = true })
 
   vim.keymap.set("n", "<tab>", "za", { desc = "Toggle fold" })
+  vim.keymap.set(
+    -- Restore <C-i> after <tab> is taken. See :help tui-input
+    "n",
+    "<C-i>",
+    "<C-i>",
+    { desc = "Jump forward", remap = false }
+  )
 
   --
   -- Navigation: [ and ]
@@ -172,14 +179,6 @@ local function setup()
     "sxc",
     require("substitute.exchange").cancel,
     { noremap = true, desc = "Cancel" }
-  )
-
-  -- Restore <C-i> after <tab> is taken. See :help tui-input
-  vim.keymap.set(
-    "n",
-    "<C-i>",
-    "<C-i>",
-    { desc = "Jump forward", remap = false }
   )
 
   wk_register {
