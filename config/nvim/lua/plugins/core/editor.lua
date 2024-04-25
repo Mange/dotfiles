@@ -8,7 +8,17 @@ return {
   { "gbprod/substitute.nvim", opts = {} },
   { "echasnovski/mini.bufremove", opts = {}, lazy = false },
 
-  { "folke/flash.nvim", event = "VeryLazy", opts = {} },
+  {
+    "folke/flash.nvim",
+    event = "VeryLazy",
+    opts = {
+      modes = {
+        search = {
+          enabled = false,
+        },
+      },
+    },
+  },
 
   {
     "johmsalas/text-case.nvim",
