@@ -36,6 +36,10 @@ return {
       --
       utils.on_lsp_attach(function(client, bufnr)
         require("mange.mappings").attach_lsp(client, bufnr)
+
+        if client.server_capabilities.definitionProvider then
+          vim.bo[bufnr].tagfunc = "v:lua.vim.lsp.tagfunc"
+        end
       end)
 
       -- TODO: Can this be made nicer?
