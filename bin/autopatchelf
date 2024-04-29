@@ -1,0 +1,27 @@
+#!/usr/bin/env nix-shell
+#! nix-shell -i bash --pure
+#! nix-shell -p patchelf bash which
+# vim: ft=bash
+set -eu
+set -o pipefail
+
+if [[ "$#" -lt 0 ]] || [[ "$1" == "--help" ]]; then
+    echo "Usage: $0 <path-to-executable>"
+    echo ""
+    echo "Will patch the executable to use the dynamic linker from the Nix store."
+    echo "A backup file will be created."
+    exit 1
+fi
+
+bin="$1"
+if [[ ! -f "$bin" ]]; then
+  echo "$bin is not a file"
+  exit 1
+fi
+
+# Uses `bash` to determine which interpreter to use.
+good_interpreter="$(patchelf --print-interpreter "$(which bash)")"
+
+# Create a backup
+cp "$bin" "$bin~"
+patchelf --set-interpreter "$good_interpreter" "$bin"
