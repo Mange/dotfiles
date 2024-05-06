@@ -59,7 +59,7 @@ return {
       if vim.lsp.inlay_hint then
         utils.on_lsp_attach(function(client, bufnr)
           if client.server_capabilities.inlayHintProvider then
-            vim.lsp.inlay_hint.enable(bufnr, true)
+            vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
           end
         end)
       end
