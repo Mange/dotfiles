@@ -724,14 +724,30 @@ local function setup()
       },
       i = {
         name = "Into…",
-        ["6"] = { ':<C-u>call base64#v("encode")<cr>', "Base64" },
+        ["6"] = {
+          function()
+            local input = utils.get_selection()
+            local encoded = vim.base64.encode(input)
+            utils.replace_selection(encoded)
+            utils.feed_escape()
+          end,
+          "Base64",
+        },
       },
       z = { ":'<,'>TZNarrow<CR>", "Zen lines" },
       -- Cannot use "<" here right now.
       -- https://github.com/folke/which-key.nvim/issues/173
       f = {
         name = "From…",
-        ["6"] = { ':<C-u>call base64#v("decode")<cr>', "Base64" },
+        ["6"] = {
+          function()
+            local input = utils.get_selection()
+            local decoded = vim.base64.decode(input)
+            utils.replace_selection(decoded)
+            utils.feed_escape()
+          end,
+          "Base64",
+        },
       },
     },
   }, {
