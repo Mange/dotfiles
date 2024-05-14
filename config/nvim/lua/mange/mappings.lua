@@ -643,7 +643,10 @@ local function setup()
         h = { "<cmd>nohl<cr>", "Search highlights" },
         i = {
           function()
-            vim.lsp.inlay_hint.enable(nil, not vim.lsp.inlay_hint.is_enabled())
+            vim.lsp.inlay_hint.enable(
+              not vim.lsp.inlay_hint.is_enabled { bufnr = 0 },
+              { bufnr = 0 }
+            )
           end,
           "Inline hints",
         },
