@@ -25,7 +25,7 @@ in {
     layout = [
       {
         label = "lock";
-        action = "wl-lock-screen";
+        action = "loginctl lock-session";
         text = "Lock";
         keybind = "1";
       }
@@ -72,10 +72,6 @@ in {
     wf-recorder
     ksnip # Screenshots + annotations
 
-    # Screen and session
-    swayidle # Trigger stuff when idle
-    swaylock-effects # Lockscreen
-
     # CLipboard control
     wl-clipboard
     cliphist # Clipboard history
@@ -95,7 +91,6 @@ in {
   home.file.".local/bin/wfrecord".source = ./bin/wfrecord;
 
   xdg.configFile = {
-    "swayidle".source = utils.linkConfig "swayidle";
     "waybar".source = utils.linkConfig "waybar";
   };
 }

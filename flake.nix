@@ -84,7 +84,9 @@
         extraSpecialArgs = { inherit inputs outputs; };
       in {
         "mange@socia" = homeConfig {
-          inherit extraSpecialArgs;
+          extraSpecialArgs = extraSpecialArgs // {
+            isLaptop = false;
+          };
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           modules = [
             hyprlandModule
@@ -92,7 +94,9 @@
           ];
         };
         "mange@vera" = homeConfig {
-          inherit extraSpecialArgs;
+          extraSpecialArgs = extraSpecialArgs // {
+            isLaptop = true;
+          };
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           modules = [
             hyprlandModule
@@ -100,7 +104,9 @@
           ];
         };
         "mange@porto" = homeConfig {
-          inherit extraSpecialArgs;
+          extraSpecialArgs = extraSpecialArgs // {
+            isLaptop = true;
+          };
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           modules = [
             hyprlandModule

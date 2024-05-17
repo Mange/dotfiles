@@ -1,4 +1,0 @@
-lock 'wl-lock-screen -f'
-timeout 600 'wl-lock-screen -f --fade-in 4 --grace 10'
-timeout 720 'hyprctl dispatch dpms off' resume 'hyprctl dispatch dpms on'
-before-sleep 'wl-lock-screen -f'

@@ -28,12 +28,8 @@
   services.xserver.enable = true;
   programs.hyprland.enable = true;
 
-  # Swaylock should have access to passwords, etc.
-  security.pam.services.swaylock = {
-    text = /*pamconf*/ ''
-      auth include login
-    '';
-  };
+  # Hyprlock should have access to passwords, etc.
+  security.pam.services.hyprlock = {};
 
   # Shell
   programs.zsh.enable = true;
