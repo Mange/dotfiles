@@ -17,6 +17,7 @@ in {
     history = { 
       path = "${config.xdg.dataHome}/zsh/history";
       share = false;
+      extended = true;
     };
 
     enableVteIntegration = true;
