@@ -6,6 +6,7 @@ in {
   programs.dircolors.enableZshIntegration = true;
   programs.direnv.enableZshIntegration = true;
   programs.fzf.enableZshIntegration = true;
+  programs.yazi.enableZshIntegration = true;
 
   # Wezterm is not configured through home-manager. See wezterm.nix.
   # programs.wezterm.enableZshIntegration = true;

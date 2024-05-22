@@ -43,6 +43,15 @@
     ];
   };
 
+  programs.yazi = {
+    enable = true;
+    settings = {
+      manager = {
+        sort_dir_first = true;
+      };
+    };
+  };
+
   programs.htop = {
     enable = true;
   };
