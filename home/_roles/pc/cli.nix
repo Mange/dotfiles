@@ -105,5 +105,6 @@
     # Misc development
     manix # A fast documentation searcher for Nix
     parallel
+    xsv # CSV tools
   ];
 }
