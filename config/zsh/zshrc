@@ -68,7 +68,15 @@ bindkey -M vicmd -s '^[[32;2u' ' '
 bindkey -M viins -s '^[[27;2u' '~'
 bindkey -M vicmd -s '^[[27;2u' '~'
 
-# See extra bindkey calls under the Plugins section
+# Open Yazi (using "ya" alias) with Ctrl-/
+ya-widget() {
+  echo ""
+  ya
+  zle send-break
+}
+zle -N ya-widget
+bindkey -M viins '^_' ya-widget
+bindkey -M vicmd '^_' ya-widget
 
 # Outputs $1 when on insert mode and outputs $2 when on command mode.
 # zle_mode_output "when insert" "when command"
