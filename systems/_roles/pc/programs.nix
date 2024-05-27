@@ -43,4 +43,12 @@
   # Docker
   virtualisation.docker.enable = true;
   users.users.mange.extraGroups = ["docker"];
+
+  # NPM should be integrated with Nixos so global installs use a custom prefix.
+  programs.npm = {
+    enable = true;
+    npmrc = ''
+      prefix = ''${HOME}/.local/share/npm
+    '';
+  };
 }

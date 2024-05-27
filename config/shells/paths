@@ -6,6 +6,7 @@
 if [[ -n $BASH_VERSION || -n $ZSH_VERSION ]]; then
   if [[ $_mange_customized_paths != "yes" ]]; then
     _mange_customized_paths="yes"
+    npm_prefix="${XDG_DATA_HOME}/npm"
 
     if [[ -n "$BASH_VERSION" ]]; then
       # Bash does not automatically have a $path array like ZSH; create it
@@ -17,14 +18,14 @@ if [[ -n $BASH_VERSION || -n $ZSH_VERSION ]]; then
       "$HOME/.local/bin"
 
       "${CARGO_HOME:-$HOME/.cargo}/bin"
-      "$XDG_DATA_HOME/npm/packages/bin"
+      "${npm_prefix}/bin"
       "$HOME/.yarn/bin"
 
       "${path[@]}"
     )
 
     # Also set up custom MANPATH
-    MANPATH="${XDG_DATA_HOME}/npm/packages/share/man:$(manpath --quiet)"
+    MANPATH="${npm_prefix}/share/man:$(manpath --quiet)"
     export MANPATH
 
     if [[ -n "$ZSH_VERSION" ]]; then
