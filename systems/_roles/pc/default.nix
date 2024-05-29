@@ -4,10 +4,9 @@
 # a personal computation device for personal use.
 # A "server" role would be used for unpersonal headless machines, and "vm" for
 # virtual machines.
-{ inputs, ... }: {
+{ ... }: {
   imports = [
     ../../_topics/nixconfig.nix
-    inputs.hyprland.nixosModules.default
 
     ./catppuccin.nix
     ./networking.nix

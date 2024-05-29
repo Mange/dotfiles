@@ -15,14 +15,6 @@
 
     hardware.url = "github:nixos/nixos-hardware";
 
-    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
-
-    hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
-    hy3 = {
-      url = "github:outfoxxed/hy3";
-      inputs.hyprland.follows = "hyprland";
-    };
-
     android-nixpkgs = {
       url = "github:tadfisher/android-nixpkgs";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -80,7 +72,6 @@
       # Available through 'home-manager --flake .#your-username@your-hostname'
       homeConfigurations = let
         homeConfig = home-manager.lib.homeManagerConfiguration;
-        hyprlandModule = inputs.hyprland.homeManagerModules.default;
         extraSpecialArgs = { inherit inputs outputs; };
       in {
         "mange@socia" = homeConfig {
@@ -88,30 +79,21 @@
             isLaptop = false;
           };
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          modules = [
-            hyprlandModule
-            ./home/socia
-          ];
+          modules = [ ./home/socia ];
         };
         "mange@vera" = homeConfig {
           extraSpecialArgs = extraSpecialArgs // {
             isLaptop = true;
           };
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          modules = [
-            hyprlandModule
-            ./home/vera
-          ];
+          modules = [ ./home/vera ];
         };
         "mange@porto" = homeConfig {
           extraSpecialArgs = extraSpecialArgs // {
             isLaptop = true;
           };
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          modules = [
-            hyprlandModule
-            ./home/porto
-          ];
+          modules = [ ./home/porto ];
         };
       };
     };

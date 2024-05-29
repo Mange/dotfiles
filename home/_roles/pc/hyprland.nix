@@ -1,9 +1,13 @@
-{ inputs, pkgs, config, lib, isLaptop, ... }: let
+{ pkgs, config, lib, isLaptop, ... }: let
   utils = import ../../utils.nix { inherit config pkgs; };
-  hy3 = inputs.hy3;
   brightnessctl = "${pkgs.brightnessctl}/bin/brightnessctl";
   hyprlock = "${config.programs.hyprlock.package}/bin/hyprlock";
   playerctl = "${pkgs.playerctl}/bin/playerctl";
+
+  fixedHy3 = pkgs.hyprlandPlugins.hy3.overrideDerivation (oldAttrs: {
+    # Remove patches that break hy3 on hyprland 0.40.0-unstable-2024-05-05
+    patches = [];
+  });
 in 
 {
   services.hypridle = {
@@ -140,7 +144,7 @@ in
 
   wayland.windowManager.hyprland = {
     enable = true;
-    plugins = [hy3.packages.x86_64-linux.hy3];
+    plugins = [fixedHy3];
     systemd.enable = true;
 
     # Systemd integration does not import all environment variables, when I
