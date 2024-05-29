@@ -659,7 +659,7 @@ local function setup()
           "<cmd>Gitsigns toggle_current_line_blame<cr>",
           "Toggle line blame",
         },
-        C = { "<cmd>CccHighlighterToggle<cr>", "Color highlights" },
+        C = { "<cmd>HighlightColors Toggle<cr>", "Color highlights" },
 
         f = {
           "<cmd>FormatToggle<cr>",

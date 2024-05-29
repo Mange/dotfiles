@@ -34,6 +34,7 @@
   "nvim-comment": { "branch": "main", "commit": "e9ac16ab056695cad6461173693069ec070d2b23" },
   "nvim-config-local": { "branch": "main", "commit": "83bb6d9881653a5cf8b489ba8a6fe5a06049a10a" },
   "nvim-genghis": { "branch": "main", "commit": "01eeb090ea4947df6b6b9d8589b324b9f1aaf851" },
+  "nvim-highlight-colors": { "branch": "main", "commit": "582064092cff170331064b7d198a5b97cb261fca" },
   "nvim-lightbulb": { "branch": "master", "commit": "8f00b89dd1b1dbde16872bee5fbcee2e58c9b8e9" },
   "nvim-lspconfig": { "branch": "master", "commit": "7383bacd57abd6d86e51765b80d7adf5707ab30d" },
   "nvim-nio": { "branch": "master", "commit": "8765cbc4d0c629c8158a5341e1b4305fd93c3a90" },

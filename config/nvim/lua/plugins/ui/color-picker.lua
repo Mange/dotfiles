@@ -7,7 +7,8 @@ return {
       bar_char = "█",
       point_char = "▍",
       highlighter = {
-        auto_enable = true,
+        -- Highlighting is done through nvim-highlight-colors instead
+        auto_enable = false,
       },
     },
     config = function(_, opts)
