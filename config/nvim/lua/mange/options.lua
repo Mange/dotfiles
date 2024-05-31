@@ -52,3 +52,6 @@ opt.title = true
 
 -- Better diff options
 opt.diffopt = [[internal,filler,closeoff,linematch:50]]
+
+-- Undo and swap options
+opt.undofile = true
