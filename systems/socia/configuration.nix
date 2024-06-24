@@ -49,5 +49,5 @@
 
   # AMD RX 7900 XT
   boot.kernelPackages = pkgs.linuxPackages_6_8; # Works better with newer kernels…
-  hardware.amdgpu.opencl = true;
+  hardware.amdgpu.opencl.enable = true;
 }
