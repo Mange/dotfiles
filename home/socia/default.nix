@@ -14,7 +14,6 @@
     ../_roles/workstation
     ../_topics/bluetooth.nix
 
-    ../_topics/android-dev.nix
     ../_topics/vm-host.nix
     ../_topics/gaming
     ../_topics/work/instabee.nix
