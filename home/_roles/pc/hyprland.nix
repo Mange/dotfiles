@@ -34,7 +34,7 @@ in
         {
           timeout = 300; # 5 min
           on-timeout = "${brightnessctl} -sd rgb:kbd_backlight set 0";
-          on-resume = "${brightnessctl} -rd rgb:kbd_baclight";
+          on-resume = "${brightnessctl} -rd rgb:kbd_backlight";
         }
 
         {
