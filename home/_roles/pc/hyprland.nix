@@ -4,10 +4,10 @@
   hyprlock = "${config.programs.hyprlock.package}/bin/hyprlock";
   playerctl = "${pkgs.playerctl}/bin/playerctl";
 
-  fixedHy3 = pkgs.hyprlandPlugins.hy3.overrideDerivation (oldAttrs: {
-    # Remove patches that break hy3 on hyprland 0.40.0-unstable-2024-05-05
-    patches = [];
-  });
+  # Until PR lands in nixos-unstable:
+  # https://nixpk.gs/pr-tracker.html?pr=321575
+  hyprland = pkgs.unstable.hyprland;
+  hy3 = pkgs.unstable.hyprlandPlugins.hy3;
 in 
 {
   services.hypridle = {
@@ -144,7 +144,8 @@ in
 
   wayland.windowManager.hyprland = {
     enable = true;
-    plugins = [fixedHy3];
+    package = hyprland;
+    plugins = [hy3];
     systemd.enable = true;
 
     # Systemd integration does not import all environment variables, when I

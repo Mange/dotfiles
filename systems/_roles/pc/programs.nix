@@ -1,4 +1,9 @@
-{ pkgs, ... }: {
+{ pkgs, ... }: let
+  # Until PR lands in nixos-unstable:
+  # https://nixpk.gs/pr-tracker.html?pr=321575
+  hyprland = pkgs.unstable.hyprland;
+  hy3 = pkgs.unstable.hyprlandPlugins.hy3;
+in {
   environment.systemPackages = with pkgs; [
     # Should be able to run home-manager after initial install.
     git
@@ -10,6 +15,10 @@
     exfat
     nfs-utils
     ntfs3g
+
+    # Hyprland plugins
+    # Just so if they will fail to compile for home-manager, they should fail the system build too.
+    hy3
   ];
 
   # Login, security, keyring, etc.
@@ -26,7 +35,7 @@
   programs.dconf.enable = true;
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.enable = true;
-  programs.hyprland.enable = true;
+  programs.hyprland = { enable = true; package = hyprland; };
 
   # Hyprlock should have access to passwords, etc.
   security.pam.services.hyprlock = {};
