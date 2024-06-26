@@ -19,6 +19,7 @@
     ./hardware-configuration.nix
 
     ../_roles/workstation
+    ../_topics/catppuccin.nix
     ../_topics/home-network.nix
     ../_topics/mullvad.nix
     ../_topics/vm-host.nix

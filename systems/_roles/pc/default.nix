@@ -8,7 +8,6 @@
   imports = [
     ../../_topics/nixconfig.nix
 
-    ./catppuccin.nix
     ./networking.nix
     ./programs.nix
     ./sound.nix

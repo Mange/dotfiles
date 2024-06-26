@@ -15,6 +15,7 @@
     ./hardware-configuration.nix
 
     ../_roles/laptop
+    ../_topics/catppuccin.nix
     ../_topics/yubikey.nix
     ../_topics/annepro.nix
   ];

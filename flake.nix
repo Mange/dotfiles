@@ -13,6 +13,9 @@
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
+    # Catppuccin
+    catppuccin.url = "github:catppuccin/nix";
+
     hardware.url = "github:nixos/nixos-hardware";
   };
 
