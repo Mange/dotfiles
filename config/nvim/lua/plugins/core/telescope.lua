@@ -1,37 +1,3 @@
-local function config()
-  local telescope = require "telescope"
-  local actions = telescope.actions
-
-  local has_trouble, trouble = pcall(require, "trouble.providers.telescope")
-
-  local all_to_qf
-  if has_trouble then
-    all_to_qf = trouble.open_with_trouble
-  else
-    all_to_qf = actions.send_to_qflist
-  end
-
-  require("telescope").setup {
-    defaults = {
-      mappings = {
-        i = {
-          ["<C-j>"] = require("telescope.actions").cycle_history_next,
-          ["<C-k>"] = require("telescope.actions").cycle_history_prev,
-          ["<C-n>"] = require("telescope.actions").cycle_history_next,
-          ["<C-p>"] = require("telescope.actions").cycle_history_prev,
-          ["<C-q>"] = all_to_qf,
-        },
-      },
-    },
-
-    extensions = {
-    },
-  }
-
-  require("telescope").load_extension "fzf"
-  require("telescope").load_extension "notify"
-end
-
 return {
   {
     "nvim-telescope/telescope.nvim",
@@ -41,6 +7,29 @@ return {
         build = "make",
       },
     },
-    config = config,
+    config = function()
+      local telescope = require "telescope"
+      local actions = require "telescope.actions"
+
+      telescope.setup {
+        defaults = {
+          mappings = {
+            i = {
+              ["<C-j>"] = actions.cycle_history_next,
+              ["<C-k>"] = actions.cycle_history_prev,
+              ["<C-n>"] = actions.cycle_history_next,
+              ["<C-p>"] = actions.cycle_history_prev,
+              ["<C-q>"] = function(...)
+                actions.smart_send_to_qflist(...)
+                require("trouble").open { mode = "quickfix", focus = true }
+              end,
+            },
+          },
+        },
+      }
+
+      telescope.load_extension "fzf"
+      telescope.load_extension "notify"
+    end,
   },
 }

@@ -10,7 +10,7 @@ return {
     output = { open_on_run = true },
     quickfix = {
       open = function()
-        require("trouble").open { mode = "quickfix", focus = false }
+        require("trouble").open "quickfix"
       end,
     },
 
@@ -32,10 +32,10 @@ return {
           end
           vim.schedule(function()
             local trouble = require "trouble"
-            if trouble.is_open() then
-              trouble.refresh()
+            if trouble.is_open "quickfix" then
+              trouble.refresh "quickfix"
               if failed == 0 then
-                trouble.close()
+                trouble.close "quickfix"
               end
             end
           end)

@@ -233,13 +233,13 @@ local function setup()
     -- Next/previous quickfix
     ["]q"] = {
       function()
-        require("trouble").next { skip_groups = true, jump = true }
+        require("trouble").next { mode = "quickfix", jump = true }
       end,
       "Trouble next",
     },
     ["[q"] = {
       function()
-        require("trouble").previous { skip_groups = true, jump = true }
+        require("trouble").prev { mode = "quickfix", jump = true }
       end,
       "Trouble previous",
     },
@@ -397,16 +397,36 @@ local function setup()
         r = { vim.lsp.buf.rename, "Rename" },
         g = {
           name = "Go to",
-          d = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
-          r = { "<cmd>Trouble lsp_references<cr>", "References" },
-          i = { "<cmd>Trouble lsp_implementations<cr>", "Implementations" },
+          g = {
+            "<cmd>Trouble lsp focus=true auto_refresh=false<cr>",
+            "All",
+          },
+          d = {
+            "<cmd>Trouble lsp_definitions focus=true auto_refresh=false<cr>",
+            "Definitions",
+          },
+          r = {
+            "<cmd>Trouble lsp_references focus=true auto_refresh=false<cr>",
+            "References",
+          },
+          i = {
+            "<cmd>Trouble lsp_implementations focus=true auto_refresh=false<cr>",
+            "Implementations",
+          },
           t = {
-            "<cmd>Trouble lsp_type_definitions<cr>",
+            "<cmd>Trouble lsp_type_definitions focus=true auto_refresh=false<cr>",
             "Type definition",
           },
         },
-        d = { "<cmd>Trouble workspace_diagnostics<cr>", "Diagnostics" },
-        s = { "<cmd>Trouble lsp_document_symbols<cr>", "Symbols" },
+        d = {
+          "<cmd>Trouble diagnostics focus=true filter.buf=0<cr>",
+          "Diagnostics (buffer)",
+        },
+        D = { "<cmd>Trouble diagnostics<cr>", "Diagnostics (all)" },
+        s = {
+          "<cmd>Trouble lsp_document_symbols toggle focus=true pinned=true win.position=right<cr>",
+          "Symbols",
+        },
         w = {
           name = "Workspace",
           a = {
@@ -665,7 +685,7 @@ local function setup()
 
         f = {
           "<cmd>FormatToggle<cr>",
-          "Autoformatting (filetype)",
+          "Autoformatting (buffer)",
         },
         F = {
           "<cmd>FormatToggle!<cr>",
@@ -676,10 +696,8 @@ local function setup()
         n = { "<cmd>set number! | set number?<cr>", "number" },
         w = { "<cmd>set wrap! | set wrap?<cr>", "wrap" },
         s = { "<cmd>set spell! | set spell?<cr>", "spell" },
-        t = { "<cmd>TroubleToggle<cr>", "Trouble" },
-        d = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "Diagnostics" },
-        q = { "<cmd>TroubleToggle quickfix<cr>", "Quickfix list" },
-        o = { "<cmd>SymbolsOutline<cr>", "Symbol outline" },
+        d = { "<cmd>Trouble diagnostics toggle focus=true<cr>", "Diagnostics" },
+        q = { "<cmd>Trouble quickfix toggle focus=true<cr>", "Quickfix list" },
         z = { ":TZAtaraxis<CR>", "Zen" },
         Z = { ":TZNarrow<CR>", "Zen lines" },
       },
@@ -823,7 +841,7 @@ local function attach_lsp(_, bufnr)
       end,
       "Show diagnostics on line",
     },
-    ["<C-]>"] = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
+    ["<C-]>"] = { "<cmd>Trouble lsp_definitions focus=true<cr>", "Definitions" },
 
     ["[e"] = {
       vim.diagnostic.goto_prev,
