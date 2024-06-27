@@ -1,7 +1,6 @@
 local function config()
   local telescope = require "telescope"
   local actions = telescope.actions
-  local fb_actions = telescope.extensions.file_browser.actions
 
   local has_trouble, trouble = pcall(require, "trouble.providers.telescope")
 
@@ -26,23 +25,9 @@ local function config()
     },
 
     extensions = {
-      file_browser = {
-        theme = "ivy",
-
-        -- disables netrw and use telescope-file-browser in its place
-        hijack_netrw = true,
-
-        mappings = {
-          ["i"] = {
-            ["<C-w>"] = { "<c-s-w>", type = "command" },
-            ["<C-h>"] = fb_actions.goto_cwd,
-          },
-        },
-      },
     },
   }
 
-  require("telescope").load_extension "file_browser"
   require("telescope").load_extension "fzf"
   require("telescope").load_extension "notify"
 end
@@ -51,7 +36,6 @@ return {
   {
     "nvim-telescope/telescope.nvim",
     dependencies = {
-      "nvim-telescope/telescope-file-browser.nvim",
       {
         "nvim-telescope/telescope-fzf-native.nvim",
         build = "make",

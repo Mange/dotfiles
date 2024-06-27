@@ -213,7 +213,14 @@ local function setup()
 
     -- Open file browser in current file's directory
     ["-"] = {
-      ':Telescope file_browser cwd=<C-R>=fnameescape(expand("%:p:h"))<cr><cr>',
+      function()
+        require("telescope.builtin").find_files(
+          require("telescope.themes").get_dropdown {
+            previewer = false,
+            cwd = require("telescope.utils").buffer_dir(),
+          }
+        )
+      end,
       "Browse file directory",
     },
 
