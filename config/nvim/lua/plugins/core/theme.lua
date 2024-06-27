@@ -20,6 +20,7 @@ return {
         integrations = {
           cmp = true,
           dap = { enabled = false, enable_ui = false },
+          fidget = true,
           flash = true,
           gitsigns = true,
           indent_blankline = { enabled = true, colored_indent_levels = false },
@@ -42,7 +43,6 @@ return {
           },
           neogit = true,
           neotest = true,
-          notify = true,
           symbols_outline = true,
           telescope = true,
           treesitter = true,

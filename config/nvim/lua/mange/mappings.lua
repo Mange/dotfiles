@@ -353,7 +353,7 @@ local function setup()
       },
       q = {
         function()
-          require("notify").dismiss { silent = true, pending = true }
+          require("fidget").notification.clear()
         end,
         "Close notifications",
       },
@@ -502,7 +502,7 @@ local function setup()
         name = "Help/Neovim",
         ["?"] = { "<cmd>Telescope keymaps", "Keymaps" },
         H = { "<cmd>Telescope highlights<cr>", "Vim highlights" },
-        n = { "<cmd>Telescope notify<cr>", "Notification history" },
+        n = { "<cmd>Fidget history<cr>", "Notification history" },
         b = { "<cmd>Telescope marks<cr>", "Vim bookmarks" },
         c = { "<cmd>Telescope colorscheme<cr>", "Vim colorschemes" },
         h = { "<cmd>Telescope help_tags<cr>", "Search help tags" },

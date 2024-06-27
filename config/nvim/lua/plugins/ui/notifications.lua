@@ -1,18 +1,12 @@
 return {
-  -- Better `vim.notify()`
+  -- Better `vim.notify()` and LSP progress indicator.
   {
-    "rcarriga/nvim-notify",
-    lazy = false,
-    opts = {
-      timeout = 3000,
-      max_height = function()
-        return math.floor(vim.o.lines * 0.75)
-      end,
-      max_width = function()
-        return math.floor(vim.o.columns * 0.75)
-      end,
-    },
-    config = function()
+    "j-hui/fidget.nvim",
+    opts = {},
+    config = function(_, opts)
+      local fidget = require "fidget"
+      fidget.setup(opts)
+
       local banned_messages = {
         vim.regex "^No information available$",
         vim.regex "^fswatch:",
@@ -25,7 +19,7 @@ return {
           end
         end
 
-        return require "notify"(msg, ...)
+        return fidget.notify(msg, ...)
       end
     end,
   },
