@@ -19,6 +19,7 @@ in {
     # Hyprland plugins
     # Just so if they will fail to compile for home-manager, they should fail the system build too.
     hy3
+    hyprlandPlugins.hyprexpo
   ];
 
   # Login, security, keyring, etc.

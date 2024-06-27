@@ -8,6 +8,7 @@
   # https://nixpk.gs/pr-tracker.html?pr=321575
   hyprland = pkgs.unstable.hyprland;
   hy3 = pkgs.unstable.hyprlandPlugins.hy3;
+  hyprexpo = pkgs.unstable.hyprlandPlugins.hyprexpo;
 in 
 {
   services.hypridle = {
@@ -145,7 +146,7 @@ in
   wayland.windowManager.hyprland = {
     enable = true;
     package = hyprland;
-    plugins = [hy3];
+    plugins = [hy3 hyprexpo];
     systemd.enable = true;
 
     # Systemd integration does not import all environment variables, when I
