@@ -2,24 +2,23 @@
   fonts.fontconfig.enable = true;
 
   gtk.font = {
-    name = "Overpass";
+    name = "Inter";
     size = 12;
-    package = pkgs.overpass;
+    package = pkgs.inter;
   };
 
-  programs.rofi.font = "Overpass Light 10";
+  programs.rofi.font = "Inter Light 10";
 
   home.packages = with pkgs; [
     # Main fonts
     jetbrains-mono
-    overpass
+    inter
 
     # Symbols
     (
       nerdfonts.override {
         fonts = [
           "JetBrainsMono"
-          "Overpass"
           "NerdFontsSymbolsOnly"
         ];
       }

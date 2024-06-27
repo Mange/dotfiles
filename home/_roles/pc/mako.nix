@@ -14,7 +14,7 @@
     on-button-middle=exec makoctl menu -n "$id" rofi -dmenu -p 'Select action: '
     on-button-right=dismiss
 
-    font=Overpass 12
+    font=Inter 12
     width=400
     height=200
     border-radius=10

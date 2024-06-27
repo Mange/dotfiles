@@ -97,7 +97,7 @@ in
           inner_color = "rgba(0, 0, 0, 0.5)";
           font_color = "rgb(200, 200, 200)";
           fade_on_empty = false;
-          font_family = "Overpass";
+          font_family = "Inter";
           placeholder_text = "Enter password to unlock";
           hide_input = false;
           position = "0, -120";
@@ -111,7 +111,7 @@ in
           text = "cmd[update:1000] date +\"%H:%M\"";
           color = "rgba(255, 255, 255, 0.9)";
           font_size = 100;
-          font_family = "Overpass";
+          font_family = "Inter Bold";
           position = "0, -300";
           halign = "center";
           valign = "top";
@@ -122,7 +122,7 @@ in
             text = "How are you, $USER?";
             color = "rgba(255, 255, 255, 0.6)";
             font_size = 25;
-            font_family = "Overpass";
+            font_family = "Inter Light";
             position = "0, -40";
             halign = "center";
             valign = "center";
@@ -130,10 +130,10 @@ in
 
         # CURRENT SONG
         {
-            text = "cmd[update:1000] ${playerctl} metadata --format '{{title}}  {{artist}}'";
+            text = "cmd[update:1000] ${playerctl} metadata --format '{{title}}   {{artist}}'";
             color = "rgba(255, 255, 255, 0.6)";
             font_size = 18;
-            font_family = "Overpass";
+            font_family = "Inter";
             position = "0, 0";
             halign = "center";
             valign = "bottom";
