@@ -27,6 +27,12 @@ return {
   hide_tab_bar_if_only_one_tab = true,
   window_background_opacity = 0.8,
 
+  -- Disable wayland again since pasting has stopped working.
+  -- Might not be the fault of Wezterm, per se, but it's the only
+  -- app where this problem manifests.
+  enable_wayland = false,
+  audible_bell = "Disabled", -- Disabled on Wayland, not on X11
+
   -- Don't accidentally select stuff when I click on a window and accidentally move a few pixels
   swallow_mouse_click_on_window_focus = true,
 
