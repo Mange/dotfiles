@@ -95,7 +95,6 @@ return {
           "man",
           "nvim-dap-ui",
           "quickfix",
-          "symbols-outline",
         },
       }
     end,

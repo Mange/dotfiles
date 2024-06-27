@@ -43,7 +43,6 @@ return {
           },
           neogit = true,
           neotest = true,
-          symbols_outline = true,
           telescope = true,
           treesitter = true,
           treesitter_context = true,
