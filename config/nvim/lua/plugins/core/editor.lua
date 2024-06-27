@@ -6,7 +6,6 @@ return {
   },
 
   { "gbprod/substitute.nvim", opts = {} },
-  { "echasnovski/mini.bufremove", opts = {}, lazy = false },
 
   {
     "folke/flash.nvim",
