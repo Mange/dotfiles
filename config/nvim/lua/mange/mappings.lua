@@ -212,17 +212,7 @@ local function setup()
     ["<C-l>"] = { "<C-w>l", "Window right" },
 
     -- Open file browser in current file's directory
-    ["-"] = {
-      function()
-        require("telescope.builtin").find_files(
-          require("telescope.themes").get_dropdown {
-            previewer = false,
-            cwd = require("telescope.utils").buffer_dir(),
-          }
-        )
-      end,
-      "Browse file directory",
-    },
+    ["-"] = { "<cmd>Oil<CR>", "Open file directory" },
 
     -- Asterisk * should only set the current search, not jump to the next match.
     ["*"] = {
@@ -451,6 +441,17 @@ local function setup()
       --
       ["f"] = {
         name = "File/Fold",
+        f = {
+          function()
+            require("telescope.builtin").find_files(
+              require("telescope.themes").get_dropdown {
+                previewer = false,
+                cwd = require("telescope.utils").buffer_dir(),
+              }
+            )
+          end,
+          "Find sibling",
+        },
         r = { genghis.renameFile, "Rename" },
         D = {
           function()
