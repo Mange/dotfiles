@@ -12,9 +12,11 @@ return {
     event = "VeryLazy",
     opts = {
       modes = {
-        search = {
-          enabled = false,
-        },
+        search = { enabled = false },
+        char = { enabled = false },
+      },
+      label = {
+        rainbow = { enabled = true },
       },
     },
   },
