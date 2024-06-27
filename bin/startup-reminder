@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
 if [[ $1 == "--help" ]]; then
   echo "Usage: $0"
@@ -15,22 +15,8 @@ if [[ -s ~/Reminder ]]; then
   entries+=("$(cat ~/Reminder)")
 fi
 
-task_cmd="task rc.echo.command=no rc._forcecolor=no rc.blanklines=false rc.hooks=off rc.verbose=nothing"
-tasks_overdue=$($task_cmd +OVERDUE count)
-tasks_today=$($task_cmd +TODAY count)
-tasks_week=$(( $($task_cmd +WEEK count) - tasks_today ))
-
-if [[ $tasks_overdue -gt 0 ]]; then
-  entries+=("YOU HAVE ${tasks_overdue} TASK(S) OVERDUE")
-fi
-
-if [[ $tasks_today -gt 0 ]]; then
-  entries+=("You have ${tasks_today} task(s) for TODAY")
-fi
-
-if [[ $tasks_week -gt 0 ]]; then
-  entries+=("(You have ${tasks_week} task(s) this week)")
-fi
+# TODO: Add other smart reminder entries here. Check calendar? Emails? System
+# health problems?
 
 if [[ "${#entries[@]}" -gt 0 ]]; then
   text="$(printf "%s\n" "${entries[@]}")"

@@ -1,0 +1,14 @@
+#!/bin/sh
+
+f="$HOME/Reminder"
+
+if [ -t 1 ]; then
+  # Inside terminal.
+  nvim "$f"
+else
+  if hash neovide >/dev/null 2>/dev/null; then
+    neovide "$f"
+  else
+    wezterm start nvim "$f"
+  fi
+fi

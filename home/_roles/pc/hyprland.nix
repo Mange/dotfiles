@@ -25,6 +25,13 @@ in
       } ;
 
       listener = [
+        # Monitor power save
+        {
+          timeout = 720; # 12 min
+          on-timeout = "hyprctl dispatch dpms off";
+          on-resume = "hyprctl dispatch dpms on";
+        }
+
         # Dim screen
         {
           timeout = 300; # 5 min
@@ -41,11 +48,7 @@ in
         {
           timeout = 600; # 10 min
           on-timeout = "loginctl lock-session";
-        }
-        {
-          timeout = 720; # 12 min
-          on-timeout = "hyprctl dispatch dpms off";
-          on-resume = "hyprctl dispatch dpms on";
+          on-resume = "startup-reminder";
         }
       ] ++ (
         if isLaptop then
