@@ -17,6 +17,7 @@
     ../_roles/laptop
     ../_topics/catppuccin.nix
     ../_topics/yubikey.nix
+    ../_topics/capslock-mapping
   ];
 
   networking.hostName = "porto";
