@@ -110,6 +110,27 @@ local function setup()
     { desc = "Jump forward", remap = false }
   )
 
+  -- Neovide-specific
+  if vim.g.neovide then
+    vim.keymap.set({ "n", "v" }, "<C-+>", function()
+      vim.g.neovide_scale_factor = vim.g.neovide_scale_factor + 0.1
+    end)
+    vim.keymap.set({ "n", "v" }, "<C-->", function()
+      vim.g.neovide_scale_factor = vim.g.neovide_scale_factor - 0.1
+    end)
+    vim.keymap.set({ "n", "v" }, "<C-0>", function()
+      vim.g.neovide_scale_factor = 1
+    end)
+
+    -- Replicate paste keys from Wezterm
+    vim.keymap.set({ "i" }, "<C-S-v>", function()
+      vim.cmd "normal! <C-R>+"
+    end)
+    vim.keymap.set({ "i" }, "<C-S-s>", function()
+      vim.cmd "normal! <C-R>*"
+    end)
+  end
+
   --
   -- Flash
   --
