@@ -1,7 +1,7 @@
 return {
   {
     "TimUntersberger/neogit",
-    branch = "nightly",
+    branch = "master",
     opts = {
       -- I want to start in insert mode on empty commit messages.
       disable_insert_on_commit = false,
