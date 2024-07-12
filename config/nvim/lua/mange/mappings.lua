@@ -474,12 +474,7 @@ local function setup()
           "Find sibling",
         },
         r = { genghis.renameFile, "Rename" },
-        D = {
-          function()
-            genghis.trashFile { trashCmd = "gio trash" }
-          end,
-          "Delete",
-        },
+        D = { genghis.trashFile, "Delete" },
         m = { genghis.moveAndRenameFile, "Move" },
         c = { genghis.duplicateFile, "Copy" },
         h = { "<cmd>Telescope oldfiles<cr>", "History" },

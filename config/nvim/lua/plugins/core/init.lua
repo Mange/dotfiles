@@ -3,7 +3,14 @@ return {
   { "nvim-lua/plenary.nvim" },
   { "nvim-tree/nvim-web-devicons", lazy = true },
 
-  { "chrisgrieser/nvim-genghis" }, -- Convenience file operations
+  {
+    -- Convenience file operations
+    "chrisgrieser/nvim-genghis",
+    opts = {
+      trashCmd = { "gio", "trash" },
+    },
+  },
+
   { "direnv/direnv.vim" },
   { "DataWraith/auto_mkdir", lazy = false },
 
