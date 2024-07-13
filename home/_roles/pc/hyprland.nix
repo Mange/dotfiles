@@ -5,8 +5,7 @@
   playerctl = "${pkgs.playerctl}/bin/playerctl";
 
   hyprland = pkgs.hyprland;
-  hy3 = pkgs.hyprlandPlugins.hy3;
-  hyprspace = pkgs.hyprlandPlugins.hyprspace;
+  hyprplugins = pkgs.hyprlandPlugins;
 in 
 {
   services.hypridle = {
@@ -147,7 +146,11 @@ in
   wayland.windowManager.hyprland = {
     enable = true;
     package = hyprland;
-    plugins = [hy3 hyprspace];
+    plugins = with hyprplugins; [
+      hy3
+      hyprspace
+      hyprfocus
+    ];
     systemd.enable = true;
 
     # Systemd integration does not import all environment variables, when I
