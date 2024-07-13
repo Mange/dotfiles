@@ -51,7 +51,7 @@ in {
   ];
 
   qt = {
-    platformTheme = "qtct";
+    platformTheme.name = "kvantum";
     style.name = "kvantum";
   };
 

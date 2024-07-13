@@ -20,5 +20,9 @@
       system = final.system;
       config.allowUnfree = true;
     };
+    nixos-stable = import inputs.nixos-stable {
+      system = final.system;
+      config.allowUnfree = true;
+    };
   };
 }

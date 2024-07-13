@@ -15,20 +15,21 @@ in {
   home.packages = with pkgs; [
     dotacat
     figlet
-    charasay
     ponysay
+
+    nixos-stable.charasay
   ];
 
   # Music visualizer
   programs.cava.enable = true;
 
   home.file = {
-    ".local/bin/banner" = mkScript ''
+    ".local/bin/banner" = mkScript /* sh */ ''
       #!/bin/sh
       ${pkgs.figlet}/bin/figlet -f "${extraFonts}/3d.flf" "$@"
     '';
 
-    ".local/bin/banners" = mkScript ''
+    ".local/bin/banners" = mkScript /* sh */ ''
       #!/bin/sh
       set -e
 

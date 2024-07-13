@@ -29,10 +29,11 @@
 
   home.packages = with pkgs; [
     keybase-gui
-    monero
-    monero-gui
     polkit_gnome
     libsecret
+
+    nixos-stable.monero
+    nixos-stable.monero-gui
   ];
 
   systemd.user.services.polkit-gnome-authentication-agent-1 = {
