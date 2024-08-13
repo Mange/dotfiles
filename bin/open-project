@@ -1,10 +1,18 @@
 #!/usr/bin/env bash
-
 set -e
-projectspath=~/Projects/
+projectspath=~/Projects
+
+if [[ "$1" == "--help" ]]; then
+  echo "Usage: open-project [command…]"
+  echo ""
+  echo "Opens a fuzzy finder over project directories and then runs command"
+  echo "inside of that directory."
+  echo "Default command is to start a terminal."
+  exit 0
+fi
 
 selected_path=$(
-  find "$projectspath" -maxdepth 3 -type d -and -name '.git' -printf '%C@ %P\n' |
+  find "${projectspath}/" -maxdepth 3 -type d -and -name '.git' -printf '%C@ %P\n' |
     sed 's#/.git##' |
     finder --numeric-reversed
 )
@@ -12,7 +20,11 @@ selected_path=$(
 path="${projectspath}/${selected_path}"
 
 if [[ -d "$path" ]]; then
-  exec wezterm start --cwd "$path"
+  command=("$@")
+  if [[ ${#command[@]} -eq 0 ]]; then
+    command=("wezterm" "start" "--cwd" "${path}")
+  fi
+  exec with-wd "${path}" "${command[@]}"
 else
   smart-notification \
     --urgency=critical \
