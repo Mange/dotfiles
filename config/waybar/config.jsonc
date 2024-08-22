@@ -47,6 +47,7 @@
       "title<.*youtube.*>": "",
       "title<.*github.*>": "",
       "class<org.wezfurlong.wezterm> title<- NVIM>": "",
+      "class<neovide>": "",
       "class<firefox>": "",
       "class<brave-browser>": "",
       "class<org.wezfurlong.wezterm>": "",
