@@ -8,13 +8,13 @@
     brave
 
     # File management
-    gnome.file-roller
-    gnome.gnome-font-viewer
+    file-roller
+    gnome-font-viewer
     cinnamon.nemo-with-extensions
 
     # Remote desktop and hardware management
     gnome.vinagre
-    gnome.gnome-disk-utility
+    gnome-disk-utility
 
     # Photography
     shotwell
@@ -31,7 +31,7 @@
 
     # Misc
     xdg-utils
-    gnome.zenity
+    zenity
     gnuplot
     libqalculate
   ];
