@@ -50,8 +50,5 @@
 
   # AMD RX 7900 XT
   boot.kernelPackages = pkgs.linuxPackages_6_6;
-  # Enable again after
-  # https://github.com/NixOS/nixpkgs/issues/325907
-  # https://nixpk.gs/pr-tracker.html?pr=325909
-  # hardware.amdgpu.opencl.enable = true;
+  hardware.amdgpu.opencl.enable = true;
 }

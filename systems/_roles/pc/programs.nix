@@ -1,8 +1,6 @@
 { pkgs, ... }: let
-  # Until PR lands in nixos-unstable:
-  # https://nixpk.gs/pr-tracker.html?pr=321575
-  hyprland = pkgs.unstable.hyprland;
-  hy3 = pkgs.unstable.hyprlandPlugins.hy3;
+  hyprland = pkgs.hyprland;
+  hy3 = pkgs.hyprlandPlugins.hy3;
 in {
   environment.systemPackages = with pkgs; [
     # Should be able to run home-manager after initial install.
