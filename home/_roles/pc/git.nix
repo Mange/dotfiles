@@ -127,6 +127,9 @@
       #-- direnv --
       ".envrc"
       ".direnv"
+
+      #-- Lsp junk --
+      ".ccls-cache/"
     ];
   };
 }
