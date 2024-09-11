@@ -16,6 +16,11 @@ return {
           return false
         end
 
+        -- Java is the wild west, and it's never going to be nice.
+        if vim.bo[bufnr].filetype == "java" then
+          return false
+        end
+
         -- Ignore format on save in common directories for installed or generated files.
         local bufname = vim.api.nvim_buf_get_name(bufnr)
         if

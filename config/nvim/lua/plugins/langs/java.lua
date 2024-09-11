@@ -8,11 +8,7 @@ return {
     end,
   },
   {
-    "neovim/nvim-lspconfig",
-    opts = {
-      servers = {
-        jdtls = {},
-      },
-    },
+    "mfussenegger/nvim-jdtls",
+    filetypes = { "java" },
   },
 }

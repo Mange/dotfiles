@@ -8,6 +8,9 @@ in
   home.sessionVariables = {
     VISUAL = "nvim";
     MANPAGER = "nvim +Man!"; # Neovim makes a better manpager than less.
+
+    # Lombok support in JDTLS (Java LSP)
+    JDTLS_JVM_ARGS = "-javaagent:${pkgs.lombok}/share/java/lombok.jar";
   };
 
   programs.neovim = {
@@ -59,9 +62,7 @@ in
       bear # tool to generate compilation database for clang tooling
       ccls # C
 
-      # Java & Kotlin
-      jdt-language-server # eclipse.jdt.ls
-      kotlin-language-server
+      # Java & Kotlin set up in home.packages
 
       # Rust
       rust-analyzer
@@ -80,5 +81,11 @@ in
   home.packages = with pkgs; [
     cargo-nextest
     neovide
+
+    # Java & Kotlin
+    # (Neovide needs to be able to access them too, so
+    # add to PATH outside of pure neovim)
+    jdt-language-server # eclipse.jdt.ls
+    kotlin-language-server
   ];
 }
