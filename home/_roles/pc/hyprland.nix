@@ -18,9 +18,10 @@ in
         lock_cmd = "(pidof hyprlock || ${hyprlock}); startup-reminder";
 
         before_sleep_cmd = "loginctl lock-session";
-        after_sleep_cmd = "hyprctl dispatch dpms on";
-
-        ignore_dbus_inhibit = false;
+        # After waking up, sometimes the timeout
+        # listener to shut off the screens will
+        # shut them off again. Wait for that to settle…
+        after_sleep_cmd = "sleep 0.5; hyprctl dispatch dpms on";
       } ;
 
       listener = [
