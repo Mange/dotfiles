@@ -13,7 +13,9 @@ in
     settings = {
       general = {
         # Avoid starting multiple instances of hyprlock.
-        lock_cmd = "pidof hyprlock || ${hyprlock}";
+        # Then show the startup reminder after the lock has
+        # ended.
+        lock_cmd = "(pidof hyprlock || ${hyprlock}); startup-reminder";
 
         before_sleep_cmd = "loginctl lock-session";
         after_sleep_cmd = "hyprctl dispatch dpms on";
@@ -45,7 +47,6 @@ in
         {
           timeout = 600; # 10 min
           on-timeout = "loginctl lock-session";
-          on-resume = "startup-reminder";
         }
       ] ++ (
         if isLaptop then
