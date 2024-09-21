@@ -26,8 +26,8 @@
     git = true;
     extraOptions = [
       "--group-directories-first"
+      "--color-scale" "all"
       "--hyperlink" 
-      "--color-scale"
     ];
   };
 

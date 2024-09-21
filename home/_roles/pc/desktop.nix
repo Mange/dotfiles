@@ -10,10 +10,9 @@
     # File management
     file-roller
     gnome-font-viewer
-    cinnamon.nemo-with-extensions
+    nemo-with-extensions
 
     # Remote desktop and hardware management
-    gnome.vinagre
     gnome-disk-utility
 
     # Photography

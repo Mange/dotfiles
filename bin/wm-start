@@ -24,7 +24,7 @@ awesome)
   awesome-client "awesome.spawn { ${escaped} }"
   ;;
 Hyprland)
-  hyprctl dispatch exec "$@"
+  hyprctl dispatch -- exec "$@"
   ;;
 *)
   # shrug… I guess we'll just try to start it in the background
