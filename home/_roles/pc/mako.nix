@@ -48,6 +48,14 @@
     ### Matchers ###
 
     # Google Calendar notifications are important!
+    # Brave/Chromium identifies the website source in messages, but Firefox
+    # does not. For Firefox, assume messages with patterns like
+    # "09:00 – 09:15" are calendar events. (NOTE: That's a unicode
+    # dash)
+    [app-name=Firefox body~="\d\d:\d\d – \d\d:\d\d"]
+    default-timeout=0
+    border-color=#fab387
+    on-notify=exec mpv /usr/share/sounds/freedesktop/stereo/bell.oga
     [app-name=Brave body~="^calendar.google.com"]
     default-timeout=0
     border-color=#fab387

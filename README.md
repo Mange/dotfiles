@@ -9,7 +9,7 @@ Quick summary of my stack:
 - **Editor:** [Neovim]
 - **Shell:** [ZSH]
 - **Terminal emulator:** [Wezterm]
-- **Web browser:** [Brave]
+- **Web browser:** [Firefox]
 - **Colors:** [Catppuccin]
 
 ## Nix
@@ -38,5 +38,5 @@ repository.
 [Neovim]: https://neovim.io/
 [ZSH]: http://zsh.sourceforge.net/
 [Wezterm]: https://wezfurlong.org/wezterm/
-[Brave]: https://brave.com/
+[Firefox]: https://www.mozilla.org/firefox/
 [Catppuccin]: https://github.com/catppuccin/catppuccin

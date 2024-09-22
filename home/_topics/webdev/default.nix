@@ -6,7 +6,7 @@
   };
 
   home.packages = with pkgs; [
-    # Browsers
+    # Extra browsers
     brave
     google-chrome
 

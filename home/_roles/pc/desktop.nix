@@ -4,7 +4,7 @@
   };
 
   home.packages = with pkgs; [
-    # Web browser
+    # Extra web browser(s)
     brave
 
     # File management
@@ -39,13 +39,13 @@
     # Nemo as my default GUI file manager
     "inode/directory" = "nemo.desktop";
 
-    # Brave as my default browser
-    "text/html" = "brave-browser.desktop";
-    "x-scheme-handler/http" = "brave-browser.desktop";
-    "x-scheme-handler/https" = "brave-browser.desktop";
-    "x-scheme-handler/mailto" = "brave-browser.desktop";
-    "x-scheme-handler/webcal" = "brave-browser.desktop";
-    "x-scheme-handler/unknown" = "brave-browser.desktop";
+    # Firefox as my default browser
+    "text/html" = "firefox.desktop";
+    "x-scheme-handler/http" = "firefox.desktop";
+    "x-scheme-handler/https" = "firefox.desktop";
+    "x-scheme-handler/mailto" = "firefox.desktop";
+    "x-scheme-handler/webcal" = "firefox.desktop";
+    "x-scheme-handler/unknown" = "firefox.desktop";
 
     # Use file-roller for archives
     "application/x-7z-compressed" = "org.gnome.FileRoller.desktop";
