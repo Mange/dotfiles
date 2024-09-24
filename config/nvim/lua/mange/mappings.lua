@@ -715,6 +715,7 @@ local function setup()
         s = { "<cmd>set spell! | set spell?<cr>", "spell" },
         d = { "<cmd>Trouble diagnostics toggle focus=true<cr>", "Diagnostics" },
         q = { "<cmd>Trouble quickfix toggle focus=true<cr>", "Quickfix list" },
+        x = { ":TSContextToggle<CR>", "Context" },
         z = { ":TZAtaraxis<CR>", "Zen" },
         Z = { ":TZNarrow<CR>", "Zen lines" },
       },
