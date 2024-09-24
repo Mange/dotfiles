@@ -605,7 +605,7 @@ local function setup()
       --
       -- Leader +test
       --
-      ["t"] = {
+      ["T"] = {
         name = "Test",
 
         t = {
@@ -675,7 +675,7 @@ local function setup()
       --
       -- Leader +toggle
       --
-      ["T"] = {
+      ["t"] = {
         name = "Toggle",
         -- Not actually a *toggle*, more like a "Toggle off". Just pressing n/N
         -- will enable the highlights again anyway.
