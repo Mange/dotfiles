@@ -44,8 +44,8 @@
     "format-window-separator": " ",
     "window-rewrite-default": "",
     "window-rewrite": {
-      "title<.*youtube.*>": "",
-      "title<.*github.*>": "",
+      "title<.*youtube\\.com.*>": "",
+      "title<.*github\\.com.*>": "",
       "class<org.wezfurlong.wezterm> title<- NVIM>": "",
       "class<neovide>": "",
       "class<firefox>": "",
@@ -57,6 +57,8 @@
       "class<keybase>": "󰭹",
       "class<obsidian>": "󰙏",
       "class<Slack>": "",
+      "class<MongoDB Compass>": "",
+      "class<virt-manager>": "🖳",
     },
   },
 
