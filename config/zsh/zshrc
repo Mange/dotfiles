@@ -71,7 +71,7 @@ bindkey -M vicmd -s '^[[27;2u' '~'
 # Open Yazi (using "ya" alias) with Ctrl-/
 ya-widget() {
   echo ""
-  ya
+  yazi
   zle send-break
 }
 zle -N ya-widget
