@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+wallpapers_dir="${XDG_DATA_HOME:-$HOME/.local/share}/wallpapers"
+cycle_file="${wallpapers_dir}/.cycle-current"
+index_file="${wallpapers_dir}/.cycle-index"
+
+usage() {
+  echo "Usage: $0 [--reset]"
+  echo ""
+  echo "Cycle wallpapers in a shuffled list. Call with --reset to re-shuffle the wallpapers."
+}
+
+walls() {
+  fd \
+    --base-directory "${wallpapers_dir}" \
+    '.*\.(jpg|jpeg|png)'
+}
+
+reset_cycle() {
+  walls | shuf >"${cycle_file}"
+  echo "0" >"${index_file}"
+}
+
+auto_reset_on_new_files() {
+  if [[ ! -f "${cycle_file}" ]]; then
+    reset_cycle
+    return
+  fi
+
+  if ! diff -q <(walls | sort) <(sort "$cycle_file") >/dev/null 2>/dev/null; then
+    echo "Detected different files in wallpapers directory. Resetting cycle..."
+    reset_cycle
+  fi
+}
+
+if [[ "$#" -gt 1 ]]; then
+  usage
+  exit 1
+fi
+
+if [[ "$#" -eq 1 ]] && [[ "$1" != "--reset" ]]; then
+  usage
+  exit 1
+fi
+
+if [[ ! -d "${wallpapers_dir}" ]]; then
+  echo "Wallpapers directory not found: ${wallpapers_dir}"
+  exit 1
+fi
+
+if [[ "${1:-}" == "--reset" ]]; then
+  echo "Resetting wallpaper cycle..."
+  reset_cycle
+else
+  auto_reset_on_new_files
+fi
+
+length=$(wc -l <"${cycle_file}")
+if [[ "${length}" -lt 1 ]]; then
+  echo "No wallpapers found in ${wallpapers_dir}"
+  exit 1
+fi
+
+index=$(<"${index_file}")
+next_index=$(((index + 1) % length))
+
+# NOTE: `sed` uses 1-based line numbers, so add 1 to the index.
+next_wallpaper=$(sed -n "$((next_index + 1))p" "${cycle_file}")
+
+echo "${next_index}" >"${index_file}"
+swww img \
+  --transition-type any \
+  "${wallpapers_dir}/${next_wallpaper}"
