@@ -4,7 +4,7 @@
     tailscale
 
     # HTTP stuff for microservices
-    insomnia
+    bruno
 
     # Cloud, k8s, etc.
     terraform
