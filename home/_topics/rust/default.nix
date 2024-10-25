@@ -38,6 +38,7 @@
 
   home.packages = with pkgs; [
     rustup
+    # rust-analyzer replaced by rustup
     cargo-update
     cargo-edit
     cargo-watch
