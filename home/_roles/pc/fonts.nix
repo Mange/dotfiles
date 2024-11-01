@@ -8,6 +8,7 @@
   };
 
   programs.rofi.font = "Inter Light 10";
+  programs.neovide.settings.font.normal = ["JetBrains Mono"];
 
   home.packages = with pkgs; [
     # Main fonts
