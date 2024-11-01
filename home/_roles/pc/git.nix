@@ -101,6 +101,12 @@
         current = "bold green";
         local = "green";
       };
+
+      url = {
+        "ssh://git@github.com/" = {
+          insteadOf = "https://github.com/";
+        };
+      };
     };
 
     ignores = [
