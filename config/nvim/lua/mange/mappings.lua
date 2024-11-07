@@ -123,12 +123,8 @@ local function setup()
     end)
 
     -- Replicate paste keys from Wezterm
-    vim.keymap.set({ "i" }, "<C-S-v>", function()
-      vim.cmd "normal! <C-R>+"
-    end)
-    vim.keymap.set({ "i" }, "<C-S-s>", function()
-      vim.cmd "normal! <C-R>*"
-    end)
+    vim.keymap.set({ "i" }, "<C-S-v>", "<C-R>+")
+    vim.keymap.set({ "i" }, "<C-S-s>", "<C-R>*")
   end
 
   --
