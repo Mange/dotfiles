@@ -15,12 +15,6 @@ in {
   environment.systemPackages = [
     icons
     pkgs.catppuccin-cursors.mochaDark
-    (pkgs.catppuccin-gtk.override {
-      variant = flavor;
-      accents = [ accent ];
-      size = "compact";
-      tweaks = []; # You can also specify multiple tweaks here
-    })
 
     # KDE is not supported by the catppuccin module, so add it manually.
     (pkgs.catppuccin-kde.override {
