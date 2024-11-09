@@ -36,7 +36,7 @@
     defaultCommand = "fd --type f";
     changeDirWidgetCommand = "fd --type d";
     changeDirWidgetOptions = [
-      "--preview 'tree -C {} | head -200'"
+      "--preview 'eza --tree --level 5 {} | head -200'"
     ];
   };
 
