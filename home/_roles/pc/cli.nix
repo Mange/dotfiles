@@ -22,7 +22,7 @@
   programs.eza = {
     # Sets up aliases: `ls`, `ll`, `la`, `lla`, `lt` by default.
     enable = true;
-    icons = true;
+    icons = "auto";
     git = true;
     extraOptions = [
       "--group-directories-first"

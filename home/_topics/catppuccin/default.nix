@@ -45,8 +45,8 @@ in {
       winDecStyles = [ "modern" ];
     })
     (catppuccin-kvantum.override {
-      variant = "Mocha";
-      accent = "Mauve";
+      variant = "mocha";
+      accent = "mauve";
     })
   ];
 

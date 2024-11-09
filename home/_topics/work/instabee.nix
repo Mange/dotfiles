@@ -22,6 +22,6 @@
     gnumake
     mongodb-compass
     postgresql
-    mysql
+    mariadb
   ];
 }

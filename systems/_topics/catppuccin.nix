@@ -29,8 +29,8 @@ in {
       winDecStyles = [ "modern" ];
     })
     (pkgs.catppuccin-kvantum.override {
-      variant = "Mocha";
-      accent = "Mauve";
+      variant = "mocha";
+      accent = "mauve";
     })
   ];
 
