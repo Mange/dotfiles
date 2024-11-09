@@ -49,6 +49,6 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   # AMD RX 7900 XT
-  boot.kernelPackages = pkgs.linuxPackages_6_6;
+  boot.kernelPackages = pkgs.linuxPackages_6_11;
   hardware.amdgpu.opencl.enable = true;
 }
