@@ -1,40 +1,51 @@
+local formatting = require "mange.formatting"
+
 --
 -- Autoformatting settings
 --
 vim.api.nvim_create_user_command("FormatDisable", function(args)
+  -- FormatDisable! will disable formatting globally
   if args.bang then
-    -- FormatDisable! will disable formatting globally
-    vim.g.disable_autoformat = true
+    formatting.toggle_global(false)
   else
-    vim.b.disable_autoformat = true
+    formatting.toggle_buffer(false)
   end
 end, {
   desc = "Disable autoformat",
   bang = true,
 })
 
-vim.api.nvim_create_user_command("FormatEnable", function()
-  vim.b.disable_autoformat = false
-  vim.g.disable_autoformat = false
+vim.api.nvim_create_user_command("FormatEnable", function(args)
+  -- Formatenable! will enable formatting globally
+  if args.bang then
+    formatting.toggle_global(true)
+  else
+    formatting.toggle_buffer(true)
+  end
 end, {
   desc = "Re-enable autoformat",
+  bang = true,
 })
 
 vim.api.nvim_create_user_command("FormatToggle", function(args)
+  -- FormatToggle! will toggle formatting globally
   if args.bang then
-    -- FormatToggle! will toggle formatting globally
-    vim.g.disable_autoformat = not vim.g.disable_autoformat
+    formatting.toggle_global()
   else
-    vim.b.disable_autoformat = not vim.b.disable_autoformat
+    formatting.toggle_buffer()
   end
 end, {
   desc = "Toggle autoformat",
+  bang = true,
 })
 
 vim.api.nvim_create_user_command("Format", function(args)
   -- Format! will format even if disabled.
-  if args.bang or not vim.g.disable_autoformat or not vim.b.disable_autoformat then
-    require("conform").format({async = true, lsp_fallback = true})
+  if
+    args.bang
+    or (formatting.globally_enabled() and formatting.buffer_enabled())
+  then
+    require("conform").format { async = true, lsp_fallback = true }
   end
 end, {
   desc = "Format",

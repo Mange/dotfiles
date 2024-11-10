@@ -15,6 +15,7 @@ local api = vim.api
 local utils = require "mange.utils"
 
 local genghis = require "genghis"
+local Snacks = require "snacks"
 
 local function map(mode, key, command, options)
   options = vim.tbl_extend("force", { noremap = true, silent = true }, options)
@@ -125,6 +126,10 @@ local function setup()
     -- Replicate paste keys from Wezterm
     vim.keymap.set({ "i" }, "<C-S-v>", "<C-R>+")
     vim.keymap.set({ "i" }, "<C-S-s>", "<C-R>*")
+
+    vim.keymap.set({ "n" }, "<C-z>", function()
+      Snacks.terminal()
+    end, { desc = "Toggle terminal" })
   end
 
   --
@@ -164,6 +169,14 @@ local function setup()
   vim.keymap.set("n", "]T", function()
     require("neotest").jump.next { status = "failed" }
   end, { desc = "Next failing test" })
+
+  vim.keymap.set({ "n", "t" }, "]]", function()
+    Snacks.words.jump(vim.v.count1)
+  end, { desc = "Next reference" })
+
+  vim.keymap.set({ "n", "t" }, "[[", function()
+    Snacks.words.jump(-vim.v.count1)
+  end, { desc = "Prev reference" })
 
   --
   -- Substitute
@@ -380,14 +393,20 @@ local function setup()
       --
       ["b"] = {
         name = "Buffers",
+        A = { "<cmd>AS<cr>", "Alternative (split)" },
         D = { delete_all_buffers, "Delete all buffers" },
+        a = { "<cmd>A<cr>", "Alternative" },
         b = { "<cmd>Telescope buffers<cr>", "Search buffers" },
         d = { ":bd<cr>", "Delete buffer" },
         f = { "<cmd>Telescope filetypes<cr>", "Set filetype" },
+        k = {
+          function()
+            Snacks.bufdelete()
+          end,
+          "Kill buffer",
+        },
         l = { ":b #<cr>", "Goto last" },
         n = { "<cmd>enew<cr>", "New" },
-        a = { "<cmd>A<cr>", "Alternative" },
-        A = { "<cmd>AS<cr>", "Alternative (split)" },
       },
 
       --
@@ -485,6 +504,12 @@ local function setup()
         name = "Git",
 
         g = { "<cmd>Neogit<cr>", "Status" },
+        o = {
+          function()
+            Snacks.gitbrowse()
+          end,
+          "Open Browser",
+        },
 
         a = { "<cmd>Gitsigns stage_buffer<cr>", "Stage all" },
         s = { "<cmd>Gitsigns stage_hunk<cr>", "Stage hunk" },
@@ -515,6 +540,23 @@ local function setup()
         ["?"] = { "<cmd>Telescope keymaps", "Keymaps" },
         H = { "<cmd>Telescope highlights<cr>", "Vim highlights" },
         n = { "<cmd>Fidget history<cr>", "Notification history" },
+        N = {
+          function()
+            Snacks.win {
+              file = vim.api.nvim_get_runtime_file("doc/news.txt", false)[1],
+              width = 0.6,
+              height = 0.6,
+              wo = {
+                spell = false,
+                wrap = false,
+                signcolumn = "yes",
+                statuscolumn = " ",
+                conceallevel = 3,
+              },
+            }
+          end,
+          "Neovim news",
+        },
         b = { "<cmd>Telescope marks<cr>", "Vim bookmarks" },
         c = { "<cmd>Telescope colorscheme<cr>", "Vim colorschemes" },
         h = { "<cmd>Telescope help_tags<cr>", "Search help tags" },
@@ -566,7 +608,12 @@ local function setup()
         },
         m = { "<cmd>Telescope git_status<cr>", "Modified files" },
         s = { "<cmd>Telescope lsp_workspace_symbols<cr>", "Symbols" },
-        t = { "<cmd>SmartSplit +terminal<cr>", "Terminal" },
+        t = {
+          function()
+            Snacks.terminal()
+          end,
+          "Terminal",
+        },
         T = { telescope_todos, "Todo comments" },
       },
 
@@ -670,50 +717,20 @@ local function setup()
 
       --
       -- Leader +toggle
+      -- Most mappings for +toggle is created below using Snacks.toggle.
       --
       ["t"] = {
         name = "Toggle",
+
+        g = { name = "Git" },
+
         -- Not actually a *toggle*, more like a "Toggle off". Just pressing n/N
         -- will enable the highlights again anyway.
-        h = { "<cmd>nohl<cr>", "Search highlights" },
-        i = {
-          function()
-            vim.lsp.inlay_hint.enable(
-              not vim.lsp.inlay_hint.is_enabled { bufnr = 0 },
-              { bufnr = 0 }
-            )
-          end,
-          "Inline hints",
-        },
+        h = { "<cmd>nohl<cr>", "Disable search highlights" },
 
-        c = {
-          require("mange.cursorline").toggle,
-          "Cursorline",
-        },
-        B = {
-          "<cmd>Gitsigns toggle_current_line_blame<cr>",
-          "Toggle line blame",
-        },
+        -- Can't be handled through Snacks.toggle right now.
+        -- https://github.com/brenoprata10/nvim-highlight-colors/issues/129
         C = { "<cmd>HighlightColors Toggle<cr>", "Color highlights" },
-
-        f = {
-          "<cmd>FormatToggle<cr>",
-          "Autoformatting (buffer)",
-        },
-        F = {
-          "<cmd>FormatToggle!<cr>",
-          "Autoformatting (global)",
-        },
-
-        l = { "<cmd>set list! | set list?<cr>", "listchars" },
-        n = { "<cmd>set number! | set number?<cr>", "number" },
-        w = { "<cmd>set wrap! | set wrap?<cr>", "wrap" },
-        s = { "<cmd>set spell! | set spell?<cr>", "spell" },
-        d = { "<cmd>Trouble diagnostics toggle focus=true<cr>", "Diagnostics" },
-        q = { "<cmd>Trouble quickfix toggle focus=true<cr>", "Quickfix list" },
-        x = { ":TSContextToggle<CR>", "Context" },
-        z = { ":TZAtaraxis<CR>", "Zen" },
-        Z = { ":TZNarrow<CR>", "Zen lines" },
       },
 
       --
@@ -722,6 +739,9 @@ local function setup()
       ["o"] = {
         name = "Open",
         p = { ":CccPick<cr>", "Color picker" },
+
+        d = { "<cmd>Trouble diagnostics toggle focus=true<cr>", "Diagnostics" },
+        q = { "<cmd>Trouble quickfix toggle focus=true<cr>", "Quickfix list" },
 
         t = {
           function()
@@ -747,6 +767,128 @@ local function setup()
       },
     },
   }
+
+  -- Toggles (through Snacks)
+  Snacks.toggle.option("list", { name = "Listchars" }):map "<leader>tl"
+  Snacks.toggle.option("number", { name = "Number" }):map "<leader>tn"
+  Snacks.toggle.option("spell", { name = "Spelling" }):map "<leader>ts"
+  Snacks.toggle.option("wrap", { name = "Wrap" }):map "<leader>tw"
+  Snacks.toggle.inlay_hints():map "<leader>ti"
+  Snacks.toggle.diagnostics():map "<leader>td"
+  Snacks.toggle.treesitter():map "<leader>tT"
+
+  Snacks.toggle
+    .option("relativenumber", { name = "Relative number" })
+    :map "<leader>tN"
+
+  Snacks.toggle
+    .option("conceallevel", {
+      name = "Conceal",
+      off = 0,
+      on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2,
+    })
+    :map "<leader>t_"
+
+  Snacks.toggle
+    .option("background", { off = "light", on = "dark", name = "Dark Background" })
+    :map "<leader>tD"
+
+  Snacks.toggle
+    .new({
+      name = "Cursorline",
+      get = function()
+        return require("mange.cursorline").enabled
+      end,
+      set = function(state)
+        require("mange.cursorline").toggle(state)
+      end,
+    })
+    :map "<leader>tc"
+
+  Snacks.toggle
+    .new({
+      name = "Context",
+      get = function()
+        return require("treesitter-context").enabled()
+      end,
+      set = function(state)
+        if state == true then
+          require("treesitter-context").enable()
+        elseif state == false then
+          require("treesitter-context").disable()
+        else
+          require("treesitter-context").toggle(state)
+        end
+      end,
+    })
+    :map "<leader>tx"
+
+  Snacks.toggle
+    .new({
+      name = "Autoformat (buffer)",
+      get = function()
+        return require("mange.formatting").buffer_enabled()
+      end,
+      set = function(state)
+        require("mange.formatting").toggle_buffer(state)
+      end,
+    })
+    :map "<leader>tf"
+
+  Snacks.toggle
+    .new({
+      name = "Autoformat (global)",
+      get = function()
+        return require("mange.formatting").globally_enabled()
+      end,
+      set = function(state)
+        require("mange.formatting").toggle_global(state)
+      end,
+    })
+    :map "<leader>tF"
+
+  Snacks.toggle.new {
+    name = "Highlight colors",
+    get = function()
+      return require "nvim-highlight-colors"
+    end,
+  }
+
+  Snacks.toggle
+    .new({
+      name = "Signs",
+      get = function()
+        return require("gitsigns.config").config.signcolumn
+      end,
+      set = function(state)
+        require("gitsigns").toggle_signs(state)
+      end,
+    })
+    :map "<leader>tgs"
+
+  Snacks.toggle
+    .new({
+      name = "Show deleted",
+      get = function()
+        return require("gitsigns.config").config.show_deleted
+      end,
+      set = function(state)
+        require("gitsigns").toggle_deleted(state)
+      end,
+    })
+    :map "<leader>tgd"
+
+  Snacks.toggle
+    .new({
+      name = "Line blame",
+      get = function()
+        return require("gitsigns.config").config.current_line_blame
+      end,
+      set = function(state)
+        require("gitsigns").toggle_current_line_blame(state)
+      end,
+    })
+    :map "<leader>tgl"
 
   --
   -- Leader (visual & select)

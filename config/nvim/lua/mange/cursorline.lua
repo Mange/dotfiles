@@ -2,8 +2,14 @@ local cursorline = {
   enabled = true,
 }
 
-function cursorline.toggle()
-  cursorline.enabled = not cursorline.enabled
+--- @param state boolean?
+function cursorline.toggle(state)
+  if state ~= nil then
+    cursorline.enabled = state
+  else
+    cursorline.enabled = not cursorline.enabled
+  end
+
   cursorline.apply()
 end
 
