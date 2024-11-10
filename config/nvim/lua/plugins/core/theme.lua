@@ -20,6 +20,7 @@ return {
         integrations = {
           cmp = true,
           dap = { enabled = false, enable_ui = false },
+          diffview = true,
           fidget = true,
           flash = true,
           gitsigns = true,
@@ -43,6 +44,8 @@ return {
           },
           neogit = true,
           neotest = true,
+          nvim_surround = true,
+          semantic_tokens = true,
           telescope = true,
           treesitter = true,
           treesitter_context = true,
