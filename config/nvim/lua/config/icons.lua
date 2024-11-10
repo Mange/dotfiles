@@ -2,7 +2,7 @@ return {
   diagnostics = {
     Error = " ",
     Warn = " ",
-    Hint = " ",
+    Hint = " ",
     Info = " ",
   },
   git = {
@@ -11,6 +11,7 @@ return {
     removed = " ",
   },
   kinds = {
+    _Unknown = "  ",
     Array = " ",
     Boolean = " ",
     Class = " ",

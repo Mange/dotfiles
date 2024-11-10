@@ -37,10 +37,28 @@ return {
 
       cmp.setup {
         formatting = {
-          format = function(_, item)
+          fields = { "kind", "abbr", "menu" },
+          format = function(entry, item, ...)
+            -- Adds color highlight if "Kind" label matches colors.
+            local color_item = require("nvim-highlight-colors").format(
+              entry,
+              { kind = item.kind }
+            )
+
+            -- Attach icon to the "Kind" label.
             if icons[item.kind] then
-              item.kind = icons[item.kind] .. item.kind
+              item.kind = icons[item.kind]
+            else
+              item.kind = icons._Unknown
             end
+
+            -- Apply color highlights, if available.
+            if color_item.abbr_hl_group then
+              item.kind_hl_group = color_item.abbr_hl_group
+              -- Overwrite icon with the color indicator.
+              item.kind = color_item.abbr
+            end
+
             return item
           end,
         },
