@@ -72,7 +72,7 @@ return {
         char = "▏",
       },
       scope = {
-        char = "┇",
+        char = "▏",
         show_start = false,
       },
     },
