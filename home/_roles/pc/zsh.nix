@@ -16,8 +16,13 @@ in {
     defaultKeymap = "viins";
     history = { 
       path = "${config.xdg.dataHome}/zsh/history";
-      share = false;
+      append = true;
+      expireDuplicatesFirst = true;
       extended = true;
+      ignoreAllDups = true;
+      share = false;
+      ignoreSpace = true;
+      save = 20000;
     };
 
     enableVteIntegration = true;
