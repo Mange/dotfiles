@@ -1,9 +1,6 @@
 { config, pkgs, ... }: let
   utils = import ../../utils.nix { inherit config pkgs; };
 in {
-  # Work breaks
-  services.safeeyes.enable = true;
-
   # Night light
   services.gammastep = {
     enable = true;
@@ -78,6 +75,9 @@ in {
 
     # Other
     ripdrag # drag-n-drop
+    # Work breaks
+    sane-break
+
 
     # Deprecated
     (waybar.override {
