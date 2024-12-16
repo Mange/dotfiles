@@ -1,5 +1,13 @@
 # Keyring, SSH, GPG stuff
-{ config, pkgs, lib, ... }: {
+{ config, pkgs, lib, rootPath, ... }: let
+  sshPubKeys = lib.filesystem.listFilesRecursive (rootPath + /data/ssh-keys);
+  sshKeyFiles = lib.lists.map (file: {
+    ".ssh/${builtins.baseNameOf file}" = { source = file; };
+  }) sshPubKeys;
+in {
+  # Install SSH public keys
+  home.file = (lib.attrsets.mergeAttrsList sshKeyFiles);
+
   # Keyring and gpg agent
   services.gnome-keyring.enable = true;
   home.sessionVariables.SSH_AUTH_SOCK = "$XDG_RUNTIME_DIR/keyring/ssh"; # gnome-keyring

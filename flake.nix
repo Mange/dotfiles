@@ -52,17 +52,22 @@
 
       # NixOS configuration entrypoint
       # Available through 'nixos-rebuild switch --flake .#your-hostname'
-      nixosConfigurations = {
+      nixosConfigurations = let
+        specialArgs = {
+          inherit inputs outputs;
+          rootPath = ./.;
+        };
+      in {
         socia = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs outputs; };
+          inherit specialArgs;
           modules = [./systems/socia/configuration.nix];
         };
         vera = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs outputs; };
+          inherit specialArgs;
           modules = [./systems/vera/configuration.nix];
         };
         porto = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs outputs; };
+          inherit specialArgs;
           modules = [./systems/porto/configuration.nix];
         };
       };
@@ -71,7 +76,10 @@
       # Available through 'home-manager --flake .#your-username@your-hostname'
       homeConfigurations = let
         homeConfig = home-manager.lib.homeManagerConfiguration;
-        extraSpecialArgs = { inherit inputs outputs; };
+        extraSpecialArgs = {
+          inherit inputs outputs;
+          rootPath = ./.;
+        };
       in {
         "mange@socia" = homeConfig {
           extraSpecialArgs = extraSpecialArgs // {

@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, rootPath, ... }: {
   security.polkit.enable = true;
   security.sudo.enable = true;
   services.accounts-daemon.enable = true;
@@ -14,9 +14,8 @@
       "input" # Control LEDs
     ];
     shell = pkgs.zsh;
-    openssh.authorizedKeys.keys = [
-      # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
+    openssh.authorizedKeys.keyFiles = [
+      (rootPath + /data/ssh-keys/id_mange_2024.pub)
     ];
   };
-
 }
