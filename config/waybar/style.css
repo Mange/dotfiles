@@ -15,6 +15,7 @@ window#waybar {
 }
 
 #custom-media,
+.modules-center,
 .modules-right,
 #taskbar button,
 #workspaces button {
