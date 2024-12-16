@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+printf -v year '%(%Y)T' -1
+path="$HOME/.ssh/id_mange_${year}"
+
+if [[ "$#" -ne 0 ]]; then
+    echo "Usage: $0"
+    echo ""
+    echo "Generates a new SSH key to ${path}."
+    exit 1
+fi
+
+if [[ -f "$path" ]]; then
+    echo "File already exists: $path"
+    exit 1
+fi
+
+if [[ -f "$path.pub" ]]; then
+    echo "File already exists: $path.pub"
+    exit 1
+fi
+
+ssh-keygen -t ed25519 -f "$path" -C "mange+${year}@bergmark"
