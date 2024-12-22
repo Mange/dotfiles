@@ -3,11 +3,7 @@
     slack
     spotify
     telegram-desktop
-
-    (discord.override {
-      withOpenASAR = true;
-      withVencord = true;
-    })
+    discord-canary
   ];
 
   xdg.mimeApps.defaultApplications = {
