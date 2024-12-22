@@ -16,14 +16,8 @@
     inter
 
     # Symbols
-    (
-      nerdfonts.override {
-        fonts = [
-          "JetBrainsMono"
-          "NerdFontsSymbolsOnly"
-        ];
-      }
-    )
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.symbols-only
     noto-fonts-emoji # Emoji
     noto-fonts-extra # etc.
 

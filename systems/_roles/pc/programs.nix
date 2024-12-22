@@ -1,5 +1,6 @@
 { pkgs, ... }: let
   hyprland = pkgs.hyprland;
+  # Patch to 0.46.0
   hy3 = pkgs.hyprlandPlugins.hy3;
 in {
   environment.systemPackages = with pkgs; [

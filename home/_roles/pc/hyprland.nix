@@ -183,7 +183,7 @@ in
     package = hyprland;
     plugins = with hyprplugins; [
       hy3
-      hyprfocus
+      # hyprfocus
     ];
     systemd.enable = true;
 

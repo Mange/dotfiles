@@ -13,12 +13,14 @@ in {
     flavor = flavor;
     accent = accent;
 
-    pointerCursor.enable = true;
-    pointerCursor.accent = "dark";
-  };
+    cursors.enable = true;
+    cursors.accent = "dark";
 
-  # My Neovim is not configured with home-manager directly.
-  programs.neovim.catppuccin.enable = false;
+    # My Neovim is not configured with home-manager directly.
+    nvim.enable = false;
+    # I use my own theme style instead. See below.
+    rofi.enable = false;
+  };
 
   home.pointerCursor = {
     size = 32;
@@ -49,7 +51,6 @@ in {
   # to adjust it.
   xdg.configFile."rofi/catpuccin.rasi".source = ./rofi/catpuccin.rasi;
   programs.rofi = {
-    catppuccin.enable = false; # Use my own style instead
     theme = "catpuccin.rasi";
     extraConfig = {
       icon-theme = iconTheme;
