@@ -1,5 +1,13 @@
 { pkgs, ... }: {
-  fonts.fontconfig.enable = true;
+  fonts.fontconfig = {
+    enable = true;
+    defaultFonts = {
+      emoji = ["Noto Color Emoji" "Nerd Fonts Symbols Only"];
+      monospace = ["JetBrains Mono Nerd Font"];
+      sansSerif = ["Inter" "Nerd Fonts Symbols Only"];
+      serif = ["Inter" "Nerd Fonts Symbols Only"];
+    };
+  };
 
   gtk.font = {
     name = "Inter";
