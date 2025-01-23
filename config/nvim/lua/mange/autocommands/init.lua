@@ -31,11 +31,3 @@ vim.api.nvim_create_autocmd("FileType", {
     )
   end,
 })
-
--- Show diagnostics in a popup when holding cursor over one.
-vim.api.nvim_create_autocmd("CursorHold", {
-  pattern = "*",
-  callback = function()
-    require("mange.utils").show_diagnostic_float()
-  end,
-})

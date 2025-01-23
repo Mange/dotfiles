@@ -4,7 +4,7 @@ local icons = require "config.icons"
 -- Configure diagnostics
 --
 vim.diagnostic.config {
-  virtual_text = false,
+  virtual_text = false, -- Replaced by tiny-inline-diagnostic
   signs = true,
   underline = true,
   float = {
