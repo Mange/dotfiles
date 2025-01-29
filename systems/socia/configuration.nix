@@ -22,6 +22,7 @@
     ../_topics/catppuccin.nix
     ../_topics/home-network.nix
     ../_topics/mullvad.nix
+    ../_topics/ollama.nix
     ../_topics/vm-host.nix
     ../_topics/wacom.nix
     ../_topics/yubikey.nix
@@ -51,4 +52,12 @@
   # AMD RX 7900 XT
   boot.kernelPackages = pkgs.linuxPackages_6_11;
   hardware.amdgpu.opencl.enable = true;
+
+  # Seems to be breaking too much…
+  # nixpkgs.config.rocmSupport = true;
+  # Waiting for https://nixpk.gs/pr-tracker.html?pr=377629
+  # services.ollama.acceleration = "rocm";
+  # nix-shell -p "rocmPackages.rocminfo" --run "rocminfo" | grep "gfx"
+  # services.ollama.rocmOverrideGfx = "11.0.0"; # i.e. `gfx1100`.
+  services.ollama.package = pkgs.ollama-rocm;
 }
