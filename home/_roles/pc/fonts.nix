@@ -42,7 +42,7 @@
 
     # ancient fonts - Just because it is cool
     # https://dn-works.com/ufas/
-    aegan
+    # aegan
     aegyptus
     symbola
     unidings
