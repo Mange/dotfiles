@@ -19,7 +19,11 @@ yet. This will take its own sweet time.
 
 ## How to bootstrap
 
-Install NixOS on a machine, clone out the repo and apply it.
+1. Install NixOS on a machine.
+2. Get my age secret key and save it as `~/.config/sops/age/keys.txt`.
+3. Clone the repo.
+4. `nix develop` and `nh os switch`.
+5. Install home manager things with `nh home switch`.
 
 ## Copyright
 
