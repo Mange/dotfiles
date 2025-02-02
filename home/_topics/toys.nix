@@ -29,6 +29,11 @@ in {
       ${pkgs.figlet}/bin/figlet -f "${extraFonts}/3d.flf" "$@"
     '';
 
+    ".local/bin/minibanner" = mkScript /* sh */ ''
+      #!/bin/sh
+      ${pkgs.figlet}/bin/figlet -f "${extraFonts}/halfiwi.flf" "$@"
+    '';
+
     ".local/bin/banners" = mkScript /* sh */ ''
       #!/bin/sh
       set -e
