@@ -57,9 +57,7 @@ in {
         keybind = "6";
       }
     ];
-    style = ./wlogout/style.css;
   };
-  xdg.configFile."wlogout/icons".source = ./wlogout/icons;
 
   # Utilities for wayland
   home.packages = with pkgs; [
