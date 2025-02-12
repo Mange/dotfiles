@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
+set -euo pipefail
 
-if [[ $1 == "--help" ]]; then
+if [[ $# -ne 0 ]]; then
   echo "Usage: $0"
   echo ""
   echo "Shows a notification with your current reminders and pending tasks."
@@ -9,7 +10,51 @@ if [[ $1 == "--help" ]]; then
   exit 0
 fi
 
+wiki_path=~/Documents/Wiki
+
+# Note: `date`(1) supports tokens like "today" and "yesterday" to the `-d`
+# option.
+format_date() {
+  local date="$1"
+  local format="$2"
+
+  LANG=C LC_ALL=C date -d "$date" "+$format"
+}
+
+journal_note_path() {
+  local date="$1"
+  echo "$wiki_path/Journal/$(format_date "$date" "%Y/%m-%B/%Y-%m-%d-%A").md"
+}
+
+count_uncompleted_tasks() {
+  local note="$1"
+  rg --fixed-strings -- "- [ ]" "$note" | wc -l
+  true
+}
+
 entries=()
+
+if [[ -d "$wiki_path" ]]; then
+  # Check today's Journal item.
+  today_note="$(journal_note_path "today")"
+  yesterday_note="$(journal_note_path "yesterday")"
+
+  if [[ -e "$yesterday_note" ]]; then
+    non_completed="$(count_uncompleted_tasks "$yesterday_note")"
+    if [[ $non_completed -gt 0 ]]; then
+      entries+=("You have ${non_completed} non-completed task(s) from yesterday!")
+    fi
+  fi
+
+  if [[ -e "$today_note" ]]; then
+    non_completed="$(count_uncompleted_tasks "$today_note")"
+    if [[ $non_completed -gt 0 ]]; then
+      entries+=("You have ${non_completed} non-completed task(s) today!")
+    fi
+  else
+    entries+=("You have not written in your journal today!")
+  fi
+fi
 
 if [[ -s ~/Reminder ]]; then
   entries+=("$(cat ~/Reminder)")
