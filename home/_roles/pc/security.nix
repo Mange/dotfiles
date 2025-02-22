@@ -56,9 +56,6 @@ in {
     keybase-gui
     polkit_gnome
     libsecret
-
-    nixos-stable.monero
-    nixos-stable.monero-gui
   ];
 
   systemd.user.services.polkit-gnome-authentication-agent-1 = {
