@@ -738,6 +738,8 @@ local function setup()
       --
       ["o"] = {
         name = "Open",
+        a = { ":CodeCompanionChat Toggle<cr>", "AI Chat" },
+        A = { ":CodeCompanionActions<cr>", "AI Actions" },
         p = { ":CccPick<cr>", "Color picker" },
 
         d = { "<cmd>Trouble diagnostics toggle focus=true<cr>", "Diagnostics" },
@@ -895,6 +897,8 @@ local function setup()
   --
   wk_register({
     ["<leader>"] = {
+      a = { ":CodeCompanionChat Toggle<cr>", "AI Chat" },
+      A = { "<cmd>CodeCompanionChat Add<cr>", "Add to AI Chat" },
       s = {
         name = "Sort",
         s = { ":'<,'>sort<cr>", "Normal" },
