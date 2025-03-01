@@ -46,7 +46,7 @@
     aegyptus
     symbola
     unidings
-    eemusic
+    # eemusic
     textfonts
     assyrian
     akkadian

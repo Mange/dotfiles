@@ -55,7 +55,7 @@ in {
   home.packages = with pkgs; [
     keybase-gui
     polkit_gnome
-    libsecret
+    # libsecret
   ];
 
   systemd.user.services.polkit-gnome-authentication-agent-1 = {

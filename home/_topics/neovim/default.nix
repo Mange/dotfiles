@@ -67,7 +67,7 @@ in
 
     # Javascript / Typescript / CSS / HTML / etc.
     typescript # includes tsserver
-    nodePackages_latest.graphql-language-service-cli
+    # nodePackages_latest.graphql-language-service-cli
     nodePackages_latest.svelte-language-server
     nodePackages_latest.typescript-language-server
     nodePackages_latest."@tailwindcss/language-server"
