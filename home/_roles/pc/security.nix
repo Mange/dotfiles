@@ -49,8 +49,6 @@ in {
     enable = true;
     mountPoint = "Keybase";
   };
-  # https://github.com/nix-community/home-manager/issues/4722
-  systemd.user.services.kbfs.Service.PrivateTmp = lib.mkForce false;
 
   home.packages = with pkgs; [
     keybase-gui
