@@ -21,6 +21,7 @@
     ../_roles/workstation
     ../_topics/amd_rx_7900_xt.nix
     ../_topics/catppuccin.nix
+    ../_topics/gaming.nix
     ../_topics/home-network.nix
     ../_topics/lg_headset.nix
     ../_topics/mullvad.nix

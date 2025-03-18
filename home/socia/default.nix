@@ -15,7 +15,6 @@
     ../_topics/bluetooth.nix
 
     ../_topics/vm-host.nix
-    ../_topics/gaming
     ../_topics/crypto.nix
     ../_topics/work/instabee.nix
   ];
