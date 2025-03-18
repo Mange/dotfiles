@@ -68,6 +68,7 @@ if [[ "${#entries[@]}" -gt 0 ]]; then
   smart-notification \
     --app-name "Reminder" \
     --icon=starred \
+    -- \
     "Reminder" \
     "$text"
 fi
