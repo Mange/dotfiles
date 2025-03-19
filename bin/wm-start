@@ -26,6 +26,9 @@ awesome)
 Hyprland)
   hyprctl dispatch -- exec "$@"
   ;;
+niri)
+  niri msg action spawn -- "$@"
+  ;;
 *)
   # shrug… I guess we'll just try to start it in the background
   # instead.

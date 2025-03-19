@@ -1,0 +1,150 @@
+#!/usr/bin/env bash
+
+usage() {
+  cat <<EOF
+Usage: nirijump [--help] <QUERY> -- <STARTCMD> [FOCUSEDCMD]
+
+Focuses a window with matching query
+
+QUERY:
+  --class CLASS -- Find windows with matching class name. (regexp)
+
+STARTCMD:
+  The command to run if no matching window is found.
+  Will be executed with /bin/sh.
+
+FOCUSEDCMD:
+  Optional command to run if window was found and was currently focused.
+  Will be executed with /bin/sh.
+  You can use the word "toggle" for moving the window to the special workspace.
+EOF
+}
+
+query_class=""
+
+while [[ "$#" -gt 0 ]]; do
+  case "$1" in
+  --class)
+    query_class="$2"
+    shift 2
+    ;;
+  --help)
+    usage
+    exit 0
+    ;;
+  --)
+    shift
+    break
+    ;;
+  -*)
+    echo "Unknown option: $1" >&2
+    exit 1
+    ;;
+  *)
+    break
+    ;;
+  esac
+done
+
+main() {
+  local start_cmd="$1"
+  local focused_cmd="$2"
+
+  if [[ -z "$query_class" ]]; then
+    echo "No query specified" >&2
+    exit 1
+  fi
+
+  if [[ -z "$start_cmd" ]]; then
+    echo "No start command specified" >&2
+    exit 1
+  fi
+
+  window=$(find_window)
+  if [[ "$window" == "null" || -z "$window" ]]; then
+    # echo "Running start script: \"${start_cmd}\"" >&2
+    exec sh -c "$start_cmd"
+  else
+    local window_id
+    window_id=$(jq -r ".id" <<<"$window")
+
+    if currently_focused "$window_id"; then
+      if [[ "$focused_cmd" == "toggle" ]]; then
+        move_to_special_workspace "$window"
+      elif [[ -n "$focused_cmd" ]]; then
+        exec sh -c "$focused_cmd"
+      fi
+    else
+      bring_to_current_workspace "$window"
+      focus_window "$window_id"
+    fi
+  fi
+}
+
+find_window() {
+  niri msg -j windows |
+    jq -r ".[] | select(.app_id | test(\"${query_class//\'/''}\"))"
+}
+
+currently_focused() {
+  local window_id="$1"
+  local focused_window_id
+
+  focused_window_id=$(niri msg -j focused-window | jq -r .id)
+
+  if [[ "$window_id" == "$focused_window_id" ]]; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+workspace_ref_from_id() {
+  local workspace_id="$1"
+
+  niri msg -j workspaces |
+    jq -r ".[] | select(.id == \"${workspace_id}\") | .idx"
+}
+
+bring_to_current_workspace() {
+  local window="$1"
+  local window_workspace_id
+  local active_workspace_id
+
+  window_workspace_id=$(jq -r ".workspace_id" <<<"$window")
+  active_workspace_id=$(niri msg -j focused-window | jq -r .workspace_id)
+
+  if [[ "$window_workspace_id" != "$active_workspace_id" ]]; then
+    local window_id
+    local workspace_idx
+    window_id=$(jq -r ".id" <<<"$window")
+    workspace_idx="$(workspace_ref_from_id "$active_workspace_id")"
+
+    niri msg action move-window-to-workspace --window-id "${window_id}" "${workspace_idx}"
+  fi
+}
+
+move_to_special_workspace() {
+  local window="$1"
+  local workspace_id
+  local workspace_idx
+
+  workspace_id=$(jq -r ".workspace_id" <<<"$window")
+  workspace_idx="$(workspace_ref_from_id "$workspace_id")"
+
+  # TODO: This does not work well. The window is flung away to some random
+  # place and moving focus over. Asking to move back to the previous workspace
+  # does not work. :(
+  # We probably need a better command in niri for this.
+  # https://github.com/YaLTeR/niri/discussions/329
+  niri msg action move-window-to-workspace --window-id "${window_id}" "special"
+  niri msg action focus-workspace "$workspace_idx"
+}
+
+focus_window() {
+  local window_id="$1"
+
+  niri msg action focus-window --id "${window_id}"
+}
+
+main "$@"
