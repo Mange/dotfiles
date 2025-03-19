@@ -27,4 +27,7 @@ in {
     };
   };
   networking.firewall.allowedTCPPorts = [22];
+
+  # Allow root to change /etc/hosts temporarily
+  environment.etc.hosts.mode = "0644";
 }
