@@ -35,7 +35,7 @@ in
         # In order for the settings to be valid, both `size` and `normal`
         # parameters must be set. Font is configured in `fonts.nix`, so just
         # place a default placeholder here to ensure the settings are valid.
-        size = 12.0;
+        size = 10.0;
         normal = lib.mkDefault [];
       };
     };

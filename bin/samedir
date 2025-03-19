@@ -33,21 +33,15 @@ elif [[ $# -eq 1 ]] && [[ $1 == "--debug" ]]; then
   shift
 fi
 
-function x11() {
-  xprop -id "$(xprop -root | awk '/_NET_ACTIVE_WINDOW\(WINDOW\)/{print $NF}')" |
-    grep -m 1 PID |
-    cut -d " " -f 3
-}
-
-function hyprland() {
-  hyprctl activewindow | grep 'pid:' | cut -d " " -f 2
-}
-
 function detect_pid() {
-  if [[ "$XDG_CURRENT_DESKTOP" == "Hyprland" ]]; then
-    hyprland
+  if [[ "$XDG_CURRENT_DESKTOP" == "niri" ]]; then
+    niri msg -j focused-window | jq -r '.pid'
+  elif [[ "$XDG_CURRENT_DESKTOP" == "Hyprland" ]]; then
+    hyprctl activewindow | grep 'pid:' | cut -d " " -f 2
   else
-    x11
+    xprop -id "$(xprop -root | awk '/_NET_ACTIVE_WINDOW\(WINDOW\)/{print $NF}')" |
+      grep -m 1 PID |
+      cut -d " " -f 3
   fi
 }
 

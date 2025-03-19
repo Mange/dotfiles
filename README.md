@@ -5,7 +5,7 @@ This is a repo of my settings and computer customization preferences.
 Quick summary of my stack:
 
 - **OS:** [NixOS]
-- **Window manager:** [Hyprland] (Wayland)
+- **Window manager:** [Niri] (Wayland)
 - **Editor:** [Neovim]
 - **Shell:** [ZSH]
 - **Terminal emulator:** [Wezterm]
@@ -38,7 +38,7 @@ No warranty or guarantees are provided in case you run any code from this
 repository.
 
 [NixOS]: https://www.nixos.org
-[Hyprland]: https://hyprland.org/
+[Niri]: https://github.com/YaLTeR/niri
 [Neovim]: https://neovim.io/
 [ZSH]: http://zsh.sourceforge.net/
 [Wezterm]: https://wezfurlong.org/wezterm/

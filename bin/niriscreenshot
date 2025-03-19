@@ -3,7 +3,7 @@ set -e
 
 usage() {
   cat <<EOF
-Usage: hyprscreenshot [--help] [--edit] [--delay SEC] [select|window]
+Usage: niriscreenshot [--help] [--edit] [--delay SEC] [select|window]
 
 Takes a screenshot and copies it to the clipboard.
 
@@ -16,7 +16,7 @@ Options:
 
 Modes:
   select (default): Select area of screen to capture.
-  window: Capture the currently focused window in Hyprland.
+  window: Capture the currently focused window in Niri.
 EOF
 }
 
@@ -64,7 +64,15 @@ select)
   geometry="$(slurp)"
   ;;
 window)
-  geometry=$(hyprctl activewindow -j | jq --raw-output '"\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])"')
+  # niri has no API to retrieve window geometry yet. Abort with the built-in screenshot utility instead.
+  # Yeah, I don't know a good way to open this in ksnip either since the
+  # written filename is not communicated over the msg channel. However, it is
+  # copied to the clipboard at least.
+  # geometry=$(niri msg -j focused-window | jq --raw-output '"\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])"')
+  if [[ "$delay" -gt 0 ]]; then
+    sleep "$delay"
+  fi
+  exec niri msg action screenshot-window
   ;;
 esac
 

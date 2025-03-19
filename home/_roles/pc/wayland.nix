@@ -73,16 +73,8 @@ in {
 
     # Other
     ripdrag # drag-n-drop
-    # Work breaks
-    sane-break
-
-
-    # Deprecated
-    (waybar.override {
-      hyprlandSupport = true;
-      runTests = false;
-      cavaSupport = true;
-    })
+    sane-break # Work breaks
+    waybar
   ];
 
   # Custom commands

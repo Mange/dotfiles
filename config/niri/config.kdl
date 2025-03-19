@@ -1,0 +1,520 @@
+// vim: set sw=4 ts=4
+input {
+    keyboard {
+        xkb {
+            layout "us"
+            options "mange:custom,caps:super"
+        }
+        repeat-delay 300
+        repeat-rate 40 
+    }
+
+    touchpad {
+        tap
+        // dwt
+        // dwtp
+        // drag-lock
+        natural-scroll
+        // accel-speed 0.2
+        // accel-profile "flat"
+        // scroll-method "two-finger"
+        // disabled-on-external-mouse
+    }
+}
+
+////////////
+// Outputs for socia
+//
+// 1440                     ┌──────┐ ┐
+//  │┌ ┌─────────┬──────────┤      │ │ 
+//  └┤ │  left   │  center  │ right│ │2560
+//   └ └─────────┴──────────┤      │ │
+//        2560       5120   └──────┘ ┘
+//    
+//  Margins: (2560-1440) = 1120
+//  Margin top: 1120/2 = 560
+//
+output "Philips Consumer Electronics Company PHL 245B1 UK02029011588" {
+  scale 1
+  mode "2560x1440@75"
+  transform "normal"
+  position x=0 y=560
+}
+output "ViewSonic Corporation VX2758-Series VVF190100000" {
+  scale 1
+  mode "2560x1440@144"
+  transform "normal"
+  position x=2560 y=560
+}
+output "Philips Consumer Electronics Company PHL 245B1 UK02029011585" {
+  scale 1
+  mode "2560x1440@75"
+  transform "270"
+  position x=5120 y=0
+}
+////////////
+
+// Left:
+// open-on-output "Philips Consumer Electronics Company PHL 245B1 UK02029011588"
+// Middle:
+// open-on-output "ViewSonic Corporation VX2758-Series VVF190100000"
+// Right:
+// open-on-output "Philips Consumer Electronics Company PHL 245B1 UK02029011585"
+
+workspace "system" {
+  open-on-output "ViewSonic Corporation VX2758-Series VVF190100000"
+}
+workspace "code" {
+  open-on-output "ViewSonic Corporation VX2758-Series VVF190100000"
+}
+workspace "www" {
+  open-on-output "Philips Consumer Electronics Company PHL 245B1 UK02029011588"
+}
+workspace "aside" {
+  open-on-output "Philips Consumer Electronics Company PHL 245B1 UK02029011585"
+}
+workspace "notes" {
+  open-on-output "ViewSonic Corporation VX2758-Series VVF190100000"
+}
+// workspace "" // 6 (Free)
+// workspace "" // 7 (Free)
+// workspace "" // 8 (Free)
+workspace "media" {
+  open-on-output "Philips Consumer Electronics Company PHL 245B1 UK02029011585"
+}
+workspace "chat" {
+  open-on-output "Philips Consumer Electronics Company PHL 245B1 UK02029011585"
+}
+
+layout {
+    gaps 10
+
+    center-focused-column "never"
+    preset-column-widths {
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+    }
+    default-column-width { proportion 0.5; }
+
+    focus-ring { off; }
+
+    border {
+        width 3
+        active-gradient from="#cba6f7" to="#fab387" angle=315
+        inactive-gradient from="#9399b2" to="#45475a" angle=315
+    }
+
+    shadow {
+        // on
+
+        // By default, the shadow draws only around its window, and not behind it.
+        // Uncomment this setting to make the shadow draw behind its window.
+        //
+        // Note that niri has no way of knowing about the CSD window corner
+        // radius. It has to assume that windows have square corners, leading to
+        // shadow artifacts inside the CSD rounded corners. This setting fixes
+        // those artifacts.
+        // 
+        // However, instead you may want to set prefer-no-csd and/or
+        // geometry-corner-radius. Then, niri will know the corner radius and
+        // draw the shadow correctly, without having to draw it behind the
+        // window. These will also remove client-side shadows if the window
+        // draws any.
+        // 
+        // draw-behind-window true
+
+        // You can change how shadows look. The values below are in logical
+        // pixels and match the CSS box-shadow properties.
+
+        // Softness controls the shadow blur radius.
+        softness 30
+
+        // Spread expands the shadow.
+        spread 5
+
+        // Offset moves the shadow relative to the window.
+        offset x=0 y=5
+
+        // You can also change the shadow color and opacity.
+        color "#0007"
+    }
+
+    // Struts shrink the area occupied by windows, similarly to layer-shell panels.
+    // You can think of them as a kind of outer gaps. They are set in logical pixels.
+    // Left and right struts will cause the next window to the side to always be visible.
+    // Top and bottom struts will simply add outer gaps in addition to the area occupied by
+    // layer-shell panels and regular gaps.
+    struts {
+        left 15
+        right 15
+        // top 64
+        // bottom 64
+    }
+}
+
+spawn-at-startup "xwayland-satellite"
+environment {
+    DISPLAY ":0" // For xwayland-satellite
+}
+
+// Daemons and services
+spawn-at-startup "wl-paste" "--watch" "cliphist" "store"
+spawn-at-startup "udiskie" "--no-automount" "--smart-tray"
+spawn-at-startup "swww-daemon"
+spawn-at-startup "waybar"
+
+// Apps
+spawn-at-startup "firefox"
+spawn-at-startup "ksnip"
+spawn-at-startup "obsidian"
+spawn-at-startup "sane-break"
+spawn-at-startup "telegram-desktop"
+
+// Spotify requires X11 to be set up, and it therefore needs to wait a bit for
+// xwayland-satellite to finish starting.
+spawn-at-startup "sh" "-c" "sleep 1; niri msg action spawn -- spotify"
+
+// Show my current reminders on login
+spawn-at-startup "startup-reminder"
+
+// Ask the clients to omit their client-side decorations if possible.
+prefer-no-csd
+
+screenshot-path "~/Media/Pictures/Screenshot_%Y-%m-%d_%H-%M-%S.png"
+
+// Animation settings.
+animations { }
+
+//
+// Window rules let you adjust behavior for individual windows.
+//
+
+// Global rule
+window-rule {
+  draw-border-with-background false
+  geometry-corner-radius 5
+  clip-to-geometry true
+}
+
+// Mark some apps as floating
+window-rule {
+  match app-id=r#"^org\.ksnip\.ksnip$"#
+  match app-id=r#"^org\.pulseaudio\.pavucontrol$"#
+  match title=r#"^Android Emulator -.*$"#
+  match title=r#"^Sane Break$.*"#
+  match app-id=r#"^thunar$" title=r#"^Förlopp för.*$"#
+  match app-id=r#"^thunar$" title=r#"^File Operation Progress.*$"#
+  match title=r#"^(Öppna|Spara) fil.*$"#
+  open-floating true
+}
+
+window-rule {
+  match title="Tillägg:.*Bitwarden"
+  block-out-from "screencast"
+  open-floating true
+}
+
+window-rule {
+  match app-id=r#"^org\.telegram\.desktop$"#
+  open-on-workspace "chat"
+  block-out-from "screencast"
+}
+
+// Floating windows should be styled differently.
+window-rule {
+  match is-floating=true
+
+  geometry-corner-radius 17
+  clip-to-geometry true
+  shadow {
+    on
+  }
+}
+
+window-rule {
+  match is-window-cast-target=true
+
+  border {
+    active-color "#f38ba8"
+  }
+
+  shadow {
+    on
+    color "#f38ba8"
+    offset x=0 y=0
+    spread 5
+  }
+
+  tab-indicator {
+    // active-color "#f38ba8"
+    inactive-color "#f38ba8"
+  }
+}
+
+window-rule {
+  match app-id="Spotify"
+  open-on-workspace "media"
+  open-maximized true
+}
+
+window-rule {
+  match app-id="org.telegram.desktop"
+  match app-id="discord"
+  match app-id="Slack"
+  open-on-workspace "chat"
+  open-maximized true
+}
+
+window-rule {
+  match at-startup=true app-id="firefox"
+  open-on-workspace "www"
+}
+
+window-rule {
+  match app-id="obsidian"
+  open-on-workspace "notes"
+}
+
+// Panel popups
+window-rule {
+  match app-id=r#"^org\.pulseaudio\.pavucontrol$"#
+
+  max-width 700
+  max-height 1000
+  default-floating-position x=10 y=10 relative-to="top-right"
+}
+
+// Dropdowns
+window-rule {
+  match app-id="^dropdown_"
+
+  open-floating true
+}
+
+window-rule {
+    match app-id=r#"^org\.wezfurlong\.wezterm$"#
+    default-column-width {}
+}
+
+window-rule {
+    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+    open-floating true
+}
+
+layer-rule {
+  match namespace="^notifications$"
+
+  block-out-from "screencast"
+}
+
+binds {
+    //
+    // Applications and WM
+    //
+
+    // The quit action will show a confirmation dialog to avoid accidental exits.
+    Ctrl+Alt+Delete { quit; }
+
+    // Applications such as remote-desktop clients and software KVM switches may
+    // request that niri stops processing the keyboard shortcuts defined here
+    // so they may, for example, forward the key presses as-is to a remote machine.
+    // It's a good idea to bind an escape hatch to toggle the inhibitor,
+    // so a buggy application can't hold your session hostage.
+    //
+    // The allow-inhibiting=false property can be applied to other binds as well,
+    // which ensures niri always processes them, even when an inhibitor is active.
+    Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
+
+    Mod+F1 { spawn "wlogout"; }
+    Mod+F2 { spawn "bt-select"; }
+    Mod+F3 { show-hotkey-overlay; }
+    Mod+F4 { spawn "foot"; } // Emergency terminal if Wezterm doesn't work.
+    Mod+F5 { spawn "wallpaper-cycle"; }
+
+    // Powers off the monitors. To turn them back on, do any input like
+    // moving the mouse or pressing any other key.
+    Mod+F9 { power-off-monitors; }
+
+    Mod+Shift+Escape { spawn "loginctl" "lock-session"; }
+
+    Mod+V { spawn "sh" "-c" "cliphist list | rofi -dmenu | cliphist decode | wl-copy"; }
+
+    Mod+D { spawn "rofi" "-show" "drun" "-modi" "drun,run"; }
+    Mod+Shift+D { spawn "rofi" "-show" "run" "-modi" "run"; }
+    Mod+E { spawn "rofi" "-modi" "emoji" "-show" "emoji" "-kb-secondary-copy" "" "-kb-custom-1" "Ctrl+c"; }
+
+    Mod+Tab { spawn "rofi" "-modi" "window" "-show" "window"; }
+
+    Mod+Return { spawn "samedirwezterm" "start" "--always-new-process"; }
+    Mod+Shift+Return { spawn "wezterm" "start" "--always-new-process"; }
+
+    // TODO: Add back "toggle" when I can get that to work.
+    Mod+G { spawn "nirijump" "--class" "dropdown_terminal" "wm-start samedirwezterm start --class dropdown_terminal" "niri msg action switch-focus-between-floating-and-tiling"; }
+    Mod+Shift+G { spawn "nirijump" "--class" "dropdown_calculator" "wm-start wezterm start --class dropdown_calculator -- qalc" "niri msg action switch-focus-between-floating-and-tiling"; }
+
+    Mod+P { spawn "open-project"; }
+    Mod+Shift+P { spawn "open-wiki"; }
+
+    Mod+R { spawn "startup-reminder"; }
+    Mod+Shift+R { spawn "edit-reminder"; }
+
+    Mod+Slash { spawn "samedir" "nemo" "."; }
+    Mod+Shift+Slash { spawn "nemo"; }
+
+    Mod+Semicolon { spawn "samedir" "neovide"; }
+    Mod+Shift+Semicolon { spawn "open-project" "neovide"; }
+
+    // Notifications
+    Mod+I { spawn "makoctl" "dismiss"; }
+    Mod+Alt+I { spawn "makoctl" "restore"; }
+    Mod+Shift+I { spawn "makoctl" "invoke"; }
+    Mod+Ctrl+Shift+I { spawn "makoctl" "menu" "rofi" "-dmenu"; }
+
+    // Screenshotting
+    Mod+S            { spawn "niriscreenshot" "select"; }
+    Mod+Shift+S      { spawn "niriscreenshot" "--edit" "select"; }
+    Mod+Ctrl+S       { spawn "niriscreenshot" "--delay" "2" "select"; }
+    Mod+Ctrl+Shift+S { spawn "niriscreenshot" "--edit" "--delay" "2" "select"; }
+    Mod+F12          { spawn "wfrecord"; }
+
+    // Media controls (all allowed when screen is locked)
+    XF86AudioRaiseVolume allow-when-locked=true { spawn "volume-change" "--toast" "+5"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn "volume-change" "--toast" "-5"; }
+    XF86AudioMute        allow-when-locked=true { spawn "pulsemixer" "--toggle-mute"; }
+    XF86AudioMicMute     allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
+    XF86AudioPlay        allow-when-locked=true { spawn "playerctl" "play-pause"; }
+    XF86AudioStop        allow-when-locked=true { spawn "playerctl" "stop"; }
+    XF86AudioNext        allow-when-locked=true { spawn "playerctl" "next"; }
+    Mod+Page_Down        allow-when-locked=true { spawn "playerctl" "next"; }
+    XF86AudioPrev        allow-when-locked=true { spawn "playerctl" "previous"; }
+    Mod+Page_Up          allow-when-locked=true { spawn "playerctl" "previous"; }
+    XF86MonBrightnessUp   { spawn "brightnessctl" "set" "+5%"; }
+    XF86MonBrightnessDown { spawn "brightnessctl" "set" "5%-"; }
+
+    // Window bindings
+    // TODO: Decide between the different fullscreen behaviors and what to keep.
+    Mod+Shift+Q { close-window; }
+    Mod+F { maximize-column; }
+    Mod+Ctrl+F { fullscreen-window; }
+
+    Mod+Shift+F       { toggle-window-floating; }
+    // TODO: Decide on a binding for this!
+    // Mod+Shift+V { switch-focus-between-floating-and-tiling; }
+
+    // Monitor bindings
+    Mod+O { move-window-to-monitor-next; }
+    Mod+Shift+O { move-workspace-to-monitor-next; }
+
+    // Group bindings
+    Mod+BracketLeft  { consume-or-expel-window-left; }
+    Mod+Shift+BracketLeft  { consume-window-into-column; } // Consume one window from the right to the bottom of the focused column.
+    Mod+BracketRight { consume-or-expel-window-right; }
+    Mod+Shift+Mod+BracketRight { expel-window-from-column; } // Expel the bottom window from the focused column to the right.
+    Mod+Q { toggle-column-tabbed-display; }
+
+    // Focus bindings
+    Mod+H     { focus-column-or-monitor-left; }
+    Mod+J     { focus-window-or-workspace-down; }
+    Mod+K     { focus-window-or-workspace-up; }
+    Mod+L     { focus-column-or-monitor-right; }
+    Mod+U     { switch-focus-between-floating-and-tiling; }
+
+    // Move window with hjkl
+    Mod+Shift+H     { move-column-left; }
+    Mod+Shift+J     { move-window-down-or-to-workspace-down; }
+    Mod+Shift+K     { move-window-up-or-to-workspace-up; }
+    Mod+Shift+L     { move-column-right; }
+
+    // Switch workspaces
+    // You can refer to workspaces by index. However, keep in mind that
+    // niri is a dynamic workspace system, so these commands are kind of
+    // "best effort". Trying to refer to a workspace index bigger than
+    // the current workspace count will instead refer to the bottommost
+    // (empty) workspace.
+    //
+    // For example, with 2 workspaces + 1 empty, indices 3, 4, 5 and so on
+    // will all refer to the 3rd workspace.
+    Mod+1 { focus-workspace "system"; }
+    Mod+2 { focus-workspace "code"; }
+    Mod+3 { focus-workspace "www"; }
+    Mod+4 { focus-workspace "aside"; }
+    Mod+5 { focus-workspace "notes"; }
+    Mod+6 { focus-workspace 6; }
+    Mod+7 { focus-workspace 7; }
+    Mod+8 { focus-workspace 8; }
+    Mod+9 { focus-workspace "media"; }
+    Mod+0 { focus-workspace "chat"; }
+    // Switches focus between the current and the previous workspace.
+    // Mod+Tab { focus-workspace-previous; }
+
+    // Move window to workspace
+    Mod+Shift+1 { move-column-to-workspace "system"; }
+    Mod+Shift+2 { move-column-to-workspace "code"; }
+    Mod+Shift+3 { move-column-to-workspace "www"; }
+    Mod+Shift+4 { move-column-to-workspace "aside"; }
+    Mod+Shift+5 { move-column-to-workspace "notes"; }
+    Mod+Shift+6 { move-column-to-workspace 6; }
+    Mod+Shift+7 { move-column-to-workspace 7; }
+    Mod+Shift+8 { move-column-to-workspace 8; }
+    Mod+Shift+9 { move-column-to-workspace "media"; }
+    Mod+Shift+0 { move-column-to-workspace "chat"; }
+
+    // Resize window
+    Mod+Minus { set-column-width "-10%"; }
+    Mod+Equal { set-column-width "+10%"; }
+    Mod+Shift+Minus { set-window-height "-10%"; }
+    Mod+Shift+Equal { set-window-height "+10%"; }
+
+    Mod+W { switch-preset-column-width; }
+    Mod+Shift+W { switch-preset-window-height; }
+    Mod+Ctrl+W { reset-window-height; }
+
+    Mod+Backspace { expand-column-to-available-width; }
+    Mod+C { center-column; }
+
+    // TODO: Go through and possibly enable something interesting!
+
+    Mod+Down  { focus-workspace-down; }
+    Mod+Up    { focus-workspace-up; }
+    Mod+Left  { focus-monitor-left; }
+    Mod+B     { focus-monitor-left; }
+    Mod+Right { focus-monitor-right; }
+    Mod+N     { focus-monitor-right; }
+
+    Mod+Shift+Down { move-column-to-workspace-down; }
+    Mod+Shift+Up   { move-column-to-workspace-up; }
+    Mod+Shift+Left { move-column-to-monitor-left; }
+    Mod+Shift+B { move-column-to-monitor-left; }
+    Mod+Shift+Right { move-column-to-monitor-right; }
+    Mod+Shift+N { move-column-to-monitor-right; }
+
+    Mod+Ctrl+Down  { move-workspace-down; }
+    Mod+Ctrl+J  { move-workspace-down; }
+    Mod+Ctrl+Up    { move-workspace-up; }
+    Mod+Ctrl+K    { move-workspace-up; }
+    Mod+Ctrl+H  { move-workspace-to-monitor-left; }
+    Mod+Ctrl+B  { move-workspace-to-monitor-left; }
+    Mod+Ctrl+Left  { move-workspace-to-monitor-left; }
+    Mod+Ctrl+L { move-workspace-to-monitor-right; }
+    Mod+Ctrl+N { move-workspace-to-monitor-right; }
+    Mod+Ctrl+Right { move-workspace-to-monitor-right; }
+
+    // You can bind mouse wheel scroll ticks using the following syntax.
+    // These binds will change direction based on the natural-scroll setting.
+    //
+    // To avoid scrolling through workspaces really fast, you can use
+    // the cooldown-ms property. The bind will be rate-limited to this value.
+    // You can set a cooldown on any bind, but it's most useful for the wheel.
+    Mod+WheelScrollDown cooldown-ms=150 { focus-workspace-down; }
+    Mod+WheelScrollUp   cooldown-ms=150 { focus-workspace-up; }
+    Mod+WheelScrollRight { focus-column-right; }
+    Mod+WheelScrollLeft  { focus-column-left; }
+
+    // Usually scrolling up and down with Shift in applications results in
+    // horizontal scrolling; these binds replicate that.
+    // Mod+Shift+WheelScrollDown      { focus-column-right; }
+    // Mod+Shift+WheelScrollUp        { focus-column-left; }
+    // Mod+Ctrl+Shift+WheelScrollDown { move-column-right; }
+    // Mod+Ctrl+Shift+WheelScrollUp   { move-column-left; }
+}

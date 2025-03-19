@@ -7,9 +7,9 @@ in {
     ./desktop.nix
     ./fonts.nix
     ./git.nix
-    ./hyprland.nix
     ./mako.nix
     ./media.nix
+    ./niri.nix
     ./rofi.nix
     ./security.nix
     ./syncthing.nix

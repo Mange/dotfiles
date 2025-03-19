@@ -1,8 +1,4 @@
-{ pkgs, ... }: let
-  hyprland = pkgs.hyprland;
-  # Patch to 0.46.0
-  hy3 = pkgs.hyprlandPlugins.hy3;
-in {
+{ pkgs, ... }: {
   environment.systemPackages = with pkgs; [
     # Should be able to run home-manager after initial install.
     git
@@ -15,9 +11,8 @@ in {
     nfs-utils
     ntfs3g
 
-    # Hyprland plugins
-    # Just so if they will fail to compile for home-manager, they should fail the system build too.
-    hy3
+    # Better X11 support in Niri
+    xwayland-satellite
   ];
 
   # Login, security, keyring, etc.
@@ -34,7 +29,7 @@ in {
   programs.dconf.enable = true;
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.enable = true;
-  programs.hyprland = { enable = true; package = hyprland; };
+  programs.niri = { enable = true; };
 
   # Hyprlock should have access to passwords, etc.
   security.pam.services.hyprlock = {};

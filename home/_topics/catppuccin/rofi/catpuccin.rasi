@@ -1,6 +1,10 @@
 * {
   transparent: #00000000;
-  bg-col:  #1E1D2F77;
+
+  /* Niri does not have background blur, so we need this to not be transparent right now. */
+  /* bg-col:  #1E1D2F77; */
+  bg-col:  #1E1D2FFF;
+
   bg-col-light: #1E1D2F77;
   border-col: #1E1D2F77;
   selected-col: #1E1D2F;

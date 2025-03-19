@@ -5,7 +5,7 @@ if [[ "$1" == "--help" ]]; then
 Usage: wm-start [command…]
 
 Spawns a command from the current window manager. This command has
-support for Awesome, Hyprland, and i3.
+support for Niri, Awesome, Hyprland, and i3.
 
 The DESKTOP_SESSION or XDG_CURRENT_DESKTOP env variables must be set in order
 for this to work.
@@ -13,6 +13,9 @@ EOF
 fi
 
 case "${DESKTOP_SESSION:-${XDG_CURRENT_DESKTOP}}" in
+niri)
+  niri msg action spawn -- "$@"
+  ;;
 i3)
   i3-msg exec "$*"
   ;;

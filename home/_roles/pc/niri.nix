@@ -1,43 +1,11 @@
-{ pkgs, config, lib, isLaptop, ... }: let
+{ config, pkgs, isLaptop, ... }: let
   utils = import ../../utils.nix { inherit config pkgs; };
   brightnessctl = "${pkgs.brightnessctl}/bin/brightnessctl";
   hyprlock = "${config.programs.hyprlock.package}/bin/hyprlock";
   playerctl = "${pkgs.playerctl}/bin/playerctl";
+in {
+  xdg.configFile."niri/config.kdl".source = utils.linkConfig "niri/config.kdl";
 
-  hyprland = pkgs.hyprland;
-  hyprplugins = pkgs.hyprlandPlugins;
-
-  # Based on:
-  # https://github.com/hyprwm/Hyprland/issues/3835
-  # Improved later by me.
-  bitwardenResizeScript = pkgs.writeScript "hyprland-bitwarden-resize" /* sh */ ''
-    #!${pkgs.bash}/bin/bash
-    handle() {
-      case $1 in
-        # Example line:
-        # windowtitlev2>>35e360a0,Tillägg: (Bitwarden Lösenordshanterare) - — Mozilla Firefox
-        #    event     ││ win ID │win title
-        "windowtitlev2>>"*)
-          # Extract the window ID and title from the line
-          payload="''${1#windowtitlev2>>}"
-          comma_pos=$(expr index "$payload" ,)
-          window_id="''${payload:0:comma_pos-1}"
-          window_title="''${payload:comma_pos}"
-
-          # Check if the title matches the characteristics of the Bitwarden popup window
-          case "$window_title" in
-            *": (Bitwarden - Free Password Manager)"* | *": (Bitwarden Lösenordshanterare)"* )
-              hyprctl --batch "dispatch setfloating address:0x$window_id ; dispatch resizewindowpixel exact 20% 40%,address:0x$window_id"
-              ;;
-          esac
-      esac
-    }
-
-    # Listen to the Hyprland socket for events and process each line with the handle function
-    ${pkgs.socat}/bin/socat -U - "UNIX-CONNECT:$XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock" | while read -r line; do handle "$line"; done
-  '';
-in 
-{
   services.hypridle = {
     enable = true;
     settings = {
@@ -47,19 +15,19 @@ in
         # ended.
         lock_cmd = "(pidof hyprlock || ${hyprlock}); startup-reminder";
 
-        before_sleep_cmd = "loginctl lock-session";
+        before_sleep_cmd = "loginctl lock-session; sleep 1;";
         # After waking up, sometimes the timeout
         # listener to shut off the screens will
         # shut them off again. Wait for that to settle…
-        after_sleep_cmd = "sleep 0.5; hyprctl dispatch dpms on";
+        after_sleep_cmd = "sleep 0.5; niri msg action power-on-monitors";
       } ;
 
       listener = [
         # Monitor power save
         {
           timeout = 720; # 12 min
-          on-timeout = "hyprctl dispatch dpms off";
-          on-resume = "hyprctl dispatch dpms on";
+          on-timeout = "niri msg action power-off-monitors";
+          on-resume = "niri msg action power-on-monitors";
         }
 
         # Dim screen
@@ -174,35 +142,4 @@ in
       ];
     };
   };
-
-  wayland.windowManager.hyprland = {
-    enable = true;
-    package = hyprland;
-    plugins = with hyprplugins; [
-      hy3
-      # hyprfocus
-    ];
-    systemd.enable = true;
-
-    # Systemd integration does not import all environment variables, when I
-    # prefer it to import everything.
-    # See https://github.com/hyprwm/Hyprland/issues/2800
-    #
-    # Also manually set up PATH so it works when using GDM, which does not run
-    # a full shell when loading Hyprland.
-    extraConfig = /*sh*/ ''
-      env = PATH,$HOME/.local/bin:$PATH
-      exec-once = "${pkgs.dbus}/bin/dbus-update-activation-environment --systemd --all";
-      source = ./config/base.conf
-      source = ./config/local.conf
-      exec-once = "${bitwardenResizeScript}";
-    '';
-  };
-  # Set up symlinks for all the config files, and also create a mutable
-  # `local.conf` for local config that you don't want committed to the repo.
-  xdg.configFile."hypr/config".source = utils.linkConfig "hypr/config";
-  xdg.configFile."hypr/screens.conf".source = lib.mkDefault ( utils.linkConfig "hypr/default_screens.conf" );
-  home.activation.localHyprConfig = lib.hm.dag.entryAfter ["writeBoundary"] ''
-     $DRY_RUN_CMD touch $VERBOSE_ARG "''${XDG_CONFIG_HOME:-$HOME/.config}/hypr/config/local.conf"
-  '';
 }
