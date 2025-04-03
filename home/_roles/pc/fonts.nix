@@ -41,6 +41,7 @@
     lohit-fonts.kannada # Indic; includes ಠ_ಠ
 
     # ancient fonts - Just because it is cool
+    # Some of the fonts are commented out because they are 404 URLs now.
     # https://dn-works.com/ufas/
     # aegan
     aegyptus
@@ -48,7 +49,7 @@
     unidings
     # eemusic
     textfonts
-    assyrian
+    # assyrian
     akkadian
     maya
   ];
