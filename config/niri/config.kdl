@@ -53,6 +53,11 @@ output "Philips Consumer Electronics Company PHL 245B1 UK02029011585" {
   position x=5120 y=0
 }
 ////////////
+// Outputs for porto
+output "AU Optronics 0xD291 Unknown" {
+  scale 1
+}
+////////////
 
 // Left:
 // open-on-output "Philips Consumer Electronics Company PHL 245B1 UK02029011588"
