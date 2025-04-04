@@ -33,7 +33,7 @@ preview_file() {
     tree -L 1 --dirsfirst -a "$file"
     ;;
   image/svg+xml)
-    convert -size "x${image_preview_height}" "$file" png:- | preview_image
+    magick -size "x${image_preview_height}" "$file" png:- | preview_image
     ;;
   image/*)
     preview_image <"$file"
