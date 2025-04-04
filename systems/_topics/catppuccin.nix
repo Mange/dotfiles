@@ -45,4 +45,8 @@ in {
     platformTheme = "qt5ct";
     style = "kvantum";
   };
+
+  # Make SVG icons work in wlogout stylesheet.
+  # https://github.com/ArtsyMacaw/wlogout/issues/61#issuecomment-2457317617
+  programs.gdk-pixbuf.modulePackages = [ pkgs.librsvg ];
 }
