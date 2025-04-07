@@ -33,16 +33,29 @@ elif [[ $# -eq 1 ]] && [[ $1 == "--debug" ]]; then
   shift
 fi
 
+function detect_xorg_pid() {
+  xprop -id "$(xprop -root | awk '/_NET_ACTIVE_WINDOW\(WINDOW\)/{print $NF}')" |
+    grep -m 1 PID |
+    cut -d " " -f 3
+}
+
 function detect_pid() {
+  local pid
   if [[ "$XDG_CURRENT_DESKTOP" == "niri" ]]; then
-    niri msg -j focused-window | jq -r '.pid'
+    pid="$(niri msg -j focused-window | jq -r '.pid')"
   elif [[ "$XDG_CURRENT_DESKTOP" == "Hyprland" ]]; then
-    hyprctl activewindow | grep 'pid:' | cut -d " " -f 2
+    pid="$(hyprctl activewindow | grep 'pid:' | cut -d " " -f 2)"
   else
-    xprop -id "$(xprop -root | awk '/_NET_ACTIVE_WINDOW\(WINDOW\)/{print $NF}')" |
-      grep -m 1 PID |
-      cut -d " " -f 3
+    detect_xorg_pid
+    return
   fi
+
+  # If PID points to xwayland-satellite, check the nested window's PID instead.
+  if [[ -n "$pid" ]] && [[ "$(readlink /proc/"$pid"/exe)" == *xwayland-satellite* ]]; then
+    pid="$(detect_xorg_pid)"
+  fi
+
+  echo "$pid"
 }
 
 # Find PID of active window
