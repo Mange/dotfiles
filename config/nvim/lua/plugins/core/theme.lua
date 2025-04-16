@@ -91,7 +91,6 @@ return {
       vim.cmd.colorscheme "catppuccin"
 
       -- Neovim theme stuff
-      vim.o.guifont = "Jetbrains Mono"
       vim.g.neovide_transparency = 0.9 -- Until Niri gets blurred backgrounds
       vim.g.neovide_theme = "dark"
       vim.g.neovide_background_color = colors.base
