@@ -8,6 +8,7 @@
   imports = [
     ../../_topics/nixconfig.nix
 
+    ./docker.nix
     ./networking.nix
     ./programs.nix
     ./sound.nix
