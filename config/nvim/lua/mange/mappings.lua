@@ -727,10 +727,6 @@ local function setup()
         -- Not actually a *toggle*, more like a "Toggle off". Just pressing n/N
         -- will enable the highlights again anyway.
         h = { "<cmd>nohl<cr>", "Disable search highlights" },
-
-        -- Can't be handled through Snacks.toggle right now.
-        -- https://github.com/brenoprata10/nvim-highlight-colors/issues/129
-        C = { "<cmd>HighlightColors Toggle<cr>", "Color highlights" },
       },
 
       --
@@ -849,12 +845,21 @@ local function setup()
     })
     :map "<leader>tF"
 
-  Snacks.toggle.new {
-    name = "Highlight colors",
-    get = function()
-      return require "nvim-highlight-colors"
-    end,
-  }
+  Snacks.toggle
+    .new({
+      name = "Highlight colors",
+      get = function()
+        return require("nvim-highlight-colors").is_active()
+      end,
+      set = function(state)
+        if state then
+          require("nvim-highlight-colors").turnOn()
+        else
+          require("nvim-highlight-colors").turnOff()
+        end
+      end,
+    })
+    :map "<leader>tC"
 
   Snacks.toggle
     .new({
