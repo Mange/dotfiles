@@ -72,7 +72,10 @@
         };
         porto = nixpkgs.lib.nixosSystem {
           inherit specialArgs;
-          modules = [./systems/porto/configuration.nix];
+          modules = [
+            sops-nix.nixosModules.sops
+            ./systems/porto/configuration.nix
+          ];
         };
       };
 

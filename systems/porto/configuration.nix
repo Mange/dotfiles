@@ -18,6 +18,8 @@
     ../_topics/catppuccin.nix
     ../_topics/yubikey.nix
     ../_topics/capslock-mapping
+
+    ../_topics/sentinelone
   ];
 
   networking.hostName = "porto";
