@@ -13,6 +13,10 @@
 
     # Better X11 support in Niri
     xwayland-satellite
+
+    # Niri uses XDG Portal from Gnome, which requires Nautilus to be installed
+    # in order to have working file chooser dialogs.
+    nautilus
   ];
 
   # Login, security, keyring, etc.
