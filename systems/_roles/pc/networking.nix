@@ -26,7 +26,17 @@ in {
       PasswordAuthentication = false;
     };
   };
-  networking.firewall.allowedTCPPorts = [22];
+
+  networking.firewall = {
+    allowedTCPPorts = [
+      22 # SSH
+      22000 # Syncthing
+    ];
+    allowedUDPPorts = [
+      22000 # Syncthing
+      21027 # Syncthing discovery
+    ];
+  };
 
   # Allow root to change /etc/hosts temporarily
   environment.etc.hosts.mode = "0644";
