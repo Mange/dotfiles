@@ -23,6 +23,7 @@ in {
     ./zsh.nix
 
     ../../_topics/catppuccin
+    ../../_topics/kde-connect.nix
     ../../_topics/neovim
     ../../_topics/ruby
     ../../_topics/rust

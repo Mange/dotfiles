@@ -9,6 +9,7 @@
     ../../_topics/nixconfig.nix
 
     ./docker.nix
+    ./kde-connect.nix
     ./networking.nix
     ./programs.nix
     ./sound.nix
