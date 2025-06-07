@@ -51,7 +51,7 @@
     textfonts
     # assyrian
     akkadian
-    maya
+    # maya
   ];
 }
 

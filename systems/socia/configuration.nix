@@ -49,5 +49,5 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   # More recent kernel than the default. Helps with drivers and similar.
-  boot.kernelPackages = pkgs.linuxPackages_6_11;
+  boot.kernelPackages = pkgs.linuxPackages_6_13;
 }

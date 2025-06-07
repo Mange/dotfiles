@@ -8,6 +8,9 @@
     yubikey-personalization
     yubikey-personalization-gui
     yubikey-manager
-    yubikey-manager-qt
+
+    # Deprecated in favor of:
+    # yubikey-manager-qt
+    yubioath-flutter
   ];
 }
