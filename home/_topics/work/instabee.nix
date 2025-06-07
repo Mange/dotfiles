@@ -21,7 +21,6 @@
     # Common DB and misc tooling
     gnumake
     mongodb-compass
-    beekeeper-studio
     postgresql
     mariadb
   ];
