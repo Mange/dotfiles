@@ -113,22 +113,6 @@ layout {
     shadow {
         // on
 
-        // By default, the shadow draws only around its window, and not behind it.
-        // Uncomment this setting to make the shadow draw behind its window.
-        //
-        // Note that niri has no way of knowing about the CSD window corner
-        // radius. It has to assume that windows have square corners, leading to
-        // shadow artifacts inside the CSD rounded corners. This setting fixes
-        // those artifacts.
-        // 
-        // However, instead you may want to set prefer-no-csd and/or
-        // geometry-corner-radius. Then, niri will know the corner radius and
-        // draw the shadow correctly, without having to draw it behind the
-        // window. These will also remove client-side shadows if the window
-        // draws any.
-        // 
-        // draw-behind-window true
-
         // You can change how shadows look. The values below are in logical
         // pixels and match the CSS box-shadow properties.
 
@@ -156,6 +140,11 @@ layout {
         // top 64
         // bottom 64
     }
+}
+
+hotkey-overlay {
+  skip-at-startup
+  // hide-not-bound
 }
 
 spawn-at-startup "xwayland-satellite"
@@ -331,32 +320,34 @@ binds {
     // which ensures niri always processes them, even when an inhibitor is active.
     Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
 
-    Mod+F1 { spawn "wlogout"; }
-    Mod+F2 { spawn "bt-select"; }
-    Mod+F3 { show-hotkey-overlay; }
-    Mod+F4 { spawn "foot"; } // Emergency terminal if Wezterm doesn't work.
-    Mod+F5 { spawn "wallpaper-cycle"; }
+    Mod+F1 hotkey-overlay-title="Exit/Logout" { spawn "wlogout"; }
+    Mod+F2 hotkey-overlay-title="Bluetooth devices" { spawn "bt-select"; }
+    Mod+F3 hotkey-overlay-title="Show this overlay" { show-hotkey-overlay; }
+    Mod+F4 hotkey-overlay-title="Emergency terminal" { spawn "foot"; } // Emergency terminal if Wezterm doesn't work.
+    Mod+F5 hotkey-overlay-title="Cycle wallpaper" { spawn "wallpaper-cycle"; }
 
     // Powers off the monitors. To turn them back on, do any input like
     // moving the mouse or pressing any other key.
-    Mod+F9 { power-off-monitors; }
+    Mod+F9 hotkey-overlay-title="Power off monitors" { power-off-monitors; }
 
-    Mod+Shift+Escape { spawn "loginctl" "lock-session"; }
+    Mod+Shift+Escape hotkey-overlay-title="Lock screen" { spawn "loginctl" "lock-session"; }
 
-    Mod+V { spawn "sh" "-c" "cliphist list | rofi -dmenu | cliphist decode | wl-copy"; }
+    Mod+V hotkey-overlay-title="Clipboard history" { spawn "sh" "-c" "cliphist list | rofi -dmenu | cliphist decode | wl-copy"; }
 
-    Mod+D { spawn "rofi" "-show" "drun" "-modi" "drun,run"; }
-    Mod+Shift+D { spawn "rofi" "-show" "run" "-modi" "run"; }
-    Mod+E { spawn "rofi" "-modi" "emoji" "-show" "emoji" "-kb-secondary-copy" "" "-kb-custom-1" "Ctrl+c"; }
+    Mod+D hotkey-overlay-title="App launcher" { spawn "rofi" "-show" "drun" "-modi" "drun,run"; }
+    Mod+E hotkey-overlay-title="Emoji picker" { spawn "rofi" "-modi" "emoji" "-show" "emoji" "-kb-secondary-copy" "" "-kb-custom-1" "Ctrl+c"; }
+    Mod+Tab hotkey-overlay-title="Window picker" { spawn "rofi" "-modi" "window" "-show" "window"; }
 
-    Mod+Tab { spawn "rofi" "-modi" "window" "-show" "window"; }
-
-    Mod+Return { spawn "samedirwezterm" "start" "--always-new-process"; }
-    Mod+Shift+Return { spawn "wezterm" "start" "--always-new-process"; }
+    Mod+Return hotkey-overlay-title="Terminal" { spawn "samedirwezterm" "start" "--always-new-process"; }
+    Mod+Shift+Return hotkey-overlay-title="Terminal (home)" { spawn "wezterm" "start" "--always-new-process"; }
 
     // TODO: Add back "toggle" when I can get that to work.
-    Mod+G { spawn "nirijump" "--class" "dropdown_terminal" "wm-start samedirwezterm start --class dropdown_terminal" "niri msg action switch-focus-between-floating-and-tiling"; }
-    Mod+Shift+G { spawn "nirijump" "--class" "dropdown_calculator" "wm-start wezterm start --class dropdown_calculator -- qalc" "niri msg action switch-focus-between-floating-and-tiling"; }
+    Mod+G hotkey-overlay-title="Terminal (dropdown)" {
+      spawn "nirijump" "--class" "dropdown_terminal" "wm-start samedirwezterm start --class dropdown_terminal" "niri msg action switch-focus-between-floating-and-tiling";
+    }
+    Mod+Shift+G hotkey-overlay-title="Calculator (dropdown)" {
+      spawn "nirijump" "--class" "dropdown_calculator" "wm-start wezterm start --class dropdown_calculator -- qalc" "niri msg action switch-focus-between-floating-and-tiling";
+    }
 
     Mod+P { spawn "open-project"; }
     Mod+Shift+P { spawn "open-wiki"; }
@@ -364,38 +355,38 @@ binds {
     Mod+R { spawn "startup-reminder"; }
     Mod+Shift+R { spawn "edit-reminder"; }
 
-    Mod+Slash { spawn "samedir" "nemo" "."; }
-    Mod+Shift+Slash { spawn "nemo"; }
+    Mod+Slash hotkey-overlay-title="Files (GUI)" { spawn "samedir" "nemo" "."; }
+    Mod+Shift+Slash hotkey-overlay-title="Files (GUI, Home)" { spawn "nemo"; }
 
-    Mod+Semicolon { spawn "samedir" "neovide"; }
-    Mod+Shift+Semicolon { spawn "open-project" "neovide"; }
+    Mod+Semicolon hotkey-overlay-title="Neovide" { spawn "samedir" "neovide"; }
+    Mod+Shift+Semicolon hotkey-overlay-title="Neovide (pick project)" { spawn "open-project" "neovide"; }
 
     // Notifications
-    Mod+I { spawn "makoctl" "dismiss"; }
-    Mod+Alt+I { spawn "makoctl" "restore"; }
-    Mod+Shift+I { spawn "makoctl" "invoke"; }
-    Mod+Ctrl+Shift+I { spawn "makoctl" "menu" "rofi" "-dmenu"; }
+    Mod+I hotkey-overlay-title="Notification dismiss" { spawn "makoctl" "dismiss"; }
+    Mod+Alt+I hotkey-overlay-title="Notification restore" { spawn "makoctl" "restore"; }
+    Mod+Shift+I hotkey-overlay-title="Notification invoke" { spawn "makoctl" "invoke"; }
+    Mod+Ctrl+Shift+I hotkey-overlay-title="Notification menu" { spawn "makoctl" "menu" "rofi" "-dmenu"; }
 
     // Screenshotting
-    Mod+S            { spawn "niriscreenshot" "select"; }
-    Mod+Shift+S      { spawn "niriscreenshot" "--edit" "select"; }
-    Mod+Ctrl+S       { spawn "niriscreenshot" "--delay" "2" "select"; }
-    Mod+Ctrl+Shift+S { spawn "niriscreenshot" "--edit" "--delay" "2" "select"; }
-    Mod+F12          { spawn "wfrecord"; }
+    Mod+S            hotkey-overlay-title="Screenshot" { spawn "niriscreenshot" "select"; }
+    Mod+Shift+S      hotkey-overlay-title="Screenshot (edit)" { spawn "niriscreenshot" "--edit" "select"; }
+    Mod+Ctrl+S       hotkey-overlay-title="Screenshot (delay)" { spawn "niriscreenshot" "--delay" "2" "select"; }
+    Mod+Ctrl+Shift+S hotkey-overlay-title="Screenshot (delay, edit)" { spawn "niriscreenshot" "--edit" "--delay" "2" "select"; }
+    Mod+F12          hotkey-overlay-title="Screen recording (toggle)" { spawn "wfrecord"; }
 
     // Media controls (all allowed when screen is locked)
-    XF86AudioRaiseVolume allow-when-locked=true { spawn "volume-change" "--toast" "+5"; }
-    XF86AudioLowerVolume allow-when-locked=true { spawn "volume-change" "--toast" "-5"; }
-    XF86AudioMute        allow-when-locked=true { spawn "pulsemixer" "--toggle-mute"; }
-    XF86AudioMicMute     allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
-    XF86AudioPlay        allow-when-locked=true { spawn "playerctl" "play-pause"; }
-    XF86AudioStop        allow-when-locked=true { spawn "playerctl" "stop"; }
-    XF86AudioNext        allow-when-locked=true { spawn "playerctl" "next"; }
-    Mod+Page_Down        allow-when-locked=true { spawn "playerctl" "next"; }
-    XF86AudioPrev        allow-when-locked=true { spawn "playerctl" "previous"; }
-    Mod+Page_Up          allow-when-locked=true { spawn "playerctl" "previous"; }
-    XF86MonBrightnessUp   { spawn "brightnessctl" "set" "+5%"; }
-    XF86MonBrightnessDown { spawn "brightnessctl" "set" "5%-"; }
+    XF86AudioRaiseVolume hotkey-overlay-title=null allow-when-locked=true { spawn "volume-change" "--toast" "+5"; }
+    XF86AudioLowerVolume hotkey-overlay-title=null allow-when-locked=true { spawn "volume-change" "--toast" "-5"; }
+    XF86AudioMute        hotkey-overlay-title=null allow-when-locked=true { spawn "pulsemixer" "--toggle-mute"; }
+    XF86AudioMicMute     hotkey-overlay-title=null allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
+    XF86AudioPlay        hotkey-overlay-title=null allow-when-locked=true { spawn "playerctl" "play-pause"; }
+    XF86AudioStop        hotkey-overlay-title=null allow-when-locked=true { spawn "playerctl" "stop"; }
+    XF86AudioNext        hotkey-overlay-title=null allow-when-locked=true { spawn "playerctl" "next"; }
+    Mod+Page_Down        hotkey-overlay-title=null allow-when-locked=true { spawn "playerctl" "next"; }
+    XF86AudioPrev        hotkey-overlay-title=null allow-when-locked=true { spawn "playerctl" "previous"; }
+    Mod+Page_Up          hotkey-overlay-title=null allow-when-locked=true { spawn "playerctl" "previous"; }
+    XF86MonBrightnessUp   hotkey-overlay-title=null { spawn "brightnessctl" "set" "+5%"; }
+    XF86MonBrightnessDown hotkey-overlay-title=null { spawn "brightnessctl" "set" "5%-"; }
 
     // Window bindings
     // TODO: Decide between the different fullscreen behaviors and what to keep.
@@ -478,8 +469,6 @@ binds {
     Mod+Backspace { expand-column-to-available-width; }
     Mod+C { center-column; }
 
-    // TODO: Go through and possibly enable something interesting!
-
     Mod+Down  { focus-workspace-down; }
     Mod+Up    { focus-workspace-up; }
     Mod+Left  { focus-monitor-left; }
@@ -515,11 +504,4 @@ binds {
     Mod+WheelScrollUp   cooldown-ms=150 { focus-workspace-up; }
     Mod+WheelScrollRight { focus-column-right; }
     Mod+WheelScrollLeft  { focus-column-left; }
-
-    // Usually scrolling up and down with Shift in applications results in
-    // horizontal scrolling; these binds replicate that.
-    // Mod+Shift+WheelScrollDown      { focus-column-right; }
-    // Mod+Shift+WheelScrollUp        { focus-column-left; }
-    // Mod+Ctrl+Shift+WheelScrollDown { move-column-right; }
-    // Mod+Ctrl+Shift+WheelScrollUp   { move-column-left; }
 }
