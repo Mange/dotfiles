@@ -91,7 +91,7 @@ return {
       vim.cmd.colorscheme "catppuccin"
 
       -- Neovim theme stuff
-      vim.g.neovide_transparency = 0.9 -- Until Niri gets blurred backgrounds
+      vim.g.neovide_opacity = 0.9 -- Until Niri gets blurred backgrounds
       vim.g.neovide_theme = "dark"
       vim.g.neovide_background_color = colors.base
       vim.g.neovide_floating_blur_amount_x = 2.0

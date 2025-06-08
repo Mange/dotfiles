@@ -6,9 +6,7 @@ return {
   {
     -- Convenience file operations
     "chrisgrieser/nvim-genghis",
-    opts = {
-      trashCmd = { "gio", "trash" },
-    },
+    opts = {},
   },
 
   { "direnv/direnv.vim" },
