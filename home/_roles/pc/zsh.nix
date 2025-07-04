@@ -1,4 +1,4 @@
-{ pkgs, config, ... }: let
+{ pkgs, config, lib, ... }: let
   utils = import ../../utils.nix { inherit config pkgs; };
 in {
   xdg.configFile."zsh".source = utils.linkConfig "zsh";
@@ -71,43 +71,46 @@ in {
 
     completionInit = "recomp";
 
-    initExtraBeforeCompInit = /* zsh */ ''
-      zmodload zsh/complist
-      autoload -U compinit add-zsh-hook
+    initContent = lib.mkMerge [
+      (lib.mkOrder 550 /* zsh */ ''
+        zmodload zsh/complist
+        autoload -U compinit add-zsh-hook
 
-      function recomp() {
-        fpath+=(
-          "''${XDG_CONFIG_HOME}/zsh/funcs"
-          "''${XDG_CONFIG_HOME}/zsh/completion"
+        function recomp() {
+          fpath+=(
+            "''${XDG_CONFIG_HOME}/zsh/funcs"
+            "''${XDG_CONFIG_HOME}/zsh/completion"
 
-          # Auto-discover ZSH directories from used Nix packages (like nix-shell,
-          # flakes, etc.)
-          ''${^''${(M)path:#/nix/store/*}}/../share/zsh/{site-functions,$ZSH_VERSION/functions,vendor-completions}(N-/)
-          ''${^''${(z)NIX_PROFILES}}/share/zsh/{site-functions,$ZSH_VERSION/functions,vendor-completions}(N-/)
-        )
-        # Don't care about world/group writable files (`compinit -u`). It's too
-        # annoying to deal with, and I don't think this is going to be *the*
-        # vector that infects me.
-        compinit -u
-      }
+            # Auto-discover ZSH directories from used Nix packages (like nix-shell,
+            # flakes, etc.)
+            ''${^''${(M)path:#/nix/store/*}}/../share/zsh/{site-functions,$ZSH_VERSION/functions,vendor-completions}(N-/)
+            ''${^''${(z)NIX_PROFILES}}/share/zsh/{site-functions,$ZSH_VERSION/functions,vendor-completions}(N-/)
+          )
+          # Don't care about world/group writable files (`compinit -u`). It's too
+          # annoying to deal with, and I don't think this is going to be *the*
+          # vector that infects me.
+          compinit -u
+        }
 
-      local _auto_recomp_xdg_data_dirs="$XDG_DATA_DIRS"
-      function _auto_recomp() {
-        if [[ "$_auto_recomp_xdg_data_dirs" != "$XDG_DATA_DIRS" ]]; then
-          _auto_recomp_xdg_data_dirs="$XDG_DATA_DIRS"
-          recomp
-        fi
-      }
+        local _auto_recomp_xdg_data_dirs="$XDG_DATA_DIRS"
+        function _auto_recomp() {
+          if [[ "$_auto_recomp_xdg_data_dirs" != "$XDG_DATA_DIRS" ]]; then
+            _auto_recomp_xdg_data_dirs="$XDG_DATA_DIRS"
+            recomp
+          fi
+        }
 
-      add-zsh-hook precmd recomp
-    '';
+        add-zsh-hook precmd recomp
+      '')
+      # Note: 1000 is default, so that is where most other generic Nix configs
+      # will insert things.
+      (lib.mkOrder 1100 /* zsh */ ''
+        source "''${HOME}/.config/zsh/zshrc"
+      '')
+    ];
 
     envExtra = /* zsh */ ''
       source "''${XDG_CONFIG_HOME:-''${HOME}/.config}/shells/common"
-    '';
-
-    initExtra = /* zsh */ ''
-      source "''${HOME}/.config/zsh/zshrc"
     '';
   };
 }
