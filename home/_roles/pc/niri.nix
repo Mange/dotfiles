@@ -3,6 +3,10 @@
   brightnessctl = "${pkgs.brightnessctl}/bin/brightnessctl";
   hyprlock = "${config.programs.hyprlock.package}/bin/hyprlock";
   playerctl = "${pkgs.playerctl}/bin/playerctl";
+
+  lockMediaScript = pkgs.writeShellScriptBin "lock-media" ''
+    ${playerctl} metadata --format '{{title}}   {{artist}}'
+  '';
 in {
   xdg.configFile."niri/config.kdl".source = utils.linkConfig "niri/config.kdl";
 
@@ -16,9 +20,8 @@ in {
         lock_cmd = "(pidof hyprlock || ${hyprlock}); startup-reminder";
 
         before_sleep_cmd = "loginctl lock-session; sleep 1;";
-        # After waking up, sometimes the timeout
-        # listener to shut off the screens will
-        # shut them off again. Wait for that to settle…
+        # After waking up, sometimes the timeout listener for shutting off the
+        # screens will shut them off again. Wait for that to settle…
         after_sleep_cmd = "sleep 0.5; niri msg action power-on-monitors";
       } ;
 
@@ -131,7 +134,7 @@ in {
 
         # CURRENT SONG
         {
-            text = "cmd[update:1000] ${playerctl} metadata --format '{{title}}   {{artist}}'";
+            text = "cmd[update:1000] ${lockMediaScript}/bin/lock-media";
             color = "rgba(255, 255, 255, 0.6)";
             font_size = 18;
             font_family = "Inter";

@@ -20,6 +20,8 @@ in {
     nvim.enable = false;
     # I use my own theme style instead. See below.
     rofi.enable = false;
+    # Same with hyprlock.
+    hyprlock.enable = false;
   };
 
   home.pointerCursor = {
