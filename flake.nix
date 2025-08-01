@@ -10,6 +10,13 @@
     nixos-stable.url = "github:nixos/nixpkgs/nixos-24.05";
     # Also see the 'unstable-packages' overlay at 'overlays/default.nix'.
 
+    # Hardware configuration
+    hardware.url = "github:nixos/nixos-hardware";
+
+    # Nix index DB
+    nix-index-database.url = "github:nix-community/nix-index-database";
+    nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
+
     # Sops
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
@@ -20,13 +27,12 @@
 
     # Catppuccin
     catppuccin.url = "github:catppuccin/nix";
-
-    hardware.url = "github:nixos/nixos-hardware";
   };
 
-  outputs = { self, nixpkgs, sops-nix, home-manager, ... }@inputs:
+  outputs = { self, nixpkgs, sops-nix, home-manager, nix-index-database, ... }@inputs:
     let
       inherit (self) outputs;
+      extraSystemModules = [ nix-index-database.nixosModules.nix-index ];
       forAllSystems = nixpkgs.lib.genAttrs [
         "x86_64-linux"
       ];
@@ -64,15 +70,15 @@
       in {
         socia = nixpkgs.lib.nixosSystem {
           inherit specialArgs;
-          modules = [./systems/socia/configuration.nix];
+          modules = extraSystemModules ++ [./systems/socia/configuration.nix];
         };
         vera = nixpkgs.lib.nixosSystem {
           inherit specialArgs;
-          modules = [./systems/vera/configuration.nix];
+          modules = extraSystemModules ++ [./systems/vera/configuration.nix];
         };
         porto = nixpkgs.lib.nixosSystem {
           inherit specialArgs;
-          modules = [./systems/porto/configuration.nix];
+          modules = extraSystemModules ++ [./systems/porto/configuration.nix];
         };
       };
 

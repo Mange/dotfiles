@@ -29,6 +29,11 @@
   # Note that kbfs is set up inside of home manager instead of here.
   services.keybase.enable = true;
 
+  # Nix index + comma for quick access to packages
+  programs.nix-index-database = {
+    comma.enable = true;
+  };
+
   # Graphical
   programs.dconf.enable = true;
   services.xserver.displayManager.gdm.enable = true;
