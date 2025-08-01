@@ -36,8 +36,7 @@
 
   # Graphical
   programs.dconf.enable = true;
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.enable = true;
+  services.displayManager.gdm.enable = true;
   programs.niri = { enable = true; };
 
   # Hyprlock should have access to passwords, etc.
