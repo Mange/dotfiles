@@ -67,6 +67,11 @@
     anchor=top-left
     format=<b>%s</b>\n%b
 
+    # Some persistent notifications from Android can be annoying to see all the
+    # time.
+    [summary="Android-system" body~="^Datavarning:"]
+    max-visible=0
+
     # My own toasts should be quick to hide and centered
     [category=x-mange.toast]
     default-timeout=1000
