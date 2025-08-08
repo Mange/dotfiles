@@ -19,8 +19,8 @@
     ../_topics/work/instabee.nix
   ];
 
-  home.packages = [
-    pkgs.duplicity
-    pkgs.thunderbird
+  home.packages = with pkgs; [
+    duplicity
+    thunderbird
   ];
 }

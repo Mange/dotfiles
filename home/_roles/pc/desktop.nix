@@ -28,6 +28,9 @@
     scrcpy
     android-file-transfer
 
+    # PDF stuff
+    kdePackages.okular
+
     # Misc
     xdg-utils
     zenity
