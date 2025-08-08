@@ -22,5 +22,8 @@
   home.packages = with pkgs; [
     duplicity
     thunderbird
+
+    # Sonos control
+    noson
   ];
 }

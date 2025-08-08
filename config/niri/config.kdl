@@ -247,12 +247,15 @@ window-rule {
 }
 
 window-rule {
+  // Media apps
   match app-id="Spotify"
+  match app-id="io.github.janbar.noson"
   open-on-workspace "media"
   open-maximized true
 }
 
 window-rule {
+  // Chat apps
   match app-id="org.telegram.desktop"
   match app-id="discord"
   match app-id="Slack"
@@ -261,11 +264,13 @@ window-rule {
 }
 
 window-rule {
+  // Browser apps
   match at-startup=true app-id="firefox"
   open-on-workspace "www"
 }
 
 window-rule {
+  // Notes apps
   match app-id="obsidian"
   open-on-workspace "notes"
 }
