@@ -14,6 +14,10 @@
   # Home network devices
   services.printing = {
     enable = true;
-    drivers = [ pkgs.brlaser ];
+    drivers = with pkgs; [
+      brlaser
+      # Brother DCP-L3550CDW printer driver
+      cups-brother-dcpl3550cdw
+    ];
   };
 }
