@@ -59,5 +59,12 @@
     "application/x-tar" = "org.gnome.FileRoller.desktop";
     "application/x-xz-compressed-tar" = "org.gnome.FileRoller.desktop";
     "application/zip" = "org.gnome.FileRoller.desktop";
+
+    # Shotwell for images
+    "image/jpeg" = "org.gnome.Shotwell-Viewer.desktop";
+    "image/png" = "org.gnome.Shotwell-Viewer.desktop";
+    "image/gif" = "org.gnome.Shotwell-Viewer.desktop";
+    "image/tiff" = "org.gnome.Shotwell-Viewer.desktop";
+    "image/webp" = "org.gnome.Shotwell-Viewer.desktop";
   };
 }
