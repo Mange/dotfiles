@@ -111,7 +111,6 @@
     # Misc development
     manix # A fast documentation searcher for Nix
     parallel
-    xan # CSV tools
     duckdb # Helpful when working with large CSV/JSON files.
   ];
 }

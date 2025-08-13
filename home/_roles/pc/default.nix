@@ -18,6 +18,7 @@ in {
     ./wallpapers.nix
     ./wayland.nix
     ./wezterm.nix
+    ./xan.nix
     ./xdg.nix
     ./zathura.nix
     ./zsh.nix
