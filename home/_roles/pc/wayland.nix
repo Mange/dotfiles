@@ -76,6 +76,9 @@ in {
     sane-break # Work breaks
     waybar
     flare-launcher
+
+    # Compatibility
+    xorg.xprop.out # For xorg/xwayland-satellite compatibility in `samedir` script.
   ];
 
   # Custom commands
