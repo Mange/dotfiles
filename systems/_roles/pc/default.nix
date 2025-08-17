@@ -31,9 +31,8 @@
   };
 
   # Let me watch a shitton amount of things.
-  # (Related to fswatch / Neovim)
   boot.kernel.sysctl = {
-    "fs.inotify.max_user_watches" = 100000;
-    "fs.inotify.max_queued_events" = 100000;
+    "fs.inotify.max_user_watches" = 700000;
+    "fs.inotify.max_user_instances" = 1024;
   };
 }
