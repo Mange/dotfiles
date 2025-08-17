@@ -75,6 +75,7 @@ in {
     ripdrag # drag-n-drop
     sane-break # Work breaks
     waybar
+    flare-launcher
   ];
 
   # Custom commands

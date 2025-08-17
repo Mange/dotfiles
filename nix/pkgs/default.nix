@@ -4,4 +4,5 @@
 { pkgs ? (import ../nixpkgs.nix) { } }: {
   # example = pkgs.callPackage ./example { };
   sane-break = pkgs.callPackage ./sane-break { };
+  flare-launcher = pkgs.callPackage ./flare-launcher { };
 }
