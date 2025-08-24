@@ -335,7 +335,9 @@ binds {
     // moving the mouse or pressing any other key.
     Mod+F9 hotkey-overlay-title="Power off monitors" { power-off-monitors; }
 
-    Mod+Shift+Escape hotkey-overlay-title="Lock screen" { spawn "loginctl" "lock-session"; }
+    // Hyprlock crashes multiple times per day. Thankfully, I can recover by
+    // spawning it again.
+    Mod+Shift+Escape hotkey-overlay-title="Lock screen" allow-when-locked=true { spawn "sh" "-c" "pidof hyprlock || hyprlock --immediate --no-fade-in"; }
 
     Mod+V hotkey-overlay-title="Clipboard history" { spawn "sh" "-c" "cliphist list | rofi -dmenu | cliphist decode | wl-copy"; }
 
