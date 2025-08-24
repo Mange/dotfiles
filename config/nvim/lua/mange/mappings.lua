@@ -393,6 +393,7 @@ local function setup()
       --
       ["b"] = {
         name = "Buffers",
+        y = { ":%y+<cr>", "Yank to clipboard" },
         A = { "<cmd>AS<cr>", "Alternative (split)" },
         D = { delete_all_buffers, "Delete all buffers" },
         a = { "<cmd>A<cr>", "Alternative" },
