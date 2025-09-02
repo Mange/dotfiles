@@ -92,9 +92,12 @@ in
     rustup
     cargo-nextest
 
+    # Nix
+    nil
+    statix
+
     # Others
     marksman # Markdown
-    nil # Nix
     nodePackages_latest.dockerfile-language-server-nodejs
     nodePackages_latest.prettier
     nodePackages_latest.yaml-language-server
