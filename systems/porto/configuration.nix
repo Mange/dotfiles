@@ -31,16 +31,20 @@
   # ▌▌█▌▌ ▙▌▚▚▘█▌▌ ▙▖
   #
 
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot = {
+    # Use the systemd-boot EFI boot loader.
+    loader.systemd-boot.enable = true;
+    loader.efi.canTouchEfiVariables = true;
 
-  # Setup keyfile
-  boot.initrd.secrets = {
-    "/crypto_keyfile.bin" = null;
+    initrd = {
+      # Setup keyfile
+      secrets = {
+        "/crypto_keyfile.bin" = null;
+      };
+
+      # Enable swap on luks
+      luks.devices."luks-f5daa918-0b21-4bbd-b1b9-b5f3fc2db563".device = "/dev/disk/by-uuid/f5daa918-0b21-4bbd-b1b9-b5f3fc2db563";
+      luks.devices."luks-f5daa918-0b21-4bbd-b1b9-b5f3fc2db563".keyFile = "/crypto_keyfile.bin";
+    };
   };
-
-  # Enable swap on luks
-  boot.initrd.luks.devices."luks-f5daa918-0b21-4bbd-b1b9-b5f3fc2db563".device = "/dev/disk/by-uuid/f5daa918-0b21-4bbd-b1b9-b5f3fc2db563";
-  boot.initrd.luks.devices."luks-f5daa918-0b21-4bbd-b1b9-b5f3fc2db563".keyFile = "/crypto_keyfile.bin";
 }

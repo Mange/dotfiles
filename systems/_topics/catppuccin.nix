@@ -2,9 +2,9 @@
   flavor = "mocha";
   accent = "mauve";
 
-  icons = (pkgs.catppuccin-papirus-folders.override {
+  icons = pkgs.catppuccin-papirus-folders.override {
     inherit flavor accent;
-  });
+  };
   # You just have to know that the icon theme will be named this…
   iconTheme = "Papirus-Dark";
 in {
@@ -30,8 +30,8 @@ in {
 
   catppuccin = {
     enable = true;
-    flavor = flavor;
-    accent = accent;
+    inherit flavor;
+    inherit accent;
   };
 
   environment.variables = {

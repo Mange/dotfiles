@@ -1,4 +1,4 @@
-{ ... }: {
+_: {
   virtualisation.docker.enable = true;
   users.users.mange.extraGroups = ["docker"];
 

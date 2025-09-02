@@ -1,4 +1,4 @@
-{ ... }: {
+_: {
   # PDF and comics
   programs.zathura.enable = true;
 

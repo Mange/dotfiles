@@ -1,4 +1,4 @@
-{ ... }: let
+_: let
   ollamaUrl = "http://localhost:11434";
 in {
   services.ollama = {

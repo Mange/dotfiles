@@ -44,37 +44,39 @@ in {
   gtk.enable = true;
   qt.enable = true;
 
-  # config/ directory
-  # xdg.configFile = lib.pipe (utils.filesIn ../config) [
-  #   (builtins.map (f: {
-  #     "${f}".source = (utils.linkConfig f);
-  #   }))
-  #   (utils.mergeAttrs)
-  # ];
-  xdg.configFile = {
-    "procs".source = utils.linkConfig "procs";
-    "shells".source = utils.linkConfig "shells";
-    "xkb".source = utils.linkConfig "xkb";
+  xdg = {
+    # config/ directory
+    # configFile = lib.pipe (utils.filesIn ../config) [
+    #   (builtins.map (f: {
+    #     "${f}".source = (utils.linkConfig f);
+    #   }))
+    #   (utils.mergeAttrs)
+    # ];
+    configFile = {
+      "procs".source = utils.linkConfig "procs";
+      "shells".source = utils.linkConfig "shells";
+      "xkb".source = utils.linkConfig "xkb";
+    };
+
+    userDirs = {
+      enable = true;
+      createDirectories = true;
+
+      desktop = "${config.home.homeDirectory}/Desktop";
+      documents = "${config.home.homeDirectory}/Documents";
+      download = "${config.home.homeDirectory}/Downloads";
+      music = "${config.home.homeDirectory}/Media/Music";
+      pictures = "${config.home.homeDirectory}/Media/Pictures";
+      publicShare = "${config.home.homeDirectory}/Public";
+      templates = "${config.home.homeDirectory}/Documents/Templates";
+      videos = "${config.home.homeDirectory}/Media/Videos";
+    };
+
+    mime.enable = true;
+    mimeApps.enable = true;
+    # Desktops replace this symlink with a file sometimes,
+    # which will cause HM activation to fail.
+    # Tell HM it's fine to replace this file.
+    configFile."mimeapps.list".force = true;
   };
-
-  xdg.userDirs = {
-    enable = true;
-    createDirectories = true;
-
-    desktop = "${config.home.homeDirectory}/Desktop";
-    documents = "${config.home.homeDirectory}/Documents";
-    download = "${config.home.homeDirectory}/Downloads";
-    music = "${config.home.homeDirectory}/Media/Music";
-    pictures = "${config.home.homeDirectory}/Media/Pictures";
-    publicShare = "${config.home.homeDirectory}/Public";
-    templates = "${config.home.homeDirectory}/Documents/Templates";
-    videos = "${config.home.homeDirectory}/Media/Videos";
-  };
-
-  xdg.mime.enable = true;
-  xdg.mimeApps.enable = true;
-  # Desktops replace this symlink with a file sometimes,
-  # which will cause HM activation to fail.
-  # Tell HM it's fine to replace this file.
-  xdg.configFile."mimeapps.list".force = true;
 }

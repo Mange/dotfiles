@@ -1,10 +1,23 @@
-{ ... }: let
+_: let
   username = "mange";
 in {
-  networking.firewall.allowPing = true;
+  networking = {
+    firewall.allowPing = true;
 
-  # NetworkManager
-  networking.networkmanager.enable = true;
+    # NetworkManager
+    networkmanager.enable = true;
+
+    firewall = {
+      allowedTCPPorts = [
+        22 # SSH
+        22000 # Syncthing
+      ];
+      allowedUDPPorts = [
+        22000 # Syncthing
+        21027 # Syncthing discovery
+      ];
+    };
+  };
   users.users.mange.extraGroups = ["networkmanager"];
 
   # Enable Tailscale
@@ -25,17 +38,6 @@ in {
       # Use keys only. Remove if you want to SSH using password (not recommended)
       PasswordAuthentication = false;
     };
-  };
-
-  networking.firewall = {
-    allowedTCPPorts = [
-      22 # SSH
-      22000 # Syncthing
-    ];
-    allowedUDPPorts = [
-      22000 # Syncthing
-      21027 # Syncthing discovery
-    ];
   };
 
   # Allow root to change /etc/hosts temporarily

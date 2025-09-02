@@ -1,80 +1,82 @@
 { pkgs, ... }: {
-  programs.bat = {
-    enable = true;
-  };
-
-  programs.dircolors = {
-    enable = true;
-    settings = {
-      # Files that I don't have to pay attention to
-      ".nfo" = "90";
-      ".sfv" = "90";
-      ".srt" = "90";
-      ".sub" = "90";
+  programs = {
+    bat = {
+      enable = true;
     };
-  };
 
-  programs.direnv = {
-    enable = true;
-    nix-direnv.enable = true;
-  };
-
-  programs.eza = {
-    # Sets up aliases: `ls`, `ll`, `la`, `lla`, `lt` by default.
-    enable = true;
-    icons = "auto";
-    git = true;
-    extraOptions = [
-      "--group-directories-first"
-      "--color-scale" "all"
-      "--hyperlink" 
-    ];
-  };
-
-  programs.fzf = {
-    enable = true;
-    defaultCommand = "fd --type f";
-    changeDirWidgetCommand = "fd --type d";
-    changeDirWidgetOptions = [
-      "--preview 'eza --tree --level 5 {} | head -200'"
-    ];
-  };
-
-  programs.yazi = {
-    enable = true;
-    settings = {
-      manager = {
-        sort_dir_first = true;
+    dircolors = {
+      enable = true;
+      settings = {
+        # Files that I don't have to pay attention to
+        ".nfo" = "90";
+        ".sfv" = "90";
+        ".srt" = "90";
+        ".sub" = "90";
       };
     };
-  };
 
-  programs.htop = {
-    enable = true;
-  };
+    direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+    };
 
-  programs.ripgrep = {
-    enable = true;
-  };
+    eza = {
+      # Sets up aliases: `ls`, `ll`, `la`, `lla`, `lt` by default.
+      enable = true;
+      icons = "auto";
+      git = true;
+      extraOptions = [
+        "--group-directories-first"
+        "--color-scale" "all"
+        "--hyperlink" 
+      ];
+    };
 
-  programs.tmate.enable = true;
-  programs.tmux = {
-    enable = true;
-    keyMode = "vi";
-    escapeTime = 0;
-    terminal = "screen-256color";
+    fzf = {
+      enable = true;
+      defaultCommand = "fd --type f";
+      changeDirWidgetCommand = "fd --type d";
+      changeDirWidgetOptions = [
+        "--preview 'eza --tree --level 5 {} | head -200'"
+      ];
+    };
 
-    # start window indexing at one instead of zero, 0 and 1 is nowhere close
-    baseIndex = 1;
+    yazi = {
+      enable = true;
+      settings = {
+        manager = {
+          sort_dir_first = true;
+        };
+      };
+    };
 
-    # I like being able to select text in the terminal window
-    mouse = false;
+    htop = {
+      enable = true;
+    };
 
-    # I am not a fucking idiot
-    clock24 = true;
+    ripgrep = {
+      enable = true;
+    };
 
-    # Auto-spawn session when attaching a session that does not exist.
-    newSession = true;
+    tmate.enable = true;
+    tmux = {
+      enable = true;
+      keyMode = "vi";
+      escapeTime = 0;
+      terminal = "screen-256color";
+
+      # start window indexing at one instead of zero, 0 and 1 is nowhere close
+      baseIndex = 1;
+
+      # I like being able to select text in the terminal window
+      mouse = false;
+
+      # I am not a fucking idiot
+      clock24 = true;
+
+      # Auto-spawn session when attaching a session that does not exist.
+      newSession = true;
+    };
   };
 
   home.packages = with pkgs; [

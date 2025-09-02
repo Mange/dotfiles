@@ -18,21 +18,23 @@
 
   # Literally doxxing myself
   time.timeZone = "Europe/Stockholm";
+
   i18n.supportedLocales = [ "C.UTF-8/UTF-8" "en_US.UTF-8/UTF-8" "sv_SE.UTF-8/UTF-8" ];
   i18n.defaultLocale = "sv_SE.UTF-8";
-
-  # Setup nice looking boot screen.
-  boot.plymouth.enable = true;
-  boot.kernelParams = ["quiet" "udev.log_level=3"];
-
   console = {
     font = "Lat2-Terminus16";
     keyMap = "us";
   };
 
-  # Let me watch a shitton amount of things.
-  boot.kernel.sysctl = {
-    "fs.inotify.max_user_watches" = 700000;
-    "fs.inotify.max_user_instances" = 1024;
+  boot = {
+    # Setup nice looking boot screen.
+    plymouth.enable = true;
+    kernelParams = ["quiet" "udev.log_level=3"];
+
+    # Let me watch a shitton amount of things.
+    kernel.sysctl = {
+      "fs.inotify.max_user_watches" = 700000;
+      "fs.inotify.max_user_instances" = 1024;
+    };
   };
 }

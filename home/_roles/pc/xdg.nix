@@ -13,10 +13,10 @@
   XDG_STATE_HOME = config.xdg.stateHome;
 
   variables = {
-    XDG_CACHE_HOME = XDG_CACHE_HOME;
-    XDG_CONFIG_HOME = XDG_CONFIG_HOME;
-    XDG_DATA_HOME = XDG_DATA_HOME;
-    XDG_STATE_HOME = XDG_STATE_HOME;
+    inherit XDG_CACHE_HOME;
+    inherit XDG_CONFIG_HOME;
+    inherit XDG_DATA_HOME;
+    inherit XDG_STATE_HOME;
 
     #
     # XDG base directory exports for special snowflakes

@@ -5,42 +5,47 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.systemd.enable = true;
-  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "usbhid" ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-amd" ];
-  boot.extraModulePackages = [ ];
-
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/c3645fb2-e588-4b48-8c4c-d3e1e6cf4d50";
-      fsType = "btrfs";
-      options = [ "subvol=@nixroot" ];
+  boot = {
+    initrd = {
+      systemd.enable = true;
+      availableKernelModules = [ "nvme" "xhci_pci" "usbhid" ];
+      kernelModules = [ ];
+      luks.devices."luksdev".device = "/dev/disk/by-uuid/4e672fc9-b117-48d6-99fc-d0e2a30d2af9";
     };
+    kernelModules = [ "kvm-amd" ];
+    extraModulePackages = [ ];
+  };
 
-  boot.initrd.luks.devices."luksdev".device = "/dev/disk/by-uuid/4e672fc9-b117-48d6-99fc-d0e2a30d2af9";
+  fileSystems = {
+    "/" =
+      { device = "/dev/disk/by-uuid/c3645fb2-e588-4b48-8c4c-d3e1e6cf4d50";
+        fsType = "btrfs";
+        options = [ "subvol=@nixroot" ];
+      };
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/B27D-FD44";
-      fsType = "vfat";
-    };
+    "/boot" =
+      { device = "/dev/disk/by-uuid/B27D-FD44";
+        fsType = "vfat";
+      };
 
-  fileSystems."/home" =
-    { device = "/dev/disk/by-uuid/c3645fb2-e588-4b48-8c4c-d3e1e6cf4d50";
-      fsType = "btrfs";
-      options = [ "subvol=@home" ];
-    };
+    "/home" =
+      { device = "/dev/disk/by-uuid/c3645fb2-e588-4b48-8c4c-d3e1e6cf4d50";
+        fsType = "btrfs";
+        options = [ "subvol=@home" ];
+      };
 
-  fileSystems."/.snapshots" =
-    { device = "/dev/disk/by-uuid/c3645fb2-e588-4b48-8c4c-d3e1e6cf4d50";
-      fsType = "btrfs";
-      options = [ "subvol=@.snapshots" ];
-    };
+    "/.snapshots" =
+      { device = "/dev/disk/by-uuid/c3645fb2-e588-4b48-8c4c-d3e1e6cf4d50";
+        fsType = "btrfs";
+        options = [ "subvol=@.snapshots" ];
+      };
 
-  fileSystems."/var/log" =
-    { device = "/dev/disk/by-uuid/c3645fb2-e588-4b48-8c4c-d3e1e6cf4d50";
-      fsType = "btrfs";
-      options = [ "subvol=@log" ];
-    };
+    "/var/log" =
+      { device = "/dev/disk/by-uuid/c3645fb2-e588-4b48-8c4c-d3e1e6cf4d50";
+        fsType = "btrfs";
+        options = [ "subvol=@log" ];
+      };
+  };
 
   swapDevices = [ ];
 

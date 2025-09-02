@@ -43,11 +43,12 @@
   # ▙▌▀▌▛▘▛▌▌▌▌▀▌▛▘█▌
   # ▌▌█▌▌ ▙▌▚▚▘█▌▌ ▙▖
   #
+  boot = {
+    # Use the systemd-boot EFI boot loader.
+    loader.systemd-boot.enable = true;
+    loader.efi.canTouchEfiVariables = true;
 
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  # More recent kernel than the default. Helps with drivers and similar.
-  boot.kernelPackages = pkgs.linuxPackages_6_13;
+    # More recent kernel than the default. Helps with drivers and similar.
+    kernelPackages = pkgs.linuxPackages_6_13;
+  };
 }

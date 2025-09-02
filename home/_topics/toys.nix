@@ -1,7 +1,7 @@
 { pkgs, ... }: let
   mkScript = text: {
     executable = true;
-    text = text;
+    inherit text;
   };
   upstreamFonts = "${pkgs.figlet}/share/figlet";
   extraFonts = pkgs.fetchFromGitHub {

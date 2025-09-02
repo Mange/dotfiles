@@ -7,31 +7,49 @@ in {
   imports = [ inputs.sops-nix.homeManagerModules.sops ];
 
   # Setup sops
-  sops.defaultSopsFile = (rootPath + /secrets/secrets.yaml);
-  sops.defaultSopsFormat = "yaml";
-  sops.age.keyFile = "/home/mange/.config/sops/age/keys.txt";
-
-  # Install SSH public and private keys
-  home.file = (lib.attrsets.mergeAttrsList (
-    lib.lists.map (file: {
-    ".ssh/${builtins.baseNameOf file}" = { source = file; };
-    }) sshPubKeys)
-  );
-  sops.secrets = (lib.attrsets.mergeAttrsList (
-    lib.lists.map (basename: {
-      "ssh/private_keys/${basename}" = {
-        path = "${home}/.ssh/${basename}";
-      };
-    }) sshKeyNames)
-  );
-
-  # Keyring and gpg agent
-  services.gnome-keyring.enable = true;
-  home.sessionVariables.SSH_AUTH_SOCK = "$XDG_RUNTIME_DIR/keyring/ssh"; # gnome-keyring
-  services.gpg-agent = {
-    enable = true;
-    pinentry.package = pkgs.pinentry-gnome3;
+  sops = {
+    defaultSopsFile = rootPath + /secrets/secrets.yaml;
+    defaultSopsFormat = "yaml";
+    age.keyFile = "/home/mange/.config/sops/age/keys.txt";
+    secrets = lib.attrsets.mergeAttrsList (
+      lib.lists.map (basename: {
+        "ssh/private_keys/${basename}" = {
+          path = "${home}/.ssh/${basename}";
+        };
+      }) sshKeyNames);
   };
+
+  home = {
+    # Install SSH public and private keys
+    file = lib.attrsets.mergeAttrsList (
+      lib.lists.map (file: {
+      ".ssh/${builtins.baseNameOf file}" = { source = file; };
+      }) sshPubKeys);
+    sessionVariables.SSH_AUTH_SOCK = "$XDG_RUNTIME_DIR/keyring/ssh";
+
+    packages = with pkgs; [
+      keybase-gui
+      polkit_gnome
+      # libsecret
+    ];
+  };
+
+  services = {
+    # Keyring and gpg agent
+    gnome-keyring.enable = true;
+    gpg-agent = {
+      enable = true;
+      pinentry.package = pkgs.pinentry-gnome3;
+    };
+
+    # Keybase
+    keybase.enable = true;
+    kbfs = {
+      enable = true;
+      mountPoint = "Keybase";
+    };
+  };
+
   programs.gpg = {
     enable = true;
     homedir = "${config.xdg.dataHome}/gnupg";
@@ -42,19 +60,6 @@ in {
       default-key = "DB2D6BB84D8E0309";
     };
   };
-
-  # Keybase
-  services.keybase.enable = true;
-  services.kbfs = {
-    enable = true;
-    mountPoint = "Keybase";
-  };
-
-  home.packages = with pkgs; [
-    keybase-gui
-    polkit_gnome
-    # libsecret
-  ];
 
   systemd.user.services.polkit-gnome-authentication-agent-1 = {
     Unit = {

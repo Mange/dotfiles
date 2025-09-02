@@ -19,43 +19,51 @@
     nautilus
   ];
 
-  # Login, security, keyring, etc.
-  programs.gnupg.agent.enable = true;
-  programs.gnupg.agent.pinentryPackage = pkgs.pinentry-gnome3;
-  programs.seahorse.enable = true;
-  programs.ssh.enableAskPassword = true;
-  security.pam.services.gdm.enableGnomeKeyring = true;
-  services.gnome.gnome-keyring.enable = true;
-  # Note that kbfs is set up inside of home manager instead of here.
-  services.keybase.enable = true;
+  programs = {
+    # Login, security, keyring, etc.
+    gnupg.agent.enable = true;
+    gnupg.agent.pinentryPackage = pkgs.pinentry-gnome3;
+    seahorse.enable = true;
+    ssh.enableAskPassword = true;
 
-  # Nix index + comma for quick access to packages
-  programs.nix-index-database = {
-    comma.enable = true;
+    # Nix index + comma for quick access to packages
+    nix-index-database = {
+      comma.enable = true;
+    };
+
+    # Graphical
+    dconf.enable = true;
+    niri = { enable = true; };
+
+    # Shell
+    zsh.enable = true; # Thumbnail support for images
+
+    # NPM should be integrated with Nixos so global installs use a custom prefix.
+    npm = {
+      enable = true;
+      npmrc = ''
+        prefix = ''${HOME}/.local/share/npm
+      '';
+    };
   };
 
-  # Graphical
-  programs.dconf.enable = true;
-  services.displayManager.gdm.enable = true;
-  programs.niri = { enable = true; };
+  services = {
+    displayManager.gdm.enable = true;
+    gnome.gnome-keyring.enable = true;
 
-  # Hyprlock should have access to passwords, etc.
+    # Note that kbfs is set up inside of home manager instead of here.
+    keybase.enable = true;
+
+    gvfs.enable = true; # Mount, trash, and other functionalities
+    tumbler.enable = true; # Thumbnailing service
+  };
+
+  # GDM and Hyprlock should have access to passwords, etc.
+  security.pam.services.gdm.enableGnomeKeyring = true;
   security.pam.services.hyprlock = {};
 
-  # Shell
-  programs.zsh.enable = true;
+  # Include ZSH resources in final linked environment.
   environment.pathsToLink = [
     "/share/zsh"
   ];
-
-  services.gvfs.enable = true; # Mount, trash, and other functionalities
-  services.tumbler.enable = true; # Thumbnail support for images
-
-  # NPM should be integrated with Nixos so global installs use a custom prefix.
-  programs.npm = {
-    enable = true;
-    npmrc = ''
-      prefix = ''${HOME}/.local/share/npm
-    '';
-  };
 }

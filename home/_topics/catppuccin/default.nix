@@ -10,8 +10,8 @@ in {
 
   catppuccin = {
     enable = true;
-    flavor = flavor;
-    accent = accent;
+    inherit flavor;
+    inherit accent;
 
     cursors.enable = true;
     cursors.accent = "dark";
