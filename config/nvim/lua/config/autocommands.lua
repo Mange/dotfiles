@@ -31,6 +31,24 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+-- Automatically create directory when writing files.
+vim.api.nvim_create_autocmd("BufWritePre", {
+  group = group,
+  callback = function(event)
+    -- Skip special protocols, oil, and unnamed buffers.
+    if
+      event.match:match "^%w%w+://"
+      or vim.bo.filetype == "oil"
+      or vim.api.nvim_buf_get_name(0) == ""
+    then
+      return
+    end
+
+    local file = vim.loop.fs_realpath(event.match) or event.match
+    vim.fn.mkdir(vim.fn.fnamemodify(file, ":p:h"), "p")
+  end,
+})
+
 -- Typescript / Javascript formatting shortcut
 vim.api.nvim_create_autocmd("FileType", {
   group = group,
