@@ -1,28 +1,10 @@
 return {
   {
-    "nvim-treesitter/nvim-treesitter",
-    opts = function(_, opts)
-      vim.list_extend(opts.ensure_installed, {
-        "typescript",
-        "javascript",
-        "tsx",
-      })
-    end,
-  },
-  -- Insert closing </tags> automatically in HTML-like filetypes.
-  -- (Also handles renames of opening tag)
-  {
-    "windwp/nvim-ts-autotag",
-    opts = {},
-    lazy = false,
-  },
-
-  {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
-        eslint = {},
-        tailwindcss = {},
+        eslint = true,
+        tailwindcss = true,
       },
     },
   },

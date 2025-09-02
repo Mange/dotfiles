@@ -1,9 +1,9 @@
 return {
   diagnostics = {
-    Error = " ",
-    Warn = " ",
-    Hint = " ",
-    Info = " ",
+    [vim.diagnostic.severity.ERROR] = " ",
+    [vim.diagnostic.severity.WARN] = " ",
+    [vim.diagnostic.severity.INFO] = " ",
+    [vim.diagnostic.severity.HINT] = " ",
   },
   git = {
     added = " ",

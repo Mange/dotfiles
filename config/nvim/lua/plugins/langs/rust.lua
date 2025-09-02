@@ -1,14 +1,5 @@
 return {
   {
-    "nvim-treesitter/nvim-treesitter",
-    opts = function(_, opts)
-      vim.list_extend(opts.ensure_installed, {
-        "rust",
-        "toml",
-      })
-    end,
-  },
-  {
     "Saecki/crates.nvim",
     event = { "BufRead Cargo.toml" },
     dependencies = { "nvim-lua/plenary.nvim" },
@@ -52,7 +43,7 @@ return {
             },
           },
           -- Allow Treesitter embedded highlights inside strings.
-          semanticHighlighting = { strings = { enable = false } },
+          semanticHighlighting = { strings = { enable = true } },
         },
       },
     },

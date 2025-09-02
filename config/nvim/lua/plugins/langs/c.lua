@@ -1,17 +1,13 @@
 return {
   {
-    "nvim-treesitter/nvim-treesitter",
-    opts = function(_, opts)
-      vim.list_extend(opts.ensure_installed, {
-        "c",
-      })
-    end,
-  },
-  {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
-        ccls = {},
+        ccls = {
+          capabilities = {
+            offsetEncoding = { "utf-16" },
+          },
+        },
       },
       setup = {
         ccls = function(opts)

@@ -31,8 +31,8 @@ end
 
 --- @return number, number, number, number, number
 function utils.selection_range()
-  local buf, start_row, start_col = unpack(vim.fn.getpos "v")
-  local _, end_row, end_col = unpack(vim.fn.getpos ".")
+  local buf, start_row, start_col = table.unpack(vim.fn.getpos "v")
+  local _, end_row, end_col = table.unpack(vim.fn.getpos ".")
   if start_row < end_row or (start_row == end_row and start_col <= end_col) then
     return buf, start_row - 1, start_col - 1, end_row - 1, end_col
   else
@@ -40,6 +40,7 @@ function utils.selection_range()
   end
 end
 
+-- TODO: Does not support visual line mode.
 function utils.get_selection()
   local buf, s_row, s_col, e_row, e_col = utils.selection_range()
   local lines = vim.api.nvim_buf_get_text(buf, s_row, s_col, e_row, e_col, {})
@@ -90,8 +91,10 @@ function utils.show_diagnostic_float(options)
 end
 
 ---@param on_attach fun(client, buffer: number): nil
-function utils.on_lsp_attach(on_attach)
+---@param opts? {group?: string|number}
+function utils.on_lsp_attach(on_attach, opts)
   vim.api.nvim_create_autocmd("LspAttach", {
+    group = opts and opts.group or nil,
     callback = function(args)
       local buffer = args.buf ---@type number
       local client = vim.lsp.get_client_by_id(args.data.client_id)

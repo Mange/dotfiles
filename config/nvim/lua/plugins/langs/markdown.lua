@@ -1,13 +1,5 @@
 return {
   {
-    "nvim-treesitter/nvim-treesitter",
-    opts = function(_, opts)
-      vim.list_extend(opts.ensure_installed, {
-        "markdown",
-      })
-    end,
-  },
-  {
     "stevearc/conform.nvim",
     opts = {
       formatters_by_ft = {
@@ -20,7 +12,7 @@ return {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
-        marksman = {},
+        marksman = true,
       },
     },
   },

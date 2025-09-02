@@ -2,11 +2,6 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)
-      vim.list_extend(opts.ensure_installed, {
-        "ruby",
-        "yaml",
-      })
-
       -- erb files keep crashing with treesitter.
       local old_disable = opts.highlight.disable
         or function()
