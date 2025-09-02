@@ -28,7 +28,6 @@
   "markview.nvim": { "branch": "main", "commit": "9c7761f4446c23cfc8e9b8b1ba980a1a7fd1c94a" },
   "neogit": { "branch": "master", "commit": "4046f747739cf7e7b9aada447f3edc59c947b111" },
   "neotest": { "branch": "master", "commit": "35a59c1f59dbb954d92b74ab64a966a668cea495" },
-  "neotest-jest": { "branch": "main", "commit": "ae9c269c8b3759cd9bceb3721fc0098263e7f25f" },
   "neotest-vitest": { "branch": "main", "commit": "a6099e1fb55a2c2851da3dd0f4d510af9a234c92" },
   "nvim-autopairs": { "branch": "master", "commit": "23320e75953ac82e559c610bec5a90d9c6dfa743" },
   "nvim-cmp": { "branch": "main", "commit": "b5311ab3ed9c846b585c0c15b7559be131ec4be9" },
