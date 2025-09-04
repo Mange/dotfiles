@@ -2,7 +2,12 @@
 return {
   { "nvim-lua/plenary.nvim" }, -- Support library
   { "nvim-tree/nvim-web-devicons", lazy = true }, -- Icons
-  { "chrisgrieser/nvim-genghis", opts = {} }, -- Convenience file operations
+
+  -- Convenience file operations
+  {
+    "chrisgrieser/nvim-genghis",
+    opts = { fileOperations = { autoAddExt = false } },
+  },
 
   -- Support for project-local configs.
   { "direnv/direnv.vim", lazy = false },
