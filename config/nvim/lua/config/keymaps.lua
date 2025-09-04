@@ -180,9 +180,10 @@ wk.add {
 --
 wk.add {
   -- stylua: ignore start
-  { "%%", "<C-R>=fnameescape(expand('%'))<cr>", desc = "Current file path", mode = "c" },
-  { "$$", "<C-R>=fnameescape(expand('%:h'))<cr>", desc = "Current file dir", mode = "c" },
-  { "^^", "<C-R>=fnameescape(expand('%:t'))<cr>", desc = "Current file basename", mode = "c" },
+  -- silent = false is required, or else the command line will not update to show the expansion.
+  { "%%", "<C-R>=fnameescape(expand('%'))<cr>", desc = "Current file path", mode = "c", silent = false },
+  { "$$", "<C-R>=fnameescape(expand('%:h'))<cr>", desc = "Current file dir", mode = "c", silent = false },
+  { "^^", "<C-R>=fnameescape(expand('%:t'))<cr>", desc = "Current file basename", mode = "c", silent = false },
   -- stylua: ignore end
 }
 
@@ -297,9 +298,13 @@ wk.add {
 --
 wk.add {
   -- stylua: ignore start
-  { "<C-a>", 'copilot#Accept("<CR>")', mode = "i", expr = true, desc = "Accept suggestion" },
-  { "<right>", "<Plug>(copilot-accept-word)", mode = "i", desc = "Accept word" },
-  { "<down>", "<Plug>(copilot-accept-line)", mode = "i", desc = "Accept line" },
+  { "<C-a>", 'copilot#Accept("<CR>")', mode = "i", expr = true, desc = "Copilot: Accept" },
+  { "<M-Right>", "<Plug>(copilot-accept-word)", mode = "i", desc = "Copilot: Accept word" },
+  { "<M-L>", "<Plug>(copilot-accept-word)", mode = "i", desc = "Copilot: Accept word" },
+  { "<M-Down>", "<Plug>(copilot-accept-line)", mode = "i", desc = "Copilot: Accept line" },
+  { "<M-J>", "<Plug>(copilot-accept-line)", mode = "i", desc = "Copilot: Accept line" },
+  { "<M-Up>", "<Plug>(copilot-next)", mode = "i", desc = "Copilot: Next" },
+  { "<M-K>", "<Plug>(copilot-next)", mode = "i", desc = "Copilot: Next" },
   -- stylua: ignore end
 }
 
@@ -474,7 +479,7 @@ wk.add {
 --
 wk.add {
   { "<leader>n", group = "notes" },
-  { "<leader>nn", "<cmd>SplitOrFocus notes.local<cr>", "Local notes" },
+  { "<leader>nn", "<cmd>SplitOrFocus notes.local<cr>", desc = "Local notes" },
   {
     "<leader>nf",
     call("snacks", "win", {
@@ -494,10 +499,10 @@ wk.add {
 wk.add {
   { "<leader>c", group = "code" },
 
-  { "<leader>c=", actions.format_buf, desc = "Format" },
-  { "<leader>cr", vim.lsp.buf.rename, "Rename" },
-
   -- stylua: ignore start
+  { "<leader>c=", actions.format_buf, desc = "Format" },
+  { "<leader>cr", vim.lsp.buf.rename, desc = "Rename" },
+
   { "<leader>cd", "<cmd>Trouble diagnostics focus=true filter.buf=0<cr>", desc = "Diagnostics (buffer)" },
   { "<leader>cD", "<cmd>Trouble diagnostics<cr>", desc = "Diagnostics (all)" },
   { "<leader>cs", "<cmd>Trouble lsp_document_symbols toggle focus=true pinned=true vim.position=right<cr>", desc = "Symbols" },
@@ -584,7 +589,7 @@ wk.add {
 
   -- Not actually a *toggle*, more like a "Toggle off". Just pressing n/N
   -- will enable the highlights again anyway.
-  { "<leader>th", "<cmd>nohl<cr>", "Disable search highlights" },
+  { "<leader>th", "<cmd>nohl<cr>", desc = "Disable search highlights" },
 }
 -- Toggles (through Snacks)
 Snacks.toggle.option("list", { name = "Listchars" }):map "<leader>tl"

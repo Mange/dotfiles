@@ -57,7 +57,7 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.keymap.set(
       "n",
       "Q",
-      "<cmd>EslintFixAll<cr>",
+      "<cmd>LspEslintFixAll<cr>",
       { buffer = true, desc = "eslint-fix-all", silent = true }
     )
   end,
