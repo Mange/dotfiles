@@ -1,6 +1,6 @@
 vim.diagnostic.config {
   virtual_text = false,
-  virtual_lines = true,
+  virtual_lines = false, -- Handled by tiny-inline-diagnostic.nvim
   underline = true,
   float = {
     source = "always",
