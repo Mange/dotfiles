@@ -477,7 +477,13 @@ wk.add {
   { "<leader>nn", "<cmd>SplitOrFocus notes.local<cr>", "Local notes" },
   {
     "<leader>nf",
-    call("snacks", "win", { file = "notes.local", width = 0.6, height = 0.6 }),
+    call("snacks", "win", {
+      file = "notes.local",
+      width = 0.6,
+      height = 0.6,
+      backdrop = 99,
+      bo = { modifiable = true },
+    }),
     desc = "Local notes (float)",
   },
 }
