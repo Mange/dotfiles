@@ -48,17 +48,3 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     vim.fn.mkdir(vim.fn.fnamemodify(file, ":p:h"), "p")
   end,
 })
-
--- Typescript / Javascript formatting shortcut
-vim.api.nvim_create_autocmd("FileType", {
-  group = group,
-  pattern = { "javascript", "typescript", "javascriptreact", "typescriptreact" },
-  callback = function()
-    vim.keymap.set(
-      "n",
-      "Q",
-      "<cmd>LspEslintFixAll<cr>",
-      { buffer = true, desc = "eslint-fix-all", silent = true }
-    )
-  end,
-})

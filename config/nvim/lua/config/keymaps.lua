@@ -784,7 +784,7 @@ wk.add {
 --
 -- LSP mappings
 --
-utils.on_lsp_attach(function(_, bufnr)
+utils.on_lsp_attach(function(client, bufnr)
   local modifiable = vim.bo[bufnr].modifiable
 
   local function buffer_map(opts)
@@ -839,6 +839,11 @@ utils.on_lsp_attach(function(_, bufnr)
     "LSP definitions",
     "<cmd>Trouble lsp_definitions focus=true<cr>",
   }
+
+  -- Set up context key for some LSPs.
+  if client.name == "eslint" then
+    buffer_map { "Q", "eslint-fix-all", "<cmd>LspEslintFixAll<cr>" }
+  end
 end, {
   group = vim.api.nvim_create_augroup("MangeLspKeymaps", { clear = true }),
 })
