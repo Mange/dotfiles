@@ -10,6 +10,9 @@
     nixos-stable.url = "github:nixos/nixpkgs/nixos-24.05";
     # Also see the 'unstable-packages' overlay at 'overlays/default.nix'.
 
+    # For random cases where I need something straight from Git.
+    nixpkgs-master.url = "github:nixos/nixpkgs/master";
+
     # Hardware configuration
     hardware.url = "github:nixos/nixos-hardware";
 

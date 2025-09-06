@@ -49,6 +49,6 @@
     loader.efi.canTouchEfiVariables = true;
 
     # More recent kernel than the default. Helps with drivers and similar.
-    kernelPackages = pkgs.linuxPackages_6_13;
+    kernelPackages = pkgs.linuxPackages_6_16;
   };
 }

@@ -1,4 +1,4 @@
-_: let
+{ pkgs, ... }: let
   ollamaUrl = "http://localhost:11434";
 in {
   services.ollama = {
@@ -7,6 +7,9 @@ in {
   };
 
   services.open-webui = {
+    # TODO: Required until https://nixpk.gs/pr-tracker.html?pr=438551
+    package = pkgs.nixpkgs-master.open-webui;
+
     enable = true;
     environment.OLLAMA_API_BASE_URL = ollamaUrl;
     # Disable authentication

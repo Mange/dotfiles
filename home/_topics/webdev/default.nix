@@ -11,7 +11,12 @@
     google-chrome
 
     # Others
-    http-prompt
+
+    # TODO: Currently broken in unstable and master. Downgrade to stable
+    # release.
+    # (Last tested 2025-09-06)
+    pkgs.nixos-stable.http-prompt
+
     httpie
     nodejs
     pastel

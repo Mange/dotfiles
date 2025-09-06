@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }: let
+{ lib, pkgs, inputs, ... }: let
   flavor = "mocha";
   accent = "mauve";
 
@@ -28,6 +28,10 @@ in {
     size = 32;
     gtk.enable = true;
     x11.enable = true;
+
+    # Override selection made by Catppuccin module, as it will want to build
+    # all flavors and all colors, which takes 10-20 minutes.
+    package = lib.mkOverride 0 pkgs.catppuccin-cursors.mochaDark;
   };
 
   # KDE is not supported by the catppuccin module, so add it manually.
