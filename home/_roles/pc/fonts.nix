@@ -1,11 +1,21 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   fonts.fontconfig = {
     enable = true;
     defaultFonts = {
-      emoji = ["Noto Color Emoji" "Nerd Fonts Symbols Only"];
-      monospace = ["JetBrainsMono Nerd Font"];
-      sansSerif = ["Inter" "Nerd Fonts Symbols Only"];
-      serif = ["Inter" "Nerd Fonts Symbols Only"];
+      emoji = [
+        "Noto Color Emoji"
+        "Nerd Fonts Symbols Only"
+      ];
+      monospace = [ "JetBrainsMono Nerd Font" ];
+      sansSerif = [
+        "Inter"
+        "Nerd Fonts Symbols Only"
+      ];
+      serif = [
+        "Inter"
+        "Nerd Fonts Symbols Only"
+      ];
     };
   };
 
@@ -16,7 +26,7 @@
   };
 
   programs.rofi.font = "Inter Light 10";
-  programs.neovide.settings.font.normal = ["JetBrains Mono"];
+  programs.neovide.settings.font.normal = [ "JetBrainsMono Nerd Font" ];
 
   home.packages = with pkgs; [
     # Main fonts
@@ -54,4 +64,3 @@
     # maya
   ];
 }
-
