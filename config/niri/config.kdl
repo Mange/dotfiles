@@ -287,6 +287,8 @@ window-rule {
 // Dropdowns
 window-rule {
   match app-id="^dropdown_"
+  match app-id="com.mitchellh.ghostty.dropdown"
+  match app-id="com.mitchellh.ghostty.dropdown-calc"
 
   open-floating true
 }
@@ -347,6 +349,7 @@ binds {
 
     Mod+Return hotkey-overlay-title="Terminal" { spawn "samedirwezterm" "start" "--always-new-process"; }
     Mod+Shift+Return hotkey-overlay-title="Terminal (home)" { spawn "wezterm" "start" "--always-new-process"; }
+    Mod+Ctrl+Return hotkey-overlay-title="Terminal (🎮)" { spawn "ghostty" "--custom-shader=/home/mange/.config/ghostty/shaders/in-game-crt.glsl"; }
 
     // TODO: Add back "toggle" when I can get that to work.
     Mod+G hotkey-overlay-title="Terminal (dropdown)" {

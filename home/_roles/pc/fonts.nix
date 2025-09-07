@@ -25,8 +25,12 @@
     package = pkgs.inter;
   };
 
-  programs.rofi.font = "Inter Light 10";
-  programs.neovide.settings.font.normal = [ "JetBrainsMono Nerd Font" ];
+  programs = {
+    rofi.font = "Inter Light 10";
+
+    ghostty.settings.font-family = "JetBrainsMono Nerd Font";
+    neovide.settings.font.normal = [ "JetBrainsMono Nerd Font" ];
+  };
 
   home.packages = with pkgs; [
     # Main fonts

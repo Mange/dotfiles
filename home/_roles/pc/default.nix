@@ -1,12 +1,15 @@
-{ config, pkgs, ... }: let
+{ config, pkgs, ... }:
+let
   utils = import ../../utils.nix { inherit config pkgs; };
-in {
+in
+{
   imports = [
     ./chat.nix
     ./cli.nix
     ./desktop.nix
     ./fonts.nix
     ./git.nix
+    ./ghostty.nix
     ./mako.nix
     ./media.nix
     ./niri.nix

@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+cwd="$(samedir --print)"
+# Fall back to HOME if samedir cannot be determined…
+cwd="${cwd:-$HOME}"
+
+exec ghostty --working-directory="$cwd" "$@"
