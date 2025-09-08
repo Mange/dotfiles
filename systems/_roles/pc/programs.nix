@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   environment.systemPackages = with pkgs; [
     # Should be able to run home-manager after initial install.
     git
@@ -33,7 +34,9 @@
 
     # Graphical
     dconf.enable = true;
-    niri = { enable = true; };
+    niri = {
+      enable = true;
+    };
 
     # Shell
     zsh.enable = true; # Thumbnail support for images
@@ -50,6 +53,7 @@
   services = {
     displayManager.gdm.enable = true;
     gnome.gnome-keyring.enable = true;
+    gnome.gcr-ssh-agent.enable = true;
 
     # Note that kbfs is set up inside of home manager instead of here.
     keybase.enable = true;
@@ -60,7 +64,7 @@
 
   # GDM and Hyprlock should have access to passwords, etc.
   security.pam.services.gdm.enableGnomeKeyring = true;
-  security.pam.services.hyprlock = {};
+  security.pam.services.hyprlock = { };
 
   # Include ZSH resources in final linked environment.
   environment.pathsToLink = [

@@ -1,9 +1,18 @@
 # Keyring, SSH, GPG stuff
-{ config, pkgs, lib, rootPath, inputs, ... }: let
+{
+  config,
+  pkgs,
+  lib,
+  rootPath,
+  inputs,
+  ...
+}:
+let
   home = config.home.homeDirectory;
   sshPubKeys = lib.filesystem.listFilesRecursive (rootPath + /data/ssh-keys);
   sshKeyNames = lib.lists.map (file: lib.removeSuffix ".pub" (builtins.baseNameOf file)) sshPubKeys;
-in {
+in
+{
   imports = [ inputs.sops-nix.homeManagerModules.sops ];
 
   # Setup sops
@@ -16,16 +25,19 @@ in {
         "ssh/private_keys/${basename}" = {
           path = "${home}/.ssh/${basename}";
         };
-      }) sshKeyNames);
+      }) sshKeyNames
+    );
   };
 
   home = {
     # Install SSH public and private keys
     file = lib.attrsets.mergeAttrsList (
       lib.lists.map (file: {
-      ".ssh/${builtins.baseNameOf file}" = { source = file; };
-      }) sshPubKeys);
-    sessionVariables.SSH_AUTH_SOCK = "$XDG_RUNTIME_DIR/keyring/ssh";
+        ".ssh/${builtins.baseNameOf file}" = {
+          source = file;
+        };
+      }) sshPubKeys
+    );
 
     packages = with pkgs; [
       keybase-gui
@@ -35,7 +47,7 @@ in {
   };
 
   services = {
-    # Keyring and gpg agent
+    # Keyring, SSH, and GPG agents
     gnome-keyring.enable = true;
     gpg-agent = {
       enable = true;
