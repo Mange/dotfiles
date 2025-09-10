@@ -223,7 +223,13 @@ if vim.g.neovide then
     { "<C-S-v>", '"+p', mode = { "n", "v" }, desc = "Paste from clipboard" },
 
     -- <C-z> in Neovide won't work. Open a terminal instead.
-    { "<C-z>", Snacks.terminal, desc = "Toggle terminal" },
+    {
+      "<C-z>",
+      function()
+        Snacks.terminal()
+      end,
+      desc = "Toggle terminal",
+    },
   }
 end
 
@@ -372,7 +378,13 @@ wk.add {
   { "<leader>by", ":%y+<cr>", desc = "Yank to clipboard" },
   { "<leader>bD", actions.delete_all_buffers, desc = "Delete all buffers" },
   { "<leader>bd", ":bd<cr>", desc = "Delete buffer" },
-  { "<leader>bk", Snacks.bufdelete, desc = "Kill buffer" },
+  {
+    "<leader>bk",
+    function()
+      Snacks.bufdelete()
+    end,
+    desc = "Kill buffer",
+  },
   { "<leader>bf", "<cmd>Telescope filetypes<cr>", desc = "Set filetype" },
   { "<leader>bl", ":b #<cr>", desc = "Goto last" },
   { "<leader>bn", "<cmd>enew<cr>", desc = "New" },
@@ -402,7 +414,13 @@ wk.add {
   { "<leader>g", group = "git" },
 
   { "<leader>gg", "<cmd>Neogit<cr>", desc = "Status" },
-  { "<leader>go", Snacks.gitbrowse, desc = "Open in browser" },
+  {
+    "<leader>go",
+    function()
+      Snacks.gitbrowse()
+    end,
+    desc = "Open in browser",
+  },
   { "<leader>gc", call("neogit", "open", { "commit" }), desc = "Commit" },
 
   { "<leader>ga", "<cmd>Gitsigns stage_buffer<cr>", desc = "Stage buffer" },
@@ -533,7 +551,7 @@ wk.add {
   { "<leader>ps", "<cmd>Telescope lsp_workspace_symbols<cr>", desc = "Symbols" },
   { "<leader>pT", actions.telescope_todos, desc = "TODOs" },
 
-  { "<leader>pt", Snacks.terminal, desc = "Terminal" },
+  { "<leader>pt", function() Snacks.terminal() end, desc = "Terminal" },
 
   { "<leader>pi", "<cmd>SplitOrFocus .git/local.lua<cr>", desc = "Project vimrc (lua)" },
   { "<leader>pI", "<cmd>SplitOrFocus .git/local.vim<cr>", desc = "Project vimrc (vimscript)" },
