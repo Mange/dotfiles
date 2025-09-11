@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   programs.steam = {
     enable = true;
     protontricks.enable = true;
@@ -14,6 +15,7 @@
 
   environment.systemPackages = with pkgs; [
     wine
+    wineWowPackages.stable
     winetricks
     lutris
   ];
