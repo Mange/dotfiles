@@ -1,6 +1,8 @@
-_: let
+_:
+let
   username = "mange";
-in {
+in
+{
   networking = {
     firewall.allowPing = true;
 
@@ -18,7 +20,7 @@ in {
       ];
     };
   };
-  users.users.mange.extraGroups = ["networkmanager"];
+  users.users.mange.extraGroups = [ "networkmanager" ];
 
   # Enable Tailscale
   services.tailscale = {
