@@ -158,7 +158,7 @@ spawn-at-startup "firefox"
 spawn-at-startup "ksnip"
 spawn-at-startup "obsidian"
 spawn-at-startup "sane-break"
-spawn-at-startup "telegram-desktop"
+spawn-at-startup "Telegram"
 
 // Spotify requires X11 to be set up, and it therefore needs to wait a bit for
 // xwayland-satellite to finish starting.
