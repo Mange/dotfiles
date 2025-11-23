@@ -147,11 +147,6 @@ hotkey-overlay {
   // hide-not-bound
 }
 
-spawn-at-startup "xwayland-satellite"
-environment {
-    DISPLAY ":0" // For xwayland-satellite
-}
-
 // Daemons and services
 spawn-at-startup "wl-paste" "--watch" "cliphist" "store"
 spawn-at-startup "udiskie" "--no-automount" "--smart-tray"
