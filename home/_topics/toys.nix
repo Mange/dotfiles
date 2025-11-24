@@ -7,8 +7,8 @@
   extraFonts = pkgs.fetchFromGitHub {
     owner = "xero";
     repo = "figlet-fonts";
-    rev = "8fc6db5e9e980153505c89edc9d7246633a26985";
-    sha256 = "sha256-/Qj8CWqn7w1R83enixxgC5ijUrHvqN3C7ZvRCs/AzBI=";
+    rev = "5c250192890856486be8a85085e7915b1b655f3e";
+    sha256 = "sha256-wT1DjM+3+UasAm2IHavBXs0R8eNMJn9uLtWSqwS+XU0=";
   };
 
 in {
