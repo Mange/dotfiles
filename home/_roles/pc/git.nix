@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   home.packages = with pkgs; [
     git-absorb
 
@@ -22,7 +23,8 @@
     gm = "git merge --no-ff";
     gmo = "git merge --no-ff @{upstream}";
     gmm = "git merge --no-ff master";
-    fixup = /*sh*/ ''gco --fixup "$(git fshow)"'';
+    fixup = # sh
+      ''gco --fixup "$(git fshow)"'';
     gro = "git rebase @{upstream}";
     grm = "git rebase master";
     gri = "git rebase -i";
@@ -33,37 +35,34 @@
     ffm = "git merge --ff-only master";
     ffo = "git merge --ff-only @{upstream}";
     gup = "gf && ffo";
-    gl="git log --no-show-signature --graph -n 1000 --format='tformat:%C(bold blue)%h%Creset %C(bold)%s%Creset%C(auto)%d%n%C(dim white)%ad %C(nodim green)(%ar)%Creset - %an%C(yellow)%+N%n%Creset'";
-    s="git status --short --branch";
-    gs="git show --show-signature --ext-diff";
-    gd="git diff --ext-diff";
-    gdd="git diff --no-ext-diff | delta";
-    gds="git diff --no-ext-diff | delta --side-by-side";
-    staged="gd --cached";
+    gl = "git log --no-show-signature --graph -n 1000 --format='tformat:%C(bold blue)%h%Creset %C(bold)%s%Creset%C(auto)%d%n%C(dim white)%ad %C(nodim green)(%ar)%Creset - %an%C(yellow)%+N%n%Creset'";
+    s = "git status --short --branch";
+    gs = "git show --show-signature --ext-diff";
+    gd = "git diff --ext-diff";
+    gdd = "git diff --no-ext-diff | delta";
+    gds = "git diff --no-ext-diff | delta --side-by-side";
+    staged = "gd --cached";
+  };
+
+  programs.difftastic = {
+    enable = true;
+    git.enable = true;
+    options = {
+      background = "dark";
+    };
   };
 
   programs.git = {
     enable = true;
 
-    userName = "Magnus Bergmark";
-    userEmail = "me@mange.dev";
-
-    difftastic = {
-      enable = true;
-      background = "dark";
-    };
-
-    aliases = {
-      prune = "!git remote | xargs -n 1 git remote prune";
-    };
-
-    signing = {
-      signByDefault = true;
-      key = "2EA6F4AA110A1BF2227519A90443C69F6F022CDE";
-    };
-
-    extraConfig = {
+    settings = {
+      user.name = "Magnus Bergmark";
+      user.email = "me@mange.dev";
       github.user = "Mange";
+
+      alias = {
+        prune = "!git remote | xargs -n 1 git remote prune";
+      };
 
       # Newspeak is double-plus ungood
       init.defaultBranch = "master";
@@ -72,7 +71,8 @@
         prompt = true;
         keepBackup = false;
         vimdiff = {
-          cmd = /*sh*/ ''nvim -d "$LOCAL" "$BASE" "$REMOTE" "$MERGED" -c "\$wincmd w" -c "wincmd J" -c "windo set wrap"'';
+          cmd = # sh
+            ''nvim -d "$LOCAL" "$BASE" "$REMOTE" "$MERGED" -c "\$wincmd w" -c "wincmd J" -c "windo set wrap"'';
         };
       };
 
@@ -107,6 +107,11 @@
           insteadOf = "https://github.com/";
         };
       };
+    };
+
+    signing = {
+      signByDefault = true;
+      key = "2EA6F4AA110A1BF2227519A90443C69F6F022CDE";
     };
 
     ignores = [

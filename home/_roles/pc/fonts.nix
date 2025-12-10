@@ -40,8 +40,8 @@
     # Symbols
     nerd-fonts.jetbrains-mono
     nerd-fonts.symbols-only
-    noto-fonts-emoji # Emoji
-    noto-fonts-extra # etc.
+    noto-fonts-color-emoji # Emoji
+    noto-fonts # etc.
 
     # Compatibility with other things
     dejavu_fonts

@@ -1,7 +1,13 @@
-{ pkgs, config, lib, ... }: let
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
+let
   utils = import ../../utils.nix { inherit config pkgs; };
   dotfiles = utils.linkConfig "nvim";
-in 
+in
 {
   xdg.configFile."nvim".source = dotfiles;
 
@@ -36,7 +42,7 @@ in
         # parameters must be set. Font is configured in `fonts.nix`, so just
         # place a default placeholder here to ensure the settings are valid.
         size = 10.0;
-        normal = lib.mkDefault [];
+        normal = lib.mkDefault [ ];
       };
     };
   };
@@ -98,7 +104,7 @@ in
 
     # Others
     marksman # Markdown
-    nodePackages_latest.dockerfile-language-server-nodejs
+    dockerfile-language-server
     nodePackages_latest.prettier
     nodePackages_latest.yaml-language-server
     terraform-ls

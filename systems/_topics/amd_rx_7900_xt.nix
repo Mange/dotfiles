@@ -1,13 +1,14 @@
 # ▄▄▄ ▄▄▄ ▄▄      ▄▄▄ ▄ ▄     ▄▄▄ ▄▄▄ ▄▄▄ ▄▄▄     ▄ ▄ ▄▄▄
 # █ █ ███ █ █     █▄▀ ▀▄▀       █ █▄█ █▀█ █▀█     ▀▄▀  █
 # █▀█ █ █ █▄▀     █ █ █ █       █ ▄▄█ ███ ███     █ █  █
-# 
-{ pkgs, ... }: {
+#
+{ pkgs, ... }:
+{
   services = {
     xserver.videoDrivers = [ "amdgpu" ];
 
     # Let Ollama use my GPU.
-    ollama.acceleration = "rocm";
+    ollama.package = pkgs.ollama-rocm;
     # nix-shell -p "rocmPackages.rocminfo" --run "rocminfo" | grep "gfx"
     ollama.rocmOverrideGfx = "11.0.0"; # i.e. `gfx1100`.
   };
@@ -16,8 +17,6 @@
   # nixpkgs.config.rocmSupport = true;
 
   hardware.amdgpu = {
-    # Go for default RADV instead of AMDVLK.
-    amdvlk.enable = false;
     opencl.enable = true;
     initrd.enable = true;
   };

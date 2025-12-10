@@ -1,14 +1,15 @@
-{ pkgs, ... }: let
+{ pkgs, ... }:
+let
   ollamaUrl = "http://localhost:11434";
-in {
+in
+{
   services.ollama = {
     enable = true;
     user = "ollama";
   };
 
   services.open-webui = {
-    # TODO: Required until https://nixpk.gs/pr-tracker.html?pr=438551
-    package = pkgs.nixpkgs-master.open-webui;
+    package = pkgs.open-webui;
 
     enable = true;
     environment.OLLAMA_API_BASE_URL = ollamaUrl;

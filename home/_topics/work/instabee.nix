@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   home.packages = with pkgs; [
     # Connecting to work VPN
     tailscale
@@ -10,8 +11,9 @@
     terraform
     kubectl
     sops
-    (google-cloud-sdk.withExtraComponents [
-      google-cloud-sdk.components.gke-gcloud-auth-plugin
+    # google-cloud-sdk depends on Python3 which fails to compile on nixos-unstable 2025-12-10.
+    (pkgs.nixos-stable.google-cloud-sdk.withExtraComponents [
+      pkgs.nixos-stable.google-cloud-sdk.components.gke-gcloud-auth-plugin
     ])
     google-cloud-sql-proxy
 
@@ -26,34 +28,35 @@
     mycli
   ];
 
-  home.file.".myclirc".text =  /*ini*/ ''
-    [main]
-    # Only execute query on Return when it ends with a semicolon
-    multi_line = True
+  home.file.".myclirc".text = # ini
+    ''
+      [main]
+      # Only execute query on Return when it ends with a semicolon
+      multi_line = True
 
-    # fo' life!
-    key_bindings = vi
+      # fo' life!
+      key_bindings = vi
 
-    # Warn on things like "DROP TABLE".
-    destructive_warning = True
+      # Warn on things like "DROP TABLE".
+      destructive_warning = True
 
-    # Like \x auto in psql; transpose table when few rows.
-    auto_expand = True
+      # Like \x auto in psql; transpose table when few rows.
+      auto_expand = True
 
-    # I'm weird LIKE that
-    keyword_casing = upper
+      # I'm weird LIKE that
+      keyword_casing = upper
 
-    less_chatty = True
-    table_format = fancy_grid
-    syntax_style = manni
+      less_chatty = True
+      table_format = fancy_grid
+      syntax_style = manni
 
-    enable_pager = True
-    wider_completion_menu = True
-    auto_vertical_output = True
+      enable_pager = True
+      wider_completion_menu = True
+      auto_vertical_output = True
 
-    # More XDG-like; generated files should not go in ~/.config
-    log_file = ~/.local/share/mycli/log
-    history_file = ~/.local/share/mycli/history
-    casing_file = ~/.local/share/mycli/casing
-  '';
+      # More XDG-like; generated files should not go in ~/.config
+      log_file = ~/.local/share/mycli/log
+      history_file = ~/.local/share/mycli/history
+      casing_file = ~/.local/share/mycli/casing
+    '';
 }
