@@ -37,7 +37,11 @@ local actions = {
   end,
 
   format_buf = function()
-    require("conform").format { async = true, lsp_fallback = true }
+    require("conform").format {
+      async = true,
+      lsp_fallback = true,
+      stop_after_first = true,
+    }
   end,
 
   set_search_word = function()

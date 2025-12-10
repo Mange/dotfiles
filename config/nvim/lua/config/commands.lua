@@ -45,7 +45,11 @@ vim.api.nvim_create_user_command("Format", function(args)
     args.bang
     or (formatting.globally_enabled() and formatting.buffer_enabled())
   then
-    require("conform").format { async = true, lsp_fallback = true }
+    require("conform").format {
+      async = true,
+      lsp_fallback = true,
+      stop_after_first = true,
+    }
   end
 end, {
   desc = "Format",
