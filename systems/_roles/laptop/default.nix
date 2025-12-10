@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   imports = [
     ../pc
 
@@ -9,4 +10,7 @@
     powertop
     brightnessctl
   ];
+
+  services.power-profiles-daemon.enable = true;
+  services.upower.enable = true;
 }
