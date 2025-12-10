@@ -1,6 +1,8 @@
-{ config, pkgs, ... }: let
+{ config, pkgs, ... }:
+let
   utils = import ../../utils.nix { inherit config pkgs; };
-in {
+in
+{
   # Night light
   services.gammastep = {
     enable = true;
@@ -74,8 +76,6 @@ in {
     # Other
     ripdrag # drag-n-drop
     sane-break # Work breaks
-    waybar
-    flare-launcher
 
     # Compatibility
     xorg.xprop.out # For xorg/xwayland-satellite compatibility in `samedir` script.
@@ -83,8 +83,4 @@ in {
 
   # Custom commands
   home.file.".local/bin/wfrecord".source = ./bin/wfrecord;
-
-  xdg.configFile = {
-    "waybar".source = utils.linkConfig "waybar";
-  };
 }

@@ -28,14 +28,17 @@
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    # Catppuccin
-    catppuccin.url = "github:catppuccin/nix";
+    # Noctalia https://docs.noctalia.dev/getting-started/nixos/
+    noctalia = {
+      url = "github:noctalia-dev/noctalia-shell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, sops-nix, home-manager, nix-index-database, ... }@inputs:
+  outputs = { self, nixpkgs, ... }@inputs:
     let
       inherit (self) outputs;
-      extraSystemModules = [ nix-index-database.nixosModules.nix-index ];
+      extraSystemModules = [ inputs.nix-index-database.nixosModules.nix-index ];
       forAllSystems = nixpkgs.lib.genAttrs [
         "x86_64-linux"
       ];
@@ -88,32 +91,33 @@
       # Standalone home-manager configuration entrypoint
       # Available through 'home-manager --flake .#your-username@your-hostname'
       homeConfigurations = let
-        homeConfig = home-manager.lib.homeManagerConfiguration;
+        homeConfig = inputs.home-manager.lib.homeManagerConfiguration;
         extraSpecialArgs = {
           inherit inputs outputs;
           rootPath = ./.;
         };
+        modules = [inputs.noctalia.homeModules.default];
       in {
         "mange@socia" = homeConfig {
           extraSpecialArgs = extraSpecialArgs // {
             isLaptop = false;
           };
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          modules = [ ./home/socia ];
+          modules = modules ++ [ ./home/socia ];
         };
         "mange@vera" = homeConfig {
           extraSpecialArgs = extraSpecialArgs // {
             isLaptop = true;
           };
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          modules = [ ./home/vera ];
+          modules = modules ++ [ ./home/vera ];
         };
         "mange@porto" = homeConfig {
           extraSpecialArgs = extraSpecialArgs // {
             isLaptop = true;
           };
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          modules = [ ./home/porto ];
+          modules = modules ++ [ ./home/porto ];
         };
       };
     };

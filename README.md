@@ -6,11 +6,11 @@ Quick summary of my stack:
 
 - **OS:** [NixOS]
 - **Window manager:** [Niri] (Wayland)
-- **Editor:** [Neovim]
-- **Shell:** [ZSH]
+- **Desktop shell** [Noctalia]
+- **Terminal shell:** [ZSH]
 - **Terminal emulator:** [Wezterm]
+- **Editor:** [Neovim]
 - **Web browser:** [Firefox]
-- **Colors:** [Catppuccin]
 
 ## Nix
 
@@ -39,8 +39,8 @@ repository.
 
 [NixOS]: https://www.nixos.org
 [Niri]: https://github.com/YaLTeR/niri
+[Noctalia]: https://docs.noctalia.dev/
 [Neovim]: https://neovim.io/
 [ZSH]: http://zsh.sourceforge.net/
 [Wezterm]: https://wezfurlong.org/wezterm/
 [Firefox]: https://www.mozilla.org/firefox/
-[Catppuccin]: https://github.com/catppuccin/catppuccin

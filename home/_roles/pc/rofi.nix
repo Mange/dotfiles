@@ -1,4 +1,7 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
+let
+  utils = import ../../utils.nix { inherit config pkgs; };
+in
 {
 
   home.packages = with pkgs; [
@@ -6,10 +9,13 @@
     wl-clipboard
   ];
 
+  xdg.configFile."rofi/catpuccin.rasi".source = utils.linkConfig "rofi/catpuccin.rasi";
+
   programs.rofi = {
     enable = true;
     package = pkgs.rofi;
     plugins = [ pkgs.rofi-emoji ];
+    theme = "catpuccin.rasi";
 
     extraConfig = {
       dpi = 1;

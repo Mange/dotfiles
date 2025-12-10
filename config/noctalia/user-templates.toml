@@ -1,0 +1,5 @@
+[config]
+
+[templates.shell]
+input_path = "~/.config/noctalia/templates/shell"
+output_path = "~/.config/shells/theme"

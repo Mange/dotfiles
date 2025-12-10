@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 {
   environment.systemPackages = with pkgs; [
     # Should be able to run home-manager after initial install.
@@ -14,6 +14,9 @@
 
     # Better X11 support in Niri
     xwayland-satellite
+
+    # Noctalia shell
+    inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
 
     # Niri uses XDG Portal from Gnome, which requires Nautilus to be installed
     # in order to have working file chooser dialogs.
@@ -62,9 +65,8 @@
     tumbler.enable = true; # Thumbnailing service
   };
 
-  # GDM and Hyprlock should have access to passwords, etc.
+  # GDM should unlock keyring, etc.
   security.pam.services.gdm.enableGnomeKeyring = true;
-  security.pam.services.hyprlock = { };
 
   # Include ZSH resources in final linked environment.
   environment.pathsToLink = [

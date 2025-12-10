@@ -12,7 +12,6 @@
     mediainfo
     yt-dlp
 
-    playerctl # MPRIS control
     pulsemixer # TUI volume mixer
     pavucontrol # Volume control
 

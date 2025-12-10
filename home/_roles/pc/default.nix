@@ -10,7 +10,6 @@ in
     ./fonts.nix
     ./git.nix
     ./ghostty.nix
-    ./mako.nix
     ./media.nix
     ./niri.nix
     ./rofi.nix
@@ -26,7 +25,6 @@ in
     ./zathura.nix
     ./zsh.nix
 
-    ../../_topics/catppuccin
     ../../_topics/kde-connect.nix
     ../../_topics/neovim
     ../../_topics/ruby

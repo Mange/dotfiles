@@ -7,22 +7,12 @@ local function font(name, params)
   )
 end
 
-local color_scheme = "Catppuccin Mocha"
-local env_scheme = "dark"
-
--- local appearance = wezterm.gui.get_appearance()
--- if appearance:find "Light" then
---   color_scheme = "Catppuccin Latte"
---   env_scheme = "light"
--- end
+local color_scheme = "Noctalia"
 
 return {
   term = "wezterm", -- Requires terminfo to be installed
   check_for_updates = false,
   color_scheme = color_scheme,
-  set_environment_variables = {
-    THEME = env_scheme,
-  },
   font = font "JetBrains Mono",
   font_size = 10.0,
   hide_tab_bar_if_only_one_tab = true,

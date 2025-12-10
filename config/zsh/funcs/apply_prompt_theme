@@ -6,8 +6,8 @@
 # different sections.
 function apply_prompt_theme {
   # Set up colors
-  # shellcheck source=/home/mange/.config/shells/catppuccin
-  source "${XDG_CONFIG_HOME:-$HOME/.config}/shells/catppuccin"
+  # shellcheck source=/home/mange/.config/shells/theme
+  source "${XDG_CONFIG_HOME:-$HOME/.config}/shells/theme"
 
   is_inside_container="${HOME}/.local/bin/is-inside-container"
 
@@ -131,16 +131,16 @@ function module_color {
     echo default
     ;;
   1)
-    echo $theme_surface0
+    echo $theme_surface_container
     ;;
   2)
-    echo $theme_surface1
+    echo $theme_surface_container_high
     ;;
   3)
-    echo $theme_surface2
+    echo $theme_surface_container_highest
     ;;
   *)
-    echo $section
+    echo default
     ;;
   esac
 }

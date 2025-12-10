@@ -18,12 +18,13 @@ in
     dotacat
     figlet
     ponysay
-
     nixos-stable.charasay
-  ];
 
-  # Music visualizer
-  programs.cava.enable = true;
+    # Music visualizer
+    # Not enabled through home-manager so config file is not managed, so
+    # Noctalia can overwrite it.
+    cava
+  ];
 
   home.file = {
     ".local/bin/banner" =

@@ -150,8 +150,7 @@ hotkey-overlay {
 // Daemons and services
 spawn-at-startup "wl-paste" "--watch" "cliphist" "store"
 spawn-at-startup "udiskie" "--no-automount" "--smart-tray"
-spawn-at-startup "swww-daemon"
-spawn-at-startup "waybar"
+spawn-at-startup "noctalia-shell"
 
 // Apps
 spawn-at-startup "firefox"
@@ -304,6 +303,12 @@ layer-rule {
   block-out-from "screencast"
 }
 
+// Set the overview wallpaper on the backdrop.
+layer-rule {
+  match namespace="^noctalia-overview*"
+  place-within-backdrop true
+}
+
 binds {
     //
     // Applications and WM
@@ -322,24 +327,28 @@ binds {
     // which ensures niri always processes them, even when an inhibitor is active.
     Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
 
-    Mod+F1 hotkey-overlay-title="Exit/Logout" { spawn "wlogout"; }
+    Mod+Comma hotkey-overlay-title="Settings" { spawn "noctalia-shell" "ipc" "call" "settings" "toggle"; }
+
+    Mod+F1 hotkey-overlay-title="Exit/Logout" { spawn "noctalia-shell" "ipc" "call" "sessionMenu" "toggle"; }
     Mod+F2 hotkey-overlay-title="Bluetooth devices" { spawn "bt-select"; }
     Mod+F3 hotkey-overlay-title="Show this overlay" { show-hotkey-overlay; }
     Mod+F4 hotkey-overlay-title="Emergency terminal" { spawn "foot"; } // Emergency terminal if Wezterm doesn't work.
-    Mod+F5 hotkey-overlay-title="Cycle wallpaper" { spawn "wallpaper-cycle"; }
+    Mod+F5 hotkey-overlay-title="Random wallpaper" { spawn "noctalia-shell" "ipc" "call" "wallpaper" "random"; }
+    Mod+Shift+F5 hotkey-overlay-title="Wallpaper selector" { spawn "noctalia-shell" "ipc" "call" "wallpaper" "toggle"; }
 
     // Powers off the monitors. To turn them back on, do any input like
     // moving the mouse or pressing any other key.
     Mod+F9 hotkey-overlay-title="Power off monitors" { power-off-monitors; }
 
-    // Hyprlock crashes multiple times per day. Thankfully, I can recover by
-    // spawning it again.
-    Mod+Shift+Escape hotkey-overlay-title="Lock screen" allow-when-locked=true { spawn "sh" "-c" "pidof hyprlock || hyprlock --immediate --no-fade-in"; }
+    Mod+Shift+Escape hotkey-overlay-title="Lock screen" { spawn "noctalia-shell" "ipc" "call" "lockScreen" "lock"; }
 
-    Mod+V hotkey-overlay-title="Clipboard history" { spawn "sh" "-c" "cliphist list | rofi -dmenu | cliphist decode | wl-copy"; }
+    Mod+V hotkey-overlay-title="Clipboard history" { spawn "noctalia-shell" "ipc" "call" "launcher" "clipboard"; }
 
-    Mod+D hotkey-overlay-title="App launcher" { spawn "rofi" "-show" "drun" "-modi" "drun,run"; }
-    Mod+E hotkey-overlay-title="Emoji picker" { spawn "rofi" "-modi" "emoji" "-show" "emoji" "-kb-secondary-copy" "" "-kb-custom-1" "Ctrl+c"; }
+    Mod+D hotkey-overlay-title="App launcher" { spawn "noctalia-shell" "ipc" "call" "launcher" "toggle"; }
+    Mod+Space hotkey-overlay-title="App launcher" { spawn "noctalia-shell" "ipc" "call" "launcher" "toggle"; }
+    Mod+Shift+D hotkey-overlay-title="App launcher (old)" { spawn "rofi" "-show" "drun" "-modi" "drun,run"; }
+    Mod+E hotkey-overlay-title="Emoji picker" { spawn "noctalia-shell" "ipc" "call" "launcher" "emoji"; }
+    Mod+Shift+E hotkey-overlay-title="Emoji picker (old)" { spawn "rofi" "-modi" "emoji" "-show" "emoji" "-kb-secondary-copy" "" "-kb-custom-1" "Ctrl+c"; }
     Mod+Tab hotkey-overlay-title="Window picker" { spawn "rofi" "-modi" "window" "-show" "window"; }
 
     Mod+Return hotkey-overlay-title="Terminal" { spawn "samedirwezterm" "start" "--always-new-process"; }
@@ -367,31 +376,37 @@ binds {
     Mod+Shift+Semicolon hotkey-overlay-title="Neovide (pick project)" { spawn "open-project" "neovide"; }
 
     // Notifications
-    Mod+I hotkey-overlay-title="Notification dismiss" { spawn "makoctl" "dismiss"; }
-    Mod+Alt+I hotkey-overlay-title="Notification restore" { spawn "makoctl" "restore"; }
-    Mod+Shift+I hotkey-overlay-title="Notification invoke" { spawn "makoctl" "invoke"; }
-    Mod+Ctrl+Shift+I hotkey-overlay-title="Notification menu" { spawn "makoctl" "menu" "rofi" "-dmenu"; }
+    Mod+I hotkey-overlay-title="Notification dismiss" { spawn "noctalia-shell" "ipc" "call" "notifications" "dismissOldest"; }
+    Mod+Ctrl+I hotkey-overlay-title="Notification dismiss all" { spawn "noctalia-shell" "ipc" "call" "notifications" "dismissAll"; }
+    Mod+Shift+I hotkey-overlay-title="Notification history" { spawn "noctalia-shell" "ipc" "call" "notifications" "toggleHistory"; }
 
     // Screenshotting
     Mod+S            hotkey-overlay-title="Screenshot" { spawn "niriscreenshot" "select"; }
     Mod+Shift+S      hotkey-overlay-title="Screenshot (edit)" { spawn "niriscreenshot" "--edit" "select"; }
     Mod+Ctrl+S       hotkey-overlay-title="Screenshot (delay)" { spawn "niriscreenshot" "--delay" "2" "select"; }
     Mod+Ctrl+Shift+S hotkey-overlay-title="Screenshot (delay, edit)" { spawn "niriscreenshot" "--edit" "--delay" "2" "select"; }
-    Mod+F12          hotkey-overlay-title="Screen recording (toggle)" { spawn "wfrecord"; }
+    Mod+F12          hotkey-overlay-title="Screen recording" { spawn "noctalia-shell" "ipc" "call" "screenRecorder" "toggle"; }
+    Mod+Shift+F12    hotkey-overlay-title="Screen recording (toggle area)" { spawn "wfrecord"; }
 
     // Media controls (all allowed when screen is locked)
-    XF86AudioRaiseVolume hotkey-overlay-title=null allow-when-locked=true { spawn "volume-change" "--toast" "+5"; }
-    XF86AudioLowerVolume hotkey-overlay-title=null allow-when-locked=true { spawn "volume-change" "--toast" "-5"; }
-    XF86AudioMute        hotkey-overlay-title=null allow-when-locked=true { spawn "pulsemixer" "--toggle-mute"; }
-    XF86AudioMicMute     hotkey-overlay-title=null allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
-    XF86AudioPlay        hotkey-overlay-title=null allow-when-locked=true { spawn "playerctl" "play-pause"; }
-    XF86AudioStop        hotkey-overlay-title=null allow-when-locked=true { spawn "playerctl" "stop"; }
-    XF86AudioNext        hotkey-overlay-title=null allow-when-locked=true { spawn "playerctl" "next"; }
-    Mod+Page_Down        hotkey-overlay-title=null allow-when-locked=true { spawn "playerctl" "next"; }
-    XF86AudioPrev        hotkey-overlay-title=null allow-when-locked=true { spawn "playerctl" "previous"; }
-    Mod+Page_Up          hotkey-overlay-title=null allow-when-locked=true { spawn "playerctl" "previous"; }
-    XF86MonBrightnessUp   hotkey-overlay-title=null { spawn "brightnessctl" "set" "+5%"; }
-    XF86MonBrightnessDown hotkey-overlay-title=null { spawn "brightnessctl" "set" "5%-"; }
+    XF86AudioRaiseVolume hotkey-overlay-title=null allow-when-locked=true { spawn "noctalia-shell" "ipc" "call" "volume" "increase"; }
+    XF86AudioLowerVolume hotkey-overlay-title=null allow-when-locked=true { spawn "noctalia-shell" "ipc" "call" "volume" "decrease"; }
+    XF86AudioMute        hotkey-overlay-title=null allow-when-locked=true { spawn "noctalia-shell" "ipc" "call" "volume" "muteOutput"; }
+
+    Mod+XF86AudioRaiseVolume hotkey-overlay-title=null allow-when-locked=true { spawn "noctalia-shell" "ipc" "call" "volume" "increaseInput"; }
+    Mod+XF86AudioLowerVolume hotkey-overlay-title=null allow-when-locked=true { spawn "noctalia-shell" "ipc" "call" "volume" "decreaseInput"; }
+    Mod+XF86AudioMute        hotkey-overlay-title=null allow-when-locked=true { spawn "noctalia-shell" "ipc" "call" "volume" "muteInput"; }
+    XF86AudioMicMute         hotkey-overlay-title=null allow-when-locked=true { spawn "noctalia-shell" "ipc" "call" "volume" "muteInput"; }
+
+    XF86AudioPlay        hotkey-overlay-title=null allow-when-locked=true { spawn "noctalia-shell" "ipc" "call" "media" "playPause"; }
+    XF86AudioStop        hotkey-overlay-title=null allow-when-locked=true { spawn "noctalia-shell" "ipc" "call" "media" "pause"; }
+    XF86AudioNext        hotkey-overlay-title=null allow-when-locked=true { spawn "noctalia-shell" "ipc" "call" "media" "next"; }
+    Mod+Page_Down        hotkey-overlay-title=null allow-when-locked=true { spawn "noctalia-shell" "ipc" "call" "media" "next"; }
+    XF86AudioPrev        hotkey-overlay-title=null allow-when-locked=true { spawn "noctalia-shell" "ipc" "call" "media" "pause"; }
+    Mod+Page_Up          hotkey-overlay-title=null allow-when-locked=true { spawn "noctalia-shell" "ipc" "call" "media" "pause"; }
+
+    XF86MonBrightnessUp   hotkey-overlay-title=null { spawn "noctalia-shell" "ipc" "call" "brightness" "increase"; }
+    XF86MonBrightnessDown hotkey-overlay-title=null { spawn "noctalia-shell" "ipc" "call" "brightness" "decrease"; }
 
     // Window bindings
     // TODO: Decide between the different fullscreen behaviors and what to keep.
@@ -510,3 +525,10 @@ binds {
     Mod+WheelScrollRight { focus-column-right; }
     Mod+WheelScrollLeft  { focus-column-left; }
 }
+
+debug {
+  // Allows notification actions and window activation from Noctalia.
+  honor-xdg-activation-with-invalid-serial
+}
+
+include "./noctalia.kdl"

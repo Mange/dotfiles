@@ -1,8 +1,9 @@
-{ pkgs, ... }: {
-  xdg.configFile."wezterm" = {
-    source = ./wezterm;
-    recursive = true;
-  };
+{ pkgs, config, ... }:
+let
+  utils = import ../../utils.nix { inherit config pkgs; };
+in
+{
+  xdg.configFile."wezterm".source = utils.linkConfig "wezterm";
 
   home.packages = with pkgs; [
     # Wezterm configuration through home-manager is still too limited. Use
