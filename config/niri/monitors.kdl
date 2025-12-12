@@ -1,0 +1,82 @@
+////////////
+// ▄▄▄          ▀      
+// ▀▄  █▀█ █▀▀  █  ▀▀█ 
+// ▄▄█ █▄█ █▄▄  █  ███ 
+//                     
+//
+// 1440                     ┌──────┐ ┐
+//  │┌ ┌─────────┬──────────┤      │ │ 
+//  └┤ │  left   │  center  │ right│ │2560
+//   └ └─────────┴──────────┤      │ │
+//        2560       5120   └──────┘ ┘
+//    
+//  Margins: (2560-1440) = 1120
+//  Margin top: 1120/2 = 560
+//
+output "Philips Consumer Electronics Company PHL 245B1 UK02029011588" {
+  scale 1
+  mode "2560x1440@75"
+  transform "normal"
+  position x=0 y=560
+}
+output "ViewSonic Corporation VX2758-Series VVF190100000" {
+  scale 1
+  mode "2560x1440@144"
+  transform "normal"
+  position x=2560 y=560
+}
+output "Philips Consumer Electronics Company PHL 245B1 UK02029011585" {
+  scale 1
+  mode "2560x1440@75"
+  transform "270"
+  position x=5120 y=0
+
+  layout {
+    default-column-width { proportion 1.0; }
+  }
+}
+
+////////////
+// ▄▄▄          ▄      
+// █▄█ █▀█ █▀▀ ▀█▀ █▀█ 
+// █   █▄█ █    █▄ █▄█ 
+//                     
+output "AU Optronics 0xD291 Unknown" {
+  scale 1
+}
+
+////////////
+// ▄ ▄         █                           
+// █▄█ █▀█ █▀▀ █▄▀ █▀▀ █▀█ ▀▀█ █▀▀ ███ █▀▀ 
+// ███ █▄█ █   █▀▄ ▄▄█ █▄█ ███ █▄▄ █▄▄ ▄▄█ 
+//                     █                   
+// Left:
+// open-on-output "Philips Consumer Electronics Company PHL 245B1 UK02029011588"
+// Middle:
+// open-on-output "ViewSonic Corporation VX2758-Series VVF190100000"
+// Right:
+// open-on-output "Philips Consumer Electronics Company PHL 245B1 UK02029011585"
+workspace "system" {
+  open-on-output "ViewSonic Corporation VX2758-Series VVF190100000"
+}
+workspace "code" {
+  open-on-output "ViewSonic Corporation VX2758-Series VVF190100000"
+}
+workspace "www" {
+  open-on-output "Philips Consumer Electronics Company PHL 245B1 UK02029011588"
+}
+workspace "aside" {
+  open-on-output "Philips Consumer Electronics Company PHL 245B1 UK02029011585"
+}
+workspace "notes" {
+  open-on-output "ViewSonic Corporation VX2758-Series VVF190100000"
+}
+// workspace "" // 6 (Free)
+// workspace "" // 7 (Free)
+// workspace "" // 8 (Free)
+workspace "media" {
+  open-on-output "Philips Consumer Electronics Company PHL 245B1 UK02029011585"
+}
+workspace "chat" {
+  open-on-output "Philips Consumer Electronics Company PHL 245B1 UK02029011585"
+}

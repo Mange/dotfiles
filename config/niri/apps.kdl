@@ -1,0 +1,18 @@
+// Daemons and services
+spawn-at-startup "wl-paste" "--watch" "cliphist" "store"
+spawn-at-startup "udiskie" "--no-automount" "--smart-tray"
+spawn-at-startup "noctalia-shell"
+
+// Apps
+spawn-at-startup "firefox"
+spawn-at-startup "ksnip"
+spawn-at-startup "obsidian"
+spawn-at-startup "sane-break"
+spawn-at-startup "Telegram"
+
+// Spotify requires X11 to be set up, and it therefore needs to wait a bit for
+// xwayland-satellite to finish starting.
+spawn-at-startup "sh" "-c" "sleep 1; niri msg action spawn -- spotify"
+
+// Show my current reminders on login
+spawn-at-startup "startup-reminder"

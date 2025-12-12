@@ -1,0 +1,140 @@
+// ▄                                █          
+// █   ▀▀█ █ █ ███ █▀▀     █▀▀ █ █  █  ███ █▀▀ 
+// █▄▄ ███ █▄█ █▄▄ █       █   █▄█  █▄ █▄▄ ▄▄█ 
+//         ▄▄█                                 
+layer-rule {
+  match namespace="^notifications$"
+
+  block-out-from "screencast"
+}
+
+// Set the overview wallpaper on the backdrop.
+layer-rule {
+  match namespace="^noctalia-overview*"
+  place-within-backdrop true
+}
+
+// ▄ ▄  ▀        █                      █          
+// █▄█  █  █▀█ █▀█ █▀█ █▄█     █▀▀ █ █  █  ███ █▀▀ 
+// ███  █  █ █ █▄█ █▄█ ███     █   █▄█  █▄ █▄▄ ▄▄█ 
+//                                                 
+
+// Global rule
+window-rule {
+  draw-border-with-background false
+  geometry-corner-radius 5
+  clip-to-geometry true
+}
+
+// Mark some apps as floating
+window-rule {
+  match app-id=r#"^org\.ksnip\.ksnip$"#
+  match app-id=r#"^org\.pulseaudio\.pavucontrol$"#
+  match title=r#"^Android Emulator -.*$"#
+  match title=r#"^Sane Break$.*"#
+  match app-id=r#"^thunar$" title=r#"^Förlopp för.*$"#
+  match app-id=r#"^thunar$" title=r#"^File Operation Progress.*$"#
+  match title=r#"^(Öppna|Spara) fil.*$"#
+  open-floating true
+}
+
+window-rule {
+  match title="Tillägg:.*Bitwarden"
+  block-out-from "screencast"
+  open-floating true
+}
+
+window-rule {
+  match app-id=r#"^org\.telegram\.desktop$"#
+  open-on-workspace "chat"
+  block-out-from "screencast"
+}
+
+// Floating windows should be styled differently.
+window-rule {
+  match is-floating=true
+
+  geometry-corner-radius 17
+  clip-to-geometry true
+  shadow {
+    on
+  }
+}
+
+window-rule {
+  match is-window-cast-target=true
+
+  border {
+    active-color "#f38ba8"
+  }
+
+  shadow {
+    on
+    color "#f38ba8"
+    offset x=0 y=0
+    spread 5
+  }
+
+  tab-indicator {
+    // active-color "#f38ba8"
+    inactive-color "#f38ba8"
+  }
+}
+
+window-rule {
+  // Media apps
+  match app-id="Spotify"
+  match app-id="io.github.janbar.noson"
+  open-on-workspace "media"
+  open-maximized true
+}
+
+window-rule {
+  // Chat apps
+  match app-id="org.telegram.desktop"
+  match app-id="discord"
+  match app-id="Slack"
+  open-on-workspace "chat"
+  open-maximized true
+}
+
+window-rule {
+  // Browser apps
+  match at-startup=true app-id="firefox"
+  open-on-workspace "www"
+}
+
+window-rule {
+  // Notes apps
+  match app-id="obsidian"
+  open-on-workspace "notes"
+}
+
+// Panel popups
+window-rule {
+  match app-id=r#"^org\.pulseaudio\.pavucontrol$"#
+
+  max-width 700
+  max-height 1000
+  default-floating-position x=10 y=10 relative-to="top-right"
+}
+
+// Dropdowns
+window-rule {
+  match app-id="^dropdown_"
+  match app-id="com.mitchellh.ghostty.dropdown"
+  match app-id="com.mitchellh.ghostty.dropdown-calc"
+
+  open-floating true
+}
+
+window-rule {
+    match app-id=r#"^org\.wezfurlong\.wezterm$"#
+    default-column-width {}
+}
+
+window-rule {
+    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+    open-floating true
+}
+

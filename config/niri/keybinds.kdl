@@ -1,0 +1,220 @@
+hotkey-overlay {
+  skip-at-startup
+}
+
+binds {
+    //
+    // Applications and WM
+    //
+
+    // The quit action will show a confirmation dialog to avoid accidental exits.
+    Ctrl+Alt+Delete { quit; }
+
+    // Applications such as remote-desktop clients and software KVM switches may
+    // request that niri stops processing the keyboard shortcuts defined here
+    // so they may, for example, forward the key presses as-is to a remote machine.
+    // It's a good idea to bind an escape hatch to toggle the inhibitor,
+    // so a buggy application can't hold your session hostage.
+    //
+    // The allow-inhibiting=false property can be applied to other binds as well,
+    // which ensures niri always processes them, even when an inhibitor is active.
+    Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
+
+    Mod+Comma hotkey-overlay-title="Settings" { spawn "noctalia-shell" "ipc" "call" "settings" "toggle"; }
+
+    Mod+F1 hotkey-overlay-title="Exit/Logout" { spawn "noctalia-shell" "ipc" "call" "sessionMenu" "toggle"; }
+    Mod+F2 hotkey-overlay-title="Bluetooth devices" { spawn "bt-select"; }
+    Mod+F3 hotkey-overlay-title="Show this overlay" { show-hotkey-overlay; }
+    Mod+F4 hotkey-overlay-title="Emergency terminal" { spawn "foot"; } // Emergency terminal if Wezterm doesn't work.
+    Mod+F5 hotkey-overlay-title="Random wallpaper" { spawn "noctalia-shell" "ipc" "call" "wallpaper" "random"; }
+    Mod+Shift+F5 hotkey-overlay-title="Wallpaper selector" { spawn "noctalia-shell" "ipc" "call" "wallpaper" "toggle"; }
+
+    // Powers off the monitors. To turn them back on, do any input like
+    // moving the mouse or pressing any other key.
+    Mod+F9 hotkey-overlay-title="Power off monitors" { power-off-monitors; }
+
+    Mod+Shift+Escape hotkey-overlay-title="Lock screen" { spawn "noctalia-shell" "ipc" "call" "lockScreen" "lock"; }
+
+    Mod+V hotkey-overlay-title="Clipboard history" { spawn "noctalia-shell" "ipc" "call" "launcher" "clipboard"; }
+
+    Mod+D hotkey-overlay-title="App launcher" { spawn "noctalia-shell" "ipc" "call" "launcher" "toggle"; }
+    Mod+Space hotkey-overlay-title="App launcher" { spawn "noctalia-shell" "ipc" "call" "launcher" "toggle"; }
+    Mod+Shift+D hotkey-overlay-title="App launcher (old)" { spawn "rofi" "-show" "drun" "-modi" "drun,run"; }
+    Mod+E hotkey-overlay-title="Emoji picker" { spawn "noctalia-shell" "ipc" "call" "launcher" "emoji"; }
+    Mod+Shift+E hotkey-overlay-title="Emoji picker (old)" { spawn "rofi" "-modi" "emoji" "-show" "emoji" "-kb-secondary-copy" "" "-kb-custom-1" "Ctrl+c"; }
+    Mod+Tab hotkey-overlay-title="Window picker" { spawn "rofi" "-modi" "window" "-show" "window"; }
+
+    Mod+Return hotkey-overlay-title="Terminal" { spawn "samedirwezterm" "start" "--always-new-process"; }
+    Mod+Shift+Return hotkey-overlay-title="Terminal (home)" { spawn "wezterm" "start" "--always-new-process"; }
+    Mod+Ctrl+Return hotkey-overlay-title="Terminal (🎮)" { spawn "ghostty" "--custom-shader=/home/mange/.config/ghostty/shaders/in-game-crt.glsl"; }
+
+    // TODO: Add back "toggle" when I can get that to work.
+    Mod+G hotkey-overlay-title="Terminal (dropdown)" {
+      spawn "nirijump" "--class" "dropdown_terminal" "wm-start samedirwezterm start --class dropdown_terminal" "niri msg action switch-focus-between-floating-and-tiling";
+    }
+    Mod+Shift+G hotkey-overlay-title="Calculator (dropdown)" {
+      spawn "nirijump" "--class" "dropdown_calculator" "wm-start wezterm start --class dropdown_calculator -- qalc" "niri msg action switch-focus-between-floating-and-tiling";
+    }
+
+    Mod+P { spawn "open-project"; }
+    Mod+Shift+P { spawn "open-wiki"; }
+
+    Mod+R { spawn "startup-reminder"; }
+    Mod+Shift+R { spawn "edit-reminder"; }
+
+    Mod+Slash hotkey-overlay-title="Files (GUI)" { spawn "samedir" "nemo" "."; }
+    Mod+Shift+Slash hotkey-overlay-title="Files (GUI, Home)" { spawn "nemo"; }
+
+    Mod+Semicolon hotkey-overlay-title="Neovide" { spawn "samedir" "neovide"; }
+    Mod+Shift+Semicolon hotkey-overlay-title="Neovide (pick project)" { spawn "open-project" "neovide"; }
+
+    // Notifications
+    Mod+I hotkey-overlay-title="Notification dismiss" { spawn "noctalia-shell" "ipc" "call" "notifications" "dismissOldest"; }
+    Mod+Ctrl+I hotkey-overlay-title="Notification dismiss all" { spawn "noctalia-shell" "ipc" "call" "notifications" "dismissAll"; }
+    Mod+Shift+I hotkey-overlay-title="Notification history" { spawn "noctalia-shell" "ipc" "call" "notifications" "toggleHistory"; }
+
+    // Screenshotting
+    Mod+S            hotkey-overlay-title="Screenshot" { spawn "niriscreenshot" "select"; }
+    Mod+Shift+S      hotkey-overlay-title="Screenshot (edit)" { spawn "niriscreenshot" "--edit" "select"; }
+    Mod+Ctrl+S       hotkey-overlay-title="Screenshot (delay)" { spawn "niriscreenshot" "--delay" "2" "select"; }
+    Mod+Ctrl+Shift+S hotkey-overlay-title="Screenshot (delay, edit)" { spawn "niriscreenshot" "--edit" "--delay" "2" "select"; }
+    Mod+F12          hotkey-overlay-title="Screen recording" { spawn "noctalia-shell" "ipc" "call" "screenRecorder" "toggle"; }
+    Mod+Shift+F12    hotkey-overlay-title="Screen recording (toggle area)" { spawn "wfrecord"; }
+
+    // Media controls (all allowed when screen is locked)
+    XF86AudioRaiseVolume hotkey-overlay-title=null allow-when-locked=true { spawn "noctalia-shell" "ipc" "call" "volume" "increase"; }
+    XF86AudioLowerVolume hotkey-overlay-title=null allow-when-locked=true { spawn "noctalia-shell" "ipc" "call" "volume" "decrease"; }
+    XF86AudioMute        hotkey-overlay-title=null allow-when-locked=true { spawn "noctalia-shell" "ipc" "call" "volume" "muteOutput"; }
+
+    Mod+XF86AudioRaiseVolume hotkey-overlay-title=null allow-when-locked=true { spawn "noctalia-shell" "ipc" "call" "volume" "increaseInput"; }
+    Mod+XF86AudioLowerVolume hotkey-overlay-title=null allow-when-locked=true { spawn "noctalia-shell" "ipc" "call" "volume" "decreaseInput"; }
+    Mod+XF86AudioMute        hotkey-overlay-title=null allow-when-locked=true { spawn "noctalia-shell" "ipc" "call" "volume" "muteInput"; }
+    XF86AudioMicMute         hotkey-overlay-title=null allow-when-locked=true { spawn "noctalia-shell" "ipc" "call" "volume" "muteInput"; }
+
+    XF86AudioPlay        hotkey-overlay-title=null allow-when-locked=true { spawn "noctalia-shell" "ipc" "call" "media" "playPause"; }
+    XF86AudioStop        hotkey-overlay-title=null allow-when-locked=true { spawn "noctalia-shell" "ipc" "call" "media" "pause"; }
+    XF86AudioNext        hotkey-overlay-title=null allow-when-locked=true { spawn "noctalia-shell" "ipc" "call" "media" "next"; }
+    Mod+Page_Down        hotkey-overlay-title=null allow-when-locked=true { spawn "noctalia-shell" "ipc" "call" "media" "next"; }
+    XF86AudioPrev        hotkey-overlay-title=null allow-when-locked=true { spawn "noctalia-shell" "ipc" "call" "media" "pause"; }
+    Mod+Page_Up          hotkey-overlay-title=null allow-when-locked=true { spawn "noctalia-shell" "ipc" "call" "media" "pause"; }
+
+    XF86MonBrightnessUp   hotkey-overlay-title=null { spawn "noctalia-shell" "ipc" "call" "brightness" "increase"; }
+    XF86MonBrightnessDown hotkey-overlay-title=null { spawn "noctalia-shell" "ipc" "call" "brightness" "decrease"; }
+
+    // Window bindings
+    // TODO: Decide between the different fullscreen behaviors and what to keep.
+    Mod+Shift+Q { close-window; }
+    Mod+F { maximize-column; }
+    Mod+Ctrl+F { fullscreen-window; }
+
+    Mod+Shift+F       { toggle-window-floating; }
+    // TODO: Decide on a binding for this!
+    // Mod+Shift+V { switch-focus-between-floating-and-tiling; }
+
+    // Monitor bindings
+    Mod+O { move-window-to-monitor-next; }
+    Mod+Shift+O { move-workspace-to-monitor-next; }
+
+    // Group bindings
+    Mod+BracketLeft  { consume-or-expel-window-left; }
+    Mod+Shift+BracketLeft  { consume-window-into-column; } // Consume one window from the right to the bottom of the focused column.
+    Mod+BracketRight { consume-or-expel-window-right; }
+    Mod+Shift+Mod+BracketRight { expel-window-from-column; } // Expel the bottom window from the focused column to the right.
+    Mod+Q { toggle-column-tabbed-display; }
+
+    // Focus bindings
+    Mod+H     { focus-column-or-monitor-left; }
+    Mod+J     { focus-window-or-workspace-down; }
+    Mod+K     { focus-window-or-workspace-up; }
+    Mod+L     { focus-column-or-monitor-right; }
+    Mod+U     { switch-focus-between-floating-and-tiling; }
+
+    // Move window with hjkl
+    Mod+Shift+H     { move-column-left; }
+    Mod+Shift+J     { move-window-down-or-to-workspace-down; }
+    Mod+Shift+K     { move-window-up-or-to-workspace-up; }
+    Mod+Shift+L     { move-column-right; }
+
+    // Switch workspaces
+    // You can refer to workspaces by index. However, keep in mind that
+    // niri is a dynamic workspace system, so these commands are kind of
+    // "best effort". Trying to refer to a workspace index bigger than
+    // the current workspace count will instead refer to the bottommost
+    // (empty) workspace.
+    //
+    // For example, with 2 workspaces + 1 empty, indices 3, 4, 5 and so on
+    // will all refer to the 3rd workspace.
+    Mod+1 { focus-workspace "system"; }
+    Mod+2 { focus-workspace "code"; }
+    Mod+3 { focus-workspace "www"; }
+    Mod+4 { focus-workspace "aside"; }
+    Mod+5 { focus-workspace "notes"; }
+    Mod+6 { focus-workspace 6; }
+    Mod+7 { focus-workspace 7; }
+    Mod+8 { focus-workspace 8; }
+    Mod+9 { focus-workspace "media"; }
+    Mod+0 { focus-workspace "chat"; }
+    // Switches focus between the current and the previous workspace.
+    // Mod+Tab { focus-workspace-previous; }
+
+    // Move window to workspace
+    Mod+Shift+1 { move-column-to-workspace "system"; }
+    Mod+Shift+2 { move-column-to-workspace "code"; }
+    Mod+Shift+3 { move-column-to-workspace "www"; }
+    Mod+Shift+4 { move-column-to-workspace "aside"; }
+    Mod+Shift+5 { move-column-to-workspace "notes"; }
+    Mod+Shift+6 { move-column-to-workspace 6; }
+    Mod+Shift+7 { move-column-to-workspace 7; }
+    Mod+Shift+8 { move-column-to-workspace 8; }
+    Mod+Shift+9 { move-column-to-workspace "media"; }
+    Mod+Shift+0 { move-column-to-workspace "chat"; }
+
+    // Resize window
+    Mod+Minus { set-column-width "-10%"; }
+    Mod+Equal { set-column-width "+10%"; }
+    Mod+Shift+Minus { set-window-height "-10%"; }
+    Mod+Shift+Equal { set-window-height "+10%"; }
+
+    Mod+W { switch-preset-column-width; }
+    Mod+Shift+W { switch-preset-window-height; }
+    Mod+Ctrl+W { reset-window-height; }
+
+    Mod+Backspace { expand-column-to-available-width; }
+    Mod+C { center-column; }
+
+    Mod+Down  { focus-workspace-down; }
+    Mod+Up    { focus-workspace-up; }
+    Mod+Left  { focus-monitor-left; }
+    Mod+B     { focus-monitor-left; }
+    Mod+Right { focus-monitor-right; }
+    Mod+N     { focus-monitor-right; }
+
+    Mod+Shift+Down { move-column-to-workspace-down; }
+    Mod+Shift+Up   { move-column-to-workspace-up; }
+    Mod+Shift+Left { move-column-to-monitor-left; }
+    Mod+Shift+B { move-column-to-monitor-left; }
+    Mod+Shift+Right { move-column-to-monitor-right; }
+    Mod+Shift+N { move-column-to-monitor-right; }
+
+    Mod+Ctrl+Down  { move-workspace-down; }
+    Mod+Ctrl+J  { move-workspace-down; }
+    Mod+Ctrl+Up    { move-workspace-up; }
+    Mod+Ctrl+K    { move-workspace-up; }
+    Mod+Ctrl+H  { move-workspace-to-monitor-left; }
+    Mod+Ctrl+B  { move-workspace-to-monitor-left; }
+    Mod+Ctrl+Left  { move-workspace-to-monitor-left; }
+    Mod+Ctrl+L { move-workspace-to-monitor-right; }
+    Mod+Ctrl+N { move-workspace-to-monitor-right; }
+    Mod+Ctrl+Right { move-workspace-to-monitor-right; }
+
+    // You can bind mouse wheel scroll ticks using the following syntax.
+    // These binds will change direction based on the natural-scroll setting.
+    //
+    // To avoid scrolling through workspaces really fast, you can use
+    // the cooldown-ms property. The bind will be rate-limited to this value.
+    // You can set a cooldown on any bind, but it's most useful for the wheel.
+    Mod+WheelScrollDown cooldown-ms=150 { focus-workspace-down; }
+    Mod+WheelScrollUp   cooldown-ms=150 { focus-workspace-up; }
+    Mod+WheelScrollRight { focus-column-right; }
+    Mod+WheelScrollLeft  { focus-column-left; }
+}

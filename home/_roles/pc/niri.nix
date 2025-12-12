@@ -9,7 +9,7 @@ let
   brightnessctl = "${pkgs.brightnessctl}/bin/brightnessctl";
 in
 {
-  xdg.configFile."niri/config.kdl".source = utils.linkConfig "niri/config.kdl";
+  xdg.configFile."niri".source = utils.linkConfig "niri";
 
   services.hypridle = {
     enable = true;
