@@ -1,10 +1,15 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+let
+  soundTheme = "/run/current-system/sw/share/sounds/freedesktop/stereo";
+  playSound = name: ''exec mpv "${soundTheme}/${name}.oga"'';
+in
+{
   home.packages = with pkgs; [
     libnotify
     mako
   ];
 
-  xdg.configFile."mako/config".text = /*ini*/ ''
+  xdg.configFile."mako/config".text = /* ini */ ''
     layer=overlay
     max-history=10
     # Oldest on top
@@ -35,12 +40,12 @@
 
     # Urgent notifications get a sound effect and stay
     [urgency=high]
-    on-notify=exec mpv /usr/share/sounds/freedesktop/stereo/message.oga
+    on-notify=${playSound "message"}
     default-timeout=0
 
     # Critical notifications get a sound effect and stay
     [urgency=critical]
-    on-notify=exec mpv /usr/share/sounds/freedesktop/stereo/bell.oga
+    on-notify=${playSound "bell"}
     default-timeout=0
     border-color=#eba0ac
     anchor=center
@@ -55,11 +60,11 @@
     [app-name=Firefox body~="\d\d:\d\d – \d\d:\d\d"]
     default-timeout=0
     border-color=#fab387
-    on-notify=exec mpv /usr/share/sounds/freedesktop/stereo/bell.oga
+    on-notify=${playSound "bell"}
     [app-name=Brave body~="^calendar.google.com"]
     default-timeout=0
     border-color=#fab387
-    on-notify=exec mpv /usr/share/sounds/freedesktop/stereo/bell.oga
+    on-notify=${playSound "bell"}
 
     # Spotify notifications should disappear quickly
     [app-name=Spotify]
@@ -80,13 +85,13 @@
     progress-color=source #b4befeCC
     border-color=#b4befeCC
     [category=x-mange.toast summary~=Volume:]
-    on-notify=exec mpv /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga
+    on-notify=${playSound "audio-volume-change"}
 
     # Do-not-Disturb mode
     [mode=dnd]
     invisible=1
     [mode=dnd urgency=critical]
-    on-notify=exec mpv /usr/share/sounds/freedesktop/stereo/bell.oga
+    on-notify=${playSound "bell"}
     anchor=top-right
   '';
 }

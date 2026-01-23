@@ -7,4 +7,7 @@ _: {
     alsa.support32Bit = true;
     pulse.enable = true;
   };
+
+  # And enable sound themes.
+  xdg.sounds.enable = true;
 }
