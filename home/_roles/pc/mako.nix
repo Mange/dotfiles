@@ -26,7 +26,7 @@ in
     padding=10,15
     default-timeout=10000
 
-    format=<span font="14">%s</span>\n%b
+    format=<span font="14"><b>▸ %s:</b></span>\n%b
 
     ### Catppuccin mocha
     # …but I want transparent background
@@ -70,7 +70,7 @@ in
     [app-name=Spotify]
     default-timeout=2000
     anchor=top-left
-    format=<b>%s</b>\n%b
+    format=%b
 
     # Some persistent notifications from Android can be annoying to see all the
     # time.
