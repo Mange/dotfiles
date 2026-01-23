@@ -18,5 +18,7 @@
     wineWowPackages.stable
     winetricks
     lutris
+
+    prismlauncher
   ];
 }
