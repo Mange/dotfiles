@@ -69,9 +69,9 @@ binds {
     Mod+Shift+Semicolon hotkey-overlay-title="Neovide (pick project)" { spawn "open-project" "neovide"; }
 
     // Notifications
-    Mod+I hotkey-overlay-title="Notification dismiss" { spawn "noctalia-shell" "ipc" "call" "notifications" "dismissOldest"; }
-    Mod+Ctrl+I hotkey-overlay-title="Notification dismiss all" { spawn "noctalia-shell" "ipc" "call" "notifications" "dismissAll"; }
-    Mod+Shift+I hotkey-overlay-title="Notification history" { spawn "noctalia-shell" "ipc" "call" "notifications" "toggleHistory"; }
+    Mod+I hotkey-overlay-title="Notification dismiss" { spawn "makoctl" "dismiss"; }
+    Mod+Shift+I hotkey-overlay-title="Notification restore" { spawn "makoctl" "restore"; }
+    Mod+Ctrl+I hotkey-overlay-title="Notification menu" { spawn "makoctl" "menu" "--" "rofi" "-dmenu" "-p" "Select action: "; }
 
     // Screenshotting
     Mod+S            hotkey-overlay-title="Screenshot" { spawn "niriscreenshot" "select"; }

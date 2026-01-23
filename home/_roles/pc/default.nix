@@ -10,6 +10,7 @@ in
     ./fonts.nix
     ./git.nix
     ./ghostty.nix
+    ./mako.nix
     ./media.nix
     ./niri.nix
     ./rofi.nix
