@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   programs.firefox.enable = true;
 
   programs.jq = {
@@ -21,9 +22,11 @@
     nodejs
     pastel
     pgcli
+    surrealist
+    surrealdb
   ];
 
-  xdg.configFile."pgcli/config".text = /*ini*/ ''
+  xdg.configFile."pgcli/config".text = /* ini */ ''
     [main]
     # Only execute query on Return when it ends with a semicolon
     multi_line = True
