@@ -149,5 +149,13 @@ return {
       key = "Escape",
       action = wezterm.action { SendString = "~" },
     },
+    -- Support Shift+Enter in Claude code.
+    {
+      mods = "SHIFT",
+      key = "Enter",
+      action = wezterm.action {
+        SendString = "\x1b\r",
+      },
+    },
   },
 }

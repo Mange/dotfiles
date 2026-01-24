@@ -19,6 +19,8 @@
     ../_topics/gamedev.nix
     ../_topics/vm-host.nix
     ../_topics/work/instabee.nix
+
+    ../_topics/clanker.nix
   ];
 
   home.packages = with pkgs; [
