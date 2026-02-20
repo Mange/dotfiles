@@ -15,7 +15,7 @@
 
   environment.systemPackages = with pkgs; [
     wine
-    wineWowPackages.stable
+    wineWow64Packages.stable
     winetricks
     lutris
 

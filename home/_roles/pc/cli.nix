@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   programs = {
     bat = {
       enable = true;
@@ -27,8 +28,9 @@
       git = true;
       extraOptions = [
         "--group-directories-first"
-        "--color-scale" "all"
-        "--hyperlink" 
+        "--color-scale"
+        "all"
+        "--hyperlink"
       ];
     };
 
@@ -43,6 +45,7 @@
 
     yazi = {
       enable = true;
+      shellWrapperName = "yy";
       settings = {
         manager = {
           sort_dir_first = true;

@@ -1,6 +1,14 @@
-{ pkgs, config, lib, ... }: let
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
+let
   utils = import ../../utils.nix { inherit config pkgs; };
-in {
+in
+{
+  programs.zsh.dotDir = "${config.xdg.configHome}/zsh";
   xdg.configFile."zsh".source = utils.linkConfig "zsh";
 
   programs = {
@@ -15,7 +23,7 @@ in {
     zsh = {
       enable = true;
       defaultKeymap = "viins";
-      history = { 
+      history = {
         path = "${config.xdg.dataHome}/zsh/history";
         append = true;
         expireDuplicatesFirst = true;
@@ -33,8 +41,8 @@ in {
       };
       historySubstringSearch = {
         enable = true;
-        searchUpKey = ["^N"];
-        searchDownKey = ["^P"];
+        searchUpKey = [ "^N" ];
+        searchDownKey = [ "^P" ];
       };
       plugins = [
         {

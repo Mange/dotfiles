@@ -78,7 +78,7 @@ in
     sane-break # Work breaks
 
     # Compatibility
-    xorg.xprop.out # For xorg/xwayland-satellite compatibility in `samedir` script.
+    xprop # For xorg/xwayland-satellite compatibility in `samedir` script.
   ];
 
   # Custom commands
