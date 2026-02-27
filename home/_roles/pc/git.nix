@@ -134,6 +134,7 @@
       ".nvim.lua"
       ".*.rs.rustfmt"
       ".#*"
+      ".claude/settings.local.json"
 
       #-- direnv --
       ".envrc"
