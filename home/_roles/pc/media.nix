@@ -5,8 +5,7 @@
   };
 
   home.packages = with pkgs; [
-    # Disabled until https://github.com/NixOS/nixpkgs/pull/465340 is shipped.
-    # jellyfin-media-player
+    jellyfin-media-player
     krita
 
     mediainfo
