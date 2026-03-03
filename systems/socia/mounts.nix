@@ -1,4 +1,5 @@
-{ config, ... }: let
+{ config, ... }:
+let
   uid = toString config.users.users.mange.uid;
   consessorShares = [
     "Anime"
@@ -6,9 +7,11 @@
     "Books"
     "Comics"
     "Downloads"
+    "Immich"
     "Kids"
     "Mange"
     "Movies"
+    "ROMs"
     "Software"
     "TV"
   ];
@@ -22,15 +25,19 @@
   };
   mkConsessorAutomount = name: {
     description = "Consessor ${name} automount";
-    requires = [ "network-online.target" "tailscaled.service" ];
+    requires = [
+      "network-online.target"
+      "tailscaled.service"
+    ];
     where = "/mnt/consessor/${name}";
-    wantedBy = ["multi-user.target"];
+    wantedBy = [ "multi-user.target" ];
     # Automatically unmount after 30 minutes of inactivity.
     automountConfig = {
       TimeoutIdleSec = "30min";
     };
   };
-in {
+in
+{
   systemd.mounts = map mkConsessorShare consessorShares;
   systemd.automounts = map mkConsessorAutomount consessorShares;
 }
