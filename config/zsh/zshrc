@@ -338,6 +338,10 @@ stty -ixon -ixoff
 # }}}
 # {{{ Theme and prompt design
 apply_prompt_theme
+
+# history-substring-search plugin colors
+export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND="fg=default,underline"
+export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND="fg=red,underline"
 # }}}
 
 # Chain with true to avoid $? being false
