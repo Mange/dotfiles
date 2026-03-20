@@ -4,9 +4,6 @@ setopt extendedglob
 zmodload zsh/datetime
 autoload -Uz add-zsh-hook
 
-# Chain with true to avoid $? being false
-[ -f "${XDG_CONFIG_HOME}/zsh/zshrc.before.local" ] && source "${XDG_CONFIG_HOME}/zsh/zshrc.before.local" || true
-
 # {{{ Autoload functions
 # upstream
 autoload zmv

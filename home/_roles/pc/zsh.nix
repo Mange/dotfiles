@@ -8,8 +8,11 @@ let
   utils = import ../../utils.nix { inherit config pkgs; };
 in
 {
-  programs.zsh.dotDir = "${config.xdg.configHome}/zsh";
-  xdg.configFile."zsh".source = utils.linkConfig "zsh";
+  xdg.configFile = {
+    "zsh/completion".source = utils.linkConfig "zsh/completion";
+    "zsh/funcs".source = utils.linkConfig "zsh/funcs";
+    "zsh/zshrc".source = utils.linkConfig "zsh/zshrc";
+  };
 
   programs = {
     dircolors.enableZshIntegration = true;
@@ -22,6 +25,7 @@ in
 
     zsh = {
       enable = true;
+      dotDir = "${config.xdg.configHome}/zsh";
       defaultKeymap = "viins";
       history = {
         path = "${config.xdg.dataHome}/zsh/history";
@@ -81,14 +85,14 @@ in
       completionInit = "recomp";
 
       initContent = lib.mkMerge [
-        (lib.mkOrder 550 /* zsh */ ''
+        (lib.mkOrder 550 /* sh */ ''
           zmodload zsh/complist
           autoload -U compinit add-zsh-hook
 
           function recomp() {
             fpath+=(
-              "''${XDG_CONFIG_HOME}/zsh/funcs"
-              "''${XDG_CONFIG_HOME}/zsh/completion"
+              "''${ZDOTDIR}/funcs"
+              "''${ZDOTDIR}/completion"
 
               # Auto-discover ZSH directories from used Nix packages (like nix-shell,
               # flakes, etc.)
@@ -113,11 +117,16 @@ in
         '')
         # Note: 1000 is default, so that is where most other generic Nix configs
         # will insert things.
-        (lib.mkOrder 1100 /* zsh */ ''
+        (lib.mkOrder 1100 /* sh */ ''
           source "''${HOME}/.config/zsh/zshrc"
         '')
+        # This should try to be inserted first
+        (lib.mkOrder 0 /* sh */ ''
+          # Chain with true to avoid $? being false
+          [ -f "''${ZDOTDIR}/zshrc.before.local" ] && source "''${ZDOTDIR}/zshrc.before.local" || true
+        '')
         # This should try to be inserted last
-        (lib.mkOrder 9999 /* zsh */ ''
+        (lib.mkOrder 9999 /* sh */ ''
           # Claude code captures all my aliases, which really causes issues for the AI as
           # it assumes commands are like their normal selves. Especially problematic with
           # my "ls" alias for `eza`, which fails to run in some cases. See:
@@ -132,7 +141,7 @@ in
           fi
 
           # Chain with true to avoid $? being false
-          [ -f "''${XDG_CONFIG_HOME}/zsh/zshrc.after.local" ] && source "''${XDG_CONFIG_HOME}/zsh/zshrc.after.local" || true
+          [ -f "''${ZDOTDIR}/zshrc.after.local" ] && source "''${ZDOTDIR}/zshrc.after.local" || true
         '')
       ];
 
