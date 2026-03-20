@@ -25,7 +25,7 @@
     ../_topics/home-network.nix
     ../_topics/lg_headset.nix
     ../_topics/mullvad.nix
-    ../_topics/ollama.nix
+    # ../_topics/ollama.nix
     ../_topics/vm-host.nix
     ../_topics/wacom.nix
     ../_topics/yubikey.nix
