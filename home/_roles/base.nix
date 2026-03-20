@@ -1,6 +1,8 @@
-{ outputs, ... }: let 
+{ outputs, ... }:
+let
   nixConfig = ./nixpkgs-config.nix;
-in {
+in
+{
   nixpkgs = {
     # You can add overlays here
     overlays = [
@@ -21,6 +23,7 @@ in {
   };
 
   home = {
+    uid = 1000;
     username = "mange";
     homeDirectory = "/home/mange";
 
@@ -29,7 +32,10 @@ in {
     ];
 
     # Setup symlinks.
-    file.".local/bin" = {source = ../../bin; recursive = true; };
+    file.".local/bin" = {
+      source = ../../bin;
+      recursive = true;
+    };
   };
 
   # Nicely reload system units when changing configs
@@ -38,4 +44,3 @@ in {
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   home.stateVersion = "23.05";
 }
-

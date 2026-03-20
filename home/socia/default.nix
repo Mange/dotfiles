@@ -18,7 +18,9 @@
     ../_topics/crypto.nix
     ../_topics/gamedev.nix
     ../_topics/vm-host.nix
+
     ../_topics/work/instabee.nix
+    ../_topics/work/toggl-track.nix
 
     ../_topics/clanker.nix
   ];
