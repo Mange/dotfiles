@@ -116,6 +116,24 @@ in
         (lib.mkOrder 1100 /* zsh */ ''
           source "''${HOME}/.config/zsh/zshrc"
         '')
+        # This should try to be inserted last
+        (lib.mkOrder 9999 /* zsh */ ''
+          # Claude code captures all my aliases, which really causes issues for the AI as
+          # it assumes commands are like their normal selves. Especially problematic with
+          # my "ls" alias for `eza`, which fails to run in some cases. See:
+          # https://github.com/eza-community/eza/issues/1725
+          #
+          # Why not skipping to define aliases inside this mode? Well, because nix is
+          # setting up my aliases and it doesn't wrap them in a conditional as they are
+          # added to the zshrc file, which IS NOT SUPPOSED TO BE USED IN NON-INTERACTIVE
+          # SHELLS. Claude DGAF and sources it anyway.
+          if [[ -n "$CLAUDECODE" ]]; then
+            unalias -a
+          fi
+
+          # Chain with true to avoid $? being false
+          [ -f "''${XDG_CONFIG_HOME}/zsh/zshrc.after.local" ] && source "''${XDG_CONFIG_HOME}/zsh/zshrc.after.local" || true
+        '')
       ];
 
       envExtra = /* zsh */ ''

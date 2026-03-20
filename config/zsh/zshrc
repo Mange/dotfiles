@@ -183,7 +183,7 @@ setopt auto_pushd
 setopt pushd_ignore_dups
 
 # Display contents of current directory when changing directories
-showdir() { exa --group-directories-first }
+showdir() { eza --group-directories-first }
 
 # Tell terminal what the current directory is
 update_osc7() {
@@ -194,10 +194,13 @@ update_osc7() {
 }
 
 # Callback for when working directory changes
-chpwd() {
-  showdir
-  update_osc7
-}
+# (Don't do this when running inside Claude Code.)
+if [[ -z "$CLAUDECODE" ]]; then
+  chpwd() {
+    showdir
+    update_osc7
+  }
+fi
 # }}}
 # {{{ Pager, man, and bat
 
@@ -268,7 +271,10 @@ zstyle ':vcs_info:*:prompt:*' check-for-changes true
 function mange-prompt-precmd-vcs {
   vcs_info 'prompt'
 }
-add-zsh-hook precmd mange-prompt-precmd-vcs
+
+if [[ -z "$CLAUDECODE" ]]; then
+  add-zsh-hook precmd mange-prompt-precmd-vcs
+fi
 
 # Convenience functions to disable/enable check-for-changes in certain sessions
 function disable-check-for-changes() {
@@ -309,8 +315,11 @@ function mange-prompt-precmd() {
   local terminal_title_format="zsh [%4~]"
   print -Pn "\033]0;${terminal_title_format}\007"
 }
-add-zsh-hook preexec mange-prompt-preexec
-add-zsh-hook precmd mange-prompt-precmd
+
+if [[ -z "$CLAUDECODE" ]]; then
+  add-zsh-hook preexec mange-prompt-preexec
+  add-zsh-hook precmd mange-prompt-precmd
+fi
 
 # Actual prompt is set up using the "theme" function
 
@@ -329,6 +338,3 @@ apply_prompt_theme
 export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND="fg=default,underline"
 export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND="fg=red,underline"
 # }}}
-
-# Chain with true to avoid $? being false
-[ -f "${XDG_CONFIG_HOME}/zsh/zshrc.after.local" ] && source "${XDG_CONFIG_HOME}/zsh/zshrc.after.local" || true
