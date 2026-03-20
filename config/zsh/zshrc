@@ -182,20 +182,6 @@ fi
 setopt auto_pushd
 setopt pushd_ignore_dups
 
-# Enhanced cd:
-#   * cd <path>/<file> go to <path>
-cd () {
-  if (( $# != 1 )); then
-    builtin cd "$@"
-  else
-    if [[ -f "$1" ]]; then
-      builtin cd "$1:h"
-    else
-      builtin cd "$1"
-    fi
-  fi
-}
-
 # Display contents of current directory when changing directories
 showdir() { exa --group-directories-first }
 
