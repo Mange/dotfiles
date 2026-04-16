@@ -1,11 +1,14 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   programs.firefox = {
     enable = true;
+    nativeMessagingHosts = [ pkgs.firefoxpwa ];
   };
 
   home.packages = with pkgs; [
     # Extra web browser(s)
     brave
+    firefoxpwa # Support for "Progressive Web Apps for Firefox" extension.
 
     # File management
     file-roller
