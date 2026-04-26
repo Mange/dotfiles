@@ -12,16 +12,13 @@
     google-chrome
 
     # Others
-
-    # TODO: Currently broken in unstable and master. Downgrade to stable
-    # release.
-    # (Last tested 2025-09-06)
-    pkgs.nixos-stable.http-prompt
-
     httpie
     nodejs
     pastel
-    pgcli
+    # TODO: Currently broken in unstable and master. Downgrade to stable
+    # release.
+    # (Last tested 2026-04-26)
+    pkgs.nixos-stable.pgcli
     surrealist
     surrealdb
   ];

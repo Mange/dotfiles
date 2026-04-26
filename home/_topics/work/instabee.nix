@@ -25,7 +25,11 @@
     mongodb-compass
     postgresql
     mariadb
-    mycli
+
+    # TODO: Currently broken in unstable and master. Downgrade to stable
+    # release.
+    # (Last tested 2026-04-26)
+    pkgs.nixos-stable.pgcli
   ];
 
   home.file.".myclirc".text = # ini

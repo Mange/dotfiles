@@ -112,6 +112,7 @@
     signing = {
       signByDefault = true;
       key = "2EA6F4AA110A1BF2227519A90443C69F6F022CDE";
+      format = "openpgp";
     };
 
     ignores = [

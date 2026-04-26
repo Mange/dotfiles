@@ -1,8 +1,9 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
   programs.firefox = {
     enable = true;
     nativeMessagingHosts = [ pkgs.firefoxpwa ];
+    configPath = "${config.xdg.configHome}/mozilla/firefox";
   };
 
   home.packages = with pkgs; [

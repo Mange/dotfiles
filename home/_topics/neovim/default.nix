@@ -22,10 +22,15 @@ in
   programs.neovim = {
     enable = true;
     defaultEditor = true;
+    sideloadInitLua = true;
+
     viAlias = true;
     vimAlias = true;
     vimdiffAlias = true;
+
     withNodeJs = true;
+    withRuby = false;
+    withPython3 = false;
 
     # Neovide also needs access to all the binaries and libraries that Neovim
     # needs to access. All extraPackages have been moved down to the
@@ -67,16 +72,16 @@ in
 
     # Shell
     bash-completion
-    nodePackages_latest.bash-language-server
+    bash-language-server
     shellcheck
     shfmt
 
     # Javascript / Typescript / CSS / HTML / etc.
     typescript # includes tsserver
-    # nodePackages_latest.graphql-language-service-cli
-    nodePackages_latest.svelte-language-server
-    nodePackages_latest.typescript-language-server
-    nodePackages_latest."@tailwindcss/language-server"
+    # graphql-language-service-cli
+    svelte-language-server
+    typescript-language-server
+    tailwindcss-language-server
     vscode-langservers-extracted
 
     # Lua
@@ -105,8 +110,8 @@ in
     # Others
     marksman # Markdown
     dockerfile-language-server
-    nodePackages_latest.prettier
-    nodePackages_latest.yaml-language-server
+    prettier
+    yaml-language-server
     terraform-ls
   ];
 }

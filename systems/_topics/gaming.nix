@@ -17,7 +17,8 @@
     wine
     wineWow64Packages.stable
     winetricks
-    lutris
+    # Needs openldap??? Anyway, that fails to compile.
+    # lutris
 
     prismlauncher
   ];
