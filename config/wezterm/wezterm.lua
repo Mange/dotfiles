@@ -16,7 +16,7 @@ return {
   font = font "JetBrains Mono",
   font_size = 10.0,
   hide_tab_bar_if_only_one_tab = true,
-  window_background_opacity = 0.9, -- Until Niri gets blurred backgrounds
+  window_background_opacity = 0.8,
 
   -- Disable wayland again since pasting has stopped working.
   -- Might not be the fault of Wezterm per se, but it's the only

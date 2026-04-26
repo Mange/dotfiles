@@ -39,6 +39,8 @@
     dconf.enable = true;
     niri = {
       enable = true;
+      # Niri 26.04. (I can't wait another day, you see.)
+      package = pkgs.nixpkgs-master.niri;
     };
 
     # Shell

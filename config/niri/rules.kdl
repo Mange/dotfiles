@@ -3,6 +3,12 @@
 // █▄▄ ███ █▄█ █▄▄ █       █   █▄█  █▄ █▄▄ ▄▄█ 
 //         ▄▄█                                 
 layer-rule {
+  background-effect {
+    xray false
+  }
+}
+
+layer-rule {
   match namespace="^notifications$"
 
   block-out-from "screencast"
@@ -12,6 +18,13 @@ layer-rule {
 layer-rule {
   match namespace="^noctalia-overview*"
   place-within-backdrop true
+}
+
+layer-rule {
+  match namespace="^rofi$"
+  background-effect {
+    blur true
+  }
 }
 
 // ▄ ▄  ▀        █                      █          
@@ -24,6 +37,9 @@ window-rule {
   draw-border-with-background false
   geometry-corner-radius 5
   clip-to-geometry true
+  background-effect {
+    xray false
+  }
 }
 
 // Mark some apps as floating
@@ -126,11 +142,16 @@ window-rule {
   match app-id="com.mitchellh.ghostty.dropdown-calc"
 
   open-floating true
+  background-effect {
+    blur true
+  }
 }
 
 window-rule {
-    match app-id=r#"^org\.wezfurlong\.wezterm$"#
-    default-column-width {}
+  match app-id=r#"^org\.wezfurlong\.wezterm$"#
+  background-effect {
+    blur true
+  }
 }
 
 window-rule {

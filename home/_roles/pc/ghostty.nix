@@ -34,7 +34,7 @@ _: {
         "ctrl+page_down=scroll_page_down"
       ];
 
-      background-opacity = 0.9; # 0.8; Until Niri gets blurred backgrounds
+      background-opacity = 0.8;
 
       link-url = true;
       window-inherit-working-directory = true;
