@@ -6,7 +6,6 @@ return {
     opts = function(_)
       return {
         options = {
-          theme = "catppuccin",
           icons_enabled = true,
           globalstatus = true,
           disabled_filetypes = { statusline = { "lazy" } },

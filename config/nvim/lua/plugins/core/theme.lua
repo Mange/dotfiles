@@ -5,8 +5,11 @@ return {
     priority = 1000,
     lazy = false,
     config = function()
-      local colors = require("catppuccin.palettes").get_palette()
+      local C = require("catppuccin.palettes").get_palette()
       local U = require "catppuccin.utils.colors"
+
+      -- local transparent_bg = opts.transparent_background and "NONE" or C.mantle
+      local transparent_bg = C.mantle
 
       local opts = {
         flavour = "mocha",
@@ -51,6 +54,41 @@ return {
           treesitter_context = true,
           ufo = true,
           which_key = true,
+          lualine = {
+            normal = {
+              a = { bg = C.blue, fg = C.mantle, gui = "bold" },
+              b = { bg = C.surface0, fg = C.blue },
+              c = { bg = transparent_bg, fg = C.text },
+            },
+
+            insert = {
+              a = { bg = C.green, fg = C.base, gui = "bold" },
+              b = { bg = C.surface0, fg = C.green },
+            },
+
+            terminal = {
+              a = { bg = C.green, fg = C.base, gui = "bold" },
+              b = { bg = C.surface0, fg = C.green },
+            },
+
+            command = {
+              a = { bg = C.peach, fg = C.base, gui = "bold" },
+              b = { bg = C.surface0, fg = C.peach },
+            },
+            visual = {
+              a = { bg = C.mauve, fg = C.base, gui = "bold" },
+              b = { bg = C.surface0, fg = C.mauve },
+            },
+            replace = {
+              a = { bg = C.red, fg = C.base, gui = "bold" },
+              b = { bg = C.surface0, fg = C.red },
+            },
+            inactive = {
+              a = { bg = transparent_bg, fg = C.blue },
+              b = { bg = transparent_bg, fg = C.surface1, gui = "bold" },
+              c = { bg = transparent_bg, fg = C.overlay0 },
+            },
+          },
         },
         custom_highlights = {
           -- Setup transparent background for normal backgrounds. Using
@@ -61,10 +99,10 @@ return {
           -- to, so use normal theme.
           Normal = vim.g.neovide and {} or { bg = "NONE" },
           NormalNC = vim.g.neovide and {} or { bg = "NONE" },
-          TelescopeNormal = vim.g.neovide and {} or { bg = colors.base },
+          TelescopeNormal = vim.g.neovide and {} or { bg = C.base },
 
           -- Disabled by transparent_background for some reason.
-          CursorLine = { bg = U.darken(colors.surface0, 0.64, colors.base) },
+          CursorLine = { bg = U.darken(C.surface0, 0.64, C.base) },
 
           DiffAdd = { bg = "#384047" },
           DiffChange = { bg = "#463f47" },
@@ -76,14 +114,14 @@ return {
           -- that character instead of the background behind it.
           DiffDelete = { fg = "#F28FAD" },
 
-          Folded = { bg = colors.surface0 },
-          FoldedInfo = { fg = colors.subtext0 },
+          Folded = { bg = C.surface0 },
+          FoldedInfo = { fg = C.subtext0 },
 
           LspReferenceRead = { bg = "#5f5840" },
           LspReferenceText = { bg = "#504945" },
           LspReferenceWrite = { bg = "#6c473e" },
 
-          LightBulbVirtualText = { fg = colors.yellow },
+          LightBulbVirtualText = { fg = C.yellow },
         },
       }
 
@@ -93,7 +131,7 @@ return {
       -- Neovim theme stuff
       vim.g.neovide_opacity = 0.8
       vim.g.neovide_theme = "dark"
-      vim.g.neovide_background_color = colors.base
+      vim.g.neovide_background_color = C.base
       vim.g.neovide_floating_blur_amount_x = 2.0
       vim.g.neovide_floating_blur_amount_y = 2.0
     end,
