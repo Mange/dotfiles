@@ -13,17 +13,6 @@ vim.diagnostic.config {
   },
 }
 
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-  border = "rounded",
-  focus = false,
-})
-
-vim.lsp.handlers["textDocument/signatureHelp"] =
-  vim.lsp.with(vim.lsp.handlers.signature_help, {
-    border = "rounded",
-    focus = false,
-  })
-
 -- Limit max length of javascript-tools inlay hints, which could be whole pages
 -- of text in the worst cases.
 -- Hack inspired by https://github.com/MariaSolOs/dotfiles/blob/88646ab9bd20d6f36dacea0cdee8b6af3ffc4c50/.config/nvim/lua/lsp.lua#L275-L292

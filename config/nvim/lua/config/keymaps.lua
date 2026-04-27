@@ -836,7 +836,13 @@ utils.on_lsp_attach(function(client, bufnr)
   buffer_map { "<leader>=", "Format", actions.format_buf, mode = "v", cond = modifiable }
   -- stylua: ignore end
 
-  buffer_map { "K", "Hover documentation", vim.lsp.buf.hover }
+  buffer_map {
+    "K",
+    "Hover documentation",
+    function()
+      vim.lsp.buf.hover { border = "rounded", focus = false }
+    end,
+  }
 
   buffer_map { "gK", "Signature help", utils.show_signature_help }
   buffer_map {

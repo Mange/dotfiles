@@ -66,10 +66,10 @@ function utils.show_signature_help(options)
   local force = opts.force or false
 
   if force then
-    vim.lsp.buf.signature_help()
+    vim.lsp.buf.signature_help { border = "rounded", focus = false }
   else
     utils.unless_floating_window(function()
-      vim.lsp.buf.signature_help()
+      vim.lsp.buf.signature_help { border = "rounded", focus = false }
     end)
   end
 end

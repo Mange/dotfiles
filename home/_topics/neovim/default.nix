@@ -53,7 +53,12 @@ in
   };
 
   home.packages = with pkgs; [
+    # Lazy deps
+    luarocks
+    lua5_1
+
     # Treesitter downloads and installation.
+    tree-sitter
     curl
     clang
 
