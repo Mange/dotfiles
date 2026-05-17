@@ -75,6 +75,7 @@ in
 
         ping = "prettyping --nolegend";
         j = "jobs -l";
+        httpie = "echo try xh";
 
         # Look for store path of some package. Autocomplete works in ZSH.
         nix-locate = "nix-build --no-out-link '<nixpkgs>' -A";

@@ -12,7 +12,7 @@
     google-chrome
 
     # Others
-    httpie
+    xh # httpie replacement
     nodejs
     pastel
     # TODO: Currently broken in unstable and master. Downgrade to stable
