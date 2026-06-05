@@ -23,6 +23,11 @@ return {
           augend.constant.alias.bool,
           augend.semver.alias.semver,
           augend.constant.new {
+            elements = { "- [ ]", "- [/]", "- [x]", "- [-]" },
+            word = false,
+            cyclic = true,
+          },
+          augend.constant.new {
             elements = { "and", "or" },
             word = true,
             cyclic = true,
