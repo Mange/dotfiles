@@ -30,12 +30,13 @@
 
     # Noctalia https://docs.noctalia.dev/getting-started/nixos/
     noctalia = {
-      url = "github:noctalia-dev/noctalia-shell";
+      url = "github:noctalia-dev/noctalia";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, ... }@inputs:
+  outputs =
+    { self, nixpkgs, ... }@inputs:
     let
       inherit (self) outputs;
       extraSystemModules = [ inputs.nix-index-database.nixosModules.nix-index ];
@@ -46,15 +47,21 @@
     {
       # Your custom packages
       # Acessible through 'nix build', 'nix shell', etc
-      packages = forAllSystems (system:
-        let pkgs = nixpkgs.legacyPackages.${system};
-        in import ./nix/pkgs { inherit pkgs; }
+      packages = forAllSystems (
+        system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+        import ./nix/pkgs { inherit pkgs; }
       );
       # Devshell for bootstrapping
       # Acessible through 'nix develop' or 'nix-shell' (legacy)
-      devShells = forAllSystems (system:
-        let pkgs = nixpkgs.legacyPackages.${system};
-        in import ./shell.nix { inherit pkgs; }
+      devShells = forAllSystems (
+        system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+        import ./shell.nix { inherit pkgs; }
       );
 
       # Your custom packages and modifications, exported as overlays
@@ -68,57 +75,61 @@
 
       # NixOS configuration entrypoint
       # Available through 'nixos-rebuild switch --flake .#your-hostname'
-      nixosConfigurations = let
-        specialArgs = {
-          inherit inputs outputs;
-          rootPath = ./.;
+      nixosConfigurations =
+        let
+          specialArgs = {
+            inherit inputs outputs;
+            rootPath = ./.;
+          };
+        in
+        {
+          socia = nixpkgs.lib.nixosSystem {
+            inherit specialArgs;
+            modules = extraSystemModules ++ [ ./systems/socia/configuration.nix ];
+          };
+          vera = nixpkgs.lib.nixosSystem {
+            inherit specialArgs;
+            modules = extraSystemModules ++ [ ./systems/vera/configuration.nix ];
+          };
+          porto = nixpkgs.lib.nixosSystem {
+            inherit specialArgs;
+            modules = extraSystemModules ++ [ ./systems/porto/configuration.nix ];
+          };
         };
-      in {
-        socia = nixpkgs.lib.nixosSystem {
-          inherit specialArgs;
-          modules = extraSystemModules ++ [./systems/socia/configuration.nix];
-        };
-        vera = nixpkgs.lib.nixosSystem {
-          inherit specialArgs;
-          modules = extraSystemModules ++ [./systems/vera/configuration.nix];
-        };
-        porto = nixpkgs.lib.nixosSystem {
-          inherit specialArgs;
-          modules = extraSystemModules ++ [./systems/porto/configuration.nix];
-        };
-      };
 
       # Standalone home-manager configuration entrypoint
       # Available through 'home-manager --flake .#your-username@your-hostname'
-      homeConfigurations = let
-        homeConfig = inputs.home-manager.lib.homeManagerConfiguration;
-        extraSpecialArgs = {
-          inherit inputs outputs;
-          rootPath = ./.;
-        };
-        modules = [inputs.noctalia.homeModules.default];
-      in {
-        "mange@socia" = homeConfig {
-          extraSpecialArgs = extraSpecialArgs // {
-            isLaptop = false;
+      homeConfigurations =
+        let
+          homeConfig = inputs.home-manager.lib.homeManagerConfiguration;
+          extraSpecialArgs = {
+            inherit inputs outputs;
+            rootPath = ./.;
           };
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          modules = modules ++ [ ./home/socia ];
-        };
-        "mange@vera" = homeConfig {
-          extraSpecialArgs = extraSpecialArgs // {
-            isLaptop = true;
+          modules = [ inputs.noctalia.homeModules.default ];
+        in
+        {
+          "mange@socia" = homeConfig {
+            extraSpecialArgs = extraSpecialArgs // {
+              isLaptop = false;
+            };
+            pkgs = nixpkgs.legacyPackages.x86_64-linux;
+            modules = modules ++ [ ./home/socia ];
           };
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          modules = modules ++ [ ./home/vera ];
-        };
-        "mange@porto" = homeConfig {
-          extraSpecialArgs = extraSpecialArgs // {
-            isLaptop = true;
+          "mange@vera" = homeConfig {
+            extraSpecialArgs = extraSpecialArgs // {
+              isLaptop = true;
+            };
+            pkgs = nixpkgs.legacyPackages.x86_64-linux;
+            modules = modules ++ [ ./home/vera ];
           };
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          modules = modules ++ [ ./home/porto ];
+          "mange@porto" = homeConfig {
+            extraSpecialArgs = extraSpecialArgs // {
+              isLaptop = true;
+            };
+            pkgs = nixpkgs.legacyPackages.x86_64-linux;
+            modules = modules ++ [ ./home/porto ];
+          };
         };
-      };
     };
 }

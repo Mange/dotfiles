@@ -15,7 +15,7 @@ in
     enable = true;
     settings = {
       general = {
-        lock_cmd = "noctalia-shell ipc call lockScreen lock";
+        lock_cmd = "noctalia ipc call lockScreen lock";
 
         before_sleep_cmd = "loginctl lock-session; sleep 1;";
         # After waking up, sometimes the timeout listener for shutting off the
@@ -63,7 +63,7 @@ in
     };
   };
 
-  programs.noctalia-shell = {
+  programs.noctalia = {
     enable = true;
   };
 }

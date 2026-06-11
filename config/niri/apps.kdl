@@ -1,7 +1,7 @@
 // Daemons and services
 spawn-at-startup "wl-paste" "--watch" "cliphist" "store"
 spawn-at-startup "udiskie" "--no-automount" "--smart-tray"
-spawn-at-startup "noctalia-shell"
+spawn-at-startup "noctalia"
 
 // Apps
 spawn-at-startup "firefox"
