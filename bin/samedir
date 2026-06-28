@@ -149,6 +149,8 @@ function main() {
     if dir="$(cwd_of_pid "$pid")"; then
       case "$mode" in
       run)
+        # Consume rest of input so process starts with a clean stdin.
+        cat >/dev/null
         exec_in_dir "$dir" "$@"
         ;;
       print)
