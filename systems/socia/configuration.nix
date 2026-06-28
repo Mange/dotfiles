@@ -26,6 +26,7 @@
     ../_topics/lg_headset.nix
     ../_topics/mullvad.nix
     # ../_topics/ollama.nix
+    ../_topics/openrgb.nix
     ../_topics/vm-host.nix
     ../_topics/wacom.nix
     ../_topics/yubikey.nix
@@ -43,6 +44,7 @@
   # ▙▌▀▌▛▘▛▌▌▌▌▀▌▛▘█▌
   # ▌▌█▌▌ ▙▌▚▚▘█▌▌ ▙▖
   #
+  services.hardware.openrgb.motherboard = "amd";
   boot = {
     # Use the systemd-boot EFI boot loader.
     loader.systemd-boot.enable = true;
