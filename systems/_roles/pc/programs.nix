@@ -1,4 +1,9 @@
-{ pkgs, inputs, ... }:
+{
+  pkgs,
+  inputs,
+  config,
+  ...
+}:
 {
   environment.systemPackages = with pkgs; [
     # Should be able to run home-manager after initial install.
@@ -37,6 +42,26 @@
 
     # Graphical
     dconf.enable = true;
+
+    regreet = {
+      enable = true;
+      font = {
+        name = "Inter";
+        size = 12;
+        package = pkgs.inter;
+      };
+      settings = {
+        skip_selection = true;
+        background = {
+          path = ../../../home/_roles/pc/wallpapers/wallhaven-618670.jpg;
+          fit = "Cover";
+        };
+        GTK = {
+          application_prefer_dark_theme = true;
+        };
+      };
+    };
+
     niri = {
       enable = true;
       # Niri 26.04. (I can't wait another day, you see.)
@@ -56,9 +81,11 @@
   };
 
   services = {
-    displayManager.gdm.enable = true;
     gnome.gnome-keyring.enable = true;
     gnome.gcr-ssh-agent.enable = true;
+
+    greetd.enable = true;
+    displayManager.sessionPackages = [ config.programs.niri.package ];
 
     # Note that kbfs is set up inside of home manager instead of here.
     keybase.enable = true;
@@ -67,8 +94,8 @@
     tumbler.enable = true; # Thumbnailing service
   };
 
-  # GDM should unlock keyring, etc.
-  security.pam.services.gdm.enableGnomeKeyring = true;
+  # May be required for greetd to work properly.
+  systemd.user.services.niri.enableDefaultPath = false;
 
   # Include ZSH resources in final linked environment.
   environment.pathsToLink = [
