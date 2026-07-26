@@ -22,7 +22,8 @@
 
     # Common DB and misc tooling
     gnumake
-    mongodb-compass
+    # TODO: Fails to build 2026-07-26
+    # mongodb-compass
     postgresql
     mariadb
 

@@ -30,15 +30,15 @@
         "--group-directories-first"
         "--color-scale"
         "all"
-        "--hyperlink"
+        "--hyperlink=auto"
       ];
     };
 
     fzf = {
       enable = true;
       defaultCommand = "fd --type f";
-      changeDirWidgetCommand = "fd --type d";
-      changeDirWidgetOptions = [
+      changeDirWidget.command = "fd --type d";
+      changeDirWidget.options = [
         "--preview 'eza --tree --level 5 {} | head -200'"
       ];
     };
