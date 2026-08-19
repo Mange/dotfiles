@@ -8,8 +8,9 @@ in
     ./cli.nix
     ./desktop.nix
     ./fonts.nix
-    ./git.nix
     ./ghostty.nix
+    ./git.nix
+    ./jj.nix
     ./mako.nix
     ./media.nix
     ./niri.nix
