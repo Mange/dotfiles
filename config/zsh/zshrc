@@ -179,9 +179,6 @@ fi
 setopt auto_pushd
 setopt pushd_ignore_dups
 
-# Display contents of current directory when changing directories
-showdir() { eza --group-directories-first }
-
 # Tell terminal what the current directory is
 update_osc7() {
   wezterm set-working-directory 2>/dev/null && return 0
@@ -194,8 +191,8 @@ update_osc7() {
 # (Don't do this when running inside Claude Code.)
 if [[ -z "$CLAUDECODE" ]]; then
   chpwd() {
-    showdir
     update_osc7
+    eza --group-directories-first
   }
 fi
 # }}}
