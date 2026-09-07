@@ -3,8 +3,8 @@ return {
     "stevearc/conform.nvim",
     opts = {
       formatters_by_ft = {
-        ["markdown.mdx"] = { "prettier" },
-        markdown = { "prettier" },
+        ["markdown.mdx"] = { "biome", "prettier", stop_after_first = true },
+        markdown = { "biome", "prettier", stop_after_first = true },
       },
     },
   },

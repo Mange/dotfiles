@@ -5,6 +5,7 @@ return {
       servers = {
         eslint = true,
         tailwindcss = true,
+        biome = true,
       },
     },
   },
@@ -52,12 +53,11 @@ return {
     "stevearc/conform.nvim",
     opts = {
       formatters_by_ft = {
-        css = { "prettier" },
-        javascript = { "prettier" },
-        javascriptreact = { "prettier" },
-        typescript = { "prettier" },
-        typescriptreact = { "prettier" },
-        vue = { "prettier" },
+        javascript = { "biome", "prettier", stop_after_first = true },
+        javascriptreact = { "biome", "prettier", stop_after_first = true },
+        typescript = { "biome", "prettier", stop_after_first = true },
+        typescriptreact = { "biome", "prettier", stop_after_first = true },
+        vue = { "biome", "prettier", stop_after_first = true },
       },
     },
   },

@@ -3,9 +3,9 @@ return {
     "stevearc/conform.nvim",
     opts = {
       formatters_by_ft = {
-        css = { "prettier" },
-        scss = { "prettier" },
-        less = { "prettier" },
+        css = { "biome", "prettier", stop_after_first = true },
+        scss = { "biome", "prettier", stop_after_first = true },
+        less = { "biome", "prettier", stop_after_first = true },
       },
     },
   },

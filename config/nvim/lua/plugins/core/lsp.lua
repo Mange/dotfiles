@@ -50,6 +50,14 @@ return {
 
         vim.lsp.enable(server)
       end
+
+      -- Custom commands
+      vim.api.nvim_create_user_command("BiomeFixAll", function()
+        vim.lsp.buf.code_action {
+          context = { only = { "source.fixAll.biome" }, diagnostics = {} },
+          apply = true,
+        }
+      end, {})
     end,
   },
 }
