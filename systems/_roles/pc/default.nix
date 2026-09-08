@@ -8,6 +8,7 @@
   imports = [
     ../../_topics/nixconfig.nix
 
+    ./cursors.nix
     ./docker.nix
     ./kde-connect.nix
     ./networking.nix
@@ -19,7 +20,11 @@
   # Literally doxxing myself
   time.timeZone = "Europe/Stockholm";
 
-  i18n.supportedLocales = [ "C.UTF-8/UTF-8" "en_US.UTF-8/UTF-8" "sv_SE.UTF-8/UTF-8" ];
+  i18n.supportedLocales = [
+    "C.UTF-8/UTF-8"
+    "en_US.UTF-8/UTF-8"
+    "sv_SE.UTF-8/UTF-8"
+  ];
   i18n.defaultLocale = "sv_SE.UTF-8";
   console = {
     font = "Lat2-Terminus16";
@@ -29,7 +34,10 @@
   boot = {
     # Setup nice looking boot screen.
     plymouth.enable = true;
-    kernelParams = ["quiet" "udev.log_level=3"];
+    kernelParams = [
+      "quiet"
+      "udev.log_level=3"
+    ];
 
     # Let me watch a shitton amount of things.
     kernel.sysctl = {

@@ -1,7 +1,4 @@
-{ config, pkgs, ... }:
-let
-  utils = import ../../utils.nix { inherit config pkgs; };
-in
+{ pkgs, ... }:
 {
   # Night light
   services.gammastep = {

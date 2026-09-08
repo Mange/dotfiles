@@ -16,6 +16,12 @@ input {
     }
 }
 
+cursor {
+    xcursor-theme "phinger-cursors-dark"
+    hide-when-typing
+    hide-after-inactive-ms 1000
+}
+
 layout {
     gaps 10
 

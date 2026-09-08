@@ -42,6 +42,15 @@
     libqalculate
   ];
 
+  home.pointerCursor = {
+    enable = true;
+    package = pkgs.phinger-cursors;
+    name = "phinger-cursors-dark";
+
+    gtk.enable = true;
+    x11.enable = true;
+  };
+
   xdg.mimeApps.defaultApplications = {
     # Nemo as my default GUI file manager
     "inode/directory" = "nemo.desktop";
