@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 # List devices to unmount
 
 devices="$(udiskie-info --all --filter is_mounted --output "{ui_label}")"
@@ -8,9 +8,9 @@ if [[ -z "$devices" ]]; then
   exit 0
 fi
 
-selection="$( \
-  echo "$devices" | \
-    rofi -dmenu -p "Pick device to unmount" \
+selection="$(
+  echo "$devices" |
+    rofi -dmenu -p "Pick device to unmount"
 )"
 
 # /dev/foo: The Device Name

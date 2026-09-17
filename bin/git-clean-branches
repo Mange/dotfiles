@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
 confirm=yes
 verbosity=verbose
@@ -27,34 +27,35 @@ EOF
 
 while [[ -n "$1" ]]; do
   case "$1" in
-    --help)
-      print_usage
-      exit 0
-      ;;
+  --help)
+    print_usage
+    exit 0
+    ;;
 
-    --verbose | -v)
-      verbosity=verbose
-      shift
-      ;;
+  --verbose | -v)
+    verbosity=verbose
+    shift
+    ;;
 
-    --quiet | -q)
-      verbosity=quiet
-      shift
-      ;;
+  --quiet | -q)
+    verbosity=quiet
+    shift
+    ;;
 
-    --confirm | -i)
-      confirm=yes
-      shift
-      ;;
+  --confirm | -i)
+    confirm=yes
+    shift
+    ;;
 
-    --force | -f)
-      confirm=no
-      shift
-      ;;
+  --force | -f)
+    confirm=no
+    shift
+    ;;
 
-    *)
-      echo "Unknown option: $1" >&2
-      exit 1
+  *)
+    echo "Unknown option: $1" >&2
+    exit 1
+    ;;
   esac
 done
 

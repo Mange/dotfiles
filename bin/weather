@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 set -e
 
 location_file="${XDG_DATA_HOME}/weather-location"
@@ -58,59 +58,59 @@ while true; do
   '--help')
     print_usage
     exit 0
-  ;;
+    ;;
   '--verbose')
     verbose="yes"
     shift
-  ;;
+    ;;
   '-1' | '--oneline')
     format="&format=1"
     shift
-  ;;
+    ;;
   '-s' | '--simple')
     simple="n"
     shift
-  ;;
+    ;;
   '-l' | '--language')
     lang="$2"
     shift 2
-  ;;
+    ;;
   '-t' | '--today')
     days="0"
     shift
-  ;;
+    ;;
   '-d' | '--days')
     days="$2"
     shift 2
-  ;;
+    ;;
   '-L' | '--show-location')
     quiet=""
     pick_quiet_automatically="no"
     shift
-  ;;
+    ;;
   '--no-show-location')
     quiet="Q"
     pick_quiet_automatically="no"
     shift
-  ;;
+    ;;
   '--no-colors')
     no_colors="T"
     shift
-  ;;
+    ;;
   '--500-iq-mode')
     units="u"
     shift
-  ;;
+    ;;
   '--')
     shift
     break
-  ;;
+    ;;
   *)
     echo "Unknown option: $1" >&2
     echo "" >&2
     print_usage >&2
     exit 1
-  ;;
+    ;;
   esac
 done
 
