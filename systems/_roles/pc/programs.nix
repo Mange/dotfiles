@@ -29,6 +29,8 @@
   ];
 
   programs = {
+    nix-ld.enable = true;
+
     # Login, security, keyring, etc.
     gnupg.agent.enable = true;
     gnupg.agent.pinentryPackage = pkgs.pinentry-gnome3;

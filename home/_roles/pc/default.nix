@@ -33,6 +33,7 @@ in
     ../../_topics/rust
     ../../_topics/toys.nix
     ../../_topics/webdev
+    ../../_topics/zeditor.nix
   ];
 
   home.language = {
