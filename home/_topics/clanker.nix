@@ -1,12 +1,19 @@
 # Let's see what the big deal is…
-{ pkgs, ... }:
+{ pkgs, config, ... }:
+let
+  uid = toString config.home.uid;
+in
 {
   home.packages = with pkgs; [
     claude-code
     claude-agent-acp
-
-    gemini-cli
   ];
+
+  sops.secrets = {
+    "claude/oauth_token" = {
+      path = "/var/run/user/${uid}/secrets/claude-oauth-token";
+    };
+  };
 
   home.file.".claude/skills/review-code/SKILL.md".text = /* markdown */ ''
     ---

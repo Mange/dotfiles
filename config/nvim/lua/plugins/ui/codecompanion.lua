@@ -1,12 +1,7 @@
-local function has_ollama()
-  return vim.env.OLLAMA_API_BASE_URL ~= nil
-end
-
-local default_adapter = has_ollama() and "ollama" or "copilot"
-
 return {
   {
     "olimorris/codecompanion.nvim",
+    version = "^19.0.0",
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
@@ -14,11 +9,28 @@ return {
     opts = {
       strategies = {
         chat = {
-          adapter = default_adapter,
+          adapter = "claude_code",
         },
         inline = {
-          adapter = default_adapter,
+          adapter = "claude_code",
         },
+        cmd = {
+          adapter = "claude_code",
+        },
+      },
+    },
+    adapters = {
+      acp = {
+        opts = {
+          show_presets = false,
+        },
+        claude_code = function()
+          return require("codecompanion.adapters").extend("claude_code", {
+            env = {
+              api_key = "cmd:cat $XDG_RUNTIME_DIR/secrets/claude-oauth-token",
+            },
+          })
+        end,
       },
     },
   },

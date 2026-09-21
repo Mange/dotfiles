@@ -15,6 +15,7 @@ return {
       preview = {
         icon_provider = "devicons",
         hybrid_modes = { "i" },
+        filetypes = { "markdown", "codecompanion" },
       },
       markdown = {
         list_items = {
