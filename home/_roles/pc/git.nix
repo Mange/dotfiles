@@ -143,19 +143,6 @@
 
       #-- Lsp junk --
       ".ccls-cache/"
-
-      #-- Claude code sandbox junk (clankers, amirite?) --
-      "/.bash_profile"
-      "/.bashrc"
-      "/.gitconfig"
-      "/.gitmodules"
-      "/.idea"
-      "/.mcp.json"
-      "/.profile"
-      "/.ripgreprc"
-      "/.vscode"
-      "/.zprofile"
-      "/.zshrc"
     ];
   };
 }

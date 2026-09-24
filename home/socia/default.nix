@@ -22,7 +22,7 @@
     ../_topics/work/instabee.nix
     ../_topics/work/toggl-track.nix
 
-    ../_topics/clanker.nix
+    ../_topics/clanker
   ];
 
   home.packages = with pkgs; [
