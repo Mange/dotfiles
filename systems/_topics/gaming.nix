@@ -21,5 +21,6 @@
     # lutris
 
     prismlauncher
+    r2modman
   ];
 }
