@@ -1,6 +1,7 @@
 { pkgs, config, ... }:
 let
   uid = toString config.home.uid;
+  utils = import ../../utils.nix { inherit config pkgs; };
 in
 {
   sops.secrets = {
@@ -22,6 +23,10 @@ in
 
   xdg.configFile = {
     "claude/CLAUDE.md".source = ./CLAUDE.md;
+
+    # Symlink settings so it's mutable. I can commit changes when I want them
+    # included in the repo.
+    "claude/settings.json".source = utils.linkConfig "claude/settings.json";
 
     "claude/skills/review-code" = {
       source = ./skills/review-code;

@@ -1,0 +1,38 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx vitest run:*)",
+      "Bash(npx @tanstack/intent@latest *)",
+      "WebFetch(domain:registry.npmjs.org)"
+    ],
+    "defaultMode": "plan"
+  },
+  "worktree": {
+    "baseRef": "fresh"
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cmd=$(jq -r '.tool_input.command // \"\"'); reason=\"\"; if echo \"$cmd\" | grep -Pq '(^|[;&|]|\\s)find\\s+/(\\s|$)'; then reason=\"Root-anchored find is not allowed - scope the search to a specific directory (e.g. '.', a repo path).\"; elif echo \"$cmd\" | grep -Pq '(^|[;&|]|\\s)rg\\s+(\\S*\\s+)*/(\\s|$)'; then reason=\"Root-anchored rg is not allowed - scope the search to a specific directory (e.g. '.', a repo path).\"; elif echo \"$cmd\" | grep -Pq '(^|[;&|]|\\s)grep\\s+(\\S*\\s+)*-[a-zA-Z]*[rR][a-zA-Z]*(\\s+\\S+)*\\s+/(\\s|$)'; then reason=\"Root-anchored recursive grep is not allowed - scope the search to a specific directory (e.g. '.', a repo path).\"; fi; if [ -n \"$reason\" ]; then jq -n --arg reason \"$reason\" '{hookSpecificOutput:{hookEventName:\"PreToolUse\",permissionDecision:\"deny\",permissionDecisionReason:$reason}}'; else echo '{}'; fi"
+          }
+        ]
+      }
+    ]
+  },
+  "enabledPlugins": {
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true,
+    "github@claude-plugins-official": true
+  },
+  "effortLevel": "medium",
+  "editorMode": "vim",
+  "verbose": true,
+  "preferredNotifChannel": "auto",
+  "remoteControlAtStartup": true,
+  "inputNeededNotifEnabled": true,
+  "agentPushNotifEnabled": true
+}
