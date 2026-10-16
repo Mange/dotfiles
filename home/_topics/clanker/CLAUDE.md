@@ -27,6 +27,8 @@
   - JJ's workflow is to create a new commit **first** then make changes.
 - Try to split up large changes into smaller logical commits. This helps
   reviewing and makes history surgery much easier.
+- Always pass `--tool=:git` to `jj diff` to get a standard, non-visual,
+  diff. I use a custom differ.
 
 ## Sandboxing
 
