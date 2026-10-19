@@ -17,7 +17,7 @@ in
     plugins = [ pkgs.rofi-emoji ];
     theme = "catpuccin.rasi";
 
-    extraConfig = {
+    settings = {
       dpi = 1;
       drun-display-format = "{name}";
       threads = 0;

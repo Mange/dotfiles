@@ -61,7 +61,6 @@
       enable = true;
     };
 
-    tmate.enable = true;
     tmux = {
       enable = true;
       keyMode = "vi";
@@ -101,6 +100,8 @@
     nmap
     rsync
     wget
+
+    upterm # Share terminal over the internet
 
     # Hardware commands
     lm_sensors

@@ -75,7 +75,10 @@ in
 
         ping = "prettyping --nolegend";
         j = "jobs -l";
+
+        # Deprecated commands and their replacements.
         httpie = "echo try xh";
+        tmate = "echo use upterm";
 
         # Look for store path of some package. Autocomplete works in ZSH.
         nix-locate = "nix-build --no-out-link '<nixpkgs>' -A";

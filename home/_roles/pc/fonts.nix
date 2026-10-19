@@ -26,7 +26,7 @@
   };
 
   programs = {
-    rofi.font = "Inter Light 10";
+    rofi.settings.font = "Inter Light 10";
 
     ghostty.settings.font-family = "JetBrainsMono Nerd Font";
     neovide.settings.font.normal = [ "JetBrainsMono Nerd Font" ];

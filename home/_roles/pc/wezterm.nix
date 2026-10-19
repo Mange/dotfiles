@@ -11,11 +11,9 @@ in
     wezterm
   ];
 
-  programs.rofi = {
+  programs.rofi.settings = {
     terminal = "wezterm";
-    extraConfig = {
-      ssh-command = "{terminal} start -- {ssh-client} {host} [-p {port}]";
-      run-shell-command = "{terminal} start -- {cmd}";
-    };
+    ssh-command = "{terminal} start -- {ssh-client} {host} [-p {port}]";
+    run-shell-command = "{terminal} start -- {cmd}";
   };
 }

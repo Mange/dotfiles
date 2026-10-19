@@ -9,7 +9,7 @@ in
   # manager configuration as well.
   environment.systemPackages = [ theme-pkg ];
 
-  programs.regreet.cursorTheme = {
+  services.displayManager.regreet.cursorTheme = {
     name = theme-name;
     package = theme-pkg;
   };

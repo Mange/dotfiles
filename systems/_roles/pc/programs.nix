@@ -45,25 +45,6 @@
     # Graphical
     dconf.enable = true;
 
-    regreet = {
-      enable = true;
-      font = {
-        name = "Inter";
-        size = 12;
-        package = pkgs.inter;
-      };
-      settings = {
-        skip_selection = true;
-        background = {
-          path = ../../../home/_roles/pc/wallpapers/wallhaven-618670.jpg;
-          fit = "Cover";
-        };
-        GTK = {
-          application_prefer_dark_theme = true;
-        };
-      };
-    };
-
     niri = {
       enable = true;
     };
@@ -86,6 +67,24 @@
 
     greetd.enable = true;
     displayManager.sessionPackages = [ config.programs.niri.package ];
+    displayManager.regreet = {
+      enable = true;
+      font = {
+        name = "Inter";
+        size = 12;
+        package = pkgs.inter;
+      };
+      settings = {
+        skip_selection = true;
+        background = {
+          path = ../../../home/_roles/pc/wallpapers/wallhaven-618670.jpg;
+          fit = "Cover";
+        };
+        GTK = {
+          application_prefer_dark_theme = true;
+        };
+      };
+    };
 
     # Note that kbfs is set up inside of home manager instead of here.
     keybase.enable = true;
