@@ -2,6 +2,14 @@ local utils = require "mange.utils"
 
 return {
   {
+    "ray-d-song/inlay-hint-trim.nvim",
+    opts = {
+      clients = {
+        ["tsc"] = true,
+      },
+    },
+  },
+  {
     "neovim/nvim-lspconfig",
     opts = {
       --

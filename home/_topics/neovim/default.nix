@@ -82,7 +82,7 @@ in
     shfmt
 
     # Javascript / Typescript / CSS / HTML / etc.
-    typescript # includes tsserver
+    typescript
     # graphql-language-service-cli
     svelte-language-server
     typescript-language-server
