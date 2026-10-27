@@ -23,4 +23,6 @@
       };
     };
   };
+
+  programs.jjui.enable = true;
 }
