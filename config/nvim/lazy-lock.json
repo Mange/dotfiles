@@ -60,6 +60,7 @@
   "treesj": { "branch": "main", "commit": "9f349ba62c524f065d6f43254d731ddf8319b9bf" },
   "trouble.nvim": { "branch": "main", "commit": "bd67efe408d4816e25e8491cc5ad4088e708a69a" },
   "vclib.nvim": { "branch": "main", "commit": "c83945c63dc0c5c8687ba0eff5a40af1f8bf6002" },
+  "vcmarkers.nvim": { "branch": "main", "commit": "c83f72c422473bb430d09280d8bd7c0aa903df1a" },
   "vcsigns.nvim": { "branch": "main", "commit": "7d7e9934f94a8e270089ac2621fcfbb78780de69" },
   "vim-easy-align": { "branch": "master", "commit": "9815a55dbcd817784458df7a18acacc6f82b1241" },
   "vim-helm": { "branch": "master", "commit": "2c8525fd98e57472769d137317bca83e477858ce" },

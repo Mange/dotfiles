@@ -298,6 +298,9 @@ wk.add {
   { "[c", ":VCSigns hunk_prev<CR>", cond = not vim.o.diff, desc = "Previous change" },
   { "]c", ":VCSigns hunk_next<CR>", cond = not vim.o.diff, desc = "Next change" },
 
+  { "[m", function() require('vcmarkers').actions.prev_marker(0, vim.v.count1) end, desc = "Previous marker" },
+  { "]m", function() require('vcmarkers').actions.next_marker(0, vim.v.count1) end, desc = "Next marker" },
+
   { "[e", vim.diagnostic.goto_prev, desc = "Previous diagnostic" },
   { "]e", vim.diagnostic.goto_next, desc = "Next diagnostic" },
   -- stylua: ignore end
@@ -437,6 +440,28 @@ wk.add {
     "<cmd>DiffviewOpen main<cr>",
     desc = "Main diff",
     icon = "󰟮",
+  },
+
+  { "<leader>gm", group = "markers" },
+  {
+    "<leader>gms",
+    call("vcmarkers.actions", "select_section_verbatim", 0),
+    desc = "Select section",
+  },
+  {
+    "<leader>gmp",
+    call("vcmarkers.actions", "select_section_plus", 0),
+    desc = "Select +",
+  },
+  {
+    "<leader>gmP",
+    call("vcmarkers.actions", "select_all_plus", 0),
+    desc = "Select all +",
+  },
+  {
+    "<leader>gmc",
+    call("vcmarkers.actions", "cycle_marker", 0),
+    desc = "Cycle representation",
   },
 }
 

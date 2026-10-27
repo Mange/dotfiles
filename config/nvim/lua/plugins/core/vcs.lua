@@ -21,6 +21,12 @@ return {
   },
 
   {
+    "algmyr/vcmarkers.nvim",
+    dependencies = { "algmyr/vclib.nvim" },
+    opts = {},
+  },
+
+  {
     "algmyr/vcsigns.nvim",
     dependencies = {
       "algmyr/vclib.nvim",
