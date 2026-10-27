@@ -295,8 +295,8 @@ wk.add {
   { "[q", call("trouble", "previous", { mode = "quickfix", jump = true }), desc = "Previous quickfix" },
   { "]q", call("trouble", "next", { mode = "quickfix", jump = true }), desc = "Next quickfix" },
 
-  { "[c", call("gitsigns.actions", "prev_hunk"), cond = not vim.o.diff, desc = "Previous change" },
-  { "]c", call("gitsigns.actions", "next_hunk"), cond = not vim.o.diff, desc = "Next change" },
+  { "[c", ":VCSigns hunk_prev<CR>", cond = not vim.o.diff, desc = "Previous change" },
+  { "]c", ":VCSigns hunk_next<CR>", cond = not vim.o.diff, desc = "Next change" },
 
   { "[e", vim.diagnostic.goto_prev, desc = "Previous diagnostic" },
   { "]e", vim.diagnostic.goto_next, desc = "Next diagnostic" },
@@ -412,12 +412,12 @@ wk.add {
 }
 
 --
--- Leader chords: git
+-- Leader chords: VCS / git / jj
 --
 wk.add {
-  { "<leader>g", group = "git" },
+  { "<leader>g", group = "vcs" },
 
-  { "<leader>gg", "<cmd>Neogit<cr>", desc = "Status" },
+  { "<leader>gg", "<cmd>Neogit<cr>", desc = "Git Status" },
   {
     "<leader>go",
     function()
@@ -427,16 +427,7 @@ wk.add {
   },
   { "<leader>gc", call("neogit", "open", { "commit" }), desc = "Commit" },
 
-  { "<leader>ga", "<cmd>Gitsigns stage_buffer<cr>", desc = "Stage buffer" },
-  { "<leader>gs", "<cmd>Gitsigns stage_hunk<cr>", desc = "Stage hunk" },
-  { "<leader>gS", "<cmd>Gitsigns undo_stage_hunk<cr>", desc = "Unstage hunk" },
-  { "<leader>gu", "<cmd>Gitsigns reset_hunk<cr>", desc = "Undo hunk" },
-  { "<leader>gp", "<cmd>Gitsigns preview_hunk<cr>", desc = "Preview hunk" },
-
-  -- stylua: ignore start
-  { "<leader>gb", "<cmd>Gitsigns blame_line<cr>", desc = "Blame line" },
-  { "<leader>gB", "<cmd>Gitsigns blame_line true<cr>", desc = "Blame line (full)" },
-  -- stylua: ignore end
+  { "<leader>gu", "<cmd>VCSigns hunk_undo<cr>", desc = "Undo hunk" },
 
   { "<leader>gf", "<cmd>DiffviewFileHistory %<cr>", desc = "File history" },
   { "<leader>gd", "<cmd>DiffviewOpen<cr>", desc = "Working diff" },
@@ -709,39 +700,20 @@ Snacks.toggle
 
 Snacks.toggle
   .new({
-    name = "Signs",
+    name = "Hunk Diffs",
     get = function()
-      return require("gitsigns.config").config.signcolumn
+      -- TODO: Replace with better API when available.
+      return vim.b[0].vcsigns_show_hunk_diffs == true
     end,
     set = function(state)
-      require("gitsigns").toggle_signs(state)
-    end,
-  })
-  :map "<leader>tgs"
-
-Snacks.toggle
-  .new({
-    name = "Show deleted",
-    get = function()
-      return require("gitsigns.config").config.show_deleted
-    end,
-    set = function(state)
-      require("gitsigns").toggle_deleted(state)
+      -- TODO: Replace with better API when available.
+      local current = vim.b[0].vcsigns_show_hunk_diffs == true
+      if state ~= current then
+        require("vcsigns.actions").toggle_hunk_diff(0)
+      end
     end,
   })
   :map "<leader>tgd"
-
-Snacks.toggle
-  .new({
-    name = "Line blame",
-    get = function()
-      return require("gitsigns.config").config.current_line_blame
-    end,
-    set = function(state)
-      require("gitsigns").toggle_current_line_blame(state)
-    end,
-  })
-  :map "<leader>tgl"
 
 --
 -- Leader chords: open
@@ -797,7 +769,9 @@ wk.add {
 wk.add {
   {
     "ih",
-    call("gitsigns.actions", "select_hunk"),
+    function()
+      require("vcsigns.textobj").select_hunk(0)
+    end,
     desc = "Inner hunk",
     mode = { "o", "x" },
   },

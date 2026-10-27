@@ -21,16 +21,12 @@ return {
   },
 
   {
-    "lewis6991/gitsigns.nvim",
-    opts = {
-      signs = {
-        add = { text = "┃" },
-        change = { text = "╏" },
-        delete = { text = "┋" },
-        topdelete = { text = "┋" },
-        changedelete = { text = "┋" },
-      },
+    "algmyr/vcsigns.nvim",
+    dependencies = {
+      "algmyr/vclib.nvim",
+      "lewis6991/async.nvim",
     },
+    opts = {},
   },
 
   {

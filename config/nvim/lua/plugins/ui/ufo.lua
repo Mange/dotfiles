@@ -57,6 +57,7 @@ return {
       fold_virt_text_handler = virtual_text_handler,
     },
     config = function(_, opts)
+      require("async-shim").install()
       local ufo = require "ufo"
 
       vim.o.foldcolumn = "1"
