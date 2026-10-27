@@ -839,7 +839,12 @@ utils.on_lsp_attach(function(client, bufnr)
     "K",
     "Hover documentation",
     function()
-      vim.lsp.buf.hover { border = "rounded", focus = false }
+      -- First: Show UFO preview if available.
+      -- Then: Show LSP hover if available.
+      local winid = require("ufo").peekFoldedLinesUnderCursor()
+      if not winid then
+        vim.lsp.buf.hover { border = "rounded", focus = false }
+      end
     end,
   }
 
