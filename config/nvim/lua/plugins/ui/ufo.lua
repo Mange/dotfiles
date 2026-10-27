@@ -25,7 +25,7 @@ local function virtual_text_handler(virtText, lnum, endLnum, width, truncate)
     end
     curWidth = curWidth + chunkWidth
   end
-  table.insert(newVirtText, { suffix, "FoldedInfo" })
+  table.insert(newVirtText, { suffix, "MoreMsg" })
   return newVirtText
 end
 
