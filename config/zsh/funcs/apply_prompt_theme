@@ -77,15 +77,8 @@ function apply_prompt_theme {
   ### Branch + VCS status
   ###
 
-  # Modify how the branch is rendered. Here's the trick:
-  # 1. Show information in this order: unstaged, staged, branch
-  # 2. Each info changes foreground color.
-  # Now if there's staged stuff, the branch will show in that color. If there's
-  # unstaged stuff, then it will be in that color. On both, the staged will
-  # win.
-  # Branch will default to blue, and unstaged to red, and staged to green.
-  zstyle ':vcs_info:*:prompt:*' unstagedstr "%F{red} "
-  zstyle ':vcs_info:*:prompt:*' stagedstr "%F{green} "
+  zstyle ':vcs_info:*:prompt:*' unstagedstr "%F{red} %f"
+  zstyle ':vcs_info:*:prompt:*' stagedstr "%F{green} %f"
 
   # NOTE: Will not be used directly in the prompt, instead it will be included
   # through $vcs_info_msg_1_.
@@ -94,8 +87,9 @@ function apply_prompt_theme {
   #   %b = Branch
   #   %c = stagedstr (if anything staged)
   #   %u = unstagedstr (if anything unstaged)
+  #   %m = misc
   local vcs_status="$(prompt_separator diagonal 2 yellow)%F{black} %a %f$(prompt_separator diagonal yellow 2)"
-  local branch_and_status="%F{blue}%u%c %b %f"
+  local branch_and_status="%u%c %F{blue}%b %F{cyan}%m%f"
   local right2='$vcs_info_msg_1_'
 
   ###
@@ -115,6 +109,10 @@ function apply_prompt_theme {
   zstyle ':vcs_info:*:prompt:*' formats "${repo_dir}" "${branch_and_status}"
   zstyle ':vcs_info:*:prompt:*' actionformats "${repo_dir}" "${vcs_status}${branch_and_status}"
 
+  # Hook to format jj branches including revision number
+  # See +vi-mange-jj-branch-revision function below.
+  zstyle ':vcs_info:jj+post-backend:prompt:*' hooks mange-jj-branch-revision
+
   #
   # Actually set up the PROMPT and RPROMPT variables
   #
@@ -122,6 +120,25 @@ function apply_prompt_theme {
   local newline=$'\n'
   export PROMPT="${newline}$(prompt_separator bubble_left 0 3)${left3}$(prompt_separator diagonal 3 2)${left2}${left1}${prompt_left}"
   export RPROMPT="${prompt_right}${right1}$(prompt_separator diagonal 1 2)${right2}$(prompt_separator diagonal 2 3)${right3}$(prompt_separator bubble_right 3 0)"
+}
+
+# Add jj change ID (formatted and colorized) after the branch name.
+# The jj plugin does not support `branchformat`, but even if it did the `%i`
+# (revision) format is uncolored.
+function +vi-mange-jj-branch-revision {
+  if [[ "${hook_com[vcs_orig]}" != jj ]]; then
+    return
+  fi
+
+  local -a change_id
+  change_id=("${(@0)$(
+    ${vcs_comm[cmd]:-jj} log --ignore-working-copy --no-graph -n 1 -r @ --color never -T '
+      change_id.shortest(6).prefix() ++ "\0" ++
+      change_id.shortest(6).rest()
+    '
+  )}")
+
+  hook_com[branch]="${hook_com[branch]}%F{magenta}${change_id[1]}%F{black}%B${change_id[2]}%b%f"
 }
 
 function module_color {

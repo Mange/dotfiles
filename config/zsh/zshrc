@@ -256,10 +256,14 @@ setopt prompt_subst
 autoload -Uz vcs_info
 
 # Speed it up by removing systems I'm not using
-zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:*' enable jj git
 
 zstyle ':vcs_info:*:prompt:*' use-prompt-escapes true
+# Enable support for things like "%c" for staged changes.
 zstyle ':vcs_info:*:prompt:*' check-for-changes true
+# …but don't do this with jj as that creates snapshots. jj plugin tracks
+# changes in snapshot even with this disabled.
+zstyle ':vcs_info:jj:prompt:*' check-for-changes false
 
 # Generate VCS info just before rendering prompt
 function mange-prompt-precmd-vcs {

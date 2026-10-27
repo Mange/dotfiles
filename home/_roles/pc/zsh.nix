@@ -6,6 +6,12 @@
 }:
 let
   utils = import ../../utils.nix { inherit config pkgs; };
+  zsh-jj = pkgs.fetchFromGitHub {
+    owner = "rkh";
+    repo = "zsh-jj";
+    rev = "c3d8636d387c3533376b64c752f199b48030d8d5";
+    sha256 = "sha256-kLipCdeBOduEfH3cqWxRYllUQS7N+do6lqSuPONodHw=";
+  };
 in
 {
   xdg.configFile = {
@@ -96,6 +102,7 @@ in
           function recomp() {
             fpath+=(
               "''${ZDOTDIR}/funcs"
+              "${zsh-jj}/functions"
               "''${ZDOTDIR}/completion"
 
               # Auto-discover ZSH directories from used Nix packages (like nix-shell,
