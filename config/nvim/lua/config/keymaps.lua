@@ -357,22 +357,15 @@ wk.add {
 -- Leader chords: root
 --
 wk.add {
-  -- stylua: ignore start
   { "<leader>:", "<cmd>Telescope commands<cr>", desc = "Commands" },
   { "<leader>/", "<cmd>nohl<cr>", desc = "nohl" },
   { "<leader>N", "<cmd>Telescope resume<cr>", desc = "Telescope resume" },
 
-  { "<leader>q", call("fidget", {"notification", "clear"}), desc = "Close notifications" },
-
-  { "<leader>j", call("treesj", "split"), desc = "Split line" },
-  { "<leader>k", function()
-    if vim.bo.ft == "rust" then
-      vim.cmd.RustLsp "joinLines"
-    else
-      require("treesj").join()
-    end
-  end, desc = "Join line" },
-  -- stylua: ignore end
+  {
+    "<leader>q",
+    call("fidget", { "notification", "clear" }),
+    desc = "Close notifications",
+  },
 }
 
 --
@@ -415,51 +408,65 @@ wk.add {
 }
 
 --
--- Leader chords: VCS / git / jj
+-- Leader chords: jj
 --
 wk.add {
-  { "<leader>g", group = "vcs" },
+  { "<leader>j", group = "jj" },
+  { "<leader>js", call("jj.cmd", "status"), desc = "JJ Status" },
 
-  { "<leader>gg", "<cmd>Neogit<cr>", desc = "Git Status" },
+  { "<leader>jj", ":J<CR>", desc = "JJ" },
+  { "<leader>jl", call("jj.cmd", "log"), desc = "JJ Log" },
   {
-    "<leader>go",
+    "<leader>jL",
+    call("jj.cmd", "log", { revisions = "all()" }),
+    desc = "JJ Log (all)",
+  },
+  {
+    "<leader>jD",
+    call("jj.cmd", "log", { revisions = "trunk()-..@" }),
+    desc = "Trunk log",
+  },
+
+  { "<leader>jd", ":Jdiff<CR>", desc = "File diff" },
+  { "<leader>jc", call("jj.cmd", "commit"), desc = "Commit" },
+
+  { "<leader>jo", ":Jbrowse<CR>", desc = "Open in browser" },
+  { "<leader>jb", ":J annotate_line<CR>", desc = "Blame line" },
+  { "<leader>jB", ":J annotate<CR>", desc = "Blame file" },
+
+  { "<leader>ju", "<cmd>VCSigns hunk_undo<cr>", desc = "Undo hunk" },
+
+  {
+    "<leader>jf",
+    call("jj.picker", "status"),
+    desc = "Find modified file",
+  },
+  {
+    "<leader>jF",
     function()
-      Snacks.gitbrowse()
+      require("jj.cmd").log { raw_flags = { vim.fn.expand "%" } }
     end,
-    desc = "Open in browser",
-  },
-  { "<leader>gc", call("neogit", "open", { "commit" }), desc = "Commit" },
-
-  { "<leader>gu", "<cmd>VCSigns hunk_undo<cr>", desc = "Undo hunk" },
-
-  { "<leader>gf", "<cmd>DiffviewFileHistory %<cr>", desc = "File history" },
-  { "<leader>gd", "<cmd>DiffviewOpen<cr>", desc = "Working diff" },
-  { "<leader>gm", "<cmd>DiffviewOpen master<cr>", desc = "Master diff" },
-  {
-    "<leader>gM",
-    "<cmd>DiffviewOpen main<cr>",
-    desc = "Main diff",
-    icon = "󰟮",
+    desc = "File history",
   },
 
-  { "<leader>gm", group = "markers" },
+  { "<leader>jm", group = "markers" },
   {
-    "<leader>gms",
+    "<leader>jms",
     call("vcmarkers.actions", "select_section_verbatim", 0),
     desc = "Select section",
   },
   {
-    "<leader>gmp",
+    "<leader>jmp",
     call("vcmarkers.actions", "select_section_plus", 0),
     desc = "Select +",
   },
   {
-    "<leader>gmP",
+    "<leader>jmP",
     call("vcmarkers.actions", "select_all_plus", 0),
     desc = "Select all +",
   },
   {
-    "<leader>gmc",
+    "<leader>jmc",
     call("vcmarkers.actions", "cycle_marker", 0),
     desc = "Cycle representation",
   },
@@ -556,6 +563,19 @@ wk.add {
   { "<leader>cg<", "<cmd>Trouble lsp_incoming_calls focus=true auto_refresh=false pinned=true vim.position=right<cr>", desc = "Incoming calls" },
   { "<leader>cg>", "<cmd>Trouble lsp_outgoing_calls focus=true auto_refresh=false pinned=true vim.position=right<cr>", desc = "Outgoing calls" },
   -- stylua: ignore end
+
+  { "<leader>cj", call("treesj", "split"), desc = "Split line" },
+  {
+    "<leader>ck",
+    function()
+      if vim.bo.ft == "rust" then
+        vim.cmd.RustLsp "joinLines"
+      else
+        require("treesj").join()
+      end
+    end,
+    desc = "Join line",
+  },
 }
 
 --

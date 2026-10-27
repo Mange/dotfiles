@@ -1,25 +1,15 @@
 return {
   {
-    "TimUntersberger/neogit",
-    branch = "master",
+    "nicolasgb/jj.nvim",
+    version = "*", -- Use latest stable release
     opts = {
-      -- I want to start in insert mode on empty commit messages.
-      disable_insert_on_commit = false,
-
-      -- Nicer characters
-      signs = {
-        section = { "▶", "▼" },
-        item = { "▶", "▼" },
-        hunk = { "▶", "▼" },
-      },
-
-      integrations = {
-        telescope = true,
-        diffview = true,
+      diff = {
+        -- Diffview does not support non-colocated jj
+        -- backend = "diffview",
+        backend = "native",
       },
     },
   },
-
   {
     "algmyr/vcmarkers.nvim",
     dependencies = { "algmyr/vclib.nvim" },
