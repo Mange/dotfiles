@@ -4,9 +4,7 @@ return {
     version = "*", -- Use latest stable release
     opts = {
       diff = {
-        -- Diffview does not support non-colocated jj
-        -- backend = "diffview",
-        backend = "native",
+        backend = "diffview",
       },
     },
   },
@@ -26,8 +24,10 @@ return {
   },
 
   {
-    "sindrets/diffview.nvim",
+    "dlyongemallo/diffview-plus.nvim",
     opts = {
+      enhanced_diff_hl = true,
+      diffopt = { algorithm = "histogram" },
       key_bindings = {
         view = {
           ["q"] = "<cmd>DiffviewClose<cr>",

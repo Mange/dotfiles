@@ -3,6 +3,10 @@ return {
   -- keybinds to be remembered.
   {
     "folke/which-key.nvim",
-    opts = {},
+    opts = {
+      filter = function(mapping)
+        return mapping.desc ~= "diffview_ignore"
+      end,
+    },
   },
 }
