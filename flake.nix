@@ -91,10 +91,6 @@
             inherit specialArgs;
             modules = extraSystemModules ++ [ ./systems/vera/configuration.nix ];
           };
-          porto = nixpkgs.lib.nixosSystem {
-            inherit specialArgs;
-            modules = extraSystemModules ++ [ ./systems/porto/configuration.nix ];
-          };
         };
 
       # Standalone home-manager configuration entrypoint
@@ -122,13 +118,6 @@
             };
             pkgs = nixpkgs.legacyPackages.x86_64-linux;
             modules = modules ++ [ ./home/vera ];
-          };
-          "mange@porto" = homeConfig {
-            extraSpecialArgs = extraSpecialArgs // {
-              isLaptop = true;
-            };
-            pkgs = nixpkgs.legacyPackages.x86_64-linux;
-            modules = modules ++ [ ./home/porto ];
           };
         };
     };
