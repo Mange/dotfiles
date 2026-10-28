@@ -29,6 +29,8 @@
   reviewing and makes history surgery much easier.
 - Always pass `--tool=:git` to `jj diff` to get a standard, non-visual,
   diff. I use a custom differ.
+- Never push to a remote. Pushing commits will sign them with the user's GPG
+  key, so only the user is allowed to push.
 
 ## Sandboxing
 
