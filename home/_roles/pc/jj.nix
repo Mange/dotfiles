@@ -65,5 +65,18 @@
     };
   };
 
-  programs.jjui.enable = true;
+  programs.jjui = {
+    enable = true;
+    settings = {
+      actions = [
+        {
+          name = "arrange";
+          lua = ''jj_interactive("arrange", "-r", jjui.revisions.current() .. "::")'';
+          key = "alt+a";
+          scope = "revisions";
+          desc = "arrange";
+        }
+      ];
+    };
+  };
 }
