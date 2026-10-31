@@ -20,6 +20,8 @@ in
     ponysay
     nixos-stable.charasay
 
+    clicketyclack
+
     # Music visualizer
     # Not enabled through home-manager so config file is not managed, so
     # Noctalia can overwrite it.

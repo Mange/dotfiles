@@ -33,6 +33,12 @@
       url = "github:noctalia-dev/noctalia";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # lol
+    clicketyclack = {
+      url = "github:Mange/clicketyclack";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
