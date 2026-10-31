@@ -10,6 +10,7 @@
 
     ./cursors.nix
     ./docker.nix
+    ./documentation.nix
     ./kde-connect.nix
     ./networking.nix
     ./programs.nix
